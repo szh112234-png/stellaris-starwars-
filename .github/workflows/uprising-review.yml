@@ -1,0 +1,40 @@
+name: Uprising review
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/uprising-review.yml'
+      - 'tools/test_uprising_annexation.py'
+      - '**/*uprising*'
+      - '**/*revolt*'
+permissions:
+  contents: read
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Collect tracked text for uprising review
+        run: |
+          python - <<'PY'
+          import pathlib, subprocess, zipfile
+          paths = subprocess.check_output(['git', 'ls-files', '-z']).decode('utf-8').split('\0')
+          suffixes = {'.txt', '.mod', '.py', '.md', '.yml', '.gfx', '.asset', '.gui'}
+          count = 0
+          with zipfile.ZipFile('uprising-review-source.zip', 'w', zipfile.ZIP_DEFLATED) as archive:
+              for name in paths:
+                  p = pathlib.Path(name)
+                  if name and p.is_file() and not p.is_symlink() and p.suffix.lower() in suffixes and not name.startswith('.git'):
+                      archive.write(p, name)
+                      count += 1
+          print('Tracked text files:', count)
+          print('Snapshot:', subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode().strip())
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: uprising-review-source
+          path: uprising-review-source.zip
+          retention-days: 3
+          if-no-files-found: error
