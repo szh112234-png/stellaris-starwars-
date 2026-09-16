@@ -1,0 +1,11 @@
+# Origin opening only. Preserve its mining access; advanced weapons are researched.
+foc_v17_7_grant_first_order_start_arsenal = {
+    if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+    if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+    if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+    if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+    if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+    if = { limit = { NOT = { has_technology = foc_tech_std_mass_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_mass_1 message = no } } }
+    if = { limit = { NOT = { has_technology = foc_tech_std_concussion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_concussion_1 message = no } } }
+    if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+}

@@ -1,0 +1,672 @@
+namespace = foc_phase1
+
+# Route/relic initializer. One human dispatcher only; all actions are idempotent.
+country_event = {
+    id = foc_phase1.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        is_ai = no
+        NOT = { has_global_flag = foc_phase1_trade_corridors_initialized }
+        any_system = { has_star_flag = foc_swmap_corellia_home }
+    }
+    immediate = {
+        # Corellian commercial spine: Coruscant -> Corellia -> Tatooine/Naboo market arc.
+        every_system = {
+            limit = { OR = { has_star_flag = foc_sw_coruscant_home has_star_flag = foc_swmap_corellia_home has_star_flag = foc_swmap_tatooine_home has_star_flag = foc_swmap_naboo_home } }
+            every_system_planet = {
+                limit = { is_colony = yes }
+                if = { limit = { NOT = { has_modifier = foc_phase1_corellian_commercial_spine } } add_modifier = { modifier = foc_phase1_corellian_commercial_spine days = -1 } }
+            }
+        }
+        # Coreward industrial corridor: Coruscant, Kuat and Fondor are the shipbuilding/administrative axis.
+        every_system = {
+            limit = { OR = { has_star_flag = foc_sw_coruscant_home has_star_flag = foc_sw_kuat_home has_star_flag = foc_swfill_fondor_home } }
+            every_system_planet = {
+                limit = { is_colony = yes }
+                if = { limit = { NOT = { has_modifier = foc_phase1_coreward_industrial_corridor } } add_modifier = { modifier = foc_phase1_coreward_industrial_corridor days = -1 } }
+            }
+        }
+        # Outer Rim military supply lane: key war worlds, not a copied named-route list.
+        every_system = {
+            limit = { OR = { has_star_flag = foc_swmap_kashyyyk_home has_star_flag = foc_swmap_mon_cala_home has_star_flag = foc_swmap_scarif_home has_star_flag = foc_sw_jakku_home } }
+            every_system_planet = {
+                limit = { is_colony = yes }
+                if = { limit = { NOT = { has_modifier = foc_phase1_outer_rim_supply_lane } } add_modifier = { modifier = foc_phase1_outer_rim_supply_lane days = -1 } }
+            }
+        }
+        set_global_flag = foc_phase1_trade_corridors_initialized
+        set_country_flag = foc_phase1_trade_corridors_seen
+        country_event = { id = foc_phase1.60 days = 1 }
+    }
+}
+
+# Historical-character continuity. Political destination, not birth country, determines who inherits a hero.
+country_event = {
+    id = foc_phase1.2
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        OR = {
+            AND = {
+                has_global_flag = foc_saga_rebel_alliance_declared
+                NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+                OR = { has_country_flag = foc_republic_origin_imperial_rebel_country has_country_flag = foc_republic_origin_rebel_alliance_country has_country_flag = foc_khan_rebel_alliance_country }
+            }
+            AND = {
+                has_global_flag = foc_republic_origin_galactic_treaty
+                has_country_flag = foc_sw_new_republic_country
+                NOT = { has_global_flag = foc_khan_phase_one }
+            }
+            AND = {
+                has_global_flag = foc_khan_phase_one
+                OR = { has_country_flag = foc_khan_rebel_alliance_country has_country_flag = foc_republic_origin_post_treaty_rebel_country has_country_flag = foc_republic_origin_rebel_alliance_country }
+            }
+            AND = {
+                has_global_flag = foc_republic_origin_galactic_treaty
+                has_country_flag = foc_sw_imperial_remnant_country
+            }
+        }
+    }
+    immediate = {
+        if = {
+            limit = { NOT = { has_global_flag = foc_republic_origin_galactic_treaty } OR = { has_country_flag = foc_republic_origin_imperial_rebel_country has_country_flag = foc_republic_origin_rebel_alliance_country has_country_flag = foc_khan_rebel_alliance_country } }
+            foc_phase1_absorb_rebel_heroes = yes
+        }
+        else_if = {
+            limit = { has_global_flag = foc_republic_origin_galactic_treaty has_country_flag = foc_sw_new_republic_country NOT = { has_global_flag = foc_khan_phase_one } }
+            foc_phase1_absorb_rebel_heroes = yes
+        }
+        else_if = {
+            limit = { has_global_flag = foc_khan_phase_one OR = { has_country_flag = foc_khan_rebel_alliance_country has_country_flag = foc_republic_origin_post_treaty_rebel_country has_country_flag = foc_republic_origin_rebel_alliance_country } }
+            foc_phase1_absorb_resistance_heroes = yes
+        }
+        else_if = {
+            limit = { has_global_flag = foc_republic_origin_galactic_treaty has_country_flag = foc_sw_imperial_remnant_country }
+            foc_phase1_move_thrawn_here = yes
+        }
+    }
+}
+
+# Spawn our FOC-original Malachor archaeology story only after the canon Malachor aftermath.
+country_event = {
+    id = foc_phase1.3
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        is_ai = no
+        has_global_flag = foc_canon_malachor_aftermath
+        NOT = { has_global_flag = foc_phase1_malachor_archive_spawned }
+        any_system = { has_star_flag = foc_swmap_malachor_home }
+    }
+    immediate = {
+        random_system = {
+            limit = { has_star_flag = foc_swmap_malachor_home }
+            random_system_planet = {
+                limit = { has_planet_flag = foc_swmap_malachor }
+                create_archaeological_site = foc_phase1_malachor_memory_site
+            }
+        }
+        set_global_flag = foc_phase1_malachor_archive_spawned
+    }
+}
+
+# First Order ambition: one-time strategic control awards. These supplement combat points,
+# but every level still has a unique FOC story gate.
+country_event = {
+    id = foc_phase1.4
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { is_ai = no has_country_flag = fop_origin_crisis_active }
+    immediate = {
+        if = {
+            limit = {
+                NOT = { has_country_flag = fop_ambition_starkiller_scored }
+                foc_khan_owns_completed_starkiller = yes
+            }
+            set_country_flag = fop_ambition_starkiller_scored
+            change_variable = { which = fop_force_dominion_points value = 300 }
+        }
+        if = {
+            limit = {
+                NOT = { has_country_flag = fop_ambition_hosnian_scored }
+                has_global_flag = foc_story_hosnian_destroyed
+            }
+            set_country_flag = fop_ambition_hosnian_scored
+            change_variable = { which = fop_force_dominion_points value = 400 }
+        }
+        if = {
+            limit = {
+                NOT = { has_country_flag = fop_ambition_new_republic_scored }
+                OR = {
+                    has_country_flag = fop_origin_new_republic_annexed
+                    NOT = { any_country = { has_country_flag = foc_sw_new_republic_country } }
+                }
+            }
+            set_country_flag = fop_ambition_new_republic_scored
+            change_variable = { which = fop_force_dominion_points value = 300 }
+        }
+
+        if = {
+            limit = { NOT = { has_country_flag = fop_ambition_coruscant_scored } any_system = { has_star_flag = foc_sw_coruscant_home space_owner? = { is_same_value = root } } }
+            set_country_flag = fop_ambition_coruscant_scored
+            change_variable = { which = fop_force_dominion_points value = 250 }
+        }
+        if = {
+            limit = { NOT = { has_country_flag = fop_ambition_kuat_scored } any_system = { has_star_flag = foc_sw_kuat_home space_owner? = { is_same_value = root } } }
+            set_country_flag = fop_ambition_kuat_scored
+            change_variable = { which = fop_force_dominion_points value = 150 }
+        }
+        if = {
+            limit = { NOT = { has_country_flag = fop_ambition_jakku_scored } any_system = { has_star_flag = foc_sw_jakku_home space_owner? = { is_same_value = root } } }
+            set_country_flag = fop_ambition_jakku_scored
+            change_variable = { which = fop_force_dominion_points value = 100 }
+        }
+        if = {
+            limit = { NOT = { has_country_flag = fop_ambition_exegol_scored } any_system = { has_star_flag = foc_khan_final_order_system space_owner? = { is_same_value = root } } }
+            set_country_flag = fop_ambition_exegol_scored
+            change_variable = { which = fop_force_dominion_points value = 300 }
+        }
+    }
+}
+
+# A newly-bound subject is worth more than destroying a minor polity because the First Order's
+# defining ambition is hierarchy, not indiscriminate extermination.
+country_event = {
+    id = foc_phase1.5
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        is_subject = yes
+        NOT = { has_country_flag = fop_ambition_thrall_scored }
+        overlord = { has_country_flag = fop_origin_crisis_active }
+    }
+    immediate = {
+        set_country_flag = fop_ambition_thrall_scored
+        overlord = { change_variable = { which = fop_force_dominion_points value = 150 } }
+    }
+}
+
+# One-time retirement recommendation on the transition out of the Clone Wars.
+country_event = {
+    id = foc_phase1.6
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        is_ai = no
+        has_technology = foc_tech_republic_venator
+        NOT = { has_country_flag = foc_phase1_legacy_prompt_shown }
+        OR = {
+            has_country_flag = foc_republic_origin_empire_country
+            has_country_flag = foc_sw_new_republic_country
+            has_country_flag = foc_republic_origin_player_imperial_remnant
+        }
+    }
+    immediate = {
+        set_country_flag = foc_phase1_legacy_prompt_shown
+        country_event = { id = foc_phase1.41 }
+    }
+}
+
+
+# Ossus becomes an archaeological memory of the Jedi only after Order 66.
+country_event = {
+    id = foc_phase1.7
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        is_ai = no
+        has_global_flag = foc_republic_origin_jedi_purged
+        NOT = { has_global_flag = foc_phase1_ossus_archive_spawned }
+        any_system = { has_star_flag = foc_swmap_ossus_home }
+    }
+    immediate = {
+        random_system = {
+            limit = { has_star_flag = foc_swmap_ossus_home }
+            random_system_planet = {
+                limit = { has_planet_flag = foc_swmap_ossus }
+                create_archaeological_site = foc_phase1_ossus_jedi_archive_site
+            }
+        }
+        set_global_flag = foc_phase1_ossus_archive_spawned
+    }
+}
+
+# The restored Mandalorians excavate the surviving clan vaults beneath the ruins.
+country_event = {
+    id = foc_phase1.8
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        is_ai = no
+        has_global_flag = foc_mandalore_restored_independent
+        NOT = { has_global_flag = foc_phase1_mandalore_vault_spawned }
+        any_system = { has_star_flag = foc_swmap_mandalore_home }
+    }
+    immediate = {
+        random_system = {
+            limit = { has_star_flag = foc_swmap_mandalore_home }
+            random_system_planet = {
+                limit = { has_planet_flag = foc_swmap_mandalore }
+                create_archaeological_site = foc_phase1_mandalore_clan_vault_site
+            }
+        }
+        set_global_flag = foc_phase1_mandalore_vault_spawned
+    }
+}
+
+# Strategic route accounting. V184 uses the same 39-system major-route set as
+# the prebuilt vanilla Hyper Relays. Control tiers preserve the old 25/50/75%
+# meaning: 10/20/30 of 39 mapped major-route systems. This is dispatched by the
+# yearly country pulse, not by a monthly repair/backfill loop.
+country_event = {
+    id = foc_phase1.61
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        OR = {
+            has_country_flag = foc_republic_origin_empire_country
+            has_country_flag = foc_republic_origin_imperial_rebel_country
+            has_country_flag = foc_republic_origin_rebel_alliance_country
+            has_country_flag = foc_khan_rebel_alliance_country
+            has_country_flag = foc_republic_origin_post_treaty_rebel_country
+        }
+    }
+    immediate = {
+        # Migrate the old single-line archive modifier from earlier Phase I builds.
+        remove_modifier = foc_phase1_fleet_archive_savings
+        if = {
+            limit = { has_country_flag = foc_phase1_venator_retired NOT = { has_modifier = foc_phase1_archive_republic_line } }
+            add_modifier = { modifier = foc_phase1_archive_republic_line days = -1 }
+        }
+
+        # Count actual ownership of the current major-route network.
+        set_variable = { which = foc_phase1_route_score value = 0 }
+        every_system = {
+            limit = {
+                foc_v184_is_major_route_system = yes
+                exists = space_owner
+                space_owner? = { is_same_value = root }
+            }
+            root = { change_variable = { which = foc_phase1_route_score value = 1 } }
+        }
+
+        if = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_republic_origin_imperial_rebel_country
+                    has_country_flag = foc_republic_origin_rebel_alliance_country
+                    has_country_flag = foc_khan_rebel_alliance_country
+                    has_country_flag = foc_republic_origin_post_treaty_rebel_country
+                }
+            }
+
+            remove_modifier = foc_phase1_rebel_route_network_1
+            remove_modifier = foc_phase1_rebel_route_network_2
+            remove_modifier = foc_phase1_rebel_route_network_3
+
+            if = {
+                limit = { check_variable = { which = foc_phase1_route_score value >= 30 } }
+                add_modifier = { modifier = foc_phase1_rebel_route_network_3 days = -1 }
+                if = {
+                    limit = { has_country_flag = foc_gcw_ledger_initialized }
+                    change_variable = { which = foc_gcw_supply value = 4 }
+                    change_variable = { which = foc_gcw_intelligence value = 3 }
+                    change_variable = { which = foc_gcw_readiness value = 2 }
+                    foc_gcw_clamp_rebel_ledger = yes
+                }
+            }
+            else_if = {
+                limit = { check_variable = { which = foc_phase1_route_score value >= 20 } }
+                add_modifier = { modifier = foc_phase1_rebel_route_network_2 days = -1 }
+                if = {
+                    limit = { has_country_flag = foc_gcw_ledger_initialized }
+                    change_variable = { which = foc_gcw_supply value = 2 }
+                    change_variable = { which = foc_gcw_intelligence value = 2 }
+                    foc_gcw_clamp_rebel_ledger = yes
+                }
+            }
+            else_if = {
+                limit = { check_variable = { which = foc_phase1_route_score value >= 10 } }
+                add_modifier = { modifier = foc_phase1_rebel_route_network_1 days = -1 }
+                if = {
+                    limit = { has_country_flag = foc_gcw_ledger_initialized }
+                    change_variable = { which = foc_gcw_supply value = 1 }
+                    foc_gcw_clamp_rebel_ledger = yes
+                }
+            }
+        }
+        else_if = {
+            limit = { has_country_flag = foc_republic_origin_empire_country }
+
+            remove_modifier = foc_phase1_imperial_route_network_1
+            remove_modifier = foc_phase1_imperial_route_network_2
+            remove_modifier = foc_phase1_imperial_route_network_3
+
+            if = {
+                limit = { check_variable = { which = foc_phase1_route_score value >= 30 } }
+                add_modifier = { modifier = foc_phase1_imperial_route_network_3 days = -1 }
+                if = {
+                    limit = { has_country_flag = foc_gcw_empire_ledger_initialized }
+                    change_variable = { which = foc_gcw_control value = 3 }
+                    change_variable = { which = foc_gcw_morale value = 2 }
+                    foc_gcw_clamp_empire_ledger = yes
+                    foc_gcw_refresh_empire_state = yes
+                }
+            }
+            else_if = {
+                limit = { check_variable = { which = foc_phase1_route_score value >= 20 } }
+                add_modifier = { modifier = foc_phase1_imperial_route_network_2 days = -1 }
+                if = {
+                    limit = { has_country_flag = foc_gcw_empire_ledger_initialized }
+                    change_variable = { which = foc_gcw_control value = 2 }
+                    foc_gcw_clamp_empire_ledger = yes
+                    foc_gcw_refresh_empire_state = yes
+                }
+            }
+            else_if = {
+                limit = { check_variable = { which = foc_phase1_route_score value >= 10 } }
+                add_modifier = { modifier = foc_phase1_imperial_route_network_1 days = -1 }
+                if = {
+                    limit = { has_country_flag = foc_gcw_empire_ledger_initialized }
+                    change_variable = { which = foc_gcw_control value = 1 }
+                    foc_gcw_clamp_empire_ledger = yes
+                    foc_gcw_refresh_empire_state = yes
+                }
+            }
+        }
+    }
+}
+
+# -------------------- Rebel Operations --------------------
+country_event = {
+    id = foc_phase1.20
+    title = foc_phase1.20.name
+    desc = foc_phase1.20.desc
+    picture = GFX_foc_rogue_one_scarif_space
+    is_triggered_only = yes
+    force_open = yes
+    trigger = {
+        is_ai = no
+        OR = { has_country_flag = foc_republic_origin_imperial_rebel_country has_country_flag = foc_republic_origin_rebel_alliance_country has_country_flag = foc_khan_rebel_alliance_country has_country_flag = foc_republic_origin_post_treaty_rebel_country }
+    }
+
+    option = {
+        name = foc_phase1.20.a
+        trigger = { NOT = { has_country_flag = foc_phase1_kuat_raid_completed } NOT = { has_country_flag = foc_phase1_raid_cooldown } }
+        allow = { resource_stockpile_compare = { resource = energy value >= 3000 } resource_stockpile_compare = { resource = alloys value >= 1500 } }
+        add_resource = { energy = -3000 alloys = -1500 }
+        set_timed_country_flag = { flag = foc_phase1_raid_cooldown days = 1080 }
+        hidden_effect = {
+            if = {
+                limit = { any_owned_leader = { leader_class = commander has_base_skill >= 8 } }
+                random_list = { 80 = { country_event = { id = foc_phase1.21 } } 20 = { country_event = { id = foc_phase1.22 } } }
+            }
+            else_if = {
+                limit = { any_owned_leader = { leader_class = commander has_base_skill >= 5 } }
+                random_list = { 60 = { country_event = { id = foc_phase1.21 } } 40 = { country_event = { id = foc_phase1.22 } } }
+            }
+            else = { random_list = { 40 = { country_event = { id = foc_phase1.21 } } 60 = { country_event = { id = foc_phase1.22 } } } }
+        }
+    }
+
+    option = {
+        name = foc_phase1.20.b
+        trigger = { NOT = { has_country_flag = foc_phase1_scarif_probe_completed } NOT = { has_country_flag = foc_phase1_raid_cooldown } }
+        allow = { resource_stockpile_compare = { resource = energy value >= 2000 } resource_stockpile_compare = { resource = unity value >= 1000 } }
+        add_resource = { energy = -2000 unity = -1000 }
+        set_timed_country_flag = { flag = foc_phase1_raid_cooldown days = 720 }
+        hidden_effect = {
+            if = {
+                limit = { any_owned_leader = { leader_class = commander has_base_skill >= 7 } }
+                random_list = { 75 = { country_event = { id = foc_phase1.23 } } 25 = { country_event = { id = foc_phase1.24 } } }
+            }
+            else = { random_list = { 50 = { country_event = { id = foc_phase1.23 } } 50 = { country_event = { id = foc_phase1.24 } } } }
+        }
+    }
+
+    option = {
+        name = foc_phase1.20.c
+        trigger = { NOT = { has_country_flag = foc_phase1_fondor_raid_completed } NOT = { has_country_flag = foc_phase1_raid_cooldown } any_system = { has_star_flag = foc_swfill_fondor_home } }
+        allow = { resource_stockpile_compare = { resource = energy value >= 2500 } }
+        add_resource = { energy = -2500 }
+        set_timed_country_flag = { flag = foc_phase1_raid_cooldown days = 900 }
+        hidden_effect = {
+            if = {
+                limit = { any_owned_leader = { leader_class = commander has_base_skill >= 6 } }
+                random_list = { 70 = { country_event = { id = foc_phase1.25 } } 30 = { country_event = { id = foc_phase1.26 } } }
+            }
+            else = { random_list = { 45 = { country_event = { id = foc_phase1.25 } } 55 = { country_event = { id = foc_phase1.26 } } } }
+        }
+    }
+    option = { name = foc_phase1.close default_hide_option = yes }
+}
+
+country_event = {
+    id = foc_phase1.21 title = foc_phase1.21.name desc = foc_phase1.21.desc picture = GFX_foc_saga_kuat_yards is_triggered_only = yes force_open = yes
+    immediate = {
+        set_country_flag = foc_phase1_kuat_raid_completed
+        add_resource = { alloys = 2000 engineering_research = 3000 }
+        if = {
+            limit = { has_country_flag = foc_gcw_ledger_initialized }
+            change_variable = { which = foc_gcw_supply value = 5 }
+            change_variable = { which = foc_gcw_readiness value = 5 }
+            foc_gcw_clamp_rebel_ledger = yes
+        }
+        capital_scope = { save_event_target_as = foc_phase1_raid_spawn }
+    }
+    option = {
+        name = foc_phase1.21.a
+        hidden_effect = {
+            if = {
+                limit = { exists = event_target:foc_phase1_raid_spawn }
+                create_fleet = {
+                    name = "NAME_FOC_PHASE1_CAPTURED_KUAT_FLEET"
+                    settings = { uses_naval_capacity = yes can_upgrade = no can_disband = yes can_change_composition = no can_change_leader = yes spawn_debris = yes }
+                    effect = {
+                        set_owner = root
+                        # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+}
+                        
+
+                        
+                        create_ship = { name = "NAME_FOC_PHASE1_CAPTURED_ISD" design = "NAME_FOC_KHAN_IMPERIAL_SD" upgradable = no }
+                        set_location = { target = event_target:foc_phase1_raid_spawn distance = 15 angle = random }
+                        set_fleet_flag = foc_phase1_captured_kuat_fleet
+                    }
+                }
+            }
+        }
+    }
+}
+country_event = { id = foc_phase1.22 title = foc_phase1.22.name desc = foc_phase1.22.desc picture = GFX_foc_saga_kuat_yards is_triggered_only = yes force_open = yes option = { name = foc_phase1.close } }
+
+country_event = {
+    id = foc_phase1.23 title = foc_phase1.23.name desc = foc_phase1.23.desc picture = GFX_foc_rogue_one_scarif_ground is_triggered_only = yes force_open = yes
+    immediate = {
+        set_country_flag = foc_phase1_scarif_probe_completed
+        add_resource = { engineering_research = 5000 unity = 2500 }
+        set_variable = { which = foc_phase1_rebel_intelligence value = 1 }
+        if = {
+            limit = { has_country_flag = foc_gcw_ledger_initialized }
+            change_variable = { which = foc_gcw_intelligence value = 10 }
+            change_variable = { which = foc_gcw_support value = 2 }
+            foc_gcw_clamp_rebel_ledger = yes
+        }
+        add_relic = r_foc_scarif_cipher_core
+        add_modifier = { modifier = foc_phase1_scarif_cipher_network days = -1 }
+    }
+    option = { name = foc_phase1.23.a }
+}
+country_event = { id = foc_phase1.24 title = foc_phase1.24.name desc = foc_phase1.24.desc picture = GFX_foc_rogue_one_scarif_ground is_triggered_only = yes force_open = yes option = { name = foc_phase1.close } }
+
+country_event = {
+    id = foc_phase1.25 title = foc_phase1.25.name desc = foc_phase1.25.desc picture = GFX_foc_saga_kuat_yards_2 is_triggered_only = yes force_open = yes
+    immediate = {
+        set_country_flag = foc_phase1_fondor_raid_completed
+        if = {
+            limit = { has_country_flag = foc_gcw_ledger_initialized }
+            change_variable = { which = foc_gcw_supply value = 4 }
+            change_variable = { which = foc_gcw_readiness value = 3 }
+            foc_gcw_clamp_rebel_ledger = yes
+        }
+        add_resource = { alloys = 3500 engineering_research = 2500 }
+        random_system = {
+            limit = { has_star_flag = foc_swfill_fondor_home exists = space_owner }
+            space_owner = {
+                if = { limit = { NOT = { has_modifier = foc_phase1_fondor_shipyard_disruption } } add_modifier = { modifier = foc_phase1_fondor_shipyard_disruption days = 720 } }
+            }
+        }
+    }
+    option = { name = foc_phase1.25.a }
+}
+country_event = { id = foc_phase1.26 title = foc_phase1.26.name desc = foc_phase1.26.desc picture = GFX_foc_saga_kuat_yards_2 is_triggered_only = yes force_open = yes option = { name = foc_phase1.close } }
+
+# -------------------- Fleet archive / retirement --------------------
+# Each option only closes/reopens a production line. Existing ships and
+# technologies are never deleted.
+country_event = {
+    id = foc_phase1.40
+    title = foc_phase1.40.name
+    desc = foc_phase1.40.desc
+    picture = GFX_foc_saga_kuat_yards_2
+    is_triggered_only = yes
+    force_open = yes
+    trigger = {
+        is_ai = no
+        OR = {
+            has_technology = foc_tech_republic_venator
+            has_technology = foc_tech_dark_legacy_imperial
+            has_country_flag = foc_rebel_mc80_design_unlocked
+            has_technology = foc_tech_dark_legacy_resurgent
+        }
+    }
+
+    option = {
+        name = foc_phase1.40.venator_retire
+        trigger = {
+            has_technology = foc_tech_republic_venator
+            NOT = { has_country_flag = foc_phase1_venator_retired }
+        }
+        set_country_flag = foc_phase1_venator_retired
+        if = {
+            limit = { NOT = { has_modifier = foc_phase1_archive_republic_line } }
+            add_modifier = { modifier = foc_phase1_archive_republic_line days = -1 }
+        }
+    }
+    option = {
+        name = foc_phase1.40.venator_restore
+        trigger = { has_country_flag = foc_phase1_venator_retired }
+        allow = {
+            resource_stockpile_compare = { resource = alloys value >= 5000 }
+            resource_stockpile_compare = { resource = unity value >= 2500 }
+        }
+        add_resource = { alloys = -5000 unity = -2500 }
+        remove_country_flag = foc_phase1_venator_retired
+        remove_modifier = foc_phase1_archive_republic_line
+    }
+
+    option = {
+        name = foc_phase1.40.imperial_retire
+        trigger = {
+            has_technology = foc_tech_dark_legacy_imperial
+            NOT = { has_country_flag = foc_phase1_imperial_sd_retired }
+        }
+        set_country_flag = foc_phase1_imperial_sd_retired
+        if = {
+            limit = { NOT = { has_modifier = foc_phase1_archive_imperial_line } }
+            add_modifier = { modifier = foc_phase1_archive_imperial_line days = -1 }
+        }
+    }
+    option = {
+        name = foc_phase1.40.imperial_restore
+        trigger = { has_country_flag = foc_phase1_imperial_sd_retired }
+        allow = {
+            resource_stockpile_compare = { resource = alloys value >= 7500 }
+            resource_stockpile_compare = { resource = unity value >= 3000 }
+        }
+        add_resource = { alloys = -7500 unity = -3000 }
+        remove_country_flag = foc_phase1_imperial_sd_retired
+        remove_modifier = foc_phase1_archive_imperial_line
+    }
+
+    option = {
+        name = foc_phase1.40.mc80_retire
+        trigger = {
+            has_country_flag = foc_rebel_mc80_design_unlocked
+            NOT = { has_country_flag = foc_phase1_mc80_retired }
+        }
+        set_country_flag = foc_phase1_mc80_retired
+        if = {
+            limit = { NOT = { has_modifier = foc_phase1_archive_rebel_line } }
+            add_modifier = { modifier = foc_phase1_archive_rebel_line days = -1 }
+        }
+    }
+    option = {
+        name = foc_phase1.40.mc80_restore
+        trigger = { has_country_flag = foc_phase1_mc80_retired }
+        allow = {
+            resource_stockpile_compare = { resource = alloys value >= 6500 }
+            resource_stockpile_compare = { resource = unity value >= 3000 }
+        }
+        add_resource = { alloys = -6500 unity = -3000 }
+        remove_country_flag = foc_phase1_mc80_retired
+        remove_modifier = foc_phase1_archive_rebel_line
+    }
+
+    option = {
+        name = foc_phase1.40.resurgent_retire
+        trigger = {
+            has_technology = foc_tech_dark_legacy_resurgent
+            NOT = { has_country_flag = foc_phase1_resurgent_retired }
+        }
+        set_country_flag = foc_phase1_resurgent_retired
+        if = {
+            limit = { NOT = { has_modifier = foc_phase1_archive_first_order_line } }
+            add_modifier = { modifier = foc_phase1_archive_first_order_line days = -1 }
+        }
+    }
+    option = {
+        name = foc_phase1.40.resurgent_restore
+        trigger = { has_country_flag = foc_phase1_resurgent_retired }
+        allow = {
+            resource_stockpile_compare = { resource = alloys value >= 10000 }
+            resource_stockpile_compare = { resource = unity value >= 4000 }
+        }
+        add_resource = { alloys = -10000 unity = -4000 }
+        remove_country_flag = foc_phase1_resurgent_retired
+        remove_modifier = foc_phase1_archive_first_order_line
+    }
+
+    option = { name = foc_phase1.close default_hide_option = yes }
+}
+
+country_event = {
+    id = foc_phase1.41
+    title = foc_phase1.41.name
+    desc = foc_phase1.41.desc
+    picture = GFX_foc_saga_kuat_yards_2
+    is_triggered_only = yes
+    force_open = yes
+    option = {
+        name = foc_phase1.41.a
+        hidden_effect = { country_event = { id = foc_phase1.40 } }
+    }
+    option = { name = foc_phase1.41.b }
+}
+
+# Trade-corridor discovery popup.
+country_event = {
+    id = foc_phase1.60
+    title = foc_phase1.60.name desc = foc_phase1.60.desc picture = GFX_foc_saga_trade_federation
+    is_triggered_only = yes force_open = yes
+    option = { name = foc_phase1.close }
+}

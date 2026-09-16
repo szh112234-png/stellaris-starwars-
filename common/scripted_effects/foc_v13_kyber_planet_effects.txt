@@ -1,0 +1,46 @@
+# FOC V13 - planet scope. Canonical flags survive ownership and colony regeneration.
+# Repair is safe to repeat; the visible permanent modifier is the only Kyber source.
+foc_v13_repair_kyber_planet = {
+    if = {
+        limit = { foc_jedha_is_destroyed_planet = yes }
+        remove_modifier = foc_kyber_source_tier_1
+        remove_modifier = foc_kyber_source_tier_2
+        remove_modifier = foc_kyber_source_tier_3
+        remove_modifier = fop_kyber_crystal_caves
+        remove_modifier = foc_lore_jedha_holy_city
+    }
+    else_if = {
+        limit = { OR = { has_planet_flag = foc_khan_starkiller_anchor has_planet_flag = foc_khan_ilum_planet has_planet_flag = fop_ilum_capital has_planet_flag = foc_khan_exegol_capital has_planet_flag = foc_swmap_jedha } }
+        if = { limit = { has_modifier = foc_kyber_source_tier_2 } remove_modifier = foc_kyber_source_tier_2 }
+        if = { limit = { has_modifier = foc_kyber_source_tier_3 } remove_modifier = foc_kyber_source_tier_3 }
+        if = {
+            limit = { NOT = { has_modifier = foc_kyber_source_tier_1 } }
+            add_modifier = { modifier = foc_kyber_source_tier_1 days = -1 }
+        }
+    }
+    else_if = {
+        limit = { OR = { has_planet_flag = foc_swmap_christophsis has_planet_flag = foc_swmap_mygeeto } }
+        if = { limit = { has_modifier = foc_kyber_source_tier_1 } remove_modifier = foc_kyber_source_tier_1 }
+        if = { limit = { has_modifier = foc_kyber_source_tier_3 } remove_modifier = foc_kyber_source_tier_3 }
+        if = {
+            limit = { NOT = { has_modifier = foc_kyber_source_tier_2 } }
+            add_modifier = { modifier = foc_kyber_source_tier_2 days = -1 }
+        }
+    }
+    else_if = {
+        limit = { OR = { has_planet_flag = foc_swmap_lothal has_planet_flag = foc_swmap_utapau has_planet_flag = foc_v175_dantooine } }
+        if = { limit = { has_modifier = foc_kyber_source_tier_1 } remove_modifier = foc_kyber_source_tier_1 }
+        if = { limit = { has_modifier = foc_kyber_source_tier_2 } remove_modifier = foc_kyber_source_tier_2 }
+        if = {
+            limit = { NOT = { has_modifier = foc_kyber_source_tier_3 } }
+            add_modifier = { modifier = foc_kyber_source_tier_3 days = -1 }
+        }
+    }
+    if = { limit = { has_deposit = d_foc_kyber_crystal_veins } remove_deposit = d_foc_kyber_crystal_veins }
+    if = { limit = { has_deposit = d_foc_kyber_crystal_veins_low } remove_deposit = d_foc_kyber_crystal_veins_low }
+    if = { limit = { has_deposit = d_foc_kyber_crystal_veins_medium } remove_deposit = d_foc_kyber_crystal_veins_medium }
+    if = { limit = { has_deposit = d_foc_kyber_crystal_veins_high } remove_deposit = d_foc_kyber_crystal_veins_high }
+    if = { limit = { has_deposit = d_foc_kyber_crystals_orbital_1 } remove_deposit = d_foc_kyber_crystals_orbital_1 }
+    if = { limit = { has_deposit = d_foc_kyber_crystals_orbital_3 } remove_deposit = d_foc_kyber_crystals_orbital_3 }
+    if = { limit = { has_deposit = d_foc_kyber_crystals_orbital_6 } remove_deposit = d_foc_kyber_crystals_orbital_6 }
+}

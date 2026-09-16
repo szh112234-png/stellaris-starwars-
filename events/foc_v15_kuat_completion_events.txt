@@ -1,0 +1,17 @@
+namespace = foc_v15_kuat
+
+# Old saves require all three durable completion flags (defined in the shared
+# trigger). Refunded projects never qualify. Missing ownership delays only the ring.
+country_event = {
+    id = foc_v15_kuat.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        foc_v15_kuat_expansion_really_completed = yes
+        OR = {
+            NOT = { has_country_flag = foc_v15_kuat_durasteel_unlocked }
+            NOT = { has_country_flag = foc_v15_kuat_ring_reward_resolved }
+        }
+    }
+    immediate = { foc_v15_complete_kuat_investment_rewards = yes }
+}

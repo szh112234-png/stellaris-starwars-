@@ -1,0 +1,31 @@
+# Starbase UI metadata for the fixed-design crisis Starkiller station.
+# The station itself is spawned with create_ship, following Kuat's method.
+
+starbase_level_foc_khan_starkiller_fixed_station = {
+    ship_size = foc_khan_starkiller_fixed_station
+    level_weight = 5
+    picture = "GFX_fop_starkiller_base_event"
+    potential_home_base = yes
+    display_shipyard_button = no
+    show_in_outliner = no
+    display_map_icon = yes
+    ai_weight = { weight = 0 }
+    downgrade_potential = { always = no }
+}
+
+# FIX: the Lowest-strength twin hull (foc_khan_starkiller_fixed_station_foc_lowest,
+# common/ship_sizes/zzzzzz_foc_lowest_vanilla_ship_sizes.txt) is also
+# class = shipclass_starbase but had no starbase level of its own, so the game logged
+# "Failed to find starbase level for ship size 弑星者基地防御平台".
+# Mirrors the entry above one-for-one.
+starbase_level_foc_khan_starkiller_fixed_station_foc_lowest = {
+    ship_size = foc_khan_starkiller_fixed_station_foc_lowest
+    level_weight = 5
+    picture = "GFX_fop_starkiller_base_event"
+    potential_home_base = yes
+    display_shipyard_button = no
+    show_in_outliner = no
+    display_map_icon = yes
+    ai_weight = { weight = 0 }
+    downgrade_potential = { always = no }
+}

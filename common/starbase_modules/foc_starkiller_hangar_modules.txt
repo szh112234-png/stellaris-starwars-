@@ -1,0 +1,61 @@
+# Starkiller Base TIE hangar module.
+#
+# Restricted to the Starkiller planet itself: both the crisis version
+# (myk_starkiller_base_final) and the player origin version (fop_starkiller_base_final)
+# set myk_starkiller_base_planet_flag on the anchor planet in on_build_complete, so a
+# single flag check covers both. Ordinary orbital rings elsewhere are untouched and
+# keep using the vanilla hangar module.
+
+foc_starkiller_hangar_bay = {
+	icon = "GFX_starbase_hangar_bay"
+	section = "FOC_STARKILLER_HANGAR_SECTION"
+	construction_days = 180
+	starbase_type = orbital_ring
+	category = sm_defense_cat
+
+	# NOT "is_orbital_ring = yes": that scripted trigger is has_starbase_size >=
+	# orbital_ring_tier_1, which the custom hull does not satisfy - that is exactly what
+	# keeps vanilla ring modules off this ring. Match the hull directly instead.
+	potential = {
+		exists = owner
+		has_starbase_size = foc_starkiller_ring
+		exists = planet
+		planet = { has_planet_flag = myk_starkiller_base_planet_flag }
+	}
+
+	resources = {
+		category = starbase_modules
+		cost = {
+			alloys = 2000
+		}
+		upkeep = {
+			energy = 5
+		}
+	}
+
+	station_modifier = {
+		ship_hull_mult = 0.20
+		ship_armor_mult = 0.20
+	}
+
+	# Matches vanilla orbital_ring_hangar_bay behaviour under an Orbital Assembly Complex.
+	triggered_station_modifier = {
+		potential = {
+			exists = planet
+			planet = {
+				exists = owner.overlord
+				has_holding = {
+					holding = holding_orbital_assembly_complex
+					owner = owner.overlord
+				}
+			}
+		}
+		starbase_defense_platform_capacity_add = 1
+	}
+
+	# High weight so the AI fills the ring's four slots with hangars rather than
+	# gun batteries. The module is planet-locked, so this cannot leak elsewhere.
+	ai_weight = {
+		weight = 1000
+	}
+}

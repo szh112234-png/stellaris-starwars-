@@ -1,0 +1,133 @@
+# FOC V231b - faction population droid portraits.
+#
+# All artwork and the droid portrait entity come from the
+# "Star Wars: Starting Systems and Portrait Collection Pack" (1708335879).
+#
+# The portrait keys keep their foc_v231_ prefix so species/event/population code
+# did not have to change, and so nothing collides if a player also runs the
+# source pack directly.
+#
+# IMPORTANT - population portraits stay fixed:
+# the pop_group scope of each group below lists exactly ONE portrait, so a
+# Confederate population is always a B1 and a First Order population is always a
+# security droid. The pack's wider droid roster is used only in the leader and
+# ruler scopes, where variety is an asset rather than a violation of the
+# "fixed pop portrait" rule.
+portraits = {
+
+    # ---------------- Confederacy ----------------
+    # Line droid. One fixed B1 texture; never OOM, BB-8, R2 or protocol art.
+    foc_v231_b1_battle_droid = {
+        entity = "foc_v231_droid_portrait_entity"
+        clothes_selector = "no_texture"
+        attachment_selector = "no_texture"
+        greeting_sound = "robot_human_greetings"
+        character_textures = { "gfx/models/portraits/cis/cis_b1_body1.dds" }
+    }
+
+    # Confederate officer patterns, used for droid leaders and rulers only.
+    foc_v231_oom_droid = {
+        entity = "foc_v231_droid_portrait_entity"
+        clothes_selector = "no_texture"
+        attachment_selector = "no_texture"
+        greeting_sound = "robot_human_greetings"
+        character_textures = { "gfx/models/portraits/cis/cis_oomdroid_body1.dds" }
+    }
+    foc_v231_commando_droid = {
+        entity = "foc_v231_droid_portrait_entity"
+        clothes_selector = "no_texture"
+        attachment_selector = "no_texture"
+        greeting_sound = "robot_human_greetings"
+        character_textures = { "gfx/models/portraits/cis/cis_commandodroid_body.dds" }
+    }
+    foc_v231_tactical_droid = {
+        entity = "foc_v231_droid_portrait_entity"
+        clothes_selector = "no_texture"
+        attachment_selector = "no_texture"
+        greeting_sound = "robot_human_greetings"
+        character_textures = {
+            "gfx/models/portraits/cis/cis_tacticaldroid_body.dds"
+            "gfx/models/portraits/cis/cis_tacticaldroid_bodyblue.dds"
+            "gfx/models/portraits/cis/cis_tacticaldroid_bodypurple.dds"
+            "gfx/models/portraits/cis/cis_tacticaldroid_bodygreen.dds"
+        }
+    }
+    foc_v231_supertactical_droid = {
+        entity = "foc_v231_droid_portrait_entity"
+        clothes_selector = "no_texture"
+        attachment_selector = "no_texture"
+        greeting_sound = "robot_human_greetings"
+        character_textures = {
+            "gfx/models/portraits/cis/cis_supertacticaldroid_body1.dds"
+            "gfx/models/portraits/cis/cis_kalani_body1.dds"
+            "gfx/models/portraits/cis/cis_kalani_body2.dds"
+        }
+    }
+    foc_v231_magnaguard_droid = {
+        entity = "foc_v231_droid_portrait_entity"
+        clothes_selector = "no_texture"
+        attachment_selector = "no_texture"
+        greeting_sound = "robot_human_greetings"
+        character_textures = { "gfx/models/portraits/cis/cis_magnaguard_body.dds" }
+    }
+    foc_v231_droideka = { texturefile = "gfx/models/portraits/cis/cis_droideka.dds" greeting_sound = "robot_human_greetings" }
+    foc_v231_b2_droid  = { texturefile = "gfx/models/portraits/cis/cis_b2droid_static.dds" greeting_sound = "robot_human_greetings" }
+
+    # ---------------- First Order ----------------
+    foc_v231_first_order_security_droid = {
+        entity = "foc_v231_droid_portrait_entity"
+        clothes_selector = "no_texture"
+        attachment_selector = "no_texture"
+        greeting_sound = "robot_human_greetings"
+        character_textures = { "gfx/models/portraits/first/firstorder_droids/firstorder_security_droid.dds" }
+    }
+    foc_v231_fo_sentry_droid = { texturefile = "gfx/models/portraits/first/firstorder_droids/firstorder_sentry_droid.dds" greeting_sound = "robot_arthopoid_greetings" }
+    foc_v231_fo_bb9e_droid   = { texturefile = "gfx/models/portraits/first/firstorder_droids/firstorder_bb9e_droid.dds" greeting_sound = "robot_arthopoid_greetings" }
+
+    # Retained static B1 alternative from the separately supplied texture.
+    # Not referenced by any species; point the group's pop scope here to switch.
+    foc_v231_b1_battle_droid_static = { texturefile = "gfx/models/portraits/droid/b1_droid_01.dds" }
+}
+
+portrait_groups = {
+
+    foc_v231_cis_droid = {
+        default = foc_v231_b1_battle_droid
+        game_setup = { add = { portraits = { foc_v231_b1_battle_droid foc_v231_tactical_droid foc_v231_supertactical_droid } } }
+        species    = { add = { portraits = { foc_v231_b1_battle_droid } } }
+        # Fixed: Confederate populations are always B1.
+        pop_group  = { add = { portraits = { foc_v231_b1_battle_droid } } }
+        leader = {
+            add = {
+                portraits = {
+                    foc_v231_tactical_droid
+                    foc_v231_supertactical_droid
+                    foc_v231_magnaguard_droid
+                    foc_v231_commando_droid
+                    foc_v231_oom_droid
+                    foc_v231_b2_droid
+                    foc_v231_droideka
+                }
+            }
+        }
+        ruler = {
+            add = {
+                portraits = {
+                    foc_v231_supertactical_droid
+                    foc_v231_tactical_droid
+                    foc_v231_oom_droid
+                }
+            }
+        }
+    }
+
+    foc_v231_first_order_droid = {
+        default = foc_v231_first_order_security_droid
+        game_setup = { add = { portraits = { foc_v231_first_order_security_droid foc_v231_fo_sentry_droid foc_v231_fo_bb9e_droid } } }
+        species    = { add = { portraits = { foc_v231_first_order_security_droid } } }
+        # Fixed: First Order populations are always the security droid.
+        pop_group  = { add = { portraits = { foc_v231_first_order_security_droid } } }
+        leader     = { add = { portraits = { foc_v231_first_order_security_droid foc_v231_fo_sentry_droid foc_v231_fo_bb9e_droid } } }
+        ruler      = { add = { portraits = { foc_v231_first_order_security_droid } } }
+    }
+}

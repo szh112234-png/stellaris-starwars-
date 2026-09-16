@@ -1,0 +1,12 @@
+# 2.33: mirror ACOT's planet-killer compatibility pattern and delegate legality
+# to the vanilla World Cracker trigger. Target selection separately excludes
+# Order/submitted countries and already destroyed worlds.
+can_destroy_planet_with_PLANET_KILLER_XYSTON_WEAPON = {
+    can_destroy_planet_with_PLANET_KILLER_CRACKER = yes
+}
+
+# Lowest-tier fixed Xyston uses a distinct component key, so the engine also
+# requires a matching can_destroy_planet scripted trigger.
+can_destroy_planet_with_PLANET_KILLER_XYSTON_WEAPON_FOC_FIXED_LOWEST = {
+    can_destroy_planet_with_PLANET_KILLER_CRACKER = yes
+}

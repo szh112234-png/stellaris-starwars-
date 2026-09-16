@@ -1,0 +1,33 @@
+namespace = foc_lowest_deathstar
+
+# Also called directly by the complete mode converter. The monthly safety net
+# only examines countries with a story Death Star and never rewrites it in combat.
+country_event = {
+    id = foc_lowest_deathstar.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { any_owned_ship = { foc_lowest_ds_is_managed_ship = yes } }
+    immediate = {
+        every_owned_ship = {
+            limit = { foc_lowest_ds_is_managed_ship = yes }
+            foc_lowest_ds_sync_ship = yes
+        }
+    }
+}
+
+fleet_event = {
+    id = foc_lowest_deathstar.2
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { any_owned_ship = { foc_lowest_ds_is_managed_ship = yes } }
+    immediate = { owner = { country_event = { id = foc_lowest_deathstar.1 days = 1 } } }
+}
+
+# Catch a pre-existing generic construction queue completing after a mode switch.
+ship_event = {
+    id = foc_lowest_deathstar.3
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { foc_lowest_ds_is_managed_ship = yes }
+    immediate = { foc_lowest_ds_sync_ship = yes }
+}

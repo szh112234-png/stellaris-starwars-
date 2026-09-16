@@ -1,0 +1,29 @@
+namespace = foc_v232j_fleet
+
+# Global scan includes special country types which skip country pulses.
+event = {
+    id = foc_v232j_fleet.1
+    hide_window = yes
+    is_triggered_only = yes
+    immediate = {
+        every_country = {
+            foc_v232j_refresh_fleet_caps = yes
+        }
+    }
+}
+
+# No delayed identity check is needed now: every created country qualifies.
+country_event = {
+    id = foc_v232j_fleet.2
+    hide_window = yes
+    is_triggered_only = yes
+    immediate = { foc_v232j_refresh_fleet_caps = yes }
+}
+
+# Retain the old delayed ID for events already queued in existing saves.
+country_event = {
+    id = foc_v232j_fleet.3
+    hide_window = yes
+    is_triggered_only = yes
+    immediate = { foc_v232j_refresh_fleet_caps = yes }
+}

@@ -1,0 +1,44 @@
+# Starkiller Base planetary defense grid.
+#
+# The custom ring hull cannot take vanilla ring modules (their sections declare only
+# orbital_ring_tier_1/2/3), so this exists to give the player something to spend a
+# module slot on other than another hangar. The crisis version never sees it - its
+# four slots are hard-written to hangars in starkiller_base.txt.
+
+foc_starkiller_defense_grid = {
+	icon = "GFX_starbase_gun_battery"
+	section = "FOC_STARKILLER_DEFENSE_SECTION"
+	construction_days = 180
+	starbase_type = orbital_ring
+	category = sm_defense_cat
+
+	potential = {
+		exists = owner
+		has_starbase_size = foc_starkiller_ring
+		exists = planet
+		planet = { has_planet_flag = myk_starkiller_base_planet_flag }
+	}
+
+	resources = {
+		category = starbase_modules
+		cost = {
+			alloys = 2000
+		}
+		upkeep = {
+			energy = 5
+		}
+	}
+
+	station_modifier = {
+		ship_hull_mult = 0.40
+		ship_armor_mult = 0.40
+		ship_shield_mult = 0.40
+		starbase_defense_platform_capacity_add = 2
+	}
+
+	# Below the hangar module's 1000, so an AI-run First Order origin still fills the
+	# ring with TIEs first and only then reaches for this.
+	ai_weight = {
+		weight = 100
+	}
+}

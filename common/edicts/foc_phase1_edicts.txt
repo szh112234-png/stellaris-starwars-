@@ -1,0 +1,22 @@
+foc_phase1_rebel_operations_edict = {
+    length = 1
+    icon = "GFX_foc_phase1_rebel_operations"
+    potential = {
+        is_ai = no
+        OR = { has_country_flag = foc_republic_origin_imperial_rebel_country has_country_flag = foc_republic_origin_rebel_alliance_country has_country_flag = foc_khan_rebel_alliance_country has_country_flag = foc_republic_origin_post_treaty_rebel_country }
+    }
+    allow = { always = yes }
+    effect = { hidden_effect = { country_event = { id = foc_phase1.20 } } }
+    ai_weight = { weight = 0 }
+}
+
+# V4: hide the Fleet Archive edict from the Policies/Edicts UI.
+# Keep the key as a disabled compatibility stub so existing saves/references remain safe.
+foc_phase1_fleet_archive_edict = {
+    length = 0
+    icon = "GFX_edict_type_policy"
+    potential = { always = no }
+    allow = { always = no }
+    effect = { }
+    ai_weight = { weight = 0 }
+}

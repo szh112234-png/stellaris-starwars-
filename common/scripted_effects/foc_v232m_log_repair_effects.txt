@@ -1,0 +1,121 @@
+# V232m. Planet/colony scope; only existing, eligible colonies are touched.
+# Species/pops are seeded by the original V231 routines BEFORE robotics research.
+# This installer creates no species or pops and preserves upgraded factories.
+foc_v232m_ensure_vanilla_droid_factory = {
+    if = {
+        limit = {
+            is_colony = yes
+            exists = owner
+            NOR = {
+                has_building = building_robot_assembly_plant
+                has_building = building_robot_assembly_complex
+                has_modifier = resort_colony
+            }
+            owner = {
+                foc_v232i_allows_vanilla_robot_factory = yes
+                is_individual_machine = no
+                NOT = { has_policy_flag = robots_outlawed }
+                has_technology = tech_robotic_workers
+                OR = {
+                    is_ai = no
+                    NOT = { has_ascension_perk = ap_engineered_evolution }
+                    is_materialist = yes
+                }
+            }
+        }
+        # V232n: factories require a real primary urban zone. Crisis countries were
+        # previously permitted the building but excluded from district_city itself.
+        if = {
+            limit = { NOT = { has_zone = { zone = zone_default } } free_district_slots > 0 }
+            if = {
+                limit = { uses_district_set = city_world }
+                add_district = district_arcology_housing
+            }
+            else_if = {
+                limit = { uses_district_set = habitat }
+                add_district = district_hab_housing
+            }
+            else_if = {
+                limit = {
+                    OR = {
+                        uses_district_set = standard
+                        uses_district_set = hive_world
+                        uses_district_set = machine_world
+                        uses_district_set = shattered_ring_world
+                        uses_district_set = volcanic_world
+                    }
+                    is_special_colony_type = no
+                    NOT = { has_deposit = d_crashed_slaver_ship }
+                }
+                add_district = district_city
+            }
+        }
+        # Only replace the old scripted substitute once a legal urban zone exists.
+        if = {
+            limit = { has_zone = { zone = zone_default } }
+            if = {
+                limit = { has_building = building_foc_sw_fe_civil_nexus }
+                remove_building = building_foc_sw_fe_civil_nexus
+            }
+            set_timed_carrier_flag = { flag = ignore_ai_building_limitations days = 2 }
+            if = {
+                limit = { free_building_slots > 0 }
+                add_building = { building = building_robot_assembly_plant zone = zone_default }
+            }
+        }
+        # One deferred retry handles same-tick ownership/zone cache changes.
+        # The permanent attempt flag prevents an endless self-scheduling repair.
+        if = {
+            limit = {
+                NOR = {
+                    has_building = building_robot_assembly_plant
+                    has_building = building_robot_assembly_complex
+                    has_carrier_flag = foc_v232n_factory_retry_used
+                }
+            }
+            set_carrier_flag = foc_v232n_factory_retry_used
+            carrier_event = { id = foc_v232n.3 days = 1 }
+        }
+    }
+}
+
+# Country scope; one-time save repair and one-day country-creation catch-up.
+# Uses exactly the same potential gates as the existing technology definitions.
+foc_v232m_repair_country = {
+    if = {
+        limit = { has_country_flag = foc_sw_new_republic_country }
+        set_country_flag = ssp_fighter_group_rebel
+        if = {
+            limit = {
+                country_uses_bio_ships = no
+                NOT = { has_technology = tech_ssp_rebel_hyperspace }
+            }
+            if = { limit = { is_ai = yes } give_technology = { tech = tech_ssp_rebel_hyperspace message = no } }
+        }
+    }
+    if = {
+        limit = { has_country_flag = foc_sw_imperial_remnant_country }
+        set_country_flag = ssp_fighter_group_empire
+        if = {
+            limit = {
+                country_uses_bio_ships = no
+                OR = {
+                    NOT = { has_country_flag = foc_republic_origin_order_technology_locked }
+                    has_country_flag = foc_dark_order_legacy_access
+                }
+                NOT = { has_technology = tech_ssp_imperial_hyperspace }
+            }
+            if = { limit = { is_ai = yes } give_technology = { tech = tech_ssp_imperial_hyperspace message = no } }
+        }
+    }
+    if = {
+        limit = {
+            exists = capital_scope
+            OR = {
+                foc_v137_is_story_starfighter_country = yes
+                has_country_flag = foc_sw_scripted_fallen_empire
+            }
+        }
+        capital_scope = { foc_v232m_ensure_vanilla_droid_factory = yes }
+    }
+}

@@ -1,0 +1,10 @@
+# Fixed orientation wrappers around the original 1.45 target entities.
+# The original particles and appearance are preserved; only the parent
+# orientation is shared by all target planets.
+entity = {
+    name = "myk_starkiller_parallel_target_impact_entity"
+    default_state = "idle"
+    state = { name = "idle" state_time = 300.0 }
+    locator = { name = "beam" position = { 0 0 0 } rotation = { 0 0 0 } }
+    attach = { beam = "myk_starkiller_target_impact_entity" }
+}

@@ -1,0 +1,110 @@
+namespace = foc_v232q_support
+
+# New tick ID: the retired .2 queue cannot become a second reinforcement stream.
+country_event = {
+    id = foc_v232q_support.2
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        has_country_flag = foc_v232q_empire_support_started
+        foc_v232q_empire_support_eligible = yes
+        NOT = { has_country_flag = foc_v232q_empire_support_cooldown }
+    }
+    immediate = { foc_v232q_issue_empire_support = yes }
+}
+
+# Do NOT set the old country destruction flag here: its monthly transition
+# still dispatches the Rebels' DS-I victory popup and Phase-II project.
+ship_event = {
+    id = foc_v232q_support.10
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { has_ship_flag = foc_republic_origin_death_star_one }
+    immediate = {
+        set_global_flag = foc_v232q_death_star_one_combat_loss
+        every_country = {
+            limit = { has_country_flag = foc_republic_origin_empire_country }
+            country_event = { id = foc_v134_support.1 }
+        }
+    }
+}
+ship_event = {
+    id = foc_v232q_support.11
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { has_ship_flag = foc_republic_origin_death_star_two }
+    immediate = { foc_v232q_end_empire_support = yes }
+}
+
+# Monthly/load one-time migration. Old scheduled event .2 is inert even before
+# this runs. Already-delivered historical fleets are deliberately not deleted.
+country_event = {
+    id = foc_v232q_support.20
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        has_country_flag = foc_republic_origin_empire_country
+        NOT = { has_country_flag = foc_v232q_empire_support_migrated }
+    }
+    immediate = {
+        set_country_flag = foc_v232q_empire_support_migrated
+        remove_country_flag = foc_v201_empire_annual_support_early_unlocked
+        remove_country_flag = foc_v207_empire_annual_support_first_wave_pending
+        if = {
+            limit = {
+                OR = {
+                    has_global_flag = foc_republic_origin_death_star_two_destroyed
+                    has_country_flag = foc_republic_origin_death_star_two_destroyed
+                    has_global_flag = foc_republic_origin_galactic_treaty
+                }
+            }
+            foc_v232q_end_empire_support = yes
+        }
+        else = { country_event = { id = foc_v134_support.1 } }
+    }
+}
+
+event = {
+    id = foc_v232q_support.21
+    hide_window = yes
+    is_triggered_only = yes
+    immediate = {
+        every_country = {
+            limit = { has_country_flag = foc_republic_origin_empire_country }
+            country_event = { id = foc_v232q_support.20 }
+        }
+    }
+}
+
+# The supplied 4.4.6 vanilla on_action is COUNTRY scope: FromFrom is the
+# destroyed ship. Keep the direct ship-event IDs above as callable helpers,
+# but do not depend on the old MOD's undocumented on_ship_destroyed entry.
+country_event = {
+    id = foc_v232q_support.12
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        exists = fromfrom
+        fromfrom = {
+            OR = {
+                has_ship_flag = foc_republic_origin_death_star_one
+                has_ship_flag = foc_republic_origin_death_star_two
+            }
+        }
+    }
+    immediate = {
+        if = {
+            limit = { fromfrom = { has_ship_flag = foc_republic_origin_death_star_one } }
+            set_global_flag = foc_v232q_death_star_one_combat_loss
+            foc_ds2_start_second_program = yes
+            every_country = {
+                limit = { has_country_flag = foc_republic_origin_empire_country }
+                country_event = { id = foc_v134_support.1 }
+            }
+        }
+        if = {
+            limit = { fromfrom = { has_ship_flag = foc_republic_origin_death_star_two } }
+            foc_v232q_end_empire_support = yes
+        }
+    }
+}

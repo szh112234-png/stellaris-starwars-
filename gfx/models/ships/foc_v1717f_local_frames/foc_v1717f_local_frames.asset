@@ -1,0 +1,92 @@
+# v17.17g: local visual frames. Frames stay at scale 1.0 on purpose. Visible
+# size for these hulls is set by `hull_scale` in common/ship_sizes, which the
+# engine applies to the whole assembled ship (frame + sections + turrets).
+# Do not reintroduce a scale here: it would stack with hull_scale.
+# These entity names also exist to satisfy the names the error log requested.
+# Existing section entities provide the one visible hull. Do not add hull attach
+# directives here: doing so would render the hull a second time.
+
+entity = {
+    name = "foc_v1717f_executor_escort_frame_entity"
+    pdxmesh = "imperialsd_frame_mesh"
+    scale = 1.0
+    default_state = "idle"
+}
+
+entity = {
+    name = "empire_01_foc_v1717f_executor_escort_frame_entity"
+    pdxmesh = "imperialsd_frame_mesh"
+    scale = 1.0
+    default_state = "idle"
+}
+
+entity = {
+    name = "empire_01_foc_v118_imperialsd_bastion_entity"
+    pdxmesh = "imperialsd_frame_mesh"
+    scale = 1.0
+    default_state = "idle"
+}
+
+entity = {
+    name = "empire_01_foc_v118_imperialsd_bastion_foc_lowest_entity"
+    pdxmesh = "imperialsd_frame_mesh"
+    scale = 1.0
+    default_state = "idle"
+}
+
+entity = {
+	name = "foc_v1717f_mc80_line_frame_entity"
+	pdxmesh = "mammalian_01_battleship_frame_mesh"
+
+	locator = { name = "part1"	position = { 0 0 0 } }
+###	locator = { name = "part2"	position = { 0 0 0 } }
+	locator = { name = "part3"	position = { 0 0 0 } }
+
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" animation_blend_time = 4 }
+	state = { name = "moving" animation = "idle" animation_blend_time = 4 }
+
+		### Maximum Death Sequence Time ~ 14.5 Seconds
+		### 3 Death Animations x 4 Death Sequences per ship = 12 Different Death Scenes per ship
+	state = { name = "death" animation = "death" animation_blend_time = 0 chance = 1 looping = no
+		event = { time = 14.5 node = "part2" particle = "dreadnought_explosion_particle" sound = { soundeffect = ship_destroyed } } }
+	state = { name = "death" animation = "death2" animation_blend_time = 0 chance = 1 looping = no
+		event = { time = 22.5 node = "part2" particle = "dreadnought_explosion_particle" sound = { soundeffect = ship_destroyed } } }
+	state = { name = "death" animation = "death3" animation_blend_time = 0 chance = 1 looping = no
+		event = { time = 15.9 node = "part2" particle = "dreadnought_explosion_particle" sound = { soundeffect = ship_destroyed } } }
+
+	game_data = {
+		size = 24.0
+	}
+
+    scale = 1.0
+}
+
+entity = {
+	name = "rebel_01_foc_v1717f_mc80_line_frame_entity"
+	pdxmesh = "mammalian_01_battleship_frame_mesh"
+
+	locator = { name = "part1"	position = { 0 0 0 } }
+###	locator = { name = "part2"	position = { 0 0 0 } }
+	locator = { name = "part3"	position = { 0 0 0 } }
+
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" animation_blend_time = 4 }
+	state = { name = "moving" animation = "idle" animation_blend_time = 4 }
+
+		### Maximum Death Sequence Time ~ 14.5 Seconds
+		### 3 Death Animations x 4 Death Sequences per ship = 12 Different Death Scenes per ship
+	state = { name = "death" animation = "death" animation_blend_time = 0 chance = 1 looping = no
+		event = { time = 14.5 node = "part2" particle = "dreadnought_explosion_particle" sound = { soundeffect = ship_destroyed } } }
+	state = { name = "death" animation = "death2" animation_blend_time = 0 chance = 1 looping = no
+		event = { time = 22.5 node = "part2" particle = "dreadnought_explosion_particle" sound = { soundeffect = ship_destroyed } } }
+	state = { name = "death" animation = "death3" animation_blend_time = 0 chance = 1 looping = no
+		event = { time = 15.9 node = "part2" particle = "dreadnought_explosion_particle" sound = { soundeffect = ship_destroyed } } }
+
+	game_data = {
+		size = 24.0
+	}
+
+    scale = 1.0
+}
+

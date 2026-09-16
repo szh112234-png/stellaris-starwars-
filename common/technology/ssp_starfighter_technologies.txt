@@ -1,0 +1,86 @@
+tech_ssp_imperial_hyperspace = {
+ cost = 6000
+ area = engineering
+ tier = 2
+ category = { voidcraft }
+ prerequisites = { "tech_strike_craft_2" }
+ prereqfor_desc = {
+  hide_prereq_for_desc = component
+  custom = {
+   title = "SSP_TECH_IMPERIAL_UNLOCK_TITLE"
+   desc = "SSP_TECH_IMPERIAL_UNLOCK_DESC"
+  }
+ }
+ weight = 80
+ ai_update_type = military
+ potential = {
+  foc_v1717c_imperial_strategic_aircraft_allowed = yes
+  country_uses_bio_ships = no
+  OR = {
+   NOT = { has_country_flag = foc_republic_origin_order_technology_locked }
+   has_country_flag = foc_dark_order_legacy_access
+  }
+  OR = {
+   has_country_flag = ssp_fighter_group_all
+   has_country_flag = ssp_fighter_group_empire
+  }
+ 
+        foc_v1718_allowed_country = yes
+    }
+ ai_weight = { weight = 20 }
+}
+
+tech_ssp_rebel_hyperspace = {
+ cost = 6000
+ area = engineering
+ tier = 2
+ category = { voidcraft }
+ prerequisites = { "tech_strike_craft_2" }
+ prereqfor_desc = {
+  hide_prereq_for_desc = component
+  custom = {
+   title = "SSP_TECH_REBEL_UNLOCK_TITLE"
+   desc = "SSP_TECH_REBEL_UNLOCK_DESC"
+  }
+ }
+ weight = 80
+ ai_update_type = military
+ potential = {
+  country_uses_bio_ships = no
+  OR = {
+   has_country_flag = ssp_fighter_group_all
+   has_country_flag = ssp_fighter_group_rebel
+  }
+ 
+        foc_v1718_allowed_country = yes
+    }
+ ai_weight = { weight = 20 }
+}
+
+tech_ssp_republic_hyperspace = {
+ cost = 6000
+ area = engineering
+ tier = 2
+ category = { voidcraft }
+ prerequisites = { "tech_strike_craft_2" }
+ prereqfor_desc = {
+  hide_prereq_for_desc = component
+  custom = {
+   title = "SSP_TECH_REPUBLIC_UNLOCK_TITLE"
+   desc = "SSP_TECH_REPUBLIC_UNLOCK_DESC"
+  }
+ }
+ weight = 80
+ ai_update_type = military
+ potential = {
+  foc_v1717c_republic_strategic_aircraft_allowed = yes
+  country_uses_bio_ships = no
+  OR = {
+   has_country_flag = ssp_fighter_group_all
+   has_country_flag = ssp_fighter_group_republic
+  }
+ 
+        foc_v1718_allowed_country = yes
+    }
+ ai_weight = { weight = 20 }
+}

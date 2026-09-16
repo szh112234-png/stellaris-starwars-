@@ -1,0 +1,46 @@
+namespace = foc_khan_218
+
+# 2.18 one-shot migration for saves whose special Xystons are still carrying
+# a serialized destroy_planet order against an already ruined world.
+event = {
+    id = foc_khan_218.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_khan_phase_two
+        exists = event_target:foc_khan_final_order
+        NOT = { has_global_flag = foc_khan_218_stuck_xyston_orders_rebuilt }
+    }
+
+    immediate = {
+        set_global_flag = foc_khan_218_stuck_xyston_orders_rebuilt
+
+        every_system = {
+            remove_star_flag = foc_khan_xyston_system_reserved_212
+            every_system_planet = {
+                remove_planet_flag = foc_khan_xyston_target_reserved
+                if = {
+                    limit = {
+                        OR = {
+                            is_planet_class = pc_shattered
+                            is_planet_class = pc_shattered_2
+                            is_planet_class = pc_broken
+                            is_planet_class = pc_black_hole
+                        }
+                    }
+                    set_planet_flag = foc_khan_xyston_destroyed_target_213
+                }
+            }
+        }
+
+        event_target:foc_khan_final_order = {
+            every_owned_fleet = {
+                limit = { any_owned_ship = { OR = { is_ship_size = foc_khan_xystonsd is_ship_size = foc_khan_xystonsd_foc_lowest } } }
+                set_fleet_flag = foc_khan_xyston_planet_killer_fleet
+                remove_fleet_flag = foc_khan_xyston_retarget_pending_218
+                foc_khan_xyston_force_retarget_218 = yes
+            }
+        }
+    }
+}

@@ -1,0 +1,93 @@
+namespace = foc_khan_293
+
+# Root = newly occupied planet. Once either Order controls the colony, clear the
+# obsolete orbit/bombardment order from combat fleets in that system. The crisis
+# military minister can then immediately select another hostile objective.
+planet_event = {
+    id = foc_khan_293.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    immediate = {
+        if = {
+            limit = {
+                is_colony = yes
+                exists = controller
+                controller = {
+                    OR = {
+                        has_country_flag = foc_khan_first_order_country
+                        has_country_flag = foc_khan_final_order_country
+                    }
+                }
+            }
+            solar_system = {
+                every_fleet_in_system = {
+                    limit = {
+                        owner = {
+                            OR = {
+                                has_country_flag = foc_khan_first_order_country
+                                has_country_flag = foc_khan_final_order_country
+                            }
+                        }
+                        OR = {
+                            has_fleet_flag = foc_khan_first_order_attack_fleet
+                            has_fleet_flag = foc_khan_final_order_attack_fleet
+                        }
+                        NOT = { is_in_combat = yes }
+                        NOT = { any_owned_ship = { is_ship_class = shipclass_transport } }
+                    }
+                    remove_auto_move_target = yes
+                    clear_orders = yes
+                    clear_fleet_actions = this
+                    set_fleet_stance = aggressive
+                    set_aggro_range_measure_from = self
+                    set_aggro_range = 9999
+                }
+            }
+        }
+    }
+}
+
+# One-time save migration: wake fleets already serialized above a colony which
+# changed controller before this fix was installed.
+event = {
+    id = foc_khan_293.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        NOT = { has_global_flag = foc_khan_293_stale_orbit_orders_cleared }
+        OR = {
+            any_country = { has_country_flag = foc_khan_first_order_country }
+            any_country = { has_country_flag = foc_khan_final_order_country }
+        }
+    }
+
+    immediate = {
+        set_global_flag = foc_khan_293_stale_orbit_orders_cleared
+        every_country = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = foc_khan_final_order_country
+                }
+            }
+            every_owned_fleet = {
+                limit = {
+                    OR = {
+                        has_fleet_flag = foc_khan_first_order_attack_fleet
+                        has_fleet_flag = foc_khan_final_order_attack_fleet
+                    }
+                    NOT = { is_in_combat = yes }
+                    NOT = { any_owned_ship = { is_ship_class = shipclass_transport } }
+                }
+                remove_auto_move_target = yes
+                clear_orders = yes
+                clear_fleet_actions = this
+                set_fleet_stance = aggressive
+                set_aggro_range_measure_from = self
+                set_aggro_range = 9999
+            }
+        }
+    }
+}

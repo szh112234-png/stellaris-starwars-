@@ -1,0 +1,42 @@
+# Country scope. Only explicit callers may commit a surrender.
+# Normal .20 checks its victory condition before calling; the debug button bypasses it.
+foc_v232s_commit_separatist_surrender = {
+    if = {
+        limit = {
+            foc_v197_republic_story_actor = yes
+            has_country_flag = foc_republic_origin_republic_country
+            NOT = { has_country_flag = foc_republic_origin_separatist_war_won }
+            NOT = { has_country_flag = foc_republic_origin_separatist_surrender_staging_142 }
+            NOT = { has_country_flag = foc_republic_origin_order_66_executed }
+            OR = {
+                has_global_flag = foc_republic_origin_separatist_war_active
+                any_country = { has_country_flag = foc_republic_origin_separatist_country }
+            }
+        }
+        set_global_flag = foc_republic_origin_separatist_war_active
+        set_country_flag = foc_republic_origin_separatist_capital_fallen
+        set_country_flag = foc_republic_origin_separatist_surrender_staging_142
+        remove_country_flag = foc_v232o_separatist_surrender_offer_pending
+        save_global_event_target_as = foc_republic_origin_republic
+        # Keep the existing separated war/territory/country cleanup unchanged.
+        country_event = { id = foc_republic_origin.208 days = 1 }
+    }
+}
+
+# A read-only diagnostic snapshot. Does not recalculate plot, award points,
+# occupy planets, set battle flags, create fleets, or end a war.
+foc_v232s_refresh_cis_status = {
+    save_event_target_as = foc_v232s_status_reader
+    if = {
+        limit = { has_country_flag = foc_republic_origin_republic_country }
+        save_global_event_target_as = foc_republic_origin_republic
+    }
+    set_variable = { which = foc_v232s_status_plot value = 0 }
+    every_situation = {
+        limit = { is_situation_type = situation_foc_republic_origin_palpatine_plot }
+        export_trigger_value_to_variable = { trigger = situation_progress variable = foc_v232s_temp_progress }
+        owner = { set_variable = { which = foc_v232s_status_plot value = prev.foc_v232s_temp_progress } }
+        clear_variable = foc_v232s_temp_progress
+    }
+    # V232u: military status comes from the recorded engine result only.
+}

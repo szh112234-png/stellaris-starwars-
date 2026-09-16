@@ -1,0 +1,11 @@
+# Strict Starkiller target test for "destroy all habitable planets".
+# Orbital stations, mining/research stations and buildings do not make a barren
+# body habitable. Colonies, colonizable worlds and ring-world sections qualify.
+myk_starkiller_is_habitable_target = {
+    is_star = no
+    OR = {
+        is_colony = yes
+        is_colonizable = yes
+        is_ringworld = yes
+    }
+}

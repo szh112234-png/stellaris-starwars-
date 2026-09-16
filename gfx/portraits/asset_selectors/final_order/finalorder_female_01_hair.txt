@@ -1,0 +1,220 @@
+# This is a template which multiple species can use. 
+  
+finalorder_female_01_hair = {
+	default = "gfx/models/portraits/human/human_female_hair_black_style_03.dds"
+	
+	game_setup = {#will run with a limited country scope. species and government is set but the country does not actually exist
+		default = "gfx/models/portraits/human/human_female_hair_black_style_01.dds"
+	}
+	
+	#species scope
+	species = { #generic portrait for a species
+		default = "gfx/models/portraits/human/human_female_hair_black_style_03.dds"
+	}
+	
+	#pop scope
+	pop = { #for a specific pop
+	
+		default = "gfx/models/portraits/human/human_female_hair_black_style_03.dds"
+
+		random = {
+			list = {
+				"gfx/models/portraits/human/human_female_hair_black_style_02.dds"
+				"gfx/models/portraits/human/human_female_hair_black_style_03.dds"
+				"gfx/models/portraits/human/human_female_hair_blonde_style_02.dds"
+				"gfx/models/portraits/human/human_female_hair_blonde_style_03.dds"
+				"gfx/models/portraits/human/human_female_hair_brown_style_02.dds"
+				"gfx/models/portraits/human/human_female_hair_brown_style_03.dds"
+				"gfx/models/portraits/human/human_female_hair_cendre_style_02.dds"
+				"gfx/models/portraits/human/human_female_hair_cendre_style_03.dds"
+
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_black_style_07.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_black_style_08.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_blonde_style_07.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_blonde_style_08.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_brown_style_07.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_brown_style_08.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_cendre_style_07.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_cendre_style_08.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_dark_red_style_07.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_dark_red_style_08.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_red_style_07.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_red_style_08.dds"
+
+			}
+		}	
+	}
+	
+	
+	
+	
+	#leader scope
+	leader = { #scientists, generals, admirals, governor
+	
+		random = {
+			trigger = {
+				leader_class = commander 
+				has_trait = subclass_commander_general 
+			}
+			list = {
+				"gfx/models/portraits/sith_eternal/finalorder_female_officer_hair.dds"
+			}
+		}		
+		
+		random = {
+			trigger = {
+				leader_class = commander 
+				NOT = { has_trait = subclass_commander_general }
+			}
+			list = {
+				"gfx/models/portraits/sith_eternal/finalorder_female_admiral_hair.dds"
+			
+	
+			}
+		}	
+		
+		random = {
+			trigger = { leader_class = scientist }
+			list = {
+				"gfx/models/portraits/sith_eternal/finalorder_female_scientist_helmet.dds"
+				
+			}
+		}		
+		
+		random = {
+			trigger = { leader_class = official }
+			list = {
+				"gfx/models/portraits/sith_eternal/finalorder_female_officer_hair.dds"
+				"gfx/models/portraits/human/human_female_hair_black_style_02.dds"
+				"gfx/models/portraits/human/human_female_hair_black_style_03.dds"
+				"gfx/models/portraits/human/human_female_hair_blonde_style_02.dds"
+				"gfx/models/portraits/human/human_female_hair_blonde_style_03.dds"
+				"gfx/models/portraits/human/human_female_hair_brown_style_02.dds"
+				"gfx/models/portraits/human/human_female_hair_brown_style_03.dds"
+				"gfx/models/portraits/human/human_female_hair_cendre_style_02.dds"
+				"gfx/models/portraits/human/human_female_hair_cendre_style_03.dds"
+
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_black_style_07.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_black_style_08.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_blonde_style_07.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_blonde_style_08.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_brown_style_07.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_brown_style_08.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_cendre_style_07.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_cendre_style_08.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_dark_red_style_07.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_dark_red_style_08.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_red_style_07.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_red_style_08.dds"
+			}
+		}
+	}
+  
+	#leader scope 
+	ruler = { #for rulers
+		
+		random = {
+			trigger = {
+				owner = { has_militarist_government = yes }
+			}
+				
+			list = {
+				"gfx/models/portraits/sith_eternal/finalorder_female_officer_hair.dds"
+				"gfx/models/portraits/human/human_female_hair_black_style_02.dds"
+				"gfx/models/portraits/human/human_female_hair_black_style_03.dds"
+				"gfx/models/portraits/human/human_female_hair_blonde_style_02.dds"
+				"gfx/models/portraits/human/human_female_hair_blonde_style_03.dds"
+				"gfx/models/portraits/human/human_female_hair_brown_style_02.dds"
+				"gfx/models/portraits/human/human_female_hair_brown_style_03.dds"
+				"gfx/models/portraits/human/human_female_hair_cendre_style_02.dds"
+				"gfx/models/portraits/human/human_female_hair_cendre_style_03.dds"
+
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_black_style_07.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_black_style_08.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_blonde_style_07.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_blonde_style_08.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_brown_style_07.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_brown_style_08.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_cendre_style_07.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_cendre_style_08.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_dark_red_style_07.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_dark_red_style_08.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_red_style_07.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_red_style_08.dds"
+			}
+		}		
+		
+		random = {
+			trigger = {
+				owner = { has_spiritualist_government = yes }
+			}
+			
+			list = {
+				"gfx/models/portraits/sith_eternal/finalorder_female_officer_hair.dds"
+				"gfx/models/portraits/sith_eternal/finalorder_female_admiral_hair.dds"
+				"gfx/models/portraits/human/human_female_hair_black_style_02.dds"
+				"gfx/models/portraits/human/human_female_hair_black_style_03.dds"
+				"gfx/models/portraits/human/human_female_hair_blonde_style_02.dds"
+				"gfx/models/portraits/human/human_female_hair_blonde_style_03.dds"
+				"gfx/models/portraits/human/human_female_hair_brown_style_02.dds"
+				"gfx/models/portraits/human/human_female_hair_brown_style_03.dds"
+				"gfx/models/portraits/human/human_female_hair_cendre_style_02.dds"
+				"gfx/models/portraits/human/human_female_hair_cendre_style_03.dds"
+
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_black_style_07.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_black_style_08.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_blonde_style_07.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_blonde_style_08.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_brown_style_07.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_brown_style_08.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_cendre_style_07.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_cendre_style_08.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_dark_red_style_07.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_dark_red_style_08.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_red_style_07.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_red_style_08.dds"
+			}
+		}		
+		
+		random = {
+			trigger = {
+				owner = {
+					OR = {
+						has_authority = auth_oligarchic
+						has_authority = auth_democratic
+						has_authority = auth_imperial
+						has_authority = auth_dictatorial
+						has_primitive_government = yes
+						has_government = gov_stagnant_ascendancy
+					}
+				}
+			}
+			
+			list = {
+				"gfx/models/portraits/sith_eternal/finalorder_female_officer_hair.dds"
+				"gfx/models/portraits/sith_eternal/finalorder_female_admiral_hair.dds"
+				"gfx/models/portraits/human/human_female_hair_black_style_02.dds"
+				"gfx/models/portraits/human/human_female_hair_black_style_03.dds"
+				"gfx/models/portraits/human/human_female_hair_blonde_style_02.dds"
+				"gfx/models/portraits/human/human_female_hair_blonde_style_03.dds"
+				"gfx/models/portraits/human/human_female_hair_brown_style_02.dds"
+				"gfx/models/portraits/human/human_female_hair_brown_style_03.dds"
+				"gfx/models/portraits/human/human_female_hair_cendre_style_02.dds"
+				"gfx/models/portraits/human/human_female_hair_cendre_style_03.dds"
+
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_black_style_07.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_black_style_08.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_blonde_style_07.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_blonde_style_08.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_brown_style_07.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_brown_style_08.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_cendre_style_07.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_cendre_style_08.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_dark_red_style_07.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_dark_red_style_08.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_red_style_07.dds"
+				"gfx/models/portraits/human/human_female_hair_update/human_female_hair_red_style_08.dds"
+			}
+		}
+	}
+}

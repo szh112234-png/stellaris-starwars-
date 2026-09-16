@@ -1,0 +1,220 @@
+namespace = foc_ds2_integration
+
+# Recovery is bounded by persistent flags; it never recreates a destroyed DS2.
+country_event = {
+    id = foc_ds2_integration.2
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { has_country_flag = foc_republic_origin_empire_country }
+    immediate = {
+        if = {
+            limit = {
+                NOT = { has_country_flag = foc_ds2_program_started }
+                OR = {
+                    has_country_flag = foc_republic_origin_death_star_one_destroyed
+                    has_global_flag = foc_v232q_death_star_one_combat_loss
+                }
+            }
+            foc_ds2_start_second_program = yes
+        }
+        if = {
+            limit = {
+                has_country_flag = foc_ds2_program_started
+                NOT = { has_country_flag = foc_republic_origin_death_star_two_built }
+            }
+            if = {
+                limit = {
+                    is_ai = yes
+                    NOT = { has_country_flag = foc_ds2_bothan_wait }
+                    NOT = { has_country_flag = foc_ds2_bothan_revealed }
+                }
+                country_event = { id = foc_ds2_integration.10 }
+            }
+            country_event = { id = foc_republic_origin.172 }
+            if = {
+                limit = {
+                    is_ai = no
+                    has_country_flag = foc_republic_origin_death_star_two_project_started
+                    NOT = { has_country_flag = foc_v138_death_star_two_engineering_work_complete }
+                    NOT = { has_special_project = FOC_REPUBLIC_ORIGIN_DEATH_STAR_II_PROJECT }
+                    NOT = { has_special_project = FOC_V202_DEATH_STAR_II_PROJECT_EMERGENCY }
+                    exists = event_target:foc_swmap_endor_system
+                }
+                event_target:foc_swmap_endor_system = {
+                    star = {
+                        enable_special_project = {
+                            name = FOC_REPUBLIC_ORIGIN_DEATH_STAR_II_PROJECT
+                            location = this
+                            owner = root
+                        }
+                    }
+                }
+            }
+            if = {
+                limit = {
+                    OR = {
+                        AND = { is_ai = yes has_country_flag = foc_ds2_bothan_revealed }
+                        AND = { is_ai = no has_country_flag = foc_v138_death_star_two_engineering_work_complete }
+                    }
+                }
+                country_event = { id = foc_republic_origin.174 }
+            }
+        }
+        # Check actual components before repairing old-save bookkeeping.
+        # Missing markers must not rebuild an already integrated model or
+        # downgrade a completed station to its unfinished appearance.
+        every_owned_ship = {
+            limit = {
+                has_ship_flag = foc_republic_origin_death_star_two
+                NOT = { has_ship_flag = foc_ds2_integration_applied }
+            }
+            if = {
+                limit = { foc_lowest_ds_is_integrated_two = yes }
+                set_ship_flag = foc_ds2_integration_applied
+                remove_modifier = foc_republic_origin_death_star_two_reinforced
+                if = {
+                    limit = { foc_lowest_ds_is_mobile_two = yes }
+                    set_ship_flag = foc_ds2_mobile_completed
+                    owner = { set_country_flag = foc_ds2_refit_completed }
+                }
+                log = "FOC_DS2_MARKERS_RECOVERED: DS2 components verified; bookkeeping repaired without changing design or rebuilding the model."
+            }
+            else_if = {
+                limit = { is_in_combat = no }
+                foc_lowest_ds_apply_unfinished_two = yes
+                set_ship_flag = foc_ds2_integration_applied
+                remove_modifier = foc_republic_origin_death_star_two_reinforced
+                log = "FOC_DS2_LEGACY_REFIT: pre-integration Death Star II changed to the unfinished design in place; no ship created or deleted."
+            }
+        }
+        foc_ds2_enable_refit_project = yes
+        country_event = { id = foc_ds2_integration.20 }
+        foc_ds2_migrate_guard_escorts = yes
+        country_event = { id = foc_lowest_deathstar.1 }
+    }
+}
+
+# Exact scheduled deadline. Clear the waiting flag explicitly before dispatch,
+# avoiding dependence on same-day timed-flag expiration order.
+country_event = {
+    id = foc_ds2_integration.9
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        is_ai = yes
+        has_country_flag = foc_republic_origin_empire_country
+        has_country_flag = foc_ds2_program_started
+        NOT = { has_country_flag = foc_ds2_bothan_revealed }
+        NOT = { has_country_flag = foc_republic_origin_death_star_two_built }
+    }
+    immediate = {
+        remove_country_flag = foc_ds2_bothan_wait
+        country_event = { id = foc_ds2_integration.10 }
+    }
+}
+
+# Only the AI uses a four-year discovery timer. Player discovery is dispatched
+# by .174, after engineering has actually completed.
+country_event = {
+    id = foc_ds2_integration.10
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        is_ai = yes
+        has_country_flag = foc_republic_origin_empire_country
+        has_country_flag = foc_ds2_program_started
+        NOT = { has_country_flag = foc_ds2_bothan_wait }
+        NOT = { has_country_flag = foc_ds2_bothan_revealed }
+        NOT = { has_country_flag = foc_republic_origin_death_star_two_built }
+        exists = event_target:foc_swmap_endor_system
+    }
+    immediate = {
+        foc_ds2_reveal_bothan_intelligence = yes
+        country_event = { id = foc_republic_origin.172 }
+        country_event = { id = foc_republic_origin.174 }
+    }
+}
+
+country_event = {
+    id = foc_ds2_integration.11
+    title = foc_ds2_integration.bothan.name
+    desc = foc_ds2_integration.bothan.desc
+    picture = GFX_foc_ds2_bothan_death_star_ii
+    location = event_target:foc_swmap_endor_system
+    is_triggered_only = yes
+    force_open = yes
+    trigger = { is_ai = no }
+    option = { name = foc_ds2_integration.bothan.a }
+}
+
+country_event = {
+    id = foc_ds2_integration.12
+    title = foc_ds2_integration.bothan.name
+    desc = foc_ds2_integration.bothan.empire.desc
+    picture = GFX_foc_ds2_bothan_death_star_ii
+    location = event_target:foc_swmap_endor_system
+    is_triggered_only = yes
+    force_open = yes
+    trigger = { is_ai = no }
+    option = { name = foc_ds2_integration.bothan.empire.a }
+}
+
+country_event = {
+    id = foc_ds2_integration.20
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        is_ai = no
+        has_country_flag = foc_republic_origin_empire_country
+        has_country_flag = foc_ds2_refit_work_complete
+        NOT = { has_country_flag = foc_ds2_refit_completed }
+        any_owned_ship = {
+            has_ship_flag = foc_republic_origin_death_star_two
+            is_in_combat = no
+        }
+    }
+    immediate = {
+        every_owned_ship = {
+            limit = { has_ship_flag = foc_republic_origin_death_star_two is_in_combat = no }
+            if = {
+                limit = {
+                    NOT = {
+                        AND = {
+                            foc_lowest_ds_is_integrated_two = yes
+                            foc_lowest_ds_is_mobile_two = yes
+                        }
+                    }
+                }
+                foc_lowest_ds_apply_completed_two = yes
+                log = "FOC_DS2_MOBILE_REFIT: player engineering refit completed on the existing Death Star II; no ship created or deleted."
+            }
+            set_ship_flag = foc_ds2_integration_applied
+            set_ship_flag = foc_ds2_mobile_completed
+            remove_modifier = foc_republic_origin_death_star_two_reinforced
+        }
+        set_country_flag = foc_ds2_refit_completed
+        country_event = { id = foc_ds2_integration.21 }
+    }
+}
+
+country_event = {
+    id = foc_ds2_integration.21
+    title = foc_ds2_integration.refit.name
+    desc = foc_ds2_integration.refit.desc
+    picture = GFX_evt_ship_in_orbit_3
+    is_triggered_only = yes
+    force_open = yes
+    trigger = { is_ai = no }
+    option = { name = foc_ds2_integration.refit.a }
+}
+
+fleet_event = {
+    id = foc_ds2_integration.22
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        any_owned_ship = { has_ship_flag = foc_republic_origin_death_star_two }
+        owner = { is_ai = no has_country_flag = foc_ds2_refit_work_complete }
+    }
+    immediate = { owner = { country_event = { id = foc_ds2_integration.20 days = 1 } } }
+}

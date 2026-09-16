@@ -1,0 +1,510 @@
+namespace = foc_v109_story
+
+# -----------------------------------------------------------------------------
+# Galactic Treaty: D'Qar appears dynamically as a New Republic colony at its exact V177 map position before the Resistance.
+# -----------------------------------------------------------------------------
+country_event = {
+    id = foc_v109_story.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v235b_dqar_settlement_allowed = yes
+        has_global_flag = foc_republic_origin_galactic_treaty
+        has_country_flag = foc_sw_new_republic_country
+        NOT = { has_global_flag = foc_v109_dqar_new_republic_established }
+        # V149: once the First Order/Resistance era has begun, D'Qar must never
+        # be reassigned to the New Republic by the old Treaty bootstrap.
+        NOR = {
+            has_global_flag = foc_khan_phase_one
+            has_global_flag = fop_origin_player_crisis_exists
+            has_global_flag = foc_v109_bloodline_resistance_authorized
+            has_global_flag = foc_v161_dqar_resistance_founded
+        }
+    }
+
+    immediate = {
+        foc_v178_adopt_static_dqar = yes
+        if = {
+            limit = { any_system = { has_star_flag = foc_khan_rebel_dqar_home } }
+            country_event = { id = foc_v109_story.2 }
+        }
+        else = {
+            foc_v178_spawn_dqar_at_map_position = yes
+            if = {
+                limit = { exists = event_target:foc_khan_rebel_spawn_anchor }
+                country_event = { id = foc_v109_story.2 days = 3 }
+                country_event = { id = foc_v109_story.2 days = 8 }
+            }
+        }
+    }
+}
+
+country_event = {
+    id = foc_v109_story.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        any_system = {
+            foc_v235b_is_dqar_system = yes
+            any_system_planet = { foc_v235b_is_dqar_planet = yes foc_v235b_base_planet_usable = yes }
+        }
+        foc_v235b_dqar_settlement_allowed = yes
+        has_global_flag = foc_republic_origin_galactic_treaty
+        has_country_flag = foc_sw_new_republic_country
+        NOT = { has_global_flag = foc_v109_dqar_new_republic_established }
+        # V149: delayed Treaty jobs must also abort if the First Order arrived
+        # after they were scheduled but before they execute.
+        NOR = {
+            has_global_flag = foc_khan_phase_one
+            has_global_flag = fop_origin_player_crisis_exists
+            has_global_flag = foc_v109_bloodline_resistance_authorized
+            has_global_flag = foc_v161_dqar_resistance_founded
+        }
+        any_system = {
+            has_star_flag = foc_khan_rebel_dqar_home
+            # V204: a delayed Treaty job must not overwrite a live Resistance
+            # even if its final global handover flag is one tick late.
+            NOT = {
+                space_owner? = {
+                    OR = {
+                        has_country_flag = foc_khan_rebel_alliance_country
+                        has_country_flag = foc_khan_first_order_resistance_country
+                        has_country_flag = foc_republic_origin_post_treaty_rebel_country
+                    }
+                }
+            }
+            NOT = {
+                any_system_planet = {
+                    is_colony = yes
+                    owner = {
+                        OR = {
+                            has_country_flag = foc_khan_rebel_alliance_country
+                            has_country_flag = foc_khan_first_order_resistance_country
+                            has_country_flag = foc_republic_origin_post_treaty_rebel_country
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    immediate = {
+        random_system = {
+            limit = { has_star_flag = foc_khan_rebel_dqar_home }
+            save_global_event_target_as = foc_khan_rebel_dqar_system
+            every_system_planet = { set_surveyed = { surveyed = yes surveyor = root } }
+            if = {
+                limit = { exists = starbase }
+                starbase = {
+                    set_owner = root
+                    set_starbase_size = starbase_starport
+                    set_starbase_module = { slot = 1 module = shipyard }
+                    set_starbase_module = { slot = 2 module = gun_battery }
+                    set_starbase_flag = foc_v109_dqar_new_republic_starbase
+                }
+            }
+            else = {
+                create_starbase = {
+                    size = starbase_starport
+                    owner = root
+                    module = shipyard
+                    effect = { set_starbase_flag = foc_v109_dqar_new_republic_starbase }
+                }
+            }
+            random_system_planet = {
+                limit = { has_planet_flag = foc_khan_rebel_dqar }
+                save_global_event_target_as = foc_khan_rebel_capital
+                if = {
+                    limit = { is_colony = no }
+                    create_colony = { owner = root }
+                    generate_start_deposits_and_blockers = yes
+                    clear_blockers = yes
+                    colony = {
+                        inline_script = "foc_v232i_safe_colony_layout"
+                        generate_start_pops = yes
+                        generate_home_planet_final_pass = yes
+                    }
+                }
+                set_owner = root
+                set_controller = root
+                remove_modifier = foc_dqar_hidden_resistance_base
+                set_planet_flag = foc_v109_dqar_new_republic_colony
+            }
+        }
+        foc_v178_connect_dqar_map_routes = yes
+        set_global_flag = foc_v109_dqar_new_republic_established
+        log = "FOC_V109_DQAR: Galactic Treaty established D'Qar as New Republic territory."
+    }
+}
+
+# -----------------------------------------------------------------------------
+# Hosnian system: all five planets are habitable and colonized by New Republic.
+# Also repairs existing saves created before V109.
+# -----------------------------------------------------------------------------
+country_event = {
+    id = foc_v109_story.5
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_sw_new_republic_country
+        exists = event_target:foc_sw_hosnian_system
+        NOT = { has_country_flag = foc_v109_hosnian_five_colonies_done }
+    }
+
+    immediate = {
+        event_target:foc_sw_hosnian_system = {
+            every_system_planet = {
+                limit = { is_star = no is_moon = no }
+                # Old saves retain the former barren/gas/frozen classes. Tag each
+                # historical body before changing class so its canonical name survives
+                # the colony-generation final pass.
+                if = {
+                    limit = { is_planet_class = pc_barren }
+                    set_planet_flag = foc_v109_hosnian_3
+                    change_pc = pc_tropical
+                }
+                else_if = {
+                    limit = { is_planet_class = pc_gas_giant }
+                    set_planet_flag = foc_v109_hosnian_4
+                    change_pc = pc_arid
+                }
+                else_if = {
+                    limit = { is_planet_class = pc_frozen }
+                    set_planet_flag = foc_v109_hosnian_5
+                    change_pc = pc_alpine
+                }
+                else_if = {
+                    limit = { is_planet_class = pc_barren_cold }
+                    set_planet_flag = foc_v109_hosnian_5
+                    change_pc = pc_alpine
+                }
+                else_if = { limit = { is_planet_class = pc_toxic } change_pc = pc_ocean }
+                set_planet_flag = foc_sw_nr_colony
+                if = {
+                    limit = { is_colony = no }
+                    create_colony = { owner = root }
+                    generate_start_deposits_and_blockers = yes
+                    clear_blockers = yes
+                    colony = {
+                        inline_script = "foc_v232i_safe_colony_layout"
+                        generate_start_pops = yes
+                        generate_home_planet_final_pass = yes
+                    }
+                }
+                set_owner = root
+                set_controller = root
+                foc_sw_restore_canonical_colony_name = yes
+            }
+        }
+        # V231o: this is the last Hosnian colony-generation pass. Re-verify the
+        # capital droid population/factory after it, instead of assuming an earlier
+        # Treaty seed survived every initialization stage.
+        if = {
+            limit = { exists = event_target:foc_sw_hosnian_prime }
+            event_target:foc_sw_hosnian_prime = { foc_v231_seed_republic_droid_pops = yes }
+        }
+        set_country_flag = foc_v109_hosnian_five_colonies_done
+        log = "FOC_V109_HOSNIAN: all five Hosnian planets are habitable New Republic colonies."
+    }
+}
+
+# -----------------------------------------------------------------------------
+# Galactic Empire fixed defenses: three named Executor groups never leave their
+# assigned systems. Scarif receives a permanent citadel and guard fleet.
+# -----------------------------------------------------------------------------
+country_event = {
+    id = foc_v109_story.10
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        OR = {
+            has_country_flag = foc_republic_origin_empire_country
+            has_country_flag = foc_republic_origin_player_empire
+        }
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+    }
+
+    immediate = {
+        # Recover canonical system targets for old saves.
+        if = {
+            limit = { NOT = { exists = event_target:foc_sw_endor_system } any_system = { has_star_flag = foc_swmap_endor_home } }
+            random_system = { limit = { has_star_flag = foc_swmap_endor_home } save_global_event_target_as = foc_sw_endor_system }
+        }
+        if = {
+            limit = { NOT = { exists = event_target:foc_swmap_scarif_system } any_system = { has_star_flag = foc_swmap_scarif_home } }
+            random_system = { limit = { has_star_flag = foc_swmap_scarif_home } save_global_event_target_as = foc_swmap_scarif_system }
+        }
+        # V118: Coruscant and Jakku were never recovered here, so on saves where
+        # those two global targets had expired the keeper silently did nothing
+        # for Lusankya and Punisher.
+        if = {
+            limit = { NOT = { exists = event_target:foc_sw_coruscant_system } any_system = { has_star_flag = foc_sw_coruscant_home } }
+            random_system = { limit = { has_star_flag = foc_sw_coruscant_home } save_global_event_target_as = foc_sw_coruscant_system }
+        }
+        if = {
+            limit = { NOT = { exists = event_target:foc_sw_jakku_system } any_system = { has_star_flag = foc_sw_jakku_home } }
+            random_system = { limit = { has_star_flag = foc_sw_jakku_home } save_global_event_target_as = foc_sw_jakku_system }
+        }
+
+        # Executor / Lusankya / Punisher are permanent defense fleets.
+        #
+        # V118 garrison rework. The V114 code only ever teleported each fleet
+        # once, because foc_v114_*_guard_positioned was set on the first pass and
+        # then blocked every later pass. Once the AI fleet manager pulled a
+        # flagship out of its system it never came back, and the monthly
+        # clear_orders simply stranded it wherever it happened to be.
+        #
+        # V118b: nothing is teleported any more. The garrison hulls carry no FTL
+        # drive, so they cannot leave their system in the first place and this
+        # keeper never has anything to correct for them. The move order below is
+        # a fallback only - it matters for the mobile Scarif group, and for any
+        # save where a guard fleet still has its old FTL-capable hull. In both
+        # cases the fleet flies home under its own power.
+        #
+        # Every solar_system switch below is guarded by exists = solar_system.
+        # A fleet in transit has no system and the unguarded switch logs
+        # "Invalid context switch [solar_system] from [fleet]" every pulse -
+        # the same mistake that was spamming 80 lines a run from the Supremacy
+        # duel setup. Seven other places in the mod already guard it this way.
+        #
+        # The keeper compares the fleet's current system against its assigned
+        # system every month and sends it home whenever the two differ. Stance is
+        # aggressive with a zero aggro range measured from the fleet itself:
+        # the group defends its own system but never chases anything out of it,
+        # which is what a garrison is supposed to do. passive would make it try
+        # to disengage and drift away the moment rebels arrived.
+        #
+        # A human Empire is never touched. Only an AI owner gets pinned.
+        if = {
+            limit = { is_ai = yes }
+            every_owned_fleet = {
+                limit = { has_fleet_flag = foc_republic_origin_executor_endor_guard }
+                set_fleet_stance = aggressive
+                set_aggro_range_measure_from = self
+                set_aggro_range = 0
+                if = {
+                    limit = {
+                        exists = event_target:foc_sw_endor_system
+                        exists = solar_system
+                        NOT = { is_in_combat = yes }
+                        NOT = { solar_system = { is_same_value = event_target:foc_sw_endor_system } }
+                    }
+                    clear_orders = yes
+                    queue_actions = { move_to = event_target:foc_sw_endor_system }
+                }
+            }
+            every_owned_fleet = {
+                limit = { has_fleet_flag = foc_republic_origin_lusankya_coruscant_guard }
+                set_fleet_stance = aggressive
+                set_aggro_range_measure_from = self
+                set_aggro_range = 0
+                if = {
+                    limit = {
+                        exists = event_target:foc_sw_coruscant_system
+                        exists = solar_system
+                        NOT = { is_in_combat = yes }
+                        NOT = { solar_system = { is_same_value = event_target:foc_sw_coruscant_system } }
+                    }
+                    clear_orders = yes
+                    queue_actions = { move_to = event_target:foc_sw_coruscant_system }
+                }
+            }
+            every_owned_fleet = {
+                limit = { has_fleet_flag = foc_republic_origin_punisher_jakku_guard }
+                set_fleet_stance = aggressive
+                set_aggro_range_measure_from = self
+                set_aggro_range = 0
+                if = {
+                    limit = {
+                        exists = event_target:foc_sw_jakku_system
+                        exists = solar_system
+                        NOT = { is_in_combat = yes }
+                        NOT = { solar_system = { is_same_value = event_target:foc_sw_jakku_system } }
+                    }
+                    clear_orders = yes
+                    queue_actions = { move_to = event_target:foc_sw_jakku_system }
+                }
+            }
+        }
+
+        # Scarif fortress is only maintained while the Galactic Empire owns it.
+        if = {
+            limit = {
+                exists = event_target:foc_swmap_scarif_system
+                event_target:foc_swmap_scarif_system = { exists = space_owner space_owner = { is_same_value = root } }
+            }
+            event_target:foc_swmap_scarif_system = {
+                if = {
+                    limit = { NOT = { exists = starbase } }
+                    create_starbase = { size = starbase_citadel owner = root }
+                }
+                starbase = {
+                    set_owner = root
+                    set_starbase_size = starbase_citadel
+                    set_starbase_module = { slot = 1 module = gun_battery }
+                    set_starbase_module = { slot = 2 module = gun_battery }
+                    set_starbase_module = { slot = 3 module = gun_battery }
+                    # V141: this scripted Empire does not necessarily own the vanilla
+                    # strike-craft tech required by hangar_bay, so the old slots 4/5
+                    # failed their potential check. Use gun batteries instead; slots
+                    # 1-5 are now a guaranteed fortress layout, with slot 6 as shipyard.
+                    set_starbase_module = { slot = 4 module = gun_battery }
+                    set_starbase_module = { slot = 5 module = gun_battery }
+                    set_starbase_module = { slot = 6 module = shipyard }
+                    if = {
+                        limit = { NOT = { has_starbase_building = crew_quarters } }
+                        set_starbase_building = { slot = 1 building = crew_quarters }
+                    }
+                    set_starbase_flag = foc_v109_scarif_fortress
+                }
+                if = {
+                    limit = { root = { NOT = { has_country_flag = foc_v109_scarif_guard_spawned } } }
+                    root = { set_country_flag = foc_v109_scarif_guard_spawned }
+                    create_fleet = {
+                        name = "NAME_FOC_V109_SCARIF_DEFENSE_FLEET"
+                        settings = { can_upgrade = no can_disband = yes can_change_composition = no spawn_debris = yes }
+                        effect = {
+                            set_owner = root
+                            # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+}
+                            
+
+                            
+
+                            
+                            if = {
+                                limit = { has_global_flag = foc_khan_strength_lowest }
+                                while = { count = 8 create_ship = { name = random design = "NAME_FOC_KHAN_IMPERIAL_SD_FOC_LOWEST" graphical_culture = empire_01 upgradable = no fleet_cache_recalc = yes } }
+                            }
+                            else = {
+                                while = { count = 8 create_ship = { name = random design = "NAME_FOC_KHAN_IMPERIAL_SD" graphical_culture = empire_01 upgradable = no fleet_cache_recalc = yes } }
+                            }
+                            if = {
+                                limit = { has_global_flag = foc_khan_strength_lowest }
+                                create_ship = { name = "Scarif Interdictor" design = "NAME_FOC_IMMOBILIZER_418_FOC_LOWEST" graphical_culture = empire_01 upgradable = no fleet_cache_recalc = yes }
+                            }
+                            else = {
+                                create_ship = { name = "Scarif Interdictor" design = "NAME_FOC_IMMOBILIZER_418" graphical_culture = empire_01 upgradable = no fleet_cache_recalc = yes }
+                            }
+                            set_location = { target = prev distance = 55 angle = 180 }
+                            set_fleet_flag = foc_v109_scarif_guard
+                            set_fleet_stance = passive
+                            set_aggro_range_measure_from = self
+                            set_aggro_range = 0
+                        }
+                    }
+                }
+            }
+        }
+
+        # V118: the Scarif garrison uses the same keeper as the three Executors.
+        if = {
+            limit = { is_ai = yes }
+            every_owned_fleet = {
+                limit = { has_fleet_flag = foc_v109_scarif_guard }
+                set_fleet_stance = aggressive
+                set_aggro_range_measure_from = self
+                set_aggro_range = 0
+                if = {
+                    limit = {
+                        exists = event_target:foc_swmap_scarif_system
+                        exists = solar_system
+                        NOT = { is_in_combat = yes }
+                        NOT = { solar_system = { is_same_value = event_target:foc_swmap_scarif_system } }
+                    }
+                    clear_orders = yes
+                    queue_actions = { move_to = event_target:foc_swmap_scarif_system }
+                }
+            }
+        }
+    }
+}
+
+# -----------------------------------------------------------------------------
+# Tarkin fear cycle: DS-I -> Jedha destruction -> Tarkin Plan removes every
+# stability penalty and adds a positive fear-compliance buff; DS-II destruction
+# shatters that fear and restores the strongest stability penalties.
+# -----------------------------------------------------------------------------
+country_event = {
+    id = foc_v109_story.20
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        OR = {
+            has_country_flag = foc_republic_origin_empire_country
+            has_country_flag = foc_republic_origin_player_empire
+        }
+        has_country_flag = foc_republic_origin_death_star_one_built
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+    }
+
+    immediate = {
+        # Both human and AI Empires use the same destruction-only doctrine event.
+        # The permanent global block also protects against old queued events.
+        if = {
+            limit = { has_global_flag = foc_jedha_tarkin_permanently_blocked }
+            foc_jedha_clear_blocked_tarkin = yes
+        }
+        else_if = {
+            limit = {
+                foc_jedha_tarkin_allowed = yes
+                NOT = { has_country_flag = foc_republic_origin_doctrine_chosen }
+                NOT = { has_country_flag = foc_republic_origin_doctrine_event_pending }
+            }
+            set_country_flag = foc_republic_origin_doctrine_event_pending
+            country_event = { id = foc_republic_origin.181 days = 1 }
+        }
+
+        if = {
+            limit = {
+                has_global_flag = foc_saga_jedha_destroyed
+                NOT = { has_global_flag = foc_jedha_tarkin_permanently_blocked }
+                has_country_flag = foc_republic_origin_tarkin_doctrine
+                NOT = { has_country_flag = foc_republic_origin_death_star_two_destroyed }
+                NOT = { has_country_flag = foc_v109_jedha_fear_order_established }
+            }
+            set_country_flag = foc_v109_jedha_fear_order_established
+            remove_modifier = foc_republic_origin_imperial_fear_deficit
+            remove_modifier = foc_saga_imperial_unrest_1
+            remove_modifier = foc_saga_imperial_unrest_2
+            remove_modifier = foc_saga_imperial_unrest_3
+            every_owned_planet = { remove_modifier = foc_saga_planet_ungarrisoned }
+            add_modifier = { modifier = foc_v109_tarkin_jedha_fear days = -1 }
+            log = "FOC_V109_TARKIN: Jedha demonstration established fear-based stability across the Empire."
+        }
+
+        if = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_republic_origin_death_star_two_destroyed
+                    has_global_flag = foc_republic_origin_death_star_two_destroyed
+                }
+                has_country_flag = foc_v109_jedha_fear_order_established
+                NOT = { has_country_flag = foc_v109_death_star_two_fear_shattered }
+            }
+            set_country_flag = foc_v109_death_star_two_fear_shattered
+            remove_modifier = foc_v109_tarkin_jedha_fear
+            remove_modifier = foc_saga_imperial_unrest_1
+            remove_modifier = foc_saga_imperial_unrest_2
+            if = { limit = { NOT = { has_modifier = foc_saga_imperial_unrest_3 } } add_modifier = { modifier = foc_saga_imperial_unrest_3 days = -1 } }
+            if = { limit = { NOT = { has_modifier = foc_republic_origin_imperial_fear_deficit } } add_modifier = { modifier = foc_republic_origin_imperial_fear_deficit days = -1 } }
+            log = "FOC_V109_TARKIN: Death Star II destroyed; fear collapsed and Imperial stability penalties returned."
+        }
+
+        foc_republic_origin_update_imperial_fear_deficit = yes
+        foc_saga_imperial_garrison_check = yes
+    }
+}

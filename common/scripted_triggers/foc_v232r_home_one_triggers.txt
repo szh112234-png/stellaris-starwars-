@@ -1,0 +1,23 @@
+# System scope, recipient country target must be valid before use.
+foc_v232r_home_one_safe_system = {
+    exists = event_target:foc_v232q_home_one_recipient
+    exists = space_owner
+    space_owner = { is_same_value = event_target:foc_v232q_home_one_recipient }
+    exists = starbase
+    starbase = {
+        exists = owner
+        owner = { is_same_value = event_target:foc_v232q_home_one_recipient }
+    }
+    NOT = {
+        any_fleet_in_system = {
+            exists = owner
+            owner = {
+                OR = {
+                    has_country_flag = foc_republic_origin_empire_country
+                    has_country_flag = foc_sw_imperial_remnant_country
+                    is_at_war_with = event_target:foc_v232q_home_one_recipient
+                }
+            }
+        }
+    }
+}

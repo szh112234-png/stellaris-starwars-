@@ -1,0 +1,38 @@
+# V196: playable Hutt Criminal Empire origin. The engine begins on a temporary
+# home system; foc_v196_hutt.1 relocates the player into the authored SW region.
+origin_foc_hutt_criminal_empire = {
+    is_origin = yes
+    icon = "gfx/interface/icons/origins/origins_default.dds"
+    picture = GFX_evt_metropolis
+    portrait = "foc_v187_hutt_species_01"
+
+    flags = { custom_start_screen }
+    starting_colony = pc_tropical
+    habitability_preference = pc_tropical
+    initializers = { foc_v196_hutt_staging_system }
+    max_once_global = yes
+    advanced_start = no
+
+    playable = { host_has_dlc = "Megacorp" }
+    ai_playable = { always = no }
+
+    potential = {
+        species_class = { value = MAM }
+    }
+
+    possible = {
+        species_class = { value = MAM }
+        authority = { value = auth_corporate }
+        civics = { value = civic_criminal_heritage }
+        is_nomadic = no
+    }
+
+    modifier = {
+        BIOLOGICAL_species_trait_points_add = 1
+        country_naval_cap_add = 20
+        starbase_shipyard_build_speed_mult = 0.10
+    }
+
+    description = origin_foc_hutt_criminal_empire_effects
+    random_weight = { base = 0 }
+}

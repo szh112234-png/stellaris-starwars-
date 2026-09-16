@@ -1,0 +1,139 @@
+# Star Wars resource industry techs rebuilt for FOC / Stellaris 4.4.x.
+# This is phase 1 of the standard weapon tech tree. Weapon-family techs are added together
+# with the standardized components in phase 2 so no visible research is a dead unlock.
+
+foc_tech_tibanna_mining = {
+    icon = "tech_tibanna_mining"
+    cost = @tier1cost1
+    area = engineering
+    tier = 1
+    category = { industry }
+    weight = @tier1weight1
+    modifier = { country_sr_tibanna_swgs_produces_mult = 0.10 }
+    ai_weight = { factor = 1 }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_tibanna_mining_1 = {
+    icon = "tech_tibanna_mining_1"
+    cost = @tier1cost2
+    area = engineering
+    tier = 1
+    category = { industry }
+    prerequisites = { "foc_tech_tibanna_mining" }
+    weight = @tier1weight1
+    modifier = { country_sr_tibanna_swgs_produces_mult = 0.10 }
+    ai_weight = { factor = 1 }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_tibanna_mining_2 = {
+    icon = "tech_tibanna_mining_2"
+    cost = @tier2cost1
+    area = engineering
+    tier = 2
+    category = { industry }
+    prerequisites = { "foc_tech_tibanna_mining_1" }
+    weight = @tier2weight1
+    modifier = { country_sr_tibanna_swgs_produces_mult = 0.10 }
+    ai_weight = { factor = 1 }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_tibanna_mining_3 = {
+    icon = "tech_tibanna_mining_3"
+    cost = @tier3cost1
+    area = engineering
+    tier = 3
+    category = { industry }
+    prerequisites = { "foc_tech_tibanna_mining_2" }
+    weight = @tier3weight1
+    modifier = { country_sr_tibanna_swgs_produces_mult = 0.10 }
+    ai_weight = { factor = 1 }
+}
+
+foc_tech_tibanna_mining_4 = {
+    icon = "tech_tibanna_mining_4"
+    cost = @tier4cost1
+    area = engineering
+    tier = 4
+    category = { industry }
+    prerequisites = { "foc_tech_tibanna_mining_3" }
+    weight = @tier4weight1
+    modifier = { country_sr_tibanna_swgs_produces_mult = 0.10 }
+    ai_weight = { factor = 1 }
+}
+
+foc_tech_tibanna_mining_5 = {
+    icon = "tech_tibanna_mining_5"
+    cost = @tier5cost1
+    area = engineering
+    tier = 5
+    category = { industry }
+    prerequisites = { "foc_tech_tibanna_mining_4" }
+    weight = @tier5weight1
+    modifier = { country_sr_tibanna_swgs_produces_mult = 0.10 }
+    ai_weight = { factor = 1 }
+}
+
+# Kyber is a mid/late-game branch. It depends on an established Tibanna industry,
+# not on a Kyber weapon, which removes the obsolete source mod's circular dependency.
+foc_tech_kyber_mining = {
+    icon = "tech_kyber_mining"
+    cost = @tier2cost3
+    area = engineering
+    tier = 2
+    category = { industry }
+    prerequisites = { "foc_tech_tibanna_mining_2" }
+    is_rare = yes
+    weight = @tier2weight1
+    modifier = { country_sr_kyber_swgs_produces_mult = 0.10 }
+    ai_weight = { factor = 1 }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_kyber_mining_1 = {
+    icon = "tech_kyber_mining_1"
+    cost = @tier3cost1
+    area = engineering
+    tier = 3
+    category = { industry }
+    prerequisites = { "foc_tech_kyber_mining" }
+    weight = @tier3weight1
+    modifier = { country_sr_kyber_swgs_produces_mult = 0.10 }
+    ai_weight = { factor = 1 }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_kyber_mining_2 = {
+    icon = "tech_kyber_mining_2"
+    cost = @tier4cost1
+    area = engineering
+    tier = 4
+    category = { industry }
+    prerequisites = { "foc_tech_kyber_mining_1" }
+    weight = @tier4weight1
+    modifier = { country_sr_kyber_swgs_produces_mult = 0.10 }
+    ai_weight = { factor = 1 }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_kyber_mining_3 = {
+    icon = "tech_kyber_mining_3"
+    cost = @tier5cost1
+    area = engineering
+    tier = 5
+    category = { industry }
+    prerequisites = { "foc_tech_kyber_mining_2" }
+    weight = @tier5weight1
+    modifier = { country_sr_kyber_swgs_produces_mult = 0.10 }
+    ai_weight = { factor = 1 }
+
+    potential = { foc_v1718_allowed_country = yes }
+}

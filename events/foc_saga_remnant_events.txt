@@ -1,0 +1,212 @@
+namespace = foc_rem
+
+# =============================================================================
+# 索龙时代：帝国残余
+# =============================================================================
+# 军阀割据 → 奇美拉号归来 → 卡塔纳舰队 → 夸特船台 → 和战抉择
+#
+# 全线接在 foc_thrawn.1（索龙接管残余）之后，只对帝国残余一侧开放。
+# 最后一条给玩家一个真正的岔路：以残余之身谋和，还是重启征服。
+# =============================================================================
+
+# --- V115: repair saves where 军阀割据 fired while still the Galactic Empire ----
+# The Empire carries foc_sw_imperial_remnant_country for legacy compatibility,
+# so older versions could show foc_rem.1 before the Treaty.  Remove only that
+# premature state/effect; once the Treaty creates the real Remnant, foc_rem.1
+# will be eligible again and will set foc_saga_rem_warlords_valid_v115.
+country_event = {
+    id = foc_rem.100
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        OR = {
+            has_country_flag = foc_republic_origin_player_empire
+            has_country_flag = foc_republic_origin_empire_country
+        }
+        has_country_flag = foc_saga_rem_warlords_shown
+        NOT = { has_country_flag = foc_saga_rem_warlords_valid_v115 }
+        NOT = { has_country_flag = foc_saga_rem_premature_scrubbed_v115 }
+    }
+
+    immediate = {
+        remove_country_flag = foc_saga_rem_warlords_shown
+        remove_country_flag = foc_saga_rem_chimaera_wait
+        remove_modifier = foc_saga_rem_iron_discipline
+        remove_modifier = foc_saga_rem_bought_loyalty
+        set_country_flag = foc_saga_rem_premature_scrubbed_v115
+    }
+}
+
+# --- 军阀割据 -----------------------------------------------------------------
+country_event = {
+    id = foc_rem.1
+    title = foc_rem.1.name
+    desc = foc_rem.1.desc
+    picture = GFX_foc_saga_isd_split
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        # V115: the Galactic Empire temporarily carries the legacy Remnant flag
+        # for shared ship/component compatibility.  This story must wait until
+        # the Treaty has actually converted the country into the Imperial Remnant.
+        has_global_flag = foc_republic_origin_galactic_treaty
+        has_country_flag = foc_sw_imperial_remnant_country
+        NOT = { has_country_flag = foc_republic_origin_empire_country }
+        NOT = { has_country_flag = foc_republic_origin_player_empire }
+        NOT = { has_country_flag = fop_player_first_order }
+        NOT = { has_country_flag = foc_khan_first_order_country }
+        # The Remnant line begins only after Thrawn has taken command.
+        has_country_flag = foc_saga_thrawn_in_command
+        NOT = { has_country_flag = foc_saga_rem_warlords_shown }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_rem_warlords_shown
+        set_country_flag = foc_saga_rem_warlords_valid_v115
+        set_timed_country_flag = { flag = foc_saga_rem_chimaera_wait days = 360 }
+    }
+
+    # 铁腕还是收编，代价不同。
+    option = {
+        name = foc_rem.1.a
+        add_modifier = { modifier = foc_saga_rem_iron_discipline days = -1 }
+    }
+    option = {
+        name = foc_rem.1.b
+        add_modifier = { modifier = foc_saga_rem_bought_loyalty days = -1 }
+    }
+}
+
+# --- 奇美拉号归来 --------------------------------------------------------------
+country_event = {
+    id = foc_rem.2
+    title = foc_rem.2.name
+    desc = foc_rem.2.desc
+    picture = GFX_foc_saga_thrawn_chimaera
+    show_sound = event_ship_bridge
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        has_global_flag = foc_republic_origin_galactic_treaty
+        has_country_flag = foc_sw_imperial_remnant_country
+        NOT = { has_country_flag = foc_republic_origin_empire_country }
+        NOT = { has_country_flag = fop_player_first_order }
+        NOT = { has_country_flag = foc_khan_first_order_country }
+        has_country_flag = foc_saga_rem_warlords_shown
+        has_country_flag = foc_saga_thrawn_in_command
+        NOT = { has_country_flag = foc_saga_rem_chimaera_shown }
+        NOT = { has_country_flag = foc_saga_rem_chimaera_wait }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_rem_chimaera_shown
+        set_timed_country_flag = { flag = foc_saga_rem_katana_wait days = 540 }
+    }
+
+    option = {
+        name = foc_rem.2.a
+        add_modifier = { modifier = foc_saga_rem_chimaera days = -1 }
+    }
+}
+
+# --- 卡塔纳舰队 ---------------------------------------------------------------
+country_event = {
+    id = foc_rem.3
+    title = foc_rem.3.name
+    desc = foc_rem.3.desc
+    picture = GFX_foc_saga_katana_fleet
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        has_global_flag = foc_republic_origin_galactic_treaty
+        has_country_flag = foc_sw_imperial_remnant_country
+        NOT = { has_country_flag = foc_republic_origin_empire_country }
+        NOT = { has_country_flag = fop_player_first_order }
+        NOT = { has_country_flag = foc_khan_first_order_country }
+        has_country_flag = foc_saga_rem_chimaera_shown
+        NOT = { has_country_flag = foc_saga_rem_katana_shown }
+        NOT = { has_country_flag = foc_saga_rem_katana_wait }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_rem_katana_shown
+        set_global_flag = foc_saga_katana_fleet_found
+        foc_saga_spawn_katana_fleet = yes
+        set_timed_country_flag = { flag = foc_saga_rem_kuat_wait days = 540 }
+    }
+
+    option = { name = foc_rem.3.a }
+}
+
+# --- 夸特船台 -----------------------------------------------------------------
+country_event = {
+    id = foc_rem.4
+    title = foc_rem.4.name
+    desc = foc_rem.4.desc
+    picture = GFX_foc_saga_kuat_yards_2
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        has_global_flag = foc_republic_origin_galactic_treaty
+        has_country_flag = foc_sw_imperial_remnant_country
+        NOT = { has_country_flag = foc_republic_origin_empire_country }
+        NOT = { has_country_flag = fop_player_first_order }
+        NOT = { has_country_flag = foc_khan_first_order_country }
+        has_country_flag = foc_saga_rem_katana_shown
+        NOT = { has_country_flag = foc_saga_rem_kuat_shown }
+        NOT = { has_country_flag = foc_saga_rem_kuat_wait }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_rem_kuat_shown
+        set_timed_country_flag = { flag = foc_saga_rem_choice_wait days = 720 }
+    }
+
+    option = {
+        name = foc_rem.4.a
+        add_modifier = { modifier = foc_saga_rem_kuat_contracts days = -1 }
+    }
+}
+
+# --- 和战抉择 -----------------------------------------------------------------
+country_event = {
+    id = foc_rem.5
+    title = foc_rem.5.name
+    desc = foc_rem.5.desc
+    picture = GFX_foc_saga_thrawn_palpatine
+    show_sound = event_mystic_reveal
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        has_global_flag = foc_republic_origin_galactic_treaty
+        has_country_flag = foc_sw_imperial_remnant_country
+        NOT = { has_country_flag = foc_republic_origin_empire_country }
+        NOT = { has_country_flag = fop_player_first_order }
+        NOT = { has_country_flag = foc_khan_first_order_country }
+        has_country_flag = foc_saga_rem_kuat_shown
+        NOT = { has_country_flag = foc_saga_rem_choice_shown }
+        NOT = { has_country_flag = foc_saga_rem_choice_wait }
+    }
+
+    immediate = { set_country_flag = foc_saga_rem_choice_shown }
+
+    # 真正的岔路：守住外环这块地，还是把整个银河再打一遍。
+    option = {
+        name = foc_rem.5.a
+        set_global_flag = foc_saga_remnant_consolidates
+        add_modifier = { modifier = foc_saga_rem_consolidation days = -1 }
+    }
+    option = {
+        name = foc_rem.5.b
+        set_global_flag = foc_saga_remnant_reconquest
+        add_modifier = { modifier = foc_saga_rem_reconquest days = -1 }
+    }
+}

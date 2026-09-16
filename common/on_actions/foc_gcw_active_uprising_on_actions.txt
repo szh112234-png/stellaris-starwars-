@@ -1,0 +1,10 @@
+# FOC - cleanup the active uprising target if the operation is cancelled externally.
+on_operation_cancelled = {
+    events = {
+        foc_gcw_active.90
+    }
+}
+
+# Normal completion is as important as cancellation for repeatability.
+on_operation_finished = { events = { foc_gcw_active.93 } }
+on_single_player_save_game_load = { events = { foc_gcw_active.92 } }

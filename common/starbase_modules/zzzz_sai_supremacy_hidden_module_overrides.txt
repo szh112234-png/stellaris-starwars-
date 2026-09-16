@@ -1,0 +1,3933 @@
+# Original Arkship modules remain unchanged for normal Arkships but are hidden from the Supremacy.
+# Supremacy-specific clones preserve all gameplay effects while using invisible section entities.
+
+arkship_engineering_bay = {
+	icon = "GFX_arkship_engineering_bay"
+	section = "ARKSHIP_CONSTRUCTION_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_naval_support_cat
+
+	potential = {
+		owner? = {
+			OR = {
+				has_technology = tech_space_construction
+				has_country_flag = champions_forge_enclave_country
+			}
+		}
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	possible = {
+		count_starbase_modules = {
+			type = arkship_beastport
+			count < 1
+			include_being_constructed = yes
+		}
+	}
+
+	show_in_tech = "tech_space_construction"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_100
+		}
+
+		upkeep = {
+			energy = @arkship_upkeep_energy_2
+		}
+	}
+
+	station_modifier = {
+		show_only_custom_tooltip = no
+		megastructure_build_speed_mult = 0.15
+	}
+	planet_modifier = {
+		planet_building_capacity_add = 1
+	}
+
+	on_finished = {
+		set_ship_construction_type = starbase_shipyard
+	}
+	on_destroyed = {
+		if = {
+			limit = { NOT = { has_starbase_module = arkship_engineering_bay } }
+			set_ship_construction_type = none
+		}
+	}
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_shipwright
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = {
+		weight = 100 #use same weight here - ai weighting is done in starbase_types.txt
+	}
+}
+
+arkship_beastport = {
+	icon = "GFX_starbase_beastport"
+	section = "ARKSHIP_CONSTRUCTION_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_naval_support_cat
+
+	potential = {
+		owner? = {
+			OR = {
+				has_technology = tech_alien_cloning
+				is_beastmasters_empire = yes
+			}
+		}
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	possible = {
+		count_starbase_modules = {
+			type = arkship_engineering_bay
+			count < 1
+			include_being_constructed = yes
+		}
+	}
+
+	abort_construction_trigger = {
+		OR = {
+			has_starbase_module = arkship_engineering_bay
+		}
+	}
+
+	resources = {
+		category = starbase_modules
+		cost = {
+			alloys = @arkship_cost_alloys_100
+		}
+
+		upkeep = {
+			energy = @arkship_upkeep_energy_2
+		}
+	}
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	planet_modifier = {
+		planet_building_capacity_add = 1
+	}
+
+	country_modifier = {
+		country_vivarium_max_capacity_add = 30
+	}
+
+	on_finished = {
+		set_ship_construction_type = starbase_beastport
+	}
+	on_destroyed = {
+		if = {
+			limit = { NOT = { has_starbase_module = beastport } }
+			set_ship_construction_type = none
+		}
+	}
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_shipwright
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = {
+		inline_script = {
+			script = starbase_modules/ship_construction_ai_weight
+			MODULE = beastport
+		}
+		modifier = {
+			factor = 0
+			owner = {
+				uses_fauna_ship_sizes = no
+			}
+		}
+	}
+}
+
+arkship_docking_bay = {
+	icon = "GFX_arkship_docking_bay"
+	section = "ARKSHIP_FACTORY_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_utility_cat
+
+	potential = {
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_50
+		}
+
+		upkeep = {
+			energy = @arkship_upkeep_energy_1
+			trade = @arkship_upkeep_trade_4
+		}
+	}
+
+	country_modifier = {
+		country_naval_cap_add = 5
+	}
+
+	station_modifier = {
+		ship_starbase_stockpile_collection_rate_mult = 0.10
+	}
+
+	ai_weight = {
+		weight = 100 #use same weight here - ai weighting is done in starbase_types.txt
+	}
+}
+
+arkship_habitation_module = {
+	icon = "GFX_arkship_habitation_module"
+	section = "ARKSHIP_LIVING_SPACE_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_utility_cat
+
+	potential = {
+		owner? = {
+			OR = {
+				has_technology = tech_housing_2
+				has_country_flag = champions_forge_enclave_country
+			}
+		}
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_housing_2"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_200
+			influence = @arkship_cost_influence_25
+			exotic_gases = @arkship_cost_strategic_25
+		}
+
+		upkeep = {
+			energy = @arkship_upkeep_energy_2
+			exotic_gases = @arkship_upkeep_strategic_1
+		}
+	}
+
+	planet_modifier = {
+		planet_max_districts_add = 1
+		pop_environment_tolerance = 0.05
+	}
+
+	ai_weight = {
+		weight = 100 #use same weight here - ai weighting is done in starbase_types.txt
+	}
+}
+
+arkship_sensor_array = {
+	icon = "GFX_arkship_sensor_array"
+	section = "ARKSHIP_SCIENCE_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_utility_cat
+
+	potential = {
+		owner? = {
+			OR = {
+				has_technology = tech_sensors_2
+				has_country_flag = champions_forge_enclave_country
+			}
+		}
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_sensors_2"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_100
+			rare_crystals = @arkship_cost_strategic_25
+		}
+
+		upkeep = {
+			energy = @arkship_upkeep_energy_2
+		}
+	}
+	station_modifier = {
+		ship_sensor_range_add = 1
+		ship_hyperlane_range_add = 1
+		science_ship_survey_speed = 0.15
+	}
+	custom_tooltip_with_modifiers = sm_arkship_sensor_array_tt
+
+	ai_weight = {
+		weight = 100 #use same weight here - ai weighting is done in starbase_types.txt
+	}
+}
+
+arkship_mining_array = {
+	icon = "GFX_arkship_mining_array"
+	section = "ARKSHIP_CONSTRUCTION_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_utility_cat
+
+	potential = {
+		owner? = {
+			OR = {
+				has_technology = tech_planetary_engineering
+				has_country_flag = champions_forge_enclave_country
+			}
+		}
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_planetary_engineering"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_100
+			volatile_motes = @arkship_cost_strategic_25
+		}
+
+		upkeep = {
+			energy = @arkship_upkeep_energy_2
+		}
+	}
+
+	station_modifier = {
+		show_only_custom_tooltip = no
+		arkship_harvest_resources_produces_mult = 0.05
+	}
+
+	custom_tooltip_with_modifiers = sm_arkship_mining_array_tt
+
+	ai_weight = {
+		weight = 100 #use same weight here - ai weighting is done in starbase_types.txt
+	}
+}
+
+arkship_grand_archive = {
+	icon = "GFX_arkship_grand_archive"
+	section = "ARKSHIP_LIVING_SPACE_MODULE"
+	construction_days = 1800
+	starbase_type = arkship
+	category = sm_utility_cat
+
+	empire_limit = {
+		base = 1
+	}
+
+	potential = {
+		owner? = {
+			has_technology = tech_galactic_archivism
+			has_grand_archive = no
+		}
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_galactic_archivism"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_500
+			volatile_motes = @arkship_cost_strategic_100
+		}
+
+		upkeep = {
+			energy = @arkship_upkeep_energy_10
+		}
+	}
+
+	country_modifier = {
+		country_vivarium_max_capacity_add = @grand_archive_vivarium_capacity
+	}
+
+	on_finished = {
+		owner = {
+			if = {
+				limit = { has_country_flag = grand_archive_destroyed }
+				remove_country_flag = grand_archive_destroyed
+			}
+			set_country_flag = has_arkship_grand_archive_module
+			country_event = { id = grand_archive.4120 }
+			country_event = { id = grand_archive.4199 }
+			if = {
+				limit = { has_origin = origin_treasure_hunters }
+				country_event = {
+					id = grand_archive.8090
+					scopes = { from = prev.solar_system }
+				}
+			}
+		}
+	}
+	on_destroyed = {
+		owner = {
+			remove_country_flag = ga_destroyed_contains_space_fauna
+			if = {
+				limit = { num_vivarium_slots > 0 }
+				set_country_flag = ga_destroyed_contains_space_fauna
+				release_all_vivarium_fauna = { LOCATION = prev.solar_system }
+			}
+			set_country_flag = grand_archive_destroyed
+			remove_country_flag = has_arkship_grand_archive_module
+		}
+	}
+
+	ai_weight = {
+		weight = 100 #use same weight here - ai weighting is done in starbase_types.txt
+	}
+}
+
+arkship_hangar_bay = {
+	icon = "GFX_arkship_hangar_bay"
+	section = "ARKSHIP_HANGAR_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_strike_craft_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_strike_craft_1
+		}
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_strike_craft_1"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_250
+			exotic_gases = @arkship_cost_strategic_45
+		}
+	}
+
+	component_set = SCOUT_HANGAR_1
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_hangar_bay_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_flight_decks
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = {
+		weight = 100 #use same weight here - ai weighting is done in starbase_types.txt
+		modifier = {
+			factor = 2
+			ai_owner_prefers_strike_craft = yes
+		}
+	}
+}
+
+arkship_archaeo_hangar_bay = {
+	icon = "GFX_arkship_archaeo_hangar_bay"
+	section = "ARKSHIP_HANGAR_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_strike_craft_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_archaeo_strike_crafts
+		}
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_archaeo_strike_crafts"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_250
+			minor_artifacts = @arkship_cost_rare_75
+		}
+	}
+
+	component_set = ARCHAEO_STRIKECRAFT
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_archaeo_hangar_bay_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_flight_decks
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = {
+		weight = 100 #use same weight here - ai weighting is done in starbase_types.txt
+		modifier = {
+			factor = 2
+			ai_owner_prefers_strike_craft = yes
+		}
+		modifier = {
+			factor = 1.25
+			ai_owner_has_archaeoengineers = yes
+		}
+	}
+}
+
+arkship_psionic_hangar_bay = {
+	icon = "GFX_arkship_psionic_hangar_bay"
+	section = "ARKSHIP_HANGAR_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_strike_craft_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_psionic_bombers
+		}
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_psionic_bombers"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_550
+			sr_zro = @arkship_cost_rare_25
+		}
+	}
+
+	component_set = PSIONIC_STRIKE_CRAFT
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_psionic_hangar_bay_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_flight_decks
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = {
+		weight = 125 #psionic components are weighted higher as the AI needs to be psionic to unlock them
+		modifier = {
+			factor = 2
+			ai_owner_prefers_strike_craft = yes
+		}
+	}
+}
+
+arkship_amoeba_hangar_bay = {
+	icon = "GFX_arkship_amoeba_hangar_bay"
+	section = "ARKSHIP_HANGAR_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_strike_craft_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_amoeba_strike_craft_1
+		}
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_amoeba_strike_craft_1"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_120
+		}
+	}
+
+	component_set = AMOEBA_STRIKE_CRAFT_1
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_amoeba_hangar_bay_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_flight_decks
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = {
+		weight = 100 #use same weight here - ai weighting is done in starbase_types.txt
+		modifier = {
+			factor = 2
+			ai_owner_prefers_strike_craft = yes
+		}
+	}
+}
+
+arkship_swarm_hangar_bay = {
+	icon = "GFX_arkship_swarm_hangar_bay"
+	section = "ARKSHIP_HANGAR_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_strike_craft_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_swarm_strike_craft_1
+		}
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_swarm_strike_craft_1"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_85
+			exotic_gases = @arkship_cost_strategic_45
+		}
+	}
+
+	component_set = SWARM_STRIKE_CRAFT_1
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_swarm_hangar_bay_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_flight_decks
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = {
+		weight = 100 #use same weight here - ai weighting is done in starbase_types.txt
+		modifier = {
+			factor = 2
+			ai_owner_prefers_strike_craft = yes
+		}
+	}
+}
+
+arkship_laser_battery = {
+	icon = "GFX_arkship_laser_battery"
+	section = "ARKSHIP_MEDIUM_TURRET_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_energy_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_lasers_1
+		}
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_lasers_1"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_100
+			rare_crystals = @arkship_cost_strategic_45
+		}
+	}
+
+	component_set = RED_LASER
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_laser_battery_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_laser_capacitors
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = {
+		weight = 100 #use same weight here - ai weighting is done in starbase_types.txt
+		modifier = {
+			factor = 2
+			ai_owner_prefers_energy_weapons = yes
+		}
+	}
+}
+
+arkship_archaeo_laser_battery = {
+	icon = "GFX_arkship_archaeo_laser_battery"
+	section = "ARKSHIP_MEDIUM_TURRET_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_energy_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_archaeo_lasers
+		}
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_archaeo_lasers"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_250
+			minor_artifacts = @arkship_cost_rare_75
+		}
+	}
+
+	component_set = ARCHAEO_LASER
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_archaeo_laser_battery_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_laser_capacitors
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = {
+		weight = 100 #use same weight here - ai weighting is done in starbase_types.txt
+		modifier = {
+			factor = 2
+			ai_owner_prefers_energy_weapons = yes
+		}
+		modifier = {
+			factor = 1.25
+			ai_owner_has_archaeoengineers = yes
+		}
+	}
+}
+
+arkship_lance_battery = {
+	icon = "GFX_arkship_lance_battery"
+	section = "ARKSHIP_XL_TURRET_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_energy_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_energy_lance_1
+		}
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_energy_lance_1"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_300
+			rare_crystals = @arkship_cost_strategic_150
+		}
+	}
+
+	component_set = ENERGY_LANCE_1
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_lance_battery_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_laser_capacitors
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = {
+		weight = 100 #use same weight here - ai weighting is done in starbase_types.txt
+		modifier = {
+			factor = 2
+			ai_owner_prefers_energy_weapons = yes
+		}
+	}
+}
+
+arkship_particle_launcher = {
+	icon = "GFX_arkship_particle_launcher"
+	section = "ARKSHIP_TORPEDO_TURRET_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_energy_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_energy_torpedoes_1
+		}
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_energy_torpedoes_1"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_500
+			exotic_gases = @arkship_cost_strategic_250
+		}
+	}
+
+	component_set = ENERGY_TORPEDO_1
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_particle_launcher_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_laser_capacitors
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = {
+		weight = 100 #use same weight here - ai weighting is done in starbase_types.txt
+		modifier = {
+			factor = 2
+			ai_owner_prefers_energy_weapons = yes
+		}
+	}
+}
+
+arkship_psionic_torpedo = {
+	icon = "GFX_arkship_psionic_torpedo"
+	section = "ARKSHIP_TORPEDO_TURRET_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_energy_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_zro_launcher
+		}
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_zro_launcher"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_825
+			sr_zro = @arkship_cost_rare_250
+		}
+	}
+
+	component_set = PSIONIC_TORPEDO
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_psionic_torpedo_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_laser_capacitors
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = {
+		weight = 125 #psionic components are weighted higher as the AI needs to be psionic to unlock them
+		modifier = {
+			factor = 2
+			ai_owner_prefers_energy_weapons = yes
+		}
+	}
+}
+
+arkship_arc_emitter_battery = {
+	icon = "GFX_arkship_arc_emitter_battery"
+	section = "ARKSHIP_XL_TURRET_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_energy_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_arc_emitter_1
+		}
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_arc_emitter_1"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_300
+			rare_crystals = @arkship_cost_strategic_150
+		}
+	}
+
+	component_set = ARC_EMITTER_1
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_arc_emitter_battery_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_laser_capacitors
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = {
+		weight = 100 #use same weight here - ai weighting is done in starbase_types.txt
+		modifier = {
+			factor = 2
+			ai_owner_prefers_energy_weapons = yes
+		}
+	}
+}
+
+arkship_psionic_lightning_battery = {
+	icon = "GFX_arkship_psionic_lightning_battery"
+	section = "ARKSHIP_LARGE_TURRET_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_energy_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_psionic_lightning
+		}
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_psionic_lightning"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_175
+			sr_zro = @arkship_cost_rare_25
+		}
+	}
+
+	component_set = PSIONIC_LIGHTNING
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_psionic_lightning_battery_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_laser_capacitors
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = {
+		weight = 125 #psionic components are weighted higher as the AI needs to be psionic to unlock them
+		modifier = {
+			factor = 2
+			ai_owner_prefers_energy_weapons = yes
+		}
+	}
+}
+
+arkship_mass_driver_battery = {
+	icon = "GFX_arkship_mass_driver_battery"
+	section = "ARKSHIP_MEDIUM_TURRET_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_projectile_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_mass_drivers_1
+		}
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_mass_drivers_1"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_100
+			volatile_motes = @arkship_cost_strategic_45
+		}
+	}
+
+	component_set = MASS_DRIVER_1
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_mass_driver_battery_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_ammunition_lines
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = {
+		weight = 100 #use same weight here - ai weighting is done in starbase_types.txt
+		modifier = {
+			factor = 2
+			ai_owner_prefers_kinetic_weapons = yes
+		}
+	}
+}
+
+arkship_archaeo_mass_driver_battery = {
+	icon = "GFX_arkship_archaeo_mass_driver_battery"
+	section = "ARKSHIP_MEDIUM_TURRET_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_projectile_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_archaeo_mass_drivers
+		}
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_archaeo_mass_drivers"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_250
+			minor_artifacts = @arkship_cost_rare_75
+		}
+	}
+
+	component_set = ARCHAEO_KINETIC
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_archaeo_mass_driver_battery_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_ammunition_lines
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = {
+		weight = 100 #use same weight here - ai weighting is done in starbase_types.txt
+		modifier = {
+			factor = 2
+			ai_owner_prefers_kinetic_weapons = yes
+		}
+		modifier = {
+			factor = 1.25
+			ai_owner_has_archaeoengineers = yes
+		}
+	}
+}
+
+arkship_kinetic_artillery_battery = {
+	icon = "GFX_arkship_kinetic_artillery_battery"
+	section = "ARKSHIP_LARGE_TURRET_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_projectile_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_kinetic_artillery_1
+		}
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_kinetic_artillery_1"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_175
+			volatile_motes = @arkship_cost_strategic_150
+		}
+	}
+
+	component_set = KINETIC_ARTILLERY_1
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_kinetic_artillery_battery_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_ammunition_lines
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = {
+		weight = 100 #use same weight here - ai weighting is done in starbase_types.txt
+		modifier = {
+			factor = 2
+			ai_owner_prefers_kinetic_weapons = yes
+		}
+	}
+}
+
+arkship_lm_accelerator = {
+	icon = "GFX_arkship_lm_accelerator"
+	section = "ARKSHIP_LARGE_TURRET_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_projectile_cat
+
+	potential = {
+		owner? = {
+			is_galvanic_empire = yes
+			has_technology = tech_kinetic_artillery_2
+		}
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_kinetic_artillery_2"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+		is_galvanic_empire = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			sr_living_metal = @arkship_cost_rare_500
+			volatile_motes = @arkship_cost_strategic_350
+		}
+	}
+
+	component_set = LM_ACCELERATOR_SET
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_lm_accelerator_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_ammunition_lines
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = {
+		weight = 100 #use same weight here - ai weighting is done in starbase_types.txt
+		modifier = {
+			factor = 2
+			ai_owner_prefers_kinetic_weapons = yes
+		}
+	}
+}
+
+arkship_mass_accelerator = {
+	icon = "GFX_arkship_mass_accelerator"
+	section = "ARKSHIP_XL_TURRET_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_projectile_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_mass_accelerator_1
+		}
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_mass_accelerator_1"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_300
+			volatile_motes = @arkship_cost_strategic_150
+		}
+	}
+
+	component_set = MASS_ACCELERATOR_1
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_mass_accelerator_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_ammunition_lines
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = {
+		weight = 100 #use same weight here - ai weighting is done in starbase_types.txt
+		modifier = {
+			factor = 2
+			ai_owner_prefers_kinetic_weapons = yes
+		}
+	}
+}
+
+arkship_archaeo_mass_accelerator = {
+	icon = "GFX_arkship_archaeo_mass_accelerator"
+	section = "ARKSHIP_XL_TURRET_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_projectile_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_archaeo_mass_accelerator
+		}
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_archaeo_mass_accelerator"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_825
+			minor_artifacts = @arkship_cost_rare_125
+		}
+	}
+
+	component_set = ARCHAEO_X
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_archaeo_mass_accelerator_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_ammunition_lines
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = {
+		weight = 100 #use same weight here - ai weighting is done in starbase_types.txt
+		modifier = {
+			factor = 2
+			ai_owner_prefers_kinetic_weapons = yes
+		}
+		modifier = {
+			factor = 1.25
+			ai_owner_has_archaeoengineers = yes
+		}
+	}
+}
+
+arkship_missile_battery = {
+	icon = "GFX_arkship_missile_battery"
+	section = "ARKSHIP_SMALL_TURRET_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_explosive_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_missiles_1
+		}
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_missiles_1"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_65
+			volatile_motes = @arkship_cost_strategic_45
+		}
+	}
+
+	component_set = MISSILE_1
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_missile_battery_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_missile_silos
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = {
+		weight = 100 #use same weight here - ai weighting is done in starbase_types.txt
+		modifier = {
+			factor = 2
+			ai_owner_prefers_explosive_weapons = yes
+		}
+	}
+}
+
+arkship_archaeo_missile_battery = {
+	icon = "GFX_arkship_archaeo_missile_battery"
+	section = "ARKSHIP_SMALL_TURRET_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_explosive_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_archaeo_missiles
+		}
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_archaeo_missiles"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_250
+			minor_artifacts = @arkship_cost_rare_150
+		}
+	}
+
+	component_set = ARCHAEO_MISSILE
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_archaeo_missile_battery_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_missile_silos
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = {
+		weight = 100 #use same weight here - ai weighting is done in starbase_types.txt
+		modifier = {
+			factor = 2
+			ai_owner_prefers_explosive_weapons = yes
+		}
+		modifier = {
+			factor = 1.25
+			ai_owner_has_archaeoengineers = yes
+		}
+	}
+}
+
+arkship_swamer_missile_battery = {
+	icon = "GFX_arkship_swamer_missile_battery"
+	section = "ARKSHIP_MEDIUM_TURRET_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_explosive_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_swarmer_missiles_1
+		}
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_swarmer_missiles_1"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_120
+			volatile_motes = @arkship_cost_strategic_65
+		}
+	}
+
+	component_set = SWARMER_MISSILE_1
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_swamer_missile_battery_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_missile_silos
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = {
+		weight = 100 #use same weight here - ai weighting is done in starbase_types.txt
+		modifier = {
+			factor = 2
+			ai_owner_prefers_explosive_weapons = yes
+		}
+	}
+}
+
+arkship_scourge_missile_battery = {
+	icon = "GFX_arkship_scourge_missile_battery"
+	section = "ARKSHIP_TORPEDO_TURRET_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_explosive_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_scourge_missile_1
+		}
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_scourge_missile_1"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_150
+			exotic_gases = @arkship_cost_strategic_45
+		}
+	}
+
+	component_set = SCOURGE_MISSILE_1
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_scourge_missile_battery_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_missile_silos
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = {
+		weight = 100 #use same weight here - ai weighting is done in starbase_types.txt
+		modifier = {
+			factor = 2
+			ai_owner_prefers_explosive_weapons = yes
+		}
+	}
+}
+
+arkship_flak_battery = {
+	icon = "GFX_arkship_flak_battery"
+	section = "ARKSHIP_PD_TURRET_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_pd_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_flak_batteries_1
+		}
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_flak_batteries_1"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_85
+		}
+	}
+
+	component_set = FLAK_BATTERY_1
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_flak_battery_tt
+
+	ai_weight = {
+		weight = 100 #use same weight here - ai weighting is done in starbase_types.txt
+	}
+}
+
+arkship_pd_battery = {
+	icon = "GFX_arkship_pd_battery"
+	section = "ARKSHIP_PD_TURRET_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_pd_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_pd_tracking_1
+		}
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_pd_tracking_1"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_85
+		}
+	}
+
+	component_set = POINT_DEFENCE_1
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_pd_battery_tt
+
+	ai_weight = {
+		weight = 100 #use same weight here - ai weighting is done in starbase_types.txt
+	}
+}
+
+arkship_archaeo_pd_battery = {
+	icon = "GFX_arkship_archaeo_pd_battery"
+	section = "ARKSHIP_PD_TURRET_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_pd_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_archaeo_point_defence
+		}
+		is_arkship_starbase = yes
+		NOR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_archaeo_point_defence"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_100
+			minor_artifacts = @arkship_cost_rare_400
+		}
+	}
+
+	component_set = ARCHAEO_POINTDEFENCE
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_archaeo_pd_battery_tt
+
+	ai_weight = {
+		weight = 100 #use same weight here - ai weighting is done in starbase_types.txt
+		modifier = {
+			factor = 1.25
+			ai_owner_has_archaeoengineers = yes
+		}
+	}
+}
+
+# --- Supremacy-only invisible clones ---
+
+sai_supremacy_arkship_engineering_bay = {
+	icon = "GFX_arkship_engineering_bay"
+	section = "SAI_SUPREMACY_HIDDEN_EMPTY_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_naval_support_cat
+
+	potential = {
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	possible = {
+		count_starbase_modules = {
+			type = sai_supremacy_arkship_beastport
+			count < 1
+			include_being_constructed = yes
+		}
+	}
+
+	show_in_tech = "tech_space_construction"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_100
+		}
+
+		upkeep = {
+			energy = @arkship_upkeep_energy_2
+		}
+	}
+
+	station_modifier = {
+		show_only_custom_tooltip = no
+		megastructure_build_speed_mult = 0.15
+	}
+	planet_modifier = {
+		planet_building_capacity_add = 1
+	}
+
+	on_finished = {
+		set_ship_construction_type = starbase_shipyard
+	}
+	on_destroyed = {
+		if = {
+			limit = { NOT = { has_starbase_module = sai_supremacy_arkship_engineering_bay } }
+			set_ship_construction_type = none
+		}
+	}
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_shipwright
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = { weight = 0 }
+}
+
+sai_supremacy_arkship_beastport = {
+	icon = "GFX_starbase_beastport"
+	section = "SAI_SUPREMACY_HIDDEN_EMPTY_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_naval_support_cat
+
+	potential = {
+		owner? = {
+			OR = {
+				has_technology = tech_alien_cloning
+				is_beastmasters_empire = yes
+			}
+		}
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	possible = {
+		count_starbase_modules = {
+			type = sai_supremacy_arkship_engineering_bay
+			count < 1
+			include_being_constructed = yes
+		}
+	}
+
+	abort_construction_trigger = {
+		OR = {
+			has_starbase_module = sai_supremacy_arkship_engineering_bay
+		}
+	}
+
+	resources = {
+		category = starbase_modules
+		cost = {
+			alloys = @arkship_cost_alloys_100
+		}
+
+		upkeep = {
+			energy = @arkship_upkeep_energy_2
+		}
+	}
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	planet_modifier = {
+		planet_building_capacity_add = 1
+	}
+
+	country_modifier = {
+		country_vivarium_max_capacity_add = 30
+	}
+
+	on_finished = {
+		set_ship_construction_type = starbase_beastport
+	}
+	on_destroyed = {
+		if = {
+			limit = { NOT = { has_starbase_module = beastport } }
+			set_ship_construction_type = none
+		}
+	}
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_shipwright
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = { weight = 0 }
+}
+
+sai_supremacy_arkship_docking_bay = {
+	icon = "GFX_arkship_docking_bay"
+	section = "SAI_SUPREMACY_HIDDEN_EMPTY_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_utility_cat
+
+	potential = {
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_50
+		}
+
+		upkeep = {
+			energy = @arkship_upkeep_energy_1
+			trade = @arkship_upkeep_trade_4
+		}
+	}
+
+	country_modifier = {
+		country_naval_cap_add = 5
+	}
+
+	station_modifier = {
+		ship_starbase_stockpile_collection_rate_mult = 0.10
+	}
+
+	ai_weight = { weight = 0 }
+}
+
+sai_supremacy_arkship_habitation_module = {
+	icon = "GFX_arkship_habitation_module"
+	section = "SAI_SUPREMACY_HIDDEN_EMPTY_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_utility_cat
+
+	potential = {
+		owner? = {
+			OR = {
+				has_technology = tech_housing_2
+				has_country_flag = champions_forge_enclave_country
+			}
+		}
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_housing_2"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_200
+			influence = @arkship_cost_influence_25
+			exotic_gases = @arkship_cost_strategic_25
+		}
+
+		upkeep = {
+			energy = @arkship_upkeep_energy_2
+			exotic_gases = @arkship_upkeep_strategic_1
+		}
+	}
+
+	planet_modifier = {
+		planet_max_districts_add = 1
+		pop_environment_tolerance = 0.05
+	}
+
+	ai_weight = { weight = 0 }
+}
+
+sai_supremacy_arkship_sensor_array = {
+	icon = "GFX_arkship_sensor_array"
+	section = "SAI_SUPREMACY_HIDDEN_EMPTY_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_utility_cat
+
+	potential = {
+		owner? = {
+			OR = {
+				has_technology = tech_sensors_2
+				has_country_flag = champions_forge_enclave_country
+			}
+		}
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_sensors_2"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_100
+			rare_crystals = @arkship_cost_strategic_25
+		}
+
+		upkeep = {
+			energy = @arkship_upkeep_energy_2
+		}
+	}
+	station_modifier = {
+		ship_sensor_range_add = 1
+		ship_hyperlane_range_add = 1
+		science_ship_survey_speed = 0.15
+	}
+	custom_tooltip_with_modifiers = sm_arkship_sensor_array_tt
+
+	ai_weight = { weight = 0 }
+}
+
+sai_supremacy_arkship_mining_array = {
+	icon = "GFX_arkship_mining_array"
+	section = "SAI_SUPREMACY_HIDDEN_EMPTY_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_utility_cat
+
+	potential = {
+		owner? = {
+			OR = {
+				has_technology = tech_planetary_engineering
+				has_country_flag = champions_forge_enclave_country
+			}
+		}
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_planetary_engineering"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_100
+			volatile_motes = @arkship_cost_strategic_25
+		}
+
+		upkeep = {
+			energy = @arkship_upkeep_energy_2
+		}
+	}
+
+	station_modifier = {
+		show_only_custom_tooltip = no
+		arkship_harvest_resources_produces_mult = 0.05
+	}
+
+	custom_tooltip_with_modifiers = sm_arkship_mining_array_tt
+
+	ai_weight = { weight = 0 }
+}
+
+sai_supremacy_arkship_grand_archive = {
+	icon = "GFX_arkship_grand_archive"
+	section = "SAI_SUPREMACY_HIDDEN_EMPTY_MODULE"
+	construction_days = 1800
+	starbase_type = arkship
+	category = sm_utility_cat
+
+	empire_limit = {
+		base = 1
+	}
+
+	potential = {
+		owner? = {
+			has_technology = tech_galactic_archivism
+			has_grand_archive = no
+		}
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_galactic_archivism"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_500
+			volatile_motes = @arkship_cost_strategic_100
+		}
+
+		upkeep = {
+			energy = @arkship_upkeep_energy_10
+		}
+	}
+
+	country_modifier = {
+		country_vivarium_max_capacity_add = @grand_archive_vivarium_capacity
+	}
+
+	on_finished = {
+		owner = {
+			if = {
+				limit = { has_country_flag = grand_archive_destroyed }
+				remove_country_flag = grand_archive_destroyed
+			}
+			set_country_flag = has_arkship_grand_archive_module
+			country_event = { id = grand_archive.4120 }
+			country_event = { id = grand_archive.4199 }
+			if = {
+				limit = { has_origin = origin_treasure_hunters }
+				country_event = {
+					id = grand_archive.8090
+					scopes = { from = prev.solar_system }
+				}
+			}
+		}
+	}
+	on_destroyed = {
+		owner = {
+			remove_country_flag = ga_destroyed_contains_space_fauna
+			if = {
+				limit = { num_vivarium_slots > 0 }
+				set_country_flag = ga_destroyed_contains_space_fauna
+				release_all_vivarium_fauna = { LOCATION = prev.solar_system }
+			}
+			set_country_flag = grand_archive_destroyed
+			remove_country_flag = has_arkship_grand_archive_module
+		}
+	}
+
+	ai_weight = { weight = 0 }
+}
+
+sai_supremacy_arkship_hangar_bay = {
+	icon = "GFX_arkship_hangar_bay"
+	section = "SAI_SUPREMACY_HIDDEN_HANGAR_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_strike_craft_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_strike_craft_1
+		}
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_strike_craft_1"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_250
+			exotic_gases = @arkship_cost_strategic_45
+		}
+	}
+
+	component_set = SCOUT_HANGAR_1
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_hangar_bay_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_flight_decks
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = { weight = 0 }
+}
+
+sai_supremacy_arkship_archaeo_hangar_bay = {
+	icon = "GFX_arkship_archaeo_hangar_bay"
+	section = "SAI_SUPREMACY_HIDDEN_HANGAR_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_strike_craft_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_archaeo_strike_crafts
+		}
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_archaeo_strike_crafts"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_250
+			minor_artifacts = @arkship_cost_rare_75
+		}
+	}
+
+	component_set = ARCHAEO_STRIKECRAFT
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_archaeo_hangar_bay_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_flight_decks
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = { weight = 0 }
+}
+
+sai_supremacy_arkship_psionic_hangar_bay = {
+	icon = "GFX_arkship_psionic_hangar_bay"
+	section = "SAI_SUPREMACY_HIDDEN_HANGAR_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_strike_craft_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_psionic_bombers
+		}
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_psionic_bombers"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_550
+			sr_zro = @arkship_cost_rare_25
+		}
+	}
+
+	component_set = PSIONIC_STRIKE_CRAFT
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_psionic_hangar_bay_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_flight_decks
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = { weight = 0 }
+}
+
+sai_supremacy_arkship_amoeba_hangar_bay = {
+	icon = "GFX_arkship_amoeba_hangar_bay"
+	section = "SAI_SUPREMACY_HIDDEN_HANGAR_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_strike_craft_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_amoeba_strike_craft_1
+		}
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_amoeba_strike_craft_1"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_120
+		}
+	}
+
+	component_set = AMOEBA_STRIKE_CRAFT_1
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_amoeba_hangar_bay_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_flight_decks
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = { weight = 0 }
+}
+
+sai_supremacy_arkship_swarm_hangar_bay = {
+	icon = "GFX_arkship_swarm_hangar_bay"
+	section = "SAI_SUPREMACY_HIDDEN_HANGAR_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_strike_craft_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_swarm_strike_craft_1
+		}
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_swarm_strike_craft_1"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_85
+			exotic_gases = @arkship_cost_strategic_45
+		}
+	}
+
+	component_set = SWARM_STRIKE_CRAFT_1
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_swarm_hangar_bay_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_flight_decks
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = { weight = 0 }
+}
+
+sai_supremacy_arkship_laser_battery = {
+	icon = "GFX_arkship_laser_battery"
+	section = "SAI_SUPREMACY_HIDDEN_MEDIUM_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_energy_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_lasers_1
+		}
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_lasers_1"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_100
+			rare_crystals = @arkship_cost_strategic_45
+		}
+	}
+
+	component_set = RED_LASER
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_laser_battery_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_laser_capacitors
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = { weight = 0 }
+}
+
+sai_supremacy_arkship_archaeo_laser_battery = {
+	icon = "GFX_arkship_archaeo_laser_battery"
+	section = "SAI_SUPREMACY_HIDDEN_MEDIUM_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_energy_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_archaeo_lasers
+		}
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_archaeo_lasers"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_250
+			minor_artifacts = @arkship_cost_rare_75
+		}
+	}
+
+	component_set = ARCHAEO_LASER
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_archaeo_laser_battery_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_laser_capacitors
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = { weight = 0 }
+}
+
+sai_supremacy_arkship_lance_battery = {
+	icon = "GFX_arkship_lance_battery"
+	section = "SAI_SUPREMACY_HIDDEN_XL_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_energy_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_energy_lance_1
+		}
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_energy_lance_1"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_300
+			rare_crystals = @arkship_cost_strategic_150
+		}
+	}
+
+	component_set = ENERGY_LANCE_1
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_lance_battery_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_laser_capacitors
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = { weight = 0 }
+}
+
+sai_supremacy_arkship_particle_launcher = {
+	icon = "GFX_arkship_particle_launcher"
+	section = "SAI_SUPREMACY_HIDDEN_TORPEDO_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_energy_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_energy_torpedoes_1
+		}
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_energy_torpedoes_1"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_500
+			exotic_gases = @arkship_cost_strategic_250
+		}
+	}
+
+	component_set = ENERGY_TORPEDO_1
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_particle_launcher_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_laser_capacitors
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = { weight = 0 }
+}
+
+sai_supremacy_arkship_psionic_torpedo = {
+	icon = "GFX_arkship_psionic_torpedo"
+	section = "SAI_SUPREMACY_HIDDEN_TORPEDO_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_energy_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_zro_launcher
+		}
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_zro_launcher"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_825
+			sr_zro = @arkship_cost_rare_250
+		}
+	}
+
+	component_set = PSIONIC_TORPEDO
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_psionic_torpedo_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_laser_capacitors
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = { weight = 0 }
+}
+
+sai_supremacy_arkship_arc_emitter_battery = {
+	icon = "GFX_arkship_arc_emitter_battery"
+	section = "SAI_SUPREMACY_HIDDEN_XL_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_energy_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_arc_emitter_1
+		}
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_arc_emitter_1"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_300
+			rare_crystals = @arkship_cost_strategic_150
+		}
+	}
+
+	component_set = ARC_EMITTER_1
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_arc_emitter_battery_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_laser_capacitors
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = { weight = 0 }
+}
+
+sai_supremacy_arkship_psionic_lightning_battery = {
+	icon = "GFX_arkship_psionic_lightning_battery"
+	section = "SAI_SUPREMACY_HIDDEN_LARGE_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_energy_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_psionic_lightning
+		}
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_psionic_lightning"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_175
+			sr_zro = @arkship_cost_rare_25
+		}
+	}
+
+	component_set = PSIONIC_LIGHTNING
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_psionic_lightning_battery_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_laser_capacitors
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = { weight = 0 }
+}
+
+sai_supremacy_arkship_mass_driver_battery = {
+	icon = "GFX_arkship_mass_driver_battery"
+	section = "SAI_SUPREMACY_HIDDEN_MEDIUM_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_projectile_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_mass_drivers_1
+		}
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_mass_drivers_1"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_100
+			volatile_motes = @arkship_cost_strategic_45
+		}
+	}
+
+	component_set = MASS_DRIVER_1
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_mass_driver_battery_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_ammunition_lines
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = { weight = 0 }
+}
+
+sai_supremacy_arkship_archaeo_mass_driver_battery = {
+	icon = "GFX_arkship_archaeo_mass_driver_battery"
+	section = "SAI_SUPREMACY_HIDDEN_MEDIUM_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_projectile_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_archaeo_mass_drivers
+		}
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_archaeo_mass_drivers"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_250
+			minor_artifacts = @arkship_cost_rare_75
+		}
+	}
+
+	component_set = ARCHAEO_KINETIC
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_archaeo_mass_driver_battery_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_ammunition_lines
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = { weight = 0 }
+}
+
+sai_supremacy_arkship_kinetic_artillery_battery = {
+	icon = "GFX_arkship_kinetic_artillery_battery"
+	section = "SAI_SUPREMACY_HIDDEN_LARGE_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_projectile_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_kinetic_artillery_1
+		}
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_kinetic_artillery_1"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_175
+			volatile_motes = @arkship_cost_strategic_150
+		}
+	}
+
+	component_set = KINETIC_ARTILLERY_1
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_kinetic_artillery_battery_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_ammunition_lines
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = { weight = 0 }
+}
+
+sai_supremacy_arkship_lm_accelerator = {
+	icon = "GFX_arkship_lm_accelerator"
+	section = "SAI_SUPREMACY_HIDDEN_LARGE_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_projectile_cat
+
+	potential = {
+		owner? = {
+			is_galvanic_empire = yes
+			has_technology = tech_kinetic_artillery_2
+		}
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_kinetic_artillery_2"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+		is_galvanic_empire = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			sr_living_metal = @arkship_cost_rare_500
+			volatile_motes = @arkship_cost_strategic_350
+		}
+	}
+
+	component_set = LM_ACCELERATOR_SET
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_lm_accelerator_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_ammunition_lines
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = { weight = 0 }
+}
+
+sai_supremacy_arkship_mass_accelerator = {
+	icon = "GFX_arkship_mass_accelerator"
+	section = "SAI_SUPREMACY_HIDDEN_XL_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_projectile_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_mass_accelerator_1
+		}
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_mass_accelerator_1"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_300
+			volatile_motes = @arkship_cost_strategic_150
+		}
+	}
+
+	component_set = MASS_ACCELERATOR_1
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_mass_accelerator_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_ammunition_lines
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = { weight = 0 }
+}
+
+sai_supremacy_arkship_archaeo_mass_accelerator = {
+	icon = "GFX_arkship_archaeo_mass_accelerator"
+	section = "SAI_SUPREMACY_HIDDEN_XL_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_projectile_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_archaeo_mass_accelerator
+		}
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_archaeo_mass_accelerator"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_825
+			minor_artifacts = @arkship_cost_rare_125
+		}
+	}
+
+	component_set = ARCHAEO_X
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_archaeo_mass_accelerator_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_ammunition_lines
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = { weight = 0 }
+}
+
+sai_supremacy_arkship_missile_battery = {
+	icon = "GFX_arkship_missile_battery"
+	section = "SAI_SUPREMACY_HIDDEN_SMALL_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_explosive_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_missiles_1
+		}
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_missiles_1"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_65
+			volatile_motes = @arkship_cost_strategic_45
+		}
+	}
+
+	component_set = MISSILE_1
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_missile_battery_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_missile_silos
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = { weight = 0 }
+}
+
+sai_supremacy_arkship_archaeo_missile_battery = {
+	icon = "GFX_arkship_archaeo_missile_battery"
+	section = "SAI_SUPREMACY_HIDDEN_SMALL_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_explosive_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_archaeo_missiles
+		}
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_archaeo_missiles"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_250
+			minor_artifacts = @arkship_cost_rare_150
+		}
+	}
+
+	component_set = ARCHAEO_MISSILE
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_archaeo_missile_battery_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_missile_silos
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = { weight = 0 }
+}
+
+sai_supremacy_arkship_swamer_missile_battery = {
+	icon = "GFX_arkship_swamer_missile_battery"
+	section = "SAI_SUPREMACY_HIDDEN_MEDIUM_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_explosive_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_swarmer_missiles_1
+		}
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_swarmer_missiles_1"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_120
+			volatile_motes = @arkship_cost_strategic_65
+		}
+	}
+
+	component_set = SWARMER_MISSILE_1
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_swamer_missile_battery_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_missile_silos
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = { weight = 0 }
+}
+
+sai_supremacy_arkship_scourge_missile_battery = {
+	icon = "GFX_arkship_scourge_missile_battery"
+	section = "SAI_SUPREMACY_HIDDEN_TORPEDO_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_explosive_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_scourge_missile_1
+		}
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_scourge_missile_1"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_150
+			exotic_gases = @arkship_cost_strategic_45
+		}
+	}
+
+	component_set = SCOURGE_MISSILE_1
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_scourge_missile_battery_tt
+
+	inline_script = {
+		script = jobs/arkship_module_soldiers_add
+		ZONE = zone_ark_missile_silos
+		AMOUNT = @arkship_module_jobs
+	}
+
+	ai_weight = { weight = 0 }
+}
+
+sai_supremacy_arkship_flak_battery = {
+	icon = "GFX_arkship_flak_battery"
+	section = "SAI_SUPREMACY_HIDDEN_PD_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_pd_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_flak_batteries_1
+		}
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_flak_batteries_1"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_85
+		}
+	}
+
+	component_set = FLAK_BATTERY_1
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_flak_battery_tt
+
+	ai_weight = { weight = 0 }
+}
+
+sai_supremacy_arkship_pd_battery = {
+	icon = "GFX_arkship_pd_battery"
+	section = "SAI_SUPREMACY_HIDDEN_PD_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_pd_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_pd_tracking_1
+		}
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_pd_tracking_1"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_85
+		}
+	}
+
+	component_set = POINT_DEFENCE_1
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_pd_battery_tt
+
+	ai_weight = { weight = 0 }
+}
+
+sai_supremacy_arkship_archaeo_pd_battery = {
+	icon = "GFX_arkship_archaeo_pd_battery"
+	section = "SAI_SUPREMACY_HIDDEN_PD_MODULE"
+	construction_days = 180
+	starbase_type = arkship
+	category = sm_pd_cat
+
+	potential = {
+		owner? = {
+			has_technology = tech_archaeo_point_defence
+		}
+		is_arkship_starbase = yes
+		OR = {
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+			# 本补丁修复：危机版至尊号走的是 foc_ 前缀的另一套尺寸
+			# （foc_supremacy_crisis_events.txt 用 set_starbase_size 把
+			# military_arkship_tier_N 改成 foc_sai_supremacy_arkship_tier_N），
+			# 而这些模块的 potential 只认无前缀的三个尺寸，于是危机版一改尺寸，
+			# 全部模块的 potential 立刻不成立——舰船上一个功能都没有。
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+			OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	show_in_tech = "tech_archaeo_point_defence"
+
+	show_tech_unlock_if = {
+		is_nomadic = yes
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = {
+			alloys = @arkship_cost_alloys_100
+			minor_artifacts = @arkship_cost_rare_400
+		}
+	}
+
+	component_set = ARCHAEO_POINTDEFENCE
+	show_component_tooltips = yes
+	custom_tooltip_with_modifiers = sm_arkship_archaeo_pd_battery_tt
+
+	ai_weight = { weight = 0 }
+}

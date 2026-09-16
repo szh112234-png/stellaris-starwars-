@@ -1,0 +1,104 @@
+# This is a template which multiple species can use. 
+
+fel_female_clothes_01 = {
+	default = "gfx/models/portraits/fel/fel_female_clothes_felofficer_01.dds"
+	
+	game_setup = {#will run with a limited country scope. species and government is set but the country does not actually exist
+		default = "gfx/models/portraits/fel/fel_female_clothes_felofficer_01.dds"
+	}
+	
+	#species scope
+	species = { #generic portrait for a species
+		default = "gfx/models/portraits/fel/fel_female_clothes_felofficer_01.dds"
+	}
+	
+	#pop scope
+	pop = { #for a specific pop
+		default = "gfx/models/portraits/fel/fel_female_clothes_felofficer_01.dds"
+		
+		
+		"gfx/models/portraits/fel/fel_female_clothes_felofficer_01.dds" 	= { OR = { is_pop_category = worker is_enslaved = yes is_pop_category = simple_drone }  }
+		"gfx/models/portraits/fel/fel_female_clothes_isbagent.dds" 	= { OR = { is_pop_category = specialist is_pop_category = complex_drone } }
+		"gfx/models/portraits/fel/fel_female_clothes_tarkin_01.dds" 	= { is_pop_category = ruler }
+	
+	}
+	#leader scope
+	leader = { #scientists, generals, admirals, governor
+		
+		#SCIENTIST 
+		"gfx/models/portraits/fel/fel_female_clothes_scientist_02.dds" = {
+			leader_class = scientist
+			NOR = {
+				has_trait = leader_trait_psionic
+				has_trait = leader_trait_imperial_knight
+			}
+		}
+		
+		#GENERAL 
+		"gfx/models/portraits/fel/fel_female_clothes_general.dds" = {
+			leader_class = commander
+			leader_should_wear_general_uniform = yes
+			NOR = {
+				has_trait = leader_trait_psionic
+				has_trait = leader_trait_imperial_knight
+			}
+		}
+		
+		#ADMIRAL 
+		"gfx/models/portraits/fel/fel_female_clothes_admiral_02.dds" = {
+			leader_class = commander
+			leader_should_wear_general_uniform = no
+			NOR = {
+				has_trait = leader_trait_psionic
+				has_trait = leader_trait_imperial_knight
+			}
+		}
+		#OFFICIAL
+		"gfx/models/portraits/fel/fel_female_clothes_tarkin_01.dds" = {
+			leader_class = official
+			NOR = {
+				has_trait = leader_trait_psionic
+				has_trait = leader_trait_imperial_knight
+			}
+		}
+		#IMP KNIGHT 
+		"gfx/models/portraits/fel/fel_female_clothes_ruler2.dds" = {
+			leader_class = commander 
+			OR = {
+				has_trait = leader_trait_psionic
+				has_trait = leader_trait_imperial_knight
+			}
+		}
+		
+		"gfx/models/portraits/fel/fel_female_clothes_impknightwhite.dds" = {
+			leader_class = official
+			OR = {
+				has_trait = leader_trait_psionic
+				has_trait = leader_trait_imperial_knight
+			}
+		}
+	}
+
+	#leader scope 
+	ruler = { #for rulers
+		default = "gfx/models/portraits/fel/fel_female_clothes_ruler.dds"
+		
+		"gfx/models/portraits/fel/fel_female_clothes_ruler.dds" = { owner = { has_generic_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/fel/fel_female_clothes_admiral_03.dds" = { owner = { has_militarist_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/fel/fel_female_clothes_impknightwhite.dds" = { owner = { has_spiritualist_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/fel/fel_female_clothes_scientist_02.dds" = { owner = { has_pacifist_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/fel/fel_female_clothes_ruler.dds" = { owner = { has_primitive_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/fel/fel_female_clothes_tarkin_01.dds" = { owner = { has_materialist_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/fel/fel_female_clothes_ruler.dds" = { owner = { has_authority = auth_imperial } }
+	}
+}
+
+fel_female_hair_1 = { 
+	default = "gfx/models/portraits/fel/fel_female_hair_red_style_01.dds"
+	
+	ruler = {
+	default = "gfx/models/portraits/fel/fel_female_hair_black_style_01.dds"
+	
+		"gfx/models/portraits/fel/fel_female_hair_black_style_01.dds" = { owner = { has_government = military_dictatorship } }
+	}
+}

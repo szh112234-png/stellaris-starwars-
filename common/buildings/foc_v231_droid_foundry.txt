@@ -1,0 +1,45 @@
+# FOC V231 - dedicated droid foundry.
+#
+# This is a mod-owned building key, so it can never break against a vanilla
+# building rename between Stellaris patches. It is granted by event at country
+# or capital creation and is not part of the normal build queue.
+
+building_foc_v231_droid_foundry = {
+    base_buildtime = 240
+    can_build = no
+    can_demolish = yes
+    base_cap_amount = 1
+    category = manufacturing
+    building_sets = { manufacturing urban }
+    icon = "building_republic_factory"
+
+    potential = {
+        exists = owner
+        owner = {
+            OR = {
+                has_country_flag = foc_republic_origin_republic_country
+                has_country_flag = foc_sw_new_republic_country
+                has_country_flag = foc_republic_origin_separatist_country
+                has_country_flag = foc_republic_origin_empire_country
+                has_country_flag = foc_sw_imperial_remnant_country
+                has_country_flag = foc_khan_first_order_country
+            }
+        }
+    }
+
+    allow = { always = yes }
+
+    planet_modifier = {
+        planet_pop_assembly_add = 3
+        planet_jobs_alloys_produces_mult = 0.10
+        planet_max_districts_add = 1
+    }
+
+    resources = {
+        category = planet_buildings
+        cost = { minerals = 600 }
+        upkeep = { energy = 3 }
+    }
+
+    ai_weight = { weight = 0 }
+}

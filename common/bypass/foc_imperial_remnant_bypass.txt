@@ -1,0 +1,53 @@
+# =============================================================================
+# 覆盖原文件：common/bypass/foc_imperial_remnant_bypass.txt
+# =============================================================================
+# 只改 country_can_use，其余逐字保留。
+#
+# 原本第一条是 has_global_flag = foc_imperial_remnant_route_unlocked。这个全局
+# 旗标本来只应该由 foc_starkiller_coords.2 在「弑星者首次开火、某国完成坐标
+# 项目」之后置上——那是设计好的全银河解锁。但共和国起源的迁都事件提前把它置
+# 上了（见 foc_republic_origin_events.txt 的修复注释），导致基地还没开工，
+# AI 新共和国就能直接走门进伊冷。
+#
+# 那一处已经改成国家旗标。这里再补两条国家级判定，让权限来源变得明确：
+#   fop_imperial_remnant_route_unlocked  - 自己打通伊冷航路（两条起源路径共用）
+#   foc_starkiller_coordinates_known     - 通过坐标项目获知（coords.2 会发给所有国家）
+# 全局旗标保留，因为 coords.2 的「首个完成者为全银河解锁」是原有设计，不动它。
+# =============================================================================
+
+foc_imperial_remnant_route = {
+    name = FOC_IMPERIAL_REMNANT_GATE
+    is_pathfind = yes
+    uses_action = no
+    requires_exploration = no
+    always_active = yes
+    windup_time = 0
+    winddown_time = 0
+    ftl_multiplier = 0
+    extends_sensors = no
+    icon_frame = 25
+    remember_instances = no
+    connection_type = scripted_connection
+    animation_time = 1
+    ftl_ship_effect = "gateway_ftl_ship_effect_entity"
+    ftl_bypass_effect = "gateway_ftl_bypass_effect_entity"
+
+    country_can_use = {
+        OR = {
+            # 坐标项目完成后由 foc_starkiller_coords.2 为全银河解锁。
+            has_global_flag = foc_imperial_remnant_route_unlocked
+            # 自己打通伊冷航路的一方。
+            has_country_flag = fop_imperial_remnant_route_unlocked
+            has_country_flag = foc_starkiller_coordinates_known
+            has_country_flag = foc_khan_first_order_country
+            has_country_flag = foc_khan_final_order_country
+            has_country_flag = fop_player_first_order
+            has_country_flag = fop_player_final_order
+        }
+    }
+
+    scripted_connection = {
+        node = { has_star_flag = foc_sw_jakku_home }
+        nexus = { has_star_flag = foc_khan_ilum_home }
+    }
+}

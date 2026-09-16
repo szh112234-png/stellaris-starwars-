@@ -1,0 +1,615 @@
+namespace = foc_rogue_one
+
+# =============================================================================
+# Rogue One / Death Star I story bridge
+# =============================================================================
+# This chain deliberately reuses the existing Jedha and Scarif state:
+#   foc_saga_jedha_destroyed
+#   foc_republic_origin_scarif_weakness_obtained
+# and therefore does not create a second, competing Death Star weakness system.
+# It is player-side aware and old-save safe through one-time country flags.
+# =============================================================================
+
+# --- Imperial perspective -----------------------------------------------------
+
+# Death Star completion opens a real decision before any shot is fired.
+country_event = {
+    id = foc_rogue_one.1
+    title = foc_jedha_choice.name
+    desc = foc_jedha_choice.desc
+    picture = GFX_foc_rogue_one_jedha
+    location = event_target:foc_swmap_jedha_system
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        has_country_flag = foc_republic_origin_empire_country
+        has_country_flag = foc_republic_origin_death_star_one_built
+        any_owned_ship = { has_ship_flag = foc_republic_origin_death_star_one }
+        NOT = { has_global_flag = foc_republic_origin_death_star_one_destroyed }
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        NOT = { has_country_flag = foc_rogue_one_empire_jedha_shown }
+        NOT = { has_global_flag = foc_jedha_choice_presented }
+        NOT = { has_global_flag = foc_jedha_choice_resolved }
+        NOT = { has_global_flag = foc_saga_jedha_destroyed }
+        any_system = {
+            has_star_flag = foc_swmap_jedha_home
+            any_system_planet = {
+                has_planet_flag = foc_swmap_jedha
+                NOT = { foc_jedha_is_destroyed_planet = yes }
+            }
+        }
+    }
+
+    immediate = {
+        set_global_flag = foc_jedha_choice_presented
+        foc_jedha_prepare_targets = yes
+    }
+
+    option = {
+        name = foc_jedha_choice.destroy
+        allow = { any_owned_ship = { has_ship_flag = foc_republic_origin_death_star_one } }
+        custom_tooltip = foc_jedha_choice.destroy.tt
+        hidden_effect = { foc_jedha_destroy_with_death_star = yes }
+        ai_chance = { factor = 100 }
+    }
+    option = {
+        name = foc_jedha_choice.ignore
+        custom_tooltip = foc_jedha_choice.ignore.tt
+        hidden_effect = { foc_jedha_leave_to_rebels = yes }
+        ai_chance = { factor = 0 }
+    }
+}
+
+# Imperial intelligence discovers that Galen Erso planted a deliberate flaw.
+country_event = {
+    id = foc_rogue_one.2
+    title = foc_rogue_one.2.name
+    desc = foc_rogue_one.2.desc
+    picture = GFX_foc_rogue_one_blueprint
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        OR = {
+            has_country_flag = foc_republic_origin_empire_country
+            has_country_flag = foc_republic_origin_player_empire
+        }
+        has_country_flag = foc_rogue_one_empire_jedha_shown
+        NOT = { has_country_flag = foc_rogue_one_empire_galen_wait }
+        NOT = { has_country_flag = foc_rogue_one_empire_galen_shown }
+    }
+
+    immediate = {
+        set_country_flag = foc_rogue_one_empire_galen_shown
+        set_timed_country_flag = { flag = foc_rogue_one_empire_krennic_wait days = 30 }
+    }
+
+    option = { name = foc_rogue_one.2.a }
+}
+
+# Tarkin takes operational control of the station while Krennic returns to Scarif.
+country_event = {
+    id = foc_rogue_one.3
+    title = foc_rogue_one.3.name
+    desc = foc_rogue_one.3.desc
+    picture = GFX_foc_rogue_one_tarkin_meeting
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        OR = {
+            has_country_flag = foc_republic_origin_empire_country
+            has_country_flag = foc_republic_origin_player_empire
+        }
+        has_country_flag = foc_rogue_one_empire_galen_shown
+        NOT = { has_country_flag = foc_rogue_one_empire_krennic_wait }
+        NOT = { has_country_flag = foc_rogue_one_empire_krennic_shown }
+    }
+
+    immediate = {
+        set_country_flag = foc_rogue_one_empire_krennic_shown
+        foc_republic_origin_appoint_death_star_commander = yes
+    }
+
+    option = { name = foc_rogue_one.3.a }
+}
+
+# Scarif has fallen and the archive transmission escaped the shield gate.
+country_event = {
+    id = foc_rogue_one.4
+    title = foc_rogue_one.4.name
+    desc = foc_rogue_one.4.desc
+    picture = GFX_foc_rogue_one_scarif_space
+    location = event_target:foc_swmap_scarif_system
+    is_triggered_only = yes
+    force_open = yes
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        OR = {
+            has_country_flag = foc_republic_origin_empire_country
+            has_country_flag = foc_republic_origin_player_empire
+        }
+        has_global_flag = foc_republic_origin_scarif_weakness_obtained
+        NOT = {
+            has_global_flag = foc_republic_origin_galactic_treaty
+        }
+        NOT = {
+            has_country_flag = foc_rogue_one_empire_scarif_shown
+        }
+        NOT = {
+            has_country_flag = foc_v1717e_scarif_notice_shown
+        }
+    }
+    immediate = {
+        set_country_flag = foc_rogue_one_empire_scarif_shown
+        set_country_flag = foc_canon_battle_scarif
+        set_country_flag = foc_v1717e_scarif_notice_shown
+        set_country_flag = foc_v1717e_scarif_sequence_migrated
+        set_country_flag = foc_v1717e_scarif_choice_pending
+        foc_v1710_begin_scarif_aftermath = yes
+    }
+    option = {
+        name = foc_rogue_one.4.a
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_country_flag = foc_v1717e_scarif_confirmed
+                    }
+                }
+                if = {
+                    limit = {
+                        NOT = {
+                            has_global_flag = foc_republic_origin_galactic_treaty
+                        }
+                    }
+                    add_modifier = {
+                        modifier = foc_rogue_one_vader_pursuit
+                        days = 180
+                    }
+                    set_timed_country_flag = {
+                        flag = foc_rogue_one_empire_vader_wait
+                        days = 5
+                    }
+                    set_country_flag = foc_v1717e_scarif_confirmed
+                    country_event = {
+                        id = foc_v1710_story.1
+                        days = 1
+                    }
+                }
+                remove_country_flag = foc_v1717e_scarif_choice_pending
+            }
+        }
+    }
+}
+
+# Vader's boarding action nearly retrieves the plans, but a courier escapes.
+country_event = {
+    id = foc_rogue_one.5
+    title = foc_rogue_one.5.name
+    desc = foc_rogue_one.5.desc
+    picture = GFX_foc_rogue_one_vader
+    show_sound = foc_v232_vader_breathing
+    is_triggered_only = yes
+    force_open = yes
+    trigger = {
+        OR = {
+            has_country_flag = foc_republic_origin_empire_country
+            has_country_flag = foc_republic_origin_player_empire
+        }
+        foc_v1710_scarif_month_elapsed = yes
+        has_country_flag = foc_v1717e_scarif_confirmed
+        has_country_flag = foc_v1717e_emergence_confirmed
+        NOT = {
+            has_country_flag = foc_v1717e_scarif_choice_pending
+        }
+        NOT = {
+            has_country_flag = foc_rogue_one_empire_vader_wait
+        }
+        NOT = {
+            has_country_flag = foc_rogue_one_empire_vader_shown
+        }
+        NOT = {
+            has_country_flag = foc_v1717e_courier_confirmed
+        }
+        NOT = {
+            has_global_flag = foc_republic_origin_galactic_treaty
+        }
+        OR = {
+            is_ai = no
+            NOT = {
+                any_playable_country = {
+                    is_ai = no
+                }
+            }
+        }
+    }
+    immediate = {
+        set_country_flag = foc_rogue_one_empire_vader_shown
+        set_country_flag = foc_v1717e_scarif_sequence_migrated
+        set_country_flag = foc_v1717e_scarif_choice_pending
+    }
+    option = {
+        name = foc_rogue_one.5.a
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_country_flag = foc_v1717e_courier_confirmed
+                    }
+                }
+                if = {
+                    limit = {
+                        NOT = {
+                            has_global_flag = foc_republic_origin_galactic_treaty
+                        }
+                    }
+                    set_country_flag = foc_v1717e_courier_confirmed
+                    country_event = {
+                        id = foc_v1710_story.1
+                        days = 1
+                    }
+                }
+                remove_country_flag = foc_v1717e_scarif_choice_pending
+            }
+        }
+    }
+}
+
+# --- Rebel perspective --------------------------------------------------------
+
+# Bodhi Rook brings Galen Erso's message after either Jedha outcome.
+country_event = {
+    id = foc_rogue_one.10
+    title = foc_rogue_one.10.name
+    desc = {
+        trigger = { has_global_flag = foc_jedha_spared }
+        text = foc_jedha_choice.bodhi_spared.desc
+    }
+    desc = {
+        trigger = { NOT = { has_global_flag = foc_jedha_spared } }
+        text = foc_rogue_one.10.desc
+    }
+    picture = GFX_foc_rogue_one_bodhi
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        OR = {
+            has_country_flag = foc_republic_origin_imperial_rebel_country
+            has_country_flag = foc_khan_rebel_alliance_country
+            has_country_flag = foc_republic_origin_rebel_alliance_country
+            has_country_flag = foc_republic_origin_player_rebels
+        }
+        foc_jedha_story_resolved = yes
+        exists = event_target:foc_republic_origin_empire
+        event_target:foc_republic_origin_empire = {
+            has_country_flag = foc_republic_origin_death_star_one_built
+        }
+        NOT = { has_country_flag = foc_rogue_one_rebel_bodhi_shown }
+    }
+
+    immediate = {
+        set_country_flag = foc_rogue_one_rebel_bodhi_shown
+        set_timed_country_flag = { flag = foc_rogue_one_rebel_galen_wait days = 20 }
+    }
+
+    option = { name = foc_rogue_one.10.a }
+}
+
+# Galen explains the deliberate reactor vulnerability and points toward the archive.
+country_event = {
+    id = foc_rogue_one.11
+    title = foc_rogue_one.11.name
+    desc = foc_rogue_one.11.desc
+    picture = GFX_foc_rogue_one_galen_message
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_rogue_one_rebel_bodhi_shown
+        NOT = { has_country_flag = foc_rogue_one_rebel_galen_wait }
+        NOT = { has_country_flag = foc_rogue_one_rebel_galen_shown }
+    }
+
+    immediate = {
+        set_country_flag = foc_rogue_one_rebel_galen_shown
+        set_timed_country_flag = { flag = foc_rogue_one_rebel_eadu_wait days = 30 }
+    }
+
+    option = { name = foc_rogue_one.11.a }
+}
+
+# The Eadu raid confirms the project but loses Galen before he can deliver the plans.
+country_event = {
+    id = foc_rogue_one.12
+    title = foc_rogue_one.12.name
+    desc = foc_rogue_one.12.desc
+    picture = GFX_foc_rogue_one_imperial_blockade
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_rogue_one_rebel_galen_shown
+        NOT = { has_country_flag = foc_rogue_one_rebel_eadu_wait }
+        NOT = { has_country_flag = foc_rogue_one_rebel_eadu_shown }
+    }
+
+    immediate = {
+        set_country_flag = foc_rogue_one_rebel_eadu_shown
+        set_timed_country_flag = { flag = foc_rogue_one_rebel_council_wait days = 30 }
+    }
+
+    option = { name = foc_rogue_one.12.a }
+}
+
+# The Alliance council refuses a formal assault; a volunteer force departs anyway.
+country_event = {
+    id = foc_rogue_one.13
+    title = foc_rogue_one.13.name
+    desc = foc_rogue_one.13.desc
+    picture = GFX_foc_rogue_one_mothma
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_rogue_one_rebel_eadu_shown
+        NOT = { has_country_flag = foc_rogue_one_rebel_council_wait }
+        NOT = { has_country_flag = foc_rogue_one_rebel_departed }
+        NOT = { has_global_flag = foc_republic_origin_scarif_weakness_obtained }
+        exists = event_target:foc_swmap_scarif_system
+    }
+
+    immediate = {
+        set_country_flag = foc_rogue_one_rebel_departed
+        add_modifier = { modifier = foc_rogue_one_scarif_assault days = 720 }
+    }
+
+    option = { name = foc_rogue_one.13.a }
+}
+
+# Scarif is captured. The existing .177 event performs the actual Death Star
+# blueprint record; this event provides the battle/character beat. Actual combat
+# rewards require the later Leia rescue event (v17.10).
+country_event = {
+    id = foc_rogue_one.14
+    title = foc_rogue_one.14.name
+    desc = foc_rogue_one.14.desc
+    picture = GFX_foc_rogue_one_scarif_ground
+    location = event_target:foc_swmap_scarif_system
+    is_triggered_only = yes
+    force_open = yes
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        foc_v1710_is_gcw_rebel = yes
+        has_global_flag = foc_republic_origin_scarif_weakness_obtained
+        NOT = {
+            has_country_flag = foc_v1717e_scarif_notice_shown
+        }
+        NOT = {
+            has_country_flag = foc_rogue_one_rebel_scarif_shown
+        }
+    }
+    immediate = {
+        set_country_flag = foc_rogue_one_rebel_scarif_shown
+        set_country_flag = foc_canon_battle_scarif
+        set_country_flag = foc_v1717e_scarif_notice_shown
+        set_country_flag = foc_v1717e_scarif_sequence_migrated
+        set_country_flag = foc_v1717e_scarif_choice_pending
+        remove_modifier = foc_rogue_one_scarif_assault
+        foc_v1710_begin_scarif_aftermath = yes
+    }
+    option = {
+        name = foc_rogue_one.14.a
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_country_flag = foc_v1717e_scarif_confirmed
+                    }
+                }
+                if = {
+                    limit = {
+                        NOT = {
+                            has_global_flag = foc_republic_origin_galactic_treaty
+                        }
+                    }
+                    set_country_flag = foc_v1717e_scarif_confirmed
+                    country_event = {
+                        id = foc_v1710_story.1
+                        days = 1
+                    }
+                }
+                remove_country_flag = foc_v1717e_scarif_choice_pending
+            }
+        }
+    }
+}
+
+# The courier carrying the archive reaches Leia's corvette.
+country_event = {
+    id = foc_rogue_one.15
+    title = foc_rogue_one.15.name
+    desc = foc_rogue_one.15.desc
+    picture = GFX_foc_rogue_one_tantive
+    is_triggered_only = yes
+    force_open = yes
+    trigger = {
+        foc_v1710_scarif_month_elapsed = yes
+        has_country_flag = foc_v1717e_scarif_confirmed
+        has_country_flag = foc_v1717e_emergence_confirmed
+        NOT = {
+            has_country_flag = foc_v1717e_scarif_choice_pending
+        }
+        NOT = {
+            has_country_flag = foc_rogue_one_rebel_hope_shown
+        }
+        NOT = {
+            has_country_flag = foc_v1717e_courier_confirmed
+        }
+        NOT = {
+            has_global_flag = foc_republic_origin_galactic_treaty
+        }
+        OR = {
+            is_ai = no
+            NOT = {
+                any_playable_country = {
+                    is_ai = no
+                }
+            }
+        }
+        NOR = {
+            has_country_flag = foc_republic_origin_empire_country
+            has_country_flag = foc_republic_origin_player_empire
+        }
+    }
+    immediate = {
+        set_country_flag = foc_rogue_one_rebel_hope_shown
+        set_country_flag = foc_v1717e_scarif_sequence_migrated
+        set_country_flag = foc_v1717e_scarif_choice_pending
+    }
+    option = {
+        name = foc_rogue_one.15.a
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_country_flag = foc_v1717e_courier_confirmed
+                    }
+                }
+                if = {
+                    limit = {
+                        NOT = {
+                            has_global_flag = foc_republic_origin_galactic_treaty
+                        }
+                    }
+                    if = {
+                        limit = {
+                            NOT = {
+                                has_country_flag = foc_v1717e_courier_confirmed
+                            }
+                        }
+                        add_resource = {
+                            unity = 5000
+                        }
+                    }
+                    set_country_flag = foc_v1717e_courier_confirmed
+                    country_event = {
+                        id = foc_v1710_story.1
+                        days = 1
+                    }
+                }
+                remove_country_flag = foc_v1717e_scarif_choice_pending
+            }
+        }
+    }
+}
+
+
+# One month after Scarif, if Death Star I was already complete when .14 fired,
+# the battlestation drops directly into the Scarif system. The trigger rechecks
+# that the same DS-I still exists, so a station destroyed during the 30-day
+# delay cannot reappear.
+country_event = {
+    id = foc_rogue_one.16
+    title = foc_rogue_one.16.name
+    desc = foc_rogue_one.16.desc
+    picture = GFX_foc_rogue_one_scarif_space
+    location = event_target:foc_swmap_scarif_system
+    is_triggered_only = yes
+    force_open = yes
+    trigger = {
+        foc_v1710_scarif_month_elapsed = yes
+        has_country_flag = foc_v1717e_scarif_confirmed
+        NOT = {
+            has_country_flag = foc_v1717e_scarif_choice_pending
+        }
+        NOT = {
+            has_country_flag = foc_v1717e_emergence_confirmed
+        }
+        has_global_flag = foc_rogue_one_death_star_emergence_scheduled
+        NOT = {
+            has_global_flag = foc_rogue_one_death_star_emerged
+        }
+        foc_v1717e_death_star_one_alive = yes
+        exists = event_target:foc_swmap_scarif_system
+        OR = {
+            is_ai = no
+            NOT = {
+                any_playable_country = {
+                    is_ai = no
+                }
+            }
+        }
+    }
+    immediate = {
+        set_country_flag = foc_v1717e_scarif_sequence_migrated
+        set_country_flag = foc_v1717e_scarif_choice_pending
+        set_global_flag = foc_rogue_one_death_star_emerged
+        event_target:foc_swmap_scarif_system = {
+            star = {
+                save_global_event_target_as = foc_rogue_one_scarif_star
+            }
+        }
+        if = {
+            limit = {
+                exists = event_target:foc_republic_origin_death_star_one_system
+            }
+            event_target:foc_republic_origin_death_star_one_system = {
+                remove_star_flag = foc_republic_origin_death_star_one_system
+            }
+        }
+        event_target:foc_republic_origin_empire = {
+            every_owned_fleet = {
+                limit = {
+                    any_owned_ship = {
+                        has_ship_flag = foc_republic_origin_death_star_one
+                    }
+                }
+                clear_orders = yes
+                set_location = {
+                    target = event_target:foc_rogue_one_scarif_star
+                    distance = 70
+                    angle = 25
+                }
+                set_fleet_flag = foc_republic_origin_death_star_one_fleet
+            }
+        }
+        event_target:foc_swmap_scarif_system = {
+            set_star_flag = foc_republic_origin_death_star_one_system
+            save_global_event_target_as = foc_republic_origin_death_star_one_system
+        }
+    }
+    option = {
+        name = foc_rogue_one.16.a
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_country_flag = foc_v1717e_emergence_confirmed
+                    }
+                }
+                if = {
+                    limit = {
+                        NOT = {
+                            has_global_flag = foc_republic_origin_galactic_treaty
+                        }
+                    }
+                    set_country_flag = foc_v1717e_emergence_confirmed
+                    country_event = {
+                        id = foc_v1710_story.1
+                        days = 1
+                    }
+                }
+                remove_country_flag = foc_v1717e_scarif_choice_pending
+            }
+        }
+    }
+}

@@ -1,0 +1,416 @@
+# V14: original point defense retained; retired ordinary aliases remain inert.
+weapon_component_template = {
+    key = "FOC_STD_TURBO_L_T3_R_V04"
+    size = large
+    type = instant
+    icon = "GFX_ship_part_turbo_laser_r_3"
+    icon_frame = 1
+    damage = {
+        min = 1200
+        max = 1320
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 240
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -30
+    component_set = "FOC_V231_HOME_ONE_LARGE_TURBO"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    prerequisites = { "foc_tech_sw_turbolaser_3" }
+    size_restriction = { foc_v231_home_one_arkship }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_STD_TURBO_M_T3_R_V04"
+    size = medium
+    type = instant
+    icon = "GFX_ship_part_turbo_laser_r_3"
+    icon_frame = 1
+    damage = {
+        min = 780
+        max = 900
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 160
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -30
+    component_set = "FOC_V231_HOME_ONE_MEDIUM_TURBO"
+    projectile_gfx = "infrared_laser_m"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    prerequisites = { "foc_tech_sw_turbolaser_3" }
+    size_restriction = { foc_v231_home_one_arkship }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 4
+        }
+        upkeep = { }
+    }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_STD_TURBO_S_T3_R_V04"
+    size = small
+    type = instant
+    icon = "GFX_ship_part_turbo_laser_r_3"
+    icon_frame = 1
+    damage = {
+        min = 600
+        max = 600
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 120
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -5
+    component_set = "FOC_V231_HOME_ONE_SMALL_TURBO"
+    projectile_gfx = "infrared_laser_s"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    prerequisites = { "foc_tech_sw_turbolaser_3" }
+    size_restriction = { foc_v231_home_one_arkship }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_STD_PD_P_T3_R_V05"
+    hidden = yes
+    size = point_defence
+    type = point_defence
+    icon = "GFX_ship_part_defence_turbo_r_2"
+    icon_frame = 1
+    damage = {
+        min = 18
+        max = 30
+    }
+    windup = {
+        min = 1
+        max = 5
+    }
+    total_fire_time = 8
+    range = 40
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 1.0
+    shield_damage = 1.25
+    armor_damage = 1.25
+    hull_damage = 1.25
+    power = -7.5
+    component_set = "FOC_V231_HOME_ONE_POINT_DEFENSE"
+    tags = { weapon_type_point_defense weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_point_defense }
+    point_defence_targets = { "missile" "strike_craft" }
+    size_restriction = { foc_v231_home_one_arkship }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    ai_weight = {
+        weight = 0
+    }
+    projectile_gfx = "white_laser_pd"
+    entity = "invisible_turret_entity"
+    prerequisites = { "foc_tech_std_pd_2" }
+
+    potential = { from = { foc_v1718_allowed_country = yes } }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+strike_craft_component_template = {
+    key = "FOC_V231_HOME_ONE_XWING_GROUP"
+    size = LARGE
+    entity = "ssp_xwing_entity"
+    weapon_type = point_defence
+    point_defence_targets = { "strike_craft" }
+    projectile_gfx = "strike_craft_laser_3"
+    power = -60
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    count = 12
+    regeneration_per_day = 2.75
+    launch_time = 2
+    damage = {
+        min = 172.8
+        max = 259.2
+    }
+    cooldown = 1.296
+    attack_range = 15
+    range = 15
+    engagement_range = 12000
+    accuracy = 1
+    tracking = 0.9
+    health = 228
+    armor = 120
+    shield = 192
+    evasion = 0.8
+    speed = 1180
+    rotation_speed = 0.8
+    acceleration = 0.9
+    shield_penetration = 0.4
+    armor_penetration = 0.4
+    shield_damage = 1.4
+    armor_damage = 1.6
+    hull_damage = 1.55
+    ship_behavior = "fighters_behavior"
+    icon = "GFX_ship_part_ssp_xwing"
+    icon_frame = 1
+    component_set = "FOC_V231_HOME_ONE_XWING_SET"
+    tags = { weapon_type_strike_craft }
+    size_restriction = { foc_v231_home_one_arkship }
+    ai_weight = {
+        weight = 10
+    }
+    potential = {
+        from = {
+            NOT = {
+                foc_v236_has_cis_aircraft_identity = yes
+            }
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+utility_component_template = {
+    key = "FOC_V231_HOME_ONE_ADAPTIVE_ARMOR"
+    size = large
+    component_set = "FOC_V231_HOME_ONE_ADAPTIVE_ARMOR"
+    icon = "GFX_ship_part_adaptive_defense_armor"
+    icon_frame = 1
+    power = -350
+    modifier = {
+        ship_hull_add = 3600
+        ship_hull_regen_add_static = 43.875
+        ship_shield_add = 3600
+        ship_armor_add = 3600
+        ship_shield_regen_add_static = 43.875
+        ship_armor_regen_add_static = 43.875
+    }
+    ship_modifier = {
+        ship_damage_reduction_add = 0.0125
+        ship_armor_hardening_add = 0.09
+        ship_shield_hardening_add = 0.09
+    }
+    size_restriction = { foc_v231_home_one_arkship }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    ai_weight = {
+        weight = 0
+    }
+}
+utility_component_template = {
+    key = "FOC_V231_HOME_ONE_AUX_DEFLECTOR"
+    size = aux
+    icon = "GFX_ship_part_swgs_deflectorshieldarray"
+    icon_frame = 1
+    power = -40
+    modifier = {
+        ship_accuracy_add = 10
+        ship_hull_regen_add_static = 43.875
+        ship_shield_regen_add_static = 43.875
+        ship_armor_regen_add_static = 43.875
+    }
+    component_set = "FOC_V231_HOME_ONE_AUX_DEFLECTOR"
+    size_restriction = { foc_v231_home_one_arkship }
+    resources = {
+        category = ship_components
+        cost = { }
+        upkeep = { }
+    }
+    ai_weight = {
+        weight = 0
+    }
+}
+utility_component_template = {
+    key = "FOC_V231_HOME_ONE_COMMAND_CORE"
+    size = aux
+    icon = "GFX_ship_part_ssp_xwing"
+    icon_frame = 1
+    component_set = "FOC_V231_HOME_ONE_COMMAND_CORE"
+    power = -25
+    size_restriction = { foc_v231_home_one_arkship }
+    resources = {
+        category = ship_components
+        cost = { }
+        upkeep = { }
+    }
+    ai_weight = {
+        weight = 0
+    }
+}
+utility_component_template = {
+    key = "FOC_V231_HOME_ONE_REACTOR"
+    size = extra_large
+    icon = "GFX_ship_part_dark_matter_power_core"
+    icon_frame = 1
+    power = 55000
+    resources = {
+        category = ship_components
+        cost = { sr_coaxium_foc = 10 }
+    }
+    component_set = "power_core"
+    size_restriction = { foc_v231_home_one_arkship }
+    ai_weight = { weight = 0 }
+    potential = { always = no }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "FOC_V231_HOME_ONE_FTL"
+    size = small
+    icon = "GFX_ship_part_jump_drive_1"
+    icon_frame = 1
+    power = -250
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 50 sr_coaxium_foc = 10 }
+    }
+    ftl = yes
+    jumpdrive = yes
+    component_set = "ftl_components"
+    size_restriction = { foc_v231_home_one_arkship }
+    ai_weight = { weight = 0 }
+    potential = { always = no }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "FOC_V231_HOME_ONE_THRUSTER"
+    size = large
+    icon = "GFX_ship_part_thruster_4"
+    icon_frame = 1
+    power = -400
+    modifier = { ship_evasion_add = 10 ship_speed_mult = 0.15 }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 40 sr_coaxium_foc = 10 }
+    }
+    component_set = "thruster_components"
+    size_restriction = { foc_v231_home_one_arkship }
+    ai_weight = { weight = 0 }
+    potential = { always = no }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "FOC_V231_HOME_ONE_SENSOR"
+    size = medium
+    icon = "GFX_ship_part_sensor_4"
+    icon_frame = 1
+    power = -200
+    sensor_range = 12
+    hyperlane_range = 18
+    ship_modifier = { ship_tracking_add = 15 }
+    resources = {
+        category = ship_components
+        cost = { }
+    }
+    component_set = "sensor_components"
+    size_restriction = { foc_v231_home_one_arkship }
+    ai_weight = { weight = 0 }
+    hidden = yes
+    potential = { always = no }
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "FOC_V231_HOME_ONE_COMPUTER"
+    size = small
+    icon = "GFX_ship_part_computer_artillery_sapient"
+    icon_frame = 1
+    power = -200
+    ship_behavior = "artillery"
+    ship_modifier = { ship_weapon_range_mult = 0.10 }
+    resources = {
+        category = ship_components
+        cost = { }
+    }
+    component_set = "combat_computers"
+    size_restriction = { foc_v231_home_one_arkship }
+    ai_weight = { weight = 0 }
+    potential = { always = no }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}

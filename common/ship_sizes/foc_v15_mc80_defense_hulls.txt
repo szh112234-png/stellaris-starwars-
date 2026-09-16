@@ -1,0 +1,267 @@
+# V15: original MC80 geometry, independently visible defensive pools.
+foc_v15_rebel_mc80 = {
+    formation_priority = 50
+    max_speed = 100
+    acceleration = 0.2
+    rotation_speed = 0.15
+    collision_radius = 6
+    modifier = {
+        ship_evasion_add = 5
+        ship_armor_add = 0
+        ship_shield_add = 134700
+    }
+    size_multiplier = 44
+    map_counter_icon = ship_counter_32
+    icon = ship_size_military_8
+    fleet_slot_size = 4
+    section_slots = {
+        bow = {
+            locator = "part1"
+        }
+        mid = {
+            locator = "part2"
+        }
+        stern = {
+            locator = "part3"
+        }
+    }
+    num_target_locators = 4
+    is_space_station = no
+    base_buildtime = 480
+    can_have_federation_design = yes
+    enable_3dview_in_ship_browser = yes
+    default_behavior = artillery
+    role_background = "GFX_role_selection_battleship"
+    ship_roles = { artillery carrier gunship }
+    prerequisites = { "tech_battleships" }
+    combat_disengage_chance = 1.25
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    required_component_set = "power_core"
+    required_component_set = "ftl_components"
+    required_component_set = "thruster_components"
+    required_component_set = "sensor_components"
+    required_component_set = "combat_computers"
+    resources = {
+        category = ships
+        upkeep = {
+            energy = 8
+            alloys = 4
+        }
+        logistics = {
+            trade = 8
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 8
+    }
+    ai_ship_data = {
+        fraction = {
+            base = 0
+            modifier = {
+                add = 50
+                uses_standard_ship_sizes = yes
+            }
+            modifier = {
+                factor = 1.5
+                is_preferred_weapons = weapon_type_strike_craft
+            }
+            modifier = {
+                factor = 1.5
+                has_valid_civic = civic_hive_devouring_swarm
+            }
+            modifier = {
+                factor = 1.5
+                is_machine_empire = yes
+            }
+            modifier = {
+                factor = 1.5
+                has_valid_ai_personality = yes
+                OR = {
+                    has_ai_personality = honorbound_warriors
+                    has_ai_personality = hegemonic_imperialists
+                    has_ai_personality = democratic_crusaders
+                    has_ai_personality = became_the_crisis
+                }
+            }
+        }
+    }
+    max_hitpoints = 221440
+    entity = "battleship_entity"
+    graphical_culture = { "rebel_01" }
+    use_shipnames_from = battleship
+    enable_default_design = yes
+    potential_country = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        OR = {
+            foc_sw_new_republic_special_buildable = yes
+            any_owned_fleet = {
+                any_owned_ship = {
+                    is_ship_size = foc_v15_rebel_mc80
+                }
+            }
+        }
+    }
+    possible_country = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        OR = {
+            foc_sw_new_republic_special_buildable = yes
+            any_owned_fleet = {
+                any_owned_ship = {
+                    is_ship_size = foc_v15_rebel_mc80
+                }
+            }
+        }
+    }
+    possible_construction = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        exists = owner
+        owner = {
+            foc_sw_new_republic_special_buildable = yes
+        }
+    }
+
+    is_designable = yes
+
+
+}
+foc_v15_rebel_mc80_foc_lowest = {
+    formation_priority = 50
+    max_speed = 100
+    acceleration = 0.2
+    rotation_speed = 0.15
+    collision_radius = 6
+    modifier = {
+        ship_evasion_add = 5
+        ship_armor_add = 0
+        ship_shield_add = 15605.9113
+    }
+    size_multiplier = 44
+    map_counter_icon = ship_counter_32
+    icon = ship_size_military_8
+    fleet_slot_size = 4
+    section_slots = {
+        bow = {
+            locator = part1
+        }
+        mid = {
+            locator = part2
+        }
+        stern = {
+            locator = part3
+        }
+    }
+    num_target_locators = 4
+    is_space_station = no
+    base_buildtime = 480
+    can_have_federation_design = yes
+    enable_3dview_in_ship_browser = yes
+    default_behavior = artillery
+    role_background = GFX_role_selection_battleship
+    ship_roles = {
+        artillery
+        carrier
+        gunship
+    }
+    prerequisites = {
+        tech_battleships
+    }
+    combat_disengage_chance = 1.25
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    required_component_set = power_core
+    required_component_set = ftl_components
+    required_component_set = thruster_components
+    required_component_set = sensor_components
+    required_component_set = combat_computers
+    resources = {
+        category = ships
+        upkeep = {
+            energy = 8
+            alloys = 4
+        }
+        logistics = {
+            trade = 8
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 8
+    }
+    ai_ship_data = {
+        fraction = {
+            base = 0
+            modifier = {
+                add = 50
+                uses_standard_ship_sizes = yes
+            }
+            modifier = {
+                factor = 1.5
+                is_preferred_weapons = weapon_type_strike_craft
+            }
+            modifier = {
+                factor = 1.5
+                has_valid_civic = civic_hive_devouring_swarm
+            }
+            modifier = {
+                factor = 1.5
+                is_machine_empire = yes
+            }
+            modifier = {
+                factor = 1.5
+                has_valid_ai_personality = yes
+                OR = {
+                    has_ai_personality = honorbound_warriors
+                    has_ai_personality = hegemonic_imperialists
+                    has_ai_personality = democratic_crusaders
+                    has_ai_personality = became_the_crisis
+                }
+            }
+        }
+    }
+    entity = battleship_entity
+    graphical_culture = {
+        rebel_01
+    }
+    use_shipnames_from = battleship
+    enable_default_design = yes
+    potential_country = {
+        has_global_flag = foc_khan_strength_lowest
+        OR = {
+            foc_sw_new_republic_special_buildable = yes
+            any_owned_fleet = {
+                any_owned_ship = {
+                    is_ship_size = foc_v15_rebel_mc80_foc_lowest
+                }
+            }
+        }
+    }
+    possible_country = {
+        has_global_flag = foc_khan_strength_lowest
+        OR = {
+            foc_sw_new_republic_special_buildable = yes
+            any_owned_fleet = {
+                any_owned_ship = {
+                    is_ship_size = foc_v15_rebel_mc80_foc_lowest
+                }
+            }
+        }
+    }
+    possible_construction = {
+        has_global_flag = foc_khan_strength_lowest
+        exists = owner
+        owner = {
+            foc_sw_new_republic_special_buildable = yes
+        }
+    }
+    max_hitpoints = 8615.76355
+
+    is_designable = yes
+
+
+}

@@ -1,0 +1,50 @@
+namespace = foc_khan_225
+
+# One-shot old-save cleanup for special Xystons that serialized a planet-killer
+# action before 2.25 and therefore keep replaying the beam over a shattered world.
+event = {
+    id = foc_khan_225.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        NOT = { has_global_flag = foc_khan_225_xyston_watchdog_migrated }
+        any_country = { has_country_flag = foc_khan_final_order_country }
+    }
+
+    immediate = {
+        set_global_flag = foc_khan_225_xyston_watchdog_migrated
+
+        every_system = {
+            remove_star_flag = foc_khan_xyston_system_reserved_212
+            every_system_planet = {
+                remove_planet_flag = foc_khan_xyston_target_reserved
+                if = {
+                    limit = {
+                        OR = {
+                            is_planet_class = pc_shattered
+                            is_planet_class = pc_shattered_2
+                            is_planet_class = pc_broken
+                            is_planet_class = pc_black_hole
+                        }
+                    }
+                    set_planet_flag = foc_khan_xyston_destroyed_target_213
+                }
+            }
+        }
+
+        every_country = {
+            limit = { has_country_flag = foc_khan_final_order_country }
+            every_owned_fleet = {
+                limit = { any_owned_ship = { OR = { is_ship_size = foc_khan_xystonsd is_ship_size = foc_khan_xystonsd_foc_lowest } } }
+                remove_fleet_flag = foc_khan_xyston_active_single_order_225
+                remove_fleet_flag = foc_khan_xyston_cleanup_scheduled_225
+                remove_fleet_flag = foc_khan_xyston_retarget_pending_218
+                remove_auto_move_target = yes
+                clear_orders = yes
+                clear_fleet_actions = this
+                fleet_event = { id = foc_khan_xyston_ai.10 days = 2 random = 10 }
+            }
+        }
+    }
+}

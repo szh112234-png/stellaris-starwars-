@@ -1,0 +1,695 @@
+@eclipse_section_cost = 0
+@mandator_section_cost = 0
+
+# Namespaced copies of the user-provided Eclipse and Mandator sections.
+
+ship_section_template = {
+	key = "FOC_KHAN_ECLIPSE_BOW"
+	ship_size = foc_khan_eclipse
+	ship_size = foc_khan_eclipse_foc_lowest
+	fits_on_slot = mid
+	entity = "eclipse_locator_entity"
+	icon = "GFX_ship_part_core_bow"
+	component_slot = {
+		name = "TITANIC_01"
+		template = "foc_titanic_turret"
+		locatorname = "W01"
+	}
+
+	component_slot = {
+		name = "LARGE_GUN_90"
+		template = "large_turret"
+		locatorname = "L01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_91"
+		template = "large_turret"
+		locatorname = "L02"
+	}
+	large_utility_slots = 12
+	prerequisites = { foc_tech_swgs_crisis_point_defence }
+
+	resources = {
+		category = ship_sections
+		cost = {
+			alloys = @eclipse_section_cost
+		}
+	}
+}
+
+ship_section_template = {
+	key = "FOC_KHAN_ECLIPSE_MID1"
+	ship_size = foc_khan_eclipse
+	ship_size = foc_khan_eclipse_foc_lowest
+	fits_on_slot = bow
+	entity = "eclipse_locator_entity"
+	icon = "GFX_ship_part_core_mid"
+	component_slot = {
+		name = "LARGE_GUN_01"
+		template = "large_turret"
+		locatorname = "L01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_02"
+		template = "large_turret"
+		locatorname = "L02"
+	}
+	component_slot = {
+		name = "LARGE_GUN_03"
+		template = "large_turret"
+		locatorname = "L03"
+	}
+	component_slot = {
+		name = "LARGE_GUN_04"
+		template = "large_turret"
+		locatorname = "L04"
+	}
+	component_slot = {
+		name = "LARGE_GUN_05"
+		template = "large_turret"
+		locatorname = "L05"
+	}
+	component_slot = {
+		name = "LARGE_GUN_06"
+		template = "large_turret"
+		locatorname = "L06"
+	}
+	component_slot = {
+		name = "LARGE_GUN_07"
+		template = "large_turret"
+		locatorname = "L07"
+	}
+	component_slot = {
+		name = "LARGE_GUN_08"
+		template = "large_turret"
+		locatorname = "L08"
+	}
+	component_slot = {
+		name = "LARGE_GUN_09"
+		template = "large_turret"
+		locatorname = "L09"
+	}
+	component_slot = {
+		name = "LARGE_GUN_10"
+		template = "large_turret"
+		locatorname = "L10"
+	}
+	component_slot = {
+		name = "LARGE_GUN_11"
+		template = "large_turret"
+		locatorname = "L11"
+	}
+	component_slot = {
+		name = "LARGE_GUN_12"
+		template = "large_turret"
+		locatorname = "L12"
+	}
+        component_slot = {
+		name = "LARGE_GUN_13"
+		template = "large_turret"
+		locatorname = "L13"
+	}
+        component_slot = {
+		name = "LARGE_GUN_14"
+		template = "large_turret"
+		locatorname = "L14"
+	}
+        component_slot = {
+		name = "LARGE_GUN_15"
+		template = "large_turret"
+		locatorname = "L15"
+	}
+
+	component_slot = {
+		name = "LARGE_GUN_90"
+		template = "large_turret"
+		locatorname = "L01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_91"
+		template = "large_turret"
+		locatorname = "L02"
+	}
+	large_utility_slots = 12
+	prerequisites = { foc_tech_swgs_crisis_point_defence }
+
+	resources = {
+		category = ship_sections
+		cost = {
+			alloys = @eclipse_section_cost
+		}
+	}
+}
+
+ship_section_template = {
+	key = "FOC_KHAN_ECLIPSE_MID2"
+	ship_size = foc_khan_eclipse
+	ship_size = foc_khan_eclipse_foc_lowest
+	fits_on_slot = core
+	entity = "eclipse_locator_entity"
+	icon = "GFX_ship_part_core_mid"
+	component_slot = {
+		name = "PD_01"
+		template = "point_defence_turret"
+		locatorname = "L13"
+	}
+	component_slot = {
+		name = "PD_02"
+		template = "point_defence_turret"
+		locatorname = "L14"
+	}
+	component_slot = {
+		name = "PD_03"
+		template = "point_defence_turret"
+		locatorname = "L15"
+	}
+	component_slot = {
+		name = "PD_04"
+		template = "point_defence_turret"
+		locatorname = "L16"
+	}
+	component_slot = {
+		name = "PD_05"
+		template = "point_defence_turret"
+		locatorname = "L17"
+	}
+	component_slot = {
+		name = "PD_06"
+		template = "point_defence_turret"
+		locatorname = "L18"
+	}
+	component_slot = {
+		name = "STRIKE_CRAFT_02"
+		template = "large_strike_craft"
+		locatorname = "L19"
+	}
+	component_slot = {
+		name = "STRIKE_CRAFT_03"
+		template = "large_strike_craft"
+		locatorname = "L20"
+	}
+	component_slot = {
+		name = "STRIKE_CRAFT_04"
+		template = "large_strike_craft"
+		locatorname = "L21"
+	}
+	component_slot = {
+		name = "STRIKE_CRAFT_05"
+		template = "large_strike_craft"
+		locatorname = "L22"
+	}
+	component_slot = {
+		name = "STRIKE_CRAFT_06"
+		template = "large_strike_craft"
+		locatorname = "L23"
+	}
+	component_slot = {
+		name = "STRIKE_CRAFT_07"
+		template = "large_strike_craft"
+		locatorname = "L24"
+	}
+
+	component_slot = {
+		name = "LARGE_GUN_90"
+		template = "large_turret"
+		locatorname = "L01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_91"
+		template = "large_turret"
+		locatorname = "L02"
+	}
+	large_utility_slots = 12
+	prerequisites = { foc_tech_swgs_crisis_point_defence }
+
+	resources = {
+		category = ship_sections
+		cost = {
+			alloys = @eclipse_section_cost
+		}
+	}
+}
+
+ship_section_template = {
+	key = "FOC_KHAN_ECLIPSE_MID3"
+	ship_size = foc_khan_eclipse
+	ship_size = foc_khan_eclipse_foc_lowest
+	fits_on_slot = data
+	entity = "eclipse_locator_entity"
+	icon = "GFX_ship_part_core_mid"
+	component_slot = {
+		name = "LARGE_GUN_01"
+		template = "large_turret"
+		locatorname = "L01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_02"
+		template = "large_turret"
+		locatorname = "L02"
+	}
+	component_slot = {
+		name = "LARGE_GUN_03"
+		template = "large_turret"
+		locatorname = "L03"
+	}
+	component_slot = {
+		name = "LARGE_GUN_04"
+		template = "large_turret"
+		locatorname = "L04"
+	}
+	component_slot = {
+		name = "LARGE_GUN_05"
+		template = "large_turret"
+		locatorname = "L05"
+	}
+	component_slot = {
+		name = "LARGE_GUN_06"
+		template = "large_turret"
+		locatorname = "L06"
+	}
+	component_slot = {
+		name = "LARGE_GUN_07"
+		template = "large_turret"
+		locatorname = "L07"
+	}
+	component_slot = {
+		name = "LARGE_GUN_08"
+		template = "large_turret"
+		locatorname = "L08"
+	}
+	component_slot = {
+		name = "LARGE_GUN_09"
+		template = "large_turret"
+		locatorname = "L09"
+	}
+	component_slot = {
+		name = "LARGE_GUN_10"
+		template = "large_turret"
+		locatorname = "L10"
+	}
+	component_slot = {
+		name = "LARGE_GUN_11"
+		template = "large_turret"
+		locatorname = "L11"
+	}
+	component_slot = {
+		name = "LARGE_GUN_12"
+		template = "large_turret"
+		locatorname = "L12"
+	}
+        component_slot = {
+		name = "LARGE_GUN_13"
+		template = "large_turret"
+		locatorname = "L13"
+	}
+        component_slot = {
+		name = "LARGE_GUN_14"
+		template = "large_turret"
+		locatorname = "L14"
+	}
+        component_slot = {
+		name = "LARGE_GUN_15"
+		template = "large_turret"
+		locatorname = "L15"
+	}
+
+	component_slot = {
+		name = "LARGE_GUN_90"
+		template = "large_turret"
+		locatorname = "L01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_91"
+		template = "large_turret"
+		locatorname = "L02"
+	}
+	large_utility_slots = 12
+	prerequisites = { foc_tech_swgs_crisis_point_defence }
+
+	resources = {
+		category = ship_sections
+		cost = {
+			alloys = @eclipse_section_cost
+		}
+	}
+}
+
+ship_section_template = {
+	key = "FOC_KHAN_ECLIPSE_STERN"
+	ship_size = foc_khan_eclipse
+	ship_size = foc_khan_eclipse_foc_lowest
+	fits_on_slot = stern
+	entity = "eclipse_locator_entity"
+	icon = "GFX_ship_part_core_stern"
+	component_slot = {
+		name = "LARGE_GUN_01"
+		template = "large_turret"
+		locatorname = "L13"
+	}
+	component_slot = {
+		name = "LARGE_GUN_02"
+		template = "large_turret"
+		locatorname = "L14"
+	}
+	component_slot = {
+		name = "LARGE_GUN_03"
+		template = "large_turret"
+		locatorname = "L15"
+	}
+	component_slot = {
+		name = "LARGE_GUN_04"
+		template = "large_turret"
+		locatorname = "L16"
+	}
+	component_slot = {
+		name = "LARGE_GUN_05"
+		template = "large_turret"
+		locatorname = "L17"
+	}
+	component_slot = {
+		name = "LARGE_GUN_06"
+		template = "large_turret"
+		locatorname = "L18"
+	}
+	component_slot = {
+		name = "LARGE_GUN_07"
+		template = "large_turret"
+		locatorname = "L19"
+	}
+	component_slot = {
+		name = "LARGE_GUN_08"
+		template = "large_turret"
+		locatorname = "L20"
+	}
+	component_slot = {
+		name = "LARGE_GUN_09"
+		template = "large_turret"
+		locatorname = "L21"
+	}
+	component_slot = {
+		name = "LARGE_GUN_10"
+		template = "large_turret"
+		locatorname = "L22"
+	}
+	component_slot = {
+		name = "LARGE_GUN_11"
+		template = "large_turret"
+		locatorname = "L23"
+	}
+	component_slot = {
+		name = "LARGE_GUN_12"
+		template = "large_turret"
+		locatorname = "L24"
+	}
+
+	component_slot = {
+		name = "LARGE_GUN_90"
+		template = "large_turret"
+		locatorname = "L01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_91"
+		template = "large_turret"
+		locatorname = "L02"
+	}
+	large_utility_slots = 12
+	aux_utility_slots = 10
+	prerequisites = { foc_tech_swgs_crisis_point_defence }
+
+	resources = {
+		category = ship_sections
+		cost = {
+			alloys = @eclipse_section_cost
+		}
+	}
+}
+
+ship_section_template = {
+    key = "FOC_KHAN_MANDATOR_BOW"
+    ship_size = foc_khan_mandator
+    ship_size = foc_khan_mandator_foc_lowest
+    fits_on_slot = main
+    entity = "first_01_Manator_bow_entity"
+    icon = "GFX_ship_part_core_bow"
+
+    component_slot = {
+        name = "TITANIC_01"
+        template = "foc_khan_mandator_titanic_fixed"
+        locatorname = "T01"
+    }
+    component_slot = {
+        name = "TITANIC_02"
+        template = "foc_khan_mandator_titanic_fixed"
+        locatorname = "T02"
+    }
+
+    large_utility_slots = 6
+    aux_utility_slots = 2
+    prerequisites = { foc_tech_swgs_crisis_point_defence }
+
+    resources = {
+        category = ship_sections
+        cost = { alloys = @mandator_section_cost }
+    }
+}
+
+
+ship_section_template = {
+    key = "FOC_KHAN_MANDATOR_MID1"
+    ship_size = foc_khan_mandator
+    ship_size = foc_khan_mandator_foc_lowest
+    fits_on_slot = bow
+    entity = "first_01_Manator_bow_entity"
+    icon = "GFX_ship_part_core_mid"
+
+    component_slot = {
+        name = "POINT_DEFIND_01"
+        template = "point_defence_turret"
+        locatorname = "L011"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_02"
+        template = "point_defence_turret"
+        locatorname = "L08"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_03"
+        template = "point_defence_turret"
+        locatorname = "L09"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_04"
+        template = "point_defence_turret"
+        locatorname = "L010"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_05"
+        template = "point_defence_turret"
+        locatorname = "L011"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_06"
+        template = "point_defence_turret"
+        locatorname = "L012"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_07"
+        template = "point_defence_turret"
+        locatorname = "L013"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_08"
+        template = "point_defence_turret"
+        locatorname = "L014"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_09"
+        template = "point_defence_turret"
+        locatorname = "L015"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_10"
+        template = "point_defence_turret"
+        locatorname = "L016"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_11"
+        template = "point_defence_turret"
+        locatorname = "L017"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_12"
+        template = "point_defence_turret"
+        locatorname = "L018"
+    }
+
+    large_utility_slots = 6
+    aux_utility_slots = 2
+    prerequisites = { foc_tech_swgs_crisis_point_defence }
+
+    resources = {
+        category = ship_sections
+        cost = { alloys = @mandator_section_cost }
+    }
+}
+
+
+ship_section_template = {
+    key = "FOC_KHAN_MANDATOR_MID2"
+    ship_size = foc_khan_mandator
+    ship_size = foc_khan_mandator_foc_lowest
+    fits_on_slot = mid
+    entity = "first_01_Manator_bow_entity"
+    icon = "GFX_ship_part_core_mid"
+
+    component_slot = {
+        name = "POINT_DEFIND_01"
+        template = "point_defence_turret"
+        locatorname = "L023"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_02"
+        template = "point_defence_turret"
+        locatorname = "L024"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_03"
+        template = "point_defence_turret"
+        locatorname = "L025"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_04"
+        template = "point_defence_turret"
+        locatorname = "L026"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_05"
+        template = "point_defence_turret"
+        locatorname = "L020"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_06"
+        template = "point_defence_turret"
+        locatorname = "L020"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_07"
+        template = "point_defence_turret"
+        locatorname = "L019"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_08"
+        template = "point_defence_turret"
+        locatorname = "L01"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_09"
+        template = "point_defence_turret"
+        locatorname = "L02"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_10"
+        template = "point_defence_turret"
+        locatorname = "L05"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_11"
+        template = "point_defence_turret"
+        locatorname = "L06"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_12"
+        template = "point_defence_turret"
+        locatorname = "L07"
+    }
+
+    large_utility_slots = 6
+    aux_utility_slots = 2
+    prerequisites = { foc_tech_swgs_crisis_point_defence }
+
+    resources = {
+        category = ship_sections
+        cost = { alloys = @mandator_section_cost }
+    }
+}
+
+
+ship_section_template = {
+    key = "FOC_KHAN_MANDATOR_MID3"
+    ship_size = foc_khan_mandator
+    ship_size = foc_khan_mandator_foc_lowest
+    fits_on_slot = stern
+    entity = "first_01_Manator_bow_entity"
+    icon = "GFX_ship_part_core_stern"
+
+    component_slot = {
+        name = "POINT_DEFIND_01"
+        template = "point_defence_turret"
+        locatorname = "L01"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_02"
+        template = "point_defence_turret"
+        locatorname = "L09"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_03"
+        template = "point_defence_turret"
+        locatorname = "L01"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_04"
+        template = "point_defence_turret"
+        locatorname = "L02"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_05"
+        template = "point_defence_turret"
+        locatorname = "L03"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_06"
+        template = "point_defence_turret"
+        locatorname = "L04"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_07"
+        template = "point_defence_turret"
+        locatorname = "L05"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_08"
+        template = "point_defence_turret"
+        locatorname = "L06"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_09"
+        template = "point_defence_turret"
+        locatorname = "L07"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_10"
+        template = "point_defence_turret"
+        locatorname = "L08"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_11"
+        template = "point_defence_turret"
+        locatorname = "L09"
+    }
+    component_slot = {
+        name = "POINT_DEFIND_12"
+        template = "point_defence_turret"
+        locatorname = "L010"
+    }
+
+    large_utility_slots = 6
+    aux_utility_slots = 2
+    prerequisites = { foc_tech_swgs_crisis_point_defence }
+
+    resources = {
+        category = ship_sections
+        cost = { alloys = @mandator_section_cost }
+    }
+}
+

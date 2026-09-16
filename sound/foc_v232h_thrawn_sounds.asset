@@ -1,0 +1,17 @@
+# V232h: complete user-provided Thrawn speech. Source: 索龙演讲.mp3.
+# V232i: resampled to 44.1 kHz, 16-bit stereo PCM WAV; no cuts, gain changes or looping.
+# Two-stage sample/soundeffect registration follows the existing Vader and
+# Starkiller speech assets. Category: FOC_Effects. Event: foc_thrawn.2.
+sound = {
+    name = "foc_v232h_thrawn_return_speech01"
+    file = "foc_v232h_thrawn_return_speech.wav"
+}
+
+soundeffect = {
+    name = foc_v232h_thrawn_return_speech
+    sounds = {
+        sound = foc_v232h_thrawn_return_speech01
+    }
+    max_audible = 1
+    volume = 1.0
+}

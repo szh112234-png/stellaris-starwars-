@@ -1,0 +1,26 @@
+namespace = foc_v185_flow
+
+# Dedicated First Order origin: Starkiller completion absorbs the Imperial
+# Remnant, but crisis status waits for the first real shot.
+country_event = {
+    id = foc_v185_flow.2
+    title = foc_v185_flow.2.name
+    desc = foc_v185_flow.2.desc
+    picture = GFX_fop_starkiller_base_event
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        is_ai = no
+        has_origin = origin_fop_first_order
+        foc_khan_owns_completed_starkiller = yes
+        NOT = { has_country_flag = foc_v185_starkiller_completion_notice }
+    }
+
+    immediate = {
+        set_country_flag = foc_v185_starkiller_completion_notice
+        log = "FOC_V185_STARKILLER: base complete; Imperial Remnant annexation processed; crisis waits for first real shot."
+    }
+
+    option = { name = foc_v185_flow.2.a }
+}

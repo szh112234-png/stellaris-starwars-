@@ -1,0 +1,764 @@
+# V14: original point defense retained; retired ordinary aliases remain inert.
+weapon_component_template = {
+    key = "FOC_STD_SPINAL_X_T3_G_V01"
+    size_restriction = { foc_sw_lusankya foc_sw_lusankya_foc_lowest foc_v118_executor_bastion_foc_lowest }
+    size = extra_large
+    type = instant
+    icon = "GFX_ship_part_swgs_spaht_beam"
+    icon_frame = 1
+    damage = {
+        min = 30000
+        max = 60000
+    }
+    windup = {
+        min = 0.0
+        max = 0.0
+    }
+    total_fire_time = 180.0
+    range = 240.0
+    accuracy = 1.00
+    tracking = 0.25
+    firing_arc = 50.0
+    shield_penetration = 1.0
+    armor_penetration = 1.0
+    power = -1400.00
+    prerequisites = { "foc_tech_sw_spinal_weapons_2" }
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 100
+            sr_tibanna_swgs = 16
+            sr_kyber_swgs = 2
+        }
+        upkeep = {
+            energy = 1
+            alloys = 1
+        }
+    }
+    component_set = "FOC_LUS_SPAHT_BEAM"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic weapon_type_kuat_artellarys_scale }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_STD_OCTUPLE_L_T3_R_V01"
+    size_restriction = { foc_sw_lusankya foc_sw_lusankya_foc_lowest foc_v118_executor_bastion_foc_lowest }
+    size = large
+    icon = "GFX_ship_part_octuple_turbo_r_1"
+    icon_frame = 1
+    damage = {
+        min = 3000.0
+        max = 3000.0
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 220
+    accuracy = 1
+    tracking = 0.2
+    shield_penetration = 1
+    armor_penetration = 1
+    power = -140
+    prerequisites = { "foc_tech_sw_octuple_turbolaser_1" }
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 100
+            sr_tibanna_swgs = 8
+        }
+        upkeep = {
+            energy = 1
+            alloys = 1
+        }
+    }
+    component_set = "FOC_LUS_OCTUPLE_TURBO_R"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_type_kinetic weapon_type_kuat_artellarys_scale }
+    ai_tags = { weapon_role_artillery }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_STD_SPINAL_X_T3_G_V02"
+    size_restriction = { foc_sw_lusankya foc_sw_lusankya_foc_lowest foc_v118_executor_bastion_foc_lowest }
+    size = extra_large
+    type = instant
+    icon = "GFX_ship_part_swgs_spaht_beam"
+    icon_frame = 1
+    damage = {
+        min = 30000
+        max = 60000
+    }
+    windup = {
+        min = 0.0
+        max = 0.0
+    }
+    total_fire_time = 180.0
+    range = 240.0
+    accuracy = 1.00
+    tracking = 0.25
+    firing_arc = 50.0
+    shield_penetration = 2.0
+    armor_penetration = 2.0
+    power = -1400.00
+    prerequisites = { "foc_tech_sw_spinal_weapons_2" }
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 100
+            sr_tibanna_swgs = 16
+            sr_kyber_swgs = 2
+        }
+        upkeep = {
+            energy = 1
+            alloys = 1
+        }
+    }
+    component_set = "FOC_LUS_SPAHT_BEAM_EC"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic weapon_type_kuat_artellarys_scale }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_armor }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_STD_OCTUPLE_L_T3_R_V02"
+    size_restriction = { foc_sw_lusankya foc_sw_lusankya_foc_lowest foc_v118_executor_bastion_foc_lowest }
+    size = large
+    icon = "GFX_ship_part_octuple_turbo_r_1"
+    icon_frame = 1
+    damage = {
+        min = 12000.0
+        max = 12000.0
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 220
+    accuracy = 1
+    tracking = 0.2
+    shield_penetration = 1
+    armor_penetration = 1
+    power = -140
+    prerequisites = { "foc_tech_sw_octuple_turbolaser_1" }
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 100
+            sr_tibanna_swgs = 8
+        }
+        upkeep = {
+            energy = 1
+            alloys = 1
+        }
+    }
+    tags = { weapon_type_energy weapon_type_kinetic weapon_type_kuat_artellarys_scale }
+    component_set = "FOC_LUS_OCTUPLE_TURBO_R_EC"
+    projectile_gfx = "infrared_laser_l"
+    ai_tags = { weapon_role_artillery }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+utility_component_template = {
+    key = "FOC_LUS_LARGE_ADAPTIVE_DEFENSE_ARMOR_EC"
+    hidden = yes
+    size_restriction = { foc_sw_lusankya foc_sw_lusankya_foc_lowest foc_v118_executor_bastion_foc_lowest }
+    size = large
+    icon = "GFX_ship_part_adaptive_defense_armor"
+    icon_frame = 1
+    power = -350
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 100
+        
+            sr_tibanna_swgs = 8
+        }
+        upkeep = {
+            energy = 1
+            alloys = 1
+        }
+    }
+    modifier = {
+        ship_hull_add = 7200
+        ship_hull_regen_add_static = 87.75
+        ship_shield_add = 7200
+        ship_armor_add = 7200
+        ship_shield_regen_add_static = 87.75
+        ship_armor_regen_add_static = 87.75
+    }
+    ship_modifier = {
+        ship_damage_reduction_add = 0.01
+        ship_armor_hardening_add = 0.18
+        ship_shield_hardening_add = 0.18
+    }
+    component_set = "FOC_LUS_LARGE_ADAPTIVE_DEFENSE_ARMOR_EC"
+    ai_weight = {
+        weight = 2000
+    }
+}
+utility_component_template = {
+    key = "FOC_LUS_LARGE_ADAPTIVE_DEFENSE_ARMOR"
+    hidden = yes
+    size_restriction = { foc_sw_lusankya foc_sw_lusankya_foc_lowest foc_v118_executor_bastion_foc_lowest }
+    size = large
+    icon = "GFX_ship_part_adaptive_defense_armor"
+    icon_frame = 1
+    power = -350
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 100
+        
+            sr_tibanna_swgs = 8
+        }
+        upkeep = {
+            energy = 1
+            alloys = 1
+        }
+    }
+    modifier = {
+        ship_hull_add = 3600
+        ship_hull_regen_add_static = 43.875
+        ship_shield_add = 3600
+        ship_armor_add = 3600
+        ship_shield_regen_add_static = 43.875
+        ship_armor_regen_add_static = 43.875
+    }
+    ship_modifier = {
+        ship_damage_reduction_add = 0.01
+        ship_armor_hardening_add = 0.09
+        ship_shield_hardening_add = 0.09
+    }
+    component_set = "FOC_LUS_LARGE_ADAPTIVE_DEFENSE_ARMOR"
+    ai_weight = {
+        weight = 2000
+    }
+}
+strike_craft_component_template = {
+    key = "FOC_LUS_ARC_170"
+    hidden = yes
+    size_restriction = { foc_sw_lusankya foc_sw_lusankya_foc_lowest foc_v118_executor_bastion_foc_lowest }
+    size = LARGE
+    entity = "swg_starship_01_droppod_entity"
+    weapon_type = instant
+    projectile_gfx = "strike_craft_laser_3"
+    power = -80
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+        }
+        from = {
+            NOT = {
+                foc_v236_has_cis_aircraft_identity = yes
+            }
+        }
+    
+    from = { NOT = { foc_v1717c_republic_strategic_aircraft_retired = yes } }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 100
+        
+            sr_tibanna_swgs = 8
+        }
+        upkeep = {
+            energy = 1
+            alloys = 1
+        }
+    }
+    count = 2
+    regeneration_per_day = 5
+    launch_time = 2
+    damage = {
+        min = 1250
+        max = 1250
+    }
+    cooldown = 2.5
+    range = 15
+    engagement_range = 500
+    accuracy = 1.0
+    accuracy = 1.0
+    ai_weight = {
+        weight = 2000
+    }
+    health = 40
+    armor = 40
+    shield = 20
+    evasion = 0.85
+    speed = 650
+    rotation_speed = 0.3
+    acceleration = 1.0
+    shield_penetration = 1.0
+    armor_damage = 1.5
+    hull_damage = 1.25
+    ship_behavior = "foc_lus_fighters_behavior"
+    icon = "GFX_ship_part_swgs_arc-170"
+    icon_frame = 1
+    component_set = "FOC_LUS_ARC_170"
+    tags = { weapon_type_strike_craft weapon_type_kuat_strikcrafe_scale }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+strike_craft_component_template = {
+    key = "FOC_LUS_X_WING"
+    hidden = yes
+    size_restriction = { foc_sw_lusankya foc_sw_lusankya_foc_lowest foc_v118_executor_bastion_foc_lowest }
+    size = LARGE
+    entity = "swg_starship_01_bomber_entity"
+    weapon_type = instant
+    projectile_gfx = "strike_craft_laser_3"
+    power = -80
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+        }
+        from = {
+            NOT = {
+                foc_v236_has_cis_aircraft_identity = yes
+            }
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 100
+        
+            sr_tibanna_swgs = 8
+        }
+        upkeep = {
+            energy = 1
+            alloys = 1
+        }
+    }
+    count = 2
+    regeneration_per_day = 5
+    launch_time = 2
+    ai_weight = {
+        weight = 2000
+    }
+    damage = {
+        min = 1300
+        max = 1300
+    }
+    cooldown = 2.5
+    range = 15
+    engagement_range = 500
+    accuracy = 1.0
+    accuracy = 1.0
+    health = 40
+    armor = 40
+    shield = 40
+    evasion = 0.75
+    speed = 650
+    rotation_speed = 0.6
+    acceleration = 1.0
+    shield_penetration = 1.0
+    armor_damage = 1.5
+    hull_damage = 1.25
+    ship_behavior = "foc_lus_fighters_behavior"
+    icon = "GFX_ship_part_swgs_x-wing"
+    icon_frame = 1
+    component_set = "FOC_LUS_X_WING"
+    tags = { weapon_type_strike_craft weapon_type_kuat_strikcrafe_scale }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+utility_component_template = {
+    key = "FOC_LUS_AURA_AFK"
+    hidden = yes
+    size_restriction = { foc_sw_lusankya foc_sw_lusankya_foc_lowest foc_v118_executor_bastion_foc_lowest }
+    size = medium
+    icon = "GFX_ship_part_swgs_Aura_AFK"
+    icon_frame = 1
+    power = 100
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 100
+        }
+        upkeep = {
+            energy = 1
+            alloys = 1
+        }
+    }
+    friendly_aura = {
+        name = "aura_AFK_presence"
+        radius = 200
+        apply_on = ships
+        stack_info = {
+            id = AFK_inspiring_presence
+            priority = 200
+        }
+        modifier = {
+            ship_hull_damage_mult = 0.25
+            ship_shield_damage_mult = 0.25
+            ship_armor_damage_mult = 0.25
+        }
+        graphics = {
+            area_effect = {
+                entity = "circle_area_entity"
+                dynamic_scale = yes
+            }
+            ship_effect = {
+                entity = "ship_aura_positive_entity"
+                dynamic_scale = no
+            }
+        }
+    }
+    hostile_aura = {
+        name = "aura_ship_AFK_snare"
+        system_wide = yes
+        stack_info = {
+            id = AFK_snare_aura
+            priority = 1
+        }
+        modifier = {
+            ship_hull_damage_mult = -0.25
+            ship_shield_damage_mult = -0.25
+            ship_armor_damage_mult = -0.25
+        }
+        graphics = {
+            area_effect = {
+                entity = "circle_area_entity"
+                dynamic_scale = yes
+            }
+            ship_effect = {
+                entity = "ship_aura_negative_entity"
+                dynamic_scale = no
+            }
+        }
+    }
+    potential = {
+        OR = {
+            is_ship_size = foc_sw_lusankya
+            is_ship_size = foc_sw_lusankya_foc_lowest
+        }
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+        }
+    }
+    component_set = "ship_aura_components"
+    ai_weight = {
+        weight = 2000
+    }
+}
+utility_component_template = {
+    key = "FOC_LUS_AURA_ATK"
+    hidden = yes
+    size_restriction = { foc_sw_lusankya foc_sw_lusankya_foc_lowest foc_v118_executor_bastion_foc_lowest }
+    size = medium
+    icon = "GFX_ship_part_swgs_Aura_ATK"
+    icon_frame = 1
+    power = 0
+    potential = {
+        OR = {
+            is_ship_size = foc_sw_lusankya
+            is_ship_size = foc_sw_lusankya_foc_lowest
+        }
+    }
+    component_set = "ship_aura_components"
+    ai_weight = {
+        weight = 0
+    }
+}
+utility_component_template = {
+    key = "FOC_LUS_AURA_ATK_EC"
+    hidden = yes
+    size_restriction = { foc_sw_lusankya foc_sw_lusankya_foc_lowest foc_v118_executor_bastion_foc_lowest }
+    size = medium
+    icon = "GFX_ship_part_swgs_Aura_ATK"
+    icon_frame = 1
+    power = 100
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 100
+        }
+        upkeep = {
+            energy = 1
+            alloys = 1
+        }
+    }
+    hostile_aura = {
+        name = "aura_ship_subspace_snare"
+        system_wide = yes
+        stack_info = {
+            id = swgs_atk_aura
+            priority = 125
+        }
+        modifier = {
+            ship_hull_mult = -0.25
+            ship_shield_mult = -0.25
+            ship_armor_mult = -0.25
+            ship_weapon_range_mult = -0.20
+        }
+        graphics = {
+            area_effect = {
+                entity = "circle_area_entity"
+                dynamic_scale = yes
+            }
+            ship_effect = {
+                entity = "ship_aura_negative_entity"
+                dynamic_scale = no
+            }
+        }
+    }
+    component_set = "ship_aura_components"
+    ai_weight = {
+        weight = 2000
+    }
+}
+utility_component_template = {
+    key = "FOC_LUS_AURA_DEF"
+    hidden = yes
+    size_restriction = { foc_sw_lusankya foc_sw_lusankya_foc_lowest foc_v118_executor_bastion_foc_lowest }
+    size = medium
+    icon = "GFX_ship_part_swgs_Aura_DEF"
+    icon_frame = 1
+    power = 0
+    potential = {
+        OR = {
+            is_ship_size = foc_sw_lusankya
+            is_ship_size = foc_sw_lusankya_foc_lowest
+        }
+    }
+    component_set = "ship_aura_components"
+    ai_weight = {
+        weight = 0
+    }
+}
+utility_component_template = {
+    key = "FOC_LUS_AURA_DEF_EC"
+    hidden = yes
+    size_restriction = { foc_sw_lusankya foc_sw_lusankya_foc_lowest foc_v118_executor_bastion_foc_lowest }
+    size = medium
+    icon = "GFX_ship_part_swgs_Aura_DEF"
+    icon_frame = 1
+    power = 100
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 100
+        }
+        upkeep = {
+            energy = 1
+            alloys = 1
+        }
+    }
+    friendly_aura = {
+        name = "aura_inspiring_presence"
+        radius = 200
+        apply_on = ships
+        stack_info = {
+            id = swgs_def_presence
+            priority = 200
+        }
+        modifier = {
+            ship_hull_mult = 1
+            ship_shield_mult = 1
+            ship_armor_mult = 1
+            ship_weapon_range_mult = 1
+        }
+        graphics = {
+            area_effect = {
+                entity = "circle_area_entity"
+                dynamic_scale = yes
+            }
+            ship_effect = {
+                entity = "ship_aura_positive_entity"
+                dynamic_scale = no
+            }
+        }
+    }
+    component_set = "ship_aura_components"
+    ai_weight = {
+        weight = 2000
+    }
+}
+utility_component_template = {
+    key = "FOC_LUS_DSWARP_DRIVE"
+    hidden = yes
+    size_restriction = { foc_sw_lusankya foc_sw_lusankya_foc_lowest foc_v118_executor_bastion_foc_lowest }
+    size = small
+    icon = "GFX_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -100
+    ftl = yes
+    jumpdrive = yes
+    potential = { always = no }
+    resources = {
+        category = ship_components
+        cost = { alloys = 100 sr_tibanna_swgs = 50 sr_coaxium_foc = 10 }
+        upkeep = { energy = 1 alloys = 1 }
+    }
+    ship_modifier = { ship_ftl_jumpdrive_range_mult = 10 ship_jumpdrive_cooldown_mult = -1 ship_windup_mult = -1 }
+    ai_weight = { weight = 0 }
+    component_set = "ftl_components"
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "FOC_LUS_COLOSSUS_REACTOR"
+    hidden = yes
+    size_restriction = { foc_sw_lusankya foc_sw_lusankya_foc_lowest foc_v118_executor_bastion_foc_lowest }
+    size = small
+    icon = "GFX_ship_part_swgs_reactor"
+    icon_frame = 1
+    power = 55000
+    potential = { always = no }
+    resources = {
+        category = ship_components
+        cost = { alloys = 100 sr_coaxium_foc = 10 }
+        upkeep = { energy = 1 alloys = 1 }
+    }
+    component_set = "power_core"
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "FOC_LUS_SENSOR"
+    hidden = yes
+    size_restriction = { foc_sw_lusankya foc_sw_lusankya_foc_lowest foc_v118_executor_bastion_foc_lowest }
+    size = medium
+    icon = "GFX_ship_part_swgs_sensor"
+    icon_frame = 1
+    power = -150
+    sensor_range = 12
+    hyperlane_range = 18
+    potential = { always = no }
+    resources = {
+        category = ship_components
+        cost = { alloys = 100 }
+        upkeep = { energy = 1 alloys = 1 }
+    }
+    ship_modifier = { ship_tracking_add = 10 }
+    component_set = "sensor_components"
+    ai_weight = { weight = 0 }
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "FOC_LUS_STARDESTROYER_THRUSTER"
+    hidden = yes
+    size_restriction = { foc_sw_lusankya foc_sw_lusankya_foc_lowest foc_v118_executor_bastion_foc_lowest }
+    size = small
+    icon = "GFX_ship_part_swgs_thruster"
+    icon_frame = 1
+    power = -150
+    potential = { always = no }
+    resources = {
+        category = ship_components
+        cost = { alloys = 100 sr_tibanna_swgs = 10 sr_coaxium_foc = 10 }
+        upkeep = { energy = 1 alloys = 1 }
+    }
+    modifier = { ship_evasion_add = 25 ship_speed_mult = 0.25 }
+    component_set = "thruster_components"
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "FOC_LUS_STRANGE_CARRIER_COMPUTER"
+    hidden = yes
+    size_restriction = { foc_sw_lusankya foc_sw_lusankya_foc_lowest foc_v118_executor_bastion_foc_lowest }
+    size = small
+    icon = "GFX_ship_part_swgs_strange_computer"
+    icon_frame = 1
+    power = -15
+    resources = {
+        category = ship_components
+        cost = { alloys = 100 }
+        upkeep = { energy = 1 alloys = 1 }
+    }
+    modifier = { ship_weapon_range_mult = 0.30 }
+    potential = { always = no }
+    component_set = "combat_computers"
+    ship_behavior = "foc_lus_carrier_ship"
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    show_tech_unlock_if = { always = no }
+}

@@ -1,0 +1,253 @@
+##########
+# DEFENSE STATIONS
+##########
+
+##########
+# SPECIAL
+##########
+
+entity = {
+	name = "republic_golan_1_shield_entity"
+	pdxmesh = "republic_golan_1_shield_mesh"
+	
+	game_data = {
+		uv_animation_speed   = -0.05
+		uv_animation_direction  = { 0.0 1.0 }
+	}
+}
+
+entity = {
+	name = "republic_golan_2_shield_entity"
+	pdxmesh = "republic_golan_2_shield_mesh"
+	
+	game_data = {
+		uv_animation_speed   = -0.05
+		uv_animation_direction  = { 0.0 1.0 }
+	}
+}
+
+entity = {
+	name = "republic_golan_3_shield_entity"
+	pdxmesh = "republic_golan_3_shield_mesh"
+	
+	game_data = {
+		uv_animation_speed   = -0.05
+		uv_animation_direction  = { 0.0 1.0 }
+	}
+}
+
+entity = {
+	name = "republic_xq5_shield_entity"
+	pdxmesh = "republic_xq5_shield_mesh"
+	
+	game_data = {
+		uv_animation_speed   = -0.05
+		uv_animation_direction  = { 0.0 1.0 }
+	}
+}
+
+##########
+# DEFENSE PLATFORM
+##########
+
+entity = {
+	name = "republic_01_military_station_small_entity"
+	pdxmesh = "republic_golan_1_mesh"
+	scale = 1.0
+
+	locator = { name = "root" rotation = { 0 0 0 } position = { 0 0 0 } }
+	attach = { root = "republic_golan_1_shield_entity" }
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5
+		event = { trigger_once = yes sound = { soundeffect = "defense_station_idle_hum" } }
+	}
+
+	### Static Death Animation / 3 Second Animation
+	state = { name = "death" state_time = 3 looping = no
+		event = { time = 1.0 node = "explosion_01" particle = "medium_station_explosion_particle" sound = { soundeffect = "station_explosion_small" } }
+		event = { time = 1.0 node = "explosion_01" particle = "ship_burn_particle" }
+		event = { time = 1.5 node = "explosion_02" particle = "medium_station_explosion_particle" sound = { soundeffect = "station_explosion_small" } }
+		event = { time = 1.5 node = "explosion_02" particle = "ship_burn_particle" }
+		event = { time = 2.5 node = "explosion_03" particle = "medium_station_explosion_particle" sound = { soundeffect = "station_explosion_small" } }
+		event = { time = 2.5 node = "explosion_03" particle = "ship_burn_particle" }
+		event = { time = 2.9 particle = "large_player_ship_explosion_particle" keep_particle = yes trigger_once = yes sound = { soundeffect = "station_explosion_large" } }
+	}
+
+	game_data = {
+		size = 16.0
+	}
+}
+
+entity = {
+	name = "republic_01_military_station_medium_entity"
+	pdxmesh = "republic_golan_2_mesh"
+	scale = 1.0
+
+	locator = { name = "root" rotation = { 0 0 0 } position = { 0 0 0 } }
+	attach = { root = "republic_golan_2_shield_entity" }
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5
+		event = { trigger_once = yes sound = { soundeffect = "defense_station_idle_hum" } }
+	}
+
+	### Static Death Animation / 4 Second Animation
+	state = { name = "death" state_time = 4 looping = no
+		event = { time = 1.0 node = "explosion_01" particle = "medium_station_explosion_particle" sound = { soundeffect = "station_explosion_small" } }
+		event = { time = 1.0 node = "explosion_01" particle = "ship_burn_particle" }
+		event = { time = 1.5 node = "explosion_02" particle = "medium_station_explosion_particle" sound = { soundeffect = "station_explosion_small" } }
+		event = { time = 1.5 node = "explosion_02" particle = "ship_burn_particle" }
+		event = { time = 2.5 node = "explosion_03" particle = "medium_station_explosion_particle" sound = { soundeffect = "station_explosion_small" } }
+		event = { time = 2.5 node = "explosion_03" particle = "ship_burn_particle" }
+		event = { time = 3.0 node = "explosion_04" particle = "medium_station_explosion_particle" sound = { soundeffect = "station_explosion_small" } }
+		event = { time = 3.0 node = "explosion_04" particle = "ship_burn_particle" }
+		event = { time = 3.5 node = "explosion_05" particle = "medium_station_explosion_particle" sound = { soundeffect = "station_explosion_small" } }
+		event = { time = 3.5 node = "explosion_05" particle = "ship_burn_particle" }
+		event = { time = 3.9 particle = "large_player_ship_explosion_particle" keep_particle = yes trigger_once = yes sound = { soundeffect = "station_explosion_large" } }
+	}
+
+	game_data = {
+		size = 16.0
+	}
+}
+
+entity = {
+	name = "republic_01_military_station_large_entity"
+	pdxmesh = "republic_golan_3_mesh"
+	scale = 1.0
+
+	locator = { name = "root" rotation = { 0 0 0 } position = { 0 0 0 } }
+	attach = { root = "republic_golan_3_shield_entity" }
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5
+		event = { trigger_once = yes sound = { soundeffect = "defense_station_idle_hum" } }
+	}
+
+	### Static Death Animation / 5 Second Animation
+	state = { name = "death" state_time = 5 looping = no
+		event = { time = 0.5 node = "explosion_01" particle = "medium_station_explosion_particle" sound = { soundeffect = "station_explosion_small" } }
+		event = { time = 0.5 node = "explosion_01" particle = "ship_burn_particle" }
+		event = { time = 1.0 node = "explosion_02" particle = "medium_station_explosion_particle" sound = { soundeffect = "station_explosion_small" } }
+		event = { time = 1.0 node = "explosion_02" particle = "ship_burn_particle" }
+		event = { time = 1.5 node = "explosion_03" particle = "medium_station_explosion_particle" sound = { soundeffect = "station_explosion_small" } }
+		event = { time = 1.5 node = "explosion_03" particle = "ship_burn_particle" }
+		event = { time = 2.5 node = "explosion_04" particle = "medium_station_explosion_particle" sound = { soundeffect = "station_explosion_small" } }
+		event = { time = 2.5 node = "explosion_04" particle = "ship_burn_particle" }
+		event = { time = 3.0 node = "explosion_05" particle = "medium_station_explosion_particle" sound = { soundeffect = "station_explosion_small" } }
+		event = { time = 3.0 node = "explosion_05" particle = "ship_burn_particle" }
+		event = { time = 3.5 node = "explosion_06" particle = "medium_station_explosion_particle" sound = { soundeffect = "station_explosion_small" } }
+		event = { time = 3.5 node = "explosion_06" particle = "ship_burn_particle" }
+		event = { time = 4.0 node = "explosion_07" particle = "medium_station_explosion_particle" sound = { soundeffect = "station_explosion_small" } }
+		event = { time = 4.0 node = "explosion_07" particle = "ship_burn_particle" }
+		event = { time = 4.5 node = "explosion_08" particle = "medium_station_explosion_particle" sound = { soundeffect = "station_explosion_small" } }
+		event = { time = 4.5 node = "explosion_08" particle = "ship_burn_particle" }
+		event = { time = 4.9 particle = "large_player_ship_explosion_particle" keep_particle = yes trigger_once = yes sound = { soundeffect = "station_explosion_large" } }
+	}
+
+	game_data = {
+		size = 16.0
+	}
+}
+
+entity = {
+	name = "republic_01_military_station_section_light_entity"
+	pdxmesh = "republic_weapons_defense_platforms_mesh"
+	scale = 1.0
+}
+
+entity = {
+	name = "republic_01_military_station_section_medium_entity"
+	pdxmesh = "republic_weapons_defense_platforms_mesh"
+	scale = 1.0
+}
+
+entity = {
+	name = "republic_01_military_station_section_heavy_entity"
+	pdxmesh = "republic_weapons_defense_platforms_mesh"
+	scale = 1.0
+}
+
+entity = {
+	name = "republic_01_military_station_section_hangar_entity"
+	pdxmesh = "republic_weapons_defense_platforms_mesh"
+	scale = 1.0
+}
+
+##########
+# ION CANNON
+##########
+
+entity = {
+	name = "republic_01_ion_cannon_entity"
+	pdxmesh = "sw_empty_mesh"
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5
+		start_event = { trigger_once = yes sound = { soundeffect = "defense_station_idle_hum" } }
+	}
+
+	### Static Death Animation / 3 Second Animation
+	state = { name = "death" state_time = 3 looping = no
+		event = { time = 2.9 particle = "large_player_ship_explosion_particle" sound = { soundeffect = "station_explosion_large" } }
+	}
+}
+
+entity = {
+	name = "republic_01_ion_cannon_section_entity"
+	pdxmesh = "republic_defense_satellite_mesh"
+	scale = 1.0
+
+	game_data = {
+		size = 16.0
+	}
+}
+
+##########
+# HEADQUARTERS
+##########
+
+entity = {
+	name = "republic_01_nsc_01_HQ_Mega_entity"
+	pdxmesh = "republic_xq5_mesh"
+	scale = 1.4
+
+	locator = { name = "root" rotation = { 0 0 0 } position = { 0 0 0 } }
+	attach = { root = "republic_xq5_shield_entity" }
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5
+		start_event = { trigger_once = yes sound = { soundeffect = "defense_station_idle_hum" } }
+	}
+
+	### Static Death Animation / 5 Second Animation
+	state = { name = "death" state_time = 5 looping = no
+		event = { time = 0.0 node = "explosion_01" particle = "medium_station_explosion_particle" sound = { soundeffect = "station_explosion_small" } }
+		event = { time = 0.0 node = "explosion_01" particle = "ship_burn_particle" }
+		event = { time = 1.1 node = "explosion_02" particle = "medium_station_explosion_particle" sound = { soundeffect = "station_explosion_small" } }
+		event = { time = 1.1 node = "explosion_02" particle = "ship_burn_particle" }
+		event = { time = 1.5 node = "explosion_03" particle = "medium_station_explosion_particle" sound = { soundeffect = "station_explosion_small" } }
+		event = { time = 1.5 node = "explosion_03" particle = "ship_burn_particle" }
+		event = { time = 2.5 node = "explosion_04" particle = "medium_station_explosion_particle" sound = { soundeffect = "station_explosion_small" } }
+		event = { time = 2.5 node = "explosion_04" particle = "ship_burn_particle" }
+		event = { time = 2.8 node = "explosion_05" particle = "medium_station_explosion_particle" sound = { soundeffect = "station_explosion_small" } }
+		event = { time = 2.8 node = "explosion_05" particle = "ship_burn_particle" }
+		event = { time = 3.5 node = "explosion_06" particle = "medium_station_explosion_particle" sound = { soundeffect = "station_explosion_small" } }
+		event = { time = 3.5 node = "explosion_06" particle = "ship_burn_particle" }
+		event = { time = 4.0 node = "explosion_07" particle = "medium_station_explosion_particle" sound = { soundeffect = "station_explosion_small" } }
+		event = { time = 4.0 node = "explosion_07" particle = "ship_burn_particle" }
+		event = { time = 4.3 node = "explosion_08" particle = "medium_station_explosion_particle" sound = { soundeffect = "station_explosion_small" } }
+		event = { time = 4.3 node = "explosion_08" particle = "ship_burn_particle" }
+		event = { time = 4.7 node = "detonate_01" particle = "juggernaut_explosion_particle" sound = { soundeffect = "station_explosion_large" } }
+		event = { time = 4.7 node = "detonate_02" particle = "juggernaut_explosion_particle" sound = { soundeffect = "station_explosion_large" } }
+		event = { time = 4.8 node = "detonate_03" particle = "juggernaut_explosion_particle" sound = { soundeffect = "station_explosion_large" } }
+		event = { time = 4.8 node = "detonate_04" particle = "juggernaut_explosion_particle" sound = { soundeffect = "station_explosion_large" } }
+		event = { time = 4.8 node = "detonate_05" particle = "juggernaut_explosion_particle" sound = { soundeffect = "station_explosion_large" } }
+		event = { time = 4.9 particle = "juggernaut_explosion_particle" sound = { soundeffect = "station_explosion_large" } }
+	}
+
+	game_data = {
+		size = 60.0
+	}
+}

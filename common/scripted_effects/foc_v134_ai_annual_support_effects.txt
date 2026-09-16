@@ -1,0 +1,112 @@
+# Galactic Civil War support fleets; effects are country scope.
+# V232q: Empire supports both player and AI; the Rebel stream remains unchanged.
+
+# Galactic Empire: one fleet (default 33 ISDs), preferred at Kuat with a valid owned fallback.
+foc_v134_spawn_empire_annual_33_isd = {
+    if = {
+        limit = { foc_v232q_empire_support_eligible = yes }
+        save_event_target_as = foc_v232q_empire_support_recipient
+        if = {
+            limit = {
+                any_system = {
+                    OR = { has_star_flag = foc_sw_kuat_home has_star_flag = foc_swmap_kuat_home }
+                    exists = space_owner
+                    space_owner = { is_same_value = event_target:foc_v232q_empire_support_recipient }
+                    NOT = { any_system_planet = { is_colony = yes NOT = { owner = { is_same_value = event_target:foc_v232q_empire_support_recipient } } } }
+                }
+            }
+            random_system = {
+                limit = {
+                    OR = { has_star_flag = foc_sw_kuat_home has_star_flag = foc_swmap_kuat_home }
+                    exists = space_owner
+                    space_owner = { is_same_value = event_target:foc_v232q_empire_support_recipient }
+                    NOT = { any_system_planet = { is_colony = yes NOT = { owner = { is_same_value = event_target:foc_v232q_empire_support_recipient } } } }
+                }
+                save_event_target_as = foc_v232q_empire_support_anchor
+            }
+        }
+        else_if = {
+            limit = { exists = capital_scope }
+            capital_scope = { solar_system = { save_event_target_as = foc_v232q_empire_support_anchor } }
+        }
+        else = {
+            random_owned_starbase = {
+                limit = { exists = solar_system }
+                solar_system = { save_event_target_as = foc_v232q_empire_support_anchor }
+            }
+        }
+        if = {
+            limit = { exists = event_target:foc_v232q_empire_support_anchor }
+            create_fleet = {
+                name = "FOC_V134_IMPERIAL_ANNUAL_SUPPORT"
+                settings = {
+                    can_upgrade = no
+                    can_disband = yes
+                    can_change_composition = no
+                    spawn_debris = yes
+                    ai_ignore_strength = yes
+                }
+                effect = {
+                    set_owner = event_target:foc_v232q_empire_support_recipient
+                    # Default = 33 ISDs. Existing low-strength and debug scales stay intact.
+                    foc_v211_create_scaled_empire_annual_isds = yes
+                    if = {
+                        limit = { any_owned_ship = { always = yes } }
+                        set_location = { target = event_target:foc_v232q_empire_support_anchor distance = 55 angle = random }
+                        set_aggro_range_measure_from = self
+                        set_aggro_range = 9999
+                        set_formation_scale = 3
+                        set_fleet_flag = foc_republic_origin_empire_isd_fleet
+                        set_fleet_flag = foc_v134_annual_support_fleet
+                        set_fleet_flag = foc_v232q_empire_support_fleet
+                        event_target:foc_v232q_empire_support_recipient = {
+                            set_country_flag = foc_v232q_empire_support_spawn_verified
+                        }
+                    }
+                    else = { delete_fleet = this }
+                }
+            }
+        }
+    }
+}
+
+# Rebel Alliance / Imperial Rebellion: one fleet of exactly 20 dedicated MC80 line cruisers.
+# V144: this is the Yavin support stream. It no longer follows the current capital.
+# This intentionally uses foc_rebel_mc80_line, NOT the separate battleship-slot MC80 design.
+foc_v134_spawn_rebel_annual_20_mc80_line = {
+    if = {
+        limit = { NOT = { has_global_flag = foc_v211_ai_support_rebel_disabled } }
+        random_system = {
+            limit = {
+                has_star_flag = foc_sw_yavin_home
+                space_owner? = { is_same_value = root }
+                NOT = {
+                    any_system_planet = {
+                        is_colony = yes
+                        NOT = { owner = { is_same_value = root } }
+                    }
+                }
+            }
+            create_fleet = {
+                name = "FOC_V134_REBEL_ANNUAL_SUPPORT"
+                settings = {
+                    can_upgrade = no
+                    can_disband = yes
+                    can_change_composition = no
+                    spawn_debris = yes
+                    ai_ignore_strength = yes
+                }
+                effect = {
+                    set_owner = root
+                    foc_v211_create_scaled_rebel_20_mc80_line = yes
+                    set_location = { target = prev distance = 45 angle = random }
+                    set_aggro_range_measure_from = self
+                    set_aggro_range = 9999
+                    set_formation_scale = 2
+                    set_fleet_flag = foc_republic_origin_rebellion_fleet
+                    set_fleet_flag = foc_v134_annual_support_fleet
+                }
+            }
+        }
+    }
+}

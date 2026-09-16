@@ -1,0 +1,530 @@
+namespace = foc_final_guard
+
+# FOC 3.11u old-save migration. The extra eight Xystons may exist either as
+# pre-3.11t one-ship attack fleets or as the 3.11t pure-Xyston guard. Count the
+# actual survivors, remove those obsolete fleets, and add the ships alternately
+# to the two surviving mixed Eclipse/Resurgent/Xyston guards.
+country_event = {
+    id = foc_final_guard.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_khan_final_order_country
+        has_global_flag = foc_khan_phase_two
+        NOT = { has_global_flag = foc_khan_crisis_finished }
+        NOT = { has_country_flag = foc_khan_final_xystons_distributed_311u }
+        exists = event_target:foc_khan_exegol_capital
+        any_owned_fleet = {
+            has_fleet_flag = foc_khan_final_order_guard_fleet
+            any_owned_ship = {
+                OR = {
+                    OR = { is_ship_size = foc_khan_eclipse is_ship_size = foc_khan_eclipse_foc_lowest }
+                    OR = { is_ship_size = foc_khan_eclipse_ii is_ship_size = foc_khan_eclipse_ii_foc_lowest }
+                }
+            }
+        }
+    }
+
+    immediate = {
+        save_event_target_as = foc_final_guard_owner_311u
+
+        # Resolve the two mixed home guards before dismantling obsolete fleets.
+        random_owned_fleet = {
+            limit = {
+                has_fleet_flag = foc_khan_final_order_guard_fleet
+                any_owned_ship = {
+                    OR = {
+                        OR = { is_ship_size = foc_khan_eclipse is_ship_size = foc_khan_eclipse_foc_lowest }
+                        OR = { is_ship_size = foc_khan_eclipse_ii is_ship_size = foc_khan_eclipse_ii_foc_lowest }
+                    }
+                }
+            }
+            save_event_target_as = foc_final_guard_mixed_a_311u
+        }
+        random_owned_fleet = {
+            limit = {
+                has_fleet_flag = foc_khan_final_order_guard_fleet
+                any_owned_ship = {
+                    OR = {
+                        OR = { is_ship_size = foc_khan_eclipse is_ship_size = foc_khan_eclipse_foc_lowest }
+                        OR = { is_ship_size = foc_khan_eclipse_ii is_ship_size = foc_khan_eclipse_ii_foc_lowest }
+                    }
+                }
+                NOT = { is_same_value = event_target:foc_final_guard_mixed_a_311u }
+            }
+            save_event_target_as = foc_final_guard_mixed_b_311u
+        }
+
+        set_variable = { which = foc_final_guard_extra_xyston_count_311u value = 0 }
+
+        every_owned_fleet = {
+            limit = {
+                owner = {
+                    check_variable = {
+                        which = foc_final_guard_extra_xyston_count_311u
+                        value < 8
+                    }
+                }
+                OR = {
+                    # FOC 3.11t pure-Xyston guard fleet.
+                    AND = {
+                        has_fleet_flag = foc_khan_final_order_guard_fleet
+                        any_owned_ship = { OR = { is_ship_size = foc_khan_xystonsd_combat is_ship_size = foc_khan_xystonsd_combat_foc_lowest } }
+                        NOT = {
+                            any_owned_ship = {
+                                OR = {
+                                    OR = { is_ship_size = foc_khan_eclipse is_ship_size = foc_khan_eclipse_foc_lowest }
+                                    OR = { is_ship_size = foc_khan_eclipse_ii is_ship_size = foc_khan_eclipse_ii_foc_lowest }
+                                }
+                            }
+                        }
+                    }
+                    # Pre-3.11t one-ship Xyston attack fleets.
+                    AND = {
+                        has_fleet_flag = foc_khan_final_order_attack_fleet
+                        NOT = { has_fleet_flag = foc_khan_final_order_guard_fleet }
+                        num_ships = 1
+                        any_owned_ship = { OR = { is_ship_size = foc_khan_xystonsd_combat is_ship_size = foc_khan_xystonsd_combat_foc_lowest } }
+                    }
+                }
+            }
+            every_owned_ship = {
+                limit = { OR = { is_ship_size = foc_khan_xystonsd_combat is_ship_size = foc_khan_xystonsd_combat_foc_lowest } }
+                owner = {
+                    change_variable = {
+                        which = foc_final_guard_extra_xyston_count_311u
+                        value = 1
+                    }
+                }
+            }
+            destroy_fleet = {
+                target = this
+                destroy_template = yes
+                kill_leader = no
+            }
+        }
+
+        # Clear the retired sortie state. If the Rebels still live, .2 will
+        # immediately launch the newly designated mixed guard instead.
+        every_owned_fleet = {
+            remove_fleet_flag = foc_khan_final_order_rebel_strike_guard_311t
+            remove_fleet_flag = foc_khan_final_rebel_guard_outbound_311t
+            remove_fleet_flag = foc_khan_final_rebel_guard_outbound_grace_311t
+            remove_fleet_flag = foc_khan_final_rebel_guard_returning_311t
+            remove_fleet_flag = foc_khan_final_rebel_guard_return_grace_311t
+        }
+        remove_country_flag = foc_khan_final_rebel_guard_launched_311t
+        remove_country_flag = foc_khan_final_rebel_guard_returned_311t
+
+        # Alternate additions A/B so eight survivors become exactly 4+4.
+        # If one mixed fleet was already destroyed, all survivors go to the
+        # remaining mixed guard rather than recreating the lost fleet.
+        while = {
+            count = 1080
+            if = {
+                limit = {
+                    check_variable = {
+                        which = foc_final_guard_extra_xyston_count_311u
+                        value > 0
+                    }
+                    exists = event_target:foc_final_guard_mixed_a_311u
+                }
+                event_target:foc_final_guard_mixed_a_311u = {
+                    
+
+                    
+
+                    
+                    # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+if = { limit = { NOT = { has_technology = tech_titans } } give_technology = { tech = tech_titans message = no } }
+}
+                    create_ship = {
+                        name = random
+                        design = "NAME_FOC_KHAN_XYSTON_COMBAT"
+                        graphical_culture = first_01
+                        upgradable = no
+                        fleet_cache_recalc = yes
+                        effect = {
+                            add_modifier = {
+                                modifier = foc_khan_spawn_corridor_acceleration
+                                days = 60
+                            }
+                        }
+                    }
+                }
+                subtract_variable = {
+                    which = foc_final_guard_extra_xyston_count_311u
+                    value = 1
+                }
+            }
+            if = {
+                limit = {
+                    check_variable = {
+                        which = foc_final_guard_extra_xyston_count_311u
+                        value > 0
+                    }
+                    exists = event_target:foc_final_guard_mixed_b_311u
+                }
+                event_target:foc_final_guard_mixed_b_311u = {
+                    
+
+                    
+
+                    
+                    # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+if = { limit = { NOT = { has_technology = tech_titans } } give_technology = { tech = tech_titans message = no } }
+}
+                    create_ship = {
+                        name = random
+                        design = "NAME_FOC_KHAN_XYSTON_COMBAT"
+                        graphical_culture = first_01
+                        upgradable = no
+                        fleet_cache_recalc = yes
+                        effect = {
+                            add_modifier = {
+                                modifier = foc_khan_spawn_corridor_acceleration
+                                days = 60
+                            }
+                        }
+                    }
+                }
+                subtract_variable = {
+                    which = foc_final_guard_extra_xyston_count_311u
+                    value = 1
+                }
+            }
+        }
+
+        # Exactly one mixed guard receives the Rebel-base sortie role.
+        if = {
+            limit = { exists = event_target:foc_final_guard_mixed_a_311u }
+            event_target:foc_final_guard_mixed_a_311u = {
+                set_fleet_flag = foc_khan_final_order_rebel_strike_guard_311t
+                set_fleet_stance = passive
+                set_aggro_range_measure_from = self
+                set_aggro_range = 300
+            }
+        }
+
+        set_country_flag = foc_khan_final_mixed_strike_guard_assigned_311u
+        set_country_flag = foc_khan_final_xystons_distributed_311u
+        remove_country_flag = foc_khan_final_xyston_guard_consolidated_311t
+        clear_variable = foc_final_guard_extra_xyston_count_311u
+        country_event = { id = foc_khan_balance.1 days = 1 }
+    }
+}
+
+
+# One Final Order mixed home guard follows the staged Resistance chain in
+# Phase II: Crait first, then Ajan Kloss after Crait falls. It returns to Exegol
+# only after the final Ajan Kloss base has been captured.
+country_event = {
+    id = foc_final_guard.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_khan_final_order_country
+        has_global_flag = foc_khan_phase_two
+        NOT = { has_global_flag = foc_khan_crisis_finished }
+        NOT = { has_country_flag = foc_khan_final_rebel_guard_returned_311t }
+        exists = event_target:foc_khan_exegol_capital
+        any_owned_fleet = {
+            has_fleet_flag = foc_khan_final_order_rebel_strike_guard_311t
+            any_owned_ship = { is_ship_class = shipclass_military }
+        }
+        OR = {
+            AND = {
+                has_global_flag = foc_khan_rebel_spawned
+                NOT = { has_global_flag = foc_khan_rebel_destroyed }
+                exists = event_target:foc_khan_rebel_alliance
+                event_target:foc_khan_rebel_alliance = {
+                    has_country_flag = foc_khan_rebel_alliance_country
+                }
+                OR = {
+                    AND = {
+                        exists = event_target:foc_khan_rebel_crait
+                        event_target:foc_khan_rebel_crait = {
+                            exists = controller
+                            controller = { is_same_value = event_target:foc_khan_rebel_alliance }
+                        }
+                    }
+                    AND = {
+                        exists = event_target:foc_khan_rebel_ajan_kloss
+                        event_target:foc_khan_rebel_ajan_kloss = {
+                            exists = controller
+                            controller = { is_same_value = event_target:foc_khan_rebel_alliance }
+                        }
+                    }
+                }
+            }
+            has_country_flag = foc_khan_final_rebel_guard_launched_311t
+        }
+    }
+
+    immediate = {
+        # The Final Order always knows its own hidden route, independently of
+        # whether ordinary countries have completed the Wayfinder project.
+        add_seen_bypass_type = foc_sith_wayfinder
+        set_country_flag = foc_sith_wayfinder_route_known
+        if = {
+            limit = { exists = event_target:foc_khan_final_order_system }
+            set_visited = event_target:foc_khan_final_order_system
+        }
+        if = {
+            limit = { exists = event_target:foc_sw_jakku_system }
+            set_visited = event_target:foc_sw_jakku_system
+        }
+        if = {
+            limit = { exists = event_target:foc_khan_rebel_dqar_system }
+            set_visited = event_target:foc_khan_rebel_dqar_system
+        }
+        if = {
+            limit = { exists = event_target:foc_khan_rebel_crait_system }
+            set_visited = event_target:foc_khan_rebel_crait_system
+        }
+        if = {
+            limit = { exists = event_target:foc_khan_rebel_ajan_kloss_system }
+            set_visited = event_target:foc_khan_rebel_ajan_kloss_system
+        }
+
+        # Ajan Kloss supersedes Crait as soon as the final base is established.
+        if = {
+            limit = {
+                exists = event_target:foc_khan_rebel_ajan_kloss
+                event_target:foc_khan_rebel_ajan_kloss = {
+                    exists = controller
+                    controller = { is_same_value = event_target:foc_khan_rebel_alliance }
+                }
+            }
+            event_target:foc_khan_rebel_ajan_kloss = {
+                save_global_event_target_as = foc_khan_rebel_strike_target_311v
+            }
+        }
+        else_if = {
+            limit = {
+                exists = event_target:foc_khan_rebel_crait
+                event_target:foc_khan_rebel_crait = {
+                    exists = controller
+                    controller = { is_same_value = event_target:foc_khan_rebel_alliance }
+                }
+            }
+            event_target:foc_khan_rebel_crait = {
+                save_global_event_target_as = foc_khan_rebel_strike_target_311v
+            }
+        }
+
+        if = {
+            limit = {
+                has_global_flag = foc_khan_rebel_spawned
+                NOT = { has_global_flag = foc_khan_rebel_destroyed }
+                exists = event_target:foc_khan_rebel_alliance
+                exists = event_target:foc_khan_rebel_strike_target_311v
+                event_target:foc_khan_rebel_alliance = {
+                    has_country_flag = foc_khan_rebel_alliance_country
+                }
+                event_target:foc_khan_rebel_strike_target_311v = {
+                    exists = controller
+                    controller = {
+                        is_same_value = event_target:foc_khan_rebel_alliance
+                    }
+                }
+            }
+
+            if = {
+                limit = {
+                    NOT = { has_country_flag = foc_khan_final_rebel_guard_launched_311t }
+                }
+                random_owned_fleet = {
+                    limit = {
+                        has_fleet_flag = foc_khan_final_order_rebel_strike_guard_311t
+                        any_owned_ship = { is_ship_class = shipclass_military }
+                    }
+                    owner = { set_country_flag = foc_khan_final_rebel_guard_launched_311t }
+                    set_fleet_flag = foc_khan_final_rebel_guard_outbound_311t
+                    set_timed_fleet_flag = {
+                        flag = foc_khan_final_rebel_guard_outbound_grace_311t
+                        days = 120
+                    }
+                    remove_auto_move_target = yes
+                    clear_orders = yes
+                    clear_fleet_actions = this
+                    set_fleet_stance = aggressive
+                    set_aggro_range_measure_from = self
+                    set_aggro_range = 9999
+                    auto_move_to_planet = {
+                        target = event_target:foc_khan_rebel_strike_target_311v
+                        clear_auto_move_on_arrival = yes
+                    }
+                }
+            }
+            else = {
+                every_owned_fleet = {
+                    limit = {
+                        has_fleet_flag = foc_khan_final_order_rebel_strike_guard_311t
+                        has_fleet_flag = foc_khan_final_rebel_guard_outbound_311t
+                        any_owned_ship = { is_ship_class = shipclass_military }
+                    }
+
+                    # A garrison setting can occasionally prevent the first
+                    # gate-path order from leaving Exegol. After a generous
+                    # grace period, place it at the Jakku endpoint and resume.
+                    if = {
+                        limit = {
+                            exists = solar_system
+                            solar_system = { has_star_flag = foc_khan_exegol_home }
+                            NOT = { has_fleet_flag = foc_khan_final_rebel_guard_outbound_grace_311t }
+                            exists = event_target:foc_sw_jakku_star
+                        }
+                        remove_auto_move_target = yes
+                        clear_orders = yes
+                        clear_fleet_actions = this
+                        set_location = {
+                            target = event_target:foc_sw_jakku_star
+                            distance = 35
+                            angle = random
+                        }
+                        set_timed_fleet_flag = {
+                            flag = foc_khan_final_rebel_guard_outbound_grace_311t
+                            days = 120
+                        }
+                        auto_move_to_planet = {
+                            target = event_target:foc_khan_rebel_strike_target_311v
+                            clear_auto_move_on_arrival = yes
+                        }
+                    }
+                    else_if = {
+                        limit = { is_fleet_idle = yes }
+                        remove_auto_move_target = yes
+                        clear_orders = yes
+                        clear_fleet_actions = this
+                        set_fleet_stance = aggressive
+                        set_aggro_range_measure_from = self
+                        set_aggro_range = 9999
+                        auto_move_to_planet = {
+                            target = event_target:foc_khan_rebel_strike_target_311v
+                            clear_auto_move_on_arrival = yes
+                        }
+                    }
+                }
+            }
+
+            # Reassert the existing invasion controller so the dedicated Final
+            # Order transports follow through and occupy the current staged
+            # Resistance world once the strike guard breaks its system defence.
+            random_owned_fleet = {
+                limit = {
+                    has_fleet_flag = foc_khan_final_order_invasion_force
+                    any_owned_ship = { is_ship_class = shipclass_transport }
+                }
+                if = {
+                    limit = { NOT = { has_fleet_flag = foc_khan_229_transport_controller } }
+                    foc_khan_229_transport_fleet_action = yes
+                }
+            }
+        }
+        else_if = {
+            # Crait's loss alone does not end the sortie. Return only after the
+            # final Ajan Kloss base has fallen and the Resistance is destroyed.
+            limit = {
+                has_country_flag = foc_khan_final_rebel_guard_launched_311t
+                has_global_flag = foc_khan_rebel_destroyed
+            }
+
+            every_owned_fleet = {
+                limit = {
+                    has_fleet_flag = foc_khan_final_order_rebel_strike_guard_311t
+                    any_owned_ship = { is_ship_class = shipclass_military }
+                }
+
+                if = {
+                    limit = {
+                        exists = solar_system
+                        solar_system = { has_star_flag = foc_khan_exegol_home }
+                    }
+                    remove_auto_move_target = yes
+                    clear_orders = yes
+                    clear_fleet_actions = this
+                    remove_fleet_flag = foc_khan_final_rebel_guard_outbound_311t
+                    remove_fleet_flag = foc_khan_final_rebel_guard_outbound_grace_311t
+                    remove_fleet_flag = foc_khan_final_rebel_guard_returning_311t
+                    remove_fleet_flag = foc_khan_final_rebel_guard_return_grace_311t
+                    set_fleet_stance = passive
+                    set_aggro_range_measure_from = self
+                    set_aggro_range = 300
+                    owner = { set_country_flag = foc_khan_final_rebel_guard_returned_311t }
+                }
+                else_if = {
+                    limit = {
+                        NOT = { has_fleet_flag = foc_khan_final_rebel_guard_returning_311t }
+                    }
+                    remove_auto_move_target = yes
+                    clear_orders = yes
+                    clear_fleet_actions = this
+                    remove_fleet_flag = foc_khan_final_rebel_guard_outbound_311t
+                    remove_fleet_flag = foc_khan_final_rebel_guard_outbound_grace_311t
+                    set_fleet_flag = foc_khan_final_rebel_guard_returning_311t
+                    set_timed_fleet_flag = {
+                        flag = foc_khan_final_rebel_guard_return_grace_311t
+                        days = 240
+                    }
+                    set_fleet_stance = aggressive
+                    set_aggro_range_measure_from = self
+                    set_aggro_range = 500
+                    auto_move_to_planet = {
+                        target = event_target:foc_khan_exegol_capital
+                        clear_auto_move_on_arrival = yes
+                    }
+                }
+                else_if = {
+                    limit = {
+                        NOT = { has_fleet_flag = foc_khan_final_rebel_guard_return_grace_311t }
+                    }
+                    remove_auto_move_target = yes
+                    clear_orders = yes
+                    clear_fleet_actions = this
+                    set_location = {
+                        target = event_target:foc_khan_exegol_capital
+                        distance = 35
+                        angle = random
+                    }
+                    remove_fleet_flag = foc_khan_final_rebel_guard_returning_311t
+                    remove_fleet_flag = foc_khan_final_rebel_guard_return_grace_311t
+                    set_fleet_stance = passive
+                    set_aggro_range_measure_from = self
+                    set_aggro_range = 300
+                    owner = { set_country_flag = foc_khan_final_rebel_guard_returned_311t }
+                }
+                else_if = {
+                    limit = { is_fleet_idle = yes }
+                    remove_auto_move_target = yes
+                    clear_orders = yes
+                    clear_fleet_actions = this
+                    auto_move_to_planet = {
+                        target = event_target:foc_khan_exegol_capital
+                        clear_auto_move_on_arrival = yes
+                    }
+                }
+            }
+        }
+    }
+}

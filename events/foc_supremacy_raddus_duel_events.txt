@@ -1,0 +1,255 @@
+namespace = foc_supremacy_duel
+
+# Monthly starter, then a 1-day loop while the crisis Supremacy exists.
+country_event = {
+    id = foc_supremacy_duel.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        OR = {
+            has_country_flag = foc_khan_first_order_country
+            has_country_flag = foc_khan_final_order_country
+        }
+        any_owned_ship = {
+            has_ship_flag = foc_khan_supremacy_flagship
+            is_disabled = no
+        }
+        has_global_flag = foc_khan_rebel_dqar_lost_311v
+        NOT = { has_global_flag = foc_supremacy_raddus_duel_done_v65 }
+    }
+
+    immediate = {
+        if = { limit = { exists = event_target:foc_v65_duel_sup_fleet } clear_global_event_target = foc_v65_duel_sup_fleet }
+        if = { limit = { exists = event_target:foc_v65_duel_sup_ship } clear_global_event_target = foc_v65_duel_sup_ship }
+        if = { limit = { exists = event_target:foc_v65_duel_sup_system } clear_global_event_target = foc_v65_duel_sup_system }
+        if = { limit = { exists = event_target:foc_v65_duel_raddus_fleet } clear_global_event_target = foc_v65_duel_raddus_fleet }
+        if = { limit = { exists = event_target:foc_v65_duel_raddus_ship } clear_global_event_target = foc_v65_duel_raddus_ship }
+        if = { limit = { exists = event_target:foc_v65_duel_raddus_system } clear_global_event_target = foc_v65_duel_raddus_system }
+
+        random_owned_fleet = {
+            limit = {
+                # V118b: without this guard the fleet can be picked while it is
+                # in transit and has no system, and the solar_system switch two
+                # lines down fails with "Invalid context switch [solar_system]
+                # from [fleet]" - 80 of them in one test run, once per pulse,
+                # and the duel never gets its systems saved.
+                exists = solar_system
+                any_owned_ship = {
+                    has_ship_flag = foc_khan_supremacy_flagship
+                    is_disabled = no
+                }
+            }
+            save_global_event_target_as = foc_v65_duel_sup_fleet
+            solar_system = { save_global_event_target_as = foc_v65_duel_sup_system }
+            random_owned_ship = {
+                limit = { has_ship_flag = foc_khan_supremacy_flagship }
+                save_global_event_target_as = foc_v65_duel_sup_ship
+            }
+        }
+
+        random_country = {
+            limit = {
+                NOT = { is_same_value = root }
+                is_hostile = root
+                any_owned_fleet = {
+                    any_owned_ship = {
+                        is_disabled = no
+                        OR = {
+                            has_ship_flag = foc_khan_rebel_home_arkship
+                            OR = { is_ship_size = foc_rebel_home_arkship_tier_3 is_ship_size = foc_rebel_home_arkship_tier_3_foc_lowest }
+                        }
+                    }
+                }
+            }
+            random_owned_fleet = {
+                limit = {
+                    exists = solar_system
+                    any_owned_ship = {
+                        is_disabled = no
+                        OR = {
+                            has_ship_flag = foc_khan_rebel_home_arkship
+                            OR = { is_ship_size = foc_rebel_home_arkship_tier_3 is_ship_size = foc_rebel_home_arkship_tier_3_foc_lowest }
+                        }
+                    }
+                }
+                save_global_event_target_as = foc_v65_duel_raddus_fleet
+                solar_system = { save_global_event_target_as = foc_v65_duel_raddus_system }
+                random_owned_ship = {
+                    limit = {
+                        OR = {
+                            has_ship_flag = foc_khan_rebel_home_arkship
+                            OR = { is_ship_size = foc_rebel_home_arkship_tier_3 is_ship_size = foc_rebel_home_arkship_tier_3_foc_lowest }
+                        }
+                    }
+                    save_global_event_target_as = foc_v65_duel_raddus_ship
+                }
+            }
+        }
+
+        if = {
+            limit = {
+                exists = event_target:foc_v65_duel_sup_ship
+                exists = event_target:foc_v65_duel_raddus_ship
+                exists = event_target:foc_v65_duel_sup_system
+                exists = event_target:foc_v65_duel_raddus_system
+                event_target:foc_v65_duel_sup_system = { is_same_value = event_target:foc_v65_duel_raddus_system }
+                event_target:foc_v65_duel_sup_fleet = { is_in_combat = yes }
+                event_target:foc_v65_duel_raddus_fleet = { is_in_combat = yes }
+            }
+            set_global_flag = foc_supremacy_raddus_duel_done_v65
+            set_global_flag = foc_khan_supremacy_destroyed_in_combat
+            log = "FOC_V66_EASTER_EGG: Supremacy and Raddus are fighting in the same system; Holdo Maneuver destroys both."
+            foc_story_notify_supremacy_destroyed = yes
+            every_country = {
+                limit = { is_ai = no }
+                country_event = { id = foc_supremacy_duel.2 }
+            }
+            event_target:foc_v65_duel_raddus_ship = { destroy_ship = this }
+            event_target:foc_v65_duel_sup_ship = { destroy_ship = this }
+        }
+        else = {
+            if = {
+                limit = {
+                    any_owned_ship = {
+                        has_ship_flag = foc_khan_supremacy_flagship
+                        is_disabled = no
+                    }
+                    NOT = { has_global_flag = foc_supremacy_raddus_duel_done_v65 }
+                }
+                country_event = { id = foc_supremacy_duel.1 days = 1 }
+            }
+        }
+    }
+}
+
+# Visible easter-egg event.
+country_event = {
+    id = foc_supremacy_duel.2
+    title = foc_supremacy_duel.2.name
+    desc = foc_supremacy_duel.2.desc
+    picture = GFX_foc_story_supremacy_destroyed
+    is_triggered_only = yes
+    option = { name = foc_supremacy_duel.2.a }
+}
+
+# on_ship_disabled fallback. Raddus must never be captured. If either flagship
+# reaches the Arkship disabled state while fighting the other in the same system,
+# resolve the easter egg immediately; otherwise a disabled Raddus is simply destroyed.
+ship_event = {
+    id = foc_supremacy_duel.3
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        OR = {
+            has_ship_flag = foc_khan_rebel_home_arkship
+            OR = { is_ship_size = foc_rebel_home_arkship_tier_3 is_ship_size = foc_rebel_home_arkship_tier_3_foc_lowest }
+            has_ship_flag = foc_khan_supremacy_flagship
+        }
+    }
+
+    immediate = {
+        if = {
+            limit = {
+                has_global_flag = foc_khan_rebel_dqar_lost_311v
+                NOT = { has_global_flag = foc_supremacy_raddus_duel_done_v65 }
+                exists = solar_system
+            }
+            solar_system = { save_global_event_target_as = foc_v65_duel_disabled_system }
+            random_country = {
+                limit = {
+                    any_owned_ship = { has_ship_flag = foc_khan_supremacy_flagship }
+                }
+                random_owned_ship = {
+                    limit = {
+                        has_ship_flag = foc_khan_supremacy_flagship
+                        solar_system = { is_same_value = event_target:foc_v65_duel_disabled_system }
+                    }
+                    save_global_event_target_as = foc_v65_duel_disabled_sup_ship
+                }
+            }
+            random_country = {
+                limit = {
+                    any_owned_ship = {
+                        OR = {
+                            has_ship_flag = foc_khan_rebel_home_arkship
+                            OR = { is_ship_size = foc_rebel_home_arkship_tier_3 is_ship_size = foc_rebel_home_arkship_tier_3_foc_lowest }
+                        }
+                    }
+                }
+                random_owned_ship = {
+                    limit = {
+                        OR = {
+                            has_ship_flag = foc_khan_rebel_home_arkship
+                            OR = { is_ship_size = foc_rebel_home_arkship_tier_3 is_ship_size = foc_rebel_home_arkship_tier_3_foc_lowest }
+                        }
+                        solar_system = { is_same_value = event_target:foc_v65_duel_disabled_system }
+                    }
+                    save_global_event_target_as = foc_v65_duel_disabled_raddus_ship
+                }
+            }
+            if = {
+                limit = {
+                    exists = event_target:foc_v65_duel_disabled_sup_ship
+                    exists = event_target:foc_v65_duel_disabled_raddus_ship
+                }
+                set_global_flag = foc_supremacy_raddus_duel_done_v65
+                set_global_flag = foc_khan_supremacy_destroyed_in_combat
+                log = "FOC_V66_EASTER_EGG: Arkship disable fallback resolved the Supremacy-Raddus duel; both are destroyed."
+                foc_story_notify_supremacy_destroyed = yes
+                every_country = {
+                    limit = { is_ai = no }
+                    country_event = { id = foc_supremacy_duel.2 }
+                }
+                event_target:foc_v65_duel_disabled_raddus_ship = { destroy_ship = this }
+                event_target:foc_v65_duel_disabled_sup_ship = { destroy_ship = this }
+            }
+        }
+
+        # If this ship is Raddus and no duel resolution just destroyed it, force
+        # a true death instead of Arkship disable/capture.
+        if = {
+            limit = {
+                OR = {
+                    has_ship_flag = foc_khan_rebel_home_arkship
+                    OR = { is_ship_size = foc_rebel_home_arkship_tier_3 is_ship_size = foc_rebel_home_arkship_tier_3_foc_lowest }
+                }
+            }
+            log = "FOC_V65: Raddus reached Arkship disabled state; converting it into true destruction to prevent capture."
+            destroy_ship = this
+        }
+    }
+}
+
+# Old-save safety: if an Order country already captured Raddus before V65, remove
+# that captured copy instead of allowing the flagship to serve the First/Final Order.
+country_event = {
+    id = foc_supremacy_duel.4
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        OR = {
+            has_country_flag = foc_khan_first_order_country
+            has_country_flag = foc_khan_final_order_country
+        }
+        any_owned_ship = {
+            OR = {
+                has_ship_flag = foc_khan_rebel_home_arkship
+                OR = { is_ship_size = foc_rebel_home_arkship_tier_3 is_ship_size = foc_rebel_home_arkship_tier_3_foc_lowest }
+            }
+        }
+    }
+    immediate = {
+        every_owned_ship = {
+            limit = {
+                OR = {
+                    has_ship_flag = foc_khan_rebel_home_arkship
+                    OR = { is_ship_size = foc_rebel_home_arkship_tier_3 is_ship_size = foc_rebel_home_arkship_tier_3_foc_lowest }
+                }
+            }
+            log = "FOC_V65: removed an already-captured Raddus from an Order country old save."
+            destroy_ship = this
+        }
+    }
+}

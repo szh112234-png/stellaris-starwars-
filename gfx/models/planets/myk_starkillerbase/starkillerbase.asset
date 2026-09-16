@@ -1,0 +1,238 @@
+#Megastructure
+entity = {
+	name = "myk_starkillerbase_megastructure_entity"
+	locator = { name = "myk_starkillerbase_rotation" position = { 0 0 0 } rotation = { -42 142 0 } }
+	attach = { "myk_starkillerbase_rotation" = "myk_starkillerbase_planet_entity" }
+	game_data = { emissive_recolor_crunch = 0 }
+}
+
+entity = {
+	name = "myk_starkillerbase_megastructure_firing_entity"
+	locator = { name = "myk_starkillerbase_rotation" position = { 0 0 0 } rotation = { -42 142 0 } }
+	attach = { "myk_starkillerbase_rotation" = "myk_starkillerbase_firing_planet_entity" }
+	game_data = { emissive_recolor_crunch = 0 }
+}
+
+###################################################
+entity = {
+	name = "myk_starkillerbase_planet_entity"
+	pdxmesh = "myk_starkillerbase_planet_mesh"
+	default_state = "idle"
+	state = { name = "idle" state_time = 5.0
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_planet_class" } }
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_planet_class_02" } }
+	}
+	game_data = { emissive_recolor_crunch = 0 }
+}
+
+entity = {
+	name = "myk_starkillerbase_firing_planet_entity"
+	pdxmesh = "myk_starkillerbase_planet_mesh"
+	attach = { "lazer_2" = "myk_starkillerbase_beamlaser_entity" }
+}
+
+###############################################megastructure fire entity######################################################################
+
+#Starkiller Laser Beam
+entity = { 
+	name = "myk_starkillerbase_beamlaser_entity" #lazer beam effect entity	
+	default_state = "idle"
+	state = { 
+		name = "idle" state_time = 1
+		event = { time = 0.0 node = "polar_effect_1" particle = "myk_starkiller_red_beam"  keep_particle = no trigger_once = yes  sound = { soundeffect = "pulsar_star_idle_hum" } }
+	}
+	game_data = { uv_animation_speed = -0.1 uv_animation_direction = { 0.4 0.4 } bloom_factor = 0.5 }	
+}
+
+entity = {
+	name = "myk_starkiller_market_fire_beam_base_entity"
+	default_state = "idle"
+	state = { 
+		name = "idle" state_time = 1
+		event = { time = 0.0 node = "polar_effect_1" particle = "myk_starkiller_planet_red_beam"  keep_particle = no trigger_once = yes  sound = { soundeffect = "pulsar_star_idle_hum" } }
+	}
+	game_data = { uv_animation_speed = -0.1 uv_animation_direction = { 0.4 0.4 } bloom_factor = 0.5 }	
+}
+
+# entity = { 
+# 	name = "myk_starkillerbase_star_beamlaser_entity" #lazer beam effect entity	
+# 	default_state = "idle"
+# 	state = { 
+# 		name = "idle" state_time = 1
+# 		event = { time = 0.0 node = "polar_effect_1" particle = "eclipse_sun_drain_particle"  keep_particle = no trigger_once = yes  sound = { soundeffect = "myk_starkillerbase_fire" } }
+# 	}
+# 	scale = 5
+# 	game_data = { uv_animation_speed = -0.1 uv_animation_direction = { 0.4 0.4 } bloom_factor = 0.5 }	
+# }
+
+
+# #Portal near Starkiller Base
+# entity = {
+# 	name = "starbasekiller_portal_entity" #hole entity
+# 	pdxmesh = "portal_mesh"
+	
+# 	locator = { name = "part1" 	position = { 0 0 0 } }
+	
+# 	default_state = idle
+# 	state = { name = "idle"		animation = "idle"		animation_blend_time = 0.3
+# 		start_event = { trigger_once = yes sound = { soundeffect = "myk_starkillerbase_fire" } }
+	
+# 		event = { time = 0 node = "root2" particle = "portal_inner_effect_particle" keep_particle = yes trigger_once = yes }
+# 		event = { time = 0 node = "clock_12_locator" particle = "portal_effect_particle" keep_particle = yes trigger_once = yes sound = { soundeffect = "myk_starkillerbase_fire" } }
+# 		event = { time = 0 node = "clock_3_locator" particle = "portal_effect_particle" keep_particle = yes trigger_once = yes sound = { soundeffect = "myk_starkillerbase_fire" } }
+# 		event = { time = 0 node = "clock_6_locator" particle = "portal_effect_particle" keep_particle = yes trigger_once = yes sound = { soundeffect = "myk_starkillerbase_fire" } }
+# 		event = { time = 0 node = "clock_9_locator" particle = "portal_effect_particle" keep_particle = yes trigger_once = yes sound = { soundeffect = "myk_starkillerbase_fire" } }
+# 	}
+# 	scale = 7
+# }
+
+#Marget ship
+# entity = {
+# 	name = "myk_starkiller_ship_entity"
+# 	pdxmesh = "locator_mesh"
+# }
+
+#Marget fundation
+entity = {
+	name = "myk_starkiller_market_entity"
+	locator = { name = "wormhole_a" position = { 0 0 0 } rotation = { 0 0 0  } }
+	attach = { "wormhole_a" = "myk_starkiller_ring_world_second_back_ration_entity" }
+}
+
+#Attack Portal
+entity = {
+	name = "myk_starkillerbase_target_portal_entity" 
+	locator = { name = "wormhole_a" position = { 0 0 0 } rotation = { 0 0 0  } }
+	locator = { name = "wormhole_b" position = { 0 0 0 } rotation = { 0 0 0 } }
+	attach = { "wormhole_b" = "myk_starkiller_market_fire_beam_base_entity" }
+}
+
+#Actual Starkiller sun drain
+entity = {
+	name = "myk_starkiller_sun_drain_entity"
+	locator = { name = "sun_drain01" position = { 0 0 100 } rotation = { 90 -90 0 } }
+	attach = { "sun_drain01" = "myk_starkiller_sun_drain" }
+}
+
+# (Removed broken "TARGET MARGET" stub that referenced the missing Kuat
+#  "ring_world_ration_back_mesh". The working replacement entity of the
+#  same name is defined below under "Standalone fixes".)
+
+
+#Starkiller sun drain TEMP 
+entity = {
+	name = "myk_starkiller_sun_drain"
+	default_state = "idle"
+	state = { name = "idle" state_time = 1
+		event = { time = 0.0 node = "polar_effect_1" particle = "myk_starkiller_sundrain_beam"  keep_particle = no trigger_once = yes  sound = { soundeffect = "pulsar_star_idle_hum" } }
+	}
+	scale = 5
+	game_data = { uv_animation_speed  = -0.1 uv_animation_direction = { 0.4 0.4 } bloom_factor = 0.5 }
+}
+
+
+# ---- Standalone fixes: override broken Kuat dependencies ----
+entity = {
+    name = "myk_starkiller_invisible_entity"
+    default_state = "idle"
+    state = { name = "idle" state_time = 5.0 }
+}
+
+# Replaces original ringworld-ration marker that required missing Kuat ringworld mesh.
+entity = {
+    name = "myk_starkiller_ring_world_second_back_ration_entity"
+    pdxmesh = "myk_starkillerbase_planet_mesh"
+    scale = 0.02
+    default_state = "idle"
+    state = { name = "idle" state_time = 5.0 }
+}
+
+# Simple marker for target impact animation, using the planet laser particle.
+entity = {
+    name = "myk_starkiller_target_impact_entity"
+    default_state = "idle"
+    state = {
+        name = "idle"
+        state_time = 30.0
+        event = {
+            time = 0.0
+            node = "root"
+            particle = "myk_starkiller_planet_red_beam"
+            keep_particle = yes
+            trigger_once = yes
+            sound = { soundeffect = "myk_starkillerbase_fire" }
+        }
+    }
+}
+
+# Simple marker for origin beam animation.
+entity = {
+    name = "myk_starkiller_origin_beam_entity"
+    default_state = "idle"
+    state = {
+        name = "idle"
+        state_time = 30.0
+        event = {
+            time = 0.0
+            node = "root"
+            particle = "myk_starkiller_red_beam"
+            keep_particle = yes
+            trigger_once = yes
+            sound = { soundeffect = "myk_starkillerbase_fire" }
+        }
+    }
+}
+
+# Simple sun drain marker.
+entity = {
+    name = "myk_starkiller_sun_drain_fixed_entity"
+    default_state = "idle"
+    state = {
+        name = "idle"
+        state_time = 30.0
+        event = {
+            time = 0.0
+            node = "root"
+            particle = "myk_starkiller_sundrain_beam"
+            keep_particle = yes
+            trigger_once = yes
+            sound = { soundeffect = "myk_starkillerbase_charge" }
+        }
+    }
+}
+
+
+# (Removed myk_starkiller_target_beacon_entity - its megastructure was deleted.)
+
+# Simple origin/target animation fallback entities.
+entity = {
+    name = "myk_starkiller_beacon_origin_beam_entity"
+    default_state = "idle"
+    state = {
+        name = "idle"
+        state_time = 30.0
+        event = {
+            time = 0.0
+            particle = "myk_starkiller_red_beam"
+            keep_particle = yes
+            trigger_once = yes
+            sound = { soundeffect = "myk_starkillerbase_fire" }
+        }
+    }
+}
+
+entity = {
+    name = "myk_starkiller_beacon_target_impact_entity"
+    default_state = "idle"
+    state = {
+        name = "idle"
+        state_time = 30.0
+        event = {
+            time = 0.0
+            particle = "myk_starkiller_planet_red_beam"
+            keep_particle = yes
+            trigger_once = yes
+            sound = { soundeffect = "myk_starkillerbase_fire" }
+        }
+    }
+}

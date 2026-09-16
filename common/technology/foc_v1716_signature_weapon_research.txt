@@ -1,0 +1,58 @@
+# V17.16: hull access and signature-weapon engineering are separate.
+# v17.18n: retired. T/W signature weapons now share the hull unlock technology;
+# these cards stay defined only so old saves keep valid technology keys.
+# Existing global support designs retain their predetermined weapon loadouts.
+
+foc_v1716_tech_mandator_siege_weapons = {
+    icon = "tech_lasers_3"
+    area = engineering
+    cost = 12000
+    tier = 5
+    category = { materials }
+    is_rare = yes
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = { "tech_foc_player_mandator_blueprint" "foc_tech_sw_superweapon_engineering" "foc_tech_emp_sphat_2" }
+    potential = {
+        # v17.18n: weapons now unlock with the hull blueprint; card retired.
+        always = no
+    }
+    weight = 45
+    ai_weight = { factor = 1 }
+}
+
+foc_v1716_tech_eclipse_superlaser = {
+    icon = "tech_sw_death_plans"
+    area = engineering
+    cost = 18000
+    tier = 5
+    category = { materials }
+    is_rare = yes
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = { "tech_foc_player_eclipse_blueprint" "foc_tech_sw_superweapon_engineering" "foc_tech_kyber_mining_3" }
+    potential = {
+        # v17.18n: weapons now unlock with the hull blueprint; card retired.
+        always = no
+    }
+    weight = 45
+    ai_weight = { factor = 1 }
+}
+
+foc_v1716_tech_xyston_superlaser = {
+    icon = "tech_sw_death_plans"
+    area = engineering
+    cost = 18000
+    tier = 5
+    category = { materials }
+    is_rare = yes
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = { "foc_tech_dark_legacy_xyston" "foc_tech_sw_superweapon_engineering" "foc_tech_kyber_mining_3" }
+    potential = {
+        # v17.18n: weapons now unlock with the hull blueprint; card retired.
+        always = no
+    }
+    weight = 45
+    ai_weight = { factor = 1 }
+}

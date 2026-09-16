@@ -1,0 +1,53 @@
+namespace = foc_khan_213
+
+# One-shot 2.13 migration for existing saves.
+# Serialized queue_actions from 2.12 must be explicitly rebuilt; changing the
+# scripted effect alone does not replace an already stored fleet action queue.
+event = {
+	id = foc_khan_213.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_global_flag = foc_khan_phase_two
+		exists = event_target:foc_khan_final_order
+		NOT = { has_global_flag = foc_khan_213_xyston_repeat_target_fix_migrated }
+	}
+
+	immediate = {
+		set_global_flag = foc_khan_213_xyston_repeat_target_fix_migrated
+
+		# Convert obviously ruined old targets into permanent exclusions and clear
+		# all temporary reservations left by the previous serialized queues.
+		every_system = {
+			remove_star_flag = foc_khan_xyston_system_reserved_212
+			every_system_planet = {
+				remove_planet_flag = foc_khan_xyston_target_reserved
+				if = {
+					limit = {
+						OR = {
+							is_planet_class = pc_shattered
+							is_planet_class = pc_shattered_2
+							is_planet_class = pc_broken
+							is_planet_class = pc_black_hole
+						}
+					}
+					set_planet_flag = foc_khan_xyston_destroyed_target_213
+				}
+			}
+		}
+
+		event_target:foc_khan_final_order = {
+			every_owned_fleet = {
+				limit = {
+					has_fleet_flag = foc_khan_xyston_planet_killer_fleet
+					any_owned_ship = { OR = { is_ship_size = foc_khan_xystonsd is_ship_size = foc_khan_xystonsd_foc_lowest } }
+				}
+				remove_auto_move_target = yes
+				clear_orders = yes
+				clear_fleet_actions = this
+				fleet_event = { id = foc_khan_xyston_ai.10 days = 1 random = 8 }
+			}
+		}
+	}
+}

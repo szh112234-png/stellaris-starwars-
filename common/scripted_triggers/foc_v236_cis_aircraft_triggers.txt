@@ -1,0 +1,11 @@
+# Positive CIS identity plus primary-faction exclusions prevent legacy flags from hijacking successor states.
+foc_v236_has_cis_aircraft_identity = {
+ OR = { has_country_flag = foc_republic_origin_separatist_country has_country_flag = foc_republic_origin_separatist_council_remnant }
+ NOT = { OR = {
+  foc_v137_has_rebel_starfighter_identity = yes
+  foc_v137_has_imperial_starfighter_identity = yes
+  has_country_flag = foc_republic_origin_republic_country
+  has_country_flag = foc_republic_origin_player_republic
+  has_country_flag = foc_republic_origin_ai_new_republic_after_dqar
+ } }
+}

@@ -1,0 +1,44 @@
+namespace = foc_coldwar
+
+# V84: non-Republic starts begin in the post-Jakku cold-war status quo.
+# This is informational only; it deliberately does not change either Fallen Empire.
+country_event = {
+    id = foc_coldwar.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        NOT = { has_origin = origin_foc_republic_unification }
+        NOT = { has_origin = origin_foc_hutt_criminal_empire }
+        NOT = { has_global_flag = foc_v197_hutt_republic_era_selected }
+        NOT = { has_global_flag = foc_v197_hutt_republic_era_initialized }
+        NOT = { has_country_flag = foc_coldwar_intro_scheduled }
+    }
+
+    immediate = {
+        set_country_flag = foc_coldwar_intro_scheduled
+        country_event = { id = foc_coldwar.2 days = 6 }
+    }
+}
+
+country_event = {
+    id = foc_coldwar.2
+    title = foc_coldwar.2.name
+    desc = foc_coldwar.2.desc
+    picture = GFX_foc_story_jakku_aftermath
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        is_ai = no
+        NOT = { has_origin = origin_foc_republic_unification }
+        NOT = { has_origin = origin_foc_hutt_criminal_empire }
+        NOT = { has_global_flag = foc_v197_hutt_republic_era_selected }
+        NOT = { has_global_flag = foc_v197_hutt_republic_era_initialized }
+        NOT = { has_country_flag = foc_coldwar_intro_shown }
+    }
+
+    immediate = { set_country_flag = foc_coldwar_intro_shown }
+    option = { name = foc_coldwar.2.a }
+}

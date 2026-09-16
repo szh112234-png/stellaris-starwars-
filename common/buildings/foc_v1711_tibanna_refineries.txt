@@ -1,0 +1,62 @@
+# Inspired by SG's Tibanna/exotic-gas refineries; not SG jobs/population scaling.
+# Actual direct output. Gestalts can operate these without consumer goods.
+# Reuses existing FOC mining techs: no additional empty research.
+building_foc_v1711_tibanna_refinery_1 = {
+    base_buildtime = 480
+    category = manufacturing
+    icon = building_gas_refinery
+    
+    potential = { exists = owner owner = { is_regular_empire = yes } }
+    allow = { exists = owner }
+    building_sets = { industrial }
+    exempt_from_ai_planet_specialization = yes
+    prerequisites = { "foc_tech_tibanna_mining" }
+    upgrades = { building_foc_v1711_tibanna_refinery_2 }
+    resources = {
+        category = planet_buildings
+        cost = { minerals = 1000 }
+        upkeep = { energy = 20 minerals = 10 }
+        produces = { sr_tibanna_swgs = 15 exotic_gases = 1 }
+    }
+    ai_resource_production = { sr_tibanna_swgs = 15 trigger = { always = yes } }
+}
+
+building_foc_v1711_tibanna_refinery_2 = {
+    base_buildtime = 600
+    category = manufacturing
+    icon = building_gas_refinery
+    can_build = no
+    potential = { exists = owner owner = { is_regular_empire = yes } }
+    allow = { exists = owner }
+    building_sets = { industrial }
+    exempt_from_ai_planet_specialization = yes
+    prerequisites = { "foc_tech_tibanna_mining_2" }
+    upgrades = { building_foc_v1711_tibanna_refinery_3 }
+    resources = {
+        category = planet_buildings
+        cost = { minerals = 2000 }
+        upkeep = { energy = 50 minerals = 25 }
+        produces = { sr_tibanna_swgs = 40 exotic_gases = 2 }
+    }
+    ai_resource_production = { sr_tibanna_swgs = 40 trigger = { always = yes } }
+}
+
+building_foc_v1711_tibanna_refinery_3 = {
+    base_buildtime = 720
+    category = manufacturing
+    icon = building_gas_refinery
+    can_build = no
+    potential = { exists = owner owner = { is_regular_empire = yes } }
+    allow = { exists = owner }
+    building_sets = { industrial }
+    exempt_from_ai_planet_specialization = yes
+    prerequisites = { "foc_tech_tibanna_mining_4" }
+    
+    resources = {
+        category = planet_buildings
+        cost = { minerals = 4000 }
+        upkeep = { energy = 125 minerals = 60 }
+        produces = { sr_tibanna_swgs = 100 exotic_gases = 4 }
+    }
+    ai_resource_production = { sr_tibanna_swgs = 100 trigger = { always = yes } }
+}

@@ -1,0 +1,112 @@
+# This is a template which multiple species can use.
+  
+tor_mando_male_01_hair = {
+	default = "gfx/models/portraits/tor_mando/mando_hunter_male_hair_01.dds"
+	
+	game_setup = {#will run with a limited country scope. species and government is set but the country does not actually exist
+		default = "gfx/models/portraits/tor_mando/mando_hunter_male_hair_01.dds"
+	}
+	
+	#species scope
+	species = { #generic portrait for a species
+		default = "gfx/models/portraits/tor_mando/mando_hunter_male_hair_01.dds"
+	}
+	
+	#pop scope
+	pop = { #for a specific pop
+	
+		default = "gfx/models/portraits/tor_mando/mando_generic_male_hair_02.dds"
+
+		random = {
+			list = {
+				"gfx/models/portraits/tor_mando/mando_generic_male_hair_01.dds"
+				"gfx/models/portraits/tor_mando/mando_generic_male_hair_02.dds"
+				"gfx/models/portraits/tor_mando/custom_mando_male_helmet_01.dds"
+				"gfx/models/portraits/tor_mando/custom_mando_male_helmet_02.dds"
+			}
+		}
+	}
+
+
+
+
+	#leader scope
+	leader = { #scientists, generals, admirals, governor
+	
+		random = {
+			trigger = { leader_class = general }
+			list = {
+				"gfx/models/portraits/tor_mando/black_red_male_hair_01.dds"
+			}
+		}
+		
+		random = {
+			trigger = { leader_class = admiral }
+			list = {
+				"gfx/models/portraits/tor_mando/custom_mando_male_helmet_01.dds"
+				"gfx/models/portraits/tor_mando/custom_mando_male_helmet_02.dds"
+			}
+		}
+		
+		random = {
+			trigger = { leader_class = scientist }
+			list = {
+				"gfx/models/portraits/tor_mando/mando_generic_male_hair_01.dds"
+				"gfx/models/portraits/tor_mando/mando_generic_male_hair_02.dds"
+			}
+		}
+		
+		random = {
+			trigger = { leader_class = governor }
+			list = {
+				"gfx/models/portraits/tor_mando/custom_mando_male_helmet_01.dds"
+				"gfx/models/portraits/tor_mando/custom_mando_male_helmet_02.dds"
+			}
+		}
+	}
+
+	#leader scope
+	ruler = { #for rulers
+		#default = "gfx/models/portraits/tor_mando/mando_male_mandalore_helmet.dds"
+		
+		random = {
+			trigger = {
+				owner = { has_militarist_government = yes }
+			}
+				
+			list = {
+				"gfx/models/portraits/tor_mando/mando_male_mandalore_helmet.dds"
+			}
+		}
+		
+		random = {
+			trigger = {
+				owner = { has_spiritualist_government = yes }
+			}
+			
+			list = {
+				"gfx/models/portraits/tor_mando/custom_mando_male_helmet_01.dds"
+				"gfx/models/portraits/tor_mando/custom_mando_male_helmet_02.dds"
+			}
+		}
+		
+		random = {
+			trigger = {
+				owner = {
+					OR = {
+						has_government = gov_stagnant_ascendancy
+						has_primitive_government = yes
+						has_materialist_government = yes
+						has_pacifist_government = yes
+					}
+				}
+			}
+			
+			list = {
+				"gfx/models/portraits/tor_mando/charismatic_mando_male_hair_01.dds"
+				"gfx/models/portraits/tor_mando/custom_mando_male_helmet_01.dds"
+				"gfx/models/portraits/tor_mando/custom_mando_male_helmet_02.dds"
+			}
+		}
+	}
+}

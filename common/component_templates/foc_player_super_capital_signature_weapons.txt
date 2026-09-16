@@ -1,0 +1,297 @@
+# V13: approved signature weapons retain baseline output through visible weapon statistics.
+weapon_component_template = {
+    key = "FOC_PLAYER_MANDATOR_SIEGE_LASER"
+    size = titanic
+    entity = "invisible_turret_entity"
+    type = instant
+    prio_projectile = yes
+    icon = "GFX_foc_v1718c_mandator_ship_part_laser"
+    icon_frame = 1
+    damage = {
+        min = 250000
+        max = 250000
+    }
+    collateral_damage = {
+        min = 1750
+        max = 1750
+    }
+    collateral_range = 50
+    windup = {
+        min = 35.7142857143
+        max = 35.7142857143
+    }
+    range = 500.0
+    accuracy = 1.0
+    tracking = 0.1
+    firing_arc = 20
+    min_range = 50
+    power = -4000
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 48
+            sr_kyber_swgs = 8
+        }
+        upkeep = { }
+    }
+    component_set = "FOC_KHAN_MANDATOR_SIEGE_LASER_SET"
+    ship_limit = 1
+    projectile_gfx = "foc_v13_mandator_siege_gfx"
+    tags = { weapon_type_energy }
+    size_restriction = { foc_player_mandator }
+    ai_tags = { weapon_role_artillery weapon_role_anti_hull weapon_role_anti_armor weapon_role_anti_shield }
+    potential = {
+        from = {
+            foc_v1718_allowed_country = yes
+            has_technology = tech_foc_player_mandator_blueprint
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 10
+    }
+    total_fire_time = 107.142857143
+
+    prerequisites = { "tech_foc_player_mandator_blueprint" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_PLAYER_MANDATOR_SIEGE_LASER_SECONDARY"
+    size = titanic
+    entity = "invisible_turret_entity"
+    type = instant
+    prio_projectile = yes
+    icon = "GFX_foc_v1718c_mandator_ship_part_laser"
+    icon_frame = 1
+    damage = {
+        min = 250000
+        max = 250000
+    }
+    collateral_damage = {
+        min = 1750
+        max = 1750
+    }
+    collateral_range = 50
+    windup = {
+        min = 35.7142857143
+        max = 35.7142857143
+    }
+    range = 500.0
+    accuracy = 1.0
+    tracking = 0.1
+    firing_arc = 20
+    min_range = 50
+    power = -4000
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 48
+            sr_kyber_swgs = 8
+        }
+        upkeep = { }
+    }
+    component_set = "FOC_KHAN_MANDATOR_SIEGE_LASER_SECONDARY_SET"
+    ship_limit = 1
+    projectile_gfx = "foc_v13_mandator_siege_gfx"
+    tags = { weapon_type_energy }
+    size_restriction = { foc_player_mandator }
+    ai_tags = { weapon_role_artillery weapon_role_anti_hull weapon_role_anti_armor weapon_role_anti_shield }
+    potential = {
+        from = {
+            foc_v1718_allowed_country = yes
+            has_technology = tech_foc_player_mandator_blueprint
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 10
+    }
+    total_fire_time = 107.142857143
+
+    prerequisites = { "tech_foc_player_mandator_blueprint" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_PLAYER_MANDATOR_SIEGE_LASER_FOC_LOWEST"
+    hidden = yes
+    size = titanic
+    entity = "invisible_turret_entity"
+    type = instant
+    prio_projectile = yes
+    icon = "GFX_foc_v1718c_mandator_ship_part_laser"
+    icon_frame = 1
+    damage = { min = 3500 max = 5500 }
+    collateral_damage = { min = 1750 max = 1750 }
+    collateral_range = 50
+    windup = { min = 45.4545454545 max = 45.4545454545 }
+    range = 250
+    accuracy = 0.9
+    tracking = 0.05
+    firing_arc = 20
+    min_range = 50
+    power = -300
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 48 sr_kyber_swgs = 8 }
+        upkeep = { }
+    }
+    component_set = "FOC_KHAN_MANDATOR_SIEGE_LASER_SET"
+    ship_limit = 1
+    projectile_gfx = "foc_v13_mandator_siege_gfx"
+    tags = { weapon_type_energy }
+    size_restriction = { foc_player_mandator_foc_lowest }
+    ai_tags = { weapon_role_artillery weapon_role_anti_hull weapon_role_anti_armor weapon_role_anti_shield }
+    potential = {
+        from = { foc_v1718_allowed_country = yes has_technology = tech_foc_player_mandator_blueprint has_country_flag = foc_khan_component_lowest }
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 1000000 }
+    total_fire_time = 18.1818181818
+    prerequisites = { "tech_foc_player_mandator_blueprint" }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_PLAYER_MANDATOR_SIEGE_LASER_SECONDARY_FOC_LOWEST"
+    hidden = yes
+    size = titanic
+    entity = "invisible_turret_entity"
+    type = instant
+    prio_projectile = yes
+    icon = "GFX_foc_v1718c_mandator_ship_part_laser"
+    icon_frame = 1
+    damage = { min = 3500 max = 5500 }
+    collateral_damage = { min = 1750 max = 1750 }
+    collateral_range = 50
+    windup = { min = 45.4545454545 max = 45.4545454545 }
+    range = 250
+    accuracy = 0.9
+    tracking = 0.05
+    firing_arc = 20
+    min_range = 50
+    power = -300
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 48 sr_kyber_swgs = 8 }
+        upkeep = { }
+    }
+    component_set = "FOC_KHAN_MANDATOR_SIEGE_LASER_SECONDARY_SET"
+    ship_limit = 1
+    projectile_gfx = "foc_v13_mandator_siege_gfx"
+    tags = { weapon_type_energy }
+    size_restriction = { foc_player_mandator_foc_lowest }
+    ai_tags = { weapon_role_artillery weapon_role_anti_hull weapon_role_anti_armor weapon_role_anti_shield }
+    potential = {
+        from = { foc_v1718_allowed_country = yes has_technology = tech_foc_player_mandator_blueprint has_country_flag = foc_khan_component_lowest }
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 1000000 }
+    total_fire_time = 18.1818181818
+    prerequisites = { "tech_foc_player_mandator_blueprint" }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    # v17.15: fixed single-hit alpha; 100%/100% penetration remains subject to hardening.
+    # Low base damage + layer multipliers; long reload, not a sustained-DPS target.
+
+    key = "FOC_PLAYER_ECLIPSE_SUPERLASER"
+    size = titanic
+    entity = "invisible_turret_entity"
+    type = instant
+    prio_projectile = yes
+    icon = "GFX_foc_v1718c_st_ship_part_sw_superlaser_1"
+    icon_frame = 1
+    damage = { min = 5000000 max = 5000000 }
+    windup = { min = 80 max = 80 }
+    range = 400
+    accuracy = 1.0
+    tracking = 0
+    shield_penetration = 1
+    armor_penetration = 1
+    firing_arc = 10.0
+    min_range = 30.0
+    power = -10000
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 64
+            sr_kyber_swgs = 5000
+        }
+        upkeep = { }
+    }
+    component_set = "FOC_KHAN_ECLIPSE_SUPERLASER_SET"
+    size_restriction = { foc_player_eclipse }
+    projectile_gfx = "foc_v13_eclipse_superweapon_gfx"
+    tags = { weapon_type_energy }
+    ai_tags = { weapon_role_artillery weapon_role_anti_hull weapon_role_anti_armor weapon_role_anti_shield }
+    ai_weight = {
+        weight = 10
+    }
+    potential = {
+        from = {
+            foc_v1718_allowed_country = yes
+            has_technology = tech_foc_player_eclipse_blueprint
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    total_fire_time = 600
+
+    hull_damage = 6
+    shield_damage = 4
+    armor_damage = 2
+
+    prerequisites = { "tech_foc_player_eclipse_blueprint" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_PLAYER_ECLIPSE_SUPERLASER_FOC_LOWEST"
+    hidden = yes
+    size = titanic
+    entity = "invisible_turret_entity"
+    type = instant
+    prio_projectile = yes
+    icon = "GFX_foc_v1718c_st_ship_part_sw_superlaser_1"
+    icon_frame = 1
+    damage = { min = 3500 max = 5500 }
+    windup = { min = 122.727272727 max = 122.727272727 }
+    range = 250
+    accuracy = 0.9
+    tracking = 0.05
+    shield_penetration = 1.0
+    armor_penetration = 1.0
+    firing_arc = 10.0
+    min_range = 30.0
+    power = -300
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 64 sr_kyber_swgs = 5000 }
+        upkeep = { }
+    }
+    component_set = "FOC_KHAN_ECLIPSE_SUPERLASER_SET"
+    size_restriction = { foc_player_eclipse_foc_lowest }
+    projectile_gfx = "foc_v13_eclipse_superweapon_gfx"
+    tags = { weapon_type_energy }
+    ai_tags = { weapon_role_artillery weapon_role_anti_hull weapon_role_anti_armor weapon_role_anti_shield }
+    ai_weight = { weight = 1000000 }
+    potential = {
+        from = { foc_v1718_allowed_country = yes has_technology = tech_foc_player_eclipse_blueprint has_country_flag = foc_khan_component_lowest }
+        from = { foc_v1718_allowed_country = yes }
+    }
+    total_fire_time = 18.1818181818
+    prerequisites = { "tech_foc_player_eclipse_blueprint" }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}

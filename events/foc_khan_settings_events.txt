@@ -1,0 +1,823 @@
+namespace = foc_khan_settings
+
+# Reapply the selected combat tier to existing crisis countries and refresh
+# player/AI component balance. Fleet quantity is configured independently.
+country_event = {
+    id = foc_khan_settings.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    immediate = {
+        # Follow-difficulty capacity profiles update immediately; manual overrides persist.
+        every_country = { foc_v232j_refresh_fleet_caps = yes }
+
+        # v62: one main difficulty also controls every strategic-fighter profile.
+        every_country = { foc_sync_ssp_strength_to_main_difficulty = yes }
+
+        every_country = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = foc_khan_final_order_country
+                }
+            }
+            foc_khan_apply_selected_strength = yes
+        }
+        every_country = {
+            limit = { has_country_flag = foc_khan_rebel_alliance_country }
+            country_event = { id = foc_khan_rebel.32 }
+        }
+        every_country = {
+            country_event = { id = foc_component.1 }
+            country_event = { id = foc_khan_balance.1 }
+        }
+    }
+}
+
+# Very old saves without any selected combat tier retain the former High-tier
+# behavior: intermediate/SG combat values with maximum fleet quantity.
+event = {
+    id = foc_khan_settings.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_khan_crisis_started
+        NOT = { has_global_flag = foc_khan_strength_migrated_079 }
+        NOR = {
+            has_global_flag = foc_khan_strength_lowest
+            has_global_flag = foc_khan_strength_initial
+            has_global_flag = foc_khan_strength_intermediate
+            has_global_flag = foc_khan_strength_high
+            has_global_flag = foc_khan_strength_madness
+        }
+    }
+
+    immediate = {
+        set_global_flag = foc_khan_strength_intermediate
+        set_global_flag = foc_khan_fleet_scale_max
+        set_global_flag = foc_khan_strength_migrated_079
+        set_global_flag = foc_khan_five_tier_migrated_254
+        set_global_flag = foc_khan_three_tier_split_migrated_321
+        every_country = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = foc_khan_final_order_country
+                }
+            }
+            foc_khan_apply_selected_strength = yes
+        }
+    }
+}
+
+# 2.54 migration retained for legacy saves in which Initial represented the
+# vanilla-scale tier. This executes before the three-tier split migration.
+event = {
+    id = foc_khan_settings.3
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        NOT = { has_global_flag = foc_khan_five_tier_migrated_254 }
+        OR = {
+            has_global_flag = foc_khan_strength_lowest
+            has_global_flag = foc_khan_strength_initial
+            has_global_flag = foc_khan_strength_intermediate
+            has_global_flag = foc_khan_strength_high
+            has_global_flag = foc_khan_strength_madness
+        }
+    }
+
+    immediate = {
+        if = {
+            limit = { has_global_flag = foc_khan_strength_initial }
+            remove_global_flag = foc_khan_strength_initial
+            set_global_flag = foc_khan_strength_lowest
+        }
+        set_global_flag = foc_khan_five_tier_migrated_254
+
+        every_country = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = foc_khan_final_order_country
+                }
+            }
+            foc_khan_apply_selected_strength = yes
+        }
+        every_country = {
+            limit = { has_country_flag = foc_khan_rebel_alliance_country }
+            country_event = { id = foc_khan_rebel.32 }
+        }
+        every_country = { country_event = { id = foc_khan_balance.1 } }
+    }
+}
+
+# Three-tier / independent-fleet-count migration.
+# Old five-tier mapping:
+# Lowest -> Vanilla combat + Small fleet set
+# Initial -> Intermediate combat + Standard fleet set
+# Intermediate -> Intermediate combat + Large fleet set
+# High -> Intermediate combat + Maximum fleet set
+# Madness -> ACOT combat + Maximum fleet set
+country_event = {
+    id = foc_khan_settings.4
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        NOT = { has_global_flag = foc_khan_three_tier_split_migrated_321 }
+        OR = {
+            has_global_flag = foc_khan_strength_lowest
+            has_global_flag = foc_khan_strength_initial
+            has_global_flag = foc_khan_strength_intermediate
+            has_global_flag = foc_khan_strength_high
+            has_global_flag = foc_khan_strength_madness
+            has_global_flag = foc_khan_crisis_started
+        }
+    }
+
+    immediate = {
+        # Preserve the old quantity represented by the former combat tier.
+        if = {
+            limit = {
+                NOR = {
+                    has_global_flag = foc_khan_fleet_scale_low
+                    has_global_flag = foc_khan_fleet_scale_standard
+                    has_global_flag = foc_khan_fleet_scale_large
+                    has_global_flag = foc_khan_fleet_scale_max
+                }
+            }
+            if = {
+                limit = { has_global_flag = foc_khan_strength_lowest }
+                set_global_flag = foc_khan_fleet_scale_low
+            }
+            else_if = {
+                limit = { has_global_flag = foc_khan_strength_initial }
+                set_global_flag = foc_khan_fleet_scale_standard
+            }
+            else_if = {
+                limit = { has_global_flag = foc_khan_strength_intermediate }
+                set_global_flag = foc_khan_fleet_scale_large
+            }
+            else = { set_global_flag = foc_khan_fleet_scale_max }
+        }
+
+        # Initial and High had no unique combat multiplier; after the split they
+        # both become the Intermediate combat tier, while their fleet quantity
+        # is preserved above.
+        if = {
+            limit = { has_global_flag = foc_khan_strength_initial }
+            remove_global_flag = foc_khan_strength_initial
+            set_global_flag = foc_khan_strength_intermediate
+        }
+        if = {
+            limit = { has_global_flag = foc_khan_strength_high }
+            remove_global_flag = foc_khan_strength_high
+            set_global_flag = foc_khan_strength_intermediate
+        }
+
+        set_global_flag = foc_khan_three_tier_split_migrated_321
+        set_global_flag = foc_khan_strength_migrated_079
+        set_global_flag = foc_khan_five_tier_migrated_254
+        country_event = { id = foc_khan_settings.1 }
+    }
+}
+
+# No-scope monthly wrapper for the country-scoped migration event.
+# on_monthly_pulse has no country scope; firing .4 from there caused a no_scope
+# script error. The visible settings menu may still call .4 directly.
+event = {
+    id = foc_khan_settings.5
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        NOT = { has_global_flag = foc_khan_three_tier_split_migrated_321 }
+        OR = {
+            has_global_flag = foc_khan_strength_lowest
+            has_global_flag = foc_khan_strength_initial
+            has_global_flag = foc_khan_strength_intermediate
+            has_global_flag = foc_khan_strength_high
+            has_global_flag = foc_khan_strength_madness
+            has_global_flag = foc_khan_crisis_started
+        }
+    }
+
+    immediate = {
+        random_country = {
+            limit = { is_ai = no }
+            country_event = { id = foc_khan_settings.4 }
+        }
+    }
+}
+
+country_event = {
+    id = foc_khan_settings.10
+    title = foc_khan_settings.10.name
+    desc = foc_khan_settings.10.desc
+    picture = GFX_evt_star_neutron
+    is_triggered_only = yes
+
+    immediate = { country_event = { id = foc_khan_settings.4 } }
+
+    option = {
+        name = foc_v1717_capacity.naval_entry
+        hidden_effect = {
+            remove_country_flag = foc_v1717_capacity_return_to_start
+            country_event = { id = foc_v1717_capacity.10 }
+        }
+    }
+    option = {
+        name = foc_v1717_capacity.command_entry
+        hidden_effect = {
+            remove_country_flag = foc_v1717_capacity_return_to_start
+            country_event = { id = foc_v1717_capacity.20 }
+        }
+    }
+    option = {
+        name = foc_khan_settings.10.strength
+        country_event = { id = foc_khan_settings.11 }
+    }
+    option = {
+        name = foc_khan_settings.10.fighter_settings
+        hidden_effect = {
+            remove_country_flag = foc_khan_fighter_return_to_start_62
+            country_event = { id = ssp_standalone.110 }
+        }
+    }
+    option = {
+        name = foc_khan_settings.10.fleet_scale
+        set_country_flag = foc_khan_fleet_scale_return_to_menu
+        country_event = { id = foc_khan_settings.14 }
+    }
+    option = {
+        name = foc_khan_settings.10.trigger_settings
+        country_event = { id = foc_khan_settings.12 }
+    }
+    option = {
+        name = foc_khan_settings.10.ai_support_debug
+        trigger = { is_ai = no }
+        country_event = { id = foc_v211_support_debug.1 }
+    }
+    option = {
+        name = foc_khan_settings.10.republic_origin_test
+        # V97: this is a universal story debugger, not a Republic-only menu.
+        # The event itself hides route-specific buttons when they are irrelevant.
+        trigger = { is_ai = no }
+        country_event = { id = foc_republic_origin_command.1 }
+    }
+    
+    option = { name = foc_khan_settings.10.close }
+}
+
+# Three combat-strength tiers. Fleet count is intentionally not touched here.
+# The submenu returns to the parent that opened it (normal settings or the
+# new-game two-level setup screen).
+country_event = {
+    id = foc_khan_settings.11
+    title = foc_khan_settings.11.name
+    desc = foc_khan_settings.11.desc
+    picture = GFX_evt_star_neutron
+    is_triggered_only = yes
+
+    option = {
+        name = foc_khan_settings.11.lowest
+        hidden_effect = {
+            remove_global_flag = foc_khan_strength_initial
+            remove_global_flag = foc_khan_strength_intermediate
+            remove_global_flag = foc_khan_strength_high
+            remove_global_flag = foc_khan_strength_madness
+            set_global_flag = foc_khan_strength_lowest
+            set_global_flag = foc_khan_strength_migrated_079
+            set_global_flag = foc_khan_five_tier_migrated_254
+            set_global_flag = foc_khan_three_tier_split_migrated_321
+            country_event = { id = foc_khan_settings.1 }
+            if = {
+                limit = { has_country_flag = foc_khan_strength_return_to_start_322 }
+                remove_country_flag = foc_khan_strength_return_to_start_322
+                set_country_flag = foc_khan_start_strength_selected_322
+                country_event = { id = foc_khan_settings.16 }
+            }
+            else = { country_event = { id = foc_khan_settings.10 } }
+        }
+    }
+    option = {
+        name = foc_khan_settings.11.intermediate
+        hidden_effect = {
+            remove_global_flag = foc_khan_strength_lowest
+            remove_global_flag = foc_khan_strength_initial
+            remove_global_flag = foc_khan_strength_high
+            remove_global_flag = foc_khan_strength_madness
+            set_global_flag = foc_khan_strength_intermediate
+            set_global_flag = foc_khan_strength_migrated_079
+            set_global_flag = foc_khan_five_tier_migrated_254
+            set_global_flag = foc_khan_three_tier_split_migrated_321
+            country_event = { id = foc_khan_settings.1 }
+            if = {
+                limit = { has_country_flag = foc_khan_strength_return_to_start_322 }
+                remove_country_flag = foc_khan_strength_return_to_start_322
+                set_country_flag = foc_khan_start_strength_selected_322
+                country_event = { id = foc_khan_settings.16 }
+            }
+            else = { country_event = { id = foc_khan_settings.10 } }
+        }
+    }
+    option = {
+        name = foc_khan_settings.11.madness
+        hidden_effect = {
+            remove_global_flag = foc_khan_strength_lowest
+            remove_global_flag = foc_khan_strength_initial
+            remove_global_flag = foc_khan_strength_intermediate
+            remove_global_flag = foc_khan_strength_high
+            set_global_flag = foc_khan_strength_madness
+            set_global_flag = foc_khan_strength_migrated_079
+            set_global_flag = foc_khan_five_tier_migrated_254
+            set_global_flag = foc_khan_three_tier_split_migrated_321
+            country_event = { id = foc_khan_settings.1 }
+            if = {
+                limit = { has_country_flag = foc_khan_strength_return_to_start_322 }
+                remove_country_flag = foc_khan_strength_return_to_start_322
+                set_country_flag = foc_khan_start_strength_selected_322
+                country_event = { id = foc_khan_settings.16 }
+            }
+            else = { country_event = { id = foc_khan_settings.10 } }
+        }
+    }
+    option = {
+        name = foc_khan_settings.back
+        hidden_effect = {
+            if = {
+                limit = { has_country_flag = foc_khan_strength_return_to_start_322 }
+                remove_country_flag = foc_khan_strength_return_to_start_322
+                country_event = { id = foc_khan_settings.16 }
+            }
+            else = { country_event = { id = foc_khan_settings.10 } }
+        }
+    }
+}
+
+country_event = {
+    id = foc_khan_settings.12
+    title = foc_khan_settings.12.name
+    desc = foc_khan_settings.12.desc
+    picture = GFX_evt_star_neutron
+    is_triggered_only = yes
+
+    option = {
+        name = foc_khan_settings.12.disable
+        trigger = {
+            NOT = { has_global_flag = foc_khan_crisis_started }
+            NOT = { has_global_flag = foc_khan_crisis_disabled }
+        }
+        hidden_effect = {
+            set_global_flag = foc_khan_crisis_disabled
+            remove_global_flag = foc_khan_crisis_spawn_scheduled
+            country_event = { id = foc_khan_settings.10 }
+        }
+    }
+    option = {
+        name = foc_khan_settings.12.enable
+        trigger = {
+            NOT = { has_global_flag = foc_khan_crisis_started }
+            has_global_flag = foc_khan_crisis_disabled
+        }
+        hidden_effect = {
+            remove_global_flag = foc_khan_crisis_disabled
+            country_event = { id = foc_khan_settings.10 }
+        }
+    }
+    option = {
+        name = foc_khan_settings.12.trigger_now
+        trigger = {
+            NOT = { has_global_flag = foc_khan_crisis_started }
+            NOT = { has_global_flag = foc_khan_phase_one_preparing }
+        }
+        hidden_effect = {
+            remove_global_flag = foc_khan_crisis_disabled
+            remove_global_flag = foc_khan_crisis_spawn_scheduled
+            country_event = { id = foc_khan.2 }
+        }
+    }
+    option = {
+        name = foc_khan_settings.12.trigger_final_order_now
+        trigger = {
+            NOT = { has_global_flag = foc_khan_phase_two }
+            NOT = { has_global_flag = foc_khan_phase_two_preparing }
+            NOT = { exists = event_target:foc_khan_final_order }
+        }
+        hidden_effect = {
+            country_event = { id = foc_v1717_crisis_debug.1 }
+        }
+    }
+    option = {
+        name = foc_khan_settings.12.already_started
+        trigger = { has_global_flag = foc_khan_crisis_started }
+    }
+    option = {
+        name = foc_khan_settings.back
+        country_event = { id = foc_khan_settings.10 }
+    }
+}
+
+# V132 new-game first-level game-mode selector. Presets apply the complete
+# combat/fighter/support package in one click; only Detailed Settings opens
+# the per-item configuration screen.
+country_event = {
+    id = foc_khan_settings.13
+    title = foc_khan_settings.13.name
+    desc = foc_khan_settings.13.desc
+    picture = GFX_evt_star_neutron
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        has_country_flag = foc_v191_government_ui_stable
+        NOT = { has_country_flag = foc_khan_start_mode_chosen_132 }
+    }
+
+    immediate = {
+        set_country_flag = foc_khan_start_difficulty_prompt_253
+    }
+
+    option = {
+        name = foc_khan_settings.13.vanilla_mode
+        custom_tooltip = foc_khan_settings.13.vanilla_mode_desc
+        hidden_effect = {
+            foc_v132_apply_vanilla_game_mode = yes
+            set_country_flag = foc_khan_start_mode_chosen_132
+            remove_country_flag = foc_khan_start_settings_active_322
+            country_event = { id = foc_khan_settings.1 }
+        }
+    }
+
+    option = {
+        name = foc_khan_settings.13.foc_mode
+        custom_tooltip = foc_khan_settings.13.foc_mode_desc
+        hidden_effect = {
+            foc_v132_apply_foc_game_mode = yes
+            set_country_flag = foc_khan_start_mode_chosen_132
+            remove_country_flag = foc_khan_start_settings_active_322
+            country_event = { id = foc_khan_settings.1 }
+        }
+    }
+
+    option = {
+        name = foc_khan_settings.13.acot_mode
+        custom_tooltip = foc_khan_settings.13.acot_mode_desc
+        hidden_effect = {
+            foc_v132_apply_acot_game_mode = yes
+            set_country_flag = foc_khan_start_mode_chosen_132
+            remove_country_flag = foc_khan_start_settings_active_322
+            country_event = { id = foc_khan_settings.1 }
+        }
+    }
+
+    option = {
+        name = foc_khan_settings.13.detailed
+        custom_tooltip = foc_khan_settings.13.detailed_desc
+        hidden_effect = {
+            # Detailed settings start from the default FOC preset, then let the
+            # player override individual items.
+            foc_v132_apply_foc_game_mode = yes
+            set_country_flag = foc_khan_start_settings_active_322
+            set_country_flag = foc_khan_start_strength_selected_322
+            set_country_flag = foc_khan_start_fleet_selected_322
+            set_country_flag = foc_khan_start_timeline_selected_323
+            country_event = { id = foc_khan_settings.16 }
+        }
+    }
+}
+
+# V132 detailed per-item setup; only reachable from the game-mode selector.
+country_event = {
+    id = foc_khan_settings.16
+    title = foc_khan_settings.16.name
+    desc = foc_khan_settings.16.desc
+    picture = GFX_evt_star_neutron
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        has_country_flag = foc_khan_start_settings_active_322
+    }
+
+    option = {
+        name = foc_v1717_capacity.naval_entry
+        hidden_effect = {
+            set_country_flag = foc_v1717_capacity_return_to_start
+            country_event = { id = foc_v1717_capacity.10 }
+        }
+    }
+option = {
+        name = foc_v1717_capacity.command_entry
+        hidden_effect = {
+            set_country_flag = foc_v1717_capacity_return_to_start
+            country_event = { id = foc_v1717_capacity.20 }
+        }
+    }
+    option = {
+        name = foc_khan_settings.16.strength
+        hidden_effect = {
+            set_country_flag = foc_khan_strength_return_to_start_322
+            country_event = { id = foc_khan_settings.11 }
+        }
+    }
+    option = {
+        name = foc_khan_settings.16.fighter_settings
+        hidden_effect = {
+            set_country_flag = foc_khan_fighter_return_to_start_62
+            country_event = { id = ssp_standalone.110 }
+        }
+    }
+    option = {
+        name = foc_khan_settings.16.fleet_scale
+        hidden_effect = {
+            set_country_flag = foc_khan_fleet_scale_return_to_start_322
+            country_event = { id = foc_khan_settings.14 }
+        }
+    }
+    option = {
+        name = foc_khan_settings.16.story_timeline
+        trigger = {
+            NOT = { has_origin = origin_foc_hutt_criminal_empire }
+            NOT = { has_global_flag = foc_v197_hutt_republic_era_selected }
+        }
+        hidden_effect = {
+            set_country_flag = foc_khan_timeline_return_to_start_323
+            country_event = { id = foc_khan_settings.15 }
+        }
+    }
+    option = {
+        name = foc_khan_settings.16.confirm
+        hidden_effect = {
+            remove_country_flag = foc_khan_start_settings_active_322
+            remove_country_flag = foc_khan_start_strength_selected_322
+            remove_country_flag = foc_khan_start_fleet_selected_322
+            remove_country_flag = foc_khan_start_timeline_selected_323
+            remove_country_flag = foc_khan_strength_return_to_start_322
+            remove_country_flag = foc_khan_fleet_scale_return_to_start_322
+            remove_country_flag = foc_khan_timeline_return_to_start_323
+            remove_country_flag = foc_khan_fighter_return_to_start_62
+            set_country_flag = foc_khan_start_mode_chosen_132
+            set_global_flag = foc_khan_three_tier_split_migrated_321
+            set_global_flag = foc_khan_strength_migrated_079
+            set_global_flag = foc_khan_five_tier_migrated_254
+            country_event = { id = foc_khan_settings.1 }
+        }
+    }
+    option = {
+        name = foc_khan_settings.16.back
+        hidden_effect = {
+            remove_country_flag = foc_khan_start_settings_active_322
+            remove_country_flag = foc_khan_start_strength_selected_322
+            remove_country_flag = foc_khan_start_fleet_selected_322
+            remove_country_flag = foc_khan_start_timeline_selected_323
+            remove_country_flag = foc_khan_strength_return_to_start_322
+            remove_country_flag = foc_khan_fleet_scale_return_to_start_322
+            remove_country_flag = foc_khan_timeline_return_to_start_323
+            remove_country_flag = foc_khan_fighter_return_to_start_62
+            country_event = { id = foc_khan_settings.13 }
+        }
+    }
+}
+
+# V95 unified story chronology selector. The same start gate is consumed by
+# Republic, ordinary and First Order origins. Each route only releases the
+# story phases that still belong to that route. Default: 2200.
+country_event = {
+    id = foc_khan_settings.15
+    title = foc_khan_settings.15.name
+    desc = foc_khan_settings.15.desc
+    picture = GFX_evt_star_neutron
+    is_triggered_only = yes
+
+    option = {
+        name = foc_khan_settings.15.y2200
+        hidden_effect = {
+            remove_global_flag = foc_story_timeline_start_2250
+            remove_global_flag = foc_story_timeline_start_2300
+            remove_global_flag = foc_story_timeline_start_2400
+            set_global_flag = foc_story_timeline_start_2200
+
+            remove_global_flag = foc_story_timeline_naboo_immediate
+            remove_global_flag = foc_story_timeline_naboo_2150
+            remove_global_flag = foc_story_timeline_naboo_2250
+            remove_global_flag = foc_story_timeline_naboo_2300
+            remove_global_flag = foc_story_timeline_naboo_2400
+            set_global_flag = foc_story_timeline_naboo_2200
+            set_country_flag = foc_khan_start_timeline_selected_323
+            if = {
+                limit = { has_country_flag = foc_khan_timeline_return_to_start_323 }
+                remove_country_flag = foc_khan_timeline_return_to_start_323
+                country_event = { id = foc_khan_settings.16 }
+            }
+            else = { country_event = { id = foc_khan_settings.10 } }
+        }
+    }
+    option = {
+        name = foc_khan_settings.15.y2250
+        trigger = {
+            NOT = { has_origin = origin_foc_hutt_criminal_empire }
+            NOT = { has_global_flag = foc_v197_hutt_republic_era_selected }
+        }
+        hidden_effect = {
+            remove_global_flag = foc_story_timeline_start_2200
+            remove_global_flag = foc_story_timeline_start_2300
+            remove_global_flag = foc_story_timeline_start_2400
+            set_global_flag = foc_story_timeline_start_2250
+
+            remove_global_flag = foc_story_timeline_naboo_immediate
+            remove_global_flag = foc_story_timeline_naboo_2150
+            remove_global_flag = foc_story_timeline_naboo_2200
+            remove_global_flag = foc_story_timeline_naboo_2300
+            remove_global_flag = foc_story_timeline_naboo_2400
+            set_global_flag = foc_story_timeline_naboo_2250
+            set_country_flag = foc_khan_start_timeline_selected_323
+            if = {
+                limit = { has_country_flag = foc_khan_timeline_return_to_start_323 }
+                remove_country_flag = foc_khan_timeline_return_to_start_323
+                country_event = { id = foc_khan_settings.16 }
+            }
+            else = { country_event = { id = foc_khan_settings.10 } }
+        }
+    }
+    option = {
+        name = foc_khan_settings.15.y2300
+        trigger = {
+            NOT = { has_origin = origin_foc_hutt_criminal_empire }
+            NOT = { has_global_flag = foc_v197_hutt_republic_era_selected }
+        }
+        hidden_effect = {
+            remove_global_flag = foc_story_timeline_start_2200
+            remove_global_flag = foc_story_timeline_start_2250
+            remove_global_flag = foc_story_timeline_start_2400
+            set_global_flag = foc_story_timeline_start_2300
+
+            remove_global_flag = foc_story_timeline_naboo_immediate
+            remove_global_flag = foc_story_timeline_naboo_2150
+            remove_global_flag = foc_story_timeline_naboo_2200
+            remove_global_flag = foc_story_timeline_naboo_2250
+            remove_global_flag = foc_story_timeline_naboo_2400
+            set_global_flag = foc_story_timeline_naboo_2300
+            set_country_flag = foc_khan_start_timeline_selected_323
+            if = {
+                limit = { has_country_flag = foc_khan_timeline_return_to_start_323 }
+                remove_country_flag = foc_khan_timeline_return_to_start_323
+                country_event = { id = foc_khan_settings.16 }
+            }
+            else = { country_event = { id = foc_khan_settings.10 } }
+        }
+    }
+    option = {
+        name = foc_khan_settings.15.y2400
+        trigger = {
+            NOT = { has_origin = origin_foc_hutt_criminal_empire }
+            NOT = { has_global_flag = foc_v197_hutt_republic_era_selected }
+        }
+        hidden_effect = {
+            remove_global_flag = foc_story_timeline_start_2200
+            remove_global_flag = foc_story_timeline_start_2250
+            remove_global_flag = foc_story_timeline_start_2300
+            set_global_flag = foc_story_timeline_start_2400
+
+            remove_global_flag = foc_story_timeline_naboo_immediate
+            remove_global_flag = foc_story_timeline_naboo_2150
+            remove_global_flag = foc_story_timeline_naboo_2200
+            remove_global_flag = foc_story_timeline_naboo_2250
+            remove_global_flag = foc_story_timeline_naboo_2300
+            set_global_flag = foc_story_timeline_naboo_2400
+            set_country_flag = foc_khan_start_timeline_selected_323
+            if = {
+                limit = { has_country_flag = foc_khan_timeline_return_to_start_323 }
+                remove_country_flag = foc_khan_timeline_return_to_start_323
+                country_event = { id = foc_khan_settings.16 }
+            }
+            else = { country_event = { id = foc_khan_settings.10 } }
+        }
+    }
+    option = {
+        name = foc_khan_settings.back
+        hidden_effect = {
+            if = {
+                limit = { has_country_flag = foc_khan_timeline_return_to_start_323 }
+                remove_country_flag = foc_khan_timeline_return_to_start_323
+                country_event = { id = foc_khan_settings.16 }
+            }
+            else = { country_event = { id = foc_khan_settings.10 } }
+        }
+    }
+}
+
+# Independent crisis fleet-quantity selector. These are the four distinct
+# quantity sets actually used by the former five-tier build; High and Madness
+# already shared identical fleet counts.
+country_event = {
+    id = foc_khan_settings.14
+    title = foc_khan_settings.14.name
+    desc = foc_khan_settings.14.desc
+    picture = GFX_evt_star_neutron
+    is_triggered_only = yes
+
+    option = {
+        name = foc_khan_settings.14.low
+        hidden_effect = {
+            remove_global_flag = foc_khan_fleet_scale_standard
+            remove_global_flag = foc_khan_fleet_scale_large
+            remove_global_flag = foc_khan_fleet_scale_max
+            set_global_flag = foc_khan_fleet_scale_low
+            set_global_flag = foc_khan_three_tier_split_migrated_321
+            if = {
+                limit = { has_country_flag = foc_khan_fleet_scale_return_to_start_322 }
+                remove_country_flag = foc_khan_fleet_scale_return_to_start_322
+                set_country_flag = foc_khan_start_fleet_selected_322
+                country_event = { id = foc_khan_settings.16 }
+            }
+            else_if = {
+                limit = { has_country_flag = foc_khan_fleet_scale_return_to_menu }
+                remove_country_flag = foc_khan_fleet_scale_return_to_menu
+                country_event = { id = foc_khan_settings.10 }
+            }
+        }
+    }
+    option = {
+        name = foc_khan_settings.14.standard
+        hidden_effect = {
+            remove_global_flag = foc_khan_fleet_scale_low
+            remove_global_flag = foc_khan_fleet_scale_large
+            remove_global_flag = foc_khan_fleet_scale_max
+            set_global_flag = foc_khan_fleet_scale_standard
+            set_global_flag = foc_khan_three_tier_split_migrated_321
+            if = {
+                limit = { has_country_flag = foc_khan_fleet_scale_return_to_start_322 }
+                remove_country_flag = foc_khan_fleet_scale_return_to_start_322
+                set_country_flag = foc_khan_start_fleet_selected_322
+                country_event = { id = foc_khan_settings.16 }
+            }
+            else_if = {
+                limit = { has_country_flag = foc_khan_fleet_scale_return_to_menu }
+                remove_country_flag = foc_khan_fleet_scale_return_to_menu
+                country_event = { id = foc_khan_settings.10 }
+            }
+        }
+    }
+    option = {
+        name = foc_khan_settings.14.large
+        hidden_effect = {
+            remove_global_flag = foc_khan_fleet_scale_low
+            remove_global_flag = foc_khan_fleet_scale_standard
+            remove_global_flag = foc_khan_fleet_scale_max
+            set_global_flag = foc_khan_fleet_scale_large
+            set_global_flag = foc_khan_three_tier_split_migrated_321
+            if = {
+                limit = { has_country_flag = foc_khan_fleet_scale_return_to_start_322 }
+                remove_country_flag = foc_khan_fleet_scale_return_to_start_322
+                set_country_flag = foc_khan_start_fleet_selected_322
+                country_event = { id = foc_khan_settings.16 }
+            }
+            else_if = {
+                limit = { has_country_flag = foc_khan_fleet_scale_return_to_menu }
+                remove_country_flag = foc_khan_fleet_scale_return_to_menu
+                country_event = { id = foc_khan_settings.10 }
+            }
+        }
+    }
+    option = {
+        name = foc_khan_settings.14.max
+        hidden_effect = {
+            remove_global_flag = foc_khan_fleet_scale_low
+            remove_global_flag = foc_khan_fleet_scale_standard
+            remove_global_flag = foc_khan_fleet_scale_large
+            set_global_flag = foc_khan_fleet_scale_max
+            set_global_flag = foc_khan_three_tier_split_migrated_321
+            if = {
+                limit = { has_country_flag = foc_khan_fleet_scale_return_to_start_322 }
+                remove_country_flag = foc_khan_fleet_scale_return_to_start_322
+                set_country_flag = foc_khan_start_fleet_selected_322
+                country_event = { id = foc_khan_settings.16 }
+            }
+            else_if = {
+                limit = { has_country_flag = foc_khan_fleet_scale_return_to_menu }
+                remove_country_flag = foc_khan_fleet_scale_return_to_menu
+                country_event = { id = foc_khan_settings.10 }
+            }
+        }
+    }
+    option = {
+        name = foc_khan_settings.back
+        hidden_effect = {
+            if = {
+                limit = { has_country_flag = foc_khan_fleet_scale_return_to_start_322 }
+                remove_country_flag = foc_khan_fleet_scale_return_to_start_322
+                country_event = { id = foc_khan_settings.16 }
+            }
+            else_if = {
+                limit = { has_country_flag = foc_khan_fleet_scale_return_to_menu }
+                remove_country_flag = foc_khan_fleet_scale_return_to_menu
+                country_event = { id = foc_khan_settings.10 }
+            }
+            else = { country_event = { id = foc_khan_settings.10 } }
+        }
+    }
+}

@@ -1,0 +1,110 @@
+# FOC custom ships can use every vanilla propulsion technology tier.
+
+utility_component_template = {
+    key = "FOC_UNIVERSAL_THRUSTER_1"
+    size = small
+    icon = "GFX_ship_part_thruster_1"
+    icon_frame = 1
+    power = -200
+    resources = {
+        category = ship_components
+        cost = { alloys = 60 sr_tibanna_swgs = 10 sr_coaxium_foc = 10 }
+    }
+    modifier = { }
+    prerequisites = { "tech_thrusters_1" }
+    component_set = "thruster_components"
+    potential = { always = no }
+    upgrades_to = "FOC_UNIVERSAL_THRUSTER_2"
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_UNIVERSAL_THRUSTER_2"
+    size = small
+    icon = "GFX_ship_part_thruster_2"
+    icon_frame = 1
+    power = -300
+    resources = {
+        category = ship_components
+        cost = { alloys = 120 sr_tibanna_swgs = 10 sr_coaxium_foc = 10 }
+    }
+    modifier = { ship_base_speed_mult = 0.25 }
+    prerequisites = { "tech_thrusters_2" }
+    component_set = "thruster_components"
+    potential = { always = no }
+    upgrades_to = "FOC_UNIVERSAL_THRUSTER_3"
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_UNIVERSAL_THRUSTER_3"
+    size = small
+    icon = "GFX_ship_part_thruster_3"
+    icon_frame = 1
+    power = -400
+    resources = {
+        category = ship_components
+        cost = { alloys = 180 sr_tibanna_swgs = 10 sr_coaxium_foc = 10 }
+    }
+    modifier = { ship_base_speed_mult = 0.50 }
+    prerequisites = { "tech_thrusters_3" }
+    component_set = "thruster_components"
+    potential = { always = no }
+    upgrades_to = "FOC_UNIVERSAL_THRUSTER_4"
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_UNIVERSAL_THRUSTER_4"
+    size = small
+    icon = "GFX_ship_part_thruster_4"
+    icon_frame = 1
+    power = -500
+    resources = {
+        category = ship_components
+        cost = { alloys = 240 sr_tibanna_swgs = 10 sr_coaxium_foc = 10 }
+    }
+    modifier = { ship_base_speed_mult = 0.75 }
+    prerequisites = { "tech_thrusters_4" }
+    component_set = "thruster_components"
+    potential = { always = no }
+    upgrades_to = "FOC_UNIVERSAL_THRUSTER_5"
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_UNIVERSAL_THRUSTER_5"
+    size = small
+    icon = "GFX_ship_part_thruster_5"
+    icon_frame = 1
+    power = -600
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 300
+            sr_dark_matter = 32
+            sr_tibanna_swgs = 10
+            sr_coaxium_foc = 10
+        }
+    }
+    modifier = { ship_base_speed_mult = 1.25 }
+    prerequisites = { "tech_dark_matter_propulsion" }
+    component_set = "thruster_components"
+    potential = { always = no }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}

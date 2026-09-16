@@ -1,0 +1,60 @@
+
+entity = { name = "foc_v236_green_bolt_size1_entity" pdxmesh = "foc_v236_green_bolt_mesh" scale = 1 cull_radius = 20.0 default_state = "idle" state = { name = "idle" } }
+entity = { name = "foc_v236_green_flash_size1_visual" pdxmesh = "foc_v236_green_flash_mesh" scale = 1 default_state = "idle" state = { name = "idle" } }
+entity = {
+ name = "foc_v236_green_muzzle_size1_entity"
+ default_state = "idle"
+ state = { name = "idle" state_time = 0.12 looping = no event = { time = 0.0 trigger_once = yes entity = "foc_v236_green_flash_size1_visual" life = 0.09 } }
+ state = { name = "stop" state_time = 0.01 looping = no }
+}
+entity = {
+ name = "foc_v236_green_hit_size1_entity"
+ default_state = "idle"
+ state = { name = "idle" state_time = 0.20 looping = no event = { time = 0.0 trigger_once = yes entity = "foc_v236_green_flash_size1_visual" life = 0.16 } }
+ state = { name = "stop" state_time = 0.01 looping = no }
+}
+
+entity = { name = "foc_v236_green_bolt_size2_entity" pdxmesh = "foc_v236_green_bolt_mesh" scale = 1.4142136 cull_radius = 20.0 default_state = "idle" state = { name = "idle" } }
+entity = { name = "foc_v236_green_flash_size2_visual" pdxmesh = "foc_v236_green_flash_mesh" scale = 1.4142136 default_state = "idle" state = { name = "idle" } }
+entity = {
+ name = "foc_v236_green_muzzle_size2_entity"
+ default_state = "idle"
+ state = { name = "idle" state_time = 0.12 looping = no event = { time = 0.0 trigger_once = yes entity = "foc_v236_green_flash_size2_visual" life = 0.09 } }
+ state = { name = "stop" state_time = 0.01 looping = no }
+}
+entity = {
+ name = "foc_v236_green_hit_size2_entity"
+ default_state = "idle"
+ state = { name = "idle" state_time = 0.20 looping = no event = { time = 0.0 trigger_once = yes entity = "foc_v236_green_flash_size2_visual" life = 0.16 } }
+ state = { name = "stop" state_time = 0.01 looping = no }
+}
+
+entity = { name = "foc_v236_green_bolt_size5_entity" pdxmesh = "foc_v236_green_bolt_mesh" scale = 2.236068 cull_radius = 20.0 default_state = "idle" state = { name = "idle" } }
+entity = { name = "foc_v236_green_flash_size5_visual" pdxmesh = "foc_v236_green_flash_mesh" scale = 2.236068 default_state = "idle" state = { name = "idle" } }
+entity = {
+ name = "foc_v236_green_muzzle_size5_entity"
+ default_state = "idle"
+ state = { name = "idle" state_time = 0.12 looping = no event = { time = 0.0 trigger_once = yes entity = "foc_v236_green_flash_size5_visual" life = 0.09 } }
+ state = { name = "stop" state_time = 0.01 looping = no }
+}
+entity = {
+ name = "foc_v236_green_hit_size5_entity"
+ default_state = "idle"
+ state = { name = "idle" state_time = 0.20 looping = no event = { time = 0.0 trigger_once = yes entity = "foc_v236_green_flash_size5_visual" life = 0.16 } }
+ state = { name = "stop" state_time = 0.01 looping = no }
+}
+
+entity = { name = "foc_v236_green_bolt_size10_entity" pdxmesh = "foc_v236_green_bolt_mesh" scale = 3.1622777 cull_radius = 20.0 default_state = "idle" state = { name = "idle" } }
+entity = { name = "foc_v236_green_flash_size10_visual" pdxmesh = "foc_v236_green_flash_mesh" scale = 3.1622777 default_state = "idle" state = { name = "idle" } }
+entity = {
+ name = "foc_v236_green_muzzle_size10_entity"
+ default_state = "idle"
+ state = { name = "idle" state_time = 0.12 looping = no event = { time = 0.0 trigger_once = yes entity = "foc_v236_green_flash_size10_visual" life = 0.09 } }
+ state = { name = "stop" state_time = 0.01 looping = no }
+}
+entity = {
+ name = "foc_v236_green_hit_size10_entity"
+ default_state = "idle"
+ state = { name = "idle" state_time = 0.20 looping = no event = { time = 0.0 trigger_once = yes entity = "foc_v236_green_flash_size10_visual" life = 0.16 } }
+ state = { name = "stop" state_time = 0.01 looping = no }
+}

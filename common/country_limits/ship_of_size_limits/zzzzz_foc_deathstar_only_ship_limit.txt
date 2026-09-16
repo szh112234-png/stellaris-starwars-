@@ -1,0 +1,18 @@
+# FOC V143 - the only ship-count cap retained by Fall of the Republic.
+# Capacity is measured against size_multiplier. deathstarbattlestation uses
+# size_multiplier = 1000, therefore base = 1000 allows exactly one at a time.
+foc_deathstar_ships_limit = {
+	ship_types = {
+		deathstarbattlestation
+	}
+	base = 1000
+	max = 1000
+	show = {
+		is_scope_valid = yes
+		OR = {
+			has_country_flag = foc_republic_origin_death_star_completed
+			has_country_flag = foc_republic_origin_death_star_one_built
+			has_country_flag = foc_republic_origin_death_star_two_built
+		}
+	}
+}

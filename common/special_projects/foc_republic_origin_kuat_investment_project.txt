@@ -1,0 +1,22 @@
+special_project = {
+    key = "FOC_REPUBLIC_ORIGIN_KUAT_INVESTMENT_PROJECT"
+    cost = 3200
+    tech_department = engineering_technology
+    timelimit = -1
+    location = yes
+    picture = GFX_evt_ship_in_orbit_3
+    icon = "gfx/interface/icons/situation_log/situation_log_engineering.dds"
+    event_scope = country_event
+
+    on_success = { country_event = { id = foc_hotfix_scripts.24 } }
+    abort_trigger = {
+        OR = {
+            has_country_flag = foc_republic_origin_kuat_investment_done
+            NOT = {
+                any_owned_starbase = {
+                    solar_system = { has_star_flag = foc_sw_kuat_home }
+                }
+            }
+        }
+    }
+}

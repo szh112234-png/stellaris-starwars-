@@ -1,0 +1,57 @@
+# Dedicated SG-aligned defensive component for the Final Order crisis Xyston.
+# SG crisis Xyston mounts 20 copies. Each is tuned so the crisis-only final totals match the SG crisis Xyston without changing the player Xyston ship size.
+utility_component_template = {
+    key = "FOC_KHAN_XYSTON_SG_ARMOR"
+    size = large
+    component_set = "FOC_KHAN_ADAPTIVE_DEFENSE_ARMOR"
+    icon = "GFX_ship_part_adaptive_defense_armor"
+    icon_frame = 1
+    power = -350
+
+    modifier = {
+        ship_hull_add = 800
+        ship_hull_regen_add_static = 1.5
+        ship_shield_add = 500
+        ship_armor_add = 500
+        ship_shield_regen_add_static = 1.5
+        ship_armor_regen_add_static = 1.5
+    }
+    ship_modifier = {
+        # Twenty copies total +10% armor/shield hardening. The old values
+        # stacked to effectively capped damage reduction and made the ship immune.
+        ship_armor_hardening_add = 0.005
+        ship_shield_hardening_add = 0.005
+    }
+
+    potential = { always = no
+	from = { NOT = { has_country_flag = foc_khan_component_lowest } }
+}
+    resources = { category = ship_components cost = { 
+            sr_tibanna_swgs = 8
+        } upkeep = { } }
+    ai_weight = { weight = 0 }
+}
+
+# Crisis-only copy of the integrated deflector array. Keeping it hidden avoids
+# broadening this component to every military-special/Colossus design.
+utility_component_template = {
+    key = "FOC_KHAN_XYSTON_DEFLECTOR_ARRAY"
+    size = aux
+    icon = "GFX_ship_part_swgs_deflectorshieldarray"
+    icon_frame = 1
+    power = -40
+
+    modifier = {
+        ship_accuracy_add = 10
+        ship_hull_regen_add_static = 5
+        ship_shield_regen_add_static = 5
+        ship_armor_regen_add_static = 5
+    }
+
+    potential = { always = no
+	from = { NOT = { has_country_flag = foc_khan_component_lowest } }
+}
+    component_set = "FOC_KHAN_DEFLECTOR_SHIELD_ARRAY"
+    resources = { category = ship_components cost = { } upkeep = { } }
+    ai_weight = { weight = 0 }
+}

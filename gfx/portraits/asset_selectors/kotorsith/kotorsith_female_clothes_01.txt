@@ -1,0 +1,91 @@
+# This is a template which multiple species can use. 
+
+kotorsith_female_clothes_01 = {
+	default = "gfx/models/portraits/kotorsith/kotorsith_female_clothes_officer2.dds"
+	
+	game_setup = {#will run with a limited country scope. species and government is set but the country does not actually exist
+		default = "gfx/models/portraits/kotorsith/kotorsith_female_clothes_officer2.dds"
+	}
+	
+	#species scope
+	species = { #generic portrait for a species
+		default = "gfx/models/portraits/kotorsith/kotorsith_female_clothes_officer2.dds"
+	}
+	
+	#pop scope
+	pop = { #for a specific pop
+		default = "gfx/models/portraits/kotorsith/kotorsith_female_clothes_officer2.dds"
+		
+	#	"gfx/models/portraits/kotorsith/kotorsith_female_clothes_admiral.dds" 	= { tile = { has_building = building_power_plant_1 } }
+	#	"gfx/models/portraits/kotorsith/kotorsith_female_clothes_officer2.dds" = { tile = { has_building = building_engineering_facility_1 } }
+	#	"gfx/models/portraits/kotorsith/kotorsith_female_clothes_officer2.dds" 	= { tile = { has_building = building_hydroponics_farm_1 } }
+	}
+	#leader scope
+	leader = { #scientists, generals, admirals, governor
+		"gfx/models/portraits/kotorsith/kotorsith_female_clothes_officer2.dds" = {
+			leader_class = commander leader_should_wear_general_uniform = yes
+			NOT = {
+				has_trait = leader_trait_psionic
+			}
+		}
+		"gfx/models/portraits/kotorsith/kotorsith_female_clothes_darkjedi.dds" = {
+			leader_class = commander leader_should_wear_general_uniform = yes
+			has_trait = leader_trait_psionic
+		}
+		"gfx/models/portraits/kotorsith/kotorsith_female_clothes_officer2.dds" = {
+			leader_class = scientist
+			NOT = {
+				has_trait = leader_trait_psionic
+			}
+		}
+		"gfx/models/portraits/kotorsith/kotorsith_female_clothes_governor.dds" = {
+			leader_class = scientist
+			has_trait = leader_trait_psionic
+		}
+		"gfx/models/portraits/kotorsith/kotorsith_female_clothes_admiral.dds" = {
+			leader_class = commander 
+			leader_should_wear_general_uniform = no
+			NOT = {
+				has_trait = leader_trait_psionic
+			}
+		}
+		"gfx/models/portraits/kotorsith/kotorsith_female_clothes_ruler2.dds" = {
+			leader_class = commander 
+			leader_should_wear_general_uniform = no
+			has_trait = leader_trait_psionic
+		}
+		"gfx/models/portraits/kotorsith/kotorsith_female_clothes_officer2.dds" = {
+			leader_class = official
+			NOT = {
+				has_trait = leader_trait_psionic
+			}
+		}
+		"gfx/models/portraits/kotorsith/kotorsith_female_clothes_governor.dds" = {
+			leader_class = official
+			has_trait = leader_trait_psionic
+		}
+	}
+
+	#leader scope 
+	ruler = { #for rulers
+		default = "gfx/models/portraits/kotorsith/kotorsith_female_clothes_ruler2.dds"
+		
+		"gfx/models/portraits/kotorsith/kotorsith_female_clothes_officer2.dds" = { owner = { has_generic_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/kotorsith/kotorsith_female_clothes_admiral.dds" = { owner = { has_militarist_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/kotorsith/kotorsith_female_clothes_ruler2.dds" = { owner = { has_spiritualist_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/kotorsith/kotorsith_female_clothes_darkjedi.dds"  = { owner = { has_pacifist_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/kotorsith/kotorsith_female_clothes_governor.dds"  = { owner = { has_primitive_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/kotorsith/kotorsith_female_clothes_officer2.dds" = { owner = { has_materialist_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/kotorsith/kotorsith_female_clothes_governor.dds" = { owner = { has_authority = auth_imperial } }
+	}
+}
+
+torsith_female_hair_1 = { 
+	default = "gfx/models/portraits/kotorsith/kotorsith_female_hair_red_style_01.dds"
+	
+	ruler = {
+	default = "gfx/models/portraits/kotorsith/kotorsith_female_hair_black_style_01.dds"
+	
+		"gfx/models/portraits/kotorsith/kotorsith_female_hair_black_style_01.dds" = { owner = { has_government = military_dictatorship } }
+	}
+}

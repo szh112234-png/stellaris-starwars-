@@ -1,0 +1,39 @@
+namespace = foc_portrait_fix
+
+country_event = {
+    id = foc_portrait_fix.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        OR = {
+            has_country_flag = foc_republic_origin_republic_country
+            has_country_flag = foc_republic_origin_separatist_country
+            has_country_flag = foc_republic_origin_imperial_rebel_country
+            has_country_flag = foc_republic_origin_rebel_alliance_country
+            has_country_flag = foc_khan_rebel_alliance_country
+            has_country_flag = foc_sw_new_republic_country
+        }
+    }
+
+    immediate = {
+        every_owned_leader = {
+            limit = { has_leader_flag = foc_canon_ahsoka_leader }
+            change_leader_portrait = foc_saga_ahsoka_01
+        }
+        every_owned_leader = {
+            limit = { has_leader_flag = foc_canon_cal_kestis_leader }
+            change_leader_portrait = foc_saga_cal_kestis_01
+        }
+        every_owned_leader = {
+            limit = { has_leader_flag = foc_saga_grievous_leader }
+            change_leader_portrait = foc_saga_grievous_01
+        }
+        every_owned_leader = {
+            limit = {
+                has_leader_flag = foc_republic_origin_windu_leader
+            }
+            change_leader_portrait = foc_saga_mace_windu_01
+        }
+    }
+}

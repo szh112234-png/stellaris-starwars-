@@ -1,0 +1,409 @@
+namespace = foc_cw
+
+# =============================================================================
+# 克隆人战争：吉奥诺西斯开战事件 + 独立战役节点
+# =============================================================================
+# 吉奥诺西斯（开战）→ 外环攻势 → 科洛桑之战（杜库之死）
+#   → 乌塔帕（格里弗斯之死）→ 卡希克（66 号命令前夜）
+#
+# V232r: 战役沿用独立事件与突袭时钟，阴谋只按选择和节点计分。
+# 投降仅检查科洛桑完成、乌塔堡完成和阴谋140点，三项缺一不可。
+#
+# 乌塔帕会真正杀掉 foc_saga_separatist_grievous_command 创建的格里弗斯，
+# 并移除邦联的指挥加成——原本那个加成会一直留到邦联投降为止。
+# =============================================================================
+
+# --- 吉奥诺西斯：普通剧情事件 / 战争的第一天 ---------------------------------
+# This is now the FINAL event of the pre-war Separatist Crisis. The CIS country
+# does not exist and no war is declared until the player closes this event and
+# the situation reaches 100.
+country_event = {
+    id = foc_cw.1
+    title = foc_cw.1.name
+    desc = foc_cw.1.desc
+    picture = GFX_foc_sep_geonosis
+    show_sound = event_ship_bridge
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_republic_origin_republic_country
+        has_country_flag = foc_republic_origin_separatist_crisis_active
+        has_country_flag = foc_sepplot_emergency_powers_granted
+        has_country_flag = foc_sepplot_clone_army_activation_done
+        has_country_flag = foc_sepplot_jedi_captured
+        NOT = { has_country_flag = foc_republic_origin_separatist_war_started }
+        NOT = { has_global_flag = foc_republic_origin_separatist_war_active }
+        NOT = { has_country_flag = foc_saga_cw_geonosis_shown }
+        NOT = { has_global_flag = foc_republic_origin_jedi_purged }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_cw_geonosis_shown
+        set_country_flag = foc_republic_origin_separatist_chain_complete
+        set_country_flag = foc_saga_cw_geonosis_direct_control_v89
+        set_global_flag = foc_saga_cw_begun
+        set_global_flag = foc_canon_geonosis_story_resolved
+        # Direct event effect: the Republic controls the whole Geonosis system.
+        random_system = {
+            limit = { has_star_flag = foc_swmap_geonosis_home }
+            foc_republic_origin_claim_for_republic = yes
+        }
+        set_timed_country_flag = { flag = foc_saga_cw_outer_rim_wait days = 900 }
+    }
+
+    option = {
+        name = foc_cw.1.a
+        add_modifier = { modifier = foc_saga_cw_grand_army days = -1 }
+        random_situation = {
+            limit = { is_situation_type = situation_foc_republic_origin_separatist_crisis }
+            add_situation_progress = 2
+        }
+    }
+}
+
+# --- 外环攻势 -----------------------------------------------------------------
+country_event = {
+    id = foc_cw.2
+    title = foc_cw.2.name
+    desc = foc_cw.2.desc
+    picture = GFX_foc_saga_venator_fleet
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_saga_cw_geonosis_shown
+        NOT = { has_country_flag = foc_saga_cw_outer_rim_shown }
+        NOT = { has_country_flag = foc_saga_cw_outer_rim_wait }
+        has_global_flag = foc_republic_origin_separatist_war_active
+        NOT = { has_global_flag = foc_republic_origin_jedi_purged }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_cw_outer_rim_shown
+    }
+
+    # 两种打法，代价不同。
+    option = {
+        name = foc_cw.2.a
+        add_modifier = { modifier = foc_saga_cw_attrition_doctrine days = -1 }
+    }
+    option = {
+        name = foc_cw.2.b
+        add_modifier = { modifier = foc_saga_cw_jedi_spearhead days = -1 }
+    }
+}
+
+# V89 old-save migration: if Christophsis was already completed before this version,
+# start a fresh two-year Coruscant clock instead of inheriting the obsolete Outer Rim timer.
+country_event = {
+    id = foc_cw.7
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_republic_origin_republic_country
+        has_global_flag = foc_republic_origin_separatist_war_active
+        has_global_flag = foc_canon_christophsis_battle_completed
+        NOT = { has_country_flag = foc_saga_cw_christophsis_coruscant_anchor_v89 }
+        NOT = { has_country_flag = foc_saga_cw_coruscant_assault_launched }
+    }
+    immediate = {
+        set_country_flag = foc_saga_cw_christophsis_coruscant_anchor_v89
+        set_timed_country_flag = { flag = foc_saga_cw_coruscant_after_christophsis_wait_v89 days = 720 }
+        remove_country_flag = foc_saga_cw_coruscant_wait
+    }
+}
+
+# V137 old-save repair: Geonosis is a live CIS strategic objective during the war.
+# Older saves that still carry the obsolete direct-Republic-control migration are
+# normalized once so the Geonosis-gated annual support rule can function.
+country_event = {
+    id = foc_cw.8
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_republic_origin_republic_country
+        has_country_flag = foc_saga_cw_geonosis_shown
+        has_global_flag = foc_republic_origin_separatist_war_active
+        NOT = { has_country_flag = foc_saga_cw_geonosis_direct_control_repaired_v89 }
+    }
+    immediate = {
+        set_country_flag = foc_saga_cw_geonosis_direct_control_repaired_v89
+        if = {
+            limit = { exists = event_target:foc_republic_origin_separatists }
+            random_system = {
+                limit = { has_star_flag = foc_swmap_geonosis_home }
+                foc_republic_origin_claim_for_separatists = yes
+            }
+        }
+    }
+}
+
+# --- V209：克隆人战争第三年科洛桑突袭备用时钟 -------------------------------
+# New wars schedule .9 on declaration day. .10 is an old-save-only migration
+# controller and never removes or weakens the original Christophsis condition.
+country_event = {
+    id = foc_cw.9
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_republic_origin_republic_country
+        has_country_flag = foc_republic_origin_separatist_war_started
+        has_global_flag = foc_republic_origin_separatist_war_active
+        NOT = { has_country_flag = foc_saga_cw_coruscant_assault_launched }
+        exists = event_target:foc_republic_origin_separatists
+        exists = event_target:foc_republic_origin_coruscant
+        NOT = { has_global_flag = foc_republic_origin_jedi_purged }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_cw_third_year_assault_due
+        log = "FOC_V209_CW: the 1080-day Coruscant assault fallback matured; dispatching the physical CIS invasion."
+        country_event = { id = foc_cw.6 }
+    }
+}
+
+country_event = {
+    id = foc_cw.10
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_republic_origin_republic_country
+        has_country_flag = foc_republic_origin_separatist_war_started
+        has_global_flag = foc_republic_origin_separatist_war_active
+        NOT = { has_country_flag = foc_saga_cw_third_year_assault_clock_started }
+        NOT = { has_country_flag = foc_saga_cw_coruscant_assault_launched }
+        NOT = { has_global_flag = foc_republic_origin_jedi_purged }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_cw_third_year_assault_clock_started
+        # A fourth-year mobilisation proves that the three-year deadline passed.
+        if = {
+            limit = {
+                any_country = {
+                    has_country_flag = foc_republic_origin_separatist_country
+                    has_country_flag = foc_saga_cis_mobilisation_done
+                }
+            }
+            country_event = { id = foc_cw.9 days = 1 }
+        }
+        # The Outer Rim phase normally appears about 900 days after Geonosis.
+        else_if = {
+            limit = { has_country_flag = foc_saga_cw_outer_rim_shown }
+            country_event = { id = foc_cw.9 days = 180 }
+        }
+        # Grievous is the two-year milestone.
+        else_if = {
+            limit = {
+                any_country = {
+                    has_country_flag = foc_republic_origin_separatist_country
+                    has_country_flag = foc_saga_cis_grievous_done
+                }
+            }
+            country_event = { id = foc_cw.9 days = 360 }
+        }
+        else = {
+            country_event = { id = foc_cw.9 days = 1080 }
+        }
+    }
+}
+
+# --- 科洛桑突袭：议长被劫持 ----------------------------------------------------
+# After the Outer Rim phase, the CIS commits a 25-Lucrehulk strike fleet to a surprise
+# jump over Coruscant. This is a physical invasion fleet, not a narrative-only
+# popup. Palpatine remains marked abducted until the battle event below fires.
+country_event = {
+    id = foc_cw.6
+    title = foc_cw.6.name
+    desc = foc_cw.6.desc
+    picture = GFX_foc_saga_coruscant_battle
+    show_sound = event_ship_bridge
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_republic_origin_republic_country
+        OR = {
+            # Original condition, unchanged: Christophsis complete + 720 days.
+            AND = {
+                has_global_flag = foc_canon_christophsis_battle_completed
+                has_country_flag = foc_saga_cw_christophsis_coruscant_anchor_v89
+                NOT = { has_country_flag = foc_saga_cw_coruscant_after_christophsis_wait_v89 }
+            }
+            # Parallel hard fallback: 1080 days after the Clone Wars declaration.
+            has_country_flag = foc_saga_cw_third_year_assault_due
+        }
+        NOT = { has_country_flag = foc_saga_cw_coruscant_assault_launched }
+        has_global_flag = foc_republic_origin_separatist_war_active
+        exists = event_target:foc_republic_origin_separatists
+        exists = event_target:foc_republic_origin_coruscant
+        NOT = { has_global_flag = foc_republic_origin_jedi_purged }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_cw_coruscant_assault_launched
+        if = {
+            limit = { has_country_flag = foc_saga_cw_third_year_assault_due }
+            set_country_flag = foc_saga_cw_coruscant_assault_via_third_year_v209
+        }
+        remove_country_flag = foc_saga_cw_third_year_assault_due
+        set_country_flag = foc_saga_palpatine_abducted
+
+        # V137: the Coruscant assault is one purpose-built Trade Federation
+        # invasion fleet of exactly 25 Lucrehulk-class battleships.  No random
+        # existing CIS fleet is teleported and no ordinary mixed line fleets are added.
+        event_target:foc_republic_origin_coruscant = {
+            foc_trade_federation_spawn_coruscant_25_lucrehulks = yes
+        }
+    
+        set_country_flag = foc_v232r_coruscant_poll_running
+        country_event = { id = foc_v232r.1 days = 7 }
+}
+
+    option = { name = foc_cw.6.a }
+}
+
+# --- 科洛桑之战：杜库伯爵之死 --------------------------------------------------
+country_event = {
+    id = foc_cw.3
+    title = foc_cw.3.name
+    desc = foc_cw.3.desc
+    picture = GFX_foc_saga_coruscant_battle
+    show_sound = event_ship_bridge
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_republic_origin_republic_country
+        has_country_flag = foc_saga_cw_coruscant_assault_launched
+        NOT = { has_country_flag = foc_saga_cw_coruscant_shown }
+        has_global_flag = foc_republic_origin_separatist_war_active
+        NOT = { has_global_flag = foc_republic_origin_jedi_purged }
+        any_system = {
+            has_star_flag = foc_sw_coruscant_home
+            exists = space_owner
+            space_owner = { has_country_flag = foc_republic_origin_republic_country }
+            NOT = {
+                any_fleet_in_system = {
+                    exists = owner
+                    owner = { has_country_flag = foc_republic_origin_separatist_country }
+                }
+            }
+        }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_cw_coruscant_shown
+        set_global_flag = foc_canon_coruscant_battle_completed
+        if = {
+            limit = { NOT = { has_global_flag = foc_canon_clone_war_first_battle_recorded } }
+            set_global_flag = foc_canon_clone_war_first_battle_coruscant
+        }
+        foc_canon_mark_clone_war_first_battle = yes
+        remove_country_flag = foc_saga_palpatine_abducted
+        remove_country_flag = foc_saga_cw_coruscant_assault_via_third_year_v209
+        set_global_flag = foc_saga_dooku_dead
+        # V90: Dooku dies here.  Normally Grievous takes command; if the player
+        # already completed Utapau and Grievous is dead, the CIS receives a normal
+        # randomly generated/elected Separatist successor instead of resurrecting him.
+        # Kill the identified Dooku leader; do not rename him into Grievous.
+        foc_v232r_kill_dooku_at_coruscant = yes
+        every_country = {
+            limit = { has_country_flag = foc_republic_origin_separatist_country }
+            country_event = { id = foc_v232r.2 days = 1 }
+        }
+        log = "FOC_V232R_CORUSCANT: defended system clear; battle completed and Dooku death resolved."
+        # 学徒换人，这一步阴谋必然前进。
+        set_country_flag = foc_v232r_plot_coruscant
+        foc_v232r_recalculate_plot = yes
+        set_timed_country_flag = { flag = foc_saga_cw_utapau_wait days = 540 }
+        # V232r: retry the three-condition surrender gate after this battle.
+        country_event = { id = foc_republic_origin.19 days = 1 }
+    }
+
+    option = { name = foc_cw.3.a }
+}
+
+# --- 乌塔帕：格里弗斯之死 ------------------------------------------------------
+country_event = {
+    id = foc_cw.4
+    title = foc_cw.4.name
+    desc = foc_cw.4.desc
+    picture = GFX_foc_saga_droid_scrapped
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        NOT = { has_country_flag = foc_saga_cw_utapau_shown }
+        has_global_flag = foc_republic_origin_separatist_war_active
+        NOT = { has_global_flag = foc_republic_origin_jedi_purged }
+        # V85: the battle completes only when the CIS has completely lost Utapau.
+        any_system = {
+            has_star_flag = foc_swmap_utapau_home
+            NOT = { space_owner? = { has_country_flag = foc_republic_origin_separatist_country } }
+        }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_cw_utapau_shown
+        set_global_flag = foc_canon_utapau_battle_completed
+        if = {
+            limit = { NOT = { has_global_flag = foc_canon_clone_war_first_battle_recorded } }
+            set_global_flag = foc_canon_clone_war_first_battle_utapau
+        }
+        foc_canon_mark_clone_war_first_battle = yes
+        set_global_flag = foc_saga_grievous_dead
+        foc_saga_kill_grievous = yes
+        set_timed_country_flag = { flag = foc_saga_cw_kashyyyk_wait days = 360 }
+        # V232r: retry the three-condition surrender gate after this battle.
+        country_event = { id = foc_republic_origin.19 days = 1 }
+    }
+
+    option = {
+        name = foc_cw.4.a
+        add_modifier = { modifier = foc_saga_cw_droid_command_broken days = 7200 }
+    }
+}
+
+# --- 卡希克：最后一场胜仗 ------------------------------------------------------
+country_event = {
+    id = foc_cw.5
+    title = foc_cw.5.name
+    desc = foc_cw.5.desc
+    picture = GFX_foc_saga_clone_troopers
+    show_sound = event_mystic_reveal
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        NOT = { has_country_flag = foc_saga_cw_kashyyyk_shown }
+        has_global_flag = foc_republic_origin_separatist_war_active
+        NOT = { has_global_flag = foc_republic_origin_jedi_purged }
+        # V85: the battle completes only when the CIS has completely lost Kashyyyk.
+        any_system = {
+            has_star_flag = foc_swmap_kashyyyk_home
+            NOT = { space_owner? = { has_country_flag = foc_republic_origin_separatist_country } }
+        }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_cw_kashyyyk_shown
+        set_global_flag = foc_canon_kashyyyk_battle_completed
+        if = {
+            limit = { NOT = { has_global_flag = foc_canon_clone_war_first_battle_recorded } }
+            set_global_flag = foc_canon_clone_war_first_battle_kashyyyk
+        }
+        foc_canon_mark_clone_war_first_battle = yes
+    }
+
+    option = { name = foc_cw.5.a }
+}

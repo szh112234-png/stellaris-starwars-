@@ -1,0 +1,3713 @@
+# v17.18b: use the global strength selection for these new core components.
+# The legacy country selector deliberately omits AI. Do not change that old
+# selector (special fixed slots depend on it); gate this independent family
+# globally instead, so authorized AI and players use the same balance profile.
+# Lower tiers retire only when the next milestone is actually usable, so old
+# saves with prematurely granted technologies keep a valid lower-tier fallback.
+utility_component_template = {
+    key = "FOC_V1718_SHARED_REACTOR_1"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_reactor"
+    icon_frame = 1
+    power = 3000
+    component_set = "power_core"
+    prerequisites = { foc_v1718_tech_reactor_1 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            foc_v1718_base_ready = yes
+            NOT = {
+                OR = {
+                    AND = { foc_v1718_emp_stage2_ready = yes has_technology = foc_v1718_tech_emp_reactor_2 }
+                    AND = { foc_v1718_reb_branch = yes has_technology = foc_v1718_tech_reb_reactor_2 }
+                }
+            }
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = { alloys = 50 sr_coaxium_foc = 10 }
+    }
+    ai_weight = { weight = 201000 }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_REACTOR_2"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_reactor"
+    icon_frame = 1
+    power = 16000
+    component_set = "power_core"
+    prerequisites = { foc_v1718_tech_emp_reactor_2 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            foc_v1718_emp_stage2_ready = yes
+            NOT = {
+                AND = { has_technology = foc_v1718_tech_emp_reactor_3 foc_v1718_emp_stage3_ready = yes }
+            }
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_EMP_REACTOR_3"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_REACTOR_3"
+    size = small
+    icon = "GFX_foc_v1718c_resurgent_ship_part_reactor_1"
+    icon_frame = 1
+    power = 48000
+    component_set = "power_core"
+    prerequisites = { foc_v1718_tech_emp_reactor_3 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            foc_v1718_emp_stage2_ready = yes
+            foc_v1718_emp_stage3_ready = yes
+            NOT = { has_technology = foc_v1718_tech_emp_reactor_4 }
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_EMP_REACTOR_4"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_REACTOR_4"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_reactor"
+    icon_frame = 1
+    power = 55000
+    component_set = "power_core"
+    prerequisites = { foc_v1718_tech_emp_reactor_4 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            foc_v1718_emp_stage2_ready = yes
+            foc_v1718_emp_stage3_ready = yes
+            NOT = { has_technology = foc_v1718_tech_emp_reactor_5 }
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_EMP_REACTOR_5"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_REACTOR_5"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_reactor"
+    icon_frame = 1
+    power = 65000
+    component_set = "power_core"
+    prerequisites = { foc_v1718_tech_emp_reactor_5 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            foc_v1718_emp_stage2_ready = yes
+            foc_v1718_emp_stage3_ready = yes
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_REACTOR_2"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_reactor"
+    icon_frame = 1
+    power = 16000
+    component_set = "power_core"
+    prerequisites = { foc_v1718_tech_reb_reactor_2 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            foc_v1718_reb_branch = yes
+            NOT = { has_technology = foc_v1718_tech_reb_reactor_3 }
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_REB_REACTOR_3"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_REACTOR_3"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_reactor"
+    icon_frame = 1
+    power = 48000
+    component_set = "power_core"
+    prerequisites = { foc_v1718_tech_reb_reactor_3 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            foc_v1718_reb_branch = yes
+            foc_v1718_reb_stage3_ready = yes
+            NOT = { has_technology = foc_v1718_tech_reb_reactor_4 }
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_REB_REACTOR_4"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_REACTOR_4"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_reactor"
+    icon_frame = 1
+    power = 55000
+    component_set = "power_core"
+    prerequisites = { foc_v1718_tech_reb_reactor_4 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            foc_v1718_reb_branch = yes
+            foc_v1718_reb_stage3_ready = yes
+            NOT = { has_technology = foc_v1718_tech_reb_reactor_5 }
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_REB_REACTOR_5"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_REACTOR_5"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_reactor"
+    icon_frame = 1
+    power = 65000
+    component_set = "power_core"
+    prerequisites = { foc_v1718_tech_reb_reactor_5 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            foc_v1718_reb_branch = yes
+            foc_v1718_reb_stage3_ready = yes
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_SHARED_HYPERDRIVE_1"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -100
+    component_set = "ftl_components"
+    prerequisites = { foc_v1718_tech_hyperdrive_1 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            foc_v1718_base_ready = yes
+            NOT = {
+                OR = {
+                    AND = { foc_v1718_emp_stage2_ready = yes has_technology = foc_v1718_tech_emp_hyperdrive_2 }
+                    AND = { foc_v1718_reb_branch = yes has_technology = foc_v1718_tech_reb_hyperdrive_2 }
+                }
+            }
+        }
+    }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.75 ship_jumpdrive_cooldown_mult = -0.75 ship_ftl_jumpdrive_range_mult = 1 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 50 sr_coaxium_foc = 10 }
+    }
+    ai_weight = { weight = 201000 }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_SHARED_HYPERDRIVE_1_ADAPTER_1"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -100
+    component_set = "foc_immobilizer418_ftl"
+    prerequisites = { foc_v1718_tech_hyperdrive_1 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.75 ship_jumpdrive_cooldown_mult = -0.75 ship_ftl_jumpdrive_range_mult = 1 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 50 sr_coaxium_foc = 10 }
+    }
+    ai_weight = { weight = 201000 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_SHARED_HYPERDRIVE_1_ADAPTER_2"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -100
+    component_set = "ftl_component_imperialsd"
+    prerequisites = { foc_v1718_tech_hyperdrive_1 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.75 ship_jumpdrive_cooldown_mult = -0.75 ship_ftl_jumpdrive_range_mult = 1 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 50 sr_coaxium_foc = 10 }
+    }
+    ai_weight = { weight = 201000 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_SHARED_HYPERDRIVE_1_ADAPTER_3"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -100
+    component_set = "ftl_component_resurgentbattlecruiser"
+    prerequisites = { foc_v1718_tech_hyperdrive_1 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.75 ship_jumpdrive_cooldown_mult = -0.75 ship_ftl_jumpdrive_range_mult = 1 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 50 sr_coaxium_foc = 10 }
+    }
+    ai_weight = { weight = 201000 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_SHARED_HYPERDRIVE_1_ADAPTER_4"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -100
+    component_set = "ftl_component_venatorclass"
+    prerequisites = { foc_v1718_tech_hyperdrive_1 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.75 ship_jumpdrive_cooldown_mult = -0.75 ship_ftl_jumpdrive_range_mult = 1 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 50 sr_coaxium_foc = 10 }
+    }
+    ai_weight = { weight = 201000 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_SHARED_HYPERDRIVE_1_ADAPTER_5"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -100
+    component_set = "ftl_component_xystonsd"
+    prerequisites = { foc_v1718_tech_hyperdrive_1 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.75 ship_jumpdrive_cooldown_mult = -0.75 ship_ftl_jumpdrive_range_mult = 1 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 50 sr_coaxium_foc = 10 }
+    }
+    ai_weight = { weight = 201000 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_2"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -150
+    component_set = "ftl_components"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_2 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            foc_v1718_emp_stage2_ready = yes
+            NOT = {
+                AND = { has_technology = foc_v1718_tech_emp_hyperdrive_3 foc_v1718_emp_stage3_ready = yes }
+            }
+        }
+    }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.8 ship_jumpdrive_cooldown_mult = -0.8 ship_ftl_jumpdrive_range_mult = 1.5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_3"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_2_ADAPTER_1"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -150
+    component_set = "foc_immobilizer418_ftl"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_2 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.8 ship_jumpdrive_cooldown_mult = -0.8 ship_ftl_jumpdrive_range_mult = 1.5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_3_ADAPTER_1"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_2_ADAPTER_2"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -150
+    component_set = "ftl_component_imperialsd"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_2 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.8 ship_jumpdrive_cooldown_mult = -0.8 ship_ftl_jumpdrive_range_mult = 1.5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_3_ADAPTER_2"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_2_ADAPTER_3"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -150
+    component_set = "ftl_component_resurgentbattlecruiser"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_2 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.8 ship_jumpdrive_cooldown_mult = -0.8 ship_ftl_jumpdrive_range_mult = 1.5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_3_ADAPTER_3"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_2_ADAPTER_4"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -150
+    component_set = "ftl_component_venatorclass"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_2 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.8 ship_jumpdrive_cooldown_mult = -0.8 ship_ftl_jumpdrive_range_mult = 1.5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_3_ADAPTER_4"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_2_ADAPTER_5"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -150
+    component_set = "ftl_component_xystonsd"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_2 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.8 ship_jumpdrive_cooldown_mult = -0.8 ship_ftl_jumpdrive_range_mult = 1.5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_3_ADAPTER_5"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_3"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -200
+    component_set = "ftl_components"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_3 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            foc_v1718_emp_stage2_ready = yes
+            foc_v1718_emp_stage3_ready = yes
+            NOT = { has_technology = foc_v1718_tech_emp_hyperdrive_4 }
+        }
+    }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.85 ship_jumpdrive_cooldown_mult = -0.85 ship_ftl_jumpdrive_range_mult = 2 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_4"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_3_ADAPTER_1"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -200
+    component_set = "foc_immobilizer418_ftl"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_3 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.85 ship_jumpdrive_cooldown_mult = -0.85 ship_ftl_jumpdrive_range_mult = 2 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_4_ADAPTER_1"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_3_ADAPTER_2"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -200
+    component_set = "ftl_component_imperialsd"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_3 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.85 ship_jumpdrive_cooldown_mult = -0.85 ship_ftl_jumpdrive_range_mult = 2 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_4_ADAPTER_2"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_3_ADAPTER_3"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -200
+    component_set = "ftl_component_resurgentbattlecruiser"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_3 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.85 ship_jumpdrive_cooldown_mult = -0.85 ship_ftl_jumpdrive_range_mult = 2 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_4_ADAPTER_3"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_3_ADAPTER_4"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -200
+    component_set = "ftl_component_venatorclass"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_3 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.85 ship_jumpdrive_cooldown_mult = -0.85 ship_ftl_jumpdrive_range_mult = 2 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_4_ADAPTER_4"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_3_ADAPTER_5"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -200
+    component_set = "ftl_component_xystonsd"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_3 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.85 ship_jumpdrive_cooldown_mult = -0.85 ship_ftl_jumpdrive_range_mult = 2 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_4_ADAPTER_5"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_4"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -250
+    component_set = "ftl_components"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_4 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            foc_v1718_emp_stage2_ready = yes
+            foc_v1718_emp_stage3_ready = yes
+            NOT = { has_technology = foc_v1718_tech_emp_hyperdrive_5 }
+        }
+    }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.9 ship_jumpdrive_cooldown_mult = -0.9 ship_ftl_jumpdrive_range_mult = 3 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_5"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_4_ADAPTER_1"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -250
+    component_set = "foc_immobilizer418_ftl"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_4 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.9 ship_jumpdrive_cooldown_mult = -0.9 ship_ftl_jumpdrive_range_mult = 3 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_5_ADAPTER_1"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_4_ADAPTER_2"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -250
+    component_set = "ftl_component_imperialsd"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_4 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.9 ship_jumpdrive_cooldown_mult = -0.9 ship_ftl_jumpdrive_range_mult = 3 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_5_ADAPTER_2"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_4_ADAPTER_3"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -250
+    component_set = "ftl_component_resurgentbattlecruiser"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_4 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.9 ship_jumpdrive_cooldown_mult = -0.9 ship_ftl_jumpdrive_range_mult = 3 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_5_ADAPTER_3"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_4_ADAPTER_4"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -250
+    component_set = "ftl_component_venatorclass"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_4 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.9 ship_jumpdrive_cooldown_mult = -0.9 ship_ftl_jumpdrive_range_mult = 3 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_5_ADAPTER_4"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_4_ADAPTER_5"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -250
+    component_set = "ftl_component_xystonsd"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_4 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.9 ship_jumpdrive_cooldown_mult = -0.9 ship_ftl_jumpdrive_range_mult = 3 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_5_ADAPTER_5"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_5"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -300
+    component_set = "ftl_components"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_5 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            foc_v1718_emp_stage2_ready = yes
+            foc_v1718_emp_stage3_ready = yes
+        }
+    }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.95 ship_jumpdrive_cooldown_mult = -0.95 ship_ftl_jumpdrive_range_mult = 5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_5_ADAPTER_1"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -300
+    component_set = "foc_immobilizer418_ftl"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_5 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.95 ship_jumpdrive_cooldown_mult = -0.95 ship_ftl_jumpdrive_range_mult = 5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_5_ADAPTER_2"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -300
+    component_set = "ftl_component_imperialsd"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_5 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.95 ship_jumpdrive_cooldown_mult = -0.95 ship_ftl_jumpdrive_range_mult = 5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_5_ADAPTER_3"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -300
+    component_set = "ftl_component_resurgentbattlecruiser"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_5 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.95 ship_jumpdrive_cooldown_mult = -0.95 ship_ftl_jumpdrive_range_mult = 5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_5_ADAPTER_4"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -300
+    component_set = "ftl_component_venatorclass"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_5 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.95 ship_jumpdrive_cooldown_mult = -0.95 ship_ftl_jumpdrive_range_mult = 5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_5_ADAPTER_5"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -300
+    component_set = "ftl_component_xystonsd"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_5 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.95 ship_jumpdrive_cooldown_mult = -0.95 ship_ftl_jumpdrive_range_mult = 5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_2"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -150
+    component_set = "ftl_components"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_2 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            foc_v1718_reb_branch = yes
+            NOT = { has_technology = foc_v1718_tech_reb_hyperdrive_3 }
+        }
+    }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.8 ship_jumpdrive_cooldown_mult = -0.8 ship_ftl_jumpdrive_range_mult = 1.5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_3"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_2_ADAPTER_1"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -150
+    component_set = "foc_immobilizer418_ftl"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_2 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.8 ship_jumpdrive_cooldown_mult = -0.8 ship_ftl_jumpdrive_range_mult = 1.5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_3_ADAPTER_1"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_2_ADAPTER_2"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -150
+    component_set = "ftl_component_imperialsd"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_2 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.8 ship_jumpdrive_cooldown_mult = -0.8 ship_ftl_jumpdrive_range_mult = 1.5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_3_ADAPTER_2"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_2_ADAPTER_3"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -150
+    component_set = "ftl_component_resurgentbattlecruiser"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_2 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.8 ship_jumpdrive_cooldown_mult = -0.8 ship_ftl_jumpdrive_range_mult = 1.5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_3_ADAPTER_3"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_2_ADAPTER_4"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -150
+    component_set = "ftl_component_venatorclass"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_2 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.8 ship_jumpdrive_cooldown_mult = -0.8 ship_ftl_jumpdrive_range_mult = 1.5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_3_ADAPTER_4"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_2_ADAPTER_5"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -150
+    component_set = "ftl_component_xystonsd"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_2 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.8 ship_jumpdrive_cooldown_mult = -0.8 ship_ftl_jumpdrive_range_mult = 1.5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_3_ADAPTER_5"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_3"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -200
+    component_set = "ftl_components"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_3 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            foc_v1718_reb_branch = yes
+            foc_v1718_reb_stage3_ready = yes
+            NOT = { has_technology = foc_v1718_tech_reb_hyperdrive_4 }
+        }
+    }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.85 ship_jumpdrive_cooldown_mult = -0.85 ship_ftl_jumpdrive_range_mult = 2 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_4"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_3_ADAPTER_1"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -200
+    component_set = "foc_immobilizer418_ftl"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_3 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.85 ship_jumpdrive_cooldown_mult = -0.85 ship_ftl_jumpdrive_range_mult = 2 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_4_ADAPTER_1"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_3_ADAPTER_2"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -200
+    component_set = "ftl_component_imperialsd"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_3 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.85 ship_jumpdrive_cooldown_mult = -0.85 ship_ftl_jumpdrive_range_mult = 2 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_4_ADAPTER_2"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_3_ADAPTER_3"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -200
+    component_set = "ftl_component_resurgentbattlecruiser"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_3 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.85 ship_jumpdrive_cooldown_mult = -0.85 ship_ftl_jumpdrive_range_mult = 2 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_4_ADAPTER_3"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_3_ADAPTER_4"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -200
+    component_set = "ftl_component_venatorclass"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_3 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.85 ship_jumpdrive_cooldown_mult = -0.85 ship_ftl_jumpdrive_range_mult = 2 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_4_ADAPTER_4"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_3_ADAPTER_5"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -200
+    component_set = "ftl_component_xystonsd"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_3 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.85 ship_jumpdrive_cooldown_mult = -0.85 ship_ftl_jumpdrive_range_mult = 2 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_4_ADAPTER_5"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_4"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -250
+    component_set = "ftl_components"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_4 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            foc_v1718_reb_branch = yes
+            foc_v1718_reb_stage3_ready = yes
+            NOT = { has_technology = foc_v1718_tech_reb_hyperdrive_5 }
+        }
+    }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.9 ship_jumpdrive_cooldown_mult = -0.9 ship_ftl_jumpdrive_range_mult = 3 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_5"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_4_ADAPTER_1"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -250
+    component_set = "foc_immobilizer418_ftl"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_4 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.9 ship_jumpdrive_cooldown_mult = -0.9 ship_ftl_jumpdrive_range_mult = 3 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_5_ADAPTER_1"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_4_ADAPTER_2"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -250
+    component_set = "ftl_component_imperialsd"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_4 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.9 ship_jumpdrive_cooldown_mult = -0.9 ship_ftl_jumpdrive_range_mult = 3 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_5_ADAPTER_2"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_4_ADAPTER_3"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -250
+    component_set = "ftl_component_resurgentbattlecruiser"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_4 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.9 ship_jumpdrive_cooldown_mult = -0.9 ship_ftl_jumpdrive_range_mult = 3 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_5_ADAPTER_3"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_4_ADAPTER_4"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -250
+    component_set = "ftl_component_venatorclass"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_4 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.9 ship_jumpdrive_cooldown_mult = -0.9 ship_ftl_jumpdrive_range_mult = 3 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_5_ADAPTER_4"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_4_ADAPTER_5"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -250
+    component_set = "ftl_component_xystonsd"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_4 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.9 ship_jumpdrive_cooldown_mult = -0.9 ship_ftl_jumpdrive_range_mult = 3 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_5_ADAPTER_5"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_5"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -300
+    component_set = "ftl_components"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_5 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            foc_v1718_reb_branch = yes
+            foc_v1718_reb_stage3_ready = yes
+        }
+    }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.95 ship_jumpdrive_cooldown_mult = -0.95 ship_ftl_jumpdrive_range_mult = 5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_5_ADAPTER_1"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -300
+    component_set = "foc_immobilizer418_ftl"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_5 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.95 ship_jumpdrive_cooldown_mult = -0.95 ship_ftl_jumpdrive_range_mult = 5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_5_ADAPTER_2"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -300
+    component_set = "ftl_component_imperialsd"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_5 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.95 ship_jumpdrive_cooldown_mult = -0.95 ship_ftl_jumpdrive_range_mult = 5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_5_ADAPTER_3"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -300
+    component_set = "ftl_component_resurgentbattlecruiser"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_5 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.95 ship_jumpdrive_cooldown_mult = -0.95 ship_ftl_jumpdrive_range_mult = 5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_5_ADAPTER_4"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -300
+    component_set = "ftl_component_venatorclass"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_5 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.95 ship_jumpdrive_cooldown_mult = -0.95 ship_ftl_jumpdrive_range_mult = 5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_5_ADAPTER_5"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -300
+    component_set = "ftl_component_xystonsd"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_5 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.95 ship_jumpdrive_cooldown_mult = -0.95 ship_ftl_jumpdrive_range_mult = 5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_SHARED_THRUSTER_1"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_thruster"
+    icon_frame = 1
+    power = -150
+    component_set = "thruster_components"
+    prerequisites = { foc_v1718_tech_thruster_1 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            foc_v1718_base_ready = yes
+            NOT = {
+                OR = {
+                    AND = { foc_v1718_emp_stage2_ready = yes has_technology = foc_v1718_tech_emp_thruster_2 }
+                    AND = { foc_v1718_reb_branch = yes has_technology = foc_v1718_tech_reb_thruster_2 }
+                }
+            }
+        }
+    }
+    modifier = { ship_speed_mult = 0.25 ship_evasion_add = 25 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 50 sr_coaxium_foc = 10 }
+    }
+    ai_weight = { weight = 201000 }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_THRUSTER_2"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_thruster"
+    icon_frame = 1
+    power = -180
+    component_set = "thruster_components"
+    prerequisites = { foc_v1718_tech_emp_thruster_2 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            foc_v1718_emp_stage2_ready = yes
+            NOT = {
+                AND = { has_technology = foc_v1718_tech_emp_thruster_3 foc_v1718_emp_stage3_ready = yes }
+            }
+        }
+    }
+    modifier = { ship_speed_mult = 0.4 ship_evasion_add = 25 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_EMP_THRUSTER_3"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_THRUSTER_3"
+    size = small
+    icon = "GFX_foc_v1718c_resurgent_ship_part_thruster_1"
+    icon_frame = 1
+    power = -220
+    component_set = "thruster_components"
+    prerequisites = { foc_v1718_tech_emp_thruster_3 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            foc_v1718_emp_stage2_ready = yes
+            foc_v1718_emp_stage3_ready = yes
+            NOT = { has_technology = foc_v1718_tech_emp_thruster_4 }
+        }
+    }
+    modifier = { ship_speed_mult = 0.6 ship_evasion_add = 25 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_EMP_THRUSTER_4"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_THRUSTER_4"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_thruster"
+    icon_frame = 1
+    power = -260
+    component_set = "thruster_components"
+    prerequisites = { foc_v1718_tech_emp_thruster_4 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            foc_v1718_emp_stage2_ready = yes
+            foc_v1718_emp_stage3_ready = yes
+            NOT = { has_technology = foc_v1718_tech_emp_thruster_5 }
+        }
+    }
+    modifier = { ship_speed_mult = 0.85 ship_evasion_add = 25 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_EMP_THRUSTER_5"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_THRUSTER_5"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_thruster"
+    icon_frame = 1
+    power = -300
+    component_set = "thruster_components"
+    prerequisites = { foc_v1718_tech_emp_thruster_5 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            foc_v1718_emp_stage2_ready = yes
+            foc_v1718_emp_stage3_ready = yes
+        }
+    }
+    modifier = { ship_speed_mult = 1.1 ship_evasion_add = 25 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_THRUSTER_2"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_thruster"
+    icon_frame = 1
+    power = -180
+    component_set = "thruster_components"
+    prerequisites = { foc_v1718_tech_reb_thruster_2 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            foc_v1718_reb_branch = yes
+            NOT = { has_technology = foc_v1718_tech_reb_thruster_3 }
+        }
+    }
+    modifier = { ship_speed_mult = 0.3 ship_evasion_add = 30 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_REB_THRUSTER_3"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_THRUSTER_3"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_thruster"
+    icon_frame = 1
+    power = -220
+    component_set = "thruster_components"
+    prerequisites = { foc_v1718_tech_reb_thruster_3 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            foc_v1718_reb_branch = yes
+            foc_v1718_reb_stage3_ready = yes
+            NOT = { has_technology = foc_v1718_tech_reb_thruster_4 }
+        }
+    }
+    modifier = { ship_speed_mult = 0.35 ship_evasion_add = 35 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_REB_THRUSTER_4"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_THRUSTER_4"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_thruster"
+    icon_frame = 1
+    power = -260
+    component_set = "thruster_components"
+    prerequisites = { foc_v1718_tech_reb_thruster_4 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            foc_v1718_reb_branch = yes
+            foc_v1718_reb_stage3_ready = yes
+            NOT = { has_technology = foc_v1718_tech_reb_thruster_5 }
+        }
+    }
+    modifier = { ship_speed_mult = 0.4 ship_evasion_add = 40 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_REB_THRUSTER_5"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_THRUSTER_5"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_thruster"
+    icon_frame = 1
+    power = -300
+    component_set = "thruster_components"
+    prerequisites = { foc_v1718_tech_reb_thruster_5 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            foc_v1718_reb_branch = yes
+            foc_v1718_reb_stage3_ready = yes
+        }
+    }
+    modifier = { ship_speed_mult = 0.5 ship_evasion_add = 45 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_SHARED_REACTOR_1_LOWEST"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_reactor"
+    icon_frame = 1
+    power = 1800
+    component_set = "power_core"
+    prerequisites = { foc_v1718_tech_reactor_1 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            foc_v1718_base_ready = yes
+            NOT = {
+                OR = {
+                    AND = { foc_v1718_emp_stage2_ready = yes has_technology = foc_v1718_tech_emp_reactor_2 }
+                    AND = { foc_v1718_reb_branch = yes has_technology = foc_v1718_tech_reb_reactor_2 }
+                }
+            }
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = { alloys = 50 sr_coaxium_foc = 10 }
+    }
+    ai_weight = { weight = 201000 }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_REACTOR_2_LOWEST"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_reactor"
+    icon_frame = 1
+    power = 3000
+    component_set = "power_core"
+    prerequisites = { foc_v1718_tech_emp_reactor_2 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            foc_v1718_emp_stage2_ready = yes
+            NOT = {
+                AND = { has_technology = foc_v1718_tech_emp_reactor_3 foc_v1718_emp_stage3_ready = yes }
+            }
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_EMP_REACTOR_3_LOWEST"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_REACTOR_3_LOWEST"
+    size = small
+    icon = "GFX_foc_v1718c_resurgent_ship_part_reactor_1"
+    icon_frame = 1
+    power = 7500
+    component_set = "power_core"
+    prerequisites = { foc_v1718_tech_emp_reactor_3 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            foc_v1718_emp_stage2_ready = yes
+            foc_v1718_emp_stage3_ready = yes
+            NOT = { has_technology = foc_v1718_tech_emp_reactor_4 }
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_EMP_REACTOR_4_LOWEST"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_REACTOR_4_LOWEST"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_reactor"
+    icon_frame = 1
+    power = 10000
+    component_set = "power_core"
+    prerequisites = { foc_v1718_tech_emp_reactor_4 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            foc_v1718_emp_stage2_ready = yes
+            foc_v1718_emp_stage3_ready = yes
+            NOT = { has_technology = foc_v1718_tech_emp_reactor_5 }
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_EMP_REACTOR_5_LOWEST"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_REACTOR_5_LOWEST"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_reactor"
+    icon_frame = 1
+    power = 14000
+    component_set = "power_core"
+    prerequisites = { foc_v1718_tech_emp_reactor_5 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            foc_v1718_emp_stage2_ready = yes
+            foc_v1718_emp_stage3_ready = yes
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_REACTOR_2_LOWEST"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_reactor"
+    icon_frame = 1
+    power = 3000
+    component_set = "power_core"
+    prerequisites = { foc_v1718_tech_reb_reactor_2 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            foc_v1718_reb_branch = yes
+            NOT = { has_technology = foc_v1718_tech_reb_reactor_3 }
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_REB_REACTOR_3_LOWEST"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_REACTOR_3_LOWEST"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_reactor"
+    icon_frame = 1
+    power = 7500
+    component_set = "power_core"
+    prerequisites = { foc_v1718_tech_reb_reactor_3 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            foc_v1718_reb_branch = yes
+            foc_v1718_reb_stage3_ready = yes
+            NOT = { has_technology = foc_v1718_tech_reb_reactor_4 }
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_REB_REACTOR_4_LOWEST"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_REACTOR_4_LOWEST"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_reactor"
+    icon_frame = 1
+    power = 10000
+    component_set = "power_core"
+    prerequisites = { foc_v1718_tech_reb_reactor_4 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            foc_v1718_reb_branch = yes
+            foc_v1718_reb_stage3_ready = yes
+            NOT = { has_technology = foc_v1718_tech_reb_reactor_5 }
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_REB_REACTOR_5_LOWEST"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_REACTOR_5_LOWEST"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_reactor"
+    icon_frame = 1
+    power = 14000
+    component_set = "power_core"
+    prerequisites = { foc_v1718_tech_reb_reactor_5 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            foc_v1718_reb_branch = yes
+            foc_v1718_reb_stage3_ready = yes
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_SHARED_HYPERDRIVE_1_LOWEST"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -20
+    component_set = "ftl_components"
+    prerequisites = { foc_v1718_tech_hyperdrive_1 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            foc_v1718_base_ready = yes
+            NOT = {
+                OR = {
+                    AND = { foc_v1718_emp_stage2_ready = yes has_technology = foc_v1718_tech_emp_hyperdrive_2 }
+                    AND = { foc_v1718_reb_branch = yes has_technology = foc_v1718_tech_reb_hyperdrive_2 }
+                }
+            }
+        }
+    }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.8 ship_jumpdrive_cooldown_mult = 0 ship_ftl_jumpdrive_range_mult = 0.2 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 50 sr_coaxium_foc = 10 }
+    }
+    ai_weight = { weight = 201000 }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_SHARED_HYPERDRIVE_1_LOWEST_ADAPTER_1"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1000
+    component_set = "foc_immobilizer418_ftl"
+    prerequisites = { foc_v1718_tech_hyperdrive_1 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.8 ship_jumpdrive_cooldown_mult = 0 ship_ftl_jumpdrive_range_mult = 0.2 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 50 sr_coaxium_foc = 10 }
+    }
+    ai_weight = { weight = 201000 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_SHARED_HYPERDRIVE_1_LOWEST_ADAPTER_2"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1000
+    component_set = "ftl_component_imperialsd"
+    prerequisites = { foc_v1718_tech_hyperdrive_1 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.8 ship_jumpdrive_cooldown_mult = 0 ship_ftl_jumpdrive_range_mult = 0.2 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 50 sr_coaxium_foc = 10 }
+    }
+    ai_weight = { weight = 201000 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_SHARED_HYPERDRIVE_1_LOWEST_ADAPTER_3"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1000
+    component_set = "ftl_component_resurgentbattlecruiser"
+    prerequisites = { foc_v1718_tech_hyperdrive_1 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.8 ship_jumpdrive_cooldown_mult = 0 ship_ftl_jumpdrive_range_mult = 0.2 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 50 sr_coaxium_foc = 10 }
+    }
+    ai_weight = { weight = 201000 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_SHARED_HYPERDRIVE_1_LOWEST_ADAPTER_4"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1000
+    component_set = "ftl_component_venatorclass"
+    prerequisites = { foc_v1718_tech_hyperdrive_1 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.8 ship_jumpdrive_cooldown_mult = 0 ship_ftl_jumpdrive_range_mult = 0.2 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 50 sr_coaxium_foc = 10 }
+    }
+    ai_weight = { weight = 201000 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_SHARED_HYPERDRIVE_1_LOWEST_ADAPTER_5"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1000
+    component_set = "ftl_component_xystonsd"
+    prerequisites = { foc_v1718_tech_hyperdrive_1 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.8 ship_jumpdrive_cooldown_mult = 0 ship_ftl_jumpdrive_range_mult = 0.2 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 50 sr_coaxium_foc = 10 }
+    }
+    ai_weight = { weight = 201000 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_2_LOWEST"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -30
+    component_set = "ftl_components"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_2 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            foc_v1718_emp_stage2_ready = yes
+            NOT = {
+                AND = { has_technology = foc_v1718_tech_emp_hyperdrive_3 foc_v1718_emp_stage3_ready = yes }
+            }
+        }
+    }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.82 ship_jumpdrive_cooldown_mult = -0.25 ship_ftl_jumpdrive_range_mult = 0.4 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_3_LOWEST"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_2_LOWEST_ADAPTER_1"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1100
+    component_set = "foc_immobilizer418_ftl"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_2 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.82 ship_jumpdrive_cooldown_mult = -0.25 ship_ftl_jumpdrive_range_mult = 0.4 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_3_LOWEST_ADAPTER_1"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_2_LOWEST_ADAPTER_2"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1100
+    component_set = "ftl_component_imperialsd"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_2 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.82 ship_jumpdrive_cooldown_mult = -0.25 ship_ftl_jumpdrive_range_mult = 0.4 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_3_LOWEST_ADAPTER_2"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_2_LOWEST_ADAPTER_3"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1100
+    component_set = "ftl_component_resurgentbattlecruiser"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_2 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.82 ship_jumpdrive_cooldown_mult = -0.25 ship_ftl_jumpdrive_range_mult = 0.4 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_3_LOWEST_ADAPTER_3"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_2_LOWEST_ADAPTER_4"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1100
+    component_set = "ftl_component_venatorclass"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_2 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.82 ship_jumpdrive_cooldown_mult = -0.25 ship_ftl_jumpdrive_range_mult = 0.4 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_3_LOWEST_ADAPTER_4"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_2_LOWEST_ADAPTER_5"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1100
+    component_set = "ftl_component_xystonsd"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_2 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.82 ship_jumpdrive_cooldown_mult = -0.25 ship_ftl_jumpdrive_range_mult = 0.4 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_3_LOWEST_ADAPTER_5"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_3_LOWEST"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -40
+    component_set = "ftl_components"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_3 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            foc_v1718_emp_stage2_ready = yes
+            foc_v1718_emp_stage3_ready = yes
+            NOT = { has_technology = foc_v1718_tech_emp_hyperdrive_4 }
+        }
+    }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.85 ship_jumpdrive_cooldown_mult = -0.5 ship_ftl_jumpdrive_range_mult = 0.6 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_4_LOWEST"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_3_LOWEST_ADAPTER_1"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1200
+    component_set = "foc_immobilizer418_ftl"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_3 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.85 ship_jumpdrive_cooldown_mult = -0.5 ship_ftl_jumpdrive_range_mult = 0.6 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_4_LOWEST_ADAPTER_1"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_3_LOWEST_ADAPTER_2"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1200
+    component_set = "ftl_component_imperialsd"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_3 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.85 ship_jumpdrive_cooldown_mult = -0.5 ship_ftl_jumpdrive_range_mult = 0.6 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_4_LOWEST_ADAPTER_2"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_3_LOWEST_ADAPTER_3"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1200
+    component_set = "ftl_component_resurgentbattlecruiser"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_3 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.85 ship_jumpdrive_cooldown_mult = -0.5 ship_ftl_jumpdrive_range_mult = 0.6 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_4_LOWEST_ADAPTER_3"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_3_LOWEST_ADAPTER_4"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1200
+    component_set = "ftl_component_venatorclass"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_3 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.85 ship_jumpdrive_cooldown_mult = -0.5 ship_ftl_jumpdrive_range_mult = 0.6 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_4_LOWEST_ADAPTER_4"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_3_LOWEST_ADAPTER_5"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1200
+    component_set = "ftl_component_xystonsd"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_3 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.85 ship_jumpdrive_cooldown_mult = -0.5 ship_ftl_jumpdrive_range_mult = 0.6 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_4_LOWEST_ADAPTER_5"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_4_LOWEST"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -50
+    component_set = "ftl_components"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_4 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            foc_v1718_emp_stage2_ready = yes
+            foc_v1718_emp_stage3_ready = yes
+            NOT = { has_technology = foc_v1718_tech_emp_hyperdrive_5 }
+        }
+    }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.9 ship_jumpdrive_cooldown_mult = -0.65 ship_ftl_jumpdrive_range_mult = 1 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_5_LOWEST"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_4_LOWEST_ADAPTER_1"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1300
+    component_set = "foc_immobilizer418_ftl"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_4 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.9 ship_jumpdrive_cooldown_mult = -0.65 ship_ftl_jumpdrive_range_mult = 1 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_5_LOWEST_ADAPTER_1"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_4_LOWEST_ADAPTER_2"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1300
+    component_set = "ftl_component_imperialsd"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_4 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.9 ship_jumpdrive_cooldown_mult = -0.65 ship_ftl_jumpdrive_range_mult = 1 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_5_LOWEST_ADAPTER_2"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_4_LOWEST_ADAPTER_3"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1300
+    component_set = "ftl_component_resurgentbattlecruiser"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_4 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.9 ship_jumpdrive_cooldown_mult = -0.65 ship_ftl_jumpdrive_range_mult = 1 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_5_LOWEST_ADAPTER_3"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_4_LOWEST_ADAPTER_4"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1300
+    component_set = "ftl_component_venatorclass"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_4 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.9 ship_jumpdrive_cooldown_mult = -0.65 ship_ftl_jumpdrive_range_mult = 1 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_5_LOWEST_ADAPTER_4"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_4_LOWEST_ADAPTER_5"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1300
+    component_set = "ftl_component_xystonsd"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_4 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.9 ship_jumpdrive_cooldown_mult = -0.65 ship_ftl_jumpdrive_range_mult = 1 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_EMP_HYPERDRIVE_5_LOWEST_ADAPTER_5"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_5_LOWEST"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -60
+    component_set = "ftl_components"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_5 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            foc_v1718_emp_stage2_ready = yes
+            foc_v1718_emp_stage3_ready = yes
+        }
+    }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.95 ship_jumpdrive_cooldown_mult = -0.75 ship_ftl_jumpdrive_range_mult = 1.5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_5_LOWEST_ADAPTER_1"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1400
+    component_set = "foc_immobilizer418_ftl"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_5 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.95 ship_jumpdrive_cooldown_mult = -0.75 ship_ftl_jumpdrive_range_mult = 1.5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_5_LOWEST_ADAPTER_2"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1400
+    component_set = "ftl_component_imperialsd"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_5 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.95 ship_jumpdrive_cooldown_mult = -0.75 ship_ftl_jumpdrive_range_mult = 1.5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_5_LOWEST_ADAPTER_3"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1400
+    component_set = "ftl_component_resurgentbattlecruiser"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_5 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.95 ship_jumpdrive_cooldown_mult = -0.75 ship_ftl_jumpdrive_range_mult = 1.5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_5_LOWEST_ADAPTER_4"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1400
+    component_set = "ftl_component_venatorclass"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_5 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.95 ship_jumpdrive_cooldown_mult = -0.75 ship_ftl_jumpdrive_range_mult = 1.5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_HYPERDRIVE_5_LOWEST_ADAPTER_5"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1400
+    component_set = "ftl_component_xystonsd"
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_5 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.95 ship_jumpdrive_cooldown_mult = -0.75 ship_ftl_jumpdrive_range_mult = 1.5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_2_LOWEST"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -30
+    component_set = "ftl_components"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_2 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            foc_v1718_reb_branch = yes
+            NOT = { has_technology = foc_v1718_tech_reb_hyperdrive_3 }
+        }
+    }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.82 ship_jumpdrive_cooldown_mult = -0.25 ship_ftl_jumpdrive_range_mult = 0.4 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_3_LOWEST"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_2_LOWEST_ADAPTER_1"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1100
+    component_set = "foc_immobilizer418_ftl"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_2 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.82 ship_jumpdrive_cooldown_mult = -0.25 ship_ftl_jumpdrive_range_mult = 0.4 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_3_LOWEST_ADAPTER_1"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_2_LOWEST_ADAPTER_2"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1100
+    component_set = "ftl_component_imperialsd"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_2 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.82 ship_jumpdrive_cooldown_mult = -0.25 ship_ftl_jumpdrive_range_mult = 0.4 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_3_LOWEST_ADAPTER_2"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_2_LOWEST_ADAPTER_3"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1100
+    component_set = "ftl_component_resurgentbattlecruiser"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_2 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.82 ship_jumpdrive_cooldown_mult = -0.25 ship_ftl_jumpdrive_range_mult = 0.4 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_3_LOWEST_ADAPTER_3"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_2_LOWEST_ADAPTER_4"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1100
+    component_set = "ftl_component_venatorclass"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_2 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.82 ship_jumpdrive_cooldown_mult = -0.25 ship_ftl_jumpdrive_range_mult = 0.4 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_3_LOWEST_ADAPTER_4"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_2_LOWEST_ADAPTER_5"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1100
+    component_set = "ftl_component_xystonsd"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_2 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.82 ship_jumpdrive_cooldown_mult = -0.25 ship_ftl_jumpdrive_range_mult = 0.4 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_3_LOWEST_ADAPTER_5"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_3_LOWEST"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -40
+    component_set = "ftl_components"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_3 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            foc_v1718_reb_branch = yes
+            foc_v1718_reb_stage3_ready = yes
+            NOT = { has_technology = foc_v1718_tech_reb_hyperdrive_4 }
+        }
+    }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.85 ship_jumpdrive_cooldown_mult = -0.5 ship_ftl_jumpdrive_range_mult = 0.6 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_4_LOWEST"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_3_LOWEST_ADAPTER_1"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1200
+    component_set = "foc_immobilizer418_ftl"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_3 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.85 ship_jumpdrive_cooldown_mult = -0.5 ship_ftl_jumpdrive_range_mult = 0.6 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_4_LOWEST_ADAPTER_1"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_3_LOWEST_ADAPTER_2"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1200
+    component_set = "ftl_component_imperialsd"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_3 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.85 ship_jumpdrive_cooldown_mult = -0.5 ship_ftl_jumpdrive_range_mult = 0.6 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_4_LOWEST_ADAPTER_2"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_3_LOWEST_ADAPTER_3"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1200
+    component_set = "ftl_component_resurgentbattlecruiser"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_3 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.85 ship_jumpdrive_cooldown_mult = -0.5 ship_ftl_jumpdrive_range_mult = 0.6 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_4_LOWEST_ADAPTER_3"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_3_LOWEST_ADAPTER_4"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1200
+    component_set = "ftl_component_venatorclass"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_3 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.85 ship_jumpdrive_cooldown_mult = -0.5 ship_ftl_jumpdrive_range_mult = 0.6 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_4_LOWEST_ADAPTER_4"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_3_LOWEST_ADAPTER_5"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1200
+    component_set = "ftl_component_xystonsd"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_3 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.85 ship_jumpdrive_cooldown_mult = -0.5 ship_ftl_jumpdrive_range_mult = 0.6 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_4_LOWEST_ADAPTER_5"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_4_LOWEST"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -50
+    component_set = "ftl_components"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_4 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            foc_v1718_reb_branch = yes
+            foc_v1718_reb_stage3_ready = yes
+            NOT = { has_technology = foc_v1718_tech_reb_hyperdrive_5 }
+        }
+    }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.9 ship_jumpdrive_cooldown_mult = -0.65 ship_ftl_jumpdrive_range_mult = 1 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_5_LOWEST"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_4_LOWEST_ADAPTER_1"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1300
+    component_set = "foc_immobilizer418_ftl"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_4 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.9 ship_jumpdrive_cooldown_mult = -0.65 ship_ftl_jumpdrive_range_mult = 1 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_5_LOWEST_ADAPTER_1"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_4_LOWEST_ADAPTER_2"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1300
+    component_set = "ftl_component_imperialsd"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_4 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.9 ship_jumpdrive_cooldown_mult = -0.65 ship_ftl_jumpdrive_range_mult = 1 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_5_LOWEST_ADAPTER_2"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_4_LOWEST_ADAPTER_3"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1300
+    component_set = "ftl_component_resurgentbattlecruiser"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_4 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.9 ship_jumpdrive_cooldown_mult = -0.65 ship_ftl_jumpdrive_range_mult = 1 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_5_LOWEST_ADAPTER_3"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_4_LOWEST_ADAPTER_4"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1300
+    component_set = "ftl_component_venatorclass"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_4 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.9 ship_jumpdrive_cooldown_mult = -0.65 ship_ftl_jumpdrive_range_mult = 1 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_5_LOWEST_ADAPTER_4"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_4_LOWEST_ADAPTER_5"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1300
+    component_set = "ftl_component_xystonsd"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_4 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.9 ship_jumpdrive_cooldown_mult = -0.65 ship_ftl_jumpdrive_range_mult = 1 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_REB_HYPERDRIVE_5_LOWEST_ADAPTER_5"
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_5_LOWEST"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -60
+    component_set = "ftl_components"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_5 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            foc_v1718_reb_branch = yes
+            foc_v1718_reb_stage3_ready = yes
+        }
+    }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.95 ship_jumpdrive_cooldown_mult = -0.75 ship_ftl_jumpdrive_range_mult = 1.5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_5_LOWEST_ADAPTER_1"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1400
+    component_set = "foc_immobilizer418_ftl"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_5 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.95 ship_jumpdrive_cooldown_mult = -0.75 ship_ftl_jumpdrive_range_mult = 1.5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_5_LOWEST_ADAPTER_2"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1400
+    component_set = "ftl_component_imperialsd"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_5 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.95 ship_jumpdrive_cooldown_mult = -0.75 ship_ftl_jumpdrive_range_mult = 1.5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_5_LOWEST_ADAPTER_3"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1400
+    component_set = "ftl_component_resurgentbattlecruiser"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_5 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.95 ship_jumpdrive_cooldown_mult = -0.75 ship_ftl_jumpdrive_range_mult = 1.5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_5_LOWEST_ADAPTER_4"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1400
+    component_set = "ftl_component_venatorclass"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_5 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.95 ship_jumpdrive_cooldown_mult = -0.75 ship_ftl_jumpdrive_range_mult = 1.5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_HYPERDRIVE_5_LOWEST_ADAPTER_5"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1400
+    component_set = "ftl_component_xystonsd"
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_5 }
+    class_restriction = { shipclass_military shipclass_military_station shipclass_starbase }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = { always = no }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.95 ship_jumpdrive_cooldown_mult = -0.75 ship_ftl_jumpdrive_range_mult = 1.5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_SHARED_THRUSTER_1_LOWEST"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_thruster"
+    icon_frame = 1
+    power = -30
+    component_set = "thruster_components"
+    prerequisites = { foc_v1718_tech_thruster_1 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            foc_v1718_base_ready = yes
+            NOT = {
+                OR = {
+                    AND = { foc_v1718_emp_stage2_ready = yes has_technology = foc_v1718_tech_emp_thruster_2 }
+                    AND = { foc_v1718_reb_branch = yes has_technology = foc_v1718_tech_reb_thruster_2 }
+                }
+            }
+        }
+    }
+    modifier = { ship_base_speed_mult = 0.1 ship_evasion_add = 5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 50 sr_coaxium_foc = 10 }
+    }
+    ai_weight = { weight = 201000 }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_THRUSTER_2_LOWEST"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_thruster"
+    icon_frame = 1
+    power = -50
+    component_set = "thruster_components"
+    prerequisites = { foc_v1718_tech_emp_thruster_2 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            foc_v1718_emp_stage2_ready = yes
+            NOT = {
+                AND = { has_technology = foc_v1718_tech_emp_thruster_3 foc_v1718_emp_stage3_ready = yes }
+            }
+        }
+    }
+    modifier = { ship_base_speed_mult = 0.2 ship_evasion_add = 5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_EMP_THRUSTER_3_LOWEST"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_THRUSTER_3_LOWEST"
+    size = small
+    icon = "GFX_foc_v1718c_resurgent_ship_part_thruster_1"
+    icon_frame = 1
+    power = -80
+    component_set = "thruster_components"
+    prerequisites = { foc_v1718_tech_emp_thruster_3 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            foc_v1718_emp_stage2_ready = yes
+            foc_v1718_emp_stage3_ready = yes
+            NOT = { has_technology = foc_v1718_tech_emp_thruster_4 }
+        }
+    }
+    modifier = { ship_base_speed_mult = 0.35 ship_evasion_add = 5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_EMP_THRUSTER_4_LOWEST"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_THRUSTER_4_LOWEST"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_thruster"
+    icon_frame = 1
+    power = -100
+    component_set = "thruster_components"
+    prerequisites = { foc_v1718_tech_emp_thruster_4 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            foc_v1718_emp_stage2_ready = yes
+            foc_v1718_emp_stage3_ready = yes
+            NOT = { has_technology = foc_v1718_tech_emp_thruster_5 }
+        }
+    }
+    modifier = { ship_base_speed_mult = 0.5 ship_evasion_add = 5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_EMP_THRUSTER_5_LOWEST"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_EMP_THRUSTER_5_LOWEST"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_thruster"
+    icon_frame = 1
+    power = -120
+    component_set = "thruster_components"
+    prerequisites = { foc_v1718_tech_emp_thruster_5 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            foc_v1718_emp_stage2_ready = yes
+            foc_v1718_emp_stage3_ready = yes
+        }
+    }
+    modifier = { ship_base_speed_mult = 0.65 ship_evasion_add = 5 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_THRUSTER_2_LOWEST"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_thruster"
+    icon_frame = 1
+    power = -50
+    component_set = "thruster_components"
+    prerequisites = { foc_v1718_tech_reb_thruster_2 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            foc_v1718_reb_branch = yes
+            NOT = { has_technology = foc_v1718_tech_reb_thruster_3 }
+        }
+    }
+    modifier = { ship_base_speed_mult = 0.15 ship_evasion_add = 10 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_coaxium_foc = 20 }
+    }
+    ai_weight = { weight = 202000 }
+    upgrades_to = "FOC_V1718_REB_THRUSTER_3_LOWEST"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_THRUSTER_3_LOWEST"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_thruster"
+    icon_frame = 1
+    power = -80
+    component_set = "thruster_components"
+    prerequisites = { foc_v1718_tech_reb_thruster_3 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            foc_v1718_reb_branch = yes
+            foc_v1718_reb_stage3_ready = yes
+            NOT = { has_technology = foc_v1718_tech_reb_thruster_4 }
+        }
+    }
+    modifier = { ship_base_speed_mult = 0.2 ship_evasion_add = 15 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 450 sr_coaxium_foc = 40 }
+    }
+    ai_weight = { weight = 203000 }
+    upgrades_to = "FOC_V1718_REB_THRUSTER_4_LOWEST"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_THRUSTER_4_LOWEST"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_thruster"
+    icon_frame = 1
+    power = -100
+    component_set = "thruster_components"
+    prerequisites = { foc_v1718_tech_reb_thruster_4 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            foc_v1718_reb_branch = yes
+            foc_v1718_reb_stage3_ready = yes
+            NOT = { has_technology = foc_v1718_tech_reb_thruster_5 }
+        }
+    }
+    modifier = { ship_base_speed_mult = 0.25 ship_evasion_add = 20 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 800 sr_coaxium_foc = 80 }
+    }
+    ai_weight = { weight = 204000 }
+    upgrades_to = "FOC_V1718_REB_THRUSTER_5_LOWEST"
+}
+
+utility_component_template = {
+    key = "FOC_V1718_REB_THRUSTER_5_LOWEST"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_thruster"
+    icon_frame = 1
+    power = -120
+    component_set = "thruster_components"
+    prerequisites = { foc_v1718_tech_reb_thruster_5 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase shipclass_transport shipclass_science_ship shipclass_constructor shipclass_colonizer }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            foc_v1718_reb_branch = yes
+            foc_v1718_reb_stage3_ready = yes
+        }
+    }
+    modifier = { ship_base_speed_mult = 0.3 ship_evasion_add = 25 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1250 sr_coaxium_foc = 160 }
+    }
+    ai_weight = { weight = 205000 }
+}

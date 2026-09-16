@@ -1,0 +1,169 @@
+# V170: eighteen additional visible named systems retained from the user-provided v3 galaxy map after removing Zonama Sekot.
+# The main named world in each initializer follows canon/official terrain where
+# available; poorly documented orbital companions use neutral numbered bodies
+# rather than invented lore names.
+
+foc_swmap_balmorra_system = {
+    name = "NAME_FOC_V168_BALMORRA_SYSTEM" class = "sc_g" usage = misc_system_init
+    flags = { foc_swmap_balmorra_home foc_swmap_v3_external_region foc_sw_new_republic_cluster } max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_balmorra_system }
+    planet = { name = "NAME_FOC_V168_BALMORRA_STAR" class = "pc_g_star" orbit_distance = 0 orbit_angle = 1 size = 23 }
+    planet = { name = "NAME_FOC_V168_BALMORRA" class = "pc_continental" orbit_distance = 55 orbit_angle = 80 size = 23 flags = { foc_swmap_balmorra foc_sw_nr_colony } init_effect = { prevent_anomaly = yes } }
+    planet = { name = "NAME_FOC_V168_BALMORRA_II" class = "pc_barren" orbit_distance = 34 orbit_angle = 210 size = 12 init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_moraband_system = {
+    name = "NAME_FOC_V168_MORABAND_SYSTEM" class = "sc_k" usage = misc_system_init
+    flags = { foc_swmap_moraband_home foc_swmap_v3_external_region foc_sw_imperial_remnant_cluster } max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_moraband_system }
+    planet = { name = "NAME_FOC_V168_MORABAND_STAR" class = "pc_k_star" orbit_distance = 0 orbit_angle = 1 size = 21 }
+    planet = { name = "NAME_FOC_V168_MORABAND" class = "pc_desert" orbit_distance = 50 orbit_angle = 110 size = 22 flags = { foc_swmap_moraband foc_sw_ir_colony } init_effect = { prevent_anomaly = yes } }
+    planet = { name = "NAME_FOC_V168_MORABAND_II" class = "pc_barren" orbit_distance = 32 orbit_angle = 250 size = 11 init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_raxus_system = {
+    name = "NAME_FOC_V168_RAXUS_SYSTEM" class = "sc_g" usage = misc_system_init
+    flags = { foc_swmap_raxus_home foc_swmap_v3_external_region foc_sw_new_republic_cluster } max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_raxus_system }
+    planet = { name = "NAME_FOC_V168_RAXUS_STAR" class = "pc_g_star" orbit_distance = 0 orbit_angle = 1 size = 23 }
+    planet = { name = "NAME_FOC_V168_RAXUS" class = "pc_continental" orbit_distance = 58 orbit_angle = 120 size = 25 flags = { foc_swmap_raxus foc_sw_nr_colony } init_effect = { prevent_anomaly = yes } }
+    planet = { name = "NAME_FOC_V168_RAXUS_II" class = "pc_gas_giant" orbit_distance = 44 orbit_angle = 280 size = 28 init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_maw_system = {
+    name = "NAME_FOC_V168_MAW_SYSTEM" class = "sc_black_hole" usage = misc_system_init
+    flags = { foc_swmap_maw_home foc_swmap_v3_external_region foc_sw_imperial_remnant_cluster } max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_maw_system }
+    planet = { name = "NAME_FOC_V168_MAW_CORE" class = "pc_black_hole" orbit_distance = 0 orbit_angle = 1 size = 24 }
+    planet = { name = "NAME_FOC_V168_MAW_DEBRIS_I" class = "pc_asteroid" orbit_distance = 70 orbit_angle = 70 size = 5 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "NAME_FOC_V168_MAW_DEBRIS_II" class = "pc_asteroid" orbit_distance = 30 orbit_angle = 240 size = 4 init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_nal_hutta_system = {
+    name = "NAME_FOC_V168_NAL_HUTTA_SYSTEM" class = "sc_k" usage = misc_system_init
+    flags = { foc_swmap_nal_hutta_home foc_swmap_v3_external_region foc_v196_hutt_criminal_empire_system } max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_nal_hutta_system }
+    planet = { name = "NAME_FOC_V168_NAL_HUTTA_STAR" class = "pc_k_star" orbit_distance = 0 orbit_angle = 1 size = 22 }
+    planet = {
+        name = "NAME_FOC_V168_NAL_HUTTA" class = "pc_tropical" orbit_distance = 56 orbit_angle = 115 size = 25 has_ring = yes
+        flags = { foc_swmap_nal_hutta } init_effect = { prevent_anomaly = yes }
+        # Legacy duplicate of the later V175 Nar Shaddaa system: retain the
+        # celestial body for save/map compatibility, but do not auto-colonize it.
+        moon = { name = "NAME_FOC_V168_NAR_SHADDAA" class = "pc_city" orbit_distance = 12 orbit_angle = 60 size = 16 init_effect = { prevent_anomaly = yes } }
+    }
+}
+
+
+foc_swmap_ferrix_system = {
+    name = "NAME_FOC_V168_FERRIX_SYSTEM" class = "sc_k" usage = misc_system_init
+    flags = { foc_swmap_ferrix_home foc_swmap_v3_external_region foc_sw_new_republic_cluster } max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_ferrix_system }
+    planet = { name = "NAME_FOC_V168_FERRIX_STAR" class = "pc_k_star" orbit_distance = 0 orbit_angle = 1 size = 21 }
+    planet = { name = "NAME_FOC_V168_FERRIX" class = "pc_savannah" orbit_distance = 52 orbit_angle = 120 size = 22 flags = { foc_swmap_ferrix foc_sw_nr_colony } init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_batuu_system = {
+    name = "NAME_FOC_V168_BATUU_SYSTEM" class = "sc_g" usage = misc_system_init
+    flags = { foc_swmap_batuu_home foc_swmap_v3_external_region foc_sw_imperial_remnant_cluster } max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_batuu_system }
+    planet = { name = "NAME_FOC_V168_BATUU_STAR" class = "pc_g_star" orbit_distance = 0 orbit_angle = 1 size = 22 }
+    planet = { name = "NAME_FOC_V168_BATUU" class = "pc_continental" orbit_distance = 58 orbit_angle = 95 size = 23 flags = { foc_swmap_batuu foc_sw_ir_colony } init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_adelphi_system = {
+    name = "NAME_FOC_V168_ADELPHI_SYSTEM" class = "sc_g" usage = misc_system_init
+    flags = { foc_swmap_adelphi_home foc_swmap_v3_external_region foc_sw_new_republic_cluster } max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_adelphi_system }
+    planet = { name = "NAME_FOC_V168_ADELPHI_STAR" class = "pc_g_star" orbit_distance = 0 orbit_angle = 1 size = 22 }
+    planet = { name = "NAME_FOC_V168_ADELPHI" class = "pc_continental" orbit_distance = 54 orbit_angle = 130 size = 22 flags = { foc_swmap_adelphi foc_sw_nr_colony } init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_tython_system = {
+    name = "NAME_FOC_V168_TYTHON_SYSTEM" class = "sc_g" usage = misc_system_init
+    flags = { foc_swmap_tython_home foc_swmap_v3_external_region foc_sw_new_republic_cluster } max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_tython_system }
+    planet = { name = "NAME_FOC_V168_TYTHON_STAR" class = "pc_g_star" orbit_distance = 0 orbit_angle = 1 size = 23 }
+    planet = {
+        name = "NAME_FOC_V168_TYTHON" class = "pc_continental" orbit_distance = 54 orbit_angle = 80 size = 23 flags = { foc_swmap_tython foc_sw_nr_colony } init_effect = { prevent_anomaly = yes }
+        moon = { name = "NAME_FOC_V168_ASHLA" class = "pc_barren_cold" orbit_distance = 10 orbit_angle = 180 size = 7 init_effect = { prevent_anomaly = yes } }
+    }
+    planet = { name = "NAME_FOC_V168_TYTHON_GAS_GIANT" class = "pc_gas_giant" orbit_distance = 45 orbit_angle = 250 size = 29 init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_centerpoint_system = {
+    name = "NAME_FOC_V168_CENTERPOINT_SYSTEM" class = "sc_g" usage = misc_system_init
+    flags = { foc_swmap_centerpoint_home foc_swmap_v3_external_region foc_sw_new_republic_cluster } max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_centerpoint_system }
+    planet = { name = "NAME_FOC_V168_CENTERPOINT_ANCHOR" class = "pc_g_star" orbit_distance = 0 orbit_angle = 1 size = 18 }
+    planet = { name = "NAME_FOC_V168_CENTERPOINT" class = "pc_habitat" orbit_distance = 62 orbit_angle = 90 size = 18 flags = { foc_swmap_centerpoint foc_sw_nr_colony } init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_ajan_kloss_system = {
+    name = "NAME_FOC_KHAN_AJAN_KLOSS_SYSTEM" class = "sc_f" usage = misc_system_init
+    flags = { foc_swmap_ajan_kloss_home foc_swmap_v3_external_region } max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_ajan_kloss_system }
+    planet = { name = "NAME_FOC_KHAN_AJAN_KLOSS_STAR" class = "pc_f_star" orbit_distance = 0 orbit_angle = 1 size = 23 }
+    planet = {
+        name = "NAME_FOC_V168_AJARA" class = "pc_gas_giant" orbit_distance = 55 orbit_angle = 175 size = 34 has_ring = yes
+        moon = { name = "NAME_FOC_KHAN_AJAN_KLOSS" class = "pc_tropical" orbit_distance = 13 orbit_angle = 75 size = 20 flags = { foc_swmap_ajan_kloss } init_effect = { prevent_anomaly = yes } }
+    }
+}
+
+foc_swmap_eriadu_system = {
+    name = "NAME_FOC_V168_ERIADU_SYSTEM" class = "sc_f" usage = misc_system_init
+    flags = { foc_swmap_eriadu_home foc_swmap_v3_external_region foc_sw_imperial_remnant_cluster } max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_eriadu_system }
+    planet = { name = "NAME_FOC_V168_ERIADU_STAR" class = "pc_f_star" orbit_distance = 0 orbit_angle = 1 size = 23 }
+    planet = { name = "NAME_FOC_V168_ERIADU" class = "pc_alpine" orbit_distance = 58 orbit_angle = 110 size = 24 flags = { foc_swmap_eriadu foc_sw_ir_colony } init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_felucia_system = {
+    name = "NAME_FOC_V168_FELUCIA_SYSTEM" class = "sc_f" usage = misc_system_init
+    flags = { foc_swmap_felucia_home foc_swmap_v3_external_region foc_sw_new_republic_cluster } max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_felucia_system }
+    planet = { name = "NAME_FOC_V168_FELUCIA_STAR" class = "pc_f_star" orbit_distance = 0 orbit_angle = 1 size = 23 }
+    planet = { name = "NAME_FOC_V168_FELUCIA" class = "pc_tropical" orbit_distance = 55 orbit_angle = 120 size = 25 flags = { foc_swmap_felucia foc_sw_nr_colony } init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_cato_neimoidia_system = {
+    name = "NAME_FOC_V168_CATO_NEIMOIDIA_SYSTEM" class = "sc_g" usage = misc_system_init
+    flags = { foc_swmap_cato_neimoidia_home foc_swmap_v3_external_region foc_sw_new_republic_cluster } max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_cato_neimoidia_system }
+    planet = { name = "NAME_FOC_V168_CATO_NEIMOIDIA_STAR" class = "pc_g_star" orbit_distance = 0 orbit_angle = 1 size = 22 }
+    planet = { name = "NAME_FOC_V168_CATO_NEIMOIDIA" class = "pc_continental" orbit_distance = 56 orbit_angle = 100 size = 23 flags = { foc_swmap_cato_neimoidia foc_sw_nr_colony } init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_onderon_system = {
+    name = "NAME_FOC_V168_ONDERON_SYSTEM" class = "sc_g" usage = misc_system_init
+    flags = { foc_swmap_onderon_home foc_swmap_v3_external_region foc_sw_new_republic_cluster } max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_onderon_system }
+    planet = { name = "NAME_FOC_V168_ONDERON_STAR" class = "pc_g_star" orbit_distance = 0 orbit_angle = 1 size = 22 }
+    planet = {
+        name = "NAME_FOC_V168_ONDERON" class = "pc_tropical" orbit_distance = 55 orbit_angle = 105 size = 24 flags = { foc_swmap_onderon foc_sw_nr_colony } init_effect = { prevent_anomaly = yes }
+        moon = { name = "NAME_FOC_V168_DXUN" class = "pc_tropical" orbit_distance = 11 orbit_angle = 220 size = 10 init_effect = { prevent_anomaly = yes } }
+    }
+}
+
+foc_swmap_ord_mantell_system = {
+    name = "NAME_FOC_V168_ORD_MANTELL_SYSTEM" class = "sc_k" usage = misc_system_init
+    flags = { foc_swmap_ord_mantell_home foc_swmap_v3_external_region foc_sw_new_republic_cluster } max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_ord_mantell_system }
+    planet = { name = "NAME_FOC_V168_ORD_MANTELL_STAR" class = "pc_k_star" orbit_distance = 0 orbit_angle = 1 size = 21 }
+    planet = { name = "NAME_FOC_V168_ORD_MANTELL" class = "pc_alpine" orbit_distance = 52 orbit_angle = 115 size = 23 flags = { foc_swmap_ord_mantell foc_sw_nr_colony } init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_mygeeto_system = {
+    name = "NAME_FOC_V168_MYGEETO_SYSTEM" class = "sc_f" usage = misc_system_init
+    flags = { foc_swmap_mygeeto_home foc_swmap_v3_external_region foc_sw_new_republic_cluster } max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_mygeeto_system }
+    planet = { name = "NAME_FOC_V168_MYGEETO_STAR" class = "pc_f_star" orbit_distance = 0 orbit_angle = 1 size = 23 init_effect = { } }
+    planet = { name = "NAME_FOC_V168_MYGEETO" class = "pc_arctic" orbit_distance = 56 orbit_angle = 125 size = 24 flags = { foc_swmap_mygeeto foc_sw_nr_colony } init_effect = { prevent_anomaly = yes add_modifier = { modifier = foc_kyber_source_tier_2 days = -1 } } }
+}
+
+foc_swmap_nevarro_system = {
+    name = "NAME_FOC_V168_NEVARRO_SYSTEM" class = "sc_k" usage = misc_system_init
+    flags = { foc_swmap_nevarro_home foc_swmap_v3_external_region foc_sw_new_republic_cluster } max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_nevarro_system }
+    planet = { name = "NAME_FOC_V168_NEVARRO_STAR" class = "pc_k_star" orbit_distance = 0 orbit_angle = 1 size = 21 }
+    planet = { name = "NAME_FOC_V168_NEVARRO" class = "pc_arid" orbit_distance = 52 orbit_angle = 120 size = 22 flags = { foc_swmap_nevarro foc_sw_nr_colony } init_effect = { prevent_anomaly = yes } }
+}

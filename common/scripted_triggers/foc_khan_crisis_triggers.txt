@@ -1,0 +1,75 @@
+foc_khan_phase_one_objectives_destroyed = {
+    foc_v1717_starkiller_was_completed = yes
+    NOT = { foc_v1717_starkiller_still_exists = yes }
+
+	OR = {
+		# Normal path: both actual Phase-I objectives are gone from the living
+		# First Order country. Losing/occupying the capital planet alone is not enough.
+		AND = {
+			any_country = {
+				has_country_flag = foc_khan_first_order_country
+				NOT = {
+					any_owned_megastructure = {
+						OR = {
+							has_megastructure_flag = foc_khan_crisis_starkiller
+							is_megastructure_type = myk_starkiller_base_final
+						}
+					}
+				}
+				NOT = {
+					any_owned_ship = {
+						has_ship_flag = foc_khan_supremacy_flagship
+					}
+				}
+			}
+		}
+
+		# Old-save fallback: both explicit destruction handlers have fired.
+		AND = {
+			has_global_flag = foc_khan_starkiller_destroyed
+			has_global_flag = foc_khan_supremacy_destroyed_in_combat
+		}
+	}
+}
+
+# 2.32: losing the Exegol starbase alone is no longer a defeat condition.
+# Final Order ends only when Exegol itself is gone, decolonized, conquered or occupied.
+foc_khan_final_capital_destroyed = {
+	OR = {
+		NOT = { exists = event_target:foc_khan_final_order }
+
+		# Exegol being invaded/occupied is a Final Order defeat even while the
+		# planet's legal owner has not changed yet.
+		NOT = { exists = event_target:foc_khan_exegol_capital }
+		AND = {
+			exists = event_target:foc_khan_final_order
+			exists = event_target:foc_khan_exegol_capital
+			event_target:foc_khan_exegol_capital = {
+				OR = {
+					NOT = { is_colony = yes }
+					NOT = { is_owned_by = event_target:foc_khan_final_order }
+					NOT = { is_controlled_by = event_target:foc_khan_final_order }
+				}
+			}
+		}
+	}
+}
+
+
+# Final Order reinforcement and legacy support require Exegol to remain a living,
+# owned colony. A shattered planet object may still exist, so existence alone is insufficient.
+foc_khan_final_capital_alive = {
+	exists = event_target:foc_khan_final_order
+	exists = event_target:foc_khan_exegol_capital
+	event_target:foc_khan_exegol_capital = {
+		is_colony = yes
+		is_owned_by = event_target:foc_khan_final_order
+		is_controlled_by = event_target:foc_khan_final_order
+		NOR = {
+			is_planet_class = pc_shattered
+			is_planet_class = pc_shattered_2
+			is_planet_class = pc_broken
+			is_planet_class = pc_black_hole
+		}
+	}
+}

@@ -1,0 +1,84 @@
+# Republic-origin member-world support infrastructure.
+#
+# Every one of the thirty-one pre-authored colonies receives this building at
+# game start. It is a capital building so the setup never depends on a spare
+# building slot. Direct output supports the origin's large story fleets without
+# creating a homeworld-sized population, while the planet modifiers prevent
+# low-habitability player species from opening unrelated rebellion situations.
+
+building_foc_republic_origin_member_world_nexus = {
+    base_buildtime = 1
+    capital = yes
+    capital_tier = 3
+    position_priority = 0
+    category = government
+    icon = building_fe_administration_2
+
+    can_build = no
+    can_demolish = no
+    can_be_ruined = no
+    can_be_disabled = no
+    exempt_from_ai_planet_specialization = yes
+
+    potential = { always = yes }
+    destroy_trigger = { always = no }
+    building_sets = { government }
+
+    triggered_planet_modifier = {
+        potential = { always = yes }
+        modifier = {
+            planet_housing_add = 100
+            planet_amenities_add = 100
+            planet_stability_add = 40
+            planet_crime_add = -100
+            planet_jobs_produces_mult = 0.25
+            planet_defense_armies_add = 5
+        }
+    }
+
+    triggered_country_modifier = {
+        potential = {
+            exists = owner
+            owner = {
+                OR = {
+                    has_country_flag = foc_republic_origin_republic_country
+                    has_country_flag = foc_republic_origin_separatist_country
+                    has_country_flag = foc_republic_origin_empire_country
+                    has_country_flag = foc_republic_origin_imperial_rebel_country
+                    has_country_flag = foc_republic_origin_rebel_alliance_country
+                    has_country_flag = foc_sw_new_republic_country
+                    has_country_flag = foc_sw_imperial_remnant_country
+                    has_country_flag = foc_republic_origin_became_first_order
+                }
+            }
+        }
+        empire_size_add = -3
+    }
+
+    resources = {
+        category = planet_buildings
+        produces = {
+            trigger = {
+                exists = owner
+                owner = {
+                    OR = {
+                        has_country_flag = foc_republic_origin_republic_country
+                        has_country_flag = foc_republic_origin_separatist_country
+                        has_country_flag = foc_republic_origin_empire_country
+                        has_country_flag = foc_republic_origin_imperial_rebel_country
+                        has_country_flag = foc_republic_origin_rebel_alliance_country
+                        has_country_flag = foc_sw_new_republic_country
+                        has_country_flag = foc_sw_imperial_remnant_country
+                        has_country_flag = foc_republic_origin_became_first_order
+                    }
+                }
+            }
+            energy = 100
+            minerals = 50
+            food = 40
+            consumer_goods = 30
+            alloys = 40
+            unity = 20
+        }
+    }
+}

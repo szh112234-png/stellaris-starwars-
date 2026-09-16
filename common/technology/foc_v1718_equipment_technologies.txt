@@ -1,0 +1,515 @@
+foc_v1718_tech_reactor_1 = {
+    icon = "swgs_tech_reactor"
+    area = physics
+    cost = 1000
+    tier = 1
+    category = { particles }
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = {  }
+    potential = { foc_v1718_allowed_country = yes  }
+    weight = 75
+    weight_modifier = {
+        modifier = { factor = 0 foc_v1718_story_country = yes }
+        modifier = { factor = 0 NOT = { foc_v1718_base_ready = yes } }
+    }
+    ai_weight = { factor = 2 }
+}
+
+foc_v1718_tech_emp_reactor_2 = {
+    icon = "swgs_tech_reactor"
+    area = physics
+    cost = 4000
+    tier = 2
+    category = { particles }
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = { foc_v1718_tech_reactor_1 }
+    potential = { foc_v1718_allowed_country = yes foc_v1718_emp_branch = yes }
+    weight = 75
+    weight_modifier = {
+        modifier = { factor = 0 foc_v1718_story_country = yes }
+        modifier = { factor = 0 NOT = { foc_v1718_emp_stage2_ready = yes } }
+    }
+    ai_weight = { factor = 2 }
+}
+
+foc_v1718_tech_emp_reactor_3 = {
+    icon = "tech_RESURGENTREACTOR1"
+    area = physics
+    cost = 12000
+    tier = 3
+    category = { particles }
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = { foc_v1718_tech_emp_reactor_2 }
+    potential = { foc_v1718_allowed_country = yes foc_v1718_emp_branch = yes }
+    weight = 75
+    weight_modifier = {
+        modifier = { factor = 0 foc_v1718_story_country = yes }
+        modifier = { factor = 0 NOT = { foc_v1718_emp_stage2_ready = yes foc_v1718_emp_stage3_ready = yes } }
+    }
+    ai_weight = { factor = 2 }
+}
+
+foc_v1718_tech_emp_reactor_4 = {
+    icon = "swgs_tech_reactor"
+    area = physics
+    cost = 30000
+    tier = 4
+    category = { particles }
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = { foc_v1718_tech_emp_reactor_3 }
+    potential = { foc_v1718_allowed_country = yes foc_v1718_emp_branch = yes }
+    weight = 75
+    weight_modifier = {
+        
+        modifier = { factor = 0 NOT = { foc_v1718_emp_stage2_ready = yes foc_v1718_emp_stage3_ready = yes } }
+    }
+    ai_weight = { factor = 2 }
+}
+
+foc_v1718_tech_emp_reactor_5 = {
+    icon = "swgs_tech_reactor"
+    area = physics
+    cost = 60000
+    tier = 5
+    category = { particles }
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = { foc_v1718_tech_emp_reactor_4 }
+    potential = { foc_v1718_allowed_country = yes foc_v1718_emp_branch = yes }
+    weight = 75
+    weight_modifier = {
+        
+        modifier = { factor = 0 NOT = { foc_v1718_emp_stage2_ready = yes foc_v1718_emp_stage3_ready = yes } }
+    }
+    ai_weight = { factor = 2 }
+}
+
+foc_v1718_tech_reb_reactor_2 = {
+    icon = "swgs_tech_reactor"
+    area = physics
+    cost = 4000
+    tier = 2
+    category = { particles }
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = { foc_v1718_tech_reactor_1 }
+    potential = { foc_v1718_allowed_country = yes foc_v1718_reb_branch = yes }
+    weight = 75
+    weight_modifier = {
+        modifier = { factor = 0 foc_v1718_story_country = yes }
+        modifier = { factor = 0 NOT = { foc_v1718_reb_branch = yes } }
+    }
+    ai_weight = { factor = 2 }
+}
+
+foc_v1718_tech_reb_reactor_3 = {
+    icon = "swgs_tech_reactor"
+    area = physics
+    cost = 12000
+    tier = 3
+    category = { particles }
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = { foc_v1718_tech_reb_reactor_2 }
+    potential = { foc_v1718_allowed_country = yes foc_v1718_reb_branch = yes }
+    weight = 75
+    weight_modifier = {
+        modifier = { factor = 0 foc_v1718_story_country = yes }
+        modifier = { factor = 0 NOT = { foc_v1718_reb_branch = yes foc_v1718_reb_stage3_ready = yes } }
+    }
+    ai_weight = { factor = 2 }
+}
+
+foc_v1718_tech_reb_reactor_4 = {
+    icon = "swgs_tech_reactor"
+    area = physics
+    cost = 30000
+    tier = 4
+    category = { particles }
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = { foc_v1718_tech_reb_reactor_3 }
+    potential = { foc_v1718_allowed_country = yes foc_v1718_reb_branch = yes }
+    weight = 75
+    weight_modifier = {
+        
+        modifier = { factor = 0 NOT = { foc_v1718_reb_branch = yes foc_v1718_reb_stage3_ready = yes } }
+    }
+    ai_weight = { factor = 2 }
+}
+
+foc_v1718_tech_reb_reactor_5 = {
+    icon = "swgs_tech_reactor"
+    area = physics
+    cost = 60000
+    tier = 5
+    category = { particles }
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = { foc_v1718_tech_reb_reactor_4 }
+    potential = { foc_v1718_allowed_country = yes foc_v1718_reb_branch = yes }
+    weight = 75
+    weight_modifier = {
+        
+        modifier = { factor = 0 NOT = { foc_v1718_reb_branch = yes foc_v1718_reb_stage3_ready = yes } }
+    }
+    ai_weight = { factor = 2 }
+}
+
+foc_v1718_tech_hyperdrive_1 = {
+    icon = "swgs_tech_warp_drive"
+    area = physics
+    cost = 1000
+    tier = 1
+    category = { particles }
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = {  }
+    potential = { foc_v1718_allowed_country = yes  }
+    weight = 75
+    weight_modifier = {
+        modifier = { factor = 0 foc_v1718_story_country = yes }
+        modifier = { factor = 0 NOT = { foc_v1718_base_ready = yes } }
+    }
+    ai_weight = { factor = 2 }
+}
+
+foc_v1718_tech_emp_hyperdrive_2 = {
+    icon = "swgs_tech_warp_drive"
+    area = physics
+    cost = 4000
+    tier = 2
+    category = { particles }
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = { foc_v1718_tech_hyperdrive_1 }
+    potential = { foc_v1718_allowed_country = yes foc_v1718_emp_branch = yes }
+    weight = 75
+    weight_modifier = {
+        modifier = { factor = 0 foc_v1718_story_country = yes }
+        modifier = { factor = 0 NOT = { foc_v1718_emp_stage2_ready = yes } }
+    }
+    ai_weight = { factor = 2 }
+}
+
+foc_v1718_tech_emp_hyperdrive_3 = {
+    icon = "swgs_tech_warp_drive"
+    area = physics
+    cost = 12000
+    tier = 3
+    category = { particles }
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_2 }
+    potential = { foc_v1718_allowed_country = yes foc_v1718_emp_branch = yes }
+    weight = 75
+    weight_modifier = {
+        modifier = { factor = 0 foc_v1718_story_country = yes }
+        modifier = { factor = 0 NOT = { foc_v1718_emp_stage2_ready = yes foc_v1718_emp_stage3_ready = yes } }
+    }
+    ai_weight = { factor = 2 }
+}
+
+foc_v1718_tech_emp_hyperdrive_4 = {
+    icon = "swgs_tech_warp_drive"
+    area = physics
+    cost = 30000
+    tier = 4
+    category = { particles }
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_3 }
+    potential = { foc_v1718_allowed_country = yes foc_v1718_emp_branch = yes }
+    weight = 75
+    weight_modifier = {
+        
+        modifier = { factor = 0 NOT = { foc_v1718_emp_stage2_ready = yes foc_v1718_emp_stage3_ready = yes } }
+    }
+    ai_weight = { factor = 2 }
+}
+
+foc_v1718_tech_emp_hyperdrive_5 = {
+    icon = "swgs_tech_deepspace_Hyperspacedrive"
+    area = physics
+    cost = 60000
+    tier = 5
+    category = { particles }
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = { foc_v1718_tech_emp_hyperdrive_4 }
+    potential = { foc_v1718_allowed_country = yes foc_v1718_emp_branch = yes }
+    weight = 75
+    weight_modifier = {
+        
+        modifier = { factor = 0 NOT = { foc_v1718_emp_stage2_ready = yes foc_v1718_emp_stage3_ready = yes } }
+    }
+    ai_weight = { factor = 2 }
+}
+
+foc_v1718_tech_reb_hyperdrive_2 = {
+    icon = "swgs_tech_warp_drive"
+    area = physics
+    cost = 4000
+    tier = 2
+    category = { particles }
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = { foc_v1718_tech_hyperdrive_1 }
+    potential = { foc_v1718_allowed_country = yes foc_v1718_reb_branch = yes }
+    weight = 75
+    weight_modifier = {
+        modifier = { factor = 0 foc_v1718_story_country = yes }
+        modifier = { factor = 0 NOT = { foc_v1718_reb_branch = yes } }
+    }
+    ai_weight = { factor = 2 }
+}
+
+foc_v1718_tech_reb_hyperdrive_3 = {
+    icon = "swgs_tech_warp_drive"
+    area = physics
+    cost = 12000
+    tier = 3
+    category = { particles }
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_2 }
+    potential = { foc_v1718_allowed_country = yes foc_v1718_reb_branch = yes }
+    weight = 75
+    weight_modifier = {
+        modifier = { factor = 0 foc_v1718_story_country = yes }
+        modifier = { factor = 0 NOT = { foc_v1718_reb_branch = yes foc_v1718_reb_stage3_ready = yes } }
+    }
+    ai_weight = { factor = 2 }
+}
+
+foc_v1718_tech_reb_hyperdrive_4 = {
+    icon = "swgs_tech_warp_drive"
+    area = physics
+    cost = 30000
+    tier = 4
+    category = { particles }
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_3 }
+    potential = { foc_v1718_allowed_country = yes foc_v1718_reb_branch = yes }
+    weight = 75
+    weight_modifier = {
+        
+        modifier = { factor = 0 NOT = { foc_v1718_reb_branch = yes foc_v1718_reb_stage3_ready = yes } }
+    }
+    ai_weight = { factor = 2 }
+}
+
+foc_v1718_tech_reb_hyperdrive_5 = {
+    icon = "swgs_tech_deepspace_Hyperspacedrive"
+    area = physics
+    cost = 60000
+    tier = 5
+    category = { particles }
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = { foc_v1718_tech_reb_hyperdrive_4 }
+    potential = { foc_v1718_allowed_country = yes foc_v1718_reb_branch = yes }
+    weight = 75
+    weight_modifier = {
+        
+        modifier = { factor = 0 NOT = { foc_v1718_reb_branch = yes foc_v1718_reb_stage3_ready = yes } }
+    }
+    ai_weight = { factor = 2 }
+}
+
+foc_v1718_tech_thruster_1 = {
+    icon = "swgs_tech_thruster"
+    area = engineering
+    cost = 1000
+    tier = 1
+    category = { voidcraft }
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = {  }
+    potential = { foc_v1718_allowed_country = yes  }
+    weight = 75
+    weight_modifier = {
+        modifier = { factor = 0 foc_v1718_story_country = yes }
+        modifier = { factor = 0 NOT = { foc_v1718_base_ready = yes } }
+    }
+    ai_weight = { factor = 2 }
+}
+
+foc_v1718_tech_emp_thruster_2 = {
+    icon = "swgs_tech_thruster"
+    area = engineering
+    cost = 4000
+    tier = 2
+    category = { voidcraft }
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = { foc_v1718_tech_thruster_1 }
+    potential = { foc_v1718_allowed_country = yes foc_v1718_emp_branch = yes }
+    weight = 75
+    weight_modifier = {
+        modifier = { factor = 0 foc_v1718_story_country = yes }
+        modifier = { factor = 0 NOT = { foc_v1718_emp_stage2_ready = yes } }
+    }
+    ai_weight = { factor = 2 }
+}
+
+foc_v1718_tech_emp_thruster_3 = {
+    icon = "tech_RESURGENTTHRUSTER1"
+    area = engineering
+    cost = 12000
+    tier = 3
+    category = { voidcraft }
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = { foc_v1718_tech_emp_thruster_2 }
+    potential = { foc_v1718_allowed_country = yes foc_v1718_emp_branch = yes }
+    weight = 75
+    weight_modifier = {
+        modifier = { factor = 0 foc_v1718_story_country = yes }
+        modifier = { factor = 0 NOT = { foc_v1718_emp_stage2_ready = yes foc_v1718_emp_stage3_ready = yes } }
+    }
+    ai_weight = { factor = 2 }
+}
+
+foc_v1718_tech_emp_thruster_4 = {
+    icon = "swgs_tech_thruster"
+    area = engineering
+    cost = 30000
+    tier = 4
+    category = { voidcraft }
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = { foc_v1718_tech_emp_thruster_3 }
+    potential = { foc_v1718_allowed_country = yes foc_v1718_emp_branch = yes }
+    weight = 75
+    weight_modifier = {
+        
+        modifier = { factor = 0 NOT = { foc_v1718_emp_stage2_ready = yes foc_v1718_emp_stage3_ready = yes } }
+    }
+    ai_weight = { factor = 2 }
+}
+
+foc_v1718_tech_emp_thruster_5 = {
+    icon = "swgs_tech_thruster"
+    area = engineering
+    cost = 60000
+    tier = 5
+    category = { voidcraft }
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = { foc_v1718_tech_emp_thruster_4 }
+    potential = { foc_v1718_allowed_country = yes foc_v1718_emp_branch = yes }
+    weight = 75
+    weight_modifier = {
+        
+        modifier = { factor = 0 NOT = { foc_v1718_emp_stage2_ready = yes foc_v1718_emp_stage3_ready = yes } }
+    }
+    ai_weight = { factor = 2 }
+}
+
+foc_v1718_tech_reb_thruster_2 = {
+    icon = "swgs_tech_thruster"
+    area = engineering
+    cost = 4000
+    tier = 2
+    category = { voidcraft }
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = { foc_v1718_tech_thruster_1 }
+    potential = { foc_v1718_allowed_country = yes foc_v1718_reb_branch = yes }
+    weight = 75
+    weight_modifier = {
+        modifier = { factor = 0 foc_v1718_story_country = yes }
+        modifier = { factor = 0 NOT = { foc_v1718_reb_branch = yes } }
+    }
+    ai_weight = { factor = 2 }
+}
+
+foc_v1718_tech_reb_thruster_3 = {
+    icon = "swgs_tech_thruster"
+    area = engineering
+    cost = 12000
+    tier = 3
+    category = { voidcraft }
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = { foc_v1718_tech_reb_thruster_2 }
+    potential = { foc_v1718_allowed_country = yes foc_v1718_reb_branch = yes }
+    weight = 75
+    weight_modifier = {
+        modifier = { factor = 0 foc_v1718_story_country = yes }
+        modifier = { factor = 0 NOT = { foc_v1718_reb_branch = yes foc_v1718_reb_stage3_ready = yes } }
+    }
+    ai_weight = { factor = 2 }
+}
+
+foc_v1718_tech_reb_thruster_4 = {
+    icon = "swgs_tech_thruster"
+    area = engineering
+    cost = 30000
+    tier = 4
+    category = { voidcraft }
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = { foc_v1718_tech_reb_thruster_3 }
+    potential = { foc_v1718_allowed_country = yes foc_v1718_reb_branch = yes }
+    weight = 75
+    weight_modifier = {
+        
+        modifier = { factor = 0 NOT = { foc_v1718_reb_branch = yes foc_v1718_reb_stage3_ready = yes } }
+    }
+    ai_weight = { factor = 2 }
+}
+
+foc_v1718_tech_reb_thruster_5 = {
+    icon = "swgs_tech_thruster"
+    area = engineering
+    cost = 60000
+    tier = 5
+    category = { voidcraft }
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = { foc_v1718_tech_reb_thruster_4 }
+    potential = { foc_v1718_allowed_country = yes foc_v1718_reb_branch = yes }
+    weight = 75
+    weight_modifier = {
+        
+        modifier = { factor = 0 NOT = { foc_v1718_reb_branch = yes foc_v1718_reb_stage3_ready = yes } }
+    }
+    ai_weight = { factor = 2 }
+}
+
+foc_v1718_tech_beskar_armor = {
+    icon = foc_v1718_beskar_armor
+    area = engineering
+    cost = 80000
+    tier = 5
+    category = { materials }
+    is_rare = yes
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = { }
+    potential = { foc_v1718_allowed_country = yes }
+    weight = 35
+    weight_modifier = { modifier = { factor = 0 NOT = { foc_v1718_beskar_research_ready = yes } } }
+    ai_weight = { factor = 3 }
+}
+
+foc_v1718_tech_sg_computers = {
+    icon = "swgs_tech_strange_computer"
+    area = physics
+    cost = 16000
+    tier = 3
+    category = { computing }
+    is_reverse_engineerable = no
+    ai_update_type = military
+    prerequisites = { foc_v1718_tech_reactor_1 }
+    potential = { foc_v1718_allowed_country = yes }
+    weight = 60
+    ai_weight = { factor = 2 }
+}

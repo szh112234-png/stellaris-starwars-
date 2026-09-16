@@ -1,0 +1,24 @@
+foc_sai_supremacy_arkship_stats = {
+	# Crisis-only flagship balance. The old value of 99 multiplied the hull by
+	# one hundred before First Order difficulty bonuses were applied.
+	# 3.11w-balance: hull / armour / shield are now defined entirely in the
+	# tier_3 ship_size (relative to the Viscount), so this modifier no longer
+	# adds flat hull/armour/shield or a hull multiplier — it only supplies the
+	# flagship's defensive qualities and the component damage-reduction fix.
+	
+	ship_weapon_range_mult = 0.15
+	ship_tracking_add = 25
+
+	# V132: the 24 adaptive armour components are normalized to 0.0125 each,
+	# yielding a sane final 30% damage reduction without a giant negative offset.
+	ship_damage_reduction_add = 0
+
+	ship_armor_hardening_add = 0.60
+	ship_shield_hardening_add = 0.60
+	ship_hull_regen_add_perc = 0.02
+	ship_armor_regen_add_perc = 0.02
+	starbase_shipyard_capacity_add = 2
+	starbase_module_capacity_add = 4
+	starbase_building_capacity_add = 8
+	planet_max_districts_add = 18
+}

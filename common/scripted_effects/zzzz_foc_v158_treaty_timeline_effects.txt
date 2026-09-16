@@ -1,0 +1,104 @@
+# FOC V158 - Galactic Treaty sequel-era clock and Imperial Remnant asset repair.
+# All Stellaris years use 360 days.
+
+foc_v158_start_treaty_sequel_timeline = {
+    if = {
+        limit = { NOT = { has_global_flag = foc_v158_treaty_sequel_timeline_started } }
+        set_global_flag = foc_v158_treaty_sequel_timeline_started
+        # Treaty +4y: Luke rebuilds the Jedi Temple on Ossus.
+        set_timed_global_flag = { flag = foc_v158_treaty_luke_4y_delay days = 1440 }
+        # Treaty +10y: Ben Solo begins training under Luke (narrative only).
+        set_timed_global_flag = { flag = foc_v158_treaty_ben_10y_delay days = 3600 }
+        # Treaty +23y: Ben destroys the temple; Leia leaves the New Republic.
+        set_timed_global_flag = { flag = foc_v158_treaty_temple_23y_delay days = 8280 }
+        log = "FOC_V158_TIMELINE: Treaty sequel clock started: Luke +4y, Ben training +10y, Temple/Leia +23y, War in Heaven +24y."
+    }
+}
+
+
+# System scope: spawn one fully locked Treaty Remnant Executor battle group.
+# This helper is used only to repair pre-War saves with fewer than eight groups.
+foc_v158_spawn_one_imperial_remnant_executor_group = {
+    # Grant fixed-design prerequisites to the fleet owner after set_owner.
+    create_fleet = {
+        name = "FOC_SW_IMPERIAL_REMNANT_EXECUTOR_FLEET_RESTORED"
+        effect = {
+            set_owner = event_target:foc_sw_imperial_remnant
+            owner = { foc_executor_prepare_imperial_ii_escorts = yes }
+            # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_octuple_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_octuple_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_octuple_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_octuple_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+}
+            
+
+            
+
+            
+            if = {
+                limit = { has_global_flag = foc_khan_strength_lowest }
+                create_ship = { name = random design = "NAME_FOC_SW_LUSANKYA_FOC_LOWEST" graphical_culture = empire_01 upgradable = no fleet_cache_recalc = yes }
+                while = { count = 30 create_ship = { name = random design = "NAME_FOC_V17_IMPERIAL_SD2_FOC_LOWEST" graphical_culture = empire_01 upgradable = no fleet_cache_recalc = yes } }
+            }
+            else = {
+                create_ship = { name = random design = "NAME_FOC_SW_LUSANKYA" graphical_culture = empire_01 upgradable = no fleet_cache_recalc = yes }
+                while = { count = 30 create_ship = { name = random design = "NAME_FOC_V17_IMPERIAL_SD2" graphical_culture = empire_01 upgradable = no fleet_cache_recalc = yes } }
+            }
+            foc_republic_origin_add_empire_shipset_escorts = yes
+            foc_sw_ensure_imperial_immobilizer418 = yes
+            set_location = { target = prev distance = 55 angle = random }
+            set_aggro_range_measure_from = self
+            set_aggro_range = 9999
+            set_formation_scale = 3
+            set_fleet_flag = foc_sw_imperial_executor_fleet
+        }
+        settings = { can_upgrade = no can_disband = yes can_change_composition = no spawn_debris = yes ai_ignore_strength = yes }
+    }
+}
+
+# Country scope: Treaty Imperial Remnant. Restore the original scripted FE
+# infrastructure before the War in Heaven, and repair V157 saves where the
+# Executor fixed design was not registered before the eight groups spawned.
+foc_v158_restore_imperial_remnant_treaty_assets = {
+    save_global_event_target_as = foc_sw_imperial_remnant
+    if = {
+        limit = { NOT = { has_modifier = foc_v158_imperial_remnant_starbase_capacity } }
+        add_modifier = { modifier = foc_v158_imperial_remnant_starbase_capacity days = -1 }
+    }
+
+    # Keep the sealed design registered, but V159 no longer replenishes
+    # Executor combat losses from this monthly-compatible infrastructure repair.
+    foc_story_grant_jakku_executor_blueprint = yes
+
+    # Before the War in Heaven every canonical Remnant system is restored to the
+    # same Citadel standard used by the original Fallen-Empire setup.
+    if = {
+        limit = { NOT = { has_global_flag = foc_sw_war_in_heaven_started } }
+        every_system = {
+            limit = {
+                has_star_flag = foc_sw_imperial_remnant_cluster
+                OR = {
+                    NOT = { exists = space_owner }
+                    space_owner = { is_same_value = root }
+                }
+            }
+            foc_sw_claim_imperial_remnant_system = yes
+        }
+    }
+}
+

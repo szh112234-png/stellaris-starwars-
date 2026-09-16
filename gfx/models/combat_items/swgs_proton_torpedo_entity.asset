@@ -1,0 +1,11 @@
+entity = {
+	name = "sw_proton_guided_entity"
+	cull_radius = 0.5
+	
+	default_state = idle
+	state = { name = "idle"
+		start_event = { time = 0 node = exhaust particle = "medium_missile_idle_particle" keep_particle = yes }
+		start_event = { time = 0 node = exhaust particle = "missile_idle_flame_particle" keep_particle = yes }
+		start_event = { time = 0 node = exhaust particle = "medium_missile_idle_particle" keep_particle = yes }
+	}
+}

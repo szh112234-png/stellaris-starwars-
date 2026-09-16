@@ -1,0 +1,248 @@
+# =============================================================================
+# FOC V232 - 时代交替：上一个时代的国家精神统一退场
+# =============================================================================
+# 设计规则：
+#   本 MOD 的四条主线（共和国 / 分离主义 / 帝国 / 义军）在剧情推进时**复用同一个
+#   国家对象**，不创建新国家。这带来一个后果：只要没有显式移除，上一个时代拿到的
+#   国家修正会原封不动地跟着玩家进入下一个时代，越滚越多。
+#
+#   V116 已经处理了「共和国 -> 银河帝国 / 帝国义军」这一步，V114 处理了
+#   「银河帝国 -> 帝国残余」。但是下面三条转换从来没有做过清理：
+#     义军同盟   -> 新共和国      （银河条约）
+#     新共和国   -> 抵抗组织      （霍斯尼亚陨落）
+#     帝国残余   -> 第一秩序      （公开现身）
+#
+#   本文件把四个时代各自的修正整理成独立的「桶」，在每个转换点调用一次即可。
+#   桶之间不重叠，也不会误删下一个时代自己要发的修正。
+#
+# 明确**不清除**的东西（它们是历史成就或角色传承，不是时代加成）：
+#   foc_saga_skywalker_legacy / new_jedi_order / last_jedi / broken_master
+#   foc_saga_force_ghost_guidance / force_dyad / ben_solo_redeemed
+#   foc_saga_knights_of_ren / supreme_leader_kylo / spark_of_hope
+#   foc_sw_fe_infrastructure_heir_core（第一秩序自己的继承包）
+#   foc_lore_* 星球级世界特征、foc_story_dark_emperor / light_custodian
+# =============================================================================
+
+
+# -----------------------------------------------------------------------------
+# 一、克隆人战争时代（共和国 + 分离主义）
+# -----------------------------------------------------------------------------
+# 共和国那一侧由 V116 的 foc_republic_origin_clear_republic_era_bonuses 负责，
+# 这里补上分离主义一侧从来没人清过的三条战时精神。两个效果一起构成完整的
+# 克隆人战争桶。
+foc_v232_clear_clone_wars_era_spirits = {
+    foc_republic_origin_clear_republic_era_bonuses = yes
+    remove_modifier = foc_saga_separatist_war_machine
+    remove_modifier = foc_saga_separatist_full_mobilisation
+    remove_modifier = foc_saga_grievous_command
+    set_country_flag = foc_v232_clone_wars_spirits_cleared
+}
+
+
+# -----------------------------------------------------------------------------
+# 二、银河帝国时代
+# -----------------------------------------------------------------------------
+# 新秩序的政治与战时学说。帝国残余路线上，V114 的
+# foc_republic_origin_clear_empire_debuffs_for_remnant 已经内联了同样的内容；
+# 这里独立成桶，是为了让「玩家帝国 -> 其他去向」的路线也能复用。
+foc_v232_clear_galactic_empire_era_spirits = {
+    remove_modifier = foc_republic_origin_civil_war_economy
+    remove_modifier = foc_republic_origin_new_order_administration
+    remove_modifier = foc_republic_origin_tarkin_doctrine
+    remove_modifier = foc_republic_origin_inquisitorius
+    remove_modifier = foc_republic_origin_darth_vader
+    remove_modifier = foc_republic_origin_imperial_fear_deficit
+    remove_modifier = foc_v109_tarkin_jedha_fear
+    remove_modifier = foc_saga_mustafar_aftermath
+    remove_modifier = foc_canon_clone_transition
+    remove_modifier = foc_canon_operation_cinder
+
+    # 死星工程只属于帝国时代。
+    # 注意：foc_republic_origin_death_star_two_reinforced 是**舰船级**修正
+    # （挂在死星二号这条船上，见 foc_republic_origin_effects.txt:2826），
+    # 国家作用域移除它没有意义，因此这里不列。
+    remove_modifier = foc_republic_origin_secret_superweapon_construction
+
+    # 帝国治安成本。三档不良治安 + 逐星球驻防惩罚一起收。
+    foc_saga_imperial_unrest_clear = yes
+
+    # 帝国时代的政治学说旗标不是历史成就，不能带进下一个时代，
+    # 否则月度维护脚本会继续按帝国规则跑。
+    remove_country_flag = foc_republic_origin_tarkin_doctrine
+    remove_country_flag = foc_republic_origin_new_order_administration
+    remove_country_flag = foc_republic_origin_inquisitorius_founded
+    set_country_flag = foc_v232_galactic_empire_spirits_cleared
+}
+
+
+# -----------------------------------------------------------------------------
+# 三、银河内战 / 义军同盟时代
+# -----------------------------------------------------------------------------
+# 银河条约生效时，义军的战时经济全部结束。
+# foc_saga_postwar_demobilisation 的原始注释就写着「双死星的战时加成随条约收回」，
+# 这里是把那句话真正落实成脚本。
+foc_v232_clear_rebellion_era_spirits = {
+    # 起义与地下网络
+    remove_modifier = foc_saga_reb_open_uprising
+    remove_modifier = foc_saga_reb_cell_network
+    remove_modifier = foc_saga_reb_mon_cala_yards
+    remove_modifier = foc_saga_reb_mandalorian_fleet
+    remove_modifier = foc_saga_reb_mandalorian_commandos
+    remove_modifier = foc_saga_reb_declaration
+
+    # 六档义军成长阶梯
+    remove_modifier = foc_saga_rebel_step_1_spark
+    remove_modifier = foc_saga_rebel_step_2_scarif
+    remove_modifier = foc_saga_rebel_step_3_yavin
+    remove_modifier = foc_saga_rebel_step_4_uprising
+    remove_modifier = foc_saga_rebel_step_5_kuat
+    remove_modifier = foc_saga_rebel_step_6_coruscant
+
+    # 内战士气线
+    remove_modifier = foc_saga_hope_of_the_rebellion
+    remove_modifier = foc_saga_rebel_vengeance
+    remove_modifier = foc_saga_jedi_restraint
+    remove_modifier = foc_saga_return_of_the_jedi
+
+    # 银河冷战动员档
+    remove_modifier = foc_gcw_rebel_mobilization_1
+    remove_modifier = foc_gcw_rebel_mobilization_2
+    remove_modifier = foc_gcw_rebel_mobilization_3
+    remove_modifier = foc_gcw_rebel_mobilization_4
+
+    # 战时后勤
+    remove_modifier = foc_saga_inner_rim_wartime_logistics
+    foc_republic_origin_clear_player_rebel_crisis_bonuses = yes
+    foc_republic_origin_clear_civil_war_difficulty_modifiers = yes
+
+    # 双死星战果与斯卡里夫情报
+    remove_modifier = foc_republic_origin_rebel_death_star_one_victory
+    remove_modifier = foc_republic_origin_rebel_death_star_two_victory
+    remove_modifier = foc_republic_origin_rebel_double_death_star_victory
+    remove_modifier = foc_republic_origin_scarif_intelligence
+    remove_modifier = foc_republic_origin_scarif_death_star_attack_solution
+    remove_modifier = foc_lowest_ds_scarif_attack_solution
+    remove_modifier = foc_rogue_one_scarif_assault
+    remove_modifier = foc_rogue_one_vader_pursuit
+
+    # 解放殖民地的累计维护费减免：计数器归零后移除当前单一修正。
+    # 首次迁移时还会清除历史256档；这里保留原来的条约退场规则。
+    # V232i: pending civil-war offers cannot leak into the successor era.
+    set_variable = { which = foc_v232i_pending_conquest_rewards value = 0 }
+    remove_country_flag = foc_v232i_conquest_offer_active
+    set_variable = { which = foc_v214_rebel_colony_logistics_stacks value = 0 }
+    foc_v214_refresh_rebel_colony_logistics_modifier = yes
+
+    set_country_flag = foc_v232_rebellion_spirits_cleared
+}
+
+
+# -----------------------------------------------------------------------------
+# 四、银河条约时代（新共和国 / 帝国残余）
+# -----------------------------------------------------------------------------
+# 霍斯尼亚陨落后新共和国变成抵抗组织，帝国残余公开变成第一秩序。
+# 两边都从「条约秩序内的合法政权」变成「战时组织」，条约期的和平红利与
+# 裁军限制一并结束。
+foc_v232_clear_treaty_era_spirits = {
+    # 条约期经济包
+    remove_modifier = foc_sw_fallen_empire_economy_core
+    remove_modifier = foc_sw_new_republic_economy_focus
+    remove_modifier = foc_sw_imperial_remnant_economy_focus
+    remove_modifier = foc_sw_awakened_fallen_empire_war_economy
+    remove_modifier = foc_saga_postwar_demobilisation
+
+    # 条约的军备限制
+    remove_modifier = foc_v135_new_republic_military_reduction_act
+    remove_modifier = foc_v157_imperial_remnant_disarmament
+    remove_modifier = foc_v158_imperial_remnant_starbase_capacity
+    remove_country_flag = foc_v157_imperial_remnant_disarmed
+
+    # 索龙时代的帝国残余精神
+    remove_modifier = foc_saga_rem_iron_discipline
+    remove_modifier = foc_saga_rem_bought_loyalty
+    remove_modifier = foc_saga_rem_chimaera
+    remove_modifier = foc_saga_rem_kuat_contracts
+    remove_modifier = foc_saga_rem_consolidation
+    remove_modifier = foc_saga_rem_reconquest
+    remove_modifier = foc_saga_thrawn_command
+    remove_modifier = foc_saga_imperial_succession_crisis
+
+    set_country_flag = foc_v232_treaty_spirits_cleared
+}
+
+
+# -----------------------------------------------------------------------------
+# 五、老存档修复：按当前身份倒推该清哪些桶
+# -----------------------------------------------------------------------------
+# 只在国家作用域调用。已经在正确时代的国家什么都不会发生，因为每个桶都是
+# remove_modifier，对没有该修正的国家是空操作。
+#
+# 每个身份只清「自己之前」的时代，绝不清自己这一代。
+#
+# V232a：一次性旗标按**身份**分开记（每个阶段一个），而不是全局只跑一次。
+# 首轮实测发现，帝国刚成立那个月修复事件就会为帝国和义军各跑一次并把总旗标
+# 写死；如果只有一个总旗标，同一个国家后来变成新共和国 / 第一秩序 / 抵抗组织
+# 时修复通道就永久关闭了。转换点本身有清理，所以那不会立刻出问题，但对中途
+# 升级 MOD 的老档少了一层兜底。现在每个阶段各自判定一次。
+foc_v232_repair_era_spirits_for_current_stage = {
+    # 抵抗组织：克隆人战争 + 帝国 + 义军 + 条约，四代全清。
+    if = {
+        limit = {
+            has_country_flag = foc_khan_first_order_resistance_country
+            NOT = { has_country_flag = foc_v232_repaired_as_resistance }
+        }
+        set_country_flag = foc_v232_repaired_as_resistance
+        foc_v232_clear_clone_wars_era_spirits = yes
+        foc_v232_clear_galactic_empire_era_spirits = yes
+        foc_v232_clear_rebellion_era_spirits = yes
+        foc_v232_clear_treaty_era_spirits = yes
+    }
+    # 第一秩序：克隆人战争 + 帝国 + 条约期残余。
+    else_if = {
+        limit = {
+            OR = {
+                has_country_flag = foc_republic_origin_became_first_order
+                has_country_flag = fop_player_first_order
+            }
+            NOT = { has_country_flag = foc_v232_repaired_as_first_order }
+        }
+        set_country_flag = foc_v232_repaired_as_first_order
+        foc_v232_clear_clone_wars_era_spirits = yes
+        foc_v232_clear_galactic_empire_era_spirits = yes
+        foc_v232_clear_treaty_era_spirits = yes
+    }
+    # 新共和国：克隆人战争 + 帝国 + 义军。条约期修正是它自己的，保留。
+    else_if = {
+        limit = {
+            has_country_flag = foc_sw_new_republic_country
+            NOT = { has_country_flag = foc_v232_repaired_as_new_republic }
+        }
+        set_country_flag = foc_v232_repaired_as_new_republic
+        foc_v232_clear_clone_wars_era_spirits = yes
+        foc_v232_clear_galactic_empire_era_spirits = yes
+        foc_v232_clear_rebellion_era_spirits = yes
+    }
+    # 帝国残余：克隆人战争 + 帝国。残余自己的精神保留。
+    else_if = {
+        limit = {
+            has_country_flag = foc_sw_imperial_remnant_country
+            NOT = { has_country_flag = foc_v232_repaired_as_remnant }
+        }
+        set_country_flag = foc_v232_repaired_as_remnant
+        foc_v232_clear_clone_wars_era_spirits = yes
+        foc_v232_clear_galactic_empire_era_spirits = yes
+    }
+    # 银河帝国 / 帝国义军：只清克隆人战争。
+    else_if = {
+        limit = {
+            OR = {
+                has_country_flag = foc_republic_origin_empire_country
+                has_country_flag = foc_khan_rebel_alliance_country
+                has_country_flag = foc_republic_origin_imperial_rebel_country
+            }
+            NOT = { has_country_flag = foc_v232_repaired_as_civil_war_power }
+        }
+        set_country_flag = foc_v232_repaired_as_civil_war_power
+        foc_v232_clear_clone_wars_era_spirits = yes
+    }
+}

@@ -1,0 +1,13 @@
+# Scopes verified against the supplied 4.4.6 common/on_actions/00_on_actions.txt.
+# Root = winner warleader; From = loser warleader; FromFrom = concluded war.
+on_war_won = {
+    events = { foc_v232u_cis.1 }
+}
+
+# Root = destroyed country; From = optional destroying country.
+# Vanilla origin.4061 documents that annihilation need not fire on_war_won.
+on_country_destroyed = {
+    events = { foc_v232u_cis.2 }
+}
+
+# Deliberately no on_war_lost, on_war_ended or on_status_quo victory handler.

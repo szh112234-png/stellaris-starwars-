@@ -1,0 +1,27 @@
+# V235b. Set this BEFORE a Starkiller strike removes the country/colony.
+# System scope; no colony, fleet, or country is created/deleted by these helpers.
+foc_v235b_lock_destroyed_dqar_system = {
+    inline_script = "foc_hotfix_lock_destroyed_dqar_system"
+}
+
+# Planet scope. A shot at another planet/moon in D'Qar must NOT mark the base lost.
+foc_v235b_lock_destroyed_dqar_planet = {
+    if = {
+        limit = { foc_v235b_is_dqar_planet = yes }
+        solar_system = { inline_script = "foc_hotfix_lock_destroyed_dqar_system" }
+    }
+}
+
+# System scope. Dispatch the existing loss story, NOT the country constructor.
+foc_v235b_dispatch_dqar_loss = {
+    if = {
+        limit = {
+            foc_v235b_is_dqar_system = yes
+            foc_v235b_dqar_ruined = yes
+        }
+        every_system_planet = {
+            limit = { foc_v235b_is_dqar_planet = yes }
+            planet_event = { id = foc_khan_rebel.41 }
+        }
+    }
+}

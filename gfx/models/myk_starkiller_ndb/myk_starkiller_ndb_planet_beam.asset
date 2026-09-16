@@ -1,0 +1,117 @@
+# Standalone planet-target beam assembly adapted from the Nicoll-Dyson target-side technique.
+# Uses only vanilla Stellaris particles, sounds, and portal mesh; no external mod dependency.
+
+entity = {
+    name = "myk_starkiller_ndb_energy_entity"
+    default_state = "idle"
+    state = {
+        name = "idle"
+        state_time = 5
+        event = { time = 0.0 node = "polar_effect_1" particle = "red_turbolaser_large_muzzle_particle" keep_particle = no trigger_once = yes }
+        event = { time = 0.0 node = "polar_effect_2" particle = "red_turbolaser_large_muzzle_particle" keep_particle = no trigger_once = yes }
+    }
+}
+
+entity = {
+    name = "myk_starkiller_ndb_megabeam_entity"
+    default_state = "idle"
+    state = {
+        name = "idle"
+        state_time = 5
+        event = {
+            time = 0.0
+            node = "polar_effect_1"
+            particle = "myk_starkiller_red_beam"
+            keep_particle = no
+            trigger_once = yes
+            sound = { soundeffect = "pulsar_star_idle_hum" }
+        }
+    }
+}
+
+entity = {
+    name = "myk_starkiller_ndb_portal_entity"
+    pdxmesh = "portal_mesh"
+    scale = 80
+    default_state = "idle"
+    state = {
+        name = "idle"
+        animation = "idle"
+        animation_blend_time = 0.3
+        start_event = { trigger_once = yes sound = { soundeffect = "ex_dimensional_portal_idle" } }
+        event = { time = 0 node = "root2" particle = "portal_inner_effect_particle" keep_particle = yes trigger_once = yes }
+        event = { time = 0 node = "clock_12_locator" particle = "portal_effect_particle" keep_particle = yes trigger_once = yes sound = { soundeffect = "ex_dimensional_portal_thunder" } }
+        event = { time = 0 node = "clock_3_locator" particle = "portal_effect_particle" keep_particle = yes trigger_once = yes sound = { soundeffect = "ex_dimensional_portal_thunder" } }
+        event = { time = 0 node = "clock_6_locator" particle = "portal_effect_particle" keep_particle = yes trigger_once = yes sound = { soundeffect = "ex_dimensional_portal_thunder" } }
+        event = { time = 0 node = "clock_9_locator" particle = "portal_effect_particle" keep_particle = yes trigger_once = yes sound = { soundeffect = "ex_dimensional_portal_thunder" } }
+    }
+}
+
+entity = {
+    name = "myk_starkiller_ndb_enemy_firing_1_entity"
+    cull_radius = 1000
+    locator = { name = "m1" position = { 0 0 -300 } rotation = { 0 -90 0 } }
+    locator = { name = "pew" position = { 0 10 0 } rotation = { 180 90 90 } }
+    locator = { name = "pew1" position = { 0 10 0 } rotation = { 180 90 90 } }
+    locator = { name = "pew2" position = { 0 10 0 } rotation = { 180 90 90 } }
+    locator = { name = "pew3" position = { 0 10 0 } rotation = { 180 90 90 } }
+    locator = { name = "loc102" position = { 0 10 0 } rotation = { 180 90 90 } scale = 15 }
+    locator = { name = "loc103" position = { 0 -10 0 } rotation = { 180 90 90 } scale = 15 }
+    locator = { name = "loc104" position = { 0 10 0 } rotation = { 180 90 90 } scale = 15 }
+    locator = { name = "loc105" position = { 0 -10 0 } rotation = { 180 90 90 } scale = 15 }
+    locator = { name = "loc106" position = { 0 0 0 } rotation = { 0 -90 0 } }
+    attach = { m1 = "myk_starkiller_ndb_megabeam_entity" }
+    attach = { pew = "fme01_titan_laser_muzzle_entity" }
+    attach = { pew1 = "fme01_titan_laser_muzzle_entity" }
+    attach = { pew2 = "titan_laser_hit_entity" }
+    attach = { pew3 = "titan_laser_hit_entity" }
+    attach = { loc102 = "myk_starkiller_ndb_energy_entity" }
+    attach = { loc103 = "myk_starkiller_ndb_energy_entity" }
+    attach = { loc104 = "myk_starkiller_ndb_energy_entity" }
+    attach = { loc105 = "myk_starkiller_ndb_energy_entity" }
+    attach = { loc106 = "myk_starkiller_ndb_portal_entity" }
+}
+
+entity = {
+    name = "myk_starkiller_ndb_enemy_firing_2_entity"
+    cull_radius = 1000
+    locator = { name = "root" position = { 0 0 0 } }
+    locator = { name = "m1" position = { 0 0 -300 } rotation = { 0 -90 0 } }
+    attach = { root = "myk_starkiller_ndb_enemy_firing_1_entity" }
+    attach = { m1 = "myk_starkiller_ndb_megabeam_entity" }
+}
+
+entity = {
+    name = "myk_starkiller_ndb_enemy_firing_3_entity"
+    cull_radius = 1000
+    locator = { name = "root" position = { 0 0 0 } }
+    locator = { name = "m1" position = { 0 0 -300 } rotation = { 0 -90 0 } }
+    attach = { root = "myk_starkiller_ndb_enemy_firing_2_entity" }
+    attach = { m1 = "myk_starkiller_ndb_megabeam_entity" }
+}
+
+entity = {
+    name = "myk_starkiller_ndb_enemy_firing_4_entity"
+    cull_radius = 1000
+    locator = { name = "root" position = { 0 0 0 } }
+    locator = { name = "m1" position = { 0 0 -300 } rotation = { 0 -90 0 } }
+    attach = { root = "myk_starkiller_ndb_enemy_firing_3_entity" }
+    attach = { m1 = "myk_starkiller_ndb_megabeam_entity" }
+}
+
+# The ambient object is anchored to the target planet and faces the local star.
+# The beam assembly extends in the opposite radial direction, creating a clear
+# outside-the-system-to-planet incoming beam instead of a star-centred beam.
+entity = {
+    name = "myk_starkiller_ndb_planet_open_entity"
+    cull_radius = 1000
+    locator = { name = "m1" position = { 0 185 0 } rotation = { -90 0 0 } scale = 0.2 }
+    attach = { m1 = "myk_starkiller_ndb_portal_entity" }
+}
+
+entity = {
+    name = "myk_starkiller_ndb_planet_firing_4_entity"
+    cull_radius = 1000
+    locator = { name = "m1" position = { 0 150 0 } rotation = { 0 -90 0 } scale = 0.2 }
+    attach = { m1 = "myk_starkiller_ndb_enemy_firing_4_entity" }
+}

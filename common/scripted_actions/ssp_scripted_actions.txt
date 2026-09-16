@@ -1,0 +1,51 @@
+ssp_imperial_strike = {
+ user_scope = fleet
+ scope = self
+ possible = { custom_tooltip = { fail_text = SSP_SOURCE_IN_COMBAT is_in_combat = no } 
+    custom_tooltip = { fail_text = FOC_V1717C_STRATEGIC_AIRCRAFT_LOCKED exists = controller controller = { foc_v1717c_imperial_strategic_aircraft_allowed = yes } }
+ }
+ button_clickable = { always = yes }
+ on_completed = on_ssp_imperial_strike_completed
+ tooltip = SSP_IMPERIAL_ACTION_DESC
+ icon = "GFX_fleet_order_button_ground_support_seismic_bombing"
+ icon_selected = "GFX_fleet_order_button_ground_support_seismic_bombing_selected"
+ activity_key = SSP_IMPERIAL_ACTIVITY
+ context_menu_name = SSP_IMPERIAL_ACTION
+ progress_activity_key = SSP_IMPERIAL_ACTIVITY
+ required_progress = 0 cooldown = 140 wait = no on_click_sound = "deep_space_citadel_select"
+ ai = { ai_minister = military weight = { base = 0 } }
+}
+
+ssp_rebel_strike = {
+ user_scope = fleet
+ scope = self
+ possible = { custom_tooltip = { fail_text = SSP_SOURCE_IN_COMBAT is_in_combat = no } }
+ button_clickable = { always = yes }
+ on_completed = on_ssp_rebel_strike_completed
+ tooltip = SSP_REBEL_ACTION_DESC
+ icon = "GFX_fleet_order_button_ground_support_seismic_bombing"
+ icon_selected = "GFX_fleet_order_button_ground_support_seismic_bombing_selected"
+ activity_key = SSP_REBEL_ACTIVITY
+ context_menu_name = SSP_REBEL_ACTION
+ progress_activity_key = SSP_REBEL_ACTIVITY
+ required_progress = 0 cooldown = 140 wait = no on_click_sound = "deep_space_citadel_select"
+ ai = { ai_minister = military weight = { base = 0 } }
+}
+
+ssp_republic_strike = {
+ user_scope = fleet
+ scope = self
+ possible = { custom_tooltip = { fail_text = SSP_SOURCE_IN_COMBAT is_in_combat = no } 
+    custom_tooltip = { fail_text = FOC_V1717C_STRATEGIC_AIRCRAFT_LOCKED exists = controller controller = { foc_v1717c_republic_strategic_aircraft_allowed = yes } }
+ }
+ button_clickable = { always = yes }
+ on_completed = on_ssp_republic_strike_completed
+ tooltip = SSP_REPUBLIC_ACTION_DESC
+ icon = "GFX_fleet_order_button_ground_support_seismic_bombing"
+ icon_selected = "GFX_fleet_order_button_ground_support_seismic_bombing_selected"
+ activity_key = SSP_REPUBLIC_ACTIVITY
+ context_menu_name = SSP_REPUBLIC_ACTION
+ progress_activity_key = SSP_REPUBLIC_ACTIVITY
+ required_progress = 0 cooldown = 140 wait = no on_click_sound = "deep_space_citadel_select"
+ ai = { ai_minister = military weight = { base = 0 } }
+}

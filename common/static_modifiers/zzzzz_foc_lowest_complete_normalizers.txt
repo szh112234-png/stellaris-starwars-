@@ -1,0 +1,45 @@
+# V145 compatibility IDs for the retired Lowest normalization system.
+# Lowest now uses dedicated vanilla-tier hulls/components directly; these modifiers
+# intentionally do nothing so old saves cannot retain the former -95%/-99% debuffs.
+foc_lowest_norm_heavy = { }
+foc_lowest_norm_resurgent = { }
+foc_lowest_norm_isd = { }
+foc_lowest_norm_mc80_line = { }
+foc_lowest_norm_xyston = { }
+foc_lowest_norm_mandator = { }
+foc_lowest_norm_eclipse = { }
+foc_lowest_norm_lusankya = { }
+foc_lowest_norm_mc158 = { }
+foc_lowest_norm_raddus = { }
+foc_lowest_norm_falcon = { }
+foc_lowest_norm_immobilizer = { }
+foc_lowest_norm_venator = { }
+foc_lowest_norm_lucrehulk = { }
+foc_lowest_norm_supremacy_t1 = { }
+foc_lowest_norm_supremacy_t2 = { }
+foc_lowest_norm_supremacy_t3 = { }
+# Standalone/player Supremacy hulls have larger Tier 1/2 bases than the crisis hulls.
+foc_lowest_norm_sai_supremacy_t1 = { }
+foc_lowest_norm_sai_supremacy_t2 = { }
+foc_lowest_norm_sai_supremacy = { }
+
+
+# Crisis Starkiller fixed defence station: its ship_size itself carries +100% fire rate
+# and +200% range. Cancel those only on Lowest; other difficulty tiers remain untouched.
+foc_lowest_norm_starkiller_fixed_station = { }
+
+# V90 ACOT tier: the same ship-level package is applied to both Venator and Lucrehulk,
+# preserving every requested relative ratio while matching the existing First Order ACOT scale.
+# V13 user-approved exception: preserve the original ACOT/Madness package unchanged.
+foc_acot_sync_venator_lucrehulk = {
+    ship_weapon_damage = 6.00
+    ship_fire_rate_mult = 3.00
+    ship_hull_mult = 10.00
+    ship_armor_mult = 10.00
+    ship_shield_mult = 10.00
+    ship_speed_mult = 0.75
+    ship_tracking_add = 50
+    ship_accuracy_add = 40
+    ship_armor_hardening_add = 0.90
+    ship_shield_hardening_add = 0.90
+}

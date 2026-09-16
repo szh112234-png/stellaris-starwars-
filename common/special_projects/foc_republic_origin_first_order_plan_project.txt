@@ -1,0 +1,15 @@
+special_project = {
+    key = "FOC_REPUBLIC_ORIGIN_FIRST_ORDER_PLAN_PROJECT"
+    cost = 60000
+    tech_department = engineering_technology
+    timelimit = -1
+    location = yes
+    picture = GFX_origin_fop_first_order
+    icon = "gfx/interface/icons/situation_log/situation_log_engineering.dds"
+    event_scope = country_event
+
+    on_success = { country_event = { id = foc_republic_origin.165 } }
+    abort_trigger = {
+        has_country_flag = foc_republic_origin_first_order_plan_completed
+    }
+}

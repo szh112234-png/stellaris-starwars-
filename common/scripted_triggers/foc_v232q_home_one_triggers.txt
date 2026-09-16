@@ -1,0 +1,30 @@
+# Country scope. GCW Rebels only; Resistance uses its separate Raddus route.
+foc_v232q_home_one_rebel_side = {
+    OR = {
+        has_country_flag = foc_republic_origin_imperial_rebel_country
+        has_country_flag = foc_republic_origin_rebel_alliance_country
+        has_country_flag = foc_khan_rebel_alliance_country
+    }
+    foc_v232n_is_resistance = no
+}
+
+# Prefer the actual global Rebel actor while it is valid, rather than the first
+# country enumerated by a monthly/global loop consuming the unique commission.
+foc_v232q_home_one_recipient = {
+    foc_v232q_home_one_rebel_side = yes
+    if = {
+        limit = {
+            exists = event_target:foc_khan_rebel_alliance
+            event_target:foc_khan_rebel_alliance = { foc_v232q_home_one_rebel_side = yes }
+        }
+        is_same_value = event_target:foc_khan_rebel_alliance
+    }
+}
+
+# Ship scope. Type fallback repairs a saved hull whose old identity flag is absent.
+foc_v232q_is_home_one = {
+    OR = {
+        has_ship_flag = foc_v231_home_one
+        is_ship_size = foc_v231_home_one_arkship
+    }
+}

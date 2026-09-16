@@ -1,0 +1,29 @@
+# FOC V17: Imperial II-class refit programme.
+# Granted by the Imperial refit event or an Executor escort package, never researched.
+# weight = 0 keeps it out of the research draw while leaving give_technology able
+# to grant it; potential = { always = no } made give_technology reject the tech
+# outright, which is why the event fired but no ship ever appeared.
+foc_v17_tech_imperialsd2 = {
+    cost = 12000
+    area = engineering
+    tier = 4
+    category = { voidcraft }
+    prerequisites = { "foc_tech_dark_legacy_imperial" }
+    is_rare = no
+    weight = 0
+
+    potential = {
+        OR = {
+            has_global_flag = foc_republic_origin_death_star_one_destroyed
+            has_country_flag = foc_executor_imperial_ii_support_access
+        }
+        OR = {
+            has_country_flag = foc_republic_origin_empire_country
+            foc_ai_capital_is_imperial_class_country = yes
+        }
+    }
+
+    ai_weight = {
+        factor = 0
+    }
+}

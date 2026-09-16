@@ -1,0 +1,151 @@
+foc_v118_executor_bastion = {
+    formation_priority = 30
+    max_speed = 100
+    acceleration = 0.1
+    rotation_speed = 0.1
+    collision_radius = 32
+    max_hitpoints = 5196454
+    modifier = {
+        ship_evasion_add = 10
+        ship_armor_add = 811946
+        ship_shield_add = 1455000
+        ship_shield_regen_add_static = 1600
+        ship_armor_regen_add_static = 1600
+        ship_hull_regen_add_static = 1600
+    }
+    ship_modifier = {
+        ship_weapon_range_mult = 1
+        ship_starting_experience_add = 11100
+    }
+    available_to_everyone = yes
+    map_counter_icon = ship_counter_128
+    size_multiplier = 670
+    fleet_slot_size = 16
+    combat_size_multiplier = 80
+    section_slots = {
+        bow = {
+            locator = "core"
+        }
+        stern = {
+            locator = "core"
+        }
+        mid = {
+            locator = "core"
+        }
+        hull = {
+            locator = "core"
+        }
+        core = {
+            locator = "core"
+        }
+    }
+    num_target_locators = 5
+    is_space_station = no
+    icon = ship_size_military_32
+    is_designable = no
+    base_buildtime = 2400
+    can_have_federation_design = no
+    enable_default_design = no
+    ship_class_icon_frame = 37
+    potential_construction = {
+        always = no
+    }
+    possible_construction = {
+        always = no
+    }
+    default_behavior = foc_lus_carrier_ship
+    entity = foc_executor_2389_frame_entity
+    combat_disengage_chance = 0
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    required_component_set = "foc_interdiction_gravity_well"
+    components_add_to_cost = no
+    resources = {
+        category = ships
+        cost = {
+            alloys = 2165950
+        }
+        upkeep = {
+            energy = 5
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 500
+    }
+}
+# Executor support: Imperial II garrison; legacy hull ID retained for save compatibility.
+foc_v118_imperialsd_bastion = {
+    graphical_culture = { "empire_01" }
+    formation_priority = 5
+    max_speed = 150
+    acceleration = 0.25
+    rotation_speed = 0.1
+    collision_radius = 8
+    max_hitpoints = 180933
+    modifier = {
+        ship_evasion_add = 60
+        ship_armor_add = 154871
+        ship_shield_add = 85250
+        ship_shield_regen_add_static = 300
+        ship_armor_regen_add_static = 300
+        ship_hull_regen_add_static = 300
+    }
+    ship_modifier = {
+        ship_weapon_range_mult = 0.25
+        ship_weapon_damage = 0.25
+    }
+    size_multiplier = 57
+    fleet_slot_size = 8
+    section_slots = {
+        bow = {
+            locator = "part1"
+        }
+        mid = {
+            locator = "part2"
+        }
+        stern = {
+            locator = "part3"
+        }
+    }
+    num_target_locators = 5
+    is_space_station = no
+    map_counter_icon = ship_counter_32
+    icon = ship_size_military_8
+    use_shipnames_from = destroyer
+    base_buildtime = 180
+    can_have_federation_design = no
+    is_designable = no
+    enable_default_design = no
+    enable_3dview_in_ship_browser = yes
+    potential_construction = {
+        always = no
+    }
+    possible_construction = {
+        always = no
+    }
+    default_behavior = picket
+    combat_disengage_chance = 0
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    required_component_set = "power_core"
+    required_component_set = "thruster_components"
+    required_component_set = "sensor_components"
+    required_component_set = "combat_computers"
+    required_component_set = "imperialsd_crew"
+    components_add_to_cost = no
+    available_to_everyone = no
+    resources = {
+        category = ships
+        cost = {
+            alloys = 1000
+        }
+        upkeep = {
+            energy = 2
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 66
+    }
+
+    entity = foc_v1717f_executor_escort_frame_entity
+}

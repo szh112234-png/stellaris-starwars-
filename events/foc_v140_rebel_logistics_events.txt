@@ -1,0 +1,35 @@
+namespace = foc_v140_logistics
+
+# V140 - remove Inner Rim wartime logistics at the exact end of the
+# Galactic Empire vs Imperial Rebel civil war. on_war_ended supplies
+# Root = loser and From = main winner, so both outcomes are handled.
+country_event = {
+    id = foc_v140_logistics.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        exists = from
+        OR = {
+            AND = {
+                has_country_flag = foc_republic_origin_imperial_rebel_country
+                from = { has_country_flag = foc_republic_origin_empire_country }
+            }
+            AND = {
+                has_country_flag = foc_republic_origin_empire_country
+                from = { has_country_flag = foc_republic_origin_imperial_rebel_country }
+            }
+        }
+    }
+
+    immediate = {
+        if = {
+            limit = { has_country_flag = foc_republic_origin_imperial_rebel_country }
+            remove_modifier = foc_saga_inner_rim_wartime_logistics
+        }
+        else = {
+            from = { remove_modifier = foc_saga_inner_rim_wartime_logistics }
+        }
+        log = "FOC_V140: Imperial-Rebel civil war ended; Inner Rim wartime logistics removed immediately."
+    }
+}

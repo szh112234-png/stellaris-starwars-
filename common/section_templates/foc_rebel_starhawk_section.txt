@@ -1,0 +1,34 @@
+# FOC 2.63 performance-oriented Starhawk crisis section.
+# Reuses the integrated MC158 hull entity because no native Starhawk model is bundled.
+ship_section_template = {
+ key = "FOC_REBEL_STARHAWK_CORE"
+ ship_size = foc_rebel_mc158
+ ship_size = foc_rebel_mc158_foc_lowest
+ fits_on_slot = core
+ entity = "mc158_section_entity"
+ icon = "GFX_ship_part_core_bow"
+ component_slot = { name = "LARGE_GUN_01" template = "invisable_large_turret_fixable" locatorname = "L01" }
+ component_slot = { name = "LARGE_GUN_02" template = "invisable_large_turret_fixable" locatorname = "L02" }
+ component_slot = { name = "LARGE_GUN_03" template = "invisable_large_turret_fixable" locatorname = "L03" }
+ component_slot = { name = "LARGE_GUN_04" template = "invisable_large_turret_fixable" locatorname = "L04" }
+ component_slot = { name = "LARGE_GUN_05" template = "invisable_large_turret_fixable" locatorname = "L05" }
+ component_slot = { name = "LARGE_GUN_06" template = "invisable_large_turret_fixable" locatorname = "L06" }
+ component_slot = { name = "LARGE_GUN_07" template = "invisable_large_turret_fixable" locatorname = "L07" }
+ component_slot = { name = "LARGE_GUN_08" template = "invisable_large_turret_fixable" locatorname = "L08" }
+ component_slot = { name = "LARGE_GUN_09" template = "invisable_large_turret_fixable" locatorname = "L09" }
+ component_slot = { name = "LARGE_GUN_10" template = "invisable_large_turret_fixable" locatorname = "L10" }
+ component_slot = { name = "LARGE_GUN_11" template = "invisable_large_turret_fixable" locatorname = "L11" }
+ component_slot = { name = "LARGE_GUN_12" template = "invisable_large_turret_fixable" locatorname = "L12" }
+ component_slot = { name = "LARGE_GUN_13" template = "invisable_large_turret_fixable" locatorname = "L13" }
+ component_slot = { name = "LARGE_GUN_14" template = "invisable_large_turret_fixable" locatorname = "L14" }
+ component_slot = { name = "LARGE_GUN_15" template = "invisable_large_turret_fixable" locatorname = "L15" }
+ component_slot = { name = "LARGE_GUN_16" template = "invisable_large_turret_fixable" locatorname = "L16" }
+ component_slot = { name = "STRIKE_CRAFT_01" template = "large_strike_craft" locatorname = "S01" }
+ component_slot = { name = "STRIKE_CRAFT_02" template = "large_strike_craft" locatorname = "S02" }
+ component_slot = { name = "STRIKE_CRAFT_03" template = "large_strike_craft" locatorname = "S03" }
+ component_slot = { name = "STRIKE_CRAFT_04" template = "large_strike_craft" locatorname = "S04" }
+ large_utility_slots = 20
+ aux_utility_slots = 3
+ prerequisites = { foc_tech_swgs_crisis_point_defence }
+ resources = { category = ship_sections cost = { alloys = 100 } }
+}

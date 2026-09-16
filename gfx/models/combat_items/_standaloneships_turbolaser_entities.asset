@@ -1,0 +1,45 @@
+entity = {
+	name = "standaloneships_turbolaser_entity"
+	pdxmesh = "standaloneships_turbolaser_mesh"
+	
+	default_state = idle
+	state = { name = "idle" }
+	scale = 1.5
+}
+entity = {
+	name = "standaloneships_turbolaser_muzzle_entity"
+	cull_radius = 1.0
+	
+	default_state = "idle"
+	state = { name = "idle" state_time = 7 looping = no
+		event = { time = 0 particle = "adv_kinetic_artillery_muzzle_particle" keep_particle = yes sound = { soundeffect = standaloneships_turbolaser_fire } }
+		event = { trigger_once = yes sound = { soundeffect = "d_standaloneships_turbolaser_fire" } }
+	}
+}
+
+entity = {
+	name = "standaloneships_turbolaser_hit_entity"
+	cull_radius = 1.0
+	
+	state = { name = "explode_med_hp" state_time = 5.0 looping = no
+		event = { time = 0.0 particle = "adv_kinetic_artillery_hit_effect" sound = { soundeffect = plasma_hit } }
+		event = { trigger_once = yes sound = { soundeffect = "distance_plasma_hit" } }
+	}
+	default_state = "explode_med_hp"
+	scale = 1.5
+}
+
+
+
+entity = {
+	name = "standaloneships_turbolaser_shield_hit_entity"
+	cull_radius = 1.0
+	
+	state = { name = "explode_med_hp" state_time = 5 looping = no
+		event = { time = 0.0 particle = "adv_kinetic_artillery_hit_effect" }
+		event = { time = 0.0 particle = "projectile_medium_shield_hit_effect" }
+		event = { trigger_once = yes sound = { soundeffect = "distance_shield_hit" } } 
+	}
+	default_state = "explode_med_hp"
+	scale = 1.5
+}

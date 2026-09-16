@@ -1,0 +1,58 @@
+namespace = foc_ethics
+
+# =============================================================================
+# 帝国伦理观补正（兼容老存档）
+# =============================================================================
+# foc_republic_origin_transform_republic_into_empire 现在会在 change_government
+# 之前调用 foc_saga_set_imperial_ethics。但**已经变成帝国的存档补不回来**——
+# 那次转换早就跑完了。
+#
+# 这一条负责给老存档补上：本国已经是帝国、却还挂着共和国那套伦理观时，
+# 补做一次转换。只做一次（foc_saga_imperial_ethics_applied 一次性旗标），
+# 此后玩家自己的伦理观漂移不会被覆盖。
+# =============================================================================
+
+country_event = {
+    id = foc_ethics.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        OR = {
+            has_country_flag = foc_republic_origin_empire_country
+            has_country_flag = foc_republic_origin_player_empire
+        }
+        NOT = { has_country_flag = foc_saga_imperial_ethics_applied }
+        # 只在确实不对的时候动手：三种目标伦理观有任何一种缺失才补。
+        OR = {
+            NOT = { has_ethic = ethic_xenophobe }
+            NOT = { has_ethic = ethic_militarist }
+            NOT = { has_ethic = ethic_authoritarian }
+        }
+    }
+
+    immediate = {
+        foc_saga_set_imperial_ethics = yes
+        if = {
+            limit = { is_ai = no }
+            country_event = { id = foc_ethics.2 days = 1 }
+        }
+    }
+}
+
+country_event = {
+    id = foc_ethics.2
+    title = foc_ethics.2.name
+    desc = foc_ethics.2.desc
+    picture = GFX_foc_saga_empire_formed
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        NOT = { has_country_flag = foc_saga_ethics_notice_shown }
+    }
+
+    immediate = { set_country_flag = foc_saga_ethics_notice_shown }
+
+    option = { name = foc_ethics.2.a }
+}

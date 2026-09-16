@@ -1,0 +1,143 @@
+namespace = foc_v1717c_venator_refit
+
+# Global designs and verified old AI carrier loadouts may be repaired.
+# Human country-owned designs are excluded to protect player customization.
+# V17.17f: Lucrehulk uses 48 guns and four hangars; Venator retains three hangars.
+# Existing ships retain their identity; no fleets, ships or leaders are recreated.
+event = {
+    id = foc_v1717c_venator_refit.1
+    hide_window = yes
+    is_triggered_only = yes
+    immediate = {
+        every_country = {
+            every_owned_ship = {
+                limit = {
+                    OR = {
+                        design = { has_ship_owner_type = global_ship_design }
+                        AND = {
+                            owner = { is_ai = yes }
+                            OR = { has_component = VCSD_ARC170 has_component = SSP_ARC170_HANGAR_04_SG has_component = SSP_ARC170_HANGAR_04_ENHANCED }
+                        }
+                    }
+                    is_ship_size = venatorclass
+                    OR = {
+                        NOT = { has_ship_flag = foc_v1717e_carrier_hangars_refit }
+                        has_component = VCSD_ARC170
+                    }
+                    is_in_combat = no
+                }
+                set_ship_design = { design = NAME_FOC_REPUBLIC_VENATOR_STORY }
+                set_ship_flag = foc_v1717e_carrier_hangars_refit
+            }
+            every_owned_ship = {
+                limit = {
+                    OR = {
+                        design = { has_ship_owner_type = global_ship_design }
+                        AND = {
+                            owner = { is_ai = yes }
+                            OR = { has_component = FOC_V177_LOWEST_63AB8DE4E7D696 has_component = VCSD_ARC170_FOC_LOWEST has_component = VCSD_ARC170_FOC_FIXED_LOWEST has_component = SSP_ARC170_HANGAR_04 }
+                        }
+                    }
+                    is_ship_size = venatorclass_foc_lowest
+                    OR = {
+                        NOT = { has_ship_flag = foc_v1717e_carrier_hangars_refit }
+                        has_component = FOC_V177_LOWEST_63AB8DE4E7D696
+                        has_component = VCSD_ARC170_FOC_LOWEST
+                        has_component = VCSD_ARC170_FOC_FIXED_LOWEST
+                    }
+                    is_in_combat = no
+                }
+                set_ship_design = { design = NAME_FOC_REPUBLIC_VENATOR_STORY_FOC_LOWEST }
+                set_ship_flag = foc_v1717e_carrier_hangars_refit
+            }
+            every_owned_ship = {
+                limit = {
+                    OR = {
+                        design = { has_ship_owner_type = global_ship_design }
+                        AND = {
+                            owner = { is_ai = yes }
+                            
+                        }
+                    }
+                    is_ship_size = foc_trade_lucrehulk
+                    NOT = { has_ship_flag = foc_v1717f_lucrehulk_loadout_refit }
+                    is_in_combat = no
+                }
+                if = {
+                    limit = { has_component = SSP_TRI_HANGAR_01_ENHANCED }
+                    set_ship_design = { design = NAME_FOC_V236_CIS_LUCREHULK_ENHANCED }
+                }
+                else = { set_ship_design = { design = NAME_FOC_TRADE_LUCREHULK } }
+                set_ship_flag = foc_v1717f_lucrehulk_loadout_refit
+            }
+            every_owned_ship = {
+                limit = {
+                    OR = {
+                        design = { has_ship_owner_type = global_ship_design }
+                        AND = {
+                            owner = { is_ai = yes }
+                            
+                        }
+                    }
+                    is_ship_size = foc_trade_lucrehulk_foc_lowest
+                    NOT = { has_ship_flag = foc_v1717f_lucrehulk_loadout_refit }
+                    is_in_combat = no
+                }
+                set_ship_design = { design = NAME_FOC_TRADE_LUCREHULK_FOC_LOWEST }
+                set_ship_flag = foc_v1717f_lucrehulk_loadout_refit
+            }
+
+            if = {
+                limit = {
+                    is_ai = no
+                    has_technology = foc_tech_republic_venator
+                    NOT = { has_global_flag = foc_khan_strength_lowest }
+                    foc_v1716_design_researched_938c45aed7c4 = yes
+                    NOT = { has_country_flag = foc_v1717e_venator_blueprint_refreshed }
+                }
+                create_ship_design = { design = NAME_FOC_REPUBLIC_VENATOR_STORY }
+                refresh_auto_generated_ship_designs = yes
+                set_country_flag = foc_v1717e_venator_blueprint_refreshed
+            }
+            if = {
+                limit = {
+                    is_ai = no
+                    has_technology = foc_tech_republic_venator
+                    has_global_flag = foc_khan_strength_lowest
+                    foc_v1716_design_researched_6d47e8957c1f = yes
+                    NOT = { has_country_flag = foc_v1717e_venator_lowest_blueprint_refreshed }
+                }
+                create_ship_design = { design = NAME_FOC_REPUBLIC_VENATOR_STORY_FOC_LOWEST }
+                refresh_auto_generated_ship_designs = yes
+                set_country_flag = foc_v1717e_venator_lowest_blueprint_refreshed
+            }
+        
+            # AI countries may retain registered copies of the old fixed designs.
+            # Reuse the original guarded registration event once for each family.
+            if = {
+                limit = {
+                    is_ai = yes
+                    foc_ai_capital_is_republic_venator_country = yes
+                    has_technology = foc_tech_republic_venator
+                    NOT = { has_country_flag = foc_v1717e_ai_venator_blueprint_refreshed }
+                }
+                remove_country_flag = foc_republic_origin_kuat_venator_design_granted_v118e
+                country_event = { id = foc_ai_capital.1 days = 1 }
+                set_country_flag = foc_v1717e_ai_venator_blueprint_refreshed
+            }
+            if = {
+                limit = {
+                    is_ai = yes
+                    foc_ai_capital_is_separatist_lucrehulk_country = yes
+                    NOT = { has_country_flag = foc_v1717f_ai_lucrehulk_blueprint_refreshed }
+                }
+                remove_country_flag = foc_ai_capital_lucrehulk_design_registered_v1
+                remove_country_flag = foc_v236_cis_registered_lowest
+                remove_country_flag = foc_v236_cis_registered_sg
+                remove_country_flag = foc_v236_cis_registered_enhanced
+                country_event = { id = foc_ai_capital.1 days = 1 }
+                set_country_flag = foc_v1717f_ai_lucrehulk_blueprint_refreshed
+            }
+        }
+    }
+}

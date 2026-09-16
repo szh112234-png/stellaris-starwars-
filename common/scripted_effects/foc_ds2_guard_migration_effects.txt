@@ -1,0 +1,111 @@
+# Country scope. Raise each surviving legacy story guard group's original
+# escort allocation from 10 to 30 once, using Imperial II-class reinforcements. Add the 20-ship difference without
+# replacing ships, restoring a lost flagship, or replenishing prior casualties.
+# Newly spawned 30-escort groups already carry the fleet flag and are skipped.
+foc_ds2_migrate_guard_escorts = {
+    if = {
+        limit = {
+            OR = {
+                has_country_flag = foc_republic_origin_empire_country
+                has_country_flag = foc_republic_origin_player_empire
+            }
+            NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        }
+        every_owned_fleet = {
+            limit = {
+                NOT = { has_fleet_flag = foc_ds2_guard_escorts_30_applied }
+                OR = {
+                    AND = {
+                        has_fleet_flag = foc_republic_origin_executor_endor_guard
+                        any_owned_ship = { has_ship_flag = foc_republic_origin_executor_one }
+                    }
+                    AND = {
+                        has_fleet_flag = foc_republic_origin_lusankya_coruscant_guard
+                        any_owned_ship = { has_ship_flag = foc_republic_origin_executor_two }
+                    }
+                    AND = {
+                        has_fleet_flag = foc_republic_origin_punisher_jakku_guard
+                        any_owned_ship = { has_ship_flag = foc_republic_origin_executor_three }
+                    }
+                }
+            }
+            owner = { foc_executor_prepare_imperial_ii_escorts = yes }
+            if = {
+                limit = { owner = { is_ai = yes } }
+                if = {
+                    limit = { has_global_flag = foc_khan_strength_lowest }
+                    while = { count = 20 
+
+                        
+
+                        
+                        # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+}
+                        create_ship = { name = random design = "NAME_FOC_V118_IMPERIAL_SD_BASTION_FOC_LOWEST" graphical_culture = empire_01 upgradable = no fleet_cache_recalc = yes effect = { set_ship_flag = foc_v118_garrison_hull } } }
+                }
+                else = {
+                    while = { count = 20 
+
+                        
+                        # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+}
+                        create_ship = { name = random design = "NAME_FOC_V118_IMPERIAL_SD_BASTION" graphical_culture = empire_01 upgradable = no fleet_cache_recalc = yes effect = { set_ship_flag = foc_v118_garrison_hull } } }
+                }
+            }
+            else = {
+                if = {
+                    limit = { has_global_flag = foc_khan_strength_lowest }
+                    while = { count = 20 
+
+                        
+
+                        
+                        # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+}
+                        create_ship = { name = random design = "NAME_FOC_V17_IMPERIAL_SD2_FOC_LOWEST" graphical_culture = empire_01 upgradable = no fleet_cache_recalc = yes } }
+                }
+                else = {
+                    while = { count = 20 
+
+                        
+                        # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+}
+                        create_ship = { name = random design = "NAME_FOC_V17_IMPERIAL_SD2" graphical_culture = empire_01 upgradable = no fleet_cache_recalc = yes } }
+                }
+            }
+            set_fleet_flag = foc_ds2_guard_escorts_30_applied
+        }
+    }
+}

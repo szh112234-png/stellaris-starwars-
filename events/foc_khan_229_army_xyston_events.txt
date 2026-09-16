@@ -1,0 +1,231 @@
+namespace = foc_khan_229
+
+# 2.54 monthly Order army reinforcement dispatcher.
+# Lowest: First Order 8 and Final Order 12 armies.
+# Beginner through Madness: original SG-scale 24 and 36 armies.
+# Existing objective-based stop conditions and transport targeting are retained.
+event = {
+    id = foc_khan_229.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        NOT = { has_global_flag = foc_khan_crisis_finished }
+        OR = {
+            has_global_flag = foc_khan_phase_one
+            has_global_flag = foc_khan_phase_two
+            any_country = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = foc_khan_final_order_country
+                }
+            }
+        }
+    }
+
+    immediate = {
+        every_country = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = foc_khan_final_order_country
+                }
+            }
+
+            # Attach the persistent landing controller to every surviving transport.
+            # Existing controllers keep running their queue and choose a new target
+            # after the current planet changes controller.
+            every_owned_fleet = {
+                limit = {
+                    any_owned_ship = { is_ship_class = shipclass_transport }
+                    NOT = { has_fleet_flag = foc_khan_229_transport_controller }
+                }
+                fleet_event = { id = foc_khan_229.2 days = 1 random = 3 }
+            }
+
+            # FIRST ORDER: monthly 8-army wave on Lowest, otherwise 24. The presence of either actual
+            # objective is enough; old destruction flags cannot stop it early.
+            if = {
+                limit = {
+                    has_country_flag = foc_khan_first_order_country
+                    NOT = { has_country_flag = foc_khan_absorbed_by_final_order }
+                    # Still stops the moment the Final Order takes over, so the two
+                    # crises never reinforce at the same time.
+                    NOT = { has_global_flag = foc_khan_phase_two }
+                    NOT = { has_global_flag = foc_khan_first_war_support_delay_142 }
+                    # V142: recurring invasion-army support begins only after one year of war.
+                    # 3.11w: the 1080-army cap, the cap flag, the "Starkiller must
+                    # survive" stop and the objective requirement are removed, so the
+                    # wave continues for as long as the First Order itself lives.
+                }
+
+                save_event_target_as = foc_khan_249_army_country
+                owner_main_species = { save_event_target_as = foc_khan_249_army_species }
+
+                # Prefer a surviving owned colony. If Starkiller Base has fallen
+                # but the mobile Supremacy remains, spawn beside the Supremacy.
+                if = {
+                    limit = { any_owned_planet = { is_colony = yes } }
+                    random_owned_planet = {
+                        limit = { is_colony = yes }
+                        planet = { save_event_target_as = foc_khan_249_army_spawn }
+                    }
+                }
+                else_if = {
+                    limit = {
+                        any_owned_ship = { has_ship_flag = foc_khan_supremacy_flagship }
+                    }
+                    random_owned_ship = {
+                        limit = { has_ship_flag = foc_khan_supremacy_flagship }
+                        solar_system = {
+                            random_system_planet = {
+                                save_event_target_as = foc_khan_249_army_spawn
+                            }
+                        }
+                    }
+                }
+                else_if = {
+                    limit = { exists = event_target:foc_khan_first_order_system }
+                    event_target:foc_khan_first_order_system = {
+                        random_system_planet = {
+                            save_event_target_as = foc_khan_249_army_spawn
+                        }
+                    }
+                }
+
+                if = {
+                    limit = { exists = event_target:foc_khan_249_army_spawn }
+                    create_fleet = {
+                        name = "FOC_KHAN_FIRST_ORDER_INVASION_FORCE"
+                        effect = {
+                            set_owner = event_target:foc_khan_249_army_country
+                            if = {
+                                limit = { has_global_flag = foc_khan_fleet_scale_low }
+                                while = { count = 8 create_army_transport = { army_type = assault_army species = event_target:foc_khan_249_army_species } }
+                            }
+                            else = {
+                                while = { count = 24 create_army_transport = { army_type = assault_army species = event_target:foc_khan_249_army_species } }
+                            }
+                            set_location = {
+                                target = event_target:foc_khan_249_army_spawn
+                                distance = 20
+                                angle = random
+                            }
+                            set_fleet_flag = foc_khan_first_order_invasion_force
+                            fleet_event = { id = foc_khan_229.2 days = 2 random = 4 }
+                        }
+                        settings = {
+                            can_upgrade = no
+                            can_disband = no
+                            can_change_composition = no
+                            spawn_debris = no
+                            ai_ignore_strength = yes
+                        }
+                    }
+                }
+            }
+
+            # FINAL ORDER: monthly 12-army wave on Lowest, otherwise 36; strictly tied to a living,
+            # legally owned and currently controlled Exegol colony.
+            if = {
+                limit = {
+                    has_country_flag = foc_khan_final_order_country
+                    has_global_flag = foc_khan_phase_two
+                    NOT = { has_global_flag = foc_khan_final_war_support_delay_142 }
+                    NOT = { has_global_flag = foc_khan_exegol_destroyed }
+                    # 3.11w: the 1080-army cap and the cap flag are removed. Losing
+                    # Exegol already fires crisis_finished and destroys the Final
+                    # Order country outright, so that remains the only stop.
+                    foc_khan_final_capital_alive = yes
+                }
+
+                save_event_target_as = foc_khan_249_army_country
+                owner_main_species = { save_event_target_as = foc_khan_249_army_species }
+                event_target:foc_khan_exegol_capital = {
+                    save_event_target_as = foc_khan_249_army_spawn
+                }
+
+                create_fleet = {
+                    name = "FOC_KHAN_FINAL_ORDER_INVASION_FORCE"
+                    effect = {
+                        set_owner = event_target:foc_khan_249_army_country
+                        if = {
+                            limit = { has_global_flag = foc_khan_fleet_scale_low }
+                            while = { count = 12 create_army_transport = { army_type = assault_army species = event_target:foc_khan_249_army_species } }
+                        }
+                        else = {
+                            while = { count = 36 create_army_transport = { army_type = assault_army species = event_target:foc_khan_249_army_species } }
+                        }
+                        set_location = {
+                            target = event_target:foc_khan_249_army_spawn
+                            distance = 20
+                            angle = random
+                        }
+                        set_fleet_flag = foc_khan_final_order_invasion_force
+                        fleet_event = { id = foc_khan_229.2 days = 2 random = 4 }
+                    }
+                    settings = {
+                        can_upgrade = no
+                        can_disband = no
+                        can_change_composition = no
+                        spawn_debris = no
+                        ai_ignore_strength = yes
+                    }
+                }
+            }
+        }
+    }
+}
+
+# Compatibility handler for serialized 2.29-2.32 fleet events. It removes the
+# obsolete scripted queue once and then returns the transport to native AI.
+fleet_event = {
+    id = foc_khan_229.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        exists = this
+        owner = {
+            OR = {
+                has_country_flag = foc_khan_first_order_country
+                has_country_flag = foc_khan_final_order_country
+            }
+        }
+        any_owned_ship = { is_ship_class = shipclass_transport }
+    }
+
+    immediate = { foc_khan_229_transport_fleet_action = yes }
+}
+
+# Legacy migration retained for saves that never ran 2.29. The 2.33 migration
+# performs the same cleanup again under a new flag for already migrated saves.
+event = {
+    id = foc_khan_229.3
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        NOT = { has_global_flag = foc_khan_229_migrated }
+        OR = {
+            any_country = { has_country_flag = foc_khan_first_order_country }
+            any_country = { has_country_flag = foc_khan_final_order_country }
+        }
+    }
+
+    immediate = {
+        set_global_flag = foc_khan_229_migrated
+        every_country = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = foc_khan_final_order_country
+                }
+            }
+            every_owned_fleet = {
+                limit = { any_owned_ship = { is_ship_class = shipclass_transport } }
+                foc_khan_229_transport_fleet_action = yes
+            }
+        }
+    }
+}

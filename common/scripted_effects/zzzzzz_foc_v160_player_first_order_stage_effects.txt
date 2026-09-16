@@ -1,0 +1,109 @@
+# FOC V160 - player-route First Order public emergence.
+# This file never touches the ordinary NPC First Order crisis country.
+
+foc_v160_promote_player_remnant_to_first_order = {
+    if = {
+        limit = { NOT = { has_country_flag = foc_republic_origin_became_first_order } }
+        set_name = "FOC_REPUBLIC_ORIGIN_FIRST_ORDER"
+        set_country_flag = foc_republic_origin_became_first_order
+        set_country_flag = foc_republic_origin_remnant_rebranded_first_order
+        set_country_flag = fop_player_first_order
+        remove_country_flag = foc_saga_thrawn_in_command
+        if = {
+            limit = { NOT = { has_technology = foc_tech_tibanna_mining } }
+            give_technology = { tech = foc_tech_tibanna_mining message = no }
+        }
+        if = {
+            limit = { NOT = { has_technology = foc_tech_std_turbo_1 } }
+            if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } }
+        }
+        if = {
+            limit = { NOT = { has_technology = foc_tech_std_turbo_1 } }
+            if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } }
+        }
+if = {
+            limit = { NOT = { has_technology = foc_tech_std_turbo_1 } }
+            if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } }
+        }
+        if = {
+            limit = { NOT = { has_technology = foc_tech_std_quad_1 } }
+            if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } }
+        }
+if = {
+            limit = { NOT = { has_technology = foc_tech_std_pd_1 } }
+            if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } }
+        }
+if = {
+            limit = { NOT = { has_technology = foc_tech_std_heavy_1 } }
+            if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } }
+        }
+        if = { limit = { foc_v14_is_rebel_arsenal_country = yes } if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_2 message = no } } } } else = { if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } } }
+        if = { limit = { foc_v14_is_rebel_arsenal_country = yes } if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_2 message = no } } } } else = { if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_quad_2 message = no } } } }
+        if = { limit = { foc_v14_is_rebel_arsenal_country = yes } if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_octuple_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_octuple_2 message = no } } } } else = { if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_octuple_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_octuple_2 message = no } } } }
+if = {
+            limit = { NOT = { has_technology = foc_tech_std_pd_2 } }
+            if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } }
+        }
+if = { limit = { foc_v14_is_rebel_arsenal_country = yes } if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_2 message = no } } } } else = { if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_2 message = no } } } }
+if = { limit = { foc_v14_is_rebel_arsenal_country = yes } if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_3 message = no } } } } else = { if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_3 message = no } } } }
+        if = { limit = { foc_v14_is_rebel_arsenal_country = yes } if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_3 message = no } } } } else = { if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_quad_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_quad_3 message = no } } } }
+        if = { limit = { foc_v14_is_rebel_arsenal_country = yes } if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_octuple_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_octuple_3 message = no } } } } else = { if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_octuple_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_octuple_3 message = no } } } }
+if = {
+            limit = { NOT = { has_technology = foc_tech_std_pd_3 } }
+            if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } }
+        }
+if = { limit = { foc_v14_is_rebel_arsenal_country = yes } if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_3 message = no } } } } else = { if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_3 message = no } } } }
+        set_country_flag = foc_std_weapon_era_tier_1
+        set_country_flag = foc_std_weapon_era_tier_2
+        set_country_flag = foc_std_weapon_era_tier_3
+        set_country_flag = foc_std_weapon_era_tier_4
+        set_country_flag = fop_origin_public_emergence
+        set_country_flag = foc_republic_origin_arc_completed
+
+        remove_country_flag = foc_republic_origin_player_empire
+        remove_country_flag = foc_republic_origin_player_imperial_remnant
+        remove_country_flag = foc_sw_imperial_remnant_country
+        remove_country_flag = foc_sw_scripted_fallen_empire
+        remove_country_flag = foc_republic_origin_original_imperial_remnant_fe_configured
+
+        # V232: public emergence ends the Treaty-era Remnant. Before V232 only
+        # the three economy/disarmament modifiers below were removed, so the
+        # whole Thrawn-era Remnant package (iron discipline, bought loyalty,
+        # Chimaera, Kuat contracts, consolidation, reconquest) stayed active on
+        # the First Order on top of its own infrastructure heir core.
+        # This call runs first; foc_sw_fe_infrastructure_heir_core is granted
+        # further down and is deliberately not part of the Treaty bucket.
+        foc_v232_clear_clone_wars_era_spirits = yes
+        foc_v232_clear_galactic_empire_era_spirits = yes
+        foc_v232_clear_treaty_era_spirits = yes
+        remove_modifier = foc_sw_fallen_empire_economy_core
+        remove_modifier = foc_sw_imperial_remnant_economy_focus
+        remove_modifier = foc_v157_imperial_remnant_disarmament
+        remove_country_flag = foc_v157_imperial_remnant_disarmed
+        set_country_flag = foc_v157_secret_fleet_construction_authorized
+        set_country_type = default
+
+        set_country_flag = foc_sw_fe_infrastructure_heir
+        if = {
+            limit = { NOT = { has_modifier = foc_sw_fe_infrastructure_heir_core } }
+            add_modifier = { modifier = foc_sw_fe_infrastructure_heir_core days = -1 }
+        }
+
+        set_graphical_culture = fop_first_order_01
+        set_city_graphical_culture = first_01
+        save_global_event_target_as = foc_republic_origin_empire
+        save_global_event_target_as = fop_first_order_crisis_country
+
+        # Player succession replaces the NPC crisis, but is NOT itself a crisis yet.
+        set_global_flag = fop_origin_replaces_first_order_crisis
+        set_global_flag = foc_khan_crisis_disabled
+        remove_global_flag = foc_khan_crisis_spawn_scheduled
+
+        country_event = { id = fop_origin.206 }
+        country_event = { id = foc_kylo.10 days = 1 }
+        # Refresh only generated designs after the player shipset and stage are ready.
+        refresh_auto_generated_ship_designs = yes
+        set_country_flag = foc_v1717b_player_order_shipset_repaired
+        log = "FOC_V160_PLAYER_FO: Imperial player route publicly became the First Order after the five-year War-in-Heaven stage; crisis status still awaits a real Starkiller impact."
+    }
+}

@@ -1,0 +1,2032 @@
+# LOWEST-only guardian-scale Death Star copies. Original FOC records and planet killer are untouched.
+utility_component_template = {
+    key = FOC_LOWEST_DS_I_DEATH_STAR_REACTOR
+    size = extra_large
+    icon = GFX_ship_part_dark_matter_power_core
+    icon_frame = 1
+    power = 500000
+    resources = {
+        category = ship_components
+        cost = {
+
+        }
+    }
+    modifier = {
+        ship_shield_regen_add_static = 45
+    }
+    component_set = power_core
+    size_restriction = {
+        colossus
+    }
+    hidden = yes
+    ai_weight = {
+        weight = 0
+    }
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+utility_component_template = {
+    key = FOC_LOWEST_DS_I_DEATH_STAR_JUMPDRIVE
+    size = small
+    icon = GFX_ship_part_jump_drive_1
+    icon_frame = 1
+    power = -5000
+    resources = {
+        category = ship_components
+        cost = {
+
+        
+            sr_tibanna_swgs = 50
+        }
+    }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = {
+        ship_windup_mult = 0.5
+        ship_ftl_jumpdrive_range_mult = 1.5
+    }
+    class_restriction = {
+        shipclass_military
+        shipclass_military_special
+    }
+    size_restriction = {
+        colossus
+    }
+    component_set = ftl_component_deathstar
+    hidden = yes
+    ai_weight = {
+        weight = 0
+    }
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+utility_component_template = {
+    key = FOC_LOWEST_DS_I_DEATH_STAR_THRUSTER
+    size = large
+    icon = GFX_ship_part_thruster_5
+    icon_frame = 1
+    power = -1000
+    resources = {
+        category = ship_components
+        cost = {
+
+        
+            sr_tibanna_swgs = 40
+        }
+    }
+    modifier = {
+        ship_base_speed_mult = 0.2
+    }
+    component_set = thruster_components
+    size_restriction = {
+        colossus
+    }
+    hidden = yes
+    ai_weight = {
+        weight = 0
+    }
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+utility_component_template = {
+    key = FOC_LOWEST_DS_I_SENSOR_4
+    size = medium
+    icon = GFX_ship_part_sensor_4
+    icon_frame = 1
+    power = -20
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 8
+        }
+    }
+    sensor_range = 4
+    hyperlane_range = 5
+    ship_modifier = {
+        ship_tracking_add = 15
+    }
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    }
+    show_tech_unlock_if = {
+        country_uses_bio_ships = no
+    }
+    prerequisites = {
+        tech_sensors_4
+    }
+    component_set = sensor_components
+    ai_weight = {
+        weight = 0
+    }
+    hidden = yes
+    size_restriction = {
+        colossus
+    }
+}
+utility_component_template = {
+    key = FOC_LOWEST_DS_I_DEATH_STAR_CORE_COMPONENT
+    size = small
+    icon = GFX_ship_part_computer_artillery_sapient
+    icon_frame = 1
+    power = -50000
+    resources = {
+        category = ship_components
+        cost = {
+
+        }
+    }
+    class_restriction = {
+        shipclass_military
+        shipclass_military_special
+    }
+    size_restriction = {
+        colossus
+    }
+    component_set = combat_computers
+    ship_behavior = foc_v1718_swgs_artillery_ship
+    ship_modifier = {
+        ship_armor_hardening_add = 0.05
+        ship_shield_hardening_add = 0.05
+        ship_disengage_chance_mult = -1
+        ship_emergency_ftl_min_days_add = 1000000
+    }
+    hidden = yes
+    ai_weight = {
+        weight = 0
+    }
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    modifier = {
+        ship_hull_add = 5
+        ship_armor_add = 5
+        ship_shield_add = 10
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+utility_component_template = {
+    key = FOC_LOWEST_DS_I_DEATH_STAR_CREW
+    size = aux
+    icon = GFX_deathstar_crew
+    icon_frame = 1
+    power = 10
+    resources = {
+        category = ship_components
+        cost = {
+            food = 3280
+        }
+    }
+    ship_modifier = {
+        ship_hull_regen_add_static = 2
+        ship_armor_regen_add_static = 4
+    }
+    component_set = deathstar_crew
+    hidden = yes
+    ai_weight = {
+        weight = 0
+    }
+    size_restriction = {
+        colossus
+    }
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    }
+}
+utility_component_template = {
+    key = FOC_LOWEST_DS_I_DEATH_STAR_SNARE
+    size = medium
+    icon = GFX_ship_part_aura_snare
+    icon_frame = 1
+    power = -2500
+    resources = {
+        category = ship_components
+        cost = {
+
+        }
+    }
+    size_restriction = {
+        colossus
+    }
+    component_set = deathstar_snare
+    hostile_aura = {
+        name = aura_ship_subspace_snare
+        system_wide = yes
+        apply_on = fleets
+        stack_info = {
+            id = hostile_snare_aura
+            priority = 9999
+        }
+        modifier = {
+            ship_emergency_ftl_min_days_mult = 3
+            ship_disengage_chance_mult = -3
+        }
+        graphics = {
+            area_effect = {
+                entity = circle_area_entity
+                dynamic_scale = yes
+            }
+            ship_effect = {
+                entity = ship_aura_negative_entity
+                dynamic_scale = no
+            }
+        }
+    }
+    ai_weight = {
+        weight = 0
+    }
+    hidden = yes
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    }
+}
+weapon_component_template = {
+    key = FOC_LOWEST_DS_I_DEATH_STAR_GUN
+    size = titanic
+    entity = invisible_turret_entity
+    type = instant
+    prio_projectile = yes
+    icon = GFX_deathstar_world_cracker
+    icon_frame = 1
+    firing_arc = 0.1
+    min_range = 30.0
+    prerequisites = { "tech_colossus" "tech_juggernaut" }
+    component_set = DEATH_STAR_GUN_SET
+    projectile_gfx = foc_v13_deathstar_superweapon_gfx
+    size_restriction = {
+        colossus
+    }
+    tags = {
+        weapon_type_energy
+    }
+    ai_tags = {
+        weapon_role_artillery
+    }
+    ai_tag_weight = 0
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 5500
+            sr_tibanna_swgs = 32
+            sr_kyber_swgs = 10000
+        }
+    }
+    power = -50000
+    damage = {
+        min = 5333.33333333
+        max = 8000
+    }
+    windup = {
+        min = 20
+        max = 20
+    }
+    total_fire_time = 100
+    range = 180
+    accuracy = 0.9
+    tracking = 0.05
+    hull_damage = 1
+    armor_damage = 1
+    shield_damage = 1
+    shield_penetration = 0.25
+    armor_penetration = 0.25
+    ai_weight = {
+        weight = 0
+    }
+    hidden = yes
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = FOC_LOWEST_DS_I_FOC_STD_TURBO_L_T3_G_V02
+    hidden = yes
+    size = large
+    type = instant
+    icon = GFX_ship_part_turbo_laser_g_3
+    icon_frame = 1
+    tags = {
+        weapon_type_energy
+        weapon_type_kinetic
+    }
+    ai_tags = {
+        weapon_role_artillery
+    }
+    component_set = FOC_DEATH_STAR_BATTERY_SET
+    size_restriction = {
+        colossus
+    }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 8
+        }
+        upkeep = {
+
+        }
+    }
+    power = -500
+    damage = {
+        min = 161.764705882
+        max = 242.647058824
+    }
+    windup = {
+        min = 5
+        max = 5
+    }
+    total_fire_time = 50
+    range = 130
+    accuracy = 0.85
+    tracking = 0.1
+    shield_penetration = 0.25
+    armor_penetration = 0.25
+    ai_weight = {
+        weight = 0
+    }
+    entity = ds_empty_turret_entity
+    projectile_gfx = gamma_laser_l
+    prerequisites = {
+        foc_tech_emp_turbo_2
+    }
+    potential = {
+        from = { foc_v1717_first_order_empire_arsenal_allowed = yes }
+
+        has_global_flag = foc_khan_strength_lowest
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    show_tech_unlock_if = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = FOC_LOWEST_DS_I_FOC_STD_TURBO_M_T3_G_V02
+    hidden = yes
+    size = medium
+    type = instant
+    icon = GFX_ship_part_turbo_laser_g_3
+    icon_frame = 1
+    tags = {
+        weapon_type_energy
+        weapon_type_kinetic
+    }
+    ai_tags = {
+        weapon_role_anti_armor
+        weapon_role_anti_shield
+    }
+    component_set = FOC_DEATH_STAR_BATTERY_SET
+    size_restriction = {
+        colossus
+    }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 4
+        }
+        upkeep = {
+
+        }
+    }
+    power = -300
+    damage = {
+        min = 76.049382716
+        max = 114.074074074
+    }
+    windup = {
+        min = 4
+        max = 4
+    }
+    total_fire_time = 40
+    range = 95
+    accuracy = 0.9
+    tracking = 0.3
+    shield_penetration = 0.2
+    armor_penetration = 0.2
+    ai_weight = {
+        weight = 0
+    }
+    entity = ds_empty_turret_entity
+    projectile_gfx = gamma_laser_m
+    prerequisites = {
+        foc_tech_emp_turbo_2
+    }
+    potential = {
+        from = { foc_v1717_first_order_empire_arsenal_allowed = yes }
+
+        has_global_flag = foc_khan_strength_lowest
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    show_tech_unlock_if = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = FOC_LOWEST_DS_I_FOC_STD_TURBO_S_T3_G_V02
+    hidden = yes
+    size = small
+    type = instant
+    icon = GFX_ship_part_turbo_laser_g_3
+    icon_frame = 1
+    tags = {
+        weapon_type_energy
+        weapon_type_kinetic
+    }
+    ai_tags = {
+        weapon_role_anti_armor
+        weapon_role_anti_shield
+    }
+    component_set = FOC_DEATH_STAR_BATTERY_SET
+    size_restriction = {
+        colossus
+    }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 2
+        }
+        upkeep = {
+
+        }
+    }
+    power = -150
+    damage = {
+        min = 29.3333333333
+        max = 44
+    }
+    windup = {
+        min = 3
+        max = 3
+    }
+    total_fire_time = 30
+    range = 70
+    accuracy = 0.9
+    tracking = 0.5
+    shield_penetration = 0.15
+    armor_penetration = 0.15
+    ai_weight = {
+        weight = 0
+    }
+    entity = ds_empty_turret_entity
+    projectile_gfx = gamma_laser_s
+    prerequisites = {
+        foc_tech_emp_turbo_2
+    }
+    potential = {
+        from = { foc_v1717_first_order_empire_arsenal_allowed = yes }
+
+        has_global_flag = foc_khan_strength_lowest
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    show_tech_unlock_if = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = FOC_LOWEST_DS_I_FOC_STD_PD_S_T3_G_V02
+    hidden = yes
+    size = small
+    type = point_defence
+    point_defence_targets = {
+        strike_craft
+        missile
+    }
+    icon = GFX_ship_part_defence_turbo_g_2
+    icon_frame = 1
+    tags = {
+        weapon_type_energy
+    }
+    ai_tags = {
+        weapon_role_point_defense
+    }
+    component_set = FOC_DEATH_STAR_POINT_DEFENSE_SET
+    size_restriction = {
+        colossus
+    }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 2
+        }
+        upkeep = {
+
+        }
+    }
+    power = -100
+    damage = {
+        min = 8.55555555556
+        max = 12.8333333333
+    }
+    total_fire_time = 20
+    range = 30
+    accuracy = 0.8
+    tracking = 0.7
+    ai_weight = {
+        weight = 0
+    }
+    projectile_gfx = strike_craft_laser_3
+    entity = ds_empty_turret_entity
+    prerequisites = {
+        foc_tech_std_pd_2
+    }
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    windup = {
+        min = 2
+        max = 2
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+strike_craft_component_template = {
+    key = FOC_LOWEST_DS_I_FOC_DEATH_STAR_TIE_WING
+    size = large
+    entity = ssp_imperial_tie_entity
+    weapon_type = point_defence
+    point_defence_targets = {
+        strike_craft
+    }
+    projectile_gfx = strike_craft_laser_2
+    power = -150
+    resources = {
+        category = ship_components
+        cost = {
+
+        
+            sr_tibanna_swgs = 8
+        }
+        upkeep = {
+
+        }
+    }
+    count = 4
+    regeneration_per_day = 0.2
+    launch_time = 5
+    damage = {
+        min = 4.62962962963
+        max = 6.94444444444
+    }
+    cooldown = 1.25
+    attack_range = 15
+    range = 15
+    engagement_range = 180
+    accuracy = 0.9
+    tracking = 0.7
+    health = 35
+    armor = 0
+    shield = 15
+    evasion = 0.7
+    speed = 500
+    rotation_speed = 1
+    acceleration = 1.2
+    ship_behavior = fighters_behavior
+    icon = GFX_ship_part_ssp_imperial_tie
+    icon_frame = 1
+    component_set = FOC_DEATH_STAR_TIE_WING_SET
+    tags = {
+        weapon_type_strike_craft
+    }
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+    hidden = yes
+    size_restriction = {
+        colossus
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+utility_component_template = {
+    key = FOC_LOWEST_DS_I_FOC_DEATH_STAR_DEFENSE
+    size = large
+    icon = GFX_ship_part_adaptive_defense_armor
+    icon_frame = 1
+    power = -1000
+    component_set = FOC_DEATH_STAR_DEFENSE_SET
+    size_restriction = {
+        colossus
+    }
+    modifier = {
+        ship_hull_add = 3333
+        ship_armor_add = 3333
+        ship_shield_add = 2666
+        ship_hull_regen_add_static = 0.2
+        ship_armor_regen_add_static = 0.4
+        ship_shield_regen_add_static = 2
+    }
+    ship_modifier = {
+        ship_armor_hardening_add = 0.01
+        ship_shield_hardening_add = 0.01
+    }
+    resources = {
+        category = ship_components
+        cost = {
+
+        
+            sr_tibanna_swgs = 8
+        }
+        upkeep = {
+
+        }
+    }
+    ai_weight = {
+        weight = 0
+    }
+    hidden = yes
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    }
+}
+utility_component_template = {
+    key = FOC_LOWEST_DS_II_UNFINISHED_DEATH_STAR_REACTOR
+    size = extra_large
+    icon = GFX_ship_part_dark_matter_power_core
+    icon_frame = 1
+    power = 500000
+    resources = {
+        category = ship_components
+        cost = {
+
+        }
+    }
+    modifier = {
+        ship_shield_regen_add_static = 15
+    }
+    component_set = power_core
+    size_restriction = {
+        colossus
+    }
+    hidden = yes
+    ai_weight = {
+        weight = 0
+    }
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+utility_component_template = {
+    key = FOC_LOWEST_DS_II_UNFINISHED_FOC_DEATH_STAR_II_CONSTRUCTION_DRIVE
+    size = small
+    icon = GFX_ship_part_jump_drive_1
+    icon_frame = 1
+    power = -5000
+    resources = {
+        category = ship_components
+        cost = {
+
+        
+            sr_tibanna_swgs = 50
+        }
+    }
+    ftl = no
+    jumpdrive = no
+    ship_modifier = {
+        ship_windup_mult = 0.5
+        ship_ftl_jumpdrive_range_mult = 1.5
+    }
+    class_restriction = {
+        shipclass_military
+        shipclass_military_special
+    }
+    size_restriction = {
+        colossus
+    }
+    ai_weight = {
+        weight = 0
+    }
+    component_set = ftl_component_deathstar
+    hidden = yes
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+utility_component_template = {
+    key = FOC_LOWEST_DS_II_UNFINISHED_FOC_DEATH_STAR_II_CONSTRUCTION_THRUSTER
+    size = large
+    icon = GFX_ship_part_thruster_5
+    icon_frame = 1
+    power = -1000
+    resources = {
+        category = ship_components
+        cost = {
+
+        
+            sr_tibanna_swgs = 40
+        }
+    }
+    modifier = {
+        ship_base_speed_mult = -1.0
+    }
+    ship_modifier = {
+        ship_speed_reduction = 1.0
+    }
+    ai_weight = {
+        weight = 0
+    }
+    component_set = thruster_components
+    size_restriction = {
+        colossus
+    }
+    hidden = yes
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+utility_component_template = {
+    key = FOC_LOWEST_DS_II_UNFINISHED_SENSOR_4
+    size = medium
+    icon = GFX_ship_part_sensor_4
+    icon_frame = 1
+    power = -20
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 8
+        }
+    }
+    sensor_range = 4
+    hyperlane_range = 5
+    ship_modifier = {
+        ship_tracking_add = 15
+    }
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    }
+    show_tech_unlock_if = {
+        country_uses_bio_ships = no
+    }
+    prerequisites = {
+        tech_sensors_4
+    }
+    component_set = sensor_components
+    ai_weight = {
+        weight = 0
+    }
+    hidden = yes
+    size_restriction = {
+        colossus
+    }
+}
+utility_component_template = {
+    key = FOC_LOWEST_DS_II_UNFINISHED_FOC_DEATH_STAR_II_CORE_COMPONENT
+    size = small
+    icon = GFX_ship_part_computer_artillery_sapient
+    icon_frame = 1
+    power = -50000
+    resources = {
+        category = ship_components
+        cost = {
+
+        }
+    }
+    class_restriction = {
+        shipclass_military
+        shipclass_military_special
+    }
+    size_restriction = {
+        colossus
+    }
+    component_set = combat_computers
+    ai_weight = {
+        weight = 0
+    }
+    ship_behavior = foc_v1718_swgs_artillery_ship
+    modifier = {
+        ship_hull_add = 0
+        ship_armor_add = 10
+        ship_shield_add = 0
+    }
+    ship_modifier = {
+        ship_armor_hardening_add = 0.05
+        ship_shield_hardening_add = 0.05
+        ship_disengage_chance_mult = -1
+        ship_emergency_ftl_min_days_add = 1000000
+    }
+    hidden = yes
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+utility_component_template = {
+    key = FOC_LOWEST_DS_II_UNFINISHED_DEATH_STAR_CREW
+    size = aux
+    icon = GFX_deathstar_crew
+    icon_frame = 1
+    power = 10
+    resources = {
+        category = ship_components
+        cost = {
+            food = 3280
+        }
+    }
+    ship_modifier = {
+        ship_hull_regen_add_static = 2
+        ship_armor_regen_add_static = 4
+    }
+    component_set = deathstar_crew
+    hidden = yes
+    ai_weight = {
+        weight = 0
+    }
+    size_restriction = {
+        colossus
+    }
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    }
+}
+utility_component_template = {
+    key = FOC_LOWEST_DS_II_UNFINISHED_DEATH_STAR_SNARE
+    size = medium
+    icon = GFX_ship_part_aura_snare
+    icon_frame = 1
+    power = -2500
+    resources = {
+        category = ship_components
+        cost = {
+
+        }
+    }
+    size_restriction = {
+        colossus
+    }
+    component_set = deathstar_snare
+    hostile_aura = {
+        name = aura_ship_subspace_snare
+        system_wide = yes
+        apply_on = fleets
+        stack_info = {
+            id = hostile_snare_aura
+            priority = 9999
+        }
+        modifier = {
+            ship_emergency_ftl_min_days_mult = 3
+            ship_disengage_chance_mult = -3
+        }
+        graphics = {
+            area_effect = {
+                entity = circle_area_entity
+                dynamic_scale = yes
+            }
+            ship_effect = {
+                entity = ship_aura_negative_entity
+                dynamic_scale = no
+            }
+        }
+    }
+    ai_weight = {
+        weight = 0
+    }
+    hidden = yes
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    }
+}
+weapon_component_template = {
+    key = FOC_LOWEST_DS_II_UNFINISHED_FOC_DEATH_STAR_II_GUN
+    size = titanic
+    entity = invisible_turret_entity
+    type = instant
+    prio_projectile = yes
+    icon = GFX_deathstar_world_cracker
+    icon_frame = 1
+    firing_arc = 0.1
+    min_range = 30.0
+    prerequisites = { "tech_colossus" "tech_juggernaut" }
+    component_set = DEATH_STAR_GUN_SET
+    projectile_gfx = foc_v13_deathstar_ii_superweapon_gfx
+    size_restriction = {
+        colossus
+    }
+    tags = {
+        weapon_type_energy
+    }
+    ai_tags = {
+        weapon_role_artillery
+    }
+    ai_tag_weight = 0
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 5500
+            sr_tibanna_swgs = 32
+            sr_kyber_swgs = 10000
+        }
+    }
+    power = -50000
+    damage = {
+        min = 4210.52631579
+        max = 6315.78947368
+    }
+    windup = {
+        min = 20
+        max = 20
+    }
+    total_fire_time = 100
+    range = 180
+    accuracy = 0.9
+    tracking = 0.05
+    hull_damage = 1
+    armor_damage = 1
+    shield_damage = 1
+    shield_penetration = 0.25
+    armor_penetration = 0.25
+    ai_weight = {
+        weight = 0
+    }
+    hidden = yes
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = FOC_LOWEST_DS_II_UNFINISHED_FOC_STD_TURBO_L_T3_G_V01
+    hidden = yes
+    size = large
+    type = instant
+    icon = GFX_ship_part_turbo_laser_g_3
+    icon_frame = 1
+    tags = {
+        weapon_type_energy
+        weapon_type_kinetic
+    }
+    ai_tags = {
+        weapon_role_artillery
+    }
+    component_set = FOC_DEATH_STAR_BATTERY_SET
+    size_restriction = {
+        colossus
+    }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 8
+        }
+        upkeep = {
+
+        }
+    }
+    power = -500
+    damage = {
+        min = 127.708978328
+        max = 191.563467492
+    }
+    windup = {
+        min = 5
+        max = 5
+    }
+    total_fire_time = 50
+    range = 130
+    accuracy = 0.85
+    tracking = 0.1
+    shield_penetration = 0.25
+    armor_penetration = 0.25
+    ai_weight = {
+        weight = 0
+    }
+    entity = ds_empty_turret_entity
+    projectile_gfx = gamma_laser_l
+    prerequisites = {
+        foc_tech_emp_turbo_2
+    }
+    potential = {
+        from = { foc_v1717_first_order_empire_arsenal_allowed = yes }
+
+        has_global_flag = foc_khan_strength_lowest
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    show_tech_unlock_if = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = FOC_LOWEST_DS_II_UNFINISHED_FOC_STD_TURBO_M_T3_G_V01
+    hidden = yes
+    size = medium
+    type = instant
+    icon = GFX_ship_part_turbo_laser_g_3
+    icon_frame = 1
+    tags = {
+        weapon_type_energy
+        weapon_type_kinetic
+    }
+    ai_tags = {
+        weapon_role_anti_armor
+        weapon_role_anti_shield
+    }
+    component_set = FOC_DEATH_STAR_BATTERY_SET
+    size_restriction = {
+        colossus
+    }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 4
+        }
+        upkeep = {
+
+        }
+    }
+    power = -300
+    damage = {
+        min = 60.0389863548
+        max = 90.0584795322
+    }
+    windup = {
+        min = 4
+        max = 4
+    }
+    total_fire_time = 40
+    range = 95
+    accuracy = 0.9
+    tracking = 0.3
+    shield_penetration = 0.2
+    armor_penetration = 0.2
+    ai_weight = {
+        weight = 0
+    }
+    entity = ds_empty_turret_entity
+    projectile_gfx = gamma_laser_m
+    prerequisites = {
+        foc_tech_emp_turbo_2
+    }
+    potential = {
+        from = { foc_v1717_first_order_empire_arsenal_allowed = yes }
+
+        has_global_flag = foc_khan_strength_lowest
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    show_tech_unlock_if = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = FOC_LOWEST_DS_II_UNFINISHED_FOC_STD_TURBO_S_T3_G_V01
+    hidden = yes
+    size = small
+    type = instant
+    icon = GFX_ship_part_turbo_laser_g_3
+    icon_frame = 1
+    tags = {
+        weapon_type_energy
+        weapon_type_kinetic
+    }
+    ai_tags = {
+        weapon_role_anti_armor
+        weapon_role_anti_shield
+    }
+    component_set = FOC_DEATH_STAR_BATTERY_SET
+    size_restriction = {
+        colossus
+    }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 2
+        }
+        upkeep = {
+
+        }
+    }
+    power = -150
+    damage = {
+        min = 23.1578947368
+        max = 34.7368421053
+    }
+    windup = {
+        min = 3
+        max = 3
+    }
+    total_fire_time = 30
+    range = 70
+    accuracy = 0.9
+    tracking = 0.5
+    shield_penetration = 0.15
+    armor_penetration = 0.15
+    ai_weight = {
+        weight = 0
+    }
+    entity = ds_empty_turret_entity
+    projectile_gfx = gamma_laser_s
+    prerequisites = {
+        foc_tech_emp_turbo_2
+    }
+    potential = {
+        from = { foc_v1717_first_order_empire_arsenal_allowed = yes }
+
+        has_global_flag = foc_khan_strength_lowest
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    show_tech_unlock_if = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = FOC_LOWEST_DS_II_UNFINISHED_FOC_STD_PD_S_T3_G_V01
+    hidden = yes
+    size = small
+    type = point_defence
+    point_defence_targets = {
+        strike_craft
+        missile
+    }
+    icon = GFX_ship_part_defence_turbo_g_2
+    icon_frame = 1
+    tags = {
+        weapon_type_energy
+    }
+    ai_tags = {
+        weapon_role_point_defense
+    }
+    component_set = FOC_DEATH_STAR_POINT_DEFENSE_SET
+    size_restriction = {
+        colossus
+    }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 2
+        }
+        upkeep = {
+
+        }
+    }
+    power = -100
+    damage = {
+        min = 6.75438596491
+        max = 10.1315789474
+    }
+    total_fire_time = 20
+    range = 30
+    accuracy = 0.8
+    tracking = 0.7
+    ai_weight = {
+        weight = 0
+    }
+    projectile_gfx = strike_craft_laser_3
+    entity = ds_empty_turret_entity
+    prerequisites = {
+        foc_tech_std_pd_2
+    }
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    windup = {
+        min = 2
+        max = 2
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+strike_craft_component_template = {
+    key = FOC_LOWEST_DS_II_UNFINISHED_FOC_DEATH_STAR_II_TIE_WING
+    size = large
+    entity = ssp_imperial_tie_entity
+    weapon_type = point_defence
+    point_defence_targets = {
+        strike_craft
+    }
+    projectile_gfx = strike_craft_laser_2
+    power = -150
+    resources = {
+        category = ship_components
+        cost = {
+
+        
+            sr_tibanna_swgs = 8
+        }
+        upkeep = {
+
+        }
+    }
+    count = 4
+    regeneration_per_day = 0.2
+    launch_time = 5
+    damage = {
+        min = 3.65497076023
+        max = 5.48245614035
+    }
+    cooldown = 1.25
+    attack_range = 15
+    range = 15
+    engagement_range = 180
+    accuracy = 0.9
+    tracking = 0.7
+    health = 35
+    armor = 0
+    shield = 15
+    evasion = 0.7
+    speed = 500
+    rotation_speed = 1
+    acceleration = 1.2
+    ship_behavior = fighters_behavior
+    icon = GFX_ship_part_ssp_imperial_tie
+    icon_frame = 1
+    component_set = FOC_DEATH_STAR_TIE_WING_SET
+    tags = {
+        weapon_type_strike_craft
+    }
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+    hidden = yes
+    size_restriction = {
+        colossus
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+utility_component_template = {
+    key = FOC_LOWEST_DS_II_UNFINISHED_FOC_DEATH_STAR_II_DEFENSE
+    size = large
+    icon = GFX_ship_part_adaptive_defense_armor
+    icon_frame = 1
+    power = -1000
+    component_set = FOC_DEATH_STAR_DEFENSE_SET
+    size_restriction = {
+        colossus
+    }
+    modifier = {
+        ship_hull_add = 2000
+        ship_armor_add = 2666
+        ship_shield_add = 2000
+        ship_hull_regen_add_static = 0.2
+        ship_armor_regen_add_static = 0.4
+        ship_shield_regen_add_static = 2
+    }
+    ship_modifier = {
+        ship_armor_hardening_add = 0.01
+        ship_shield_hardening_add = 0.01
+    }
+    resources = {
+        category = ship_components
+        cost = {
+
+        
+            sr_tibanna_swgs = 8
+        }
+        upkeep = {
+
+        }
+    }
+    ai_weight = {
+        weight = 0
+    }
+    hidden = yes
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    }
+}
+utility_component_template = {
+    key = FOC_LOWEST_DS_II_DEATH_STAR_REACTOR
+    size = extra_large
+    icon = GFX_ship_part_dark_matter_power_core
+    icon_frame = 1
+    power = 500000
+    resources = {
+        category = ship_components
+        cost = {
+
+        }
+    }
+    modifier = {
+        ship_shield_regen_add_static = 60
+    }
+    component_set = power_core
+    size_restriction = {
+        colossus
+    }
+    hidden = yes
+    ai_weight = {
+        weight = 0
+    }
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+utility_component_template = {
+    key = FOC_LOWEST_DS_II_DEATH_STAR_JUMPDRIVE
+    size = small
+    icon = GFX_ship_part_jump_drive_1
+    icon_frame = 1
+    power = -5000
+    resources = {
+        category = ship_components
+        cost = {
+
+        
+            sr_tibanna_swgs = 50
+        }
+    }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = {
+        ship_windup_mult = 0.5
+        ship_ftl_jumpdrive_range_mult = 1.5
+    }
+    class_restriction = {
+        shipclass_military
+        shipclass_military_special
+    }
+    size_restriction = {
+        colossus
+    }
+    component_set = ftl_component_deathstar
+    hidden = yes
+    ai_weight = {
+        weight = 0
+    }
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+utility_component_template = {
+    key = FOC_LOWEST_DS_II_DEATH_STAR_THRUSTER
+    size = large
+    icon = GFX_ship_part_thruster_5
+    icon_frame = 1
+    power = -1000
+    resources = {
+        category = ship_components
+        cost = {
+
+        
+            sr_tibanna_swgs = 40
+        }
+    }
+    modifier = {
+        ship_base_speed_mult = 0.2
+    }
+    component_set = thruster_components
+    size_restriction = {
+        colossus
+    }
+    hidden = yes
+    ai_weight = {
+        weight = 0
+    }
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+utility_component_template = {
+    key = FOC_LOWEST_DS_II_SENSOR_4
+    size = medium
+    icon = GFX_ship_part_sensor_4
+    icon_frame = 1
+    power = -20
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 8
+        }
+    }
+    sensor_range = 4
+    hyperlane_range = 5
+    ship_modifier = {
+        ship_tracking_add = 15
+    }
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    }
+    show_tech_unlock_if = {
+        country_uses_bio_ships = no
+    }
+    prerequisites = {
+        tech_sensors_4
+    }
+    component_set = sensor_components
+    ai_weight = {
+        weight = 0
+    }
+    hidden = yes
+    size_restriction = {
+        colossus
+    }
+}
+utility_component_template = {
+    key = FOC_LOWEST_DS_II_FOC_DEATH_STAR_II_CORE_COMPONENT
+    size = small
+    icon = GFX_ship_part_computer_artillery_sapient
+    icon_frame = 1
+    power = -50000
+    resources = {
+        category = ship_components
+        cost = {
+
+        }
+    }
+    class_restriction = {
+        shipclass_military
+        shipclass_military_special
+    }
+    size_restriction = {
+        colossus
+    }
+    component_set = combat_computers
+    ai_weight = {
+        weight = 0
+    }
+    ship_behavior = foc_v1718_swgs_artillery_ship
+    modifier = {
+        ship_hull_add = 5
+        ship_armor_add = 10
+        ship_shield_add = 0
+    }
+    ship_modifier = {
+        ship_armor_hardening_add = 0.05
+        ship_shield_hardening_add = 0.05
+        ship_disengage_chance_mult = -1
+        ship_emergency_ftl_min_days_add = 1000000
+    }
+    hidden = yes
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+utility_component_template = {
+    key = FOC_LOWEST_DS_II_DEATH_STAR_CREW
+    size = aux
+    icon = GFX_deathstar_crew
+    icon_frame = 1
+    power = 10
+    resources = {
+        category = ship_components
+        cost = {
+            food = 3280
+        }
+    }
+    ship_modifier = {
+        ship_hull_regen_add_static = 2
+        ship_armor_regen_add_static = 4
+    }
+    component_set = deathstar_crew
+    hidden = yes
+    ai_weight = {
+        weight = 0
+    }
+    size_restriction = {
+        colossus
+    }
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    }
+}
+utility_component_template = {
+    key = FOC_LOWEST_DS_II_DEATH_STAR_SNARE
+    size = medium
+    icon = GFX_ship_part_aura_snare
+    icon_frame = 1
+    power = -2500
+    resources = {
+        category = ship_components
+        cost = {
+
+        }
+    }
+    size_restriction = {
+        colossus
+    }
+    component_set = deathstar_snare
+    hostile_aura = {
+        name = aura_ship_subspace_snare
+        system_wide = yes
+        apply_on = fleets
+        stack_info = {
+            id = hostile_snare_aura
+            priority = 9999
+        }
+        modifier = {
+            ship_emergency_ftl_min_days_mult = 3
+            ship_disengage_chance_mult = -3
+        }
+        graphics = {
+            area_effect = {
+                entity = circle_area_entity
+                dynamic_scale = yes
+            }
+            ship_effect = {
+                entity = ship_aura_negative_entity
+                dynamic_scale = no
+            }
+        }
+    }
+    ai_weight = {
+        weight = 0
+    }
+    hidden = yes
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    }
+}
+weapon_component_template = {
+    key = FOC_LOWEST_DS_II_FOC_DEATH_STAR_II_GUN
+    size = titanic
+    entity = invisible_turret_entity
+    type = instant
+    prio_projectile = yes
+    icon = GFX_deathstar_world_cracker
+    icon_frame = 1
+    firing_arc = 0.1
+    min_range = 30.0
+    prerequisites = { "tech_colossus" "tech_juggernaut" }
+    component_set = DEATH_STAR_GUN_SET
+    projectile_gfx = foc_v13_deathstar_ii_superweapon_gfx
+    size_restriction = {
+        colossus
+    }
+    tags = {
+        weapon_type_energy
+    }
+    ai_tags = {
+        weapon_role_artillery
+    }
+    ai_tag_weight = 0
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 5500
+            sr_tibanna_swgs = 32
+            sr_kyber_swgs = 10000
+        }
+    }
+    power = -50000
+    damage = {
+        min = 6175.43859649
+        max = 9263.15789474
+    }
+    windup = {
+        min = 20
+        max = 20
+    }
+    total_fire_time = 100
+    range = 180
+    accuracy = 0.9
+    tracking = 0.05
+    hull_damage = 1
+    armor_damage = 1
+    shield_damage = 1
+    shield_penetration = 0.25
+    armor_penetration = 0.25
+    ai_weight = {
+        weight = 0
+    }
+    hidden = yes
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = FOC_LOWEST_DS_II_FOC_STD_TURBO_L_T3_G_V01
+    hidden = yes
+    size = large
+    type = instant
+    icon = GFX_ship_part_turbo_laser_g_3
+    icon_frame = 1
+    tags = {
+        weapon_type_energy
+        weapon_type_kinetic
+    }
+    ai_tags = {
+        weapon_role_artillery
+    }
+    component_set = FOC_DEATH_STAR_BATTERY_SET
+    size_restriction = {
+        colossus
+    }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 8
+        }
+        upkeep = {
+
+        }
+    }
+    power = -500
+    damage = {
+        min = 187.306501548
+        max = 280.959752322
+    }
+    windup = {
+        min = 5
+        max = 5
+    }
+    total_fire_time = 50
+    range = 130
+    accuracy = 0.85
+    tracking = 0.1
+    shield_penetration = 0.25
+    armor_penetration = 0.25
+    ai_weight = {
+        weight = 0
+    }
+    entity = ds_empty_turret_entity
+    projectile_gfx = gamma_laser_l
+    prerequisites = {
+        foc_tech_emp_turbo_2
+    }
+    potential = {
+        from = { foc_v1717_first_order_empire_arsenal_allowed = yes }
+
+        has_global_flag = foc_khan_strength_lowest
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    show_tech_unlock_if = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = FOC_LOWEST_DS_II_FOC_STD_TURBO_M_T3_G_V01
+    hidden = yes
+    size = medium
+    type = instant
+    icon = GFX_ship_part_turbo_laser_g_3
+    icon_frame = 1
+    tags = {
+        weapon_type_energy
+        weapon_type_kinetic
+    }
+    ai_tags = {
+        weapon_role_anti_armor
+        weapon_role_anti_shield
+    }
+    component_set = FOC_DEATH_STAR_BATTERY_SET
+    size_restriction = {
+        colossus
+    }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 4
+        }
+        upkeep = {
+
+        }
+    }
+    power = -300
+    damage = {
+        min = 88.057179987
+        max = 132.085769981
+    }
+    windup = {
+        min = 4
+        max = 4
+    }
+    total_fire_time = 40
+    range = 95
+    accuracy = 0.9
+    tracking = 0.3
+    shield_penetration = 0.2
+    armor_penetration = 0.2
+    ai_weight = {
+        weight = 0
+    }
+    entity = ds_empty_turret_entity
+    projectile_gfx = gamma_laser_m
+    prerequisites = {
+        foc_tech_emp_turbo_2
+    }
+    potential = {
+        from = { foc_v1717_first_order_empire_arsenal_allowed = yes }
+
+        has_global_flag = foc_khan_strength_lowest
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    show_tech_unlock_if = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = FOC_LOWEST_DS_II_FOC_STD_TURBO_S_T3_G_V01
+    hidden = yes
+    size = small
+    type = instant
+    icon = GFX_ship_part_turbo_laser_g_3
+    icon_frame = 1
+    tags = {
+        weapon_type_energy
+        weapon_type_kinetic
+    }
+    ai_tags = {
+        weapon_role_anti_armor
+        weapon_role_anti_shield
+    }
+    component_set = FOC_DEATH_STAR_BATTERY_SET
+    size_restriction = {
+        colossus
+    }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 2
+        }
+        upkeep = {
+
+        }
+    }
+    power = -150
+    damage = {
+        min = 33.9649122807
+        max = 50.9473684211
+    }
+    windup = {
+        min = 3
+        max = 3
+    }
+    total_fire_time = 30
+    range = 70
+    accuracy = 0.9
+    tracking = 0.5
+    shield_penetration = 0.15
+    armor_penetration = 0.15
+    ai_weight = {
+        weight = 0
+    }
+    entity = ds_empty_turret_entity
+    projectile_gfx = gamma_laser_s
+    prerequisites = {
+        foc_tech_emp_turbo_2
+    }
+    potential = {
+        from = { foc_v1717_first_order_empire_arsenal_allowed = yes }
+
+        has_global_flag = foc_khan_strength_lowest
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    show_tech_unlock_if = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = FOC_LOWEST_DS_II_FOC_STD_PD_S_T3_G_V01
+    hidden = yes
+    size = small
+    type = point_defence
+    point_defence_targets = {
+        strike_craft
+        missile
+    }
+    icon = GFX_ship_part_defence_turbo_g_2
+    icon_frame = 1
+    tags = {
+        weapon_type_energy
+    }
+    ai_tags = {
+        weapon_role_point_defense
+    }
+    component_set = FOC_DEATH_STAR_POINT_DEFENSE_SET
+    size_restriction = {
+        colossus
+    }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 2
+        }
+        upkeep = {
+
+        }
+    }
+    power = -100
+    damage = {
+        min = 9.90643274854
+        max = 14.8596491228
+    }
+    total_fire_time = 20
+    range = 30
+    accuracy = 0.8
+    tracking = 0.7
+    ai_weight = {
+        weight = 0
+    }
+    projectile_gfx = strike_craft_laser_3
+    entity = ds_empty_turret_entity
+    prerequisites = {
+        foc_tech_std_pd_2
+    }
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    windup = {
+        min = 2
+        max = 2
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+strike_craft_component_template = {
+    key = FOC_LOWEST_DS_II_FOC_DEATH_STAR_II_TIE_WING
+    size = large
+    entity = ssp_imperial_tie_entity
+    weapon_type = point_defence
+    point_defence_targets = {
+        strike_craft
+    }
+    projectile_gfx = strike_craft_laser_2
+    power = -150
+    resources = {
+        category = ship_components
+        cost = {
+
+        
+            sr_tibanna_swgs = 8
+        }
+        upkeep = {
+
+        }
+    }
+    count = 4
+    regeneration_per_day = 0.2
+    launch_time = 5
+    damage = {
+        min = 5.36062378168
+        max = 8.04093567251
+    }
+    cooldown = 1.25
+    attack_range = 15
+    range = 15
+    engagement_range = 180
+    accuracy = 0.9
+    tracking = 0.7
+    health = 35
+    armor = 0
+    shield = 15
+    evasion = 0.7
+    speed = 500
+    rotation_speed = 1
+    acceleration = 1.2
+    ship_behavior = fighters_behavior
+    icon = GFX_ship_part_ssp_imperial_tie
+    icon_frame = 1
+    component_set = FOC_DEATH_STAR_TIE_WING_SET
+    tags = {
+        weapon_type_strike_craft
+    }
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+    hidden = yes
+    size_restriction = {
+        colossus
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+utility_component_template = {
+    key = FOC_LOWEST_DS_II_FOC_DEATH_STAR_II_DEFENSE
+    size = large
+    icon = GFX_ship_part_adaptive_defense_armor
+    icon_frame = 1
+    power = -1000
+    component_set = FOC_DEATH_STAR_DEFENSE_SET
+    size_restriction = {
+        colossus
+    }
+    modifier = {
+        ship_hull_add = 3933
+        ship_armor_add = 3666
+        ship_shield_add = 3000
+        ship_hull_regen_add_static = 0.2
+        ship_armor_regen_add_static = 0.4
+        ship_shield_regen_add_static = 2
+    }
+    ship_modifier = {
+        ship_armor_hardening_add = 0.01
+        ship_shield_hardening_add = 0.01
+    }
+    resources = {
+        category = ship_components
+        cost = {
+
+        
+            sr_tibanna_swgs = 8
+        }
+        upkeep = {
+
+        }
+    }
+    ai_weight = {
+        weight = 0
+    }
+    hidden = yes
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+    }
+}

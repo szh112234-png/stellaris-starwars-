@@ -1,0 +1,21 @@
+fop_tech_starkiller_base = {
+    cost = @tier5cost3
+    area = engineering
+    tier = 5
+    category = { voidcraft }
+    prerequisites = { "tech_battleships" }
+    weight = @tier5weight3
+    icon = "myk_tech_starkiller_base" # 1.93: icon expects a key, not a file path; resolves to gfx/interface/icons/technologies/<key>.dds
+
+    potential = {
+        has_origin = origin_fop_first_order
+    }
+
+    weight_modifier = {
+        factor = 1
+        modifier = {
+            factor = 3
+            has_origin = origin_fop_first_order
+        }
+    }
+}

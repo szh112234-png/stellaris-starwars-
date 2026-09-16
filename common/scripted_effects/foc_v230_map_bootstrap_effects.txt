@@ -1,0 +1,282 @@
+# FOC V230 - synchronous map bootstrap for persistent Star Wars states/species.
+# Called directly from foc_swmap.1 after the ordinary successor-state bootstrap.
+# No delayed country events are used here.
+
+foc_v230_initialize_map_states_and_species = {
+    # Hutt Space first, because later Hutt population seeding expects the owner.
+    if = {
+        limit = { NOT = { has_global_flag = foc_v196_hutt_criminal_empire_initialized } }
+        foc_v196_establish_hutt_criminal_empire = yes
+    }
+
+    # Independent Mandalore in the same map-load pass.
+    if = {
+        limit = {
+            any_system = { has_star_flag = foc_swmap_mandalore_home }
+            NOT = { has_global_flag = foc_republic_origin_jedi_purged }
+            NOT = { has_global_flag = foc_mandalore_opening_independence_initialized }
+        }
+        log = "FOC_V230_BOOTSTRAP: initializing Mandalore synchronously during map load."
+        foc_mandalore_ensure_system_target = yes
+        foc_mandalore_ensure_species = yes
+        if = {
+            limit = {
+                exists = event_target:foc_swmap_mandalore_system
+                exists = event_target:foc_mandalore_species
+                NOT = { exists = event_target:foc_mandalore_country }
+            }
+            foc_mandalore_create_country = yes
+        }
+        if = {
+            limit = { exists = event_target:foc_mandalore_country }
+            foc_mandalore_set_satine_state = yes
+            set_global_flag = foc_mandalore_opening_independence_initialized
+            log = "FOC_V230_BOOTSTRAP: Mandalore country created during map load."
+        }
+        foc_mandalore_sync_concord_dawn_owner = yes
+    }
+
+    # Native FOC species.
+    if = {
+        limit = { NOT = { has_global_flag = foc_v182_native_species_initialized } }
+        set_global_flag = foc_v182_native_species_initialized
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_kashyyyk_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_swmap_kashyyyk }
+                foc_native_species_seed_kashyyyk = yes
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_mon_cala_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_swmap_mon_cala }
+                foc_native_species_seed_mon_cala = yes
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_geonosis_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_swmap_geonosis }
+
+                foc_native_species_seed_geonosis = yes
+
+                # Keep the intended political status synchronized after the
+                # Clone Wars transfer without recreating any population.
+                if = {
+                    limit = {
+                        is_colony = yes
+                        exists = event_target:foc_native_geonosian_species
+                    }
+
+                    owner = {
+                        save_event_target_as = foc_native_geonosis_current_owner
+                    }
+
+                    event_target:foc_native_geonosian_species = {
+                        if = {
+                            limit = {
+                                event_target:foc_native_geonosis_current_owner = {
+                                    has_country_flag = foc_republic_origin_separatist_country
+                                }
+                            }
+                            set_citizenship_type = {
+                                country = event_target:foc_native_geonosis_current_owner
+                                type = citizenship_full
+                                cooldown = no
+                            }
+                            set_military_service_type = {
+                                country = event_target:foc_native_geonosis_current_owner
+                                type = military_service_full
+                                cooldown = no
+                            }
+                        }
+                        else_if = {
+                            limit = {
+                                event_target:foc_native_geonosis_current_owner = {
+                                    has_country_flag = foc_republic_origin_republic_country
+                                }
+                            }
+                            set_citizenship_type = {
+                                country = event_target:foc_native_geonosis_current_owner
+                                type = citizenship_limited
+                                cooldown = no
+                            }
+                            set_military_service_type = {
+                                country = event_target:foc_native_geonosis_current_owner
+                                type = military_service_limited
+                                cooldown = no
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    # V187 extra species and additive population groups.
+    if = {
+        limit = { NOT = { has_global_flag = foc_v187_additional_species_initialized } }
+        set_global_flag = foc_v187_additional_species_initialized
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_ryloth_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_swmap_ryloth }
+                foc_v187_seed_twilek = yes
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_v175_bothawui_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_v175_bothawui }
+                foc_v187_seed_bothan = yes
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_cato_neimoidia_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_swmap_cato_neimoidia }
+                foc_v187_seed_neimoidian = yes
+                foc_v187_seed_skakoan = yes
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_nal_hutta_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_swmap_nal_hutta }
+                foc_v187_seed_hutt = yes
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_v175_nar_shaddaa_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_v175_nar_shaddaa }
+                foc_v187_add_hutt_diaspora = yes
+                foc_v187_seed_rodian = yes
+                foc_v187_seed_zeltron = yes
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_moraband_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_swmap_moraband }
+                foc_v187_seed_sith = yes
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_dathomir_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_swmap_dathomir }
+                foc_v187_seed_zabrak = yes
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_sw_yaga_minor_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_yaga_minor }
+                foc_v187_seed_chiss = yes
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_sw_coruscant_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_coruscant }
+                foc_v187_seed_duros = yes
+                foc_v187_seed_togruta = yes
+                foc_v187_seed_kel_dor = yes
+                foc_v187_seed_korunnai = yes
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_v175_dantooine_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_v175_dantooine }
+                foc_v187_seed_echani = yes
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_v175_taris_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_v175_taris }
+                foc_v187_seed_arkanian = yes
+                foc_v187_seed_arkanian_offshoot = yes
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_jedha_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_swmap_jedha }
+                foc_v187_seed_chalactan = yes
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_v175_carida_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_v175_carida }
+                foc_v187_seed_thyrsian = yes
+            }
+        }
+
+        log = "FOC_V187_SPECIES: 19 missing biological species and 27 additive population groups initialized once; legacy FOC species unchanged."
+    }
+
+    # Protocol / Astromech / Security droid species on Coruscant.
+    if = {
+        limit = {
+            NOT = { has_global_flag = foc_v223_species_initialized }
+            any_system = { has_star_flag = foc_sw_coruscant_home }
+        }
+        every_system = {
+            limit = { has_star_flag = foc_sw_coruscant_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_coruscant }
+                foc_v223_ensure_droid_species = yes
+                # V232: the B1 population species is created in the same map-load pass.
+                # First Order now reuses the V223 K-2SO Security Droid species.
+                foc_v231_ensure_faction_droid_species = yes
+            }
+        }
+        set_global_flag = foc_v223_species_initialized
+    }
+
+    # V231: whichever Republic-side country already holds Coruscant at map load
+    # opens with the vanilla robot assembly plant and a droid population. The human Republic
+    # origin also seeds Coruscant directly inside foc_republic_origin.1; both
+    # paths are guarded by the same carrier seed flag and cannot stack.
+    every_system = {
+        limit = { has_star_flag = foc_sw_coruscant_home }
+        every_system_planet = {
+            limit = {
+                has_planet_flag = foc_sw_coruscant
+                is_colony = yes
+                exists = owner
+                owner = {
+                    OR = {
+                        has_country_flag = foc_republic_origin_republic_country
+                        has_country_flag = foc_sw_new_republic_country
+                    }
+                }
+            }
+            foc_v231_seed_republic_droid_pops = yes
+        }
+    }
+
+    set_global_flag = foc_v230_all_extra_species_map_initialized
+    log = "FOC_V230_BOOTSTRAP: Hutt Space, Mandalore and all persistent extra species initialized in one map-load pass."
+}

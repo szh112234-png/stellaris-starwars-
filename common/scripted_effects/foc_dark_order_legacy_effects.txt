@@ -1,0 +1,175 @@
+# Unified player-only access package for First Order legacy assets.
+# The playable First Order origin receives this package during initialization,
+# but the Xyston-class remains sealed until the country enters Final Order.
+# Every other origin can receive it only from the actual Final Order victory
+# event after choosing the dark-side ending. The Republic-origin Imperial route
+# uses the narrower foc_republic_origin_grant_first_order_plan_access effect
+# below, so its project does not expose Xyston early.
+foc_grant_dark_order_legacy_access = {
+    set_country_flag = foc_dark_order_legacy_access
+    remove_country_flag = foc_republic_origin_order_technology_locked
+    # Dark Legacy is an Imperial inheritance, so it carries the TIE line with
+    # it and retires whatever squadron family the country flew before.
+    foc_republic_origin_adopt_imperial_starfighters = yes
+    if = { limit = { is_ai = yes } give_technology = { tech = tech_ssp_imperial_hyperspace message = no } }
+
+    if = {
+        limit = { has_origin = origin_fop_first_order }
+        give_technology = { tech = fop_tech_starkiller_base message = no }
+    }
+    else = {
+        # Late-game victors receive the ordinary prerequisites as well, so every
+        # recovered blueprint is immediately constructible rather than merely
+        # visible in the technology list.
+        give_technology = { tech = tech_destroyers message = no }
+        if = { limit = { is_ai = yes } give_technology = { tech = tech_plasma_3 message = no } }
+        give_technology = { tech = tech_battleships message = no }
+        give_technology = { tech = tech_titans message = no }
+        give_technology = { tech = tech_juggernaut message = no }
+        give_technology = { tech = myk_tech_starkiller_base message = no }
+    }
+
+    give_technology = { tech = foc_tech_dark_legacy_imperial message = no }
+    # Basic weapons follow origin/Kuat access. Players research advanced weapons; AI retains its equipment package.
+    if = {
+        limit = { has_origin = origin_fop_first_order }
+        foc_v17_7_grant_first_order_start_arsenal = yes
+    }
+    else = {
+    if = {
+        limit = { NOT = { has_technology = foc_tech_tibanna_mining } }
+        give_technology = { tech = foc_tech_tibanna_mining message = no }
+    }
+    if = {
+        limit = { NOT = { has_technology = foc_tech_std_turbo_1 } }
+        if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } }
+    }
+    if = {
+        limit = { NOT = { has_technology = foc_tech_std_turbo_1 } }
+        if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } }
+    }
+if = {
+        limit = { NOT = { has_technology = foc_tech_std_turbo_1 } }
+        if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } }
+    }
+    if = {
+        limit = { NOT = { has_technology = foc_tech_std_quad_1 } }
+        if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } }
+    }
+if = {
+        limit = { NOT = { has_technology = foc_tech_std_pd_1 } }
+        if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } }
+    }
+if = {
+        limit = { NOT = { has_technology = foc_tech_std_heavy_1 } }
+        if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } }
+    }
+    if = { limit = { foc_v14_is_rebel_arsenal_country = yes } if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_2 message = no } } } } else = { if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } } }
+    if = { limit = { foc_v14_is_rebel_arsenal_country = yes } if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_2 message = no } } } } else = { if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_quad_2 message = no } } } }
+    if = { limit = { foc_v14_is_rebel_arsenal_country = yes } if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_octuple_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_octuple_2 message = no } } } } else = { if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_octuple_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_octuple_2 message = no } } } }
+if = {
+        limit = { NOT = { has_technology = foc_tech_std_pd_2 } }
+        if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } }
+    }
+if = { limit = { foc_v14_is_rebel_arsenal_country = yes } if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_2 message = no } } } } else = { if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_2 message = no } } } }
+if = { limit = { foc_v14_is_rebel_arsenal_country = yes } if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_3 message = no } } } } else = { if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_3 message = no } } } }
+    if = { limit = { foc_v14_is_rebel_arsenal_country = yes } if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_3 message = no } } } } else = { if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_quad_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_quad_3 message = no } } } }
+    if = { limit = { foc_v14_is_rebel_arsenal_country = yes } if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_octuple_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_octuple_3 message = no } } } } else = { if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_octuple_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_octuple_3 message = no } } } }
+if = {
+        limit = { NOT = { has_technology = foc_tech_std_pd_3 } }
+        if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } }
+    }
+if = { limit = { foc_v14_is_rebel_arsenal_country = yes } if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_3 message = no } } } } else = { if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_3 message = no } } } }
+    set_country_flag = foc_std_weapon_era_tier_1
+    set_country_flag = foc_std_weapon_era_tier_2
+    set_country_flag = foc_std_weapon_era_tier_3
+    set_country_flag = foc_std_weapon_era_tier_4
+    }
+    give_technology = { tech = foc_tech_dark_legacy_resurgent message = no }
+    # v17.18b: catch scripted blueprint grants after the current package settles.
+    # Research completion and old saves also have the shared tech/monthly hooks.
+    if = {
+        limit = { has_origin = origin_fop_first_order }
+        country_event = { id = foc_v1718.10 days = 1 }
+    }
+    foc_v17_unlock_resurgent_durasteel = yes
+    # Player Mandator: register in the exact same effect that grants the Resurgent blueprint.
+    country_event = { id = foc_player_supercap.1 }
+    # Xyston remains sealed here. It is granted only after entering the Final Order stage.
+    give_technology = { tech = foc_tech_dark_legacy_supremacy message = no }
+}
+
+# Country scope. The Republic-origin Imperial route receives this deliberately
+# narrower package when the First Order Plan special project is completed.
+# Xyston remains sealed: the project exposes only Starkiller Base, Resurgent
+# and Supremacy, exactly as advertised by the Imperial post-war story.
+foc_republic_origin_grant_first_order_plan_access = {
+    set_country_flag = foc_dark_order_legacy_access
+    remove_country_flag = foc_republic_origin_order_technology_locked
+    foc_republic_origin_adopt_imperial_starfighters = yes
+
+    # Give every prerequisite with no research-card race, then the three
+    # project rewards themselves. The generic Starkiller path is used because
+    # this country did not start with origin_fop_first_order.
+    if = { limit = { is_ai = yes } give_technology = { tech = tech_ssp_imperial_hyperspace message = no } }
+    give_technology = { tech = tech_destroyers message = no }
+    if = { limit = { is_ai = yes } give_technology = { tech = tech_plasma_3 message = no } }
+    give_technology = { tech = tech_battleships message = no }
+    give_technology = { tech = tech_juggernaut message = no }
+    give_technology = { tech = tech_arkship_construction message = no }
+    give_technology = { tech = tech_wormhole_stabilization message = no }
+    give_technology = { tech = myk_tech_starkiller_base message = no }
+    if = {
+        limit = { NOT = { has_technology = foc_tech_tibanna_mining } }
+        give_technology = { tech = foc_tech_tibanna_mining message = no }
+    }
+    if = {
+        limit = { NOT = { has_technology = foc_tech_std_turbo_1 } }
+        if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } }
+    }
+    if = {
+        limit = { NOT = { has_technology = foc_tech_std_turbo_1 } }
+        if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } }
+    }
+if = {
+        limit = { NOT = { has_technology = foc_tech_std_turbo_1 } }
+        if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } }
+    }
+    if = {
+        limit = { NOT = { has_technology = foc_tech_std_quad_1 } }
+        if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } }
+    }
+if = {
+        limit = { NOT = { has_technology = foc_tech_std_pd_1 } }
+        if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } }
+    }
+if = {
+        limit = { NOT = { has_technology = foc_tech_std_heavy_1 } }
+        if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } }
+    }
+    if = { limit = { foc_v14_is_rebel_arsenal_country = yes } if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_2 message = no } } } } else = { if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } } }
+    if = { limit = { foc_v14_is_rebel_arsenal_country = yes } if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_2 message = no } } } } else = { if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_quad_2 message = no } } } }
+    if = { limit = { foc_v14_is_rebel_arsenal_country = yes } if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_octuple_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_octuple_2 message = no } } } } else = { if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_octuple_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_octuple_2 message = no } } } }
+if = {
+        limit = { NOT = { has_technology = foc_tech_std_pd_2 } }
+        if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } }
+    }
+if = { limit = { foc_v14_is_rebel_arsenal_country = yes } if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_2 message = no } } } } else = { if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_2 message = no } } } }
+if = { limit = { foc_v14_is_rebel_arsenal_country = yes } if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_3 message = no } } } } else = { if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_3 message = no } } } }
+    if = { limit = { foc_v14_is_rebel_arsenal_country = yes } if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_3 message = no } } } } else = { if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_quad_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_quad_3 message = no } } } }
+    if = { limit = { foc_v14_is_rebel_arsenal_country = yes } if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_octuple_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_octuple_3 message = no } } } } else = { if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_octuple_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_octuple_3 message = no } } } }
+if = {
+        limit = { NOT = { has_technology = foc_tech_std_pd_3 } }
+        if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } }
+    }
+if = { limit = { foc_v14_is_rebel_arsenal_country = yes } if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_3 message = no } } } } else = { if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_3 message = no } } } }
+    set_country_flag = foc_std_weapon_era_tier_1
+    set_country_flag = foc_std_weapon_era_tier_2
+    set_country_flag = foc_std_weapon_era_tier_3
+    set_country_flag = foc_std_weapon_era_tier_4
+    give_technology = { tech = foc_tech_dark_legacy_resurgent message = no }
+    foc_v17_unlock_resurgent_durasteel = yes
+    # Player Mandator: register in the exact same effect that grants the Resurgent blueprint.
+    country_event = { id = foc_player_supercap.1 }
+    give_technology = { tech = foc_tech_dark_legacy_supremacy message = no }
+}

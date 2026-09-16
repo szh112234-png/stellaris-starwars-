@@ -1,0 +1,58 @@
+# V14: original point defense retained; retired ordinary aliases remain inert.
+weapon_component_template = {
+    type = instant
+    key = "FOC_STD_TURBO_L_T4_G_V06"
+    size = large
+    icon = "GFX_ship_part_turbo_laser_g_4"
+    icon_frame = 1
+    prerequisites = { "tech_plasma_3" "tech_battleships" "foc_tech_sw_turbolaser_4" }
+    component_set = "RESURGENTBATTLECRUISER_TURBOCANNON_GUN"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_role_artillery L_slot }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { resurgentbattlecruiser resurgentbattlecruiser_foc_lowest }
+    ai_tag_weight = 0
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 12
+        }
+    }
+    power = -300
+    damage = {
+        min = 834
+        max = 1572
+    }
+    windup = {
+        min = 2
+        max = 2
+    }
+    total_fire_time = 2
+    range = 110
+    accuracy = 0.7
+    tracking = 0.4
+    hull_damage = 1
+    armor_damage = 2
+    shield_damage = 3
+    shield_penetration = 0
+    armor_penetration = 0
+    target_weights = {
+        titan = 5
+        battleship = 4
+        cruiser = 3
+        destroyer = 2
+        frigate = 1
+        corvette = 1
+    }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}

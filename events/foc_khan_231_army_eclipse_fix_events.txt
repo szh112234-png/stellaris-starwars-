@@ -1,0 +1,49 @@
+namespace = foc_khan_231
+
+# One-time 2.31 migration for existing saves.
+event = {
+    id = foc_khan_231.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        NOT = { has_global_flag = foc_khan_231_migrated }
+        OR = {
+            any_country = { has_country_flag = foc_khan_first_order_country }
+            any_country = { has_country_flag = foc_khan_final_order_country }
+        }
+    }
+
+    immediate = {
+        set_global_flag = foc_khan_231_migrated
+
+        every_country = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = foc_khan_final_order_country
+                }
+            }
+
+            remove_country_flag = foc_khan_230_army_reinforcement_cooldown
+
+            every_owned_fleet = {
+                limit = { any_owned_ship = { is_ship_class = shipclass_transport } }
+                remove_fleet_flag = foc_khan_229_transport_controller
+                remove_auto_move_target = yes
+                clear_orders = yes
+                clear_fleet_actions = this
+                fleet_event = { id = foc_khan_229.2 days = 2 random = 5 }
+            }
+
+            # Do not clear combat orders on an active Eclipse fleet; the updated
+            # hull and combat-computer definitions take effect immediately.
+            every_owned_fleet = {
+                limit = { any_owned_ship = { OR = { OR = { is_ship_size = foc_khan_eclipse is_ship_size = foc_khan_eclipse_foc_lowest } OR = { is_ship_size = foc_khan_eclipse_ii is_ship_size = foc_khan_eclipse_ii_foc_lowest } } } }
+                set_fleet_stance = aggressive
+                set_aggro_range_measure_from = self
+                set_aggro_range = 9999
+            }
+        }
+    }
+}

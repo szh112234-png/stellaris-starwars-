@@ -1,0 +1,35 @@
+ship_section_template = {
+	key = "VCSD_HULL"
+	ship_size = venatorclass
+	ship_size = venatorclass_foc_lowest
+	fits_on_slot = core
+	entity = "venatorclass_entity"
+	icon = "GFX_ship_part_core_bow"
+
+	# SG Venator spinal SPHA-T beam.
+	component_slot = {
+		name = "XL_GUN_01"
+		template = "foc_rebel_home_arkship_extra_large_fixed"
+		locatorname = "part1"
+	}
+
+	# Eight SG-style heavy dual turbolaser batteries.
+	component_slot = { name = "LARGE_GUN_01" template = "venatoclass_large_turret" locatorname = "weapon1" }
+	component_slot = { name = "LARGE_GUN_02" template = "venatoclass_large_turret" locatorname = "weapon2" }
+	component_slot = { name = "LARGE_GUN_03" template = "venatoclass_large_turret" locatorname = "weapon3" }
+	component_slot = { name = "LARGE_GUN_04" template = "venatoclass_large_turret" locatorname = "weapon4" }
+	component_slot = { name = "LARGE_GUN_05" template = "venatoclass_large_turret" locatorname = "weapon5" }
+	component_slot = { name = "LARGE_GUN_06" template = "venatoclass_large_turret" locatorname = "weapon6" }
+	component_slot = { name = "LARGE_GUN_07" template = "venatoclass_large_turret" locatorname = "weapon7" }
+	component_slot = { name = "LARGE_GUN_08" template = "venatoclass_large_turret" locatorname = "weapon8" }
+
+	# V17.17e: three strategic ARC-170 hangars. The per-hangar component count
+	# is difficulty-sensitive; the number of hangars is fixed here.
+	component_slot = { name = "STRIKE_CRAFT_01" template = "large_strike_craft" locatorname = "part1" }
+	component_slot = { name = "STRIKE_CRAFT_02" template = "large_strike_craft" locatorname = "part1" }
+	component_slot = { name = "STRIKE_CRAFT_03" template = "large_strike_craft" locatorname = "part1" }
+
+	# SG defensive totals are intrinsic to ship_size in V90; no extra utility
+	# slots are exposed, preventing manual designs from exceeding the SG profile.
+	resources = { category = ship_sections cost = { } }
+}

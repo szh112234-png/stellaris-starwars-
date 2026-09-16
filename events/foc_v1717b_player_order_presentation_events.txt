@@ -1,0 +1,44 @@
+namespace = foc_v1717b_player_order
+
+# Existing saves: repair presentation only. Research, player designs and fixed
+# support ships are retained. All commands are native to avoid macro depth growth.
+event = {
+    id = foc_v1717b_player_order.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    immediate = {
+        every_country = {
+            limit = {
+                is_ai = no
+                OR = {
+                    has_country_flag = fop_player_first_order
+                    has_country_flag = fop_player_final_order
+                    has_country_flag = fop_origin_player_final_order_established
+                    has_country_flag = foc_republic_origin_became_first_order
+                    has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+                }
+            }
+            # These are current-stage tags, not the retained historical Treaty flags.
+            remove_country_flag = foc_saga_thrawn_in_command
+            remove_country_flag = foc_sw_imperial_remnant_country
+            remove_country_flag = foc_sw_scripted_fallen_empire
+            remove_country_flag = foc_republic_origin_player_imperial_remnant
+            if = {
+                limit = { NOT = { has_country_flag = foc_v1717b_player_order_shipset_repaired } }
+                set_graphical_culture = fop_first_order_01
+                set_city_graphical_culture = first_01
+                refresh_auto_generated_ship_designs = yes
+                set_country_flag = foc_v1717b_player_order_shipset_repaired
+            }
+            if = {
+                limit = { exists = ruler }
+                ruler = {
+                    if = { limit = { has_leader_flag = foc_khan_snoke_ruler } change_leader_portrait = snoke_male_01 }
+                    if = { limit = { has_leader_flag = foc_khan_palpatine_ruler } change_leader_portrait = fopalpatine_male_01 }
+                    if = { limit = { has_leader_flag = fop_player_palpatine_ruler } change_leader_portrait = fopalpatine_male_01 }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,207 @@
+# V232r: 5 voluntary choices x20 + Naboo/Clone Army/Kuat/Coruscant x10 = 140.
+# Monthly gain is zero; 140-180 is reserved for the existing post-war closure.
+situation_foc_republic_origin_palpatine_plot = {
+    picture = GFX_foc_sep_palpatine
+    category = negative
+    complete_icon_frame = GFX_situation_outcome_frame_red
+    complete_icon = GFX_situation_outcome_revolt
+    situation_log_category = empire_concerns
+    initial_progress = 0
+
+    potential = {
+        has_country_flag = foc_republic_origin_republic_country
+        NOT = { has_country_flag = foc_republic_origin_empire_war_started }
+        NOT = { has_country_flag = foc_republic_origin_arc_completed }
+    }
+
+    abort_trigger = {
+        OR = {
+            NOT = { exists = owner }
+            owner = {
+                OR = {
+                    has_country_flag = foc_republic_origin_empire_war_started
+                    has_country_flag = foc_republic_origin_arc_completed
+                }
+            }
+        }
+    }
+
+    on_start = {
+        save_global_event_target_as = foc_republic_origin_palpatine_plot_situation
+        owner = {
+            set_country_flag = foc_republic_origin_palpatine_plot_active
+            country_event = { id = foc_republic_origin.21 days = 3 }
+        
+            set_country_flag = foc_v232r_plot_ledger_initialized
+            set_variable = { which = foc_v232r_plot_score value = 0 }
+        }
+    }
+
+    on_progress_complete = {
+        owner = {
+            remove_country_flag = foc_republic_origin_palpatine_plot_active
+            set_country_flag = foc_republic_origin_palpatine_plot_complete
+            country_event = { id = foc_republic_origin.29 days = 1 }
+        }
+        clear_global_event_target = foc_republic_origin_palpatine_plot_situation
+        destroy_situation = this
+    }
+
+    on_abort = {
+        owner = { remove_country_flag = foc_republic_origin_palpatine_plot_active }
+        clear_global_event_target = foc_republic_origin_palpatine_plot_situation
+    }
+
+    stages = {
+        foc_republic_origin_plot_stage_whispers = {
+            icon = GFX_situation_stage_1
+            icon_background = GFX_situation_stage_frame_red
+            end = 50
+            custom_tooltip = foc_republic_origin_plot_stage_whispers_tooltip
+        }
+        foc_republic_origin_plot_stage_clone_army = {
+            icon = GFX_situation_stage_2
+            icon_background = GFX_situation_stage_frame_red
+            end = 140
+            
+            custom_tooltip = foc_republic_origin_plot_stage_clone_army_tooltip
+        }
+        foc_republic_origin_plot_stage_order_66 = {
+            icon = GFX_situation_stage_3
+            icon_background = GFX_situation_stage_frame_red
+            end = 180
+            on_first_enter = {
+                owner = {
+                    # V209: the stage-II ceiling is 140. From this exact transition
+                    # onward the CIS receives no ordinary reinforcement fleets.
+                    # The dedicated Coruscant story invasion remains exempt.
+                    set_global_flag = foc_v209_cis_reinforcement_cutoff
+                    country_event = { id = foc_republic_origin.16 }
+                }
+            }
+            custom_tooltip = foc_republic_origin_plot_stage_order_66_tooltip
+        }
+    }
+
+    approach = {
+        name = foc_republic_origin_plot_approach_emergency_powers
+        icon = GFX_situation_approach_fist
+        icon_background = GFX_situation_approach_bg_red
+        default = yes
+        custom_tooltip = foc_republic_origin_plot_approach_emergency_powers_tooltip
+        on_select = {
+            custom_tooltip = foc_republic_origin_plot_approach_emergency_powers_tooltip
+        }
+        ai_weight = { base = 100 }
+    }
+
+    # Progress is driven by the arc, not by the calendar. Nothing accumulates
+    # during the long peace before the Outer Rim secedes: the Chancellor is in
+    # position, but he has been handed nothing yet. A flat monthly tick here
+    # would run the whole conspiracy out years before the war that justifies it.
+    monthly_progress = { base = 0 }
+}
+
+
+# =============================================================================
+# Separatist Crisis — event-driven prelude to the Clone Wars
+# =============================================================================
+# This is deliberately NOT calendar-driven. The bar advances only when the
+# historical story events are acknowledged. The final two points are granted by
+# the Geonosis opening story event; only then does on_progress_complete dispatch the
+# existing CIS creation / war-start event.
+situation_foc_republic_origin_separatist_crisis = {
+    picture = GFX_foc_sep_droid_factory
+    category = negative
+    complete_icon_frame = GFX_situation_outcome_frame_red
+    complete_icon = GFX_situation_outcome_revolt
+    situation_log_category = empire_concerns
+    initial_progress = 0
+
+    potential = {
+        has_country_flag = foc_republic_origin_republic_country
+        NOT = { has_country_flag = foc_republic_origin_separatist_war_started }
+        NOT = { has_country_flag = foc_republic_origin_arc_completed }
+    }
+
+    abort_trigger = {
+        OR = {
+            NOT = { exists = owner }
+            owner = {
+                OR = {
+                    has_country_flag = foc_republic_origin_separatist_war_started
+                    has_country_flag = foc_republic_origin_arc_completed
+                }
+            }
+        }
+    }
+
+    on_start = {
+        save_global_event_target_as = foc_republic_origin_separatist_crisis_situation
+        owner = {
+            set_country_flag = foc_republic_origin_separatist_crisis_started
+            set_country_flag = foc_republic_origin_separatist_crisis_active
+        }
+    }
+
+    on_progress_complete = {
+        owner = {
+            remove_country_flag = foc_republic_origin_separatist_crisis_active
+            set_country_flag = foc_republic_origin_separatist_situation_complete
+            # Hard gate: the actual CIS state and the war do not exist until the
+            # whole event chain has reached Geonosis.
+            if = {
+                limit = { has_country_flag = foc_republic_origin_separatist_chain_complete }
+                country_event = { id = foc_republic_origin.10 days = 1 }
+            }
+        }
+        clear_global_event_target = foc_republic_origin_separatist_crisis_situation
+        destroy_situation = this
+    }
+
+    on_abort = {
+        owner = { remove_country_flag = foc_republic_origin_separatist_crisis_active }
+        clear_global_event_target = foc_republic_origin_separatist_crisis_situation
+    }
+
+    stages = {
+        foc_republic_origin_sep_stage_naboo = {
+            icon = GFX_situation_stage_1
+            icon_background = GFX_situation_stage_frame_red
+            end = 25
+            custom_tooltip = foc_republic_origin_sep_stage_naboo_tooltip
+        }
+        foc_republic_origin_sep_stage_shadow_army = {
+            icon = GFX_situation_stage_2
+            icon_background = GFX_situation_stage_frame_red
+            end = 50
+            custom_tooltip = foc_republic_origin_sep_stage_shadow_army_tooltip
+        }
+        foc_republic_origin_sep_stage_secession = {
+            icon = GFX_situation_stage_2
+            icon_background = GFX_situation_stage_frame_red
+            end = 80
+            custom_tooltip = foc_republic_origin_sep_stage_secession_tooltip
+        }
+        foc_republic_origin_sep_stage_geonosis = {
+            icon = GFX_situation_stage_3
+            icon_background = GFX_situation_stage_frame_red
+            end = 100
+            custom_tooltip = foc_republic_origin_sep_stage_geonosis_tooltip
+        }
+    }
+
+    approach = {
+        name = foc_republic_origin_sep_approach_watch
+        icon = GFX_situation_approach_fist
+        icon_background = GFX_situation_approach_bg_red
+        default = yes
+        custom_tooltip = foc_republic_origin_sep_approach_watch_tooltip
+        on_select = {
+            custom_tooltip = foc_republic_origin_sep_approach_watch_tooltip
+        }
+        ai_weight = { base = 100 }
+    }
+
+    monthly_progress = { base = 0 }
+}

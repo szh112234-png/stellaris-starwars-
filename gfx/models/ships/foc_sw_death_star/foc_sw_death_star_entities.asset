@@ -1,0 +1,9 @@
+# Uploaded player-First-Order Death Star mesh pair, isolated under a unique
+# Imperial Remnant graphical culture to avoid duplicate-entity load-order conflicts.
+entity = { name = "foc_imperial_remnant_01_colossus_entity" pdxmesh = "foc_sw_death_star_top_mesh" }
+entity = {
+    name = "foc_imperial_remnant_01_colossus_ship_entity"
+    pdxmesh = "foc_sw_death_star_bottom_mesh"
+    # Copied from the paired top mesh: p=(0,0,0), q=(0,0,0,1).
+    locator = { name = "planet_killer_gun_01" position = { 0 0 0 } rotation = { 0 0 0 } }
+}

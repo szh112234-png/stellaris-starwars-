@@ -1,0 +1,116 @@
+# FOC 3.21: event-only, maximum-tier Rebel mobile home.
+# The key is deliberately isolated from military_arkship_* and both Supremacy
+# families, so neither vanilla Arkships nor the Supremacy can inherit this hull.
+foc_rebel_home_arkship_tier_3 = {
+	preserve_movement_animation_progress = yes
+	# Match the normal FOC Home One design: generic titan entity keys are resolved
+	# through the Rebel graphical culture.  Do not write the rebel_01 prefix here;
+	# doing so makes the engine prefix it a second time and leaves the ship blank.
+	graphical_culture = { "rebel_01" }
+	hero_ship = {
+		hero_ship_fleet_background = "GFX_arkship_fleetview_military"
+		custom_class_text_color = H
+	}
+	class = shipclass_starbase
+	base_ship_size = "military_arkship_tier_1"
+	carries_colony = pc_ark
+	display_attack_neutral_fleet_button = no
+	automation_icon = GFX_fleet_order_auto_explore_arkship
+	arkship_picture = "arkship_military"
+	planet_view_header = "GFX_arkship_planetview_header_military"
+	auto_upgrade = yes
+	can_disable = no
+	stay_disabled = no
+	# V65: Raddus is a true combat loss. Disabling/capture behavior is disabled;
+	# if its hull is defeated, it is destroyed instead of changing hands.
+	never_lost = no
+	collects_stockpile_from = {
+		shipclass_starbase
+		shipclass_constructor
+	}
+	collects_stockpile_to_country = yes
+	accepts_all_modifiers = yes
+
+	use_shipnames_from = titan
+	potential_construction = { always = no }
+	possible_construction = { always = no }
+	on_click_sound = "arkship_military_selection"
+
+	icon = ship_size_military_arkship_tier_3
+	icon_frame = 16
+	ship_class_icon_frame = 64
+	map_icon_override = {
+		normal = GFX_ship_icons_type_arkship
+		mixed = GFX_ship_icons_type_arkship_mixed
+		cloaked = GFX_ship_icons_type_arkship_cloaked
+		encamped = GFX_ship_icons_type_arkship_encamped
+	}
+
+	# Follow the edict-spawned full-loadout Supremacy architecture: a dedicated
+	# root, one complete combat core, six invisible Arkship modules and one fixed
+	# axial module.  On rebel_01, titan_mid_entity is the Home One-class hull.
+	entity = titan_entity
+	section_slots = {
+		"mid" = { locator = "part2" }
+		"1" = { locator = "part2" }
+		"2" = { locator = "part2" }
+		"3" = { locator = "part2" }
+		"4" = { locator = "part2" }
+		"5" = { locator = "part2" }
+		"6" = { locator = "part2" }
+		"spinal_mount_1" = { locator = "part2" }
+	}
+
+	formation_priority = @arkship_formation_priority_4
+	max_speed = @arkship_max_speed_100
+	acceleration = @arkship_acceleration_20_percent
+	rotation_speed = @arkship_rotation_speed_15_percent
+	construction_offset_mult = @arkship_construction_offset_4
+	collision_radius = @arkship_collision_radius_4
+	max_hitpoints = 1440000
+	modifier = {
+		ship_evasion_add = @arkship_evasion_5
+		ship_armor_add = 360000
+		ship_shield_add = 360000
+		ship_hull_regen_add_static = 800
+		ship_armor_regen_add_static = 800
+		ship_shield_regen_add_static = 800
+		starbase_module_capacity_add = @arkship_starbase_module_capacity_add_7
+		starbase_building_capacity_add = 12
+		planet_max_districts_add = @arkship_max_districts_add_18
+		ship_sensor_range_add = 3
+	}
+	ship_modifier = {
+		ship_starbase_stockpile_collection_rate_add = @arkship_collection_rate_add_625
+		
+		ship_weapon_range_mult = 0.35
+	}
+	size_multiplier = @arkship_size_120
+	fleet_slot_size = @arkship_slot_size_32
+	num_target_locators = 0
+	is_designable = no
+	is_space_station = no
+	is_civilian = no
+	can_have_federation_design = no
+	components_add_to_cost = no
+	available_to_everyone = yes
+	enable_default_design = no
+	enable_3dview_in_ship_browser = yes
+	combat_disengage_chance = @arkship_disengage_chance_2
+	construction_type = starbase_shipyard
+	required_component_set = "power_core"
+	required_component_set = "ftl_components"
+	required_component_set = "thruster_components"
+	required_component_set = "sensor_components"
+	required_component_set = "combat_computers"
+	resources = {
+		category = starbase_arkships
+		upkeep = {
+			alloys = @arkship_upkeep_alloys_4_5
+			energy = @arkship_upkeep_energy_4_5
+		}
+		logistics = { trade = @arkship_upkeep_logistics_0 }
+	}
+	min_upgrade_cost = { alloys = 1 }
+	ai_ship_data = { }
+}

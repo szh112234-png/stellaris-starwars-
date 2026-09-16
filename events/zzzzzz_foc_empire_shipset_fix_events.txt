@@ -1,0 +1,11 @@
+namespace = foc_empire_shipset_fix
+
+country_event = {
+    id = foc_empire_shipset_fix.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { has_country_flag = foc_republic_origin_empire_country }
+    immediate = {
+        foc_republic_origin_apply_complete_empire_shipset = yes
+    }
+}

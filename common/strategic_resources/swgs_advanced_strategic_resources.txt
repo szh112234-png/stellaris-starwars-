@@ -1,0 +1,26 @@
+# FOC v17.12 standalone fallback, not an SG override patch.
+# The canonical IDs are shared; all fallback dependencies are local to FOC.
+# OPTIONAL SG: load FOC FIRST and the ORIGINAL SG AFTER FOC.
+# Because SG owns this same virtual path, its complete native registry wins.
+# Never copy this file into SG; do not install the withdrawn v17.11 SG patch.
+# With SG enabled, SG retains its own prerequisites/market/capacity/shortages.
+sr_kyber_swgs = {
+    tradable = yes
+    market_amount = 25
+    market_price = 200
+    max = 15000
+    visibility_prerequisite = { always = yes }
+    deficit_modifier = foc_v1712_kyber_deficit
+    ai_weight = { weight = 100 }
+    ai_wants = { base = 250 }
+}
+sr_tibanna_swgs = {
+    tradable = yes
+    market_amount = 100
+    market_price = 100
+    max = 15000
+    visibility_prerequisite = { always = yes }
+    deficit_modifier = foc_v1712_tibanna_deficit
+    ai_weight = { weight = 100 }
+    ai_wants = { base = 500 }
+}

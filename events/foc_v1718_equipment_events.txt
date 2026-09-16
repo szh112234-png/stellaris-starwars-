@@ -1,0 +1,54 @@
+namespace = foc_v1718
+country_event = {
+    id = foc_v1718.10
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { foc_v1718_allowed_country = yes NOT = { has_country_flag = foc_v1718_sync_running } }
+    immediate = { foc_v1718_sync_equipment_techs = yes }
+}
+# Only the monthly hook pays. Load/start/milestone hooks never credit stockpiles.
+country_event = {
+    id = foc_v1718.20
+    hide_window = yes
+    is_triggered_only = yes
+    immediate = {
+        every_owned_starbase = {
+            solar_system = {
+                every_system_planet = {
+                    limit = { OR = { has_planet_flag = foc_swmap_kessel has_planet_flag = foc_swmap_mandalore } }
+                    foc_v1718_repair_source_planet = yes
+                    if = {
+                        limit = { has_modifier = foc_v1718_coaxium_source NOT = { has_planet_flag = foc_v1718_coaxium_paid } }
+                        set_timed_planet_flag = { flag = foc_v1718_coaxium_paid days = 29 }
+                        root = { add_resource = { sr_coaxium_foc = 100 } }
+                    }
+                    if = {
+                        limit = { has_modifier = foc_v1718_beskar_source NOT = { has_planet_flag = foc_v1718_beskar_paid } }
+                        set_timed_planet_flag = { flag = foc_v1718_beskar_paid days = 29 }
+                        root = { add_resource = { sr_beskar_foc = 100 } }
+                    }
+                }
+            }
+        }
+    }
+}
+country_event = {
+    id = foc_v1718.90
+    hide_window = yes
+    is_triggered_only = yes
+    immediate = {
+        every_country = {
+            # Clear a stale in-progress guard on load, not during normal monthly work.
+            remove_country_flag = foc_v1718_sync_running
+            country_event = { id = foc_v1718.10 }
+            every_owned_starbase = {
+                solar_system = {
+                    every_system_planet = {
+                        limit = { OR = { has_planet_flag = foc_swmap_kessel has_planet_flag = foc_swmap_mandalore } }
+                        foc_v1718_repair_source_planet = yes
+                    }
+                }
+            }
+        }
+    }
+}

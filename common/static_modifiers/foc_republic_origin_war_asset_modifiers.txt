@@ -1,0 +1,99 @@
+# Contested war assets of the Imperial civil war. Three worlds are worth more
+# than the systems around them, and whichever side holds one gets its industry
+# for as long as it holds it. They give the war objectives between the two
+# Death Stars instead of a single long grind toward the second battlestation.
+
+# Mon Cala: the Mon Calamari yards that build the Rebellion's capital ships.
+foc_republic_origin_asset_mon_cala = {
+    shipsize_corvette_build_speed_mult = 0.25
+    shipsize_destroyer_build_speed_mult = 0.25
+    shipsize_cruiser_build_speed_mult = 0.25
+    shipsize_battleship_build_speed_mult = 0.25
+    starbase_shipyard_build_speed_mult = 0.25
+    country_naval_cap_add = 300
+}
+
+# Kamino: the growth vats. Whoever holds them raises soldiers faster than
+# anyone should be able to.
+foc_republic_origin_asset_kamino = {
+    army_damage_mult = 0.20
+    planet_army_build_speed_mult = 0.50
+    logistic_growth_mult = 0.15
+}
+
+# Kuat Drive Yards: the largest naval industry in the galaxy.
+foc_republic_origin_asset_kuat = {
+    shipsize_corvette_build_speed_mult = 0.25
+    shipsize_destroyer_build_speed_mult = 0.25
+    shipsize_cruiser_build_speed_mult = 0.25
+    shipsize_battleship_build_speed_mult = 0.25
+    starbase_shipyard_build_cost_mult = -0.25
+}
+
+# The Tarkin Doctrine. Rule through fear of force rather than force itself:
+# compliance rises everywhere, and so does the number of people with nothing
+# left to lose.
+foc_republic_origin_tarkin_doctrine = {
+    pop_government_ethic_attraction = 0.30
+    planet_stability_add = 8
+    country_war_exhaustion_mult = -0.30
+    planet_crime_add = 15
+    pop_happiness = -0.10
+}
+
+# The alternative: govern the Outer Rim rather than terrorise it.
+foc_republic_origin_new_order_administration = {
+    planet_jobs_produces_mult = 0.10
+    planet_crime_add = -15
+    pop_happiness = 0.05
+}
+
+# Peace-era outcomes.
+foc_republic_origin_combine_resentment = {
+    planet_jobs_trade_produces_mult = -0.15
+    planet_stability_add = -3
+}
+
+foc_republic_origin_military_creation_act = {
+    planet_army_build_speed_mult = 0.25
+    army_damage_mult = 0.10
+    country_naval_cap_add = 200
+}
+
+# Emergency powers extended: the Republic fights better and answers to one man.
+foc_republic_origin_emergency_powers = {
+    
+    army_damage_mult = 0.15
+    country_war_exhaustion_mult = -0.25
+    planet_stability_add = 3
+}
+
+# Emergency powers allowed to lapse: the Senate keeps its hand on the tiller
+# and the Republic fights the war the slow way.
+foc_republic_origin_senate_oversight = {
+    country_war_exhaustion_mult = 0.25
+    
+    country_unity_produces_mult = 0.15
+    diplo_weight_mult = 0.15
+}
+
+# No clone army. The Republic fights with whatever its member systems send.
+foc_republic_origin_militia_levies = {
+    army_damage_mult = -0.20
+    army_defense_damage_mult = -0.10
+    planet_army_build_speed_mult = -0.25
+    country_unity_produces_mult = 0.10
+}
+
+# The Empire seizes power by force and then has to hold a galaxy that did not
+# consent. Until the New Order has an answer to that question, every Imperial
+# world runs a permanent stability deficit. Two things clear it, and both are
+# required: the Death Star must actually exist, and the Emperor must commit to
+# the Tarkin Doctrine - rule through fear of that station. Choosing the
+# administrative alternative in event .181 leaves the deficit in place, which
+# is the price of governing rather than terrorising.
+foc_republic_origin_imperial_fear_deficit = {
+    planet_stability_add = -30
+    pop_happiness = -0.10
+    planet_crime_add = 10
+}

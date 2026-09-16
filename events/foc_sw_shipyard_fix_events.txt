@@ -1,0 +1,401 @@
+namespace = foc_sw_shipyard_fix
+
+# The original scripted New Republic still uses its legacy country type, while
+# a Republic-origin New Republic created by the Galactic Treaty must remain an
+# ordinary country. The two custom capital hulls require sealed blueprint
+# technologies and fixed designs. This monthly migration supports both new
+# games and old saves.
+#
+# Vanilla also exposes its xenophile FE warships to any vanilla Fallen Empire
+# with fanatic xenophile ethics. Those hulls only support fallen_empire_*
+# graphical cultures, so Kuat's high-capacity yards used to mass-produce them
+# as missing-model ships for the New Republic's rebel_01 culture. New games use
+# three moderate ethics at country creation; this event migrates old saves and
+# removes any already-built incompatible vanilla FE military hulls.
+country_event = {
+    id = foc_sw_shipyard_fix.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_sw_new_republic_country
+    }
+
+    immediate = {
+        # The Treaty successors are normal nations. Reapply this on the monthly
+        # pulse so old saves and the later War-in-Heaven awakening cannot leave
+        # the New Republic as a Fallen or Awakened Empire.
+        if = {
+            limit = { has_global_flag = foc_republic_origin_galactic_treaty }
+            set_country_type = default
+        }
+
+        if = {
+            limit = {
+                NOT = { has_country_flag = foc_sw_kuat_shipyard_model_fix_311x }
+            }
+            if = {
+                limit = { has_ethic = ethic_fanatic_xenophile }
+                country_remove_ethic = ethic_fanatic_xenophile
+                country_add_ethic = ethic_xenophile
+                country_add_ethic = ethic_egalitarian
+            }
+            set_country_flag = foc_sw_kuat_shipyard_model_fix_311x
+        }
+
+        # Keep this guard active after migration so ships already queued before
+        # the update cannot reintroduce red error models when they finish.
+        every_owned_fleet = {
+            limit = {
+                any_owned_ship = {
+                    OR = {
+                        is_ship_size = small_ship_fallen_empire
+                        is_ship_size = large_ship_fallen_empire
+                        is_ship_size = massive_ship_fallen_empire
+                    }
+                }
+            }
+            every_owned_ship = {
+                limit = {
+                    OR = {
+                        is_ship_size = small_ship_fallen_empire
+                        is_ship_size = large_ship_fallen_empire
+                        is_ship_size = massive_ship_fallen_empire
+                    }
+                }
+                delete_ship = this
+            }
+        }
+
+        if = {
+            limit = { NOT = { has_technology = tech_foc_rebel_nebula_blueprint } }
+            give_technology = { tech = tech_foc_rebel_nebula_blueprint message = no }
+        }
+        if = {
+            limit = { NOT = { has_technology = tech_foc_rebel_viscount_blueprint } }
+            give_technology = { tech = tech_foc_rebel_viscount_blueprint message = no }
+        }
+
+        # Republic-origin Treaty only: technology, construction-list designs
+        # and the one-time old-save fleet recovery are separate, so a stale
+        # reward flag cannot suppress either one.
+        if = {
+            limit = {
+                has_global_flag = foc_republic_origin_galactic_treaty
+                NOT = { has_country_flag = foc_republic_origin_viscount_recovery_414 }
+            }
+            foc_republic_origin_repair_new_republic_ship_blueprints = yes
+            save_global_event_target_as = foc_sw_new_republic
+            save_global_event_target_as = foc_republic_origin_republic
+            foc_republic_origin_restore_original_fe_capitals = yes
+            if = {
+                limit = {
+                    exists = event_target:foc_sw_hosnian_system
+                    NOT = { any_owned_ship = { OR = { is_ship_size = foc_rebel_mc158 is_ship_size = foc_rebel_mc158_foc_lowest } } }
+                }
+                event_target:foc_sw_hosnian_system = {
+                    foc_sw_spawn_new_republic_replacement_fleet = yes
+                }
+            }
+            # If Hosnian could not yet be reacquired or ship creation failed,
+            # leave the marker unset and retry next month. Only an existing or
+            # newly spawned Viscount completes this migration.
+            if = {
+                limit = { any_owned_ship = { OR = { is_ship_size = foc_rebel_mc158 is_ship_size = foc_rebel_mc158_foc_lowest } } }
+                set_country_flag = foc_republic_origin_viscount_recovery_414
+            }
+        }
+    }
+}
+
+# Origin-only old-save recovery. Once the player has absorbed either scripted
+# Fallen Empire, vanilla megastructures located inside systems already owned by
+# the player follow the territorial transfer. No fleet changes are performed.
+country_event = {
+    id = foc_sw_shipyard_fix.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        has_origin = origin_fop_first_order
+        OR = {
+            has_global_flag = foc_sw_new_republic_absorbed_by_first_order
+            has_global_flag = fop_origin_imperial_remnant_annexed
+        }
+    }
+
+    immediate = {
+        every_system = {
+            limit = {
+                OR = {
+                    has_star_flag = foc_sw_new_republic_cluster
+                    has_star_flag = foc_sw_imperial_remnant_cluster
+                }
+                exists = starbase
+                starbase.owner = { is_same_value = root }
+            }
+            every_system_megastructure = {
+                limit = {
+                    OR = {
+                        is_megastructure_type = mega_shipyard_3
+                        is_megastructure_type = interstellar_assembly_4
+                        is_megastructure_type = think_tank_4
+                        is_megastructure_type = quantum_catapult_3
+                        is_megastructure_type = strategic_coordination_center_3
+                        is_megastructure_type = spy_orb_4
+                        is_megastructure_type = habitat_central_complex
+                    }
+                }
+                set_owner = root
+            }
+        }
+    }
+}
+
+# Imperial-side counterpart to .1. The supplied Empire ship family uses the
+# ordinary corvette/destroyer/cruiser/battleship hull progression rather than
+# the three vanilla Fallen-Empire hull sizes. Old saves are migrated and any
+# completed or previously queued incompatible FE hulls are removed monthly.
+country_event = {
+    id = foc_sw_shipyard_fix.3
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_sw_imperial_remnant_country
+        NOT = { has_country_flag = foc_republic_origin_empire_country }
+    
+        # Player successors have their own shipset; stale Treaty tags are historical.
+        NOR = {
+            has_country_flag = fop_player_first_order
+            has_country_flag = fop_player_final_order
+            has_country_flag = fop_origin_player_final_order_established
+            has_country_flag = foc_republic_origin_became_first_order
+            has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+        }
+}
+
+    immediate = {
+        # Imperial-side old-save counterpart to the New Republic correction.
+        if = {
+            limit = { has_global_flag = foc_republic_origin_galactic_treaty }
+            set_country_type = default
+        }
+
+        if = {
+            limit = {
+                NOT = { has_country_flag = foc_sw_bilbringi_shipyard_model_fix_311y }
+            }
+            if = {
+                limit = { has_ethic = ethic_fanatic_xenophobe }
+                country_remove_ethic = ethic_fanatic_xenophobe
+                country_add_ethic = ethic_xenophobe
+                country_add_ethic = ethic_authoritarian
+            }
+            set_country_flag = foc_sw_bilbringi_shipyard_model_fix_311y
+        }
+
+        # 4.12: existing Imperial Remnants inherit the same empire_01 ship
+        # family and four ordinary military hull classes as the Galactic
+        # Empire. Refreshing designs before retrofitting fleets makes the
+        # random_existing_design calls safe on saves created by older builds.
+        if = {
+            limit = {
+                NOT = { has_country_flag = foc_sw_imperial_remnant_empire_shipset_412 }
+            }
+            set_graphical_culture = empire_01
+            if = {
+                limit = { NOT = { has_technology = tech_space_construction } }
+                give_technology = { tech = tech_space_construction message = no }
+            }
+            if = {
+                limit = { NOT = { has_technology = tech_destroyers } }
+                give_technology = { tech = tech_destroyers message = no }
+            }
+            if = {
+                limit = { NOT = { has_technology = tech_cruisers } }
+                give_technology = { tech = tech_cruisers message = no }
+            }
+            if = {
+                limit = { NOT = { has_technology = tech_battleships } }
+                give_technology = { tech = tech_battleships message = no }
+            }
+            refresh_auto_generated_ship_designs = yes
+            every_owned_ship = {
+                limit = {
+                    OR = {
+                        OR = { is_ship_size = imperialsd is_ship_size = imperialsd_foc_lowest }
+                        OR = { is_ship_size = foc_sw_lusankya is_ship_size = foc_sw_lusankya_foc_lowest }
+                        OR = { is_ship_size = foc_immobilizer418 is_ship_size = foc_immobilizer418_foc_lowest }
+                        OR = { is_ship_size = foc_khan_eclipse is_ship_size = foc_khan_eclipse_foc_lowest }
+                        is_ship_size = battleship
+                        is_ship_size = cruiser
+                        is_ship_size = destroyer
+                        is_ship_size = corvette
+                        has_ship_flag = foc_sw_imperial_remnant_constructor
+                    }
+                }
+                set_graphical_culture = empire_01
+            }
+            every_owned_fleet = {
+                limit = {
+                    NOT = {
+                        has_fleet_flag = foc_republic_origin_empire_shipset_escorts_added
+                    }
+                    OR = {
+                        has_fleet_flag = foc_sw_imperial_executor_fleet
+                        has_fleet_flag = foc_sw_imperial_remnant_isd_fleet
+                        has_fleet_flag = foc_republic_origin_empire_isd_fleet
+                    }
+                }
+                foc_republic_origin_add_empire_shipset_escorts = yes
+            }
+            set_country_flag = foc_sw_imperial_remnant_empire_shipset_412
+        }
+
+        # Keep deleting only the three incompatible vanilla FE military hulls.
+        # Correct FOC Imperial-class and Lusankya ships are never touched.
+        every_owned_fleet = {
+            limit = {
+                any_owned_ship = {
+                    OR = {
+                        is_ship_size = small_ship_fallen_empire
+                        is_ship_size = large_ship_fallen_empire
+                        is_ship_size = massive_ship_fallen_empire
+                    }
+                }
+            }
+            every_owned_ship = {
+                limit = {
+                    OR = {
+                        is_ship_size = small_ship_fallen_empire
+                        is_ship_size = large_ship_fallen_empire
+                        is_ship_size = massive_ship_fallen_empire
+                    }
+                }
+                delete_ship = this
+            }
+        }
+
+        if = {
+            limit = { NOT = { has_technology = tech_destroyers } }
+            give_technology = { tech = tech_destroyers message = no }
+        }
+        if = {
+            limit = { NOT = { has_technology = tech_foc_jakku_executor_blueprint } }
+            give_technology = { tech = tech_foc_jakku_executor_blueprint message = no }
+        }
+
+        # Recover origin saves that had already passed the Death Star I event
+        # before the actual-ship reward was added. The country effect is
+        # idempotent and falls back to the current capital after the Treaty.
+        if = {
+            limit = {
+                has_country_flag = foc_republic_origin_death_star_one_destroyed
+				OR = {
+					NOT = { has_country_flag = foc_republic_origin_executor_one_commissioned }
+					NOT = { has_country_flag = foc_republic_origin_executor_two_commissioned }
+					NOT = { has_country_flag = foc_republic_origin_executor_three_commissioned }
+				}
+            }
+            foc_republic_origin_grant_death_star_one_executor_reward = yes
+        }
+    }
+}
+
+# Add the completed Kuat and Bilbringi Mega Shipyards to old saves exactly once.
+# Republic-origin games skip the New Republic creation event that normally
+# builds Kuat Drive Yards, while Bilbringi already had its own recovery path.
+# Each current starbase owner receives the structure in its actual system; no
+# shipyard is moved between Kuat and Bilbringi. Existing stages are respected.
+event = {
+    id = foc_sw_shipyard_fix.4
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        OR = {
+            any_system = {
+                has_star_flag = foc_sw_kuat_home
+                NOT = { has_star_flag = foc_sw_kuat_mega_shipyard_republic_origin_initialized }
+                exists = starbase
+            }
+            any_system = {
+                has_star_flag = foc_sw_bilbringi_home
+                NOT = { has_star_flag = foc_sw_bilbringi_mega_shipyard_311y_initialized }
+                exists = starbase
+            }
+        }
+    }
+
+    immediate = {
+        random_system = {
+            limit = {
+                has_star_flag = foc_sw_kuat_home
+                NOT = { has_star_flag = foc_sw_kuat_mega_shipyard_republic_origin_initialized }
+                exists = starbase
+            }
+            starbase = {
+                owner = { save_event_target_as = foc_sw_kuat_shipyard_owner }
+            }
+            if = {
+                limit = {
+                    NOT = {
+                        any_system_megastructure = {
+                            OR = {
+                                is_megastructure_type = mega_shipyard_0
+                                is_megastructure_type = mega_shipyard_1
+                                is_megastructure_type = mega_shipyard_2
+                                is_megastructure_type = mega_shipyard_3
+                            }
+                        }
+                    }
+                }
+                spawn_megastructure = {
+                    type = mega_shipyard_3
+                    owner = event_target:foc_sw_kuat_shipyard_owner
+                    planet = star
+                    orbit_distance = 390
+                    orbit_angle = 110
+                    init_effect = { set_name = "Kuat Drive Yards" }
+                }
+            }
+            set_star_flag = foc_sw_kuat_mega_shipyard_republic_origin_initialized
+        }
+
+        random_system = {
+            limit = {
+                has_star_flag = foc_sw_bilbringi_home
+                NOT = { has_star_flag = foc_sw_bilbringi_mega_shipyard_311y_initialized }
+                exists = starbase
+            }
+            starbase = {
+                owner = { save_event_target_as = foc_sw_bilbringi_shipyard_owner }
+            }
+            if = {
+                limit = {
+                    NOT = {
+                        any_system_megastructure = {
+                            OR = {
+                                is_megastructure_type = mega_shipyard_0
+                                is_megastructure_type = mega_shipyard_1
+                                is_megastructure_type = mega_shipyard_2
+                                is_megastructure_type = mega_shipyard_3
+                            }
+                        }
+                    }
+                }
+                spawn_megastructure = {
+                    type = mega_shipyard_3
+                    owner = event_target:foc_sw_bilbringi_shipyard_owner
+                    planet = star
+                    orbit_distance = 390
+                    orbit_angle = 250
+                    init_effect = { set_name = "Bilbringi Imperial Shipyards" }
+                }
+            }
+            set_star_flag = foc_sw_bilbringi_mega_shipyard_311y_initialized
+        }
+    }
+}

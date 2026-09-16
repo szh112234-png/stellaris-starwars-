@@ -1,0 +1,45 @@
+namespace = foc_v235b
+
+# Both hooks below supply no_scope; do not use country_event here.
+event = {
+    id = foc_v235b.0
+    hide_window = yes
+    is_triggered_only = yes
+    immediate = {
+        log = "FOC_V235B_LOADED: Dqar no-refoundation guards loaded; existing save objects are not deleted."
+    }
+}
+
+# Old-save convergence is flag-only. Physical evidence is also checked by every
+# constructor, so safety never depends on monthly event execution order.
+event = {
+    id = foc_v235b.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        NOT = { has_global_flag = foc_v235b_dqar_destroyed }
+        foc_v235b_dqar_ruined = yes
+    }
+    immediate = {
+        every_system = {
+            limit = { foc_v235b_is_dqar_system = yes }
+            foc_v235b_lock_destroyed_dqar_system = yes
+        }
+    }
+}
+
+# Class-change callback covers planet killers without a colony-occupation event.
+# It does not fire for normal colonization, terraforming, or another Dqar moon.
+planet_event = {
+    id = foc_v235b.2
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        foc_v235b_is_dqar_planet = yes
+        foc_v235b_base_planet_destroyed = yes
+    }
+    immediate = {
+        foc_v235b_lock_destroyed_dqar_planet = yes
+        planet_event = { id = foc_khan_rebel.41 }
+    }
+}

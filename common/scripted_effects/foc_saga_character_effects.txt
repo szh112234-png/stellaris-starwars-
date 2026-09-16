@@ -1,0 +1,562 @@
+# =============================================================================
+# FOC - 天行者与凯洛·伦：命名角色与头像集中定义
+# =============================================================================
+# 全 MOD 中卢克 / 本·索罗 / 凯洛·伦的头像只在此文件里指定一次。
+# 将来若要把头像内置进 MOD（参照 README 的 V31 做法），只需修改下面三个
+# scripted effect 里的 portrait key，不必再去翻任何事件文件。
+#
+# 头像 key 说明：
+#   foc_saga_luke_01 - 本 MOD 自带（common/portraits/foc_saga_portraits.txt，
+#                      贴图在 gfx/models/portraits/foc_saga/），不依赖外部头像包
+#   kyloren_male_01  - 仍由第一秩序头像包提供。你给的那组头像包里没有凯洛·伦，
+#                      所以这个 key 暂时无法内置；外部包未启用时会回落为随机头像。
+# =============================================================================
+
+foc_saga_apply_luke_portrait = {
+    change_leader_portrait = foc_saga_luke_01
+}
+
+# 恩多之后 / 新绝地武士团时期的绝地长袍版本。
+foc_saga_apply_luke_jedi_portrait = {
+    change_leader_portrait = foc_saga_luke_jedi_01
+}
+
+foc_saga_apply_leia_portrait = {
+    change_leader_portrait = foc_saga_leia_01
+}
+
+foc_saga_apply_mon_mothma_portrait = {
+    change_leader_portrait = foc_saga_mon_mothma_01
+}
+
+# 本·索罗与凯洛·伦是同一个人，共用同一张脸。
+foc_saga_apply_kylo_portrait = {
+    change_leader_portrait = kyloren_male_01
+}
+
+foc_saga_apply_ben_solo_portrait = {
+    change_leader_portrait = kyloren_male_01
+}
+
+# -----------------------------------------------------------------------------
+# 卢克·天行者
+# -----------------------------------------------------------------------------
+# 国家作用域。义军高层在建国时已经创建过卢克，那种情况下只补标记与头像，
+# 绝不会重复创建第二个卢克。
+foc_saga_ensure_luke = {
+    if = {
+        limit = {
+            any_owned_leader = { has_leader_flag = foc_saga_luke_leader }
+        }
+        random_owned_leader = {
+            limit = { has_leader_flag = foc_saga_luke_leader }
+            if = {
+                limit = { NOT = { has_trait = leader_trait_foc_force_sensitive } }
+                add_trait = { trait = leader_trait_foc_force_sensitive consume_selection = no }
+                add_trait = { trait = leader_trait_psionic consume_selection = no }
+            }
+            foc_saga_apply_luke_portrait = yes
+            save_global_event_target_as = foc_saga_luke
+        }
+    }
+    else = {
+        create_leader = {
+            tier = leader_tier_legendary
+            class = commander
+            species = owner_main_species
+            name = "FOC_SAGA_LUKE_NAME"
+            gender = male
+            skill = 6
+            leader_age_min = 22
+            leader_age_max = 24
+            event_leader = yes
+            skip_background_generation = yes
+            randomize_traits = no
+            traits = {
+                0 = subclass_commander_general
+            }
+            effect = {
+                foc_saga_apply_luke_portrait = yes
+                set_leader_flag = foc_saga_luke_leader
+                add_trait = { trait = leader_trait_foc_force_sensitive consume_selection = no }
+                add_trait = { trait = leader_trait_psionic consume_selection = no }
+                save_global_event_target_as = foc_saga_luke
+            }
+        }
+    }
+}
+
+# 每一次成长：达戈巴、贝斯滨、恩多、新武士团。
+foc_saga_luke_advance = {
+    random_owned_leader = {
+        limit = { has_leader_flag = foc_saga_luke_leader }
+        add_experience = 2000
+    }
+}
+
+# 阿奇托闭关：卢克退出现役指挥序列，但人还在。
+foc_saga_luke_retire = {
+    random_owned_leader = {
+        limit = { has_leader_flag = foc_saga_luke_leader }
+        set_leader_flag = foc_saga_luke_exiled
+    }
+}
+
+# 克瑞特：与原力合而为一。
+foc_saga_luke_become_one_with_the_force = {
+    random_owned_leader = {
+        limit = { has_leader_flag = foc_saga_luke_leader }
+        set_leader_flag = foc_saga_luke_force_ghost
+        set_immortal = no
+        kill_leader = { show_notification = no }
+    }
+    set_global_flag = foc_saga_luke_died
+}
+
+# -----------------------------------------------------------------------------
+# 莱雅·奥加纳
+# -----------------------------------------------------------------------------
+# Existing story node foc_hero_rewards.2 is explicitly the death of Leia and
+# return of Ben Solo. V66 makes that existing narrative node authoritative for
+# the actual leader object instead of allowing natural old age to pre-empt it.
+foc_saga_kill_leia = {
+    if = {
+        limit = { NOT = { has_global_flag = foc_saga_leia_dead } }
+        set_global_flag = foc_saga_leia_dead
+        every_country = {
+            every_owned_leader = {
+                limit = { has_leader_flag = foc_saga_leia_leader }
+                set_immortal = no
+                kill_leader = { show_notification = no }
+            }
+        }
+    }
+}
+
+# -----------------------------------------------------------------------------
+# 本·索罗 / 凯洛·伦
+# -----------------------------------------------------------------------------
+# 国家作用域。兼容 foc_hero_rewards.2 已经发放过的凯洛·伦英雄。
+foc_saga_ensure_kylo = {
+    if = {
+        limit = {
+            any_owned_leader = { has_leader_flag = foc_saga_kylo_leader }
+        }
+        random_owned_leader = {
+            limit = { has_leader_flag = foc_saga_kylo_leader }
+            foc_saga_apply_kylo_portrait = yes
+            save_global_event_target_as = foc_saga_kylo
+        }
+    }
+    else_if = {
+        limit = {
+            any_owned_leader = { has_leader_flag = foc_hero_kylo_ren }
+        }
+        random_owned_leader = {
+            limit = { has_leader_flag = foc_hero_kylo_ren }
+            set_leader_flag = foc_saga_kylo_leader
+            foc_saga_apply_kylo_portrait = yes
+            save_global_event_target_as = foc_saga_kylo
+        }
+    }
+    else = {
+        create_leader = {
+            tier = leader_tier_legendary
+            class = commander
+            species = owner_main_species
+            name = "FOC_SAGA_KYLO_NAME"
+            gender = male
+            skill = 8
+            leader_age_min = 27
+            leader_age_max = 30
+            event_leader = yes
+            skip_background_generation = yes
+            randomize_traits = no
+            traits = {
+                0 = subclass_commander_general
+            }
+            effect = {
+                foc_saga_apply_kylo_portrait = yes
+                set_leader_flag = foc_saga_kylo_leader
+                save_global_event_target_as = foc_saga_kylo
+            }
+        }
+    }
+}
+
+foc_saga_kylo_advance = {
+    random_owned_leader = {
+        limit = { has_leader_flag = foc_saga_kylo_leader }
+        add_experience = 2000
+    }
+}
+
+# 至尊号：斯诺克死，凯洛·伦自立为最高领袖。
+foc_saga_kylo_becomes_supreme_leader = {
+    random_owned_leader = {
+        limit = { has_leader_flag = foc_saga_kylo_leader }
+        set_leader_flag = foc_saga_kylo_supreme_leader
+        set_name = "FOC_SAGA_KYLO_SUPREME_NAME"
+        add_experience = 3000
+    }
+    set_global_flag = foc_saga_kylo_supreme_leader_risen
+}
+
+# 重归光明：改回本·索罗。
+foc_saga_kylo_returns_as_ben_solo = {
+    random_owned_leader = {
+        limit = { has_leader_flag = foc_saga_kylo_leader }
+        remove_leader_flag = foc_saga_kylo_supreme_leader
+        set_leader_flag = foc_saga_ben_solo_returned_leader
+        set_name = "FOC_SAGA_BEN_SOLO_NAME"
+        foc_saga_apply_ben_solo_portrait = yes
+    }
+    set_global_flag = foc_saga_ben_solo_returned
+}
+
+
+# -----------------------------------------------------------------------------
+# V232f：权威恩多终局结算（国家作用域 = 银河帝国）
+# -----------------------------------------------------------------------------
+# V232c only attached the finale to on_ship_destroyed.  Some Death Star II loss
+# paths remove the ship without firing that ship-event, so the story window was
+# skipped.  V232f calls this same idempotent effect both from the direct hook and
+# from the proven Death-Star-II loss controller (.175).
+foc_v232f_resolve_endor_redemption = {
+    if = {
+        limit = { NOT = { has_global_flag = foc_saga_final_redemption_resolved } }
+
+        set_global_flag = foc_saga_final_redemption_resolved
+        set_global_flag = foc_republic_origin_death_star_two_destroyed
+        inline_script = "foc_v232n_endor_reward_cutoff"
+        set_global_flag = foc_saga_anakin_redeemed
+        set_global_flag = foc_saga_vader_died_at_endor
+
+        set_country_flag = foc_saga_vader_dead
+        set_country_flag = foc_saga_endor_imperial_report_shown
+        set_country_flag = foc_saga_emperor_death_report_shown
+        foc_saga_kill_darth_vader = yes
+        foc_saga_emperor_dies_at_endor = yes
+
+        # Preserve the gameplay reward from the older Rebel-side Endor event.
+        if = {
+            limit = { exists = event_target:foc_khan_rebel_alliance }
+            event_target:foc_khan_rebel_alliance = {
+                if = {
+                    limit = { NOT = { has_country_flag = foc_saga_luke_endor_shown } }
+                    set_country_flag = foc_saga_luke_endor_shown
+                    foc_saga_ensure_luke = yes
+                    foc_saga_luke_advance = yes
+                    if = {
+                        limit = { NOT = { has_modifier = foc_saga_return_of_the_jedi } }
+                        add_modifier = { modifier = foc_saga_return_of_the_jedi days = -1 }
+                    }
+                }
+            }
+        }
+
+        # The cinematic is independent from leader succession.  Even if a later
+        # cosmetic ruler-normalization step fails, the player still receives the
+        # canonical Endor finale exactly once.
+        every_country = {
+            limit = {
+                is_ai = no
+                NOT = { has_country_flag = foc_saga_final_redemption_story_shown }
+            }
+            country_event = { id = foc_luke.19 }
+        }
+
+        log = "FOC_V232F_ENDOR: authoritative Death Star II loss resolved; Vader/Palpatine killed and final-redemption story dispatched."
+    }
+}
+
+# -----------------------------------------------------------------------------
+# 恩多：达斯·维达之死
+# -----------------------------------------------------------------------------
+# 国家作用域（银河帝国）。原版流程里维达在 66 号命令之后就一直活到银河条约，
+# 与恩多的结局对不上。这里在死星二号被摧毁时把他真正送走：命名领袖阵亡，
+# 帝国失去他带来的地面与舰队加成。
+foc_saga_kill_darth_vader = {
+    remove_modifier = foc_republic_origin_darth_vader
+    every_owned_leader = {
+        limit = {
+            OR = {
+                has_leader_flag = foc_republic_origin_vader_leader
+                has_leader_flag = foc_republic_origin_anakin_leader
+            }
+        }
+        set_immortal = no
+        kill_leader = { show_notification = no }
+    }
+    clear_global_event_target = foc_republic_origin_darth_vader
+}
+
+# -----------------------------------------------------------------------------
+# 帕德梅·纳贝里·阿米达拉
+# -----------------------------------------------------------------------------
+# V226: 帕德梅成为真实传奇官员。纳布危机后进入共和国领袖池，
+# 穆斯塔法后仍存活，直到“双生子”事件结算时死亡。
+foc_saga_create_padme = {
+    set_country_flag = foc_saga_padme_story_present
+    set_global_flag = foc_saga_padme_story_present
+    foc_v226_create_padme = yes
+}
+
+# 国家作用域。V226 改为“双生子”事件调用。
+foc_saga_kill_padme = {
+    remove_modifier = foc_saga_amidala_senator
+    remove_modifier = foc_saga_anakin_visions
+    remove_country_flag = foc_saga_padme_story_present
+    foc_v226_kill_padme_leader = yes
+    set_global_flag = foc_saga_padme_dead
+}
+
+# -----------------------------------------------------------------------------
+# 恩多：皇帝之死，与帝国残余的新主人
+# -----------------------------------------------------------------------------
+# 国家作用域（银河帝国）。V232c：死星二号被摧毁时，帕尔帕廷必须
+# 真正死亡，而不是只把现任元首改名换脸。auth_imperial 会在元首死亡后
+# 自动完成继承。V232f 不再在死亡后一日强闯 ruler 作用域；后续索龙接管
+# 仍由既有剧情链处理，避免 4.4.6 在王位短暂空缺时产生脚本错误。
+foc_saga_emperor_dies_at_endor = {
+    if = {
+        limit = { NOT = { has_country_flag = foc_saga_palpatine_dead } }
+        set_country_flag = foc_saga_palpatine_dead
+        set_global_flag = foc_saga_palpatine_died_at_endor
+
+        # Palpatine genuinely dies here. The story-protection pulse stops
+        # restoring immortality because the global death flag is set first.
+        ruler = {
+            set_immortal = no
+            kill_leader = { show_notification = no }
+        }
+
+        # V232f: do not force a ruler scope one day after death.  On 4.4.6 the
+        # imperial throne can still be temporarily vacant at that tick, which
+        # produced Invalid context switch [ruler].  Later succession/Thrawn
+        # logic remains authoritative; the Endor finale no longer depends on it.
+
+        # 皇帝一死，新秩序赖以运转的那套东西立刻失效。
+        if = {
+            limit = { NOT = { has_modifier = foc_saga_imperial_succession_crisis } }
+            add_modifier = { modifier = foc_saga_imperial_succession_crisis days = -1 }
+        }
+    }
+}
+
+# V232h: country scope, strictly the Imperial Remnant. Never use ROOT here:
+# the caller can be the human First Order country during the opening bootstrap.
+# Reuse a real Thrawn when present; otherwise create and appoint him, rather than
+# renaming Palpatine/a regent or assuming that the throne already has a ruler.
+foc_saga_thrawn_takes_command = {
+    if = {
+        limit = {
+            has_country_flag = foc_sw_imperial_remnant_country
+            NOT = { has_origin = origin_fop_first_order }
+            NOR = {
+                has_country_flag = fop_player_first_order
+                has_country_flag = fop_player_final_order
+                has_country_flag = foc_khan_first_order_country
+                has_country_flag = foc_khan_final_order_country
+            }
+            NOT = { has_country_flag = foc_v232h_thrawn_command_initialized }
+        }
+        if = {
+            limit = {
+                any_owned_leader = { has_leader_flag = foc_saga_thrawn_leader }
+            }
+            random_owned_leader = {
+                limit = { has_leader_flag = foc_saga_thrawn_leader }
+                save_event_target_as = foc_v232h_existing_thrawn
+            }
+            set_leader = event_target:foc_v232h_existing_thrawn
+        }
+        else = {
+            # The map-load species pass has already run on the new-game route.
+            # Older saves without that target fall back to the country's species;
+            # no additional population/species seeding is performed here.
+            if = {
+                limit = { exists = event_target:foc_v187_chiss_species }
+                foc_v232h_create_thrawn_ruler = {
+                    SPECIES = event_target:foc_v187_chiss_species
+                }
+            }
+            else = {
+                foc_v232h_create_thrawn_ruler = { SPECIES = owner_main_species }
+            }
+        }
+
+        # Success flags and the command modifier are set only after a real
+        # Thrawn ruler exists. A failed appointment must not consume the event.
+        if = {
+            limit = { exists = ruler }
+            if = {
+                limit = { ruler = { has_leader_flag = foc_saga_thrawn_leader } }
+                ruler = {
+                    set_name = "FOC_SAGA_THRAWN_NAME"
+                    change_leader_portrait = foc_saga_thrawn_01
+                    set_leader_tier = leader_tier_legendary
+                    remove_leader_flag = foc_saga_imperial_regent
+                }
+                set_country_flag = foc_saga_thrawn_in_command
+                set_country_flag = foc_v232h_thrawn_command_initialized
+                set_global_flag = foc_saga_thrawn_leads_the_remnant
+                remove_modifier = foc_saga_imperial_succession_crisis
+                if = {
+                    limit = { NOT = { has_modifier = foc_saga_thrawn_command } }
+                    add_modifier = { modifier = foc_saga_thrawn_command days = -1 }
+                }
+                log = "FOC_V232H_THRAWN: appointment verified; Thrawn is the Imperial Remnant ruler."
+            }
+        }
+    }
+}
+
+# Country-scope creation helper, called only inside the Remnant guard above.
+foc_v232h_create_thrawn_ruler = {
+    create_leader = {
+        tier = leader_tier_legendary
+        class = commander
+        species = $SPECIES$
+        name = "FOC_SAGA_THRAWN_NAME"
+        gender = male
+        skill = 5
+        event_leader = yes
+        skip_background_generation = yes
+        randomize_traits = no
+        effect = {
+            change_leader_portrait = foc_saga_thrawn_01
+            set_leader_flag = foc_saga_thrawn_leader
+        }
+    }
+    set_leader = last_created_leader
+}
+
+# Recipient-country scope. The appointment and the player notification are
+# deliberately separate: this helper never creates or assigns a leader.
+foc_v232h_queue_thrawn_return_report = {
+    if = {
+        limit = {
+            is_ai = no
+            has_global_flag = foc_saga_thrawn_leads_the_remnant
+            NOT = { has_country_flag = foc_saga_thrawn_report_shown }
+            NOT = { has_country_flag = foc_v232h_thrawn_report_pending }
+        }
+        set_country_flag = foc_v232h_thrawn_report_pending
+        country_event = { id = foc_thrawn.2 days = 1 }
+        log = "FOC_V232H_THRAWN: return story queued for a human player; delivery in one game day."
+    }
+}
+
+# -----------------------------------------------------------------------------
+# 卡塔纳舰队
+# -----------------------------------------------------------------------------
+# 国家作用域（帝国残余）。两百艘无人可用的德雷德诺特级躺了半个世纪，
+# 索龙把它们找了出来。数量给得克制：这是一份意外之财，不是一个新帝国。
+foc_saga_spawn_katana_fleet = {
+    if = {
+        limit = {
+            any_owned_planet = { is_capital = yes }
+        }
+        random_owned_planet = {
+            limit = { is_capital = yes }
+            solar_system = {
+                create_fleet = {
+                    name = "FOC_SAGA_KATANA_FLEET"
+                    settings = { can_change_composition = no can_upgrade = yes can_disband = yes spawn_debris = yes }
+                    effect = {
+                        set_owner = prevprev.owner
+                        owner = {
+                            if = {
+                                limit = {
+                                    NOT = { has_technology = foc_tech_tibanna_mining }
+                                }
+                                give_technology = { tech = foc_tech_tibanna_mining message = no }
+                            }
+                            if = {
+                                limit = {
+                                    NOT = { has_technology = foc_tech_std_turbo_1 }
+                                }
+                                if = {
+                                    limit = { foc_v1716_republic_start_arsenal_allowed = yes }
+                                    give_technology = { tech = foc_tech_std_turbo_1 message = no }
+                                }
+                            }
+                        }
+                        while = {
+                            count = 4
+                            if = {
+                                limit = { has_global_flag = foc_khan_strength_lowest }
+                                create_ship = { name = random design = "NAME_FOC_STORY_BATTLESHIP_V1718E_LOWEST" }
+                            }
+                            else = {
+                                create_ship = { name = random design = "NAME_FOC_STORY_BATTLESHIP" }
+                            }
+                        }
+                        while = {
+                            count = 8
+                            if = {
+                                limit = { has_global_flag = foc_khan_strength_lowest }
+                                create_ship = { name = random design = "NAME_FOC_STORY_CRUISER_V1718E_LOWEST" }
+                            }
+                            else = {
+                                create_ship = { name = random design = "NAME_FOC_STORY_CRUISER" }
+                            }
+                        }
+                        while = {
+                            count = 12
+                            if = {
+                                limit = { has_global_flag = foc_khan_strength_lowest }
+                                create_ship = { name = random design = "NAME_FOC_STORY_DESTROYER_V1718E_LOWEST" }
+                            }
+                            else = {
+                                create_ship = { name = random design = "NAME_FOC_STORY_DESTROYER" }
+                            }
+                        }
+                        set_location = { target = prev distance = 40 angle = random }
+                        set_fleet_flag = foc_saga_katana_fleet
+                    }
+                }
+            }
+        }
+    }
+}
+
+# -----------------------------------------------------------------------------
+# 帝国宣告：伦理观
+# -----------------------------------------------------------------------------
+# 国家作用域。foc_republic_origin_transform_republic_into_empire 里只调了
+# change_government——那个效果**只改政体与国策，不碰伦理观**，所以玩家的共和国
+# 变成帝国之后，伦理观仍然停在共和国那一套（亲外/和平/平等主义）。
+#
+# 对照组能说明这是遗漏而不是设计：同一份文件里
+#   * 第 543 行（新共和国堕落帝国）
+#   * 第 640 行（帝国残余堕落帝国）
+# 两处都在 change_government 之前老老实实做了 country_remove_ethic ×16 +
+# country_add_ethic ×3。而 AI 版帝国走 create_country，直接用 ethos = { } 指定，
+# 所以只有玩家原地转换这一条路径漏了。
+#
+# 这里照抄那两处已经在用的写法：先清空全部十六种伦理观，再装上
+# 排外 + 军国 + 威权，与 AI 版帝国的 ethos 完全一致。
+foc_saga_set_imperial_ethics = {
+    country_remove_ethic = ethic_fanatic_xenophile
+    country_remove_ethic = ethic_fanatic_pacifist
+    country_remove_ethic = ethic_fanatic_egalitarian
+    country_remove_ethic = ethic_fanatic_xenophobe
+    country_remove_ethic = ethic_fanatic_militarist
+    country_remove_ethic = ethic_fanatic_authoritarian
+    country_remove_ethic = ethic_fanatic_materialist
+    country_remove_ethic = ethic_fanatic_spiritualist
+    country_remove_ethic = ethic_xenophile
+    country_remove_ethic = ethic_pacifist
+    country_remove_ethic = ethic_egalitarian
+    country_remove_ethic = ethic_xenophobe
+    country_remove_ethic = ethic_militarist
+    country_remove_ethic = ethic_authoritarian
+    country_remove_ethic = ethic_materialist
+    country_remove_ethic = ethic_spiritualist
+    country_add_ethic = ethic_xenophobe
+    country_add_ethic = ethic_militarist
+    country_add_ethic = ethic_authoritarian
+    set_country_flag = foc_saga_imperial_ethics_applied
+}

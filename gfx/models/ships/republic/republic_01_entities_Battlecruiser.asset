@@ -1,0 +1,520 @@
+##########
+# BATTLECRUISER
+##########
+
+##########
+# FRAME
+##########
+
+entity = {
+	name = "republic_01_Battlecruiser_entity"
+	pdxmesh = "mammalian_01_battleship_frame_mesh"
+
+###	locator = { name = "part1"	position = { 0 0 0 } }
+	locator = { name = "part2"	position = { 0 0.3 -6 } }
+	locator = { name = "part3"	position = { 0 0.3 -6 } }
+	locator = { name = "part4"	position = { 0 0.3 -6 } }
+
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" animation_blend_time = 4 }
+	state = { name = "moving" animation = "idle" animation_blend_time = 4 }
+
+		### Maximum Death Sequence Time ~ 14.5 Seconds
+		### 3 Death Animations x 4 Death Sequences per ship = 12 Different Death Scenes per ship
+	state = { name = "death" animation = "death" animation_blend_time = 0 chance = 1 looping = no
+		event = { time = 14.5 node = "part1" particle = "large_player_ship_explosion_particle" sound = { soundeffect = ship_destroyed } } }
+	state = { name = "death" animation = "death2" animation_blend_time = 0 chance = 1 looping = no
+		event = { time = 22.5 node = "part1" particle = "large_player_ship_explosion_particle" sound = { soundeffect = ship_destroyed } } }
+	state = { name = "death" animation = "death3" animation_blend_time = 0 chance = 1 looping = no
+		event = { time = 15.9 node = "part1" particle = "large_player_ship_explosion_particle" sound = { soundeffect = ship_destroyed } } }
+
+	game_data = {
+		size = 16.0
+	}
+}
+
+##########
+# BOW
+##########
+
+entity = {
+	name = "republic_01_Battlecruiser_bow_L1_entity"
+	pdxmesh = "republic_acclamator_mesh"
+	scale = 1.0
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_destroyer_hum" } }
+		event = { time = 0 node = "engine_small_01" particle = "republic_1_0_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engine_small_02" particle = "republic_1_0_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engine_large_01" particle = "republic_3_0_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engine_large_02" particle = "republic_3_0_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+	}
+	state = { name = "moving" state_time = 5
+		event = { trigger_once = yes sound = { soundeffect = "moving_out_destroyer" } }
+		event = { time = 0 node = "engine_small_01" particle = "republic_1_0_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engine_small_02" particle = "republic_1_0_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engine_large_01" particle = "republic_3_0_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engine_large_02" particle = "republic_3_0_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+	}
+
+	### Death Sequence 1
+	state = { name = "death" chance = 1 state_time = 20
+		event = { time = 1.0 node = "explosion_01" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 1.0 node = "explosion_01" particle = "ship_burn_particle" }
+		event = { time = 1.5 node = "explosion_02" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 1.5 node = "explosion_02" particle = "ship_burn_particle" }
+		event = { time = 2.0 node = "explosion_03" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 2.0 node = "explosion_03" particle = "ship_burn_particle" }
+		event = { time = 7.5 node = "explosion_04" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 7.5 node = "explosion_04" particle = "ship_burn_particle" }
+		event = { time = 8.0 node = "explosion_05" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 8.0 node = "explosion_05" particle = "ship_burn_particle" }
+		event = { time = 8.5 node = "explosion_06" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 8.5 node = "explosion_06" particle = "ship_burn_particle" }
+		event = { time = 11.5 node = "explosion_09" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 11.5 node = "explosion_09" particle = "ship_burn_particle" }
+		event = { time = 12.0 node = "explosion_10" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 12.0 node = "explosion_10" particle = "ship_burn_particle" }
+		event = { time = 12.5 node = "explosion_11" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 12.5 node = "explosion_11" particle = "ship_burn_particle" }
+		event = { time = 13.0 node = "explosion_07" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 13.0 node = "explosion_07" particle = "ship_burn_particle" }
+		event = { time = 13.5 node = "explosion_08" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 13.5 node = "explosion_08" particle = "ship_burn_particle" }
+	}
+
+	### Death Sequence 2
+	state = { name = "death" chance = 1 state_time = 20
+		event = { time = 0.0 node = "explosion_03" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 0.0 node = "explosion_03" particle = "ship_burn_particle" }
+		event = { time = 0.4 node = "small_gun_01" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 0.4 node = "small_gun_01" particle = "ship_burn_particle" }
+		event = { time = 0.8 node = "small_gun_02" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 1.2 node = "small_gun_02" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 1.6 node = "explosion_12" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 1.6 node = "explosion_12" particle = "ship_burn_particle" }
+		event = { time = 1.9 node = "explosion_12" particle = "small_player_ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 4.0 node = "explosion_12" particle = "ship_burn_particle" }
+		event = { time = 6.5 node = "explosion_07" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 6.5 node = "explosion_07" particle = "ship_burn_particle" }
+		event = { time = 8.0 node = "explosion_09" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 8.0 node = "explosion_09" particle = "ship_burn_particle" }
+		event = { time = 8.0 node = "explosion_12" particle = "ship_burn_particle" }
+		event = { time = 8.5 node = "explosion_04" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 8.5 node = "explosion_04" particle = "ship_burn_particle" }
+		event = { time = 12.0 node = "explosion_12" particle = "ship_burn_particle" }
+		event = { time = 13.5 node = "explosion_05" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 13.5 node = "explosion_05" particle = "ship_burn_particle" }
+		event = { time = 14.0 node = "explosion_02" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 14.0 node = "explosion_02" particle = "ship_burn_particle" }
+	}
+
+	### Death Sequence 3
+	state = { name = "death" chance = 1 state_time = 20
+		event = { time = 0.0 node = "explosion_08" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 0.0 node = "explosion_08" particle = "ship_burn_particle" }
+		event = { time = 0.3 node = "explosion_04" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 0.6 node = "small_gun_01" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 0.8 node = "explosion_03" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 1.2 node = "engine_small_01" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 1.2 node = "engine_small_01" particle = "ship_burn_particle" }
+		event = { time = 1.5 node = "engine_large_01" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 1.5 node = "engine_large_01" particle = "ship_burn_particle" }
+		event = { time = 1.8 node = "engine_large_02" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 1.8 node = "engine_large_02" particle = "ship_burn_particle" }
+		event = { time = 2.2 node = "engine_large_01" particle = "small_player_ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } }
+		event = { time = 2.2 node = "engine_large_01" particle = "ship_burn_particle" }
+		event = { time = 2.4 node = "engine_large_01" particle = "small_player_ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } }
+		event = { time = 2.4 node = "engine_large_01" particle = "ship_burn_particle" }
+		event = { time = 2.5 node = "engine_small_01" particle = "small_player_ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } }
+		event = { time = 2.5 node = "engine_small_01" particle = "ship_burn_particle" }
+		event = { time = 6.0 node = "engine_small_01" particle = "ship_burn_particle" }
+		event = { time = 6.0 node = "engine_large_01" particle = "ship_burn_particle" }
+		event = { time = 8.5 node = "explosion_11" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 8.5 node = "explosion_11" particle = "ship_burn_particle" }
+		event = { time = 9.0 node = "explosion_10" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 9.0 node = "explosion_10" particle = "ship_burn_particle" }
+		event = { time = 10.0 node = "engine_small_01" particle = "ship_burn_particle" }
+		event = { time = 10.0 node = "engine_large_01" particle = "ship_burn_particle" }
+		event = { time = 11.5 node = "explosion_04" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 11.5 node = "explosion_04" particle = "ship_burn_particle" }
+		event = { time = 13.0 node = "explosion_02" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 13.0 node = "explosion_02" particle = "ship_burn_particle" }
+		event = { time = 13.5 node = "engine_large_02" particle = "small_player_ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } }
+		event = { time = 13.8 node = "engine_small_02" particle = "small_player_ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } }
+		event = { time = 13.8 node = "engine_small_02" particle = "ship_burn_particle" }
+		event = { time = 14.0 node = "engine_small_01" particle = "ship_burn_particle" }
+		event = { time = 14.0 node = "engine_large_01" particle = "ship_burn_particle" }
+	}
+
+	### Death Sequence 4
+	state = { name = "death" chance = 1 state_time = 20
+		event = { time = 0.0 node = "explosion_07" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 0.0 node = "explosion_07" particle = "ship_burn_particle" }
+		event = { time = 1.0 node = "explosion_04" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 1.0 node = "explosion_04" particle = "ship_burn_particle" }
+		event = { time = 2.0 node = "explosion_10" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 2.0 node = "explosion_10" particle = "ship_burn_particle" }
+		event = { time = 4.0 node = "explosion_11" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 4.0 node = "explosion_11" particle = "ship_burn_particle" }
+		event = { time = 6.0 node = "explosion_06" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 6.2 node = "explosion_02" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 6.3 node = "explosion_08" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 6.3 node = "explosion_03" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 6.5 node = "small_gun_02" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 6.6 node = "explosion_01" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 6.8 node = "explosion_04" particle = "small_player_ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 6.8 node = "explosion_04" particle = "ship_burn_particle" }
+		event = { time = 7.0 node = "small_gun_01" particle = "small_player_ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 7.0 node = "small_gun_01" particle = "ship_burn_particle" }
+		event = { time = 7.1 node = "explosion_01" particle = "small_player_ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 7.1 node = "explosion_01" particle = "ship_burn_particle" }
+		event = { time = 10.0 node = "explosion_04" particle = "ship_burn_particle" }
+		event = { time = 10.0 node = "small_gun_01" particle = "ship_burn_particle" }
+		event = { time = 10.0 node = "explosion_01" particle = "ship_burn_particle" }
+		event = { time = 10.0 node = "explosion_08" particle = "ship_burn_particle" }
+		event = { time = 10.0 node = "explosion_06" particle = "ship_burn_particle" }
+		event = { time = 14.0 node = "explosion_04" particle = "ship_burn_particle" }
+		event = { time = 14.0 node = "small_gun_01" particle = "ship_burn_particle" }
+		event = { time = 14.0 node = "explosion_01" particle = "ship_burn_particle" }
+		event = { time = 14.0 node = "explosion_08" particle = "ship_burn_particle" }
+		event = { time = 14.0 node = "explosion_06" particle = "ship_burn_particle" }
+	}
+}
+
+entity = {
+	name = "republic_01_Battlecruiser_bow_M1S2_entity"
+	pdxmesh = "republic_acclamator_2_mesh"
+	scale = 1.0
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_destroyer_hum" } }
+		event = { time = 0 node = "engine_medium_01" particle = "republic_3_0_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engine_medium_02" particle = "republic_3_0_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engine_medium_03" particle = "republic_3_0_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engine_medium_04" particle = "republic_3_0_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+	}
+	state = { name = "moving" state_time = 5
+		event = { trigger_once = yes sound = { soundeffect = "moving_out_destroyer" } }
+		event = { time = 0 node = "engine_medium_01" particle = "republic_3_0_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engine_medium_02" particle = "republic_3_0_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engine_medium_03" particle = "republic_3_0_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engine_medium_04" particle = "republic_3_0_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+	}
+
+	### Death Sequence 1
+	state = { name = "death" chance = 1 state_time = 20
+		event = { time = 1.0 node = "explosion_01" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 1.0 node = "explosion_01" particle = "ship_burn_particle" }
+		event = { time = 1.5 node = "explosion_02" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 1.5 node = "explosion_02" particle = "ship_burn_particle" }
+		event = { time = 2.0 node = "explosion_03" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 2.0 node = "explosion_03" particle = "ship_burn_particle" }
+		event = { time = 7.5 node = "explosion_04" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 7.5 node = "explosion_04" particle = "ship_burn_particle" }
+		event = { time = 8.0 node = "explosion_05" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 8.0 node = "explosion_05" particle = "ship_burn_particle" }
+		event = { time = 8.5 node = "explosion_06" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 8.5 node = "explosion_06" particle = "ship_burn_particle" }
+		event = { time = 11.5 node = "explosion_09" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 11.5 node = "explosion_09" particle = "ship_burn_particle" }
+		event = { time = 12.0 node = "explosion_10" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 12.0 node = "explosion_10" particle = "ship_burn_particle" }
+		event = { time = 12.5 node = "explosion_11" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 12.5 node = "explosion_11" particle = "ship_burn_particle" }
+		event = { time = 13.0 node = "explosion_07" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 13.0 node = "explosion_07" particle = "ship_burn_particle" }
+		event = { time = 14.0 node = "explosion_08" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 14.0 node = "explosion_08" particle = "ship_burn_particle" }
+	}
+
+	### Death Sequence 2
+	state = { name = "death" chance = 1 state_time = 20
+		event = { time = 0.0 node = "explosion_03" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 0.0 node = "explosion_03" particle = "ship_burn_particle" }
+		event = { time = 0.4 node = "small_gun_01" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 0.4 node = "small_gun_01" particle = "ship_burn_particle" }
+		event = { time = 0.8 node = "small_gun_02" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 1.2 node = "small_gun_02" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 1.6 node = "explosion_12" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 1.6 node = "explosion_12" particle = "ship_burn_particle" }
+		event = { time = 1.9 node = "explosion_12" particle = "small_player_ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 4.0 node = "explosion_12" particle = "ship_burn_particle" }
+		event = { time = 6.5 node = "explosion_07" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 6.5 node = "explosion_07" particle = "ship_burn_particle" }
+		event = { time = 8.0 node = "explosion_09" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 8.0 node = "explosion_09" particle = "ship_burn_particle" }
+		event = { time = 8.0 node = "explosion_12" particle = "ship_burn_particle" }
+		event = { time = 8.5 node = "explosion_04" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 8.5 node = "explosion_04" particle = "ship_burn_particle" }
+		event = { time = 12.0 node = "explosion_12" particle = "ship_burn_particle" }
+		event = { time = 13.5 node = "explosion_05" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 13.5 node = "explosion_05" particle = "ship_burn_particle" }
+		event = { time = 14.0 node = "explosion_02" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 14.0 node = "explosion_02" particle = "ship_burn_particle" }
+	}
+
+	### Death Sequence 3
+	state = { name = "death" chance = 1 state_time = 20
+		event = { time = 0.0 node = "explosion_08" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 0.0 node = "explosion_08" particle = "ship_burn_particle" }
+		event = { time = 0.3 node = "explosion_04" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 0.6 node = "small_gun_01" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 0.8 node = "explosion_03" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 1.2 node = "engine_medium_03" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 1.2 node = "engine_medium_03" particle = "ship_burn_particle" }
+		event = { time = 1.5 node = "engine_medium_01" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 1.5 node = "engine_medium_01" particle = "ship_burn_particle" }
+		event = { time = 1.8 node = "engine_medium_02" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 1.8 node = "engine_medium_02" particle = "ship_burn_particle" }
+		event = { time = 2.2 node = "engine_medium_01" particle = "small_player_ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } }
+		event = { time = 2.2 node = "engine_medium_01" particle = "ship_burn_particle" }
+		event = { time = 2.4 node = "engine_medium_01" particle = "small_player_ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } }
+		event = { time = 2.4 node = "engine_medium_01" particle = "ship_burn_particle" }
+		event = { time = 2.5 node = "engine_medium_03" particle = "small_player_ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } }
+		event = { time = 2.5 node = "engine_medium_03" particle = "ship_burn_particle" }
+		event = { time = 6.0 node = "engine_medium_03" particle = "ship_burn_particle" }
+		event = { time = 6.0 node = "engine_medium_01" particle = "ship_burn_particle" }
+		event = { time = 8.5 node = "explosion_11" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 8.5 node = "explosion_11" particle = "ship_burn_particle" }
+		event = { time = 9.0 node = "explosion_10" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 9.0 node = "explosion_10" particle = "ship_burn_particle" }
+		event = { time = 10.0 node = "engine_medium_03" particle = "ship_burn_particle" }
+		event = { time = 10.0 node = "engine_medium_01" particle = "ship_burn_particle" }
+		event = { time = 11.5 node = "explosion_04" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 11.5 node = "explosion_04" particle = "ship_burn_particle" }
+		event = { time = 13.0 node = "explosion_02" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 13.0 node = "explosion_02" particle = "ship_burn_particle" }
+		event = { time = 13.5 node = "engine_medium_02" particle = "small_player_ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } }
+		event = { time = 13.8 node = "engine_medium_04" particle = "small_player_ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } }
+		event = { time = 13.8 node = "engine_medium_04" particle = "ship_burn_particle" }
+		event = { time = 14.0 node = "engine_medium_03" particle = "ship_burn_particle" }
+		event = { time = 14.0 node = "engine_medium_01" particle = "ship_burn_particle" }
+	}
+
+	### Death Sequence 4
+	state = { name = "death" chance = 1 state_time = 20
+		event = { time = 0.0 node = "explosion_07" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 0.0 node = "explosion_07" particle = "ship_burn_particle" }
+		event = { time = 1.0 node = "explosion_04" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 1.0 node = "explosion_04" particle = "ship_burn_particle" }
+		event = { time = 2.0 node = "explosion_10" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 2.0 node = "explosion_10" particle = "ship_burn_particle" }
+		event = { time = 4.0 node = "explosion_11" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 4.0 node = "explosion_11" particle = "ship_burn_particle" }
+		event = { time = 6.0 node = "explosion_06" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 6.2 node = "explosion_02" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 6.3 node = "explosion_08" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 6.3 node = "explosion_03" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 6.5 node = "small_gun_02" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 6.6 node = "explosion_01" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 6.8 node = "explosion_04" particle = "small_player_ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 6.8 node = "explosion_04" particle = "ship_burn_particle" }
+		event = { time = 7.0 node = "small_gun_01" particle = "small_player_ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 7.0 node = "small_gun_01" particle = "ship_burn_particle" }
+		event = { time = 7.1 node = "explosion_01" particle = "small_player_ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 7.1 node = "explosion_01" particle = "ship_burn_particle" }
+		event = { time = 10.0 node = "explosion_04" particle = "ship_burn_particle" }
+		event = { time = 10.0 node = "small_gun_01" particle = "ship_burn_particle" }
+		event = { time = 10.0 node = "explosion_01" particle = "ship_burn_particle" }
+		event = { time = 10.0 node = "explosion_08" particle = "ship_burn_particle" }
+		event = { time = 10.0 node = "explosion_06" particle = "ship_burn_particle" }
+		event = { time = 14.0 node = "explosion_04" particle = "ship_burn_particle" }
+		event = { time = 14.0 node = "small_gun_01" particle = "ship_burn_particle" }
+		event = { time = 14.0 node = "explosion_01" particle = "ship_burn_particle" }
+		event = { time = 14.0 node = "explosion_08" particle = "ship_burn_particle" }
+		event = { time = 14.0 node = "explosion_06" particle = "ship_burn_particle" }
+	}
+}
+
+entity = {
+	name = "republic_01_Battlecruiser_bow_M2_entity"
+	pdxmesh = "republic_acclamator_mesh"
+	scale = 1.0
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_destroyer_hum" } }
+		event = { time = 0 node = "engine_small_01" particle = "republic_1_0_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engine_small_02" particle = "republic_1_0_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engine_large_01" particle = "republic_3_0_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engine_large_02" particle = "republic_3_0_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+	}
+	state = { name = "moving" state_time = 5
+		event = { trigger_once = yes sound = { soundeffect = "moving_out_destroyer" } }
+		event = { time = 0 node = "engine_small_01" particle = "republic_1_0_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engine_small_02" particle = "republic_1_0_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engine_large_01" particle = "republic_3_0_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engine_large_02" particle = "republic_3_0_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+	}
+
+	### Death Sequence 1
+	state = { name = "death" chance = 1 state_time = 20
+		event = { time = 1.0 node = "explosion_01" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 1.0 node = "explosion_01" particle = "ship_burn_particle" }
+		event = { time = 1.5 node = "explosion_02" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 1.5 node = "explosion_02" particle = "ship_burn_particle" }
+		event = { time = 2.0 node = "explosion_03" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 2.0 node = "explosion_03" particle = "ship_burn_particle" }
+		event = { time = 7.5 node = "explosion_04" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 7.5 node = "explosion_04" particle = "ship_burn_particle" }
+		event = { time = 8.0 node = "explosion_05" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 8.0 node = "explosion_05" particle = "ship_burn_particle" }
+		event = { time = 8.5 node = "explosion_06" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 8.5 node = "explosion_06" particle = "ship_burn_particle" }
+		event = { time = 11.5 node = "explosion_09" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 11.5 node = "explosion_09" particle = "ship_burn_particle" }
+		event = { time = 12.0 node = "explosion_10" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 12.0 node = "explosion_10" particle = "ship_burn_particle" }
+		event = { time = 12.5 node = "explosion_11" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 12.5 node = "explosion_11" particle = "ship_burn_particle" }
+		event = { time = 13.0 node = "explosion_07" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 13.0 node = "explosion_07" particle = "ship_burn_particle" }
+		event = { time = 13.5 node = "explosion_08" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 13.5 node = "explosion_08" particle = "ship_burn_particle" }
+	}
+
+	### Death Sequence 2
+	state = { name = "death" chance = 1 state_time = 20
+		event = { time = 0.0 node = "explosion_03" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 0.0 node = "explosion_03" particle = "ship_burn_particle" }
+		event = { time = 0.4 node = "small_gun_01" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 0.4 node = "small_gun_01" particle = "ship_burn_particle" }
+		event = { time = 0.8 node = "small_gun_02" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 1.2 node = "small_gun_02" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 1.6 node = "explosion_12" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 1.6 node = "explosion_12" particle = "ship_burn_particle" }
+		event = { time = 1.9 node = "explosion_12" particle = "small_player_ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 4.0 node = "explosion_12" particle = "ship_burn_particle" }
+		event = { time = 6.5 node = "explosion_07" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 6.5 node = "explosion_07" particle = "ship_burn_particle" }
+		event = { time = 8.0 node = "explosion_09" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 8.0 node = "explosion_09" particle = "ship_burn_particle" }
+		event = { time = 8.0 node = "explosion_12" particle = "ship_burn_particle" }
+		event = { time = 8.5 node = "explosion_04" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 8.5 node = "explosion_04" particle = "ship_burn_particle" }
+		event = { time = 12.0 node = "explosion_12" particle = "ship_burn_particle" }
+		event = { time = 13.5 node = "explosion_05" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 13.5 node = "explosion_05" particle = "ship_burn_particle" }
+		event = { time = 14.0 node = "explosion_02" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 14.0 node = "explosion_02" particle = "ship_burn_particle" }
+	}
+
+	### Death Sequence 3
+	state = { name = "death" chance = 1 state_time = 20
+		event = { time = 0.0 node = "explosion_08" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 0.0 node = "explosion_08" particle = "ship_burn_particle" }
+		event = { time = 0.3 node = "explosion_04" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 0.6 node = "small_gun_01" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 0.8 node = "explosion_03" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 1.2 node = "engine_small_01" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 1.2 node = "engine_small_01" particle = "ship_burn_particle" }
+		event = { time = 1.5 node = "engine_large_01" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 1.5 node = "engine_large_01" particle = "ship_burn_particle" }
+		event = { time = 1.8 node = "engine_large_02" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 1.8 node = "engine_large_02" particle = "ship_burn_particle" }
+		event = { time = 2.2 node = "engine_large_01" particle = "small_player_ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } }
+		event = { time = 2.2 node = "engine_large_01" particle = "ship_burn_particle" }
+		event = { time = 2.4 node = "engine_large_01" particle = "small_player_ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } }
+		event = { time = 2.4 node = "engine_large_01" particle = "ship_burn_particle" }
+		event = { time = 2.5 node = "engine_small_01" particle = "small_player_ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } }
+		event = { time = 2.5 node = "engine_small_01" particle = "ship_burn_particle" }
+		event = { time = 6.0 node = "engine_small_01" particle = "ship_burn_particle" }
+		event = { time = 6.0 node = "engine_large_01" particle = "ship_burn_particle" }
+		event = { time = 8.5 node = "explosion_11" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 8.5 node = "explosion_11" particle = "ship_burn_particle" }
+		event = { time = 9.0 node = "explosion_10" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 9.0 node = "explosion_10" particle = "ship_burn_particle" }
+		event = { time = 10.0 node = "engine_small_01" particle = "ship_burn_particle" }
+		event = { time = 10.0 node = "engine_large_01" particle = "ship_burn_particle" }
+		event = { time = 11.5 node = "explosion_04" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 11.5 node = "explosion_04" particle = "ship_burn_particle" }
+		event = { time = 13.0 node = "explosion_02" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 13.0 node = "explosion_02" particle = "ship_burn_particle" }
+		event = { time = 13.5 node = "engine_large_02" particle = "small_player_ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } }
+		event = { time = 13.8 node = "engine_small_02" particle = "small_player_ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } }
+		event = { time = 13.8 node = "engine_small_02" particle = "ship_burn_particle" }
+		event = { time = 14.0 node = "engine_small_01" particle = "ship_burn_particle" }
+		event = { time = 14.0 node = "engine_large_01" particle = "ship_burn_particle" }
+	}
+
+	### Death Sequence 4
+	state = { name = "death" chance = 1 state_time = 20
+		event = { time = 0.0 node = "explosion_07" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 0.0 node = "explosion_07" particle = "ship_burn_particle" }
+		event = { time = 1.0 node = "explosion_04" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 1.0 node = "explosion_04" particle = "ship_burn_particle" }
+		event = { time = 2.0 node = "explosion_10" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 2.0 node = "explosion_10" particle = "ship_burn_particle" }
+		event = { time = 4.0 node = "explosion_11" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 4.0 node = "explosion_11" particle = "ship_burn_particle" }
+		event = { time = 6.0 node = "explosion_06" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 6.2 node = "explosion_02" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 6.3 node = "explosion_08" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 6.3 node = "explosion_03" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 6.5 node = "small_gun_02" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 6.6 node = "explosion_01" particle = "ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 6.8 node = "explosion_04" particle = "small_player_ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 6.8 node = "explosion_04" particle = "ship_burn_particle" }
+		event = { time = 7.0 node = "small_gun_01" particle = "small_player_ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 7.0 node = "small_gun_01" particle = "ship_burn_particle" }
+		event = { time = 7.1 node = "explosion_01" particle = "small_player_ship_explosion_particle" sound = { soundeffect = "ship_explosion" } }
+		event = { time = 7.1 node = "explosion_01" particle = "ship_burn_particle" }
+		event = { time = 10.0 node = "explosion_04" particle = "ship_burn_particle" }
+		event = { time = 10.0 node = "small_gun_01" particle = "ship_burn_particle" }
+		event = { time = 10.0 node = "explosion_01" particle = "ship_burn_particle" }
+		event = { time = 10.0 node = "explosion_08" particle = "ship_burn_particle" }
+		event = { time = 10.0 node = "explosion_06" particle = "ship_burn_particle" }
+		event = { time = 14.0 node = "explosion_04" particle = "ship_burn_particle" }
+		event = { time = 14.0 node = "small_gun_01" particle = "ship_burn_particle" }
+		event = { time = 14.0 node = "explosion_01" particle = "ship_burn_particle" }
+		event = { time = 14.0 node = "explosion_08" particle = "ship_burn_particle" }
+		event = { time = 14.0 node = "explosion_06" particle = "ship_burn_particle" }
+	}
+}
+
+##########
+# MID
+##########
+
+entity = {
+	name = "republic_01_Battlecruiser_mid_S2HB_entity"
+	pdxmesh = "republic_weapons_battlecruiser_mid_mesh"
+	scale = 1.0
+}
+
+entity = {
+	name = "republic_01_Battlecruiser_mid_L1M1_entity"
+	pdxmesh = "republic_weapons_battlecruiser_mid_mesh"
+	scale = 1.0
+}
+
+entity = {
+	name = "republic_01_Battlecruiser_mid_M3_entity"
+	pdxmesh = "republic_weapons_battlecruiser_mid_mesh"
+	scale = 1.0
+}
+
+entity = {
+	name = "republic_01_Battlecruiser_mid_M2S2_entity"
+	pdxmesh = "republic_weapons_battlecruiser_mid_mesh"
+	scale = 1.0
+}
+
+##########
+# STERN
+##########
+
+entity = {
+	name = "republic_01_Battlecruiser_stern_M1_entity"
+	pdxmesh = "republic_weapons_battlecruiser_stern_mesh"
+	scale = 1.0
+}
+
+entity = {
+	name = "republic_01_Battlecruiser_stern_S2_entity"
+	pdxmesh = "republic_weapons_battlecruiser_stern_mesh"
+	scale = 1.0
+}

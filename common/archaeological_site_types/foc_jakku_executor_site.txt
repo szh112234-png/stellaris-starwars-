@@ -1,0 +1,48 @@
+# The Battle of Jakku left enough Executor-class wreckage and data cores to
+# reconstruct a sealed Imperial Remnant blueprint.
+
+foc_jakku_executor_wreckage_site = {
+    desc = "foc_jakku_executor_wreckage_site_intro"
+    picture = GFX_foc_event_jakku_executor_excavation
+    stages = 4
+    weight = 0
+
+    allow = {
+        exists = leader
+        leader = {
+            leader_class = scientist
+            owner = { is_ai = no }
+        }
+    }
+
+    visible = {
+        default_site_visible_trigger = yes
+    }
+
+    stage = {
+        difficulty = 1
+        icon = GFX_archaeology_runes_D1
+        event = foc_jakku_executor_site.1
+    }
+    stage = {
+        difficulty = 2
+        icon = GFX_archaeology_runes_D2
+        event = foc_jakku_executor_site.2
+    }
+    stage = {
+        difficulty = 3
+        icon = GFX_archaeology_runes_D3
+        event = foc_jakku_executor_site.3
+    }
+    stage = {
+        difficulty = 4
+        icon = GFX_archaeology_runes_D4
+        event = foc_jakku_executor_site.4
+    }
+
+    on_roll_failed = {
+        from? = {
+            standard_archaeological_site_on_roll_failed = { RANDOM_EVENTS = all_random_events }
+        }
+    }
+}

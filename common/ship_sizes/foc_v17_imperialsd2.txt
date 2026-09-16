@@ -1,0 +1,133 @@
+# FOC V17b: Imperial II-class. Cloned from imperialsd.txt so the three
+# sections, slots, required component sets and locators are identical.
+# (hull + armour) x1.18 measured with all 12 large utility slots filled with
+# adaptive durasteel armour; shields x1.25 and damage x1.25 on the base value.
+foc_imperialsd2 = {
+    formation_priority = 5
+    max_speed = 150
+    acceleration = 0.25
+    rotation_speed = 0.1
+    collision_radius = 8
+    max_hitpoints = 180933
+    modifier = {
+        ship_evasion_add = 30
+        ship_armor_add = 154871
+        ship_shield_add = 85250
+        ship_shield_regen_add_static = 300
+        ship_armor_regen_add_static = 300
+        ship_hull_regen_add_static = 300
+    }
+    ship_modifier = {
+        ship_weapon_range_mult = 0.25
+        ship_weapon_damage = 0.25
+    }
+    size_multiplier = 57
+    fleet_slot_size = 8
+    section_slots = {
+        bow = {
+            locator = "part1"
+        }
+        mid = {
+            locator = "part2"
+        }
+        stern = {
+            locator = "part3"
+        }
+    }
+    num_target_locators = 5
+    is_space_station = no
+    map_counter_icon = ship_counter_32
+    icon = ship_size_military_8
+    use_shipnames_from = destroyer
+    base_buildtime = 180
+    can_have_federation_design = no
+    enable_default_design = yes
+    enable_3dview_in_ship_browser = yes
+    default_behavior = picket
+    potential_country = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        OR = {
+            OR = {
+                has_country_flag = foc_republic_origin_empire_country
+                foc_ai_capital_is_imperial_class_country = yes
+            }
+            any_owned_fleet = {
+                any_owned_ship = {
+                    is_ship_size = foc_imperialsd2
+                }
+            }
+        }
+    }
+    possible_country = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        OR = {
+            OR = {
+                has_country_flag = foc_republic_origin_empire_country
+                foc_ai_capital_is_imperial_class_country = yes
+            }
+            any_owned_fleet = {
+                any_owned_ship = {
+                    is_ship_size = foc_imperialsd2
+                }
+            }
+        }
+    }
+    prerequisites = { "tech_destroyers" "foc_v17_tech_imperialsd2" }
+    combat_disengage_chance = 0.10
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    possible_construction = {
+        has_global_flag = foc_republic_origin_death_star_one_destroyed
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        exists = owner
+        owner = {
+            OR = {
+                has_country_flag = foc_republic_origin_empire_country
+                foc_ai_capital_is_imperial_class_country = yes
+            }
+        }
+    }
+    required_component_set = "power_core"
+    required_component_set = "ftl_components"
+    required_component_set = "thruster_components"
+    required_component_set = "sensor_components"
+    required_component_set = "combat_computers"
+    required_component_set = "imperialsd_crew"
+    resources = {
+        category = ships
+        cost = {
+            alloys = 1000
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 66
+    }
+    ai_ship_data = {
+        fraction = {
+            base = 0
+            modifier = {
+                add = 120
+                OR = {
+                    has_country_flag = foc_republic_origin_empire_country
+                    foc_ai_capital_is_imperial_class_country = yes
+                }
+                has_technology = foc_v17_tech_imperialsd2
+                NOT = {
+                    has_country_flag = foc_phase1_imperial_sd_retired
+                }
+            }
+        }
+    }
+    available_to_everyone = no
+    entity = foc_v1717m_imperialsd2_frame_entity
+
+    is_designable = yes
+
+
+}

@@ -1,0 +1,66 @@
+namespace = foc_khan_bombfix
+
+# 2.44: legacy IDs retained for old saves. FOC no longer selects or forces
+# bombardment stances. Event .1 only repairs the dedicated crisis country type.
+country_event = {
+    id = foc_khan_bombfix.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        OR = {
+            has_country_flag = foc_khan_first_order_country
+            has_country_flag = foc_khan_final_order_country
+        }
+        NOT = { has_global_flag = foc_khan_crisis_finished }
+    }
+    immediate = {
+        if = {
+            limit = { NOT = { is_country_type = foc_khan_crisis_country } }
+            set_country_type = foc_khan_crisis_country
+        }
+        country_event = { id = foc_khan_bombfix.3 }
+    }
+}
+
+country_event = {
+    id = foc_khan_bombfix.3
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        OR = {
+            has_country_flag = foc_khan_first_order_country
+            has_country_flag = foc_khan_final_order_country
+        }
+    }
+    immediate = {
+        every_owned_fleet = {
+            remove_fleet_flag = foc_khan_forced_bombardment_active
+            remove_fleet_flag = foc_khan_sgk_bombarding_planet
+        }
+    }
+}
+
+country_event = {
+    id = foc_khan_bombfix.4
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        OR = {
+            has_country_flag = foc_khan_first_order_country
+            has_country_flag = foc_khan_final_order_country
+        }
+    }
+    immediate = {
+        every_owned_fleet = {
+            remove_fleet_flag = foc_khan_forced_bombardment_active
+            remove_fleet_flag = foc_khan_sgk_bombarding_planet
+        }
+    }
+}
+
+event = {
+    id = foc_khan_bombfix.2
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { always = no }
+}

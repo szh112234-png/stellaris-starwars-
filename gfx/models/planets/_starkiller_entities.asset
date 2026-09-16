@@ -1,0 +1,22 @@
+entity = {
+	name = "first_01_starkiller_entity"
+	pdxmesh = "starkiller_mesh"
+	
+	meshsettings = {
+        name = "Supremacyhull"
+        index = 0
+		texture_diffuse = "Starkiller.dds"
+        texture_normal = "Starkiller_B.dds"
+        texture_specular = "nospec.dds"
+        shader = "PdxMeshPlanet"
+	}
+
+	
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 }
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_planet_class" } }
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_planet_class_02" } }
+	}
+}
+
+

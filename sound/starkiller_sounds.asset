@@ -1,0 +1,47 @@
+# Two-stage sound definition, following the exact format proven to work in the
+# companion Kuat mod (sound/exe_weapons_sound_effects.asset + kuat_sound_effects.asset):
+#   1) sound = { }       registers a wav file under a sample name
+#   2) soundeffect = { } references that sample name via sounds = { sound = ... }
+# All names use the unique myk_ prefix so they never collide with the Kuat mod.
+
+# ---- Stage 1: register the wav samples ----
+sound = {
+	name = "myk_starkillerbase_charge01"
+	file = "swfo_starkillerbase_charge.wav"
+}
+sound = {
+	name = "myk_starkillerbase_fire01"
+	file = "swfo_starkillerbase_fire.wav"
+}
+sound = {
+	name = "myk_starkillerbase_completed_speech01"
+	file = "swfo_starkillerbase_completed_speech.wav"
+}
+
+# ---- Stage 2: define the sound effects entities/events reference ----
+soundeffect = {
+	name = myk_starkillerbase_charge
+	sounds = {
+		sound = myk_starkillerbase_charge01
+	}
+	is3d = yes
+	max_audible = 3
+	volume = 1.0
+}
+soundeffect = {
+	name = myk_starkillerbase_fire
+	sounds = {
+		sound = myk_starkillerbase_fire01
+	}
+	is3d = yes
+	max_audible = 3
+	volume = 1.0
+}
+soundeffect = {
+	name = myk_starkillerbase_completed_speech
+	sounds = {
+		sound = myk_starkillerbase_completed_speech01
+	}
+	max_audible = 3
+	volume = 1.0
+}

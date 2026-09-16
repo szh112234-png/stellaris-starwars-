@@ -1,0 +1,65 @@
+# Standalone TIE wing integrated from the user-provided FOC 1.38 full resource pack.
+# Uses independent SAI IDs and contains its own model, textures, icon and behavior.
+strike_craft_component_template = {
+	key = "SAI_SUPREMACY_TIE_FIGHTER"
+	size = LARGE
+	entity = "sai_supremacy_tie_fighter_entity"
+
+	weapon_type = instant
+	projectile_gfx = "strike_craft_laser_3"
+	power = -60
+
+	resources = {
+		category = ship_components
+		cost = { 
+            sr_tibanna_swgs = 8
+        }
+		upkeep = { }
+	}
+
+	count = 2
+	regeneration_per_day = 5
+	launch_time = 2
+
+	damage = { min = 1200 max = 1200 }
+	cooldown = 2.3
+	range = 15
+	engagement_range = 500
+	accuracy = 1.0
+	tracking = 1.0
+
+	health = 40
+	armor = 40
+	shield = 0
+	evasion = 0.95
+
+	speed = 750
+	rotation_speed = 0.1
+	acceleration = 1.0
+
+	shield_penetration = 1.0
+	armor_damage = 1.5
+
+	ship_behavior = "sai_supremacy_tie_fighter_behavior"
+
+	icon = "GFX_ship_part_sai_supremacy_tie_fighter"
+	icon_frame = 1
+	component_set = "SAI_SUPREMACY_TIE_FIGHTER_SET"
+
+	size_restriction = { sai_supremacy_arkship_tier_1
+		sai_supremacy_arkship_tier_2
+		sai_supremacy_arkship_tier_3 sai_supremacy_arkship_tier_3_foc_lowest }
+
+	tags = { weapon_type_strike_craft }
+	ai_tags = { weapon_role_anti_hull carrier }
+	ai_weight = { weight = 10 }
+	potential = {
+	from = { NOT = { has_country_flag = foc_khan_component_lowest } }
+	
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}

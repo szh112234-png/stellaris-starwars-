@@ -1,0 +1,74 @@
+namespace = foc_khan_portrait_lock
+
+# One-time old-save repair. 0.88 also fixes diplomatic portraits directly, independent of the ruler object.
+event = {
+	id = foc_khan_portrait_lock.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		every_country = {
+			limit = {
+				has_country_flag = foc_khan_first_order_country
+				NOT = { has_country_flag = foc_khan_snoke_portrait_fixed_088 }
+			}
+			create_leader = {
+				class = random_ruler
+				species = owner_main_species
+				name = "Supreme Leader Snoke"
+				gender = male
+				skill = 10
+				immortal = yes
+				leader_age_min = 50
+				leader_age_max = 80
+				event_leader = yes
+				skip_background_generation = yes
+				randomize_traits = no
+				effect = {
+					change_leader_portrait = snoke_male_01
+					set_leader_flag = foc_khan_snoke_ruler
+					save_global_event_target_as = foc_khan_snoke_ruler
+				}
+			}
+			set_leader = last_created_leader
+			set_country_flag = foc_khan_snoke_ruler_created
+			set_country_flag = foc_khan_snoke_portrait_fixed_088
+		}
+
+		every_country = {
+			limit = {
+				has_country_flag = foc_khan_final_order_country
+				NOT = { has_country_flag = foc_khan_palpatine_portrait_fixed_088 }
+			}
+			create_leader = {
+			    tier = leader_tier_legendary
+				class = random_ruler
+				species = owner_main_species
+				name = "Emperor Palpatine"
+				gender = male
+				skill = 10
+				immortal = yes
+				leader_age_min = 70
+				leader_age_max = 100
+				event_leader = yes
+				skip_background_generation = yes
+				randomize_traits = no
+				effect = {
+					change_leader_portrait = fopalpatine_male_01
+					set_leader_flag = foc_khan_palpatine_ruler
+					set_leader_flag = foc_saga_palpatine_exegol_clone
+					save_global_event_target_as = foc_khan_palpatine_ruler
+				}
+			}
+			set_leader = last_created_leader
+			set_country_flag = foc_khan_palpatine_ruler_created
+			set_country_flag = foc_khan_palpatine_portrait_fixed_088
+			set_country_flag = foc_saga_palpatine_returned_final_order
+			set_global_flag = foc_saga_palpatine_returned_final_order
+			if = {
+				limit = { has_global_flag = foc_saga_palpatine_died_at_endor }
+				set_global_flag = foc_saga_palpatine_resurrected_after_endor
+			}
+		}
+	}
+}

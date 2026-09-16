@@ -1,0 +1,35 @@
+namespace = foc_khan_capital
+
+# Exegol occupation is a Final Order defeat condition. The First Order phase
+# still requires BOTH Starkiller Base and the Supremacy to be destroyed.
+planet_event = {
+	id = foc_khan_capital.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_global_flag = foc_khan_crisis_finished }
+		has_planet_flag = foc_khan_exegol_capital
+		has_global_flag = foc_khan_phase_two
+		exists = event_target:foc_khan_final_order
+		NOT = { is_controlled_by = event_target:foc_khan_final_order }
+	}
+
+	immediate = {
+		# Prefer the actual occupying human country. The old random fallback is
+		# retained only for legacy/scripted control changes without a valid actor.
+		if = {
+			limit = {
+				exists = fromfrom
+				fromfrom = { is_ai = no is_regular_empire = yes }
+			}
+			fromfrom = { country_event = { id = foc_khan.90 days = 1 } }
+		}
+		else = {
+			random_playable_country = {
+				limit = { is_ai = no }
+				country_event = { id = foc_khan.90 days = 1 }
+			}
+		}
+	}
+}

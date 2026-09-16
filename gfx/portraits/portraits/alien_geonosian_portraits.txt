@@ -1,0 +1,108 @@
+portraits = {
+	poggle_male_01 = { entity = "portrait_poggle_07_entity" clothes_selector = "no_texture"	attachment_selector = "no_texture"	greeting_sound = "arthropoid_01_greetings" 
+		character_textures = { "gfx/models/portraits/cis/cis_poggle_body.dds" }
+	}
+	geonosian_male_01 = { entity = "portrait_poggle_07_entity" clothes_selector = "no_texture"	attachment_selector = "no_texture"	greeting_sound = "arthropoid_01_greetings" 
+		character_textures = { 
+			"gfx/models/portraits/cis/cis_geonosian_body.dds"
+			"gfx/models/portraits/cis/cis_geonosian_body2.dds"
+
+		}
+	}
+}
+
+portrait_groups = {
+	geonosian1 = {
+		default = geonosian_male_01
+		game_setup = { #will run with a limited country scope. species and government is set but the country does not actually exist
+			add = {
+				trigger = {
+					ruler = {
+						OR = {
+							gender = male
+							gender = indeterminable
+						}
+					}
+				}
+				portraits = {
+					poggle_male_01
+					geonosian_male_01
+				}
+			}
+			add = {
+				trigger = {
+					ruler = {
+						OR = {
+							gender = female
+							gender = indeterminable
+						}
+					}
+				}
+				portraits = {
+					geonosian_male_01
+				}
+			}
+		}		
+		
+		#species scope
+		species = { #generic portrait for a species
+			add = {
+				portraits = {
+					geonosian_male_01
+				}
+			}
+		}		
+		
+		#pop scope
+		pop_group = { #for a specific pop
+			add = {
+				portraits = {
+					geonosian_male_01
+					poggle_male_01
+				}
+			}
+		}
+		
+		#leader scope
+		leader = { #scientists, generals, admirals, governor
+			add = {
+				trigger = {
+					gender = male
+				}
+				portraits = {
+					poggle_male_01
+					geonosian_male_01
+				}
+			}
+			add = {
+				trigger = {
+					gender = female
+				}
+				portraits = {
+					geonosian_male_01
+				}
+			}
+		}
+
+			
+		#leader scope 
+		ruler = {
+			add = {
+				trigger = {
+					gender = male
+				}
+				portraits = {
+					poggle_male_01
+				}
+			}
+			add = {
+				trigger = {
+					gender = female
+				}
+				portraits = {
+					geonosian_male_01
+				}
+			}
+		}
+	}	
+}

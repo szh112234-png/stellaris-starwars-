@@ -1,0 +1,320 @@
+# V197: Hutt-origin starts belong to the Galactic Republic era. The human keeps
+# the Hutt criminal empire; this effect creates a separate AI Republic which
+# owns the non-Hutt canonical region and runs the complete prequel-era saga.
+# Country scope: the human Hutt-origin country.
+foc_v197_establish_ai_galactic_republic = {
+    # The Hutt route always begins on 2200.1.1. Clear delayed story selections
+    # before any Republic dispatcher can inspect the shared chronology gate.
+    remove_global_flag = foc_story_timeline_start_2250
+    remove_global_flag = foc_story_timeline_start_2300
+    remove_global_flag = foc_story_timeline_start_2400
+    set_global_flag = foc_story_timeline_start_2200
+    remove_global_flag = foc_story_timeline_naboo_immediate
+    remove_global_flag = foc_story_timeline_naboo_2150
+    remove_global_flag = foc_story_timeline_naboo_2250
+    remove_global_flag = foc_story_timeline_naboo_2300
+    remove_global_flag = foc_story_timeline_naboo_2400
+    set_global_flag = foc_story_timeline_naboo_2200
+
+    if = {
+        limit = { NOT = { exists = event_target:foc_sw_coruscant_system } }
+        random_system = {
+            limit = { has_star_flag = foc_sw_coruscant_home }
+            save_global_event_target_as = foc_sw_coruscant_system
+        }
+    }
+    if = {
+        limit = { NOT = { exists = event_target:foc_sw_kuat_system } }
+        random_system = {
+            limit = { has_star_flag = foc_sw_kuat_home }
+            save_global_event_target_as = foc_sw_kuat_system
+        }
+    }
+    event_target:foc_sw_coruscant_system = {
+        random_system_planet = {
+            limit = { has_planet_flag = foc_sw_coruscant }
+            save_global_event_target_as = foc_republic_origin_coruscant
+        }
+    }
+
+    # Reuse a partially created V197 Republic when loading a startup save.
+    if = {
+        limit = { NOT = { exists = event_target:foc_republic_origin_republic } }
+        random_country = {
+            limit = { has_country_flag = foc_v197_hutt_era_ai_republic }
+            save_global_event_target_as = foc_republic_origin_republic
+        }
+    }
+
+    if = {
+        limit = {
+            exists = event_target:foc_republic_origin_coruscant
+            NOT = { exists = event_target:foc_republic_origin_species }
+        }
+        event_target:foc_republic_origin_coruscant = {
+            create_species = {
+                name = FOC_REPUBLIC_ORIGIN_PRESET_SPECIES
+                plural = FOC_REPUBLIC_ORIGIN_PRESET_SPECIES_PLURAL
+                adjective = FOC_REPUBLIC_ORIGIN_PRESET_SPECIES_ADJ
+                name_list = "gar"
+                class = "HUM"
+                portrait = "gar"
+                homeworld = this
+                traits = {
+                    trait = "trait_organic"
+                    trait = "trait_communal"
+                    trait = "trait_traditional"
+                    trait = "trait_wasteful"
+                }
+                effect = {
+                    set_species_flag = foc_v197_hutt_era_republic_human_species
+                    save_global_event_target_as = foc_republic_origin_species
+                }
+            }
+        }
+    }
+
+    if = {
+        limit = {
+            exists = event_target:foc_republic_origin_species
+            NOT = { exists = event_target:foc_republic_origin_republic }
+        }
+        create_country = {
+            name = "FOC_REPUBLIC_ORIGIN_GALACTIC_REPUBLIC"
+            type = default
+            auto_delete = no
+            ignore_initial_colony_error = yes
+            species = event_target:foc_republic_origin_species
+            authority = auth_democratic
+            origin = origin_default
+            ethos = {
+                ethic = ethic_egalitarian
+                ethic = ethic_xenophile
+                ethic = ethic_militarist
+            }
+            civics = {
+                civic = civic_foc_republic_origin_galactic_senate
+                civic = civic_foc_republic_origin_defense_fleet
+            }
+            flag = {
+                icon = { category = "GAR" file = "gar2.dds" }
+                background = { category = "backgrounds" file = "circle.dds" }
+                colors = { "red" "dark_grey" "null" "null" }
+            }
+            name_list = "gar"
+            effect = {
+                set_country_flag = foc_republic_origin_initialized
+                set_country_flag = foc_republic_origin_republic_country
+                set_country_flag = foc_republic_origin_order_technology_locked
+                set_country_flag = foc_v197_hutt_era_ai_republic
+                save_global_event_target_as = foc_republic_origin_republic
+                set_graphical_culture = republic_01
+                set_city_graphical_culture = mammalian_01
+                ruler = {
+                    set_name = "FOC_REPUBLIC_ORIGIN_CHANCELLOR_NAME"
+                    change_leader_portrait = foc_chancellor_palpatine_01
+                    set_leader_tier = leader_tier_legendary
+                }
+                foc_republic_origin_grant_republic_arsenal = yes
+                give_technology = { tech = tech_space_construction message = no }
+                give_technology = { tech = tech_corvettes message = no }
+                give_technology = { tech = tech_destroyers message = no }
+                give_technology = { tech = tech_cruisers message = no }
+                give_technology = { tech = tech_battleships message = no }
+                give_technology = { tech = tech_starbase_4 message = no }
+                give_technology = { tech = tech_wormhole_stabilization message = no }
+                add_seen_bypass_type = wormhole
+                add_modifier = { modifier = foc_republic_origin_union_economy days = -1 }
+                add_resource = {
+                    energy = 1000000
+                    minerals = 1000000
+                    food = 500000
+                    consumer_goods = 500000
+                    alloys = 1000000
+                    unity = 1000000
+                    influence = 1000
+                    volatile_motes = 50000
+                    exotic_gases = 50000
+                    rare_crystals = 50000
+                    sr_zro = 25000
+                    sr_dark_matter = 25000
+                    sr_living_metal = 25000
+                    nanites = 25000
+                }
+                refresh_auto_generated_ship_designs = yes
+            }
+        }
+    }
+
+    if = {
+        limit = {
+            exists = event_target:foc_republic_origin_species
+            exists = event_target:foc_republic_origin_republic
+            exists = event_target:foc_republic_origin_coruscant
+        }
+
+        # Mark all three Hutt systems before the Republic claims its territory.
+        # The Hutt establishment effect also removes their old successor-state
+        # cluster flags, making the separation explicit and permanent.
+        every_system = {
+            limit = {
+                OR = {
+                    has_star_flag = foc_swmap_tatooine_home
+                    has_star_flag = foc_swmap_nal_hutta_home
+                    has_star_flag = foc_v175_nar_shaddaa_home
+                }
+            }
+            set_star_flag = foc_v196_hutt_criminal_empire_system
+        }
+
+        every_system = {
+            limit = {
+                OR = {
+                    has_star_flag = foc_sw_new_republic_cluster
+                    has_star_flag = foc_sw_imperial_remnant_cluster
+                }
+            }
+            foc_republic_origin_claim_for_republic = yes
+        }
+
+        # The pre-Imperial branch bypasses the late-era Kuat initializer, so the
+        # Republic receives the canonical completed yards here.
+        if = {
+            limit = { exists = event_target:foc_sw_kuat_system }
+            event_target:foc_sw_kuat_system = {
+                if = {
+                    limit = {
+                        NOT = {
+                            any_system_megastructure = {
+                                OR = {
+                                    is_megastructure_type = mega_shipyard_0
+                                    is_megastructure_type = mega_shipyard_1
+                                    is_megastructure_type = mega_shipyard_2
+                                    is_megastructure_type = mega_shipyard_3
+                                }
+                            }
+                        }
+                    }
+                    spawn_megastructure = {
+                        type = mega_shipyard_3
+                        owner = event_target:foc_republic_origin_republic
+                        planet = star
+                        orbit_distance = 390
+                        orbit_angle = 110
+                        init_effect = { set_name = "Kuat Drive Yards" }
+                    }
+                }
+                set_star_flag = foc_sw_kuat_mega_shipyard_republic_origin_initialized
+            }
+        }
+
+        event_target:foc_republic_origin_republic = {
+            foc_republic_origin_establish_core_starbases = yes
+        }
+
+        every_system = {
+            limit = {
+                OR = {
+                    has_star_flag = foc_sw_new_republic_cluster
+                    has_star_flag = foc_sw_imperial_remnant_cluster
+                }
+            }
+            every_system_planet = {
+                limit = {
+                    is_colony = no
+                    OR = {
+                        has_planet_flag = foc_sw_nr_colony
+                        has_planet_flag = foc_sw_ir_colony
+                    }
+                }
+                foc_republic_origin_prepare_member_world = yes
+            }
+        }
+
+        event_target:foc_republic_origin_coruscant = {
+            set_owner = event_target:foc_republic_origin_republic
+            set_controller = event_target:foc_republic_origin_republic
+            if = {
+                limit = { NOT = { has_planet_flag = foc_v197_hutt_era_coruscant_seeded } }
+                while = {
+                    count = 24
+                    create_pop_group = {
+                        size = 100
+                        species = event_target:foc_republic_origin_species
+                    }
+                }
+                set_planet_flag = foc_v197_hutt_era_coruscant_seeded
+            }
+            set_capital = yes
+        }
+        event_target:foc_republic_origin_species = {
+            set_species_homeworld = event_target:foc_republic_origin_coruscant
+        }
+        event_target:foc_sw_coruscant_system = {
+            set_star_flag = empire_home_system
+            set_star_flag = empire_cluster
+        }
+
+        every_system = {
+            limit = {
+                OR = {
+                    has_star_flag = foc_sw_new_republic_cluster
+                    has_star_flag = foc_sw_imperial_remnant_cluster
+                }
+            }
+            every_system_planet = {
+                limit = {
+                    is_colony = yes
+                    has_planet_flag = foc_republic_origin_member_world
+                }
+                foc_republic_origin_install_member_world_nexus = yes
+            }
+        }
+
+        # V231o: the Hutt-era Republic reconstruction uses the same final-step
+        # rule as the ordinary origin: seed droids after all member-world Nexus
+        # initialization has finished.
+        event_target:foc_republic_origin_coruscant = {
+            foc_v231_seed_republic_droid_pops = yes
+        }
+
+        event_target:foc_republic_origin_republic = {
+            every_playable_country = {
+                limit = { NOT = { is_same_value = prev } }
+                establish_communications_no_message = prev
+                event_target:foc_republic_origin_republic = {
+                    establish_communications_no_message = prev
+                }
+            }
+
+            start_situation = {
+                type = situation_foc_republic_origin_palpatine_plot
+                effect = {
+                    save_global_event_target_as = foc_republic_origin_palpatine_plot_situation
+                }
+            }
+            start_situation = {
+                type = situation_foc_republic_origin_separatist_crisis
+                effect = {
+                    save_global_event_target_as = foc_republic_origin_separatist_crisis_situation
+                }
+            }
+            country_event = { id = foc_republic_origin.2 days = 1 }
+            country_event = { id = foc_republic_origin.3 days = 5 }
+            country_event = { id = foc_republic_origin.6 days = 12 }
+            set_country_flag = foc_republic_origin_naboo_timeline_pending
+        }
+
+        if = { limit = { exists = event_target:foc_sw_new_republic } clear_global_event_target = foc_sw_new_republic }
+        if = { limit = { exists = event_target:foc_sw_imperial_remnant } clear_global_event_target = foc_sw_imperial_remnant }
+        remove_global_flag = foc_sw_fallen_empires_initializing
+        remove_global_flag = foc_sw_fallen_empires_ready
+        set_global_flag = foc_republic_origin_bootstrap
+        set_global_flag = foc_republic_origin_no_jakku_executor_site
+        set_global_flag = foc_republic_origin_active
+        set_global_flag = foc_khan_crisis_disabled
+        remove_global_flag = foc_khan_crisis_spawn_scheduled
+        set_global_flag = foc_v197_hutt_republic_era_initialized
+        log = "FOC_V197_HUTT_ERA: Hutt player and AI Galactic Republic initialized in the Republic era."
+    }
+}

@@ -1,0 +1,416 @@
+# V14: original point defense retained; retired ordinary aliases remain inert.
+weapon_component_template = {
+    key = "FOC_STD_TURBO_L_T3_R_V01"
+    size = large
+    type = instant
+    entity = "invisible_turret_entity"
+    projectile_gfx = "infrared_laser_l"
+    icon = "GFX_ship_part_turbo_laser_r_3"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_artillery }
+    component_set = "FOC_REBEL_HOME_ARKSHIP_WEAPON_SET"
+    size_restriction = { foc_rebel_home_arkship_tier_3 foc_rebel_home_arkship_tier_3_foc_lowest }
+    prerequisites = { "foc_tech_sw_turbolaser_3" }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    power = -30
+    damage = {
+        min = 1200
+        max = 1320
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 240
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_STD_TURBO_M_T3_R_V01"
+    size = medium
+    type = instant
+    entity = "invisible_turret_entity"
+    projectile_gfx = "infrared_laser_m"
+    icon = "GFX_ship_part_turbo_laser_r_3"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_artillery }
+    component_set = "FOC_REBEL_HOME_ARKSHIP_WEAPON_SET"
+    size_restriction = { foc_rebel_home_arkship_tier_3 foc_rebel_home_arkship_tier_3_foc_lowest }
+    prerequisites = { "foc_tech_sw_turbolaser_3" }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 4
+        }
+        upkeep = { }
+    }
+    power = -30
+    damage = {
+        min = 780
+        max = 900
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 160
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_STD_TURBO_S_T3_R_V01"
+    size = small
+    type = instant
+    entity = "invisible_turret_entity"
+    projectile_gfx = "infrared_laser_s"
+    icon = "GFX_ship_part_turbo_laser_r_3"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    component_set = "FOC_REBEL_HOME_ARKSHIP_WEAPON_SET"
+    size_restriction = { foc_rebel_home_arkship_tier_3 foc_rebel_home_arkship_tier_3_foc_lowest }
+    prerequisites = { "foc_tech_sw_turbolaser_3" }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    power = -5
+    damage = {
+        min = 600
+        max = 600
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 120
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_STD_PD_P_T3_R_V03"
+    hidden = yes
+    size = point_defence
+    type = point_defence
+    icon = "GFX_ship_part_defence_turbo_r_2"
+    icon_frame = 1
+    tags = { weapon_type_point_defense weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_point_defense }
+    component_set = "FOC_REBEL_HOME_ARKSHIP_WEAPON_SET"
+    size_restriction = { foc_rebel_home_arkship_tier_3 foc_rebel_home_arkship_tier_3_foc_lowest }
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    power = -7.5
+    damage = {
+        min = 18
+        max = 30
+    }
+    windup = {
+        min = 1
+        max = 5
+    }
+    total_fire_time = 8
+    range = 40
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 1.0
+    shield_damage = 1.25
+    armor_damage = 1.25
+    hull_damage = 1.25
+    point_defence_targets = { "missile" "strike_craft" }
+    ai_weight = {
+        weight = 0
+    }
+    projectile_gfx = "white_laser_pd"
+    entity = "invisible_turret_entity"
+    prerequisites = { "foc_tech_std_pd_2" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_STD_SPINAL_X_T3_R_V01"
+    size = extra_large
+    type = instant
+    entity = "invisible_turret_entity"
+    projectile_gfx = "particle_lance"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_artillery }
+    component_set = "FOC_REBEL_HOME_ARKSHIP_WEAPON_SET"
+    size_restriction = { foc_rebel_home_arkship_tier_3 foc_rebel_home_arkship_tier_3_foc_lowest }
+    prerequisites = { "foc_tech_sw_spinal_weapons_2" }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 16
+            sr_kyber_swgs = 2
+        }
+        upkeep = { }
+    }
+    power = -1400
+    damage = {
+        min = 30000
+        max = 60000
+    }
+    windup = {
+        min = 0
+        max = 0
+    }
+    total_fire_time = 180
+    range = 260
+    accuracy = 1.0
+    tracking = 0.35
+    shield_penetration = 1.0
+    armor_penetration = 1.0
+    firing_arc = 50
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+utility_component_template = {
+    key = "FOC_REBEL_HOME_ARKSHIP_DEFENSE"
+    size = large
+    icon = "GFX_ship_part_adaptive_defense_armor"
+    icon_frame = 1
+    power = -500
+    component_set = "FOC_REBEL_HOME_ARKSHIP_DEFENSE_SET"
+    size_restriction = { foc_rebel_home_arkship_tier_3 foc_rebel_home_arkship_tier_3_foc_lowest }
+    modifier = {
+        ship_hull_add = 12000
+        ship_armor_add = 12000
+        ship_shield_add = 12000
+        ship_hull_regen_add_static = 100
+        ship_armor_regen_add_static = 100
+        ship_shield_regen_add_static = 100
+    }
+    ship_modifier = {
+        ship_armor_hardening_add = 0.10
+        ship_shield_hardening_add = 0.10
+    }
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    ai_weight = {
+        weight = 0
+    }
+}
+utility_component_template = {
+    key = "FOC_REBEL_HOME_ARKSHIP_AUX_DEFLECTOR"
+    size = aux
+    icon = "GFX_ship_part_shield_5"
+    icon_frame = 1
+    power = -100
+    component_set = "FOC_REBEL_HOME_ARKSHIP_DEFENSE_SET"
+    size_restriction = { foc_rebel_home_arkship_tier_3 foc_rebel_home_arkship_tier_3_foc_lowest }
+    modifier = {
+        ship_accuracy_add = 10
+        ship_hull_regen_add_static = 100
+        ship_armor_regen_add_static = 100
+        ship_shield_regen_add_static = 100
+    }
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = { }
+        upkeep = { }
+    }
+    ai_weight = {
+        weight = 0
+    }
+}
+utility_component_template = {
+    key = "FOC_REBEL_HOME_ARKSHIP_REACTOR"
+    size = extra_large
+    icon = "GFX_ship_part_dark_matter_power_core"
+    icon_frame = 1
+    power = 55000
+    component_set = "power_core"
+    size_restriction = { foc_rebel_home_arkship_tier_3 foc_rebel_home_arkship_tier_3_foc_lowest }
+    potential = { always = no }
+    resources = {
+        category = ship_components
+        cost = { sr_coaxium_foc = 10 }
+        upkeep = { }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "FOC_REBEL_HOME_ARKSHIP_FTL"
+    size = small
+    icon = "GFX_ship_part_jump_drive_1"
+    icon_frame = 1
+    power = -250
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.75 ship_jumpdrive_cooldown_mult = -0.75 ship_ftl_jumpdrive_range_mult = 1.0 }
+    component_set = "ftl_components"
+    size_restriction = { foc_rebel_home_arkship_tier_3 foc_rebel_home_arkship_tier_3_foc_lowest }
+    potential = { always = no }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 50 sr_coaxium_foc = 10 }
+        upkeep = { }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "FOC_REBEL_HOME_ARKSHIP_THRUSTER"
+    size = large
+    icon = "GFX_ship_part_thruster_4"
+    icon_frame = 1
+    power = -400
+    modifier = { ship_evasion_add = 10 ship_speed_mult = 0.15 }
+    component_set = "thruster_components"
+    size_restriction = { foc_rebel_home_arkship_tier_3 foc_rebel_home_arkship_tier_3_foc_lowest }
+    potential = { always = no }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 40 sr_coaxium_foc = 10 }
+        upkeep = { }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "FOC_REBEL_HOME_ARKSHIP_SENSOR"
+    size = medium
+    icon = "GFX_ship_part_sensor_4"
+    icon_frame = 1
+    power = -200
+    sensor_range = 12
+    hyperlane_range = 18
+    ship_modifier = { ship_tracking_add = 15 }
+    component_set = "sensor_components"
+    size_restriction = { foc_rebel_home_arkship_tier_3 foc_rebel_home_arkship_tier_3_foc_lowest }
+    potential = { always = no }
+    resources = {
+        category = ship_components
+        cost = { }
+        upkeep = { }
+    }
+    ai_weight = { weight = 0 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "FOC_REBEL_HOME_ARKSHIP_COMPUTER"
+    size = small
+    icon = "GFX_ship_part_computer_artillery_sapient"
+    icon_frame = 1
+    power = -200
+    component_set = "combat_computers"
+    ship_behavior = "artillery"
+    ship_modifier = { ship_weapon_range_mult = 0.25 ship_tracking_add = 15 }
+    size_restriction = { foc_rebel_home_arkship_tier_3 foc_rebel_home_arkship_tier_3_foc_lowest }
+    potential = { always = no }
+    resources = {
+        category = ship_components
+        cost = { }
+        upkeep = { }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}

@@ -1,0 +1,243 @@
+namespace = foc_hero_rewards
+
+# Visible event reward: the Millennium Falcon is granted only after the player
+# confirms the event option. A pending flag prevents duplicate monthly fallback
+# events while the popup is open.
+country_event = {
+    id = foc_hero_rewards.1
+    title = foc_hero_rewards.1.name
+    desc = foc_hero_rewards.1.desc
+    picture = GFX_foc_story_starkiller_destroyed
+    show_sound = event_ship_bridge
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        is_regular_empire = yes
+        has_global_flag = foc_khan_starkiller_destroyed
+        NOT = { has_country_flag = foc_reward_millennium_falcon_granted }
+        NOT = { has_country_flag = foc_reward_millennium_falcon_pending }
+        NOT = { has_country_flag = foc_khan_first_order_country }
+        NOT = { has_country_flag = foc_khan_final_order_country }
+    }
+
+    immediate = {
+        set_country_flag = foc_reward_millennium_falcon_pending
+    }
+
+    option = {
+        name = foc_hero_rewards.1.a
+
+        capital_scope = { save_event_target_as = foc_millennium_falcon_spawn_planet }
+        if = {
+            limit = { NOT = { exists = event_target:foc_millennium_falcon_spawn_planet } }
+            random_owned_planet = { save_event_target_as = foc_millennium_falcon_spawn_planet }
+        }
+
+        if = {
+            limit = { exists = event_target:foc_millennium_falcon_spawn_planet }
+            create_fleet = {
+                name = "NAME_FOC_MILLENNIUM_FALCON_FLEET"
+                settings = {
+                    uses_naval_capacity = no
+                    can_upgrade = no
+                    can_disband = yes
+                    can_change_composition = no
+                    can_change_leader = yes
+                    spawn_debris = no
+                }
+                effect = {
+                    set_owner = root
+                    # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_2 message = no } } }
+}
+                    
+
+                    
+
+                    
+                    create_ship = {
+                        name = "NAME_FOC_MILLENNIUM_FALCON"
+                        design = "NAME_FOC_MILLENNIUM_FALCON"
+                        upgradable = no
+                        effect = {
+                            set_ship_flag = foc_millennium_falcon_unique_ship
+                        }
+                    }
+                    set_location = {
+                        target = event_target:foc_millennium_falcon_spawn_planet
+                        distance = 15
+                        angle = random
+                    }
+                    set_fleet_flag = foc_millennium_falcon_unique_fleet
+                }
+            }
+            set_country_flag = foc_reward_millennium_falcon_granted
+        }
+
+        remove_country_flag = foc_reward_millennium_falcon_pending
+    }
+}
+
+# Leia's death and Ben Solo's return occur only after BOTH the Death of
+# Skywalker story and the active Final Order crisis. Accepting the event creates
+# the player hero still identified in the UI as Kylo Ren, but as a ground-force
+# commander so the Exegol landing easter egg can be completed deliberately.
+country_event = {
+    id = foc_hero_rewards.2
+    title = foc_hero_rewards.2.name
+    desc = foc_hero_rewards.2.desc
+    picture = GFX_foc_event_leia_death_ben_return
+    show_sound = event_mystic_reveal
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        is_regular_empire = yes
+        has_global_flag = foc_khan_phase_two
+        has_global_flag = foc_story_rebel_capital_fallen
+        has_country_flag = foc_story_skywalker_choice_resolved
+        NOT = { has_global_flag = foc_khan_crisis_finished }
+        exists = event_target:foc_khan_final_order
+        NOT = { has_country_flag = foc_reward_kylo_ren_granted }
+        NOT = { has_country_flag = foc_reward_kylo_ren_pending }
+        NOT = { has_country_flag = foc_khan_first_order_country }
+        NOT = { has_country_flag = foc_khan_final_order_country }
+    }
+
+    immediate = {
+        set_country_flag = foc_reward_kylo_ren_pending
+        # V66: this existing event is already the canonical Leia-death story
+        # node, so it now performs the mechanical death too.
+        foc_saga_kill_leia = yes
+    }
+
+    option = {
+        name = foc_hero_rewards.2.a
+
+        create_leader = {
+
+            tier = leader_tier_legendary
+            class = commander
+            species = owner_main_species
+            name = "FOC_HERO_KYLO_REN"
+            gender = male
+            skill = 10
+            leader_age_min = 29
+            leader_age_max = 32
+            event_leader = yes
+            skip_background_generation = yes
+            randomize_traits = no
+            traits = {
+                0 = subclass_commander_general
+            }
+            effect = {
+                change_leader_portrait = kyloren_male_01
+                set_leader_flag = foc_hero_kylo_ren
+                set_leader_flag = foc_hero_ben_solo_returned
+            }
+        }
+        set_country_flag = foc_reward_kylo_ren_granted
+        set_country_flag = foc_kylo_ground_commander_migrated_311s
+        set_country_flag = foc_sith_wayfinder_clue_found
+        country_event = { id = foc_wayfinder.1 days = 1 }
+        remove_country_flag = foc_reward_kylo_ren_pending
+    }
+}
+
+# on_ground_combat_started supplies Root = invaded colony and From = attacking
+# country. Exegol changes hands immediately when the player's Kylo Ren is the
+# general attached to one of the attacking armies. The hero then dies as Ben
+# Solo, and the actual player is preserved as the Final Order victor.
+carrier_event = {
+    id = foc_hero_rewards.3
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_planet_flag = foc_khan_exegol_capital
+        has_global_flag = foc_khan_phase_two
+        NOT = { has_global_flag = foc_khan_crisis_finished }
+        NOT = { has_global_flag = foc_story_ben_solo_death_completed }
+        from = {
+            is_ai = no
+            is_regular_empire = yes
+            has_country_flag = foc_reward_kylo_ren_granted
+            NOT = { has_country_flag = foc_khan_first_order_country }
+            NOT = { has_country_flag = foc_khan_final_order_country }
+            any_owned_leader = { has_leader_flag = foc_hero_kylo_ren }
+        }
+        any_ground_combat_attacker = {
+            exists = leader
+            leader = { has_leader_flag = foc_hero_kylo_ren }
+        }
+    }
+
+    immediate = {
+        set_global_flag = foc_story_ben_solo_death_completed
+        from = {
+            set_country_flag = foc_ben_solo_exegol_victor
+            save_global_event_target_as = foc_story_final_order_victor
+            random_owned_leader = {
+                limit = { has_leader_flag = foc_hero_kylo_ren }
+                set_immortal = no
+                kill_leader = { show_notification = no }
+            }
+            country_event = { id = foc_hero_rewards.4 days = 1 }
+        }
+
+        # Taking control here makes the sacrifice deterministic at the moment
+        # the army lands instead of depending on a later occupation guess.
+        set_controller = from
+    }
+}
+
+country_event = {
+    id = foc_hero_rewards.4
+    title = foc_hero_rewards.4.name
+    desc = foc_hero_rewards.4.desc
+    picture = GFX_foc_event_ben_solo_death
+    location = event_target:foc_khan_exegol_capital
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        is_ai = no
+        has_country_flag = foc_ben_solo_exegol_victor
+        has_global_flag = foc_story_ben_solo_death_completed
+    }
+
+    option = { name = foc_hero_rewards.4.a }
+}
+
+# Existing 3.11r saves may already own Kylo Ren without a commander subclass.
+# Convert only this unique hero to a general once so those saves can use the
+# Exegol landing event as well.
+country_event = {
+    id = foc_hero_rewards.5
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_reward_kylo_ren_granted
+        NOT = { has_country_flag = foc_kylo_ground_commander_migrated_311s }
+        any_owned_leader = { has_leader_flag = foc_hero_kylo_ren }
+    }
+
+    immediate = {
+        every_owned_leader = {
+            limit = { has_leader_flag = foc_hero_kylo_ren }
+            unassign_leader = this
+            remove_subclass = yes
+            add_trait = {
+                trait = subclass_commander_general
+                consume_selection = no
+            }
+            set_leader_flag = foc_hero_ben_solo_returned
+        }
+        set_country_flag = foc_kylo_ground_commander_migrated_311s
+    }
+}

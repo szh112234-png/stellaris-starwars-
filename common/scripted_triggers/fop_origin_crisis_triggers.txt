@@ -1,0 +1,28 @@
+# Country scope: every surviving ordinary or Fallen Empire is either this
+# country's subject or has no remaining colony. A resisted Final Order must
+# also be destroyed before galactic domination is complete.
+fop_origin_controls_galaxy = {
+    NOT = {
+        any_country = {
+            OR = {
+                is_regular_empire = yes
+                is_country_type = fallen_empire
+                is_country_type = awakened_fallen_empire
+            }
+            NOT = { is_same_value = root }
+            any_owned_planet = { is_colony = yes }
+            OR = {
+                is_subject = no
+                AND = {
+                    is_subject = yes
+                    overlord = { NOT = { is_same_value = root } }
+                }
+            }
+        }
+    }
+    OR = {
+        NOT = { has_country_flag = fop_origin_resisting_final_order }
+        NOT = { exists = event_target:foc_khan_final_order }
+        has_global_flag = foc_khan_crisis_finished
+    }
+}

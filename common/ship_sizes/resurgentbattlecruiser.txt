@@ -1,0 +1,96 @@
+resurgentbattlecruiser = {
+    # v17.18j-loadtest: filter in COUNTRY scope before generic design fitting.
+    # Same access rule as the required FOC cores; no new research or build permit.
+    potential_country = { foc_v1718_allowed_country = yes }
+    possible_country = { foc_v1718_allowed_country = yes }
+
+    formation_priority = 25
+    max_speed = 100
+    acceleration = 0.1
+    rotation_speed = 0.1
+    collision_radius = 8
+    max_hitpoints = 474724
+    modifier = {
+        ship_evasion_add = 30
+        ship_armor_add = 74176
+        ship_shield_add = 72280
+        ship_shield_regen_add_static = 400
+        ship_armor_regen_add_static = 400
+        ship_hull_regen_add_static = 400
+    }
+    ship_modifier = {
+        ship_weapon_range_mult = 0.25
+    }
+    size_multiplier = 103
+    fleet_slot_size = 8
+    section_slots = {
+        core = {
+            locator = "core"
+        }
+    }
+    num_target_locators = 5
+    is_space_station = no
+    map_counter_icon = ship_counter_32
+    icon = ship_size_military_8
+    use_shipnames_from = battleship
+    base_buildtime = 360
+    can_have_federation_design = no
+    enable_default_design = yes
+    enable_3dview_in_ship_browser = yes
+    default_behavior = picket
+    prerequisites = { "tech_plasma_3" "tech_battleships" "foc_tech_dark_legacy_resurgent" }
+    combat_disengage_chance = -0.10
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    required_component_set = "power_core"
+    required_component_set = "ftl_components"
+    required_component_set = "thruster_components"
+    required_component_set = "sensor_components"
+    required_component_set = "combat_computers"
+    required_component_set = "resurgentbattlecruiser_crew"
+    required_component_set = "resurgentbattlecruiser_subsnare"
+    potential_construction = {
+        OR = {
+            is_scope_type = starbase
+            AND = {
+                is_scope_type = megastructure
+                OR = {
+                    is_megastructure_type = mega_shipyard_3
+                    is_megastructure_type = mega_shipyard_restored
+                }
+            }
+        }
+    }
+    possible_construction = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        owner = {
+            NOT = {
+                has_country_flag = foc_phase1_resurgent_retired
+            }
+        }
+    }
+    resources = {
+        category = ships
+        cost = {
+            alloys = 1800
+        }
+        produces = {
+            unity = 50
+            influence = 0.05
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 1200
+    }
+    ai_ship_data = {
+        min = 0
+        max = 0
+    }
+    available_to_everyone = no
+
+    is_designable = yes
+
+
+}

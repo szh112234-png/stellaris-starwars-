@@ -1,0 +1,43 @@
+# Scripted Imperial Remnant interdictor. The supplied combat stats and model
+# scale are retained, but the hull is sealed behind an event-only fixed design.
+foc_immobilizer418 = {
+    formation_priority = 50
+    max_speed = 100
+    acceleration = 0.45
+    rotation_speed = 0.19
+    collision_radius = 6
+    max_hitpoints = 7000
+    modifier = { ship_armor_add = 3500 ship_shield_add = 1750 ship_evasion_add = 20 }
+    size_multiplier = 50
+    fleet_slot_size = 50
+    section_slots = {
+        "core" = { locator = "core" }
+    }
+    num_target_locators = 3
+    is_space_station = no
+    map_counter_icon = ship_counter_16
+    icon = ship_size_military_4
+    use_shipnames_from = cruiser
+    base_buildtime = 60
+    can_have_federation_design = no
+    enable_default_design = no
+    is_designable = no
+    enable_3dview_in_ship_browser = yes
+    entity = "foc_immobilizer418_entity"
+    default_behavior = picket
+    combat_disengage_chance = 0.15
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    required_component_set = "power_core"
+    required_component_set = "ftl_components"
+    required_component_set = "thruster_components"
+    required_component_set = "sensor_components"
+    required_component_set = "combat_computers"
+    resources = {
+        category = ships
+        cost = { energy = 200 alloys = 200 }
+    }
+    min_upgrade_cost = { alloys = 66 }
+    ai_ship_data = { min = 0 max = 0 }
+    available_to_everyone = no
+}

@@ -1,0 +1,104 @@
+# FOC 2.80 - one-shot cinematic story dispatchers.
+
+foc_story_notify_hosnian_destroyed = {
+    # V101: keep the mechanical destruction flag independent from the popup flag,
+    # so old/missed notification states cannot block the collapse chain.
+    if = {
+        limit = { NOT = { has_global_flag = foc_story_hosnian_destroyed } }
+        set_global_flag = foc_story_hosnian_destroyed
+    }
+
+    if = {
+        limit = { NOT = { has_global_flag = foc_story_hosnian_destroyed_shown } }
+        set_global_flag = foc_story_hosnian_destroyed_shown
+        every_playable_country = { country_event = { id = foc_story.10 } }
+    }
+
+    # Reacquire the ordinary or Republic-origin First Order before collapsing
+    # the New Republic. A lost event target must never leave Hosnian destroyed
+    # while the Republic government survives forever.
+    if = {
+        limit = { NOT = { exists = event_target:foc_khan_first_order } }
+        random_country = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    AND = {
+                        has_country_flag = foc_republic_origin_empire_crisis
+                        has_country_flag = fop_origin_crisis_active
+                    }
+                }
+            }
+            save_global_event_target_as = foc_khan_first_order
+        }
+    }
+
+    if = {
+        limit = { exists = event_target:foc_khan_first_order }
+        event_target:foc_khan_first_order = {
+            country_event = { id = foc_fallen_war.24 }
+            country_event = { id = foc_fallen_war.24 days = 5 }
+        }
+    }
+}
+
+foc_story_notify_starkiller_destroyed = {
+    if = {
+        limit = { NOT = { has_global_flag = foc_story_starkiller_destroyed_shown } }
+        set_global_flag = foc_story_starkiller_destroyed_shown
+        every_playable_country = { country_event = { id = foc_story.11 } }
+        every_playable_country = {
+            limit = {
+                is_ai = no
+                is_regular_empire = yes
+                NOT = { has_country_flag = foc_khan_first_order_country }
+                NOT = { has_country_flag = foc_khan_final_order_country }
+            }
+            country_event = { id = foc_hero_rewards.1 days = 1 }
+        }
+    }
+}
+
+foc_story_notify_supremacy_destroyed = {
+    if = {
+        limit = { NOT = { has_global_flag = foc_story_supremacy_destroyed_shown } }
+        set_global_flag = foc_story_supremacy_destroyed_shown
+        every_playable_country = { country_event = { id = foc_story.12 } }
+    }
+}
+
+foc_story_notify_final_order_destroyed = {
+    if = {
+        limit = { NOT = { has_global_flag = foc_story_final_order_destroyed_shown } }
+        set_global_flag = foc_story_final_order_destroyed_shown
+
+        # The normal crisis end event saves the actual victorious player. For old
+        # saves, choose a human regular empire as a safe fallback.
+        if = {
+            limit = { NOT = { exists = event_target:foc_story_final_order_victor } }
+            random_playable_country = {
+                limit = { is_ai = no is_regular_empire = yes }
+                save_global_event_target_as = foc_story_final_order_victor
+            }
+        }
+        if = {
+            limit = { NOT = { exists = event_target:foc_story_final_order_victor } }
+            random_playable_country = {
+                limit = { is_regular_empire = yes }
+                save_global_event_target_as = foc_story_final_order_victor
+            }
+        }
+
+        if = {
+            limit = { exists = event_target:foc_story_final_order_victor }
+            event_target:foc_story_final_order_victor = { country_event = { id = foc_story.20 } }
+            every_playable_country = {
+                limit = {
+                    is_ai = no
+                    NOT = { is_same_value = event_target:foc_story_final_order_victor }
+                }
+                country_event = { id = foc_story.23 }
+            }
+        }
+    }
+}

@@ -1,0 +1,97 @@
+namespace = foc_v161_dqar
+
+# Old-save / race recovery: if Leia's Resistance already exists but a Treaty
+# maintenance pulse has wrongly returned D'Qar to the New Republic, hand only
+# D'Qar back. This does NOT resurrect D'Qar after a real First Order conquest.
+country_event = {
+    id = foc_v161_dqar.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v235b_dqar_settlement_allowed = yes
+        is_ai = no
+        has_global_flag = foc_republic_origin_galactic_treaty
+        OR = {
+            has_global_flag = foc_v158_leia_resistance_foundation_due
+            has_global_flag = foc_v109_bloodline_resistance_authorized
+            has_global_flag = foc_v161_dqar_resistance_founded
+        }
+        NOT = { has_global_flag = foc_khan_rebel_dqar_lost_311v }
+        any_country = {
+            has_country_flag = foc_khan_rebel_alliance_country
+            OR = {
+                has_country_flag = foc_khan_first_order_resistance_country
+                has_country_flag = foc_republic_origin_post_treaty_rebel_country
+                has_country_flag = foc_republic_origin_dqar_inheritance_complete
+            }
+        }
+        any_system = {
+            has_star_flag = foc_khan_rebel_dqar_home
+            space_owner? = { has_country_flag = foc_sw_new_republic_country }
+        }
+    }
+
+    immediate = {
+        random_country = {
+            limit = {
+                has_country_flag = foc_khan_rebel_alliance_country
+                OR = {
+                    has_country_flag = foc_khan_first_order_resistance_country
+                    has_country_flag = foc_republic_origin_post_treaty_rebel_country
+                    has_country_flag = foc_republic_origin_dqar_inheritance_complete
+                }
+            }
+            save_global_event_target_as = foc_khan_rebel_alliance
+        }
+
+        if = {
+            limit = { exists = event_target:foc_khan_rebel_alliance }
+            random_system = {
+                limit = { has_star_flag = foc_khan_rebel_dqar_home }
+                save_global_event_target_as = foc_khan_rebel_system
+                save_global_event_target_as = foc_khan_rebel_dqar_system
+
+                if = {
+                    limit = { exists = starbase }
+                    starbase = {
+                        set_owner = event_target:foc_khan_rebel_alliance
+                        set_starbase_flag = foc_khan_rebel_base_starbase
+                    }
+                }
+                else = {
+                    create_starbase = {
+                        size = starbase_starhold
+                        owner = event_target:foc_khan_rebel_alliance
+                        effect = { set_starbase_flag = foc_khan_rebel_base_starbase }
+                    }
+                }
+
+                every_system_planet = {
+                    limit = { is_colony = yes }
+                    set_owner = event_target:foc_khan_rebel_alliance
+                    set_controller = event_target:foc_khan_rebel_alliance
+                    every_planet_army = { set_owner = event_target:foc_khan_rebel_alliance }
+                }
+                every_system_megastructure = {
+                    set_owner = event_target:foc_khan_rebel_alliance
+                }
+
+                random_system_planet = {
+                    limit = { has_planet_flag = foc_khan_rebel_dqar }
+                    set_planet_flag = foc_khan_rebel_capital
+                    remove_modifier = foc_dqar_hidden_resistance_base
+                    add_modifier = { modifier = foc_dqar_hidden_resistance_base days = -1 }
+                    set_capital = yes
+                    save_global_event_target_as = foc_khan_rebel_capital
+                }
+
+                foc_v204_finalize_dqar_resistance_markers = yes
+            }
+
+            set_global_flag = foc_v161_dqar_resistance_founded
+            set_global_flag = foc_saga_dqar_held_by_rebels
+            log = "FOC_V161_DQAR: repaired false New Republic reclaim; D'Qar restored to Leia's Resistance."
+        }
+    }
+}

@@ -1,0 +1,750 @@
+# FOC 3.21: Raddus uses the same single, explicitly populated combat-core layout
+# as the edict-spawned full-loadout Supremacy.  The generic mid entity resolves
+# to rebel_01_titan_mid_entity, which is FOC's Home One-class hull.
+ship_section_template = {
+	key = "FOC_REBEL_HOME_ARKSHIP_FULL_CORE"
+	ship_size = foc_rebel_home_arkship_tier_3 
+
+	# This is the only mid section available to the dedicated event hull.
+	ship_size = foc_rebel_home_arkship_tier_3_foc_lowest
+	# Auto design may therefore fill all core slots with the latest researched components.
+	ai_weight = {
+		weight = 100
+	}
+	# Raddus has far more logical weapon slots than the Home One mesh has turret
+	# locators.  Its fixed weapons still function, but remain visually integrated.
+	should_draw_components = no
+	fits_on_slot = mid
+	entity = "titan_mid_entity"
+	icon = "GFX_ship_part_core_mid"
+	
+	component_slot = {
+		name = "LARGE_GUN_01"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}	
+	component_slot = {
+		name = "LARGE_GUN_02"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_03"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_04"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_05"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_06"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_07"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_08"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}	
+	component_slot = {
+		name = "LARGE_GUN_09"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_10"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_11"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_12"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_13"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_14"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_15"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_16"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_17"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_18"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "MEDIUM_GUN_01"
+		template = "foc_rebel_home_arkship_medium_fixed"
+		locatorname = "large_gun_01"
+	}	
+	component_slot = {
+		name = "MEDIUM_GUN_02"
+		template = "foc_rebel_home_arkship_medium_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "MEDIUM_GUN_03"
+		template = "foc_rebel_home_arkship_medium_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "MEDIUM_GUN_04"
+		template = "foc_rebel_home_arkship_medium_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "MEDIUM_GUN_05"
+		template = "foc_rebel_home_arkship_medium_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "MEDIUM_GUN_06"
+		template = "foc_rebel_home_arkship_medium_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "MEDIUM_GUN_07"
+		template = "foc_rebel_home_arkship_medium_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "MEDIUM_GUN_08"
+		template = "foc_rebel_home_arkship_medium_fixed"
+		locatorname = "large_gun_01"
+	}	
+	component_slot = {
+		name = "MEDIUM_GUN_09"
+		template = "foc_rebel_home_arkship_medium_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "MEDIUM_GUN_10"
+		template = "foc_rebel_home_arkship_medium_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "MEDIUM_GUN_11"
+		template = "foc_rebel_home_arkship_medium_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "MEDIUM_GUN_12"
+		template = "foc_rebel_home_arkship_medium_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "MEDIUM_GUN_13"
+		template = "foc_rebel_home_arkship_medium_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "MEDIUM_GUN_14"
+		template = "foc_rebel_home_arkship_medium_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "MEDIUM_GUN_15"
+		template = "foc_rebel_home_arkship_medium_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "MEDIUM_GUN_16"
+		template = "foc_rebel_home_arkship_medium_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "MEDIUM_GUN_17"
+		template = "foc_rebel_home_arkship_medium_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "MEDIUM_GUN_18"
+		template = "foc_rebel_home_arkship_medium_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_01"
+		template = "foc_rebel_home_arkship_small_fixed"
+		locatorname = "large_gun_01"
+	}	
+	component_slot = {
+		name = "SMALL_GUN_02"
+		template = "foc_rebel_home_arkship_small_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_03"
+		template = "foc_rebel_home_arkship_small_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_04"
+		template = "foc_rebel_home_arkship_small_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_05"
+		template = "foc_rebel_home_arkship_small_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_06"
+		template = "foc_rebel_home_arkship_small_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_07"
+		template = "foc_rebel_home_arkship_small_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_08"
+		template = "foc_rebel_home_arkship_small_fixed"
+		locatorname = "large_gun_01"
+	}	
+	component_slot = {
+		name = "SMALL_GUN_09"
+		template = "foc_rebel_home_arkship_small_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_10"
+		template = "foc_rebel_home_arkship_small_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_11"
+		template = "foc_rebel_home_arkship_small_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_12"
+		template = "foc_rebel_home_arkship_small_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_13"
+		template = "foc_rebel_home_arkship_small_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_14"
+		template = "foc_rebel_home_arkship_small_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_15"
+		template = "foc_rebel_home_arkship_small_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_16"
+		template = "foc_rebel_home_arkship_small_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_17"
+		template = "foc_rebel_home_arkship_small_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_18"
+		template = "foc_rebel_home_arkship_small_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_19"
+		template = "foc_rebel_home_arkship_point_defence_fixed"
+		locatorname = "large_gun_01"
+	}	
+	component_slot = {
+		name = "SMALL_GUN_20"
+		template = "foc_rebel_home_arkship_point_defence_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_21"
+		template = "foc_rebel_home_arkship_point_defence_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_22"
+		template = "foc_rebel_home_arkship_point_defence_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_23"
+		template = "foc_rebel_home_arkship_point_defence_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_24"
+		template = "foc_rebel_home_arkship_point_defence_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_25"
+		template = "foc_rebel_home_arkship_point_defence_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_26"
+		template = "foc_rebel_home_arkship_point_defence_fixed"
+		locatorname = "large_gun_01"
+	}	
+	component_slot = {
+		name = "SMALL_GUN_27"
+		template = "foc_rebel_home_arkship_point_defence_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_28"
+		template = "foc_rebel_home_arkship_point_defence_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_29"
+		template = "foc_rebel_home_arkship_point_defence_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_30"
+		template = "foc_rebel_home_arkship_point_defence_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_31"
+		template = "foc_rebel_home_arkship_point_defence_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_32"
+		template = "foc_rebel_home_arkship_point_defence_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_33"
+		template = "foc_rebel_home_arkship_point_defence_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_34"
+		template = "foc_rebel_home_arkship_point_defence_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_35"
+		template = "foc_rebel_home_arkship_point_defence_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_36"
+		template = "foc_rebel_home_arkship_point_defence_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "STRIKE_CRAFT_01"
+		template = "large_strike_craft"
+		locatorname = "large_gun_01"
+	}	
+	component_slot = {
+		name = "STRIKE_CRAFT_02"
+		template = "large_strike_craft"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "STRIKE_CRAFT_03"
+		template = "large_strike_craft"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "STRIKE_CRAFT_04"
+		template = "large_strike_craft"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "STRIKE_CRAFT_05"
+		template = "large_strike_craft"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "STRIKE_CRAFT_06"
+		template = "large_strike_craft"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "STRIKE_CRAFT_07"
+		template = "large_strike_craft"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "STRIKE_CRAFT_08"
+		template = "large_strike_craft"
+		locatorname = "large_gun_01"
+	}	
+	component_slot = {
+		name = "STRIKE_CRAFT_09"
+		template = "large_strike_craft"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "STRIKE_CRAFT_10"
+		template = "large_strike_craft"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "STRIKE_CRAFT_11"
+		template = "large_strike_craft"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "STRIKE_CRAFT_12"
+		template = "large_strike_craft"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "STRIKE_CRAFT_13"
+		template = "large_strike_craft"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "STRIKE_CRAFT_14"
+		template = "large_strike_craft"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "STRIKE_CRAFT_15"
+		template = "large_strike_craft"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "STRIKE_CRAFT_16"
+		template = "large_strike_craft"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "STRIKE_CRAFT_17"
+		template = "large_strike_craft"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "STRIKE_CRAFT_18"
+		template = "large_strike_craft"
+		locatorname = "large_gun_01"
+	}	
+
+	component_slot = {
+		name = "EXTRA_LARGE_01"
+		template = "foc_rebel_home_arkship_extra_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "EXTRA_LARGE_02"
+		template = "foc_rebel_home_arkship_extra_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "EXTRA_LARGE_03"
+		template = "foc_rebel_home_arkship_extra_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "EXTRA_LARGE_04"
+		template = "foc_rebel_home_arkship_extra_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "EXTRA_LARGE_05"
+		template = "foc_rebel_home_arkship_extra_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "EXTRA_LARGE_06"
+		template = "foc_rebel_home_arkship_extra_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_19"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_20"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_21"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_22"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_23"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_24"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_25"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_26"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_27"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_28"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_29"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_30"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_31"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_32"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_33"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_34"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_35"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_36"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_37"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_38"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_39"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_40"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_41"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_42"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_43"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_44"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_45"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_46"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_47"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_48"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_49"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_50"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_51"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_52"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_53"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_54"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_55"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_56"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_57"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_58"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_59"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_60"
+		template = "foc_rebel_home_arkship_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	
+	large_utility_slots = 24
+	aux_utility_slots = 6
+	
+	resources = {
+		category = ship_sections
+		cost = {
+		}
+	}
+}
+
+# Invisible module section used by the two default functional Arkship modules.
+# This is private to Raddus and cannot alter the vanilla Arkship or Supremacy.
+ship_section_template = {
+	key = "FOC_REBEL_HOME_ARKSHIP_HIDDEN_EMPTY_MODULE"
+	ship_size = foc_rebel_home_arkship_tier_3
+	ship_size = foc_rebel_home_arkship_tier_3_foc_lowest
+	fits_on_slot = "1"
+	fits_on_slot = "2"
+	fits_on_slot = "3"
+	fits_on_slot = "4"
+	fits_on_slot = "5"
+	fits_on_slot = "6"
+	should_draw_components = no
+	entity = "invisible_turret_entity"
+	icon = "GFX_ship_part_core_mid"
+}
+
+# The unique fixed Rebel fighter-command axial module.  Like the edict
+# Supremacy's tracker, it is functional but adds no foreign geometry.
+ship_section_template = {
+	key = "FOC_REBEL_HOME_ARKSHIP_STRIKE_COMMAND_SECTION"
+	ship_size = foc_rebel_home_arkship_tier_3
+	ship_size = foc_rebel_home_arkship_tier_3_foc_lowest
+	fits_on_slot = "spinal_mount_1"
+	should_draw_components = no
+	entity = "invisible_turret_entity"
+	icon = "GFX_ship_part_core_mid"
+}

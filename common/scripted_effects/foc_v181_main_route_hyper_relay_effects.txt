@@ -1,0 +1,26 @@
+# V181 - prebuilt vanilla Hyper Relays on every system traversed by the six
+# major routes in the supplied map: Perlemian Trade Route, Corellian Run,
+# Corellian Trade Spine, Rimma Trade Route, Hydian Way and Fedalle-Kuat route.
+# Physical prerequisites mirror vanilla Hyper Relay placement: an existing
+# starbase, at least one hyperlane neighbour, and no existing relay of any state.
+
+foc_v181_seed_main_route_hyper_relays = {
+    every_system = {
+        limit = {
+            foc_v184_is_major_route_system = yes
+            exists = space_owner
+            exists = starbase
+            count_neighbor_system = { count > 0 }
+            has_any_hyper_relay = no
+        }
+        space_owner = { save_event_target_as = foc_v181_route_relay_owner }
+        spawn_megastructure = {
+            type = hyper_relay
+            owner = event_target:foc_v181_route_relay_owner
+            random_pos = yes
+            orbit_angle = 360
+            init_effect = { set_megastructure_flag = foc_v181_main_route_hyper_relay }
+        }
+        set_star_flag = foc_v181_main_route_hyper_relay_seeded
+    }
+}

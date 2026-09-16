@@ -1,0 +1,181 @@
+namespace = foc_rebel_growth
+
+# =============================================================================
+# 帝国叛军：占领即补充
+# =============================================================================
+# foc_republic_origin_garrison_rebel_systems 已改为一次性布防（见
+# foc_republic_origin_effects.txt 内的注释），不再每月复活被打掉的驻军。
+# 义军此后的扩张奖励全部来自这里：只有新控制的“有殖民星球”星系才结算。
+# 玩家可在 20 艘 MC80 与“29800 合金 + 5% 可叠加舰队维护费减免”之间选择；
+# AI 固定获得一支 20 艘 MC80 舰队。无殖民星球的星系不发任何奖励。
+# =============================================================================
+
+country_event = {
+    id = foc_rebel_growth.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_republic_origin_imperial_rebel_country
+        exists = event_target:foc_khan_rebel_alliance
+        is_same_value = event_target:foc_khan_rebel_alliance
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        NOT = { has_country_flag = foc_republic_origin_arc_completed }
+    }
+
+    immediate = {
+        # V140: the Inner Rim logistics package exists only while the Imperial
+        # Civil War itself is active. The on_war_ended hook removes it instantly;
+        # this monthly branch is only a save/load fallback.
+        if = {
+            limit = { has_modifier = foc_saga_inner_rim_wartime_logistics }
+            if = {
+                limit = {
+                    OR = {
+                        NOT = { exists = event_target:foc_republic_origin_empire }
+                        NOT = { is_at_war_with = event_target:foc_republic_origin_empire }
+                    }
+                }
+                remove_modifier = foc_saga_inner_rim_wartime_logistics
+            }
+        }
+        else_if = {
+            limit = {
+                has_global_flag = foc_saga_inner_rim_uprising_done
+                exists = event_target:foc_republic_origin_empire
+                is_at_war_with = event_target:foc_republic_origin_empire
+            }
+            add_modifier = { modifier = foc_saga_inner_rim_wartime_logistics days = -1 }
+        }
+        # Settle one reward for every net newly controlled system.
+        if = {
+            limit = { foc_v232n_rebel_conquest_rewards_active = yes }
+            foc_saga_rebel_conquest_reinforcement = yes
+        }
+        else = { inline_script = "foc_v232n_close_conquest_queue" }
+    }
+}
+
+# 玩家扮演义军时，每新增一个星系选择一次资源或现成舰队。
+country_event = {
+    id = foc_rebel_growth.2
+    title = foc_v232i_conquest_reward_name
+    desc = foc_v232i_conquest_reward_desc
+    picture = GFX_foc_saga_rebel_recruits
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v232n_rebel_conquest_rewards_active = yes
+        is_ai = no
+        has_country_flag = foc_republic_origin_imperial_rebel_country
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+    }
+
+    option = {
+        trigger = { foc_v232n_rebel_conquest_rewards_active = yes }
+        name = foc_v232i_conquest_reward_fleet
+        if = {
+            limit = {
+                foc_v232n_rebel_conquest_rewards_active = yes
+                has_country_flag = foc_republic_origin_imperial_rebel_country
+                NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+                NOT = { has_country_flag = foc_republic_origin_arc_completed }
+            }
+            foc_saga_spawn_rebel_conquest_fleet = yes
+        }
+    }
+    option = {
+        trigger = { foc_v232n_rebel_conquest_rewards_active = yes }
+        name = foc_v232i_conquest_reward_resources
+        if = {
+            limit = {
+                foc_v232n_rebel_conquest_rewards_active = yes
+                has_country_flag = foc_republic_origin_imperial_rebel_country
+                NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+                NOT = { has_country_flag = foc_republic_origin_arc_completed }
+            }
+            foc_v214_grant_rebel_colony_logistics_reward = yes
+        }
+    }
+    option = {
+        name = foc_v232n_conquest_closed
+        trigger = { foc_v232n_rebel_conquest_rewards_active = no }
+        inline_script = "foc_v232n_close_conquest_queue"
+    }
+}
+
+# V232n: one visible queued offer; neither legacy .2 nor queued .3 can pay out after Endor.
+country_event = {
+    id = foc_rebel_growth.3
+    title = foc_v232i_conquest_reward_name
+    desc = foc_v232i_conquest_reward_queue_desc
+    picture = GFX_foc_saga_rebel_recruits
+    is_triggered_only = yes
+    trigger = {
+        foc_v232n_rebel_conquest_rewards_active = yes
+        is_ai = no
+        has_country_flag = foc_republic_origin_imperial_rebel_country
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        NOT = { has_country_flag = foc_republic_origin_arc_completed }
+        check_variable = { which = foc_v232i_pending_conquest_rewards value > 0 }
+    }
+    option = {
+        trigger = { foc_v232n_rebel_conquest_rewards_active = yes }
+        name = foc_v232i_conquest_reward_fleet
+        if = {
+            limit = {
+                foc_v232n_rebel_conquest_rewards_active = yes
+                has_country_flag = foc_republic_origin_imperial_rebel_country
+                NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+                NOT = { has_country_flag = foc_republic_origin_arc_completed }
+                check_variable = { which = foc_v232i_pending_conquest_rewards value > 0 }
+            }
+            foc_saga_spawn_rebel_conquest_fleet = yes
+            change_variable = { which = foc_v232i_pending_conquest_rewards value = -1 }
+        }
+        remove_country_flag = foc_v232i_conquest_offer_active
+        country_event = { id = foc_rebel_growth.4 days = 1 }
+    }
+    option = {
+        trigger = { foc_v232n_rebel_conquest_rewards_active = yes }
+        name = foc_v232i_conquest_reward_resources
+        if = {
+            limit = {
+                foc_v232n_rebel_conquest_rewards_active = yes
+                has_country_flag = foc_republic_origin_imperial_rebel_country
+                NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+                NOT = { has_country_flag = foc_republic_origin_arc_completed }
+                check_variable = { which = foc_v232i_pending_conquest_rewards value > 0 }
+            }
+            foc_v214_grant_rebel_colony_logistics_reward = yes
+            change_variable = { which = foc_v232i_pending_conquest_rewards value = -1 }
+        }
+        remove_country_flag = foc_v232i_conquest_offer_active
+        country_event = { id = foc_rebel_growth.4 days = 1 }
+    }
+    option = {
+        name = foc_v232n_conquest_closed
+        trigger = { foc_v232n_rebel_conquest_rewards_active = no }
+        inline_script = "foc_v232n_close_conquest_queue"
+    }
+}
+
+country_event = {
+    id = foc_rebel_growth.4
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        foc_v232n_rebel_conquest_rewards_active = yes
+        is_ai = no
+        has_country_flag = foc_republic_origin_imperial_rebel_country
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        NOT = { has_country_flag = foc_republic_origin_arc_completed }
+        NOT = { has_country_flag = foc_v232i_conquest_offer_active }
+        is_variable_set = foc_v232i_pending_conquest_rewards
+        check_variable = { which = foc_v232i_pending_conquest_rewards value > 0 }
+    }
+    immediate = {
+        set_country_flag = foc_v232i_conquest_offer_active
+        country_event = { id = foc_rebel_growth.3 }
+    }
+}

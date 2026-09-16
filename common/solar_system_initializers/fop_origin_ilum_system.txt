@@ -1,0 +1,40 @@
+@fop_origin_distance = 30
+
+# Player-origin-only Ilum. The ordinary First Order crisis continues to use
+# foc_khan_ilum_system from foc_khan_systems.txt without any override.
+fop_origin_ilum_system = {
+    name = "NAME_FOC_KHAN_ILUM_SYSTEM"
+    class = "sc_k"
+    usage = misc_system_init
+    flags = { foc_khan_ilum_home fop_origin_ilum_home }
+    max_instances = 1
+
+    init_effect = {
+        save_global_event_target_as = fop_origin_ilum_system
+        every_neighbor_system = { set_star_flag = empire_cluster }
+    }
+    asteroid_belt = { type = icy_asteroid_belt radius = 375 }
+
+    planet = { name = "NAME_FOC_KHAN_ILUM_STAR" class = "pc_k_star" orbit_distance = 0 orbit_angle = 1 size = 20 has_ring = no init_effect = { } }
+
+    planet = {
+        name = "NAME_FOC_KHAN_ILUM"
+        class = "pc_arctic"
+        orbit_distance = 58
+        orbit_angle = 25
+        size = 22
+        has_ring = no
+        flags = { foc_khan_starkiller_anchor foc_khan_ilum_planet }
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_kyber_source_tier_1 days = -1 }
+        }
+    }
+
+    planet = { name = "NAME_FOC_KHAN_ILUM_II" class = "pc_barren_cold" orbit_distance = 42 orbit_angle = 80 size = 13 has_ring = no init_effect = { prevent_anomaly = yes } }
+    planet = { name = "NAME_FOC_KHAN_ILUM_III" class = "pc_frozen" orbit_distance = 44 orbit_angle = 145 size = 15 has_ring = no init_effect = { prevent_anomaly = yes } }
+    planet = { name = "NAME_FOC_KHAN_ILUM_IV" class = "pc_barren_cold" orbit_distance = 46 orbit_angle = 205 size = 14 has_ring = no init_effect = { prevent_anomaly = yes } }
+    planet = { name = "NAME_FOC_KHAN_ILUM_V" class = "pc_gas_giant" orbit_distance = 54 orbit_angle = 245 size = 24 has_ring = yes init_effect = { prevent_anomaly = yes } }
+    planet = { name = "NAME_FOC_KHAN_ILUM_VI" class = "pc_gas_giant" orbit_distance = 59 orbit_angle = 295 size = 28 has_ring = no init_effect = { prevent_anomaly = yes } }
+    planet = { name = "NAME_FOC_KHAN_ILUM_VII" class = "pc_gas_giant" orbit_distance = 64 orbit_angle = 340 size = 31 has_ring = yes init_effect = { prevent_anomaly = yes } }
+}

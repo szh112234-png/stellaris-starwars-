@@ -1,0 +1,231 @@
+# V235 all-owned-ship census, not fleet-count or naval-capacity arithmetic.
+# Legacy battleship MC80s and defensive/Lowest ISD variants are included.
+foc_v235_count_capital_hulls = {
+    set_variable = { which = foc_v235_isd_total value = 0 }
+    set_variable = { which = foc_v235_mc80_total value = 0 }
+    every_owned_ship = {
+        if = {
+            limit = { foc_v235_is_imperial_class_hull = yes }
+            owner = { change_variable = { which = foc_v235_isd_total value = 1 } }
+        }
+        else_if = {
+            limit = { foc_v235_is_mc80_hull = yes }
+            owner = { change_variable = { which = foc_v235_mc80_total value = 1 } }
+        }
+    }
+}
+
+# No existing fleet is moved, deleted, combined or rewritten. Small normal fleets
+# carry the deficit only, preserving the V234 native garrison/command fixes.
+foc_v235_spawn_isd_ratio_deficit = {
+    save_event_target_as = foc_v235_ratio_fleet_owner
+    capital_scope = { solar_system = { save_event_target_as = foc_v235_ratio_spawn_system } }
+    set_variable = { which = foc_v235_ratio_batches value = foc_v235_ratio_deficit }
+    divide_variable = { which = foc_v235_ratio_batches value = 21 }
+    ceiling_variable = foc_v235_ratio_batches
+    while = {
+        count = foc_v235_ratio_batches
+        set_variable = { which = foc_v235_ratio_batch_size value = foc_v235_ratio_deficit }
+        if = {
+            limit = { check_variable = { which = foc_v235_ratio_batch_size value > 21 } }
+            set_variable = { which = foc_v235_ratio_batch_size value = 21 }
+        }
+        create_fleet = {
+            name = "FOC_V235_ISD_RESERVE_FLEET"
+            settings = {
+                garrison = no
+                can_upgrade = no
+                can_disband = yes
+                can_change_composition = no
+                can_change_leader = yes
+                spawn_debris = yes
+            }
+            effect = {
+                set_owner = event_target:foc_v235_ratio_fleet_owner
+                # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+}
+                
+
+                
+
+                
+                if = {
+                    limit = { has_global_flag = foc_khan_strength_lowest }
+                    while = {
+                        count = event_target:foc_v235_ratio_fleet_owner.foc_v235_ratio_batch_size
+                        create_ship = { name = random design = "NAME_FOC_KHAN_IMPERIAL_SD_FOC_LOWEST" graphical_culture = empire_01 upgradable = no fleet_cache_recalc = yes }
+                    }
+                }
+                else = {
+                    while = {
+                        count = event_target:foc_v235_ratio_fleet_owner.foc_v235_ratio_batch_size
+                        create_ship = { name = random design = "NAME_FOC_KHAN_IMPERIAL_SD" graphical_culture = empire_01 upgradable = no fleet_cache_recalc = yes }
+                    }
+                }
+                set_location = { target = event_target:foc_v235_ratio_spawn_system distance = 50 angle = random }
+                set_fleet_flag = foc_republic_origin_empire_isd_fleet
+                set_fleet_flag = foc_republic_origin_empire_shipset_escorts_added
+                set_fleet_flag = foc_v235_ratio_supplement
+                set_fleet_stance = passive
+            }
+        }
+        subtract_variable = { which = foc_v235_ratio_deficit value = foc_v235_ratio_batch_size }
+    }
+}
+
+foc_v235_spawn_mc80_ratio_deficit = {
+    save_event_target_as = foc_v235_ratio_fleet_owner
+    capital_scope = { solar_system = { save_event_target_as = foc_v235_ratio_spawn_system } }
+    set_variable = { which = foc_v235_ratio_batches value = foc_v235_ratio_deficit }
+    divide_variable = { which = foc_v235_ratio_batches value = 14 }
+    ceiling_variable = foc_v235_ratio_batches
+    while = {
+        count = foc_v235_ratio_batches
+        set_variable = { which = foc_v235_ratio_batch_size value = foc_v235_ratio_deficit }
+        if = {
+            limit = { check_variable = { which = foc_v235_ratio_batch_size value > 14 } }
+            set_variable = { which = foc_v235_ratio_batch_size value = 14 }
+        }
+        create_fleet = {
+            name = "FOC_V235_MC80_RESERVE_FLEET"
+            settings = {
+                garrison = no
+                can_upgrade = no
+                can_disband = yes
+                can_change_composition = no
+                can_change_leader = yes
+                spawn_debris = yes
+            }
+            effect = {
+                set_owner = event_target:foc_v235_ratio_fleet_owner
+                # V15 full-armor prerequisite: foc_v15_defense_32622eafe4b3.
+                owner = {
+                    if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+                }
+                
+                # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+}
+                
+
+                
+
+                
+                if = {
+                    limit = { has_global_flag = foc_khan_strength_lowest }
+                    while = {
+                        count = event_target:foc_v235_ratio_fleet_owner.foc_v235_ratio_batch_size
+                        create_ship = { name = random design = "NAME_FOC_REBEL_MC80_LINE_FOC_LOWEST" graphical_culture = rebel_01 upgradable = no fleet_cache_recalc = yes }
+                    }
+                }
+                else = {
+                    while = {
+                        count = event_target:foc_v235_ratio_fleet_owner.foc_v235_ratio_batch_size
+                        create_ship = { name = random design = "NAME_FOC_REBEL_MC80_LINE" graphical_culture = rebel_01 upgradable = no fleet_cache_recalc = yes }
+                    }
+                }
+                set_location = { target = event_target:foc_v235_ratio_spawn_system distance = 50 angle = random }
+                set_fleet_flag = foc_republic_origin_rebellion_fleet
+                set_fleet_flag = foc_v235_ratio_supplement
+                set_fleet_stance = passive
+            }
+        }
+        subtract_variable = { which = foc_v235_ratio_deficit value = foc_v235_ratio_batch_size }
+    }
+}
+
+# Empire country scope. Rebalance ONCE after ALL starting fleets and Scarif's
+# delayed guard are created. This is NOT a casualty-replacement/annual-support loop.
+foc_v235_balance_opening_capital_totals = {
+    if = {
+        limit = {
+            has_country_flag = foc_republic_origin_empire_country
+            NOT = { has_country_flag = foc_v235_opening_ratio_done }
+            NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+            exists = capital_scope
+            any_owned_ship = { foc_v235_is_imperial_class_hull = yes }
+            exists = event_target:foc_khan_rebel_alliance
+            event_target:foc_khan_rebel_alliance = {
+                foc_v235_is_gcw_rebel = yes
+                exists = capital_scope
+                any_owned_ship = { foc_v235_is_mc80_hull = yes }
+            }
+        }
+        save_event_target_as = foc_v235_ratio_empire
+        event_target:foc_khan_rebel_alliance = {
+            save_event_target_as = foc_v235_ratio_rebels
+            foc_v235_count_capital_hulls = yes
+        }
+        foc_v235_count_capital_hulls = yes
+        set_variable = { which = foc_v235_rebel_mc80_total value = event_target:foc_v235_ratio_rebels.foc_v235_mc80_total }
+        set_variable = { which = foc_v235_ratio_n value = foc_v235_isd_total }
+        divide_variable = { which = foc_v235_ratio_n value = 3 }
+        ceiling_variable = foc_v235_ratio_n
+        set_variable = { which = foc_v235_ratio_r value = event_target:foc_v235_ratio_rebels.foc_v235_mc80_total }
+        divide_variable = { which = foc_v235_ratio_r value = 2 }
+        ceiling_variable = foc_v235_ratio_r
+        if = {
+            limit = { check_variable = { which = foc_v235_ratio_r value > foc_v235_ratio_n } }
+            set_variable = { which = foc_v235_ratio_n value = foc_v235_ratio_r }
+        }
+        # Integer totals E=3N and R=2N; never delete an odd hull for rounding.
+        set_variable = { which = foc_v235_isd_target value = foc_v235_ratio_n }
+        multiply_variable = { which = foc_v235_isd_target value = 3 }
+        set_variable = { which = foc_v235_mc80_target value = foc_v235_ratio_n }
+        multiply_variable = { which = foc_v235_mc80_target value = 2 }
+        log = "FOC_V235_RATIO_BEFORE: ISD=[This.foc_v235_isd_total], MC80=[This.foc_v235_rebel_mc80_total]; targets=[This.foc_v235_isd_target]:[This.foc_v235_mc80_target]."
+        set_variable = { which = foc_v235_ratio_deficit value = foc_v235_isd_target }
+        subtract_variable = { which = foc_v235_ratio_deficit value = foc_v235_isd_total }
+        if = {
+            limit = { check_variable = { which = foc_v235_ratio_deficit value > 0 } }
+            foc_v235_spawn_isd_ratio_deficit = yes
+        }
+        event_target:foc_v235_ratio_rebels = {
+            set_variable = { which = foc_v235_ratio_deficit value = event_target:foc_v235_ratio_empire.foc_v235_mc80_target }
+            subtract_variable = { which = foc_v235_ratio_deficit value = foc_v235_mc80_total }
+            if = {
+                limit = { check_variable = { which = foc_v235_ratio_deficit value > 0 } }
+                foc_v235_spawn_mc80_ratio_deficit = yes
+            }
+            foc_v235_count_capital_hulls = yes
+        }
+        foc_v235_count_capital_hulls = yes
+        set_variable = { which = foc_v235_rebel_mc80_total value = event_target:foc_v235_ratio_rebels.foc_v235_mc80_total }
+        if = {
+            limit = {
+                check_variable = { which = foc_v235_isd_total value = foc_v235_isd_target }
+                event_target:foc_v235_ratio_rebels = {
+                    check_variable = { which = foc_v235_mc80_total value = event_target:foc_v235_ratio_empire.foc_v235_mc80_target }
+                }
+            }
+            set_country_flag = foc_v235_opening_ratio_done
+            remove_country_flag = foc_v235_opening_ratio_pending
+            log = "FOC_V235_RATIO_VERIFIED: all owned ISDs=[This.foc_v235_isd_total], all owned MC80s=[This.foc_v235_rebel_mc80_total], exact 3:2."
+        }
+        else = {
+            # Do not repeatedly spawn partial failures from a monthly watchdog.
+            remove_country_flag = foc_v235_opening_ratio_pending
+            log = "FOC_V235_RATIO_NOT_VERIFIED: inspect game/error logs; automatic retries disabled."
+        }
+    }
+    else = {
+        if = {
+            limit = { has_country_flag = foc_v235_opening_ratio_pending }
+            remove_country_flag = foc_v235_opening_ratio_pending
+            log = "FOC_V235_RATIO_SKIPPED: opening factions, capitals or capital hulls unavailable; no automatic retry or replacement fleets."
+        }
+    }
+}

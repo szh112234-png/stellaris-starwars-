@@ -1,0 +1,91 @@
+# =============================================================================
+# 弑星者基地：备用目标判定
+# =============================================================================
+# 危机 AI 控制器 foc_khan.1000 的每一条目标筛选都要求
+# foc_khan_has_live_starkiller_capital_311x —— 也就是说它**只会打首都**，而且
+# 那个首都必须是活着的殖民地、所在恒星没有被打碎、也不是黑洞。
+#
+# 于是义军首都和新共和国首都被打掉之后：
+#   * 那两个星系带上了 star_cracked，永久出局
+#   * 两国要么灭亡，要么首都被摧毁、`capital_scope` 短期内取不到有效殖民地
+#   * 银河里剩下的敌对国家基本都是附庸、已臣服、或对第一秩序友好，全被
+#     NOR / NOT 排除
+# 结果是控制器的 trigger 再也不成立，基地就此哑火——正是你遇到的现象。
+#
+# 下面这条判定不看首都，只看「这个星系里有没有一颗还活着的、属于敌对国家的
+# 殖民地」，用于给 foc_sk.1 备用控制器挑目标。
+# =============================================================================
+
+foc_saga_starkiller_hostile_colony_owner = {
+    is_regular_empire = yes
+    NOT = { is_same_value = event_target:foc_khan_first_order }
+    NOT = { is_friendly_to = event_target:foc_khan_first_order }
+    NOT = { has_overlord = event_target:foc_khan_first_order }
+    NOR = {
+        has_country_flag = foc_khan_first_order_country
+        has_country_flag = foc_khan_final_order_country
+        has_country_flag = foc_khan_submitted_first_order
+        has_country_flag = foc_khan_submitted_final_order
+    }
+}
+
+# 系统作用域。
+foc_saga_starkiller_fallback_target_system = {
+    foc_khan_is_live_starkiller_target_system_311x = yes
+    any_system_planet = {
+        is_colony = yes
+        NOT = { has_planet_flag = myk_starkiller_planet_destroyed }
+        exists = owner
+        owner = { foc_saga_starkiller_hostile_colony_owner = yes }
+    }
+}
+
+# 原控制器是否还找得到「首都可打」的国家。找不到时才轮到备用控制器。
+#
+# v28 修正：这里原本只用 any_playable_country 判断。而 playable 作用域**不包含
+# 堕落帝国与 playable = no 的脚本国家**——新共和国正是其中之一。于是原控制器
+# 明明还能打新共和国首都，这个判定却报「没有首都目标了」，备用控制器抢先开火，
+# 打了一个随机敌对殖民地。表现就是「危机弑星者不再优先攻击新共首都」。
+#
+# 现在把原控制器 foc_khan.1000 的三条路径逐一对齐：义军同盟、新共和国两个具名
+# 事件目标各查一次，再加 any_country（不限 playable，覆盖堕落帝国与一切脚本
+# 国家）。只有这四条全部落空，备用控制器才接手。
+foc_saga_starkiller_no_capital_target_left = {
+    NOR = {
+        AND = {
+            exists = event_target:foc_khan_rebel_alliance
+            event_target:foc_khan_rebel_alliance = {
+                foc_khan_has_live_starkiller_capital_311x = yes
+                foc_saga_starkiller_hostile_colony_owner = yes
+            }
+        }
+        AND = {
+            exists = event_target:foc_sw_new_republic
+            event_target:foc_sw_new_republic = {
+                foc_khan_has_live_starkiller_capital_311x = yes
+                foc_saga_starkiller_hostile_colony_owner = yes
+            }
+        }
+        any_playable_country = {
+            foc_khan_has_live_starkiller_capital_311x = yes
+            foc_saga_starkiller_hostile_colony_owner = yes
+        }
+        any_country = {
+            is_regular_empire = yes
+            foc_khan_has_live_starkiller_capital_311x = yes
+            foc_saga_starkiller_hostile_colony_owner = yes
+        }
+    }
+}
+
+# 系统作用域。本星系里有没有敌对国家的**首都**。备用控制器即使接手，也优先打首都。
+foc_saga_starkiller_fallback_capital_system = {
+    foc_khan_is_live_starkiller_target_system_311x = yes
+    any_system_planet = {
+        is_capital = yes
+        is_colony = yes
+        NOT = { has_planet_flag = myk_starkiller_planet_destroyed }
+        exists = owner
+        owner = { foc_saga_starkiller_hostile_colony_owner = yes }
+    }
+}

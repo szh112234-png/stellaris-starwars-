@@ -1,0 +1,193 @@
+utility_component_template = {
+    key = "RESURGENTBATTLECRUISER_REACTOR"
+    size = extra_large
+    icon = "GFX_foc_v1718c_resurgent_ship_part_reactor_1"
+    icon_frame = 1
+    power = 48000
+    resources = {
+        category = ship_components
+        cost = { sr_coaxium_foc = 10 }
+    }
+    modifier = { ship_shield_regen_add_static = 1150 }
+    component_set = "power_core"
+    size_restriction = { resurgentbattlecruiser foc_khan_starkiller_fixed_station resurgentbattlecruiser_foc_lowest foc_khan_starkiller_fixed_station_foc_lowest }
+    potential = { always = no }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    ai_weight = { weight = 0 }
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "RESURGENTBATTLECRUISER_JUMPDRIVE"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -1525
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 50 sr_coaxium_foc = 10 }
+    }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.8 ship_ftl_jumpdrive_range_mult = 1 }
+    class_restriction = { shipclass_military }
+    size_restriction = { resurgentbattlecruiser resurgentbattlecruiser_foc_lowest }
+    component_set = "ftl_components"
+    potential = { always = no }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    ai_weight = { weight = 0 }
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "RESURGENTBATTLECRUISER_THRUSTER"
+    size = large
+    icon = "GFX_foc_v1718c_resurgent_ship_part_thruster_1"
+    icon_frame = 1
+    power = -700
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 40 sr_coaxium_foc = 10 }
+    }
+    modifier = {
+        ship_base_speed_mult = 0.1
+        ship_emergency_ftl_mult = -0.7
+        ship_jumpdrive_cooldown_mult = -1.4
+        ship_emergency_ftl_min_days_add = -6
+    }
+    component_set = "thruster_components"
+    size_restriction = {
+        corvette
+        destroyer
+        cruiser
+        battleship
+        titan
+        imperialsd
+        resurgentbattlecruiser
+        xystonsd
+        foc_khan_mandator
+        foc_khan_eclipse
+        foc_khan_eclipse_ii
+        foc_rebel_nebula
+        foc_rebel_mc158
+        foc_sai_supremacy_arkship_tier_1
+        foc_sai_supremacy_arkship_tier_2
+        foc_sai_supremacy_arkship_tier_3
+        imperialsd_foc_lowest
+        resurgentbattlecruiser_foc_lowest
+        foc_khan_mandator_foc_lowest
+        foc_khan_eclipse_foc_lowest
+        foc_khan_eclipse_ii_foc_lowest
+        foc_rebel_nebula_foc_lowest
+        foc_rebel_mc158_foc_lowest
+        foc_sai_supremacy_arkship_tier_1_foc_lowest
+        foc_sai_supremacy_arkship_tier_2_foc_lowest
+        foc_sai_supremacy_arkship_tier_3_foc_lowest
+        foc_v118_imperialsd_bastion_foc_lowest
+        foc_imperialsd2
+        foc_imperialsd2_foc_lowest
+    }
+    ai_weight = { weight = 0 }
+    potential = { always = no }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "RESURGENTBATTLECRUISER_CORE"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_strange_computer"
+    icon_frame = 1
+    power = -2460
+    resources = {
+        category = ship_components
+        cost = { }
+    }
+    class_restriction = { shipclass_military shipclass_starbase }
+    size_restriction = { resurgentbattlecruiser foc_khan_starkiller_fixed_station resurgentbattlecruiser_foc_lowest foc_khan_starkiller_fixed_station_foc_lowest }
+    component_set = "combat_computers"
+    ship_behavior = "picket"
+    ship_modifier = {
+        ship_cloaking_detection_add = 8
+        ship_armor_hardening_add = 2
+        ship_shield_hardening_add = 2
+        ship_tracking_add = 30
+    }
+    potential = { always = no }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    ai_weight = { weight = 0 }
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "RESURGENTBATTLECRUISER_CREW_ACTUAL"
+    size = aux
+    icon = "GFX_resurgentbattlecruiser_crew"
+    icon_frame = 1
+    power = 0
+    resources = {
+        category = ship_components
+        cost = {
+            food = 350
+        }
+    }
+    ship_modifier = {
+        ship_experience_gain_mult = 2.1
+        ship_hull_regen_add_perc = 0.7
+        ship_armor_regen_add_perc = 0.7
+    }
+    component_set = "resurgentbattlecruiser_crew"
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+        }
+    }
+}
+utility_component_template = {
+    key = "RESURGENTBATTLECRUISER_SNARE"
+    size = medium
+    icon = "GFX_ship_part_aura_snare"
+    icon_frame = 1
+    power = -8000
+    resources = {
+        category = ship_components
+        cost = { }
+    }
+    size_restriction = { resurgentbattlecruiser resurgentbattlecruiser_foc_lowest }
+    component_set = "resurgentbattlecruiser_subsnare"
+    hostile_aura = {
+        name = "aura_ship_subspace_snare"
+        radius = 1500
+        apply_on = fleets
+        stack_info = {
+            id = hostile_snare_aura
+            priority = 999
+        }
+        modifier = {
+            ship_emergency_ftl_min_days_mult = 9999
+            ship_disengage_chance_mult = -9999
+        }
+        graphics = {
+            area_effect = {
+                entity = "circle_area_entity"
+                dynamic_scale = yes
+            }
+            ship_effect = {
+                entity = "ship_aura_negative_entity"
+                dynamic_scale = no
+            }
+        }
+    }
+    ai_weight = {
+        weight = 999
+    }
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+        }
+    }
+}

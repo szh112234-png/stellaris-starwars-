@@ -1,0 +1,29 @@
+# V17.16. Country scope. Recognize both the dedicated origin and the public
+# First Order stage reached through the Republic/Imperial Remnant storyline.
+# Birth eligibility must not depend on having activated the separate crisis perk.
+foc_v17_is_player_first_order = {
+    is_ai = no
+    OR = {
+        has_country_flag = fop_player_first_order
+        has_country_flag = foc_republic_origin_became_first_order
+        has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+        has_country_flag = foc_republic_origin_empire_crisis
+        has_country_flag = foc_khan_first_order_country
+        has_origin = origin_fop_first_order
+    }
+    NOR = {
+        has_country_flag = fop_player_final_order
+        has_country_flag = fop_origin_player_final_order_established
+        has_country_flag = foc_khan_rebel_alliance_country
+        has_country_flag = foc_khan_first_order_resistance_country
+        has_country_flag = foc_republic_origin_post_treaty_new_republic
+        has_country_flag = foc_republic_origin_post_treaty_player_rebels
+    }
+}
+
+# Choice outcome flags, rather than the legacy "window was sent" flag, are final.
+foc_v17_player_first_order_pending = {
+    foc_v17_is_player_first_order = yes
+    NOT = { has_country_flag = fop_origin_chose_final_order }
+    NOT = { has_country_flag = fop_origin_resisting_final_order }
+}

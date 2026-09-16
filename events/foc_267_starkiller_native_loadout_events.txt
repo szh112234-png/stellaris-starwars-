@@ -1,0 +1,46 @@
+namespace = foc_267_starkiller_native
+country_event = {
+    id = foc_267_starkiller_native.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        has_country_flag = foc_khan_first_order_country
+        any_owned_starbase = { has_starbase_size = foc_starkiller_ring }
+    }
+    immediate = {
+        # Make the original SG/strategic-fighter components legal for the crisis country.
+        give_technology = { tech = tech_battleships message = no }
+        if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } }
+        if = { limit = { is_ai = yes } give_technology = { tech = tech_ssp_imperial_hyperspace message = no } }
+        set_country_flag = ssp_fighter_group_empire
+        set_country_flag = ssp_strength_sg
+        set_country_flag = ssp_size_original
+        remove_country_flag = ssp_strength_balanced
+        remove_country_flag = ssp_strength_enhanced
+        remove_country_flag = ssp_strength_extreme
+        foc_sync_ssp_strength_to_main_difficulty = yes
+        remove_country_flag = ssp_size_2x
+        remove_country_flag = ssp_size_5x
+        remove_country_flag = ssp_size_10x
+
+        every_owned_starbase = {
+            limit = {
+                has_starbase_size = foc_starkiller_ring
+                NOT = { has_starbase_flag = foc_starkiller_267_native_loadout }
+            }
+            remove_starbase_flag = foc_starkiller_station_265_refreshed
+            remove_starbase_flag = foc_starkiller_station_265_loadout
+            remove_starbase_flag = foc_starkiller_266_dedicated_loadout
+            set_starbase_size = foc_starkiller_ring
+            set_starbase_module = { slot = 1 module = foc_starkiller_crisis_integrated_defense }
+            set_starbase_module = { slot = 2 module = foc_starkiller_crisis_integrated_defense }
+            set_starbase_module = { slot = 3 module = foc_starkiller_crisis_integrated_defense }
+            set_starbase_module = { slot = 4 module = foc_starkiller_crisis_integrated_defense }
+            set_starbase_module = { slot = 5 module = foc_starkiller_crisis_integrated_defense }
+            set_starbase_module = { slot = 6 module = foc_starkiller_crisis_integrated_defense }
+            set_ship_construction_type = none
+            set_starbase_flag = foc_starkiller_267_native_loadout
+        }
+        log = "FOC_2.67_STARKILLER_NATIVE_LOADOUT: 4 SSP SG TIE hangars, 4 FOC_KHAN_SPAHT_BEAM, 24 FOC_KHAN_DEFENCE_TURBO_G_EC, 6 FOC_KHAN_ADAPTIVE_DEFENSE_ARMOR."
+    }
+}

@@ -1,0 +1,300 @@
+namespace = foc_cis
+
+# =============================================================================
+# 分离主义强化
+# =============================================================================
+# 原版流程里，邦联开战时只在阿基瓦生成四支舰队，此后不再增援，所以共和国
+# 只要一次决战打掉阿基瓦上空的守军，整场分离主义战争就结束了。
+#
+# 这里做四件事：
+#   1. 开战时追加主力与突击群，并分散部署到外环各地；
+#   2. 战争第二年，格里弗斯将军接任最高统帅，邦联再上一个台阶；
+#   3. 战争第四年，商业财团总动员，私兵全部并入邦联舰队；
+#   4. 只保留明确配置的年度卢克里赫尔克支援；不再按舰队损失自动补舰。
+#
+# 月度脉冲只负责启动/检查阶段事件，本身不按损失刷新舰队。
+# =============================================================================
+
+# 开战：完整的战争机器。
+country_event = {
+    id = foc_cis.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_republic_origin_separatist_country
+        has_country_flag = foc_republic_origin_separatist_fleets_ready
+        has_global_flag = foc_republic_origin_separatist_war_active
+        NOT = { has_country_flag = foc_saga_cis_initial_buildup_done }
+        exists = event_target:foc_republic_origin_separatists
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_cis_initial_buildup_done
+        foc_saga_separatist_initial_buildup = yes
+        # 两次战争中期升级，从开战当天开始计时。
+        country_event = { id = foc_cis.2 days = 720 }
+        country_event = { id = foc_cis.3 days = 1440 }
+        # 通知共和国玩家：这场仗不会一次打完。
+        every_country = {
+            limit = {
+                foc_v197_republic_story_actor = yes
+                has_country_flag = foc_republic_origin_republic_country
+            }
+            country_event = { id = foc_cis.10 days = 3 }
+        }
+    }
+}
+
+# 战争第二年：格里弗斯将军。
+country_event = {
+    id = foc_cis.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_republic_origin_separatist_country
+        has_global_flag = foc_republic_origin_separatist_war_active
+        NOT = { has_country_flag = foc_saga_cis_grievous_done }
+        NOT = { has_global_flag = foc_saga_grievous_dead }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_cis_grievous_done
+        foc_saga_separatist_grievous_command = yes
+        every_country = {
+            limit = {
+                foc_v197_republic_story_actor = yes
+                has_country_flag = foc_republic_origin_republic_country
+            }
+            country_event = { id = foc_cis.11 days = 3 }
+        }
+    }
+}
+
+# 战争第四年：商业财团总动员。
+country_event = {
+    id = foc_cis.3
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_republic_origin_separatist_country
+        has_global_flag = foc_republic_origin_separatist_war_active
+        NOT = { has_country_flag = foc_saga_cis_mobilisation_done }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_cis_mobilisation_done
+        foc_saga_separatist_mobilise_combines = yes
+        every_country = {
+            limit = {
+                foc_v197_republic_story_actor = yes
+                has_country_flag = foc_republic_origin_republic_country
+            }
+            country_event = { id = foc_cis.12 days = 3 }
+        }
+    }
+}
+
+# V136: casualty-replacement loop removed. CIS now receives only the explicitly configured annual Lucrehulk support.
+
+# V196: Clone Wars AI-only CIS reinforcement loop.
+# New wars receive one support fleet on declaration day. This old-save/fallback
+# starter does the same, then continues every 360 days while Geonosis is held.
+country_event = {
+    id = foc_cis.6
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = yes
+        has_country_flag = foc_republic_origin_separatist_country
+        has_country_flag = foc_saga_cis_initial_buildup_done
+        has_global_flag = foc_republic_origin_separatist_war_active
+        foc_v209_cis_reinforcements_allowed = yes
+        exists = event_target:foc_republic_origin_separatists
+        exists = capital_scope
+        any_system = {
+            has_star_flag = foc_swmap_geonosis_home
+            space_owner? = { is_same_value = root }
+            NOT = {
+                any_system_planet = {
+                    is_colony = yes
+                    NOT = { owner = { is_same_value = root } }
+                }
+            }
+        }
+        NOT = { has_country_flag = foc_cis_lucrehulk_180d_loop_started }
+    }
+
+    immediate = {
+        set_country_flag = foc_cis_lucrehulk_180d_loop_started
+        foc_trade_federation_monthly_25_lucrehulks = yes
+        country_event = { id = foc_cis.7 days = 360 }
+    }
+}
+
+# Exact 360-day reinforcement tick. It permanently stops once Geonosis is lost.
+country_event = {
+    id = foc_cis.7
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = yes
+        has_country_flag = foc_republic_origin_separatist_country
+        has_country_flag = foc_saga_cis_initial_buildup_done
+        has_global_flag = foc_republic_origin_separatist_war_active
+        foc_v209_cis_reinforcements_allowed = yes
+        exists = event_target:foc_republic_origin_separatists
+        exists = capital_scope
+        any_system = {
+            has_star_flag = foc_swmap_geonosis_home
+            space_owner? = { is_same_value = root }
+            NOT = {
+                any_system_planet = {
+                    is_colony = yes
+                    NOT = { owner = { is_same_value = root } }
+                }
+            }
+        }
+    }
+
+    immediate = {
+        foc_trade_federation_monthly_25_lucrehulks = yes
+        country_event = { id = foc_cis.7 days = 360 }
+    }
+}
+
+# -----------------------------------------------------------------------------
+# 共和国方的战报
+# -----------------------------------------------------------------------------
+
+country_event = {
+    id = foc_cis.10
+    title = foc_cis.10.name
+    desc = foc_cis.10.desc
+    picture = GFX_foc_saga_droid_factory
+    location = event_target:foc_republic_origin_separatist_capital
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_republic_origin_republic_country
+        NOT = { has_country_flag = foc_saga_cis_report_one_shown }
+    }
+
+    immediate = { set_country_flag = foc_saga_cis_report_one_shown }
+
+    option = { name = foc_cis.10.a }
+}
+
+country_event = {
+    id = foc_cis.11
+    title = foc_cis.11.name
+    desc = foc_cis.11.desc
+    picture = GFX_foc_saga_battle_droids
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_republic_origin_republic_country
+        NOT = { has_country_flag = foc_saga_cis_report_two_shown }
+    }
+
+    immediate = { set_country_flag = foc_saga_cis_report_two_shown }
+
+    option = { name = foc_cis.11.a }
+}
+
+country_event = {
+    id = foc_cis.12
+    title = foc_cis.12.name
+    desc = foc_cis.12.desc
+    picture = GFX_foc_saga_trade_federation
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_republic_origin_republic_country
+        NOT = { has_country_flag = foc_saga_cis_report_three_shown }
+    }
+
+    immediate = { set_country_flag = foc_saga_cis_report_three_shown }
+
+    option = { name = foc_cis.12.a }
+}
+
+# V86 old-save repair: if Coruscant already killed Dooku before this version,
+# promote Grievous on the next monthly pulse instead of leaving Dooku as ruler.
+country_event = {
+    id = foc_cis.5
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_republic_origin_separatist_country
+        has_global_flag = foc_republic_origin_separatist_war_active
+        has_global_flag = foc_saga_dooku_dead
+        NOT = { has_global_flag = foc_saga_grievous_dead }
+        NOT = { has_country_flag = foc_saga_grievous_cis_ruler }
+    }
+
+    immediate = {
+        foc_saga_grievous_becomes_cis_ruler = yes
+    }
+}
+
+
+# V205 one-shot opening deployment / old-save migration. New wars run this
+# synchronously from foc_saga_separatist_initial_buildup; old active wars receive
+# the same package on their next monthly pulse.
+country_event = {
+    id = foc_cis.8
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_republic_origin_separatist_country
+        has_global_flag = foc_republic_origin_separatist_war_active
+        foc_v209_cis_reinforcements_allowed = yes
+        has_country_flag = foc_saga_cis_initial_buildup_done
+        exists = event_target:foc_republic_origin_separatists
+        NOT = { has_country_flag = foc_v205_cis_opening_system_fleets_done }
+    }
+
+    immediate = {
+        foc_trade_federation_spawn_25_lucrehulks_in_every_controlled_system = yes
+        log = "FOC_V205_CIS: deployed one 25-Lucrehulk opening fleet in every Separatist-controlled system."
+    }
+}
+
+# V209 old-save keeper. The direct scripted trigger already blocks support;
+# this event persists the global cutoff flag on the next Republic monthly pulse.
+country_event = {
+    id = foc_cis.9
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_republic_origin_republic_country
+        has_global_flag = foc_republic_origin_separatist_war_active
+        NOT = { has_global_flag = foc_v209_cis_reinforcement_cutoff }
+        OR = {
+            has_country_flag = foc_republic_origin_order_66_pending
+            has_country_flag = foc_republic_origin_palpatine_plot_complete
+            any_situation = {
+                is_situation_type = situation_foc_republic_origin_palpatine_plot
+                situation_progress >= 140
+            }
+        }
+    }
+
+    immediate = {
+        set_global_flag = foc_v209_cis_reinforcement_cutoff
+        log = "FOC_V209_CIS: Palpatine progress reached 140; all ordinary Confederate reinforcement fleets are disabled."
+    }
+}
+

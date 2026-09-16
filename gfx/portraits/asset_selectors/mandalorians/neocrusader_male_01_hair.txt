@@ -1,0 +1,105 @@
+# This is a template which multiple species can use.
+  
+neocrusader_male_01_hair = {
+	default = "gfx/models/portraits/neocrusader_male_mandalblue_hair.dds"
+	
+	game_setup = {#will run with a limited country scope. species and government is set but the country does not actually exist
+		default = "gfx/models/portraits/neocrusader/neocrusader_male_mandalblue_hair.dds"
+	}
+	
+	#species scope
+	species = { #generic portrait for a species
+		default = "gfx/models/portraits/neocrusader/neocrusader_male_mandalblue_hair.dds"
+	}
+	
+	#pop scope
+	pop = { #for a specific pop
+	
+		default = "gfx/models/portraits/neocrusader/neocrusader_male_mandalblue_hair.dds"
+
+		random = {
+			list = {
+				"gfx/models/portraits/neocrusader/neocrusader_male_mandalblue_hair.dds"
+			}
+		}
+	}
+
+
+
+
+	#leader scope
+	leader = { #scientists, generals, admirals, governor
+		random = {
+			trigger = { leader_class = general }
+			list = {
+				"gfx/models/portraits/neocrusader/neocrusader_male_mandalred_hair.dds"
+			
+			}
+		}
+		random = {
+			trigger = { leader_class = admiral }
+			list = {
+				
+				"gfx/models/portraits/neocrusader/neocrusader_male_admiral_hair.dds"
+			}
+		}
+		
+		random = {
+			trigger = { leader_class = scientist }
+			list = {
+				"gfx/models/portraits/neocrusader/neocrusader_male_scientist_hair.dds"
+
+			}
+		}
+		
+		random = {
+			trigger = { leader_class = governor }
+			list = {
+				"gfx/models/portraits/neocrusader/neocrusader_male_mandalyellow_hair.dds"
+			}
+		}
+	}
+
+	#leader scope
+	ruler = { #for rulers
+		#default = "gfx/models/portraits/neocrusader/neocrusader_male_ruler_hair.dds"
+		
+		random = {
+			trigger = {
+				owner = { has_militarist_government = yes }
+			}
+				
+			list = {
+
+			"gfx/models/portraits/neocrusader/neocrusader_male_ruler_hair.dds"
+			}
+		}
+		
+		random = {
+			trigger = {
+				owner = { has_spiritualist_government = yes }
+			}
+			
+			list = {
+				"gfx/models/portraits/neocrusader/neocrusader_male_ruler_hair.dds"
+			}
+		}
+		
+		random = {
+			trigger = {
+				owner = {
+					OR = {
+						has_government = gov_stagnant_ascendancy
+						has_primitive_government = yes
+						has_materialist_government = yes
+						has_pacifist_government = yes
+					}
+				}
+			}
+			
+			list = {
+				"gfx/models/portraits/neocrusader/neocrusader_male_mandalore_hair.dds"
+			}
+		}
+	}
+}

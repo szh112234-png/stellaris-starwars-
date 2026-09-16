@@ -1,0 +1,68 @@
+namespace = foc_v1717c_aircraft
+
+# Load repair is global; normal startup/monthly callbacks use country scope.
+event = {
+    id = foc_v1717c_aircraft.1
+    hide_window = yes
+    is_triggered_only = yes
+    immediate = {
+        every_country = {
+            limit = { is_ai = no }
+            country_event = { id = foc_v1717c_aircraft.2 }
+        }
+    }
+}
+
+# A successful Kuat expansion or completed Starkiller awards only its base
+# strategic-aircraft technology. No other technology or existing design changes.
+country_event = {
+    id = foc_v1717c_aircraft.2
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        is_ai = no
+        OR = {
+            AND = {
+                    has_origin = origin_foc_republic_unification
+                    foc_v15_kuat_expansion_really_completed = yes
+                    foc_v1717c_republic_strategic_aircraft_allowed = yes
+                    NOT = { foc_v236_has_cis_aircraft_identity = yes }
+                    NOT = { has_technology = tech_ssp_republic_hyperspace }
+            }
+            AND = {
+                    foc_v1718e_imperial_aviation_earned = yes
+                    NOT = { has_technology = tech_ssp_imperial_hyperspace }
+            }
+        }
+    }
+    immediate = {
+        if = {
+            limit = {
+                    has_origin = origin_foc_republic_unification
+                    foc_v15_kuat_expansion_really_completed = yes
+                    foc_v1717c_republic_strategic_aircraft_allowed = yes
+                    NOT = { foc_v236_has_cis_aircraft_identity = yes }
+                    NOT = { has_technology = tech_ssp_republic_hyperspace }
+            }
+            remove_country_flag = ssp_fighter_group_all
+            remove_country_flag = ssp_fighter_group_rebel
+            remove_country_flag = ssp_fighter_group_empire
+            set_country_flag = ssp_fighter_group_republic
+            give_technology = { tech = tech_ssp_republic_hyperspace message = no }
+        }
+        if = {
+            limit = {
+                    foc_v1718e_imperial_aviation_earned = yes
+                    NOT = { has_technology = tech_ssp_imperial_hyperspace }
+            }
+            remove_country_flag = ssp_fighter_group_all
+            remove_country_flag = ssp_fighter_group_rebel
+            remove_country_flag = ssp_fighter_group_republic
+            remove_country_flag = foc_republic_origin_order_technology_locked
+            set_country_flag = ssp_fighter_group_empire
+            give_technology = { tech = tech_ssp_imperial_hyperspace message = no }
+        }
+        # This event only runs for a missing earned unlock, not every monthly pulse.
+        refresh_auto_generated_ship_designs = yes
+    }
+}

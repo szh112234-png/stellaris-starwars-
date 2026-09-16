@@ -1,0 +1,34 @@
+# Event-only defensive systems for Raddus. Dedicated keys remove the vanilla
+# Arkship technology/potential dependency while retaining the same actual
+# component effects and visible functionality in the Arkship interface.
+foc_rebel_home_arkship_armor = {
+    icon = "GFX_arkship_armor"
+    starbase_type = arkship
+    construction_days = 1
+    category = sm_defense_cat
+    starbase_limit = { base = -1 }
+    potential = { has_starbase_size = foc_rebel_home_arkship_tier_3 }
+    resources = { category = starbase_arkship_upgrades cost = { alloys = 0 } }
+    equipped_component = LARGE_ARMOR_1
+    equipped_component = LARGE_ARMOR_1
+    equipped_component = LARGE_ARMOR_1
+    show_component_tooltips = yes
+    custom_tooltip = sm_arkship_armor_tt
+    ai_weight = { weight = 0 }
+}
+
+foc_rebel_home_arkship_shield = {
+    icon = "GFX_arkship_shield"
+    starbase_type = arkship
+    construction_days = 1
+    category = sm_defense_cat
+    starbase_limit = { base = -1 }
+    potential = { has_starbase_size = foc_rebel_home_arkship_tier_3 }
+    resources = { category = starbase_arkship_upgrades cost = { alloys = 0 } }
+    equipped_component = LARGE_SHIELD_1
+    equipped_component = LARGE_SHIELD_1
+    equipped_component = LARGE_SHIELD_1
+    show_component_tooltips = yes
+    custom_tooltip = sm_arkship_shield_tt
+    ai_weight = { weight = 0 }
+}

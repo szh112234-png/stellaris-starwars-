@@ -1,0 +1,3482 @@
+namespace = sai_supremacy_arkship
+
+
+# Unified Supremacy command menu.
+country_event = {
+	id = sai_supremacy_arkship.19
+	title = sai_supremacy_arkship.19.name
+	desc = sai_supremacy_arkship.19.desc
+	picture = GFX_evt_ship_in_orbit_3
+	show_sound = event_ship_bridge
+	is_triggered_only = yes
+
+	trigger = {
+		is_ai = no
+		has_technology = foc_tech_dark_legacy_supremacy
+		exists = capital_scope
+		NOT = { has_country_flag = sai_supremacy_arkship_pending }
+	}
+
+	option = {
+		name = sai_supremacy_arkship.19.a
+		custom_tooltip = sai_supremacy_arkship.19.a.tt
+		hidden_effect = {
+			country_event = { id = sai_supremacy_arkship.1 }
+		}
+	}
+
+	option = {
+		name = sai_supremacy_arkship.19.b
+		allow = {
+			custom_tooltip = {
+				text = FOC_V17_7_SUPREMACY_FULL_RESEARCH_REQUIRED
+				foc_v17_7_supremacy_full_loadout_researched = yes
+			}
+		}
+		custom_tooltip = sai_supremacy_arkship.19.b.tt
+		hidden_effect = {
+			country_event = { id = sai_supremacy_arkship.14 }
+		}
+	}
+
+	option = {
+		name = sai_supremacy_arkship.19.c
+		custom_tooltip = sai_supremacy_arkship.19.c.tt
+		hidden_effect = {
+			set_country_flag = sai_supremacy_replace_all_military_arkship_models
+			country_event = { id = sai_supremacy_arkship.20 }
+		}
+	}
+}
+
+# Deployment request.
+country_event = {
+	id = sai_supremacy_arkship.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		is_ai = no
+		has_technology = foc_tech_dark_legacy_supremacy
+		NOT = { has_country_flag = sai_supremacy_arkship_pending }
+		exists = capital_scope
+	}
+
+	immediate = {
+        give_technology = { tech = tech_arkship_construction message = no }
+        give_technology = { tech = tech_military_arkship message = no }
+
+		set_country_flag = sai_supremacy_arkship_pending
+		give_technology = { tech = tech_juggernaut message = no }
+		# Register the dedicated auto-generated hull design after unlocking its prerequisite.
+		country_event = { id = sai_supremacy_arkship.2 days = 1 }
+	}
+}
+
+# Spawn the event-only dedicated hull. Its core and every installed Arkship module
+# are auto-equipped/upgraded by the normal 4.4 starbase design system.
+country_event = {
+    id = sai_supremacy_arkship.2
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        is_ai = no
+        has_technology = foc_tech_dark_legacy_supremacy
+        has_country_flag = sai_supremacy_arkship_pending
+        exists = capital_scope
+    }
+    immediate = {
+        capital_scope = { save_event_target_as = sai_supremacy_spawn_planet }
+        create_fleet = {
+            name = "NAME_SAI_SUPREMACY_ARKSHIP"
+            effect = {
+                set_owner = root
+                if = {
+                    limit = { has_global_flag = foc_khan_strength_lowest }
+                    create_ship = {
+                        fleet_cache_recalc = yes # v17.18h: update Arkship/hero fleet cache at creation.
+                        name = "NAME_SAI_SUPREMACY_ARKSHIP"
+                        design = "NAME_SAI_SUPREMACY_ARKSHIP_TIER_1_SHELL_FOC_LOWEST"
+                        graphical_culture = military_arkship
+                        effect = {
+                        set_ship_flag = foc_v1718i_arkship_new_spawn
+
+                            if = {
+                                limit = {
+                                    NOT = { has_global_flag = foc_khan_strength_lowest }
+                                }
+                                add_modifier = { modifier = sai_supremacy_arkship_stats days = -1 }
+                            }
+                            set_ship_flag = sai_supremacy_arkship
+                            set_ship_flag = sai_supremacy_event_spawned_only
+                            ship_event = { id = sai_supremacy_arkship.21 days = 1 }
+                        }
+                    }
+                }
+                else = {
+                    create_ship = {
+                        fleet_cache_recalc = yes # v17.18h: update Arkship/hero fleet cache at creation.
+                        name = "NAME_SAI_SUPREMACY_ARKSHIP"
+                        design = NAME_SAI_SUPREMACY_ARKSHIP_TIER_1
+                        graphical_culture = military_arkship
+                        effect = {
+                        set_ship_flag = foc_v1718i_arkship_new_spawn
+
+                            if = {
+                                limit = {
+                                    NOT = { has_global_flag = foc_khan_strength_lowest }
+                                }
+                                add_modifier = { modifier = sai_supremacy_arkship_stats days = -1 }
+                            }
+                            set_ship_flag = sai_supremacy_arkship
+                            set_ship_flag = sai_supremacy_event_spawned_only
+                            ship_event = { id = sai_supremacy_arkship.21 days = 1 }
+                        }
+                    }
+                }
+                set_location = { target = event_target:sai_supremacy_spawn_planet distance = 20 angle = random }
+            }
+        }
+        remove_country_flag = sai_supremacy_arkship_pending
+        remove_country_flag = sai_supremacy_arkship_granted
+    }
+}
+
+# Old-save migration from 1.8-2.2. Change only the starbase size/level.
+# Existing Arkship modules and buildings remain installed and immediately rebuild
+# against the dedicated Supremacy core instead of being overwritten by a forced whole-design replacement.
+country_event = {
+	id = sai_supremacy_arkship.15
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		any_owned_ship = {
+			has_modifier = sai_supremacy_arkship_stats
+			OR = {
+				is_ship_size = military_arkship_tier_1
+				is_ship_size = military_arkship_tier_2
+				is_ship_size = military_arkship_tier_3
+			}
+		}
+	}
+
+	immediate = {
+		every_owned_ship = {
+			limit = { has_modifier = sai_supremacy_arkship_stats }
+			if = {
+				limit = { is_ship_size = military_arkship_tier_1 }
+				starbase = { set_starbase_size = sai_supremacy_arkship_tier_1 }
+			}
+			else_if = {
+				limit = { is_ship_size = military_arkship_tier_2 }
+				starbase = { set_starbase_size = sai_supremacy_arkship_tier_2 }
+			}
+			else_if = {
+				limit = { is_ship_size = military_arkship_tier_3 }
+				starbase = { set_starbase_size = sai_supremacy_arkship_tier_3 }
+			}
+			set_graphical_culture = military_arkship
+			set_ship_flag = sai_supremacy_arkship
+			set_ship_flag = sai_supremacy_event_spawned_only
+			# V186: a nomadic Arkship colony resolves to the carrier ship, not a planet.
+			# Identity is preserved by the modifier and ship flags above.
+			foc_v177_sync_supremacy_shell_ship = yes
+			ship_event = { id = sai_supremacy_arkship.22 days = 1 }
+			remove_ship_flag = sai_supremacy_model_tier_1
+			remove_ship_flag = sai_supremacy_model_tier_2
+			remove_ship_flag = sai_supremacy_model_tier_3
+		}
+	}
+}
+
+# Full-loadout edict entry point.
+# Adds one fully equipped Tier III Supremacy and never removes existing ships.
+# The normal I -> II -> III Arkship upgrade chain remains available.
+country_event = {
+	id = sai_supremacy_arkship.14
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		foc_v17_7_supremacy_spawn_allowed = yes
+		is_ai = no
+		has_technology = foc_tech_dark_legacy_supremacy
+		exists = capital_scope
+		NOT = { has_country_flag = sai_supremacy_arkship_pending }
+	}
+
+	immediate = {
+        give_technology = { tech = tech_arkship_construction message = no }
+        give_technology = { tech = tech_military_arkship message = no }
+
+		set_country_flag = sai_supremacy_arkship_pending
+		give_technology = { tech = tech_juggernaut message = no }
+		country_event = { id = sai_supremacy_arkship.18 days = 1 }
+	}
+}
+
+# Save cleanup: the permanent modifier remains the authoritative event-ship identity.
+country_event = {
+	id = sai_supremacy_arkship.13
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			any_owned_ship = {
+				OR = {
+					OR = { is_ship_size = sai_supremacy_arkship_tier_1 is_ship_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+					OR = { is_ship_size = sai_supremacy_arkship_tier_2 is_ship_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+					OR = { OR = { is_ship_size = sai_supremacy_arkship_tier_3 is_ship_size = sai_supremacy_arkship_tier_3_shell_foc_lowest } is_ship_size = sai_supremacy_arkship_tier_3_foc_lowest }
+				}
+				OR = {
+					NOT = { has_modifier = sai_supremacy_arkship_stats }
+					NOT = { has_ship_flag = sai_supremacy_arkship }
+					NOT = { has_ship_flag = sai_supremacy_event_spawned_only }
+					NOT = { has_ship_flag = sai_supremacy_arkship_core_initialized }
+					starbase = {
+						NOR = {
+							has_starbase_module = sai_supremacy_arkship_engineering_bay
+							has_starbase_module = sai_supremacy_arkship_beastport
+							has_starbase_module = arkship_engineering_bay
+							has_starbase_module = arkship_beastport
+						}
+					}
+					starbase = {
+						NOR = {
+							has_starbase_module = sai_supremacy_arkship_docking_bay
+							has_starbase_module = arkship_docking_bay
+						}
+					}
+				}
+			}
+			any_owned_ship = {
+				has_modifier = sai_supremacy_arkship_stats
+				NOT = { has_ship_flag = sai_supremacy_event_spawned_only }
+			}
+			any_owned_ship = {
+				has_ship_flag = sai_supremacy_arkship
+				NOT = { has_modifier = sai_supremacy_arkship_stats }
+			}
+			any_owned_ship = { has_modifier = sai_supremacy_hyperspace_tracker }
+		}
+	}
+
+	immediate = {
+		# Upgrade reconstruction can discard flags and installed Arkship modules.
+		# The dedicated hull key is authoritative, so restore identity and schedule
+		# a one-time core repair on the upgraded ship object.
+		every_owned_ship = {
+			limit = {
+				OR = {
+					OR = { is_ship_size = sai_supremacy_arkship_tier_1 is_ship_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+					OR = { is_ship_size = sai_supremacy_arkship_tier_2 is_ship_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+					OR = { OR = { is_ship_size = sai_supremacy_arkship_tier_3 is_ship_size = sai_supremacy_arkship_tier_3_shell_foc_lowest } is_ship_size = sai_supremacy_arkship_tier_3_foc_lowest }
+				}
+			}
+			if = {
+				limit = { NOT = { has_modifier = sai_supremacy_arkship_stats } }
+				if = { limit = { NOT = { has_global_flag = foc_khan_strength_lowest } } add_modifier = { modifier = sai_supremacy_arkship_stats days = -1 } }
+			}
+			set_ship_flag = sai_supremacy_arkship
+			set_ship_flag = sai_supremacy_event_spawned_only
+			set_graphical_culture = military_arkship
+			# V186: a nomadic Arkship colony resolves to the carrier ship, not a planet.
+			# Identity is preserved by the modifier and ship flags above.
+			if = {
+				limit = {
+					OR = {
+						NOT = { has_ship_flag = sai_supremacy_arkship_core_initialized }
+						starbase = {
+							NOR = {
+								has_starbase_module = sai_supremacy_arkship_engineering_bay
+								has_starbase_module = sai_supremacy_arkship_beastport
+								has_starbase_module = arkship_engineering_bay
+								has_starbase_module = arkship_beastport
+							}
+						}
+						starbase = {
+							NOR = {
+								has_starbase_module = sai_supremacy_arkship_docking_bay
+								has_starbase_module = arkship_docking_bay
+							}
+						}
+					}
+				}
+				foc_v177_sync_supremacy_shell_ship = yes
+				ship_event = { id = sai_supremacy_arkship.22 days = 1 }
+			}
+		}
+
+		every_owned_ship = {
+			limit = { has_modifier = sai_supremacy_arkship_stats }
+			set_ship_flag = sai_supremacy_arkship
+			set_ship_flag = sai_supremacy_event_spawned_only
+		}
+		every_owned_ship = {
+			limit = { has_modifier = sai_supremacy_hyperspace_tracker }
+			remove_modifier = sai_supremacy_hyperspace_tracker
+		}
+		every_owned_ship = {
+			limit = {
+				has_ship_flag = sai_supremacy_arkship
+				NOT = { has_modifier = sai_supremacy_arkship_stats }
+				NOR = {
+					OR = { is_ship_size = sai_supremacy_arkship_tier_1 is_ship_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+					OR = { is_ship_size = sai_supremacy_arkship_tier_2 is_ship_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+					OR = { OR = { is_ship_size = sai_supremacy_arkship_tier_3 is_ship_size = sai_supremacy_arkship_tier_3_shell_foc_lowest } is_ship_size = sai_supremacy_arkship_tier_3_foc_lowest }
+				}
+			}
+			remove_ship_flag = sai_supremacy_arkship
+			remove_ship_flag = sai_supremacy_event_spawned_only
+			remove_ship_flag = sai_supremacy_model_tier_1
+			remove_ship_flag = sai_supremacy_model_tier_2
+			remove_ship_flag = sai_supremacy_model_tier_3
+			remove_ship_flag = sai_supremacy_arkship_core_initialized
+		}
+	}
+}
+
+
+# Tier III fixed tracker auto-installer.
+# set_starbase_module uses the numeric slot index; the seventh slot is the dedicated
+# spinal_mount_1 slot declared by the Tier III Supremacy starbase level.
+country_event = {
+	id = sai_supremacy_arkship.16
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+        # Keep the standalone cleanup of obsolete tracker bonuses; do not stack them with the module.
+        if = { limit = { has_modifier = sai_supremacy_hyperspace_tracker_country_active } remove_modifier = sai_supremacy_hyperspace_tracker_country_active }
+        remove_country_flag = sai_supremacy_hyperspace_tracker_online
+        every_owned_ship = {
+            limit = { OR = { is_ship_size = sai_supremacy_arkship_tier_1 is_ship_size = sai_supremacy_arkship_tier_1_shell_foc_lowest is_ship_size = sai_supremacy_arkship_tier_2 is_ship_size = sai_supremacy_arkship_tier_2_shell_foc_lowest is_ship_size = sai_supremacy_arkship_tier_3 is_ship_size = sai_supremacy_arkship_tier_3_foc_lowest is_ship_size = sai_supremacy_arkship_tier_3_shell_foc_lowest } }
+            if = { limit = { has_modifier = sai_supremacy_hyperspace_tracker } remove_modifier = sai_supremacy_hyperspace_tracker }
+            if = { limit = { has_modifier = sai_supremacy_hyperspace_tracker_active } remove_modifier = sai_supremacy_hyperspace_tracker_active }
+            if = {
+                limit = { OR = { is_ship_size = sai_supremacy_arkship_tier_3 is_ship_size = sai_supremacy_arkship_tier_3_foc_lowest is_ship_size = sai_supremacy_arkship_tier_3_shell_foc_lowest } exists = starbase }
+                starbase = {
+                    if = {
+                        limit = { owner = { has_technology = tech_arkship_tier_3 } NOT = { has_starbase_module = sai_supremacy_hyperspace_tracker_module } }
+                        set_starbase_module = { slot = 7 module = sai_supremacy_hyperspace_tracker_module }
+                    }
+                    if = { limit = { has_starbase_module = sai_supremacy_hyperspace_tracker_module } owner = { set_country_flag = sai_supremacy_hyperspace_tracker_online } }
+                }
+            }
+        }
+}
+}
+
+
+# Convert visible original Arkship modules on the event Supremacy into invisible,
+# gameplay-identical Supremacy-only clones. Module types and counts are preserved.
+country_event = {
+	id = sai_supremacy_arkship.17
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		any_owned_ship = {
+			foc_v1718h_is_supremacy_ship = yes
+                has_ship_flag = foc_v1718i_fresh_native_modules
+			starbase = {
+				OR = {
+						has_starbase_module = arkship_engineering_bay
+						has_starbase_module = arkship_beastport
+						has_starbase_module = arkship_docking_bay
+						has_starbase_module = arkship_habitation_module
+						has_starbase_module = arkship_sensor_array
+						has_starbase_module = arkship_mining_array
+						has_starbase_module = arkship_grand_archive
+						has_starbase_module = arkship_hangar_bay
+						has_starbase_module = arkship_archaeo_hangar_bay
+						has_starbase_module = arkship_psionic_hangar_bay
+						has_starbase_module = arkship_amoeba_hangar_bay
+						has_starbase_module = arkship_swarm_hangar_bay
+						has_starbase_module = arkship_laser_battery
+						has_starbase_module = arkship_archaeo_laser_battery
+						has_starbase_module = arkship_lance_battery
+						has_starbase_module = arkship_particle_launcher
+						has_starbase_module = arkship_psionic_torpedo
+						has_starbase_module = arkship_arc_emitter_battery
+						has_starbase_module = arkship_psionic_lightning_battery
+						has_starbase_module = arkship_mass_driver_battery
+						has_starbase_module = arkship_archaeo_mass_driver_battery
+						has_starbase_module = arkship_kinetic_artillery_battery
+						has_starbase_module = arkship_lm_accelerator
+						has_starbase_module = arkship_mass_accelerator
+						has_starbase_module = arkship_archaeo_mass_accelerator
+						has_starbase_module = arkship_missile_battery
+						has_starbase_module = arkship_archaeo_missile_battery
+						has_starbase_module = arkship_swamer_missile_battery
+						has_starbase_module = arkship_scourge_missile_battery
+						has_starbase_module = arkship_flak_battery
+						has_starbase_module = arkship_pd_battery
+						has_starbase_module = arkship_archaeo_pd_battery
+				}
+			}
+		}
+	}
+
+	immediate = {
+		every_owned_ship = {
+			limit = { foc_v1718h_is_supremacy_ship = yes
+                has_ship_flag = foc_v1718i_fresh_native_modules }
+			starbase = {
+				if = {
+					limit = { OR = {
+						has_starbase_module = arkship_engineering_bay
+						has_starbase_module = arkship_beastport
+						has_starbase_module = arkship_docking_bay
+						has_starbase_module = arkship_habitation_module
+						has_starbase_module = arkship_sensor_array
+						has_starbase_module = arkship_mining_array
+						has_starbase_module = arkship_grand_archive
+						has_starbase_module = arkship_hangar_bay
+						has_starbase_module = arkship_archaeo_hangar_bay
+						has_starbase_module = arkship_psionic_hangar_bay
+						has_starbase_module = arkship_amoeba_hangar_bay
+						has_starbase_module = arkship_swarm_hangar_bay
+						has_starbase_module = arkship_laser_battery
+						has_starbase_module = arkship_archaeo_laser_battery
+						has_starbase_module = arkship_lance_battery
+						has_starbase_module = arkship_particle_launcher
+						has_starbase_module = arkship_psionic_torpedo
+						has_starbase_module = arkship_arc_emitter_battery
+						has_starbase_module = arkship_psionic_lightning_battery
+						has_starbase_module = arkship_mass_driver_battery
+						has_starbase_module = arkship_archaeo_mass_driver_battery
+						has_starbase_module = arkship_kinetic_artillery_battery
+						has_starbase_module = arkship_lm_accelerator
+						has_starbase_module = arkship_mass_accelerator
+						has_starbase_module = arkship_archaeo_mass_accelerator
+						has_starbase_module = arkship_missile_battery
+						has_starbase_module = arkship_archaeo_missile_battery
+						has_starbase_module = arkship_swamer_missile_battery
+						has_starbase_module = arkship_scourge_missile_battery
+						has_starbase_module = arkship_flak_battery
+						has_starbase_module = arkship_pd_battery
+						has_starbase_module = arkship_archaeo_pd_battery
+					} }
+			set_variable = { which = sai_hidden_m_01 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_engineering_bay count >= 6 } }
+				change_variable = { which = sai_hidden_m_01 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_engineering_bay count >= 5 } }
+				change_variable = { which = sai_hidden_m_01 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_engineering_bay count >= 4 } }
+				change_variable = { which = sai_hidden_m_01 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_engineering_bay count >= 3 } }
+				change_variable = { which = sai_hidden_m_01 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_engineering_bay count >= 2 } }
+				change_variable = { which = sai_hidden_m_01 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_engineering_bay count >= 1 } }
+				change_variable = { which = sai_hidden_m_01 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_engineering_bay count >= 6 } }
+				change_variable = { which = sai_hidden_m_01 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_engineering_bay count >= 5 } }
+				change_variable = { which = sai_hidden_m_01 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_engineering_bay count >= 4 } }
+				change_variable = { which = sai_hidden_m_01 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_engineering_bay count >= 3 } }
+				change_variable = { which = sai_hidden_m_01 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_engineering_bay count >= 2 } }
+				change_variable = { which = sai_hidden_m_01 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_engineering_bay count >= 1 } }
+				change_variable = { which = sai_hidden_m_01 value = 1 }
+			}
+			set_variable = { which = sai_hidden_m_02 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_beastport count >= 6 } }
+				change_variable = { which = sai_hidden_m_02 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_beastport count >= 5 } }
+				change_variable = { which = sai_hidden_m_02 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_beastport count >= 4 } }
+				change_variable = { which = sai_hidden_m_02 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_beastport count >= 3 } }
+				change_variable = { which = sai_hidden_m_02 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_beastport count >= 2 } }
+				change_variable = { which = sai_hidden_m_02 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_beastport count >= 1 } }
+				change_variable = { which = sai_hidden_m_02 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_beastport count >= 6 } }
+				change_variable = { which = sai_hidden_m_02 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_beastport count >= 5 } }
+				change_variable = { which = sai_hidden_m_02 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_beastport count >= 4 } }
+				change_variable = { which = sai_hidden_m_02 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_beastport count >= 3 } }
+				change_variable = { which = sai_hidden_m_02 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_beastport count >= 2 } }
+				change_variable = { which = sai_hidden_m_02 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_beastport count >= 1 } }
+				change_variable = { which = sai_hidden_m_02 value = 1 }
+			}
+			set_variable = { which = sai_hidden_m_03 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_docking_bay count >= 6 } }
+				change_variable = { which = sai_hidden_m_03 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_docking_bay count >= 5 } }
+				change_variable = { which = sai_hidden_m_03 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_docking_bay count >= 4 } }
+				change_variable = { which = sai_hidden_m_03 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_docking_bay count >= 3 } }
+				change_variable = { which = sai_hidden_m_03 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_docking_bay count >= 2 } }
+				change_variable = { which = sai_hidden_m_03 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_docking_bay count >= 1 } }
+				change_variable = { which = sai_hidden_m_03 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_docking_bay count >= 6 } }
+				change_variable = { which = sai_hidden_m_03 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_docking_bay count >= 5 } }
+				change_variable = { which = sai_hidden_m_03 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_docking_bay count >= 4 } }
+				change_variable = { which = sai_hidden_m_03 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_docking_bay count >= 3 } }
+				change_variable = { which = sai_hidden_m_03 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_docking_bay count >= 2 } }
+				change_variable = { which = sai_hidden_m_03 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_docking_bay count >= 1 } }
+				change_variable = { which = sai_hidden_m_03 value = 1 }
+			}
+			set_variable = { which = sai_hidden_m_04 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_habitation_module count >= 6 } }
+				change_variable = { which = sai_hidden_m_04 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_habitation_module count >= 5 } }
+				change_variable = { which = sai_hidden_m_04 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_habitation_module count >= 4 } }
+				change_variable = { which = sai_hidden_m_04 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_habitation_module count >= 3 } }
+				change_variable = { which = sai_hidden_m_04 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_habitation_module count >= 2 } }
+				change_variable = { which = sai_hidden_m_04 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_habitation_module count >= 1 } }
+				change_variable = { which = sai_hidden_m_04 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_habitation_module count >= 6 } }
+				change_variable = { which = sai_hidden_m_04 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_habitation_module count >= 5 } }
+				change_variable = { which = sai_hidden_m_04 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_habitation_module count >= 4 } }
+				change_variable = { which = sai_hidden_m_04 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_habitation_module count >= 3 } }
+				change_variable = { which = sai_hidden_m_04 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_habitation_module count >= 2 } }
+				change_variable = { which = sai_hidden_m_04 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_habitation_module count >= 1 } }
+				change_variable = { which = sai_hidden_m_04 value = 1 }
+			}
+			set_variable = { which = sai_hidden_m_05 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_sensor_array count >= 6 } }
+				change_variable = { which = sai_hidden_m_05 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_sensor_array count >= 5 } }
+				change_variable = { which = sai_hidden_m_05 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_sensor_array count >= 4 } }
+				change_variable = { which = sai_hidden_m_05 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_sensor_array count >= 3 } }
+				change_variable = { which = sai_hidden_m_05 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_sensor_array count >= 2 } }
+				change_variable = { which = sai_hidden_m_05 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_sensor_array count >= 1 } }
+				change_variable = { which = sai_hidden_m_05 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_sensor_array count >= 6 } }
+				change_variable = { which = sai_hidden_m_05 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_sensor_array count >= 5 } }
+				change_variable = { which = sai_hidden_m_05 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_sensor_array count >= 4 } }
+				change_variable = { which = sai_hidden_m_05 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_sensor_array count >= 3 } }
+				change_variable = { which = sai_hidden_m_05 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_sensor_array count >= 2 } }
+				change_variable = { which = sai_hidden_m_05 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_sensor_array count >= 1 } }
+				change_variable = { which = sai_hidden_m_05 value = 1 }
+			}
+			set_variable = { which = sai_hidden_m_06 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_mining_array count >= 6 } }
+				change_variable = { which = sai_hidden_m_06 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_mining_array count >= 5 } }
+				change_variable = { which = sai_hidden_m_06 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_mining_array count >= 4 } }
+				change_variable = { which = sai_hidden_m_06 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_mining_array count >= 3 } }
+				change_variable = { which = sai_hidden_m_06 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_mining_array count >= 2 } }
+				change_variable = { which = sai_hidden_m_06 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_mining_array count >= 1 } }
+				change_variable = { which = sai_hidden_m_06 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_mining_array count >= 6 } }
+				change_variable = { which = sai_hidden_m_06 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_mining_array count >= 5 } }
+				change_variable = { which = sai_hidden_m_06 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_mining_array count >= 4 } }
+				change_variable = { which = sai_hidden_m_06 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_mining_array count >= 3 } }
+				change_variable = { which = sai_hidden_m_06 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_mining_array count >= 2 } }
+				change_variable = { which = sai_hidden_m_06 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_mining_array count >= 1 } }
+				change_variable = { which = sai_hidden_m_06 value = 1 }
+			}
+			set_variable = { which = sai_hidden_m_07 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_grand_archive count >= 6 } }
+				change_variable = { which = sai_hidden_m_07 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_grand_archive count >= 5 } }
+				change_variable = { which = sai_hidden_m_07 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_grand_archive count >= 4 } }
+				change_variable = { which = sai_hidden_m_07 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_grand_archive count >= 3 } }
+				change_variable = { which = sai_hidden_m_07 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_grand_archive count >= 2 } }
+				change_variable = { which = sai_hidden_m_07 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_grand_archive count >= 1 } }
+				change_variable = { which = sai_hidden_m_07 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_grand_archive count >= 6 } }
+				change_variable = { which = sai_hidden_m_07 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_grand_archive count >= 5 } }
+				change_variable = { which = sai_hidden_m_07 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_grand_archive count >= 4 } }
+				change_variable = { which = sai_hidden_m_07 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_grand_archive count >= 3 } }
+				change_variable = { which = sai_hidden_m_07 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_grand_archive count >= 2 } }
+				change_variable = { which = sai_hidden_m_07 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_grand_archive count >= 1 } }
+				change_variable = { which = sai_hidden_m_07 value = 1 }
+			}
+			set_variable = { which = sai_hidden_m_08 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_hangar_bay count >= 6 } }
+				change_variable = { which = sai_hidden_m_08 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_hangar_bay count >= 5 } }
+				change_variable = { which = sai_hidden_m_08 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_hangar_bay count >= 4 } }
+				change_variable = { which = sai_hidden_m_08 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_hangar_bay count >= 3 } }
+				change_variable = { which = sai_hidden_m_08 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_hangar_bay count >= 2 } }
+				change_variable = { which = sai_hidden_m_08 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_hangar_bay count >= 1 } }
+				change_variable = { which = sai_hidden_m_08 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_hangar_bay count >= 6 } }
+				change_variable = { which = sai_hidden_m_08 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_hangar_bay count >= 5 } }
+				change_variable = { which = sai_hidden_m_08 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_hangar_bay count >= 4 } }
+				change_variable = { which = sai_hidden_m_08 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_hangar_bay count >= 3 } }
+				change_variable = { which = sai_hidden_m_08 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_hangar_bay count >= 2 } }
+				change_variable = { which = sai_hidden_m_08 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_hangar_bay count >= 1 } }
+				change_variable = { which = sai_hidden_m_08 value = 1 }
+			}
+			set_variable = { which = sai_hidden_m_09 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_hangar_bay count >= 6 } }
+				change_variable = { which = sai_hidden_m_09 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_hangar_bay count >= 5 } }
+				change_variable = { which = sai_hidden_m_09 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_hangar_bay count >= 4 } }
+				change_variable = { which = sai_hidden_m_09 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_hangar_bay count >= 3 } }
+				change_variable = { which = sai_hidden_m_09 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_hangar_bay count >= 2 } }
+				change_variable = { which = sai_hidden_m_09 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_hangar_bay count >= 1 } }
+				change_variable = { which = sai_hidden_m_09 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_hangar_bay count >= 6 } }
+				change_variable = { which = sai_hidden_m_09 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_hangar_bay count >= 5 } }
+				change_variable = { which = sai_hidden_m_09 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_hangar_bay count >= 4 } }
+				change_variable = { which = sai_hidden_m_09 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_hangar_bay count >= 3 } }
+				change_variable = { which = sai_hidden_m_09 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_hangar_bay count >= 2 } }
+				change_variable = { which = sai_hidden_m_09 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_hangar_bay count >= 1 } }
+				change_variable = { which = sai_hidden_m_09 value = 1 }
+			}
+			set_variable = { which = sai_hidden_m_10 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_psionic_hangar_bay count >= 6 } }
+				change_variable = { which = sai_hidden_m_10 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_psionic_hangar_bay count >= 5 } }
+				change_variable = { which = sai_hidden_m_10 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_psionic_hangar_bay count >= 4 } }
+				change_variable = { which = sai_hidden_m_10 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_psionic_hangar_bay count >= 3 } }
+				change_variable = { which = sai_hidden_m_10 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_psionic_hangar_bay count >= 2 } }
+				change_variable = { which = sai_hidden_m_10 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_psionic_hangar_bay count >= 1 } }
+				change_variable = { which = sai_hidden_m_10 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_psionic_hangar_bay count >= 6 } }
+				change_variable = { which = sai_hidden_m_10 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_psionic_hangar_bay count >= 5 } }
+				change_variable = { which = sai_hidden_m_10 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_psionic_hangar_bay count >= 4 } }
+				change_variable = { which = sai_hidden_m_10 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_psionic_hangar_bay count >= 3 } }
+				change_variable = { which = sai_hidden_m_10 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_psionic_hangar_bay count >= 2 } }
+				change_variable = { which = sai_hidden_m_10 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_psionic_hangar_bay count >= 1 } }
+				change_variable = { which = sai_hidden_m_10 value = 1 }
+			}
+			set_variable = { which = sai_hidden_m_11 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_amoeba_hangar_bay count >= 6 } }
+				change_variable = { which = sai_hidden_m_11 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_amoeba_hangar_bay count >= 5 } }
+				change_variable = { which = sai_hidden_m_11 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_amoeba_hangar_bay count >= 4 } }
+				change_variable = { which = sai_hidden_m_11 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_amoeba_hangar_bay count >= 3 } }
+				change_variable = { which = sai_hidden_m_11 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_amoeba_hangar_bay count >= 2 } }
+				change_variable = { which = sai_hidden_m_11 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_amoeba_hangar_bay count >= 1 } }
+				change_variable = { which = sai_hidden_m_11 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_amoeba_hangar_bay count >= 6 } }
+				change_variable = { which = sai_hidden_m_11 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_amoeba_hangar_bay count >= 5 } }
+				change_variable = { which = sai_hidden_m_11 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_amoeba_hangar_bay count >= 4 } }
+				change_variable = { which = sai_hidden_m_11 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_amoeba_hangar_bay count >= 3 } }
+				change_variable = { which = sai_hidden_m_11 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_amoeba_hangar_bay count >= 2 } }
+				change_variable = { which = sai_hidden_m_11 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_amoeba_hangar_bay count >= 1 } }
+				change_variable = { which = sai_hidden_m_11 value = 1 }
+			}
+			set_variable = { which = sai_hidden_m_12 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_swarm_hangar_bay count >= 6 } }
+				change_variable = { which = sai_hidden_m_12 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_swarm_hangar_bay count >= 5 } }
+				change_variable = { which = sai_hidden_m_12 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_swarm_hangar_bay count >= 4 } }
+				change_variable = { which = sai_hidden_m_12 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_swarm_hangar_bay count >= 3 } }
+				change_variable = { which = sai_hidden_m_12 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_swarm_hangar_bay count >= 2 } }
+				change_variable = { which = sai_hidden_m_12 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_swarm_hangar_bay count >= 1 } }
+				change_variable = { which = sai_hidden_m_12 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_swarm_hangar_bay count >= 6 } }
+				change_variable = { which = sai_hidden_m_12 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_swarm_hangar_bay count >= 5 } }
+				change_variable = { which = sai_hidden_m_12 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_swarm_hangar_bay count >= 4 } }
+				change_variable = { which = sai_hidden_m_12 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_swarm_hangar_bay count >= 3 } }
+				change_variable = { which = sai_hidden_m_12 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_swarm_hangar_bay count >= 2 } }
+				change_variable = { which = sai_hidden_m_12 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_swarm_hangar_bay count >= 1 } }
+				change_variable = { which = sai_hidden_m_12 value = 1 }
+			}
+			set_variable = { which = sai_hidden_m_13 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_laser_battery count >= 6 } }
+				change_variable = { which = sai_hidden_m_13 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_laser_battery count >= 5 } }
+				change_variable = { which = sai_hidden_m_13 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_laser_battery count >= 4 } }
+				change_variable = { which = sai_hidden_m_13 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_laser_battery count >= 3 } }
+				change_variable = { which = sai_hidden_m_13 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_laser_battery count >= 2 } }
+				change_variable = { which = sai_hidden_m_13 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_laser_battery count >= 1 } }
+				change_variable = { which = sai_hidden_m_13 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_laser_battery count >= 6 } }
+				change_variable = { which = sai_hidden_m_13 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_laser_battery count >= 5 } }
+				change_variable = { which = sai_hidden_m_13 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_laser_battery count >= 4 } }
+				change_variable = { which = sai_hidden_m_13 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_laser_battery count >= 3 } }
+				change_variable = { which = sai_hidden_m_13 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_laser_battery count >= 2 } }
+				change_variable = { which = sai_hidden_m_13 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_laser_battery count >= 1 } }
+				change_variable = { which = sai_hidden_m_13 value = 1 }
+			}
+			set_variable = { which = sai_hidden_m_14 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_laser_battery count >= 6 } }
+				change_variable = { which = sai_hidden_m_14 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_laser_battery count >= 5 } }
+				change_variable = { which = sai_hidden_m_14 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_laser_battery count >= 4 } }
+				change_variable = { which = sai_hidden_m_14 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_laser_battery count >= 3 } }
+				change_variable = { which = sai_hidden_m_14 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_laser_battery count >= 2 } }
+				change_variable = { which = sai_hidden_m_14 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_laser_battery count >= 1 } }
+				change_variable = { which = sai_hidden_m_14 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_laser_battery count >= 6 } }
+				change_variable = { which = sai_hidden_m_14 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_laser_battery count >= 5 } }
+				change_variable = { which = sai_hidden_m_14 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_laser_battery count >= 4 } }
+				change_variable = { which = sai_hidden_m_14 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_laser_battery count >= 3 } }
+				change_variable = { which = sai_hidden_m_14 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_laser_battery count >= 2 } }
+				change_variable = { which = sai_hidden_m_14 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_laser_battery count >= 1 } }
+				change_variable = { which = sai_hidden_m_14 value = 1 }
+			}
+			set_variable = { which = sai_hidden_m_15 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_lance_battery count >= 6 } }
+				change_variable = { which = sai_hidden_m_15 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_lance_battery count >= 5 } }
+				change_variable = { which = sai_hidden_m_15 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_lance_battery count >= 4 } }
+				change_variable = { which = sai_hidden_m_15 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_lance_battery count >= 3 } }
+				change_variable = { which = sai_hidden_m_15 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_lance_battery count >= 2 } }
+				change_variable = { which = sai_hidden_m_15 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_lance_battery count >= 1 } }
+				change_variable = { which = sai_hidden_m_15 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_lance_battery count >= 6 } }
+				change_variable = { which = sai_hidden_m_15 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_lance_battery count >= 5 } }
+				change_variable = { which = sai_hidden_m_15 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_lance_battery count >= 4 } }
+				change_variable = { which = sai_hidden_m_15 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_lance_battery count >= 3 } }
+				change_variable = { which = sai_hidden_m_15 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_lance_battery count >= 2 } }
+				change_variable = { which = sai_hidden_m_15 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_lance_battery count >= 1 } }
+				change_variable = { which = sai_hidden_m_15 value = 1 }
+			}
+			set_variable = { which = sai_hidden_m_16 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_particle_launcher count >= 6 } }
+				change_variable = { which = sai_hidden_m_16 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_particle_launcher count >= 5 } }
+				change_variable = { which = sai_hidden_m_16 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_particle_launcher count >= 4 } }
+				change_variable = { which = sai_hidden_m_16 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_particle_launcher count >= 3 } }
+				change_variable = { which = sai_hidden_m_16 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_particle_launcher count >= 2 } }
+				change_variable = { which = sai_hidden_m_16 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_particle_launcher count >= 1 } }
+				change_variable = { which = sai_hidden_m_16 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_particle_launcher count >= 6 } }
+				change_variable = { which = sai_hidden_m_16 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_particle_launcher count >= 5 } }
+				change_variable = { which = sai_hidden_m_16 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_particle_launcher count >= 4 } }
+				change_variable = { which = sai_hidden_m_16 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_particle_launcher count >= 3 } }
+				change_variable = { which = sai_hidden_m_16 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_particle_launcher count >= 2 } }
+				change_variable = { which = sai_hidden_m_16 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_particle_launcher count >= 1 } }
+				change_variable = { which = sai_hidden_m_16 value = 1 }
+			}
+			set_variable = { which = sai_hidden_m_17 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_psionic_torpedo count >= 6 } }
+				change_variable = { which = sai_hidden_m_17 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_psionic_torpedo count >= 5 } }
+				change_variable = { which = sai_hidden_m_17 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_psionic_torpedo count >= 4 } }
+				change_variable = { which = sai_hidden_m_17 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_psionic_torpedo count >= 3 } }
+				change_variable = { which = sai_hidden_m_17 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_psionic_torpedo count >= 2 } }
+				change_variable = { which = sai_hidden_m_17 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_psionic_torpedo count >= 1 } }
+				change_variable = { which = sai_hidden_m_17 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_psionic_torpedo count >= 6 } }
+				change_variable = { which = sai_hidden_m_17 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_psionic_torpedo count >= 5 } }
+				change_variable = { which = sai_hidden_m_17 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_psionic_torpedo count >= 4 } }
+				change_variable = { which = sai_hidden_m_17 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_psionic_torpedo count >= 3 } }
+				change_variable = { which = sai_hidden_m_17 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_psionic_torpedo count >= 2 } }
+				change_variable = { which = sai_hidden_m_17 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_psionic_torpedo count >= 1 } }
+				change_variable = { which = sai_hidden_m_17 value = 1 }
+			}
+			set_variable = { which = sai_hidden_m_18 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_arc_emitter_battery count >= 6 } }
+				change_variable = { which = sai_hidden_m_18 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_arc_emitter_battery count >= 5 } }
+				change_variable = { which = sai_hidden_m_18 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_arc_emitter_battery count >= 4 } }
+				change_variable = { which = sai_hidden_m_18 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_arc_emitter_battery count >= 3 } }
+				change_variable = { which = sai_hidden_m_18 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_arc_emitter_battery count >= 2 } }
+				change_variable = { which = sai_hidden_m_18 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_arc_emitter_battery count >= 1 } }
+				change_variable = { which = sai_hidden_m_18 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_arc_emitter_battery count >= 6 } }
+				change_variable = { which = sai_hidden_m_18 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_arc_emitter_battery count >= 5 } }
+				change_variable = { which = sai_hidden_m_18 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_arc_emitter_battery count >= 4 } }
+				change_variable = { which = sai_hidden_m_18 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_arc_emitter_battery count >= 3 } }
+				change_variable = { which = sai_hidden_m_18 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_arc_emitter_battery count >= 2 } }
+				change_variable = { which = sai_hidden_m_18 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_arc_emitter_battery count >= 1 } }
+				change_variable = { which = sai_hidden_m_18 value = 1 }
+			}
+			set_variable = { which = sai_hidden_m_19 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_psionic_lightning_battery count >= 6 } }
+				change_variable = { which = sai_hidden_m_19 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_psionic_lightning_battery count >= 5 } }
+				change_variable = { which = sai_hidden_m_19 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_psionic_lightning_battery count >= 4 } }
+				change_variable = { which = sai_hidden_m_19 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_psionic_lightning_battery count >= 3 } }
+				change_variable = { which = sai_hidden_m_19 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_psionic_lightning_battery count >= 2 } }
+				change_variable = { which = sai_hidden_m_19 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_psionic_lightning_battery count >= 1 } }
+				change_variable = { which = sai_hidden_m_19 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_psionic_lightning_battery count >= 6 } }
+				change_variable = { which = sai_hidden_m_19 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_psionic_lightning_battery count >= 5 } }
+				change_variable = { which = sai_hidden_m_19 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_psionic_lightning_battery count >= 4 } }
+				change_variable = { which = sai_hidden_m_19 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_psionic_lightning_battery count >= 3 } }
+				change_variable = { which = sai_hidden_m_19 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_psionic_lightning_battery count >= 2 } }
+				change_variable = { which = sai_hidden_m_19 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_psionic_lightning_battery count >= 1 } }
+				change_variable = { which = sai_hidden_m_19 value = 1 }
+			}
+			set_variable = { which = sai_hidden_m_20 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_mass_driver_battery count >= 6 } }
+				change_variable = { which = sai_hidden_m_20 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_mass_driver_battery count >= 5 } }
+				change_variable = { which = sai_hidden_m_20 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_mass_driver_battery count >= 4 } }
+				change_variable = { which = sai_hidden_m_20 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_mass_driver_battery count >= 3 } }
+				change_variable = { which = sai_hidden_m_20 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_mass_driver_battery count >= 2 } }
+				change_variable = { which = sai_hidden_m_20 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_mass_driver_battery count >= 1 } }
+				change_variable = { which = sai_hidden_m_20 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_mass_driver_battery count >= 6 } }
+				change_variable = { which = sai_hidden_m_20 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_mass_driver_battery count >= 5 } }
+				change_variable = { which = sai_hidden_m_20 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_mass_driver_battery count >= 4 } }
+				change_variable = { which = sai_hidden_m_20 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_mass_driver_battery count >= 3 } }
+				change_variable = { which = sai_hidden_m_20 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_mass_driver_battery count >= 2 } }
+				change_variable = { which = sai_hidden_m_20 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_mass_driver_battery count >= 1 } }
+				change_variable = { which = sai_hidden_m_20 value = 1 }
+			}
+			set_variable = { which = sai_hidden_m_21 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_mass_driver_battery count >= 6 } }
+				change_variable = { which = sai_hidden_m_21 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_mass_driver_battery count >= 5 } }
+				change_variable = { which = sai_hidden_m_21 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_mass_driver_battery count >= 4 } }
+				change_variable = { which = sai_hidden_m_21 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_mass_driver_battery count >= 3 } }
+				change_variable = { which = sai_hidden_m_21 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_mass_driver_battery count >= 2 } }
+				change_variable = { which = sai_hidden_m_21 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_mass_driver_battery count >= 1 } }
+				change_variable = { which = sai_hidden_m_21 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_mass_driver_battery count >= 6 } }
+				change_variable = { which = sai_hidden_m_21 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_mass_driver_battery count >= 5 } }
+				change_variable = { which = sai_hidden_m_21 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_mass_driver_battery count >= 4 } }
+				change_variable = { which = sai_hidden_m_21 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_mass_driver_battery count >= 3 } }
+				change_variable = { which = sai_hidden_m_21 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_mass_driver_battery count >= 2 } }
+				change_variable = { which = sai_hidden_m_21 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_mass_driver_battery count >= 1 } }
+				change_variable = { which = sai_hidden_m_21 value = 1 }
+			}
+			set_variable = { which = sai_hidden_m_22 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_kinetic_artillery_battery count >= 6 } }
+				change_variable = { which = sai_hidden_m_22 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_kinetic_artillery_battery count >= 5 } }
+				change_variable = { which = sai_hidden_m_22 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_kinetic_artillery_battery count >= 4 } }
+				change_variable = { which = sai_hidden_m_22 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_kinetic_artillery_battery count >= 3 } }
+				change_variable = { which = sai_hidden_m_22 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_kinetic_artillery_battery count >= 2 } }
+				change_variable = { which = sai_hidden_m_22 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_kinetic_artillery_battery count >= 1 } }
+				change_variable = { which = sai_hidden_m_22 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_kinetic_artillery_battery count >= 6 } }
+				change_variable = { which = sai_hidden_m_22 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_kinetic_artillery_battery count >= 5 } }
+				change_variable = { which = sai_hidden_m_22 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_kinetic_artillery_battery count >= 4 } }
+				change_variable = { which = sai_hidden_m_22 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_kinetic_artillery_battery count >= 3 } }
+				change_variable = { which = sai_hidden_m_22 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_kinetic_artillery_battery count >= 2 } }
+				change_variable = { which = sai_hidden_m_22 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_kinetic_artillery_battery count >= 1 } }
+				change_variable = { which = sai_hidden_m_22 value = 1 }
+			}
+			set_variable = { which = sai_hidden_m_23 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_lm_accelerator count >= 6 } }
+				change_variable = { which = sai_hidden_m_23 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_lm_accelerator count >= 5 } }
+				change_variable = { which = sai_hidden_m_23 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_lm_accelerator count >= 4 } }
+				change_variable = { which = sai_hidden_m_23 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_lm_accelerator count >= 3 } }
+				change_variable = { which = sai_hidden_m_23 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_lm_accelerator count >= 2 } }
+				change_variable = { which = sai_hidden_m_23 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_lm_accelerator count >= 1 } }
+				change_variable = { which = sai_hidden_m_23 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_lm_accelerator count >= 6 } }
+				change_variable = { which = sai_hidden_m_23 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_lm_accelerator count >= 5 } }
+				change_variable = { which = sai_hidden_m_23 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_lm_accelerator count >= 4 } }
+				change_variable = { which = sai_hidden_m_23 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_lm_accelerator count >= 3 } }
+				change_variable = { which = sai_hidden_m_23 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_lm_accelerator count >= 2 } }
+				change_variable = { which = sai_hidden_m_23 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_lm_accelerator count >= 1 } }
+				change_variable = { which = sai_hidden_m_23 value = 1 }
+			}
+			set_variable = { which = sai_hidden_m_24 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_mass_accelerator count >= 6 } }
+				change_variable = { which = sai_hidden_m_24 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_mass_accelerator count >= 5 } }
+				change_variable = { which = sai_hidden_m_24 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_mass_accelerator count >= 4 } }
+				change_variable = { which = sai_hidden_m_24 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_mass_accelerator count >= 3 } }
+				change_variable = { which = sai_hidden_m_24 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_mass_accelerator count >= 2 } }
+				change_variable = { which = sai_hidden_m_24 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_mass_accelerator count >= 1 } }
+				change_variable = { which = sai_hidden_m_24 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_mass_accelerator count >= 6 } }
+				change_variable = { which = sai_hidden_m_24 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_mass_accelerator count >= 5 } }
+				change_variable = { which = sai_hidden_m_24 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_mass_accelerator count >= 4 } }
+				change_variable = { which = sai_hidden_m_24 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_mass_accelerator count >= 3 } }
+				change_variable = { which = sai_hidden_m_24 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_mass_accelerator count >= 2 } }
+				change_variable = { which = sai_hidden_m_24 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_mass_accelerator count >= 1 } }
+				change_variable = { which = sai_hidden_m_24 value = 1 }
+			}
+			set_variable = { which = sai_hidden_m_25 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_mass_accelerator count >= 6 } }
+				change_variable = { which = sai_hidden_m_25 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_mass_accelerator count >= 5 } }
+				change_variable = { which = sai_hidden_m_25 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_mass_accelerator count >= 4 } }
+				change_variable = { which = sai_hidden_m_25 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_mass_accelerator count >= 3 } }
+				change_variable = { which = sai_hidden_m_25 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_mass_accelerator count >= 2 } }
+				change_variable = { which = sai_hidden_m_25 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_mass_accelerator count >= 1 } }
+				change_variable = { which = sai_hidden_m_25 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_mass_accelerator count >= 6 } }
+				change_variable = { which = sai_hidden_m_25 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_mass_accelerator count >= 5 } }
+				change_variable = { which = sai_hidden_m_25 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_mass_accelerator count >= 4 } }
+				change_variable = { which = sai_hidden_m_25 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_mass_accelerator count >= 3 } }
+				change_variable = { which = sai_hidden_m_25 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_mass_accelerator count >= 2 } }
+				change_variable = { which = sai_hidden_m_25 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_mass_accelerator count >= 1 } }
+				change_variable = { which = sai_hidden_m_25 value = 1 }
+			}
+			set_variable = { which = sai_hidden_m_26 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_missile_battery count >= 6 } }
+				change_variable = { which = sai_hidden_m_26 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_missile_battery count >= 5 } }
+				change_variable = { which = sai_hidden_m_26 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_missile_battery count >= 4 } }
+				change_variable = { which = sai_hidden_m_26 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_missile_battery count >= 3 } }
+				change_variable = { which = sai_hidden_m_26 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_missile_battery count >= 2 } }
+				change_variable = { which = sai_hidden_m_26 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_missile_battery count >= 1 } }
+				change_variable = { which = sai_hidden_m_26 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_missile_battery count >= 6 } }
+				change_variable = { which = sai_hidden_m_26 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_missile_battery count >= 5 } }
+				change_variable = { which = sai_hidden_m_26 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_missile_battery count >= 4 } }
+				change_variable = { which = sai_hidden_m_26 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_missile_battery count >= 3 } }
+				change_variable = { which = sai_hidden_m_26 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_missile_battery count >= 2 } }
+				change_variable = { which = sai_hidden_m_26 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_missile_battery count >= 1 } }
+				change_variable = { which = sai_hidden_m_26 value = 1 }
+			}
+			set_variable = { which = sai_hidden_m_27 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_missile_battery count >= 6 } }
+				change_variable = { which = sai_hidden_m_27 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_missile_battery count >= 5 } }
+				change_variable = { which = sai_hidden_m_27 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_missile_battery count >= 4 } }
+				change_variable = { which = sai_hidden_m_27 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_missile_battery count >= 3 } }
+				change_variable = { which = sai_hidden_m_27 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_missile_battery count >= 2 } }
+				change_variable = { which = sai_hidden_m_27 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_missile_battery count >= 1 } }
+				change_variable = { which = sai_hidden_m_27 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_missile_battery count >= 6 } }
+				change_variable = { which = sai_hidden_m_27 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_missile_battery count >= 5 } }
+				change_variable = { which = sai_hidden_m_27 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_missile_battery count >= 4 } }
+				change_variable = { which = sai_hidden_m_27 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_missile_battery count >= 3 } }
+				change_variable = { which = sai_hidden_m_27 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_missile_battery count >= 2 } }
+				change_variable = { which = sai_hidden_m_27 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_missile_battery count >= 1 } }
+				change_variable = { which = sai_hidden_m_27 value = 1 }
+			}
+			set_variable = { which = sai_hidden_m_28 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_swamer_missile_battery count >= 6 } }
+				change_variable = { which = sai_hidden_m_28 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_swamer_missile_battery count >= 5 } }
+				change_variable = { which = sai_hidden_m_28 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_swamer_missile_battery count >= 4 } }
+				change_variable = { which = sai_hidden_m_28 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_swamer_missile_battery count >= 3 } }
+				change_variable = { which = sai_hidden_m_28 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_swamer_missile_battery count >= 2 } }
+				change_variable = { which = sai_hidden_m_28 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_swamer_missile_battery count >= 1 } }
+				change_variable = { which = sai_hidden_m_28 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_swamer_missile_battery count >= 6 } }
+				change_variable = { which = sai_hidden_m_28 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_swamer_missile_battery count >= 5 } }
+				change_variable = { which = sai_hidden_m_28 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_swamer_missile_battery count >= 4 } }
+				change_variable = { which = sai_hidden_m_28 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_swamer_missile_battery count >= 3 } }
+				change_variable = { which = sai_hidden_m_28 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_swamer_missile_battery count >= 2 } }
+				change_variable = { which = sai_hidden_m_28 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_swamer_missile_battery count >= 1 } }
+				change_variable = { which = sai_hidden_m_28 value = 1 }
+			}
+			set_variable = { which = sai_hidden_m_29 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_scourge_missile_battery count >= 6 } }
+				change_variable = { which = sai_hidden_m_29 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_scourge_missile_battery count >= 5 } }
+				change_variable = { which = sai_hidden_m_29 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_scourge_missile_battery count >= 4 } }
+				change_variable = { which = sai_hidden_m_29 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_scourge_missile_battery count >= 3 } }
+				change_variable = { which = sai_hidden_m_29 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_scourge_missile_battery count >= 2 } }
+				change_variable = { which = sai_hidden_m_29 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_scourge_missile_battery count >= 1 } }
+				change_variable = { which = sai_hidden_m_29 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_scourge_missile_battery count >= 6 } }
+				change_variable = { which = sai_hidden_m_29 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_scourge_missile_battery count >= 5 } }
+				change_variable = { which = sai_hidden_m_29 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_scourge_missile_battery count >= 4 } }
+				change_variable = { which = sai_hidden_m_29 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_scourge_missile_battery count >= 3 } }
+				change_variable = { which = sai_hidden_m_29 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_scourge_missile_battery count >= 2 } }
+				change_variable = { which = sai_hidden_m_29 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_scourge_missile_battery count >= 1 } }
+				change_variable = { which = sai_hidden_m_29 value = 1 }
+			}
+			set_variable = { which = sai_hidden_m_30 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_flak_battery count >= 6 } }
+				change_variable = { which = sai_hidden_m_30 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_flak_battery count >= 5 } }
+				change_variable = { which = sai_hidden_m_30 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_flak_battery count >= 4 } }
+				change_variable = { which = sai_hidden_m_30 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_flak_battery count >= 3 } }
+				change_variable = { which = sai_hidden_m_30 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_flak_battery count >= 2 } }
+				change_variable = { which = sai_hidden_m_30 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_flak_battery count >= 1 } }
+				change_variable = { which = sai_hidden_m_30 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_flak_battery count >= 6 } }
+				change_variable = { which = sai_hidden_m_30 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_flak_battery count >= 5 } }
+				change_variable = { which = sai_hidden_m_30 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_flak_battery count >= 4 } }
+				change_variable = { which = sai_hidden_m_30 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_flak_battery count >= 3 } }
+				change_variable = { which = sai_hidden_m_30 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_flak_battery count >= 2 } }
+				change_variable = { which = sai_hidden_m_30 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_flak_battery count >= 1 } }
+				change_variable = { which = sai_hidden_m_30 value = 1 }
+			}
+			set_variable = { which = sai_hidden_m_31 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_pd_battery count >= 6 } }
+				change_variable = { which = sai_hidden_m_31 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_pd_battery count >= 5 } }
+				change_variable = { which = sai_hidden_m_31 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_pd_battery count >= 4 } }
+				change_variable = { which = sai_hidden_m_31 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_pd_battery count >= 3 } }
+				change_variable = { which = sai_hidden_m_31 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_pd_battery count >= 2 } }
+				change_variable = { which = sai_hidden_m_31 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_pd_battery count >= 1 } }
+				change_variable = { which = sai_hidden_m_31 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_pd_battery count >= 6 } }
+				change_variable = { which = sai_hidden_m_31 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_pd_battery count >= 5 } }
+				change_variable = { which = sai_hidden_m_31 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_pd_battery count >= 4 } }
+				change_variable = { which = sai_hidden_m_31 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_pd_battery count >= 3 } }
+				change_variable = { which = sai_hidden_m_31 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_pd_battery count >= 2 } }
+				change_variable = { which = sai_hidden_m_31 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_pd_battery count >= 1 } }
+				change_variable = { which = sai_hidden_m_31 value = 1 }
+			}
+			set_variable = { which = sai_hidden_m_32 value = 0 }
+			if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_pd_battery count >= 6 } }
+				change_variable = { which = sai_hidden_m_32 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_pd_battery count >= 5 } }
+				change_variable = { which = sai_hidden_m_32 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_pd_battery count >= 4 } }
+				change_variable = { which = sai_hidden_m_32 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_pd_battery count >= 3 } }
+				change_variable = { which = sai_hidden_m_32 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_pd_battery count >= 2 } }
+				change_variable = { which = sai_hidden_m_32 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = arkship_archaeo_pd_battery count >= 1 } }
+				change_variable = { which = sai_hidden_m_32 value = 1 }
+			}
+			if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_pd_battery count >= 6 } }
+				change_variable = { which = sai_hidden_m_32 value = 6 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_pd_battery count >= 5 } }
+				change_variable = { which = sai_hidden_m_32 value = 5 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_pd_battery count >= 4 } }
+				change_variable = { which = sai_hidden_m_32 value = 4 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_pd_battery count >= 3 } }
+				change_variable = { which = sai_hidden_m_32 value = 3 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_pd_battery count >= 2 } }
+				change_variable = { which = sai_hidden_m_32 value = 2 }
+			}
+			else_if = {
+				limit = { count_starbase_modules = { type = sai_supremacy_arkship_archaeo_pd_battery count >= 1 } }
+				change_variable = { which = sai_hidden_m_32 value = 1 }
+			}
+			remove_starbase_module = { slot = 1 }
+			remove_starbase_module = { slot = 2 }
+			if = { limit = { OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest } } remove_starbase_module = { slot = 3 } }
+			if = { limit = { OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest } } remove_starbase_module = { slot = 4 } }
+			if = { limit = { OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest } } remove_starbase_module = { slot = 5 } }
+			if = { limit = { OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest } } remove_starbase_module = { slot = 6 } }
+			if = {
+				limit = { check_variable = { which = sai_hidden_m_01 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_engineering_bay }
+				change_variable = { which = sai_hidden_m_01 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_02 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_beastport }
+				change_variable = { which = sai_hidden_m_02 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_03 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_docking_bay }
+				change_variable = { which = sai_hidden_m_03 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_04 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_habitation_module }
+				change_variable = { which = sai_hidden_m_04 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_05 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_sensor_array }
+				change_variable = { which = sai_hidden_m_05 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_06 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_mining_array }
+				change_variable = { which = sai_hidden_m_06 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_07 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_grand_archive }
+				change_variable = { which = sai_hidden_m_07 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_08 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_hangar_bay }
+				change_variable = { which = sai_hidden_m_08 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_09 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_archaeo_hangar_bay }
+				change_variable = { which = sai_hidden_m_09 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_10 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_psionic_hangar_bay }
+				change_variable = { which = sai_hidden_m_10 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_11 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_amoeba_hangar_bay }
+				change_variable = { which = sai_hidden_m_11 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_12 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_swarm_hangar_bay }
+				change_variable = { which = sai_hidden_m_12 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_13 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_laser_battery }
+				change_variable = { which = sai_hidden_m_13 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_14 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_archaeo_laser_battery }
+				change_variable = { which = sai_hidden_m_14 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_15 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_lance_battery }
+				change_variable = { which = sai_hidden_m_15 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_16 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_particle_launcher }
+				change_variable = { which = sai_hidden_m_16 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_17 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_psionic_torpedo }
+				change_variable = { which = sai_hidden_m_17 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_18 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_arc_emitter_battery }
+				change_variable = { which = sai_hidden_m_18 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_19 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_psionic_lightning_battery }
+				change_variable = { which = sai_hidden_m_19 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_20 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_mass_driver_battery }
+				change_variable = { which = sai_hidden_m_20 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_21 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_archaeo_mass_driver_battery }
+				change_variable = { which = sai_hidden_m_21 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_22 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_kinetic_artillery_battery }
+				change_variable = { which = sai_hidden_m_22 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_23 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_lm_accelerator }
+				change_variable = { which = sai_hidden_m_23 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_24 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_mass_accelerator }
+				change_variable = { which = sai_hidden_m_24 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_25 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_archaeo_mass_accelerator }
+				change_variable = { which = sai_hidden_m_25 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_26 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_missile_battery }
+				change_variable = { which = sai_hidden_m_26 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_27 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_archaeo_missile_battery }
+				change_variable = { which = sai_hidden_m_27 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_28 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_swamer_missile_battery }
+				change_variable = { which = sai_hidden_m_28 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_29 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_scourge_missile_battery }
+				change_variable = { which = sai_hidden_m_29 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_30 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_flak_battery }
+				change_variable = { which = sai_hidden_m_30 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_31 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_pd_battery }
+				change_variable = { which = sai_hidden_m_31 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_32 value > 0 } }
+				set_starbase_module = { slot = 1 module = sai_supremacy_arkship_archaeo_pd_battery }
+				change_variable = { which = sai_hidden_m_32 value = -1 }
+			}
+			if = {
+				limit = { check_variable = { which = sai_hidden_m_01 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_engineering_bay }
+				change_variable = { which = sai_hidden_m_01 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_02 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_beastport }
+				change_variable = { which = sai_hidden_m_02 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_03 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_docking_bay }
+				change_variable = { which = sai_hidden_m_03 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_04 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_habitation_module }
+				change_variable = { which = sai_hidden_m_04 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_05 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_sensor_array }
+				change_variable = { which = sai_hidden_m_05 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_06 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_mining_array }
+				change_variable = { which = sai_hidden_m_06 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_07 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_grand_archive }
+				change_variable = { which = sai_hidden_m_07 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_08 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_hangar_bay }
+				change_variable = { which = sai_hidden_m_08 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_09 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_archaeo_hangar_bay }
+				change_variable = { which = sai_hidden_m_09 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_10 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_psionic_hangar_bay }
+				change_variable = { which = sai_hidden_m_10 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_11 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_amoeba_hangar_bay }
+				change_variable = { which = sai_hidden_m_11 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_12 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_swarm_hangar_bay }
+				change_variable = { which = sai_hidden_m_12 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_13 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_laser_battery }
+				change_variable = { which = sai_hidden_m_13 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_14 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_archaeo_laser_battery }
+				change_variable = { which = sai_hidden_m_14 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_15 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_lance_battery }
+				change_variable = { which = sai_hidden_m_15 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_16 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_particle_launcher }
+				change_variable = { which = sai_hidden_m_16 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_17 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_psionic_torpedo }
+				change_variable = { which = sai_hidden_m_17 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_18 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_arc_emitter_battery }
+				change_variable = { which = sai_hidden_m_18 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_19 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_psionic_lightning_battery }
+				change_variable = { which = sai_hidden_m_19 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_20 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_mass_driver_battery }
+				change_variable = { which = sai_hidden_m_20 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_21 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_archaeo_mass_driver_battery }
+				change_variable = { which = sai_hidden_m_21 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_22 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_kinetic_artillery_battery }
+				change_variable = { which = sai_hidden_m_22 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_23 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_lm_accelerator }
+				change_variable = { which = sai_hidden_m_23 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_24 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_mass_accelerator }
+				change_variable = { which = sai_hidden_m_24 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_25 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_archaeo_mass_accelerator }
+				change_variable = { which = sai_hidden_m_25 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_26 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_missile_battery }
+				change_variable = { which = sai_hidden_m_26 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_27 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_archaeo_missile_battery }
+				change_variable = { which = sai_hidden_m_27 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_28 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_swamer_missile_battery }
+				change_variable = { which = sai_hidden_m_28 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_29 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_scourge_missile_battery }
+				change_variable = { which = sai_hidden_m_29 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_30 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_flak_battery }
+				change_variable = { which = sai_hidden_m_30 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_31 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_pd_battery }
+				change_variable = { which = sai_hidden_m_31 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_32 value > 0 } }
+				set_starbase_module = { slot = 2 module = sai_supremacy_arkship_archaeo_pd_battery }
+				change_variable = { which = sai_hidden_m_32 value = -1 }
+			}
+			if = {
+				limit = { check_variable = { which = sai_hidden_m_01 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_engineering_bay }
+				change_variable = { which = sai_hidden_m_01 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_02 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_beastport }
+				change_variable = { which = sai_hidden_m_02 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_03 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_docking_bay }
+				change_variable = { which = sai_hidden_m_03 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_04 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_habitation_module }
+				change_variable = { which = sai_hidden_m_04 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_05 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_sensor_array }
+				change_variable = { which = sai_hidden_m_05 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_06 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_mining_array }
+				change_variable = { which = sai_hidden_m_06 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_07 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_grand_archive }
+				change_variable = { which = sai_hidden_m_07 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_08 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_hangar_bay }
+				change_variable = { which = sai_hidden_m_08 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_09 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_archaeo_hangar_bay }
+				change_variable = { which = sai_hidden_m_09 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_10 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_psionic_hangar_bay }
+				change_variable = { which = sai_hidden_m_10 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_11 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_amoeba_hangar_bay }
+				change_variable = { which = sai_hidden_m_11 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_12 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_swarm_hangar_bay }
+				change_variable = { which = sai_hidden_m_12 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_13 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_laser_battery }
+				change_variable = { which = sai_hidden_m_13 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_14 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_archaeo_laser_battery }
+				change_variable = { which = sai_hidden_m_14 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_15 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_lance_battery }
+				change_variable = { which = sai_hidden_m_15 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_16 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_particle_launcher }
+				change_variable = { which = sai_hidden_m_16 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_17 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_psionic_torpedo }
+				change_variable = { which = sai_hidden_m_17 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_18 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_arc_emitter_battery }
+				change_variable = { which = sai_hidden_m_18 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_19 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_psionic_lightning_battery }
+				change_variable = { which = sai_hidden_m_19 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_20 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_mass_driver_battery }
+				change_variable = { which = sai_hidden_m_20 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_21 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_archaeo_mass_driver_battery }
+				change_variable = { which = sai_hidden_m_21 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_22 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_kinetic_artillery_battery }
+				change_variable = { which = sai_hidden_m_22 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_23 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_lm_accelerator }
+				change_variable = { which = sai_hidden_m_23 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_24 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_mass_accelerator }
+				change_variable = { which = sai_hidden_m_24 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_25 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_archaeo_mass_accelerator }
+				change_variable = { which = sai_hidden_m_25 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_26 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_missile_battery }
+				change_variable = { which = sai_hidden_m_26 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_27 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_archaeo_missile_battery }
+				change_variable = { which = sai_hidden_m_27 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_28 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_swamer_missile_battery }
+				change_variable = { which = sai_hidden_m_28 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_29 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_scourge_missile_battery }
+				change_variable = { which = sai_hidden_m_29 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_30 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_flak_battery }
+				change_variable = { which = sai_hidden_m_30 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_31 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_pd_battery }
+				change_variable = { which = sai_hidden_m_31 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_32 value > 0 } }
+				set_starbase_module = { slot = 3 module = sai_supremacy_arkship_archaeo_pd_battery }
+				change_variable = { which = sai_hidden_m_32 value = -1 }
+			}
+			if = {
+				limit = { check_variable = { which = sai_hidden_m_01 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_engineering_bay }
+				change_variable = { which = sai_hidden_m_01 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_02 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_beastport }
+				change_variable = { which = sai_hidden_m_02 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_03 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_docking_bay }
+				change_variable = { which = sai_hidden_m_03 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_04 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_habitation_module }
+				change_variable = { which = sai_hidden_m_04 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_05 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_sensor_array }
+				change_variable = { which = sai_hidden_m_05 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_06 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_mining_array }
+				change_variable = { which = sai_hidden_m_06 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_07 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_grand_archive }
+				change_variable = { which = sai_hidden_m_07 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_08 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_hangar_bay }
+				change_variable = { which = sai_hidden_m_08 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_09 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_archaeo_hangar_bay }
+				change_variable = { which = sai_hidden_m_09 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_10 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_psionic_hangar_bay }
+				change_variable = { which = sai_hidden_m_10 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_11 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_amoeba_hangar_bay }
+				change_variable = { which = sai_hidden_m_11 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_12 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_swarm_hangar_bay }
+				change_variable = { which = sai_hidden_m_12 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_13 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_laser_battery }
+				change_variable = { which = sai_hidden_m_13 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_14 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_archaeo_laser_battery }
+				change_variable = { which = sai_hidden_m_14 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_15 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_lance_battery }
+				change_variable = { which = sai_hidden_m_15 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_16 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_particle_launcher }
+				change_variable = { which = sai_hidden_m_16 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_17 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_psionic_torpedo }
+				change_variable = { which = sai_hidden_m_17 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_18 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_arc_emitter_battery }
+				change_variable = { which = sai_hidden_m_18 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_19 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_psionic_lightning_battery }
+				change_variable = { which = sai_hidden_m_19 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_20 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_mass_driver_battery }
+				change_variable = { which = sai_hidden_m_20 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_21 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_archaeo_mass_driver_battery }
+				change_variable = { which = sai_hidden_m_21 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_22 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_kinetic_artillery_battery }
+				change_variable = { which = sai_hidden_m_22 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_23 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_lm_accelerator }
+				change_variable = { which = sai_hidden_m_23 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_24 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_mass_accelerator }
+				change_variable = { which = sai_hidden_m_24 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_25 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_archaeo_mass_accelerator }
+				change_variable = { which = sai_hidden_m_25 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_26 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_missile_battery }
+				change_variable = { which = sai_hidden_m_26 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_27 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_archaeo_missile_battery }
+				change_variable = { which = sai_hidden_m_27 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_28 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_swamer_missile_battery }
+				change_variable = { which = sai_hidden_m_28 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_29 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_scourge_missile_battery }
+				change_variable = { which = sai_hidden_m_29 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_30 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_flak_battery }
+				change_variable = { which = sai_hidden_m_30 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_31 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_pd_battery }
+				change_variable = { which = sai_hidden_m_31 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_32 value > 0 } }
+				set_starbase_module = { slot = 4 module = sai_supremacy_arkship_archaeo_pd_battery }
+				change_variable = { which = sai_hidden_m_32 value = -1 }
+			}
+			if = {
+				limit = { check_variable = { which = sai_hidden_m_01 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_engineering_bay }
+				change_variable = { which = sai_hidden_m_01 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_02 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_beastport }
+				change_variable = { which = sai_hidden_m_02 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_03 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_docking_bay }
+				change_variable = { which = sai_hidden_m_03 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_04 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_habitation_module }
+				change_variable = { which = sai_hidden_m_04 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_05 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_sensor_array }
+				change_variable = { which = sai_hidden_m_05 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_06 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_mining_array }
+				change_variable = { which = sai_hidden_m_06 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_07 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_grand_archive }
+				change_variable = { which = sai_hidden_m_07 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_08 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_hangar_bay }
+				change_variable = { which = sai_hidden_m_08 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_09 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_archaeo_hangar_bay }
+				change_variable = { which = sai_hidden_m_09 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_10 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_psionic_hangar_bay }
+				change_variable = { which = sai_hidden_m_10 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_11 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_amoeba_hangar_bay }
+				change_variable = { which = sai_hidden_m_11 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_12 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_swarm_hangar_bay }
+				change_variable = { which = sai_hidden_m_12 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_13 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_laser_battery }
+				change_variable = { which = sai_hidden_m_13 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_14 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_archaeo_laser_battery }
+				change_variable = { which = sai_hidden_m_14 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_15 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_lance_battery }
+				change_variable = { which = sai_hidden_m_15 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_16 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_particle_launcher }
+				change_variable = { which = sai_hidden_m_16 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_17 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_psionic_torpedo }
+				change_variable = { which = sai_hidden_m_17 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_18 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_arc_emitter_battery }
+				change_variable = { which = sai_hidden_m_18 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_19 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_psionic_lightning_battery }
+				change_variable = { which = sai_hidden_m_19 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_20 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_mass_driver_battery }
+				change_variable = { which = sai_hidden_m_20 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_21 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_archaeo_mass_driver_battery }
+				change_variable = { which = sai_hidden_m_21 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_22 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_kinetic_artillery_battery }
+				change_variable = { which = sai_hidden_m_22 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_23 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_lm_accelerator }
+				change_variable = { which = sai_hidden_m_23 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_24 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_mass_accelerator }
+				change_variable = { which = sai_hidden_m_24 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_25 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_archaeo_mass_accelerator }
+				change_variable = { which = sai_hidden_m_25 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_26 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_missile_battery }
+				change_variable = { which = sai_hidden_m_26 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_27 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_archaeo_missile_battery }
+				change_variable = { which = sai_hidden_m_27 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_28 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_swamer_missile_battery }
+				change_variable = { which = sai_hidden_m_28 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_29 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_scourge_missile_battery }
+				change_variable = { which = sai_hidden_m_29 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_30 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_flak_battery }
+				change_variable = { which = sai_hidden_m_30 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_31 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_pd_battery }
+				change_variable = { which = sai_hidden_m_31 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_32 value > 0 } }
+				set_starbase_module = { slot = 5 module = sai_supremacy_arkship_archaeo_pd_battery }
+				change_variable = { which = sai_hidden_m_32 value = -1 }
+			}
+			if = {
+				limit = { check_variable = { which = sai_hidden_m_01 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_engineering_bay }
+				change_variable = { which = sai_hidden_m_01 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_02 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_beastport }
+				change_variable = { which = sai_hidden_m_02 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_03 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_docking_bay }
+				change_variable = { which = sai_hidden_m_03 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_04 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_habitation_module }
+				change_variable = { which = sai_hidden_m_04 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_05 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_sensor_array }
+				change_variable = { which = sai_hidden_m_05 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_06 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_mining_array }
+				change_variable = { which = sai_hidden_m_06 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_07 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_grand_archive }
+				change_variable = { which = sai_hidden_m_07 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_08 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_hangar_bay }
+				change_variable = { which = sai_hidden_m_08 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_09 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_archaeo_hangar_bay }
+				change_variable = { which = sai_hidden_m_09 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_10 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_psionic_hangar_bay }
+				change_variable = { which = sai_hidden_m_10 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_11 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_amoeba_hangar_bay }
+				change_variable = { which = sai_hidden_m_11 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_12 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_swarm_hangar_bay }
+				change_variable = { which = sai_hidden_m_12 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_13 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_laser_battery }
+				change_variable = { which = sai_hidden_m_13 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_14 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_archaeo_laser_battery }
+				change_variable = { which = sai_hidden_m_14 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_15 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_lance_battery }
+				change_variable = { which = sai_hidden_m_15 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_16 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_particle_launcher }
+				change_variable = { which = sai_hidden_m_16 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_17 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_psionic_torpedo }
+				change_variable = { which = sai_hidden_m_17 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_18 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_arc_emitter_battery }
+				change_variable = { which = sai_hidden_m_18 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_19 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_psionic_lightning_battery }
+				change_variable = { which = sai_hidden_m_19 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_20 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_mass_driver_battery }
+				change_variable = { which = sai_hidden_m_20 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_21 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_archaeo_mass_driver_battery }
+				change_variable = { which = sai_hidden_m_21 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_22 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_kinetic_artillery_battery }
+				change_variable = { which = sai_hidden_m_22 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_23 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_lm_accelerator }
+				change_variable = { which = sai_hidden_m_23 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_24 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_mass_accelerator }
+				change_variable = { which = sai_hidden_m_24 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_25 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_archaeo_mass_accelerator }
+				change_variable = { which = sai_hidden_m_25 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_26 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_missile_battery }
+				change_variable = { which = sai_hidden_m_26 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_27 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_archaeo_missile_battery }
+				change_variable = { which = sai_hidden_m_27 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_28 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_swamer_missile_battery }
+				change_variable = { which = sai_hidden_m_28 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_29 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_scourge_missile_battery }
+				change_variable = { which = sai_hidden_m_29 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_30 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_flak_battery }
+				change_variable = { which = sai_hidden_m_30 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_31 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_pd_battery }
+				change_variable = { which = sai_hidden_m_31 value = -1 }
+			}
+			else_if = {
+				limit = { check_variable = { which = sai_hidden_m_32 value > 0 } }
+				set_starbase_module = { slot = 6 module = sai_supremacy_arkship_archaeo_pd_battery }
+				change_variable = { which = sai_hidden_m_32 value = -1 }
+			}
+			clear_variable = sai_hidden_m_01
+			clear_variable = sai_hidden_m_02
+			clear_variable = sai_hidden_m_03
+			clear_variable = sai_hidden_m_04
+			clear_variable = sai_hidden_m_05
+			clear_variable = sai_hidden_m_06
+			clear_variable = sai_hidden_m_07
+			clear_variable = sai_hidden_m_08
+			clear_variable = sai_hidden_m_09
+			clear_variable = sai_hidden_m_10
+			clear_variable = sai_hidden_m_11
+			clear_variable = sai_hidden_m_12
+			clear_variable = sai_hidden_m_13
+			clear_variable = sai_hidden_m_14
+			clear_variable = sai_hidden_m_15
+			clear_variable = sai_hidden_m_16
+			clear_variable = sai_hidden_m_17
+			clear_variable = sai_hidden_m_18
+			clear_variable = sai_hidden_m_19
+			clear_variable = sai_hidden_m_20
+			clear_variable = sai_hidden_m_21
+			clear_variable = sai_hidden_m_22
+			clear_variable = sai_hidden_m_23
+			clear_variable = sai_hidden_m_24
+			clear_variable = sai_hidden_m_25
+			clear_variable = sai_hidden_m_26
+			clear_variable = sai_hidden_m_27
+			clear_variable = sai_hidden_m_28
+			clear_variable = sai_hidden_m_29
+			clear_variable = sai_hidden_m_30
+			clear_variable = sai_hidden_m_31
+			clear_variable = sai_hidden_m_32
+				}
+			}
+		}
+	}
+}
+
+# Full-loadout spawn completion.
+# Creates one additional fixed, fully equipped Tier III design.
+country_event = {
+    id = sai_supremacy_arkship.18
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        foc_v17_7_supremacy_spawn_allowed = yes
+        is_ai = no
+        has_technology = foc_tech_dark_legacy_supremacy
+        has_country_flag = sai_supremacy_arkship_pending
+        exists = capital_scope
+    }
+    immediate = {
+        capital_scope = { save_event_target_as = sai_supremacy_respawn_planet }
+        create_fleet = {
+            name = "NAME_SAI_SUPREMACY_ARKSHIP"
+            effect = {
+                set_owner = root
+                owner = {
+                    if = {
+                        limit = {
+                            OR = {
+                                NOT = { has_origin = origin_fop_first_order }
+                                NOR = { has_country_flag = sai_supremacy_respawn_tier_1 has_country_flag = sai_supremacy_respawn_tier_2 has_country_flag = sai_supremacy_respawn_tier_3 }
+                            }
+                        }
+                        if = {
+                            limit = {
+                                NOT = { has_technology = foc_tech_tibanna_mining }
+                            }
+                            give_technology = { tech = foc_tech_tibanna_mining message = no }
+                        }
+                        if = {
+                            limit = {
+                                NOT = { has_technology = foc_tech_std_turbo_1 }
+                            }
+                            if = {
+                                limit = { foc_v1716_republic_start_arsenal_allowed = yes }
+                                give_technology = { tech = foc_tech_std_turbo_1 message = no }
+                            }
+                        }
+                        if = {
+                            limit = {
+                                foc_v14_can_research_empire_arsenal = yes
+                                NOT = { has_technology = foc_tech_emp_turbo_2 }
+                            }
+                            if = {
+                                limit = { is_ai = yes }
+                                give_technology = { tech = foc_tech_emp_turbo_2 message = no }
+                            }
+                        }
+                        if = {
+                            limit = {
+                                foc_v14_can_research_empire_arsenal = yes
+                                NOT = { has_technology = foc_tech_emp_turbo_3 }
+                            }
+                            if = {
+                                limit = { is_ai = yes }
+                                give_technology = { tech = foc_tech_emp_turbo_3 message = no }
+                            }
+                        }
+                        if = {
+                            limit = {
+                                NOT = { has_technology = foc_tech_std_pd_1 }
+                            }
+                            if = {
+                                limit = { foc_v1716_republic_start_arsenal_allowed = yes }
+                                give_technology = { tech = foc_tech_std_pd_1 message = no }
+                            }
+                        }
+                        if = {
+                            limit = {
+                                NOT = { has_technology = foc_tech_std_pd_2 }
+                            }
+                            if = {
+                                limit = { is_ai = yes }
+                                give_technology = { tech = foc_tech_std_pd_2 message = no }
+                            }
+                        }
+                        if = {
+                            limit = {
+                                NOT = { has_technology = foc_tech_std_pd_3 }
+                            }
+                            if = {
+                                limit = { is_ai = yes }
+                                give_technology = { tech = foc_tech_std_pd_3 message = no }
+                            }
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        root = { has_country_flag = sai_supremacy_respawn_tier_1 }
+                    }
+                    if = {
+                        limit = { has_global_flag = foc_khan_strength_lowest }
+                        create_ship = {
+                            fleet_cache_recalc = yes # v17.18h: update Arkship/hero fleet cache at creation.
+                            name = "NAME_SAI_SUPREMACY_ARKSHIP"
+                            design = "NAME_SAI_SUPREMACY_ARKSHIP_TIER_1_SHELL_FOC_LOWEST"
+                            graphical_culture = military_arkship
+                            effect = {
+                        set_ship_flag = foc_v1718i_arkship_new_spawn
+
+                                if = {
+                                    limit = {
+                                        NOT = { has_global_flag = foc_khan_strength_lowest }
+                                    }
+                                    add_modifier = { modifier = sai_supremacy_arkship_stats days = -1 }
+                                }
+                                set_ship_flag = sai_supremacy_arkship
+                                set_ship_flag = sai_supremacy_event_spawned_only
+                                ship_event = { id = sai_supremacy_arkship.21 days = 1 }
+                            }
+                        }
+                    }
+                    else = {
+                        create_ship = {
+                            fleet_cache_recalc = yes # v17.18h: update Arkship/hero fleet cache at creation.
+                            name = "NAME_SAI_SUPREMACY_ARKSHIP"
+                            design = NAME_SAI_SUPREMACY_ARKSHIP_TIER_1
+                            graphical_culture = military_arkship
+                            effect = {
+                        set_ship_flag = foc_v1718i_arkship_new_spawn
+
+                                if = {
+                                    limit = {
+                                        NOT = { has_global_flag = foc_khan_strength_lowest }
+                                    }
+                                    add_modifier = { modifier = sai_supremacy_arkship_stats days = -1 }
+                                }
+                                set_ship_flag = sai_supremacy_arkship
+                                set_ship_flag = sai_supremacy_event_spawned_only
+                                ship_event = { id = sai_supremacy_arkship.21 days = 1 }
+                            }
+                        }
+                    }
+                }
+                else_if = {
+                    limit = {
+                        root = { has_country_flag = sai_supremacy_respawn_tier_2 }
+                    }
+                    if = {
+                        limit = { has_global_flag = foc_khan_strength_lowest }
+                        create_ship = {
+                            fleet_cache_recalc = yes # v17.18h: update Arkship/hero fleet cache at creation.
+                            name = "NAME_SAI_SUPREMACY_ARKSHIP"
+                            design = "NAME_SAI_SUPREMACY_ARKSHIP_TIER_2_SHELL_FOC_LOWEST"
+                            graphical_culture = military_arkship
+                            effect = {
+                        set_ship_flag = foc_v1718i_arkship_new_spawn
+
+                                if = {
+                                    limit = {
+                                        NOT = { has_global_flag = foc_khan_strength_lowest }
+                                    }
+                                    add_modifier = { modifier = sai_supremacy_arkship_stats days = -1 }
+                                }
+                                set_ship_flag = sai_supremacy_arkship
+                                set_ship_flag = sai_supremacy_event_spawned_only
+                                ship_event = { id = sai_supremacy_arkship.21 days = 1 }
+                            }
+                        }
+                    }
+                    else = {
+                        create_ship = {
+                            fleet_cache_recalc = yes # v17.18h: update Arkship/hero fleet cache at creation.
+                            name = "NAME_SAI_SUPREMACY_ARKSHIP"
+                            design = NAME_SAI_SUPREMACY_ARKSHIP_TIER_2
+                            graphical_culture = military_arkship
+                            effect = {
+                        set_ship_flag = foc_v1718i_arkship_new_spawn
+
+                                if = {
+                                    limit = {
+                                        NOT = { has_global_flag = foc_khan_strength_lowest }
+                                    }
+                                    add_modifier = { modifier = sai_supremacy_arkship_stats days = -1 }
+                                }
+                                set_ship_flag = sai_supremacy_arkship
+                                set_ship_flag = sai_supremacy_event_spawned_only
+                                ship_event = { id = sai_supremacy_arkship.21 days = 1 }
+                            }
+                        }
+                    }
+                }
+                else_if = {
+                    limit = {
+                        root = { has_country_flag = sai_supremacy_respawn_tier_3 }
+                    }
+                    if = {
+                        limit = { has_global_flag = foc_khan_strength_lowest }
+                        create_ship = {
+                            fleet_cache_recalc = yes # v17.18h: update Arkship/hero fleet cache at creation.
+                            name = "NAME_SAI_SUPREMACY_ARKSHIP"
+                            design = "NAME_SAI_SUPREMACY_ARKSHIP_TIER_3_SHELL_FOC_LOWEST"
+                            graphical_culture = military_arkship
+                            effect = {
+                        set_ship_flag = foc_v1718i_arkship_new_spawn
+
+                                if = {
+                                    limit = {
+                                        NOT = { has_global_flag = foc_khan_strength_lowest }
+                                    }
+                                    add_modifier = { modifier = sai_supremacy_arkship_stats days = -1 }
+                                }
+                                set_ship_flag = sai_supremacy_arkship
+                                set_ship_flag = sai_supremacy_event_spawned_only
+                                ship_event = { id = sai_supremacy_arkship.21 days = 1 }
+                            }
+                        }
+                    }
+                    else = {
+                        create_ship = {
+                            fleet_cache_recalc = yes # v17.18h: update Arkship/hero fleet cache at creation.
+                            name = "NAME_SAI_SUPREMACY_ARKSHIP"
+                            design = NAME_SAI_SUPREMACY_ARKSHIP_TIER_3
+                            graphical_culture = military_arkship
+                            effect = {
+                        set_ship_flag = foc_v1718i_arkship_new_spawn
+
+                                if = {
+                                    limit = {
+                                        NOT = { has_global_flag = foc_khan_strength_lowest }
+                                    }
+                                    add_modifier = { modifier = sai_supremacy_arkship_stats days = -1 }
+                                }
+                                set_ship_flag = sai_supremacy_arkship
+                                set_ship_flag = sai_supremacy_event_spawned_only
+                                ship_event = { id = sai_supremacy_arkship.21 days = 1 }
+                            }
+                        }
+                    }
+                }
+                else = {
+                    create_ship = {
+                        fleet_cache_recalc = yes # v17.18h: update Arkship/hero fleet cache at creation.
+                        name = "NAME_SAI_SUPREMACY_ARKSHIP"
+                        design = NAME_SAI_SUPREMACY_ARKSHIP_TIER_3_FULL
+                        graphical_culture = military_arkship
+                        effect = {
+                        set_ship_flag = foc_v1718i_arkship_new_spawn
+
+                            if = {
+                                limit = {
+                                    NOT = { has_global_flag = foc_khan_strength_lowest }
+                                }
+                                add_modifier = { modifier = sai_supremacy_arkship_stats days = -1 }
+                            }
+                            set_ship_flag = sai_supremacy_arkship
+                            set_ship_flag = sai_supremacy_event_spawned_only
+                            ship_event = { id = sai_supremacy_arkship.21 days = 1 }
+                        }
+                    }
+                }
+                set_location = { target = event_target:sai_supremacy_respawn_planet distance = 20 angle = random }
+            }
+        }
+        remove_country_flag = sai_supremacy_respawn_tier_1
+        remove_country_flag = sai_supremacy_respawn_tier_2
+        remove_country_flag = sai_supremacy_respawn_tier_3
+        remove_country_flag = sai_supremacy_arkship_pending
+        remove_country_flag = sai_supremacy_arkship_granted
+        country_event = { id = sai_supremacy_arkship.13 days = 1 }
+        country_event = { id = sai_supremacy_arkship.16 days = 2 }
+        country_event = { id = sai_supremacy_arkship.17 days = 3 }
+    }
+}
+
+
+# Persistent model replacement for this country's normal Military Arkships.
+# It uses an in-place same-tier starbase-size switch; no destruction and no
+# initialize_arkship_starbase_effect call, so the existing Arkship colony,
+# population, modules and buildings remain attached.
+country_event = {
+	id = sai_supremacy_arkship.20
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		is_ai = no
+		has_technology = foc_tech_dark_legacy_supremacy
+		has_country_flag = sai_supremacy_replace_all_military_arkship_models
+		any_owned_ship = {
+			OR = {
+				is_ship_size = military_arkship_tier_1
+				is_ship_size = military_arkship_tier_2
+				is_ship_size = military_arkship_tier_3
+			}
+		}
+	}
+
+	immediate = {
+		every_owned_ship = {
+			limit = {
+				OR = {
+					is_ship_size = military_arkship_tier_1
+					is_ship_size = military_arkship_tier_2
+					is_ship_size = military_arkship_tier_3
+				}
+			}
+			if = {
+				limit = { is_ship_size = military_arkship_tier_1 }
+				starbase = { set_starbase_size = sai_supremacy_arkship_tier_1 }
+			}
+			else_if = {
+				limit = { is_ship_size = military_arkship_tier_2 }
+				starbase = { set_starbase_size = sai_supremacy_arkship_tier_2 }
+			}
+			else_if = {
+				limit = { is_ship_size = military_arkship_tier_3 }
+				starbase = { set_starbase_size = sai_supremacy_arkship_tier_3 }
+			}
+			set_graphical_culture = military_arkship
+		}
+	}
+}
+
+
+# Delayed Arkship initialization. Running this after the fleet has an owner and a
+# valid location avoids initializing a half-created starbase object inside create_ship.
+ship_event = {
+	id = sai_supremacy_arkship.21
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			has_ship_flag = sai_supremacy_event_spawned_only
+			has_ship_flag = sai_supremacy_arkship
+			has_modifier = sai_supremacy_arkship_stats
+		}
+	}
+
+	immediate = {
+        # Reference: CHANGELOG.zip/events/sai_supremacy_arkship_events.txt, .21.
+        # This flag means the native effect was CALLED, not a UI test success.
+        if = {
+            limit = {
+                has_ship_flag = foc_v1718i_arkship_new_spawn
+                NOT = { has_ship_flag = foc_v1718i_native_init_called }
+                exists = owner
+            }
+            initialize_arkship_starbase_effect = yes
+            set_ship_flag = foc_v1718i_native_init_called
+            set_ship_flag = foc_v1718i_fresh_native_modules
+            remove_ship_flag = foc_v1718i_arkship_new_spawn
+            log = "FOC_V1718I_NATIVE_INIT_CALLED: [This.GetName]; deferred native Arkship setup."
+            ship_event = { id = sai_supremacy_arkship.22 days = 1 }
+        }
+}
+}
+
+
+
+# v17.18i post-initialization compatibility handler. The native initializer owns
+# Arkship setup; this handler never inserts guessed default modules into an old ship.
+ship_event = {
+	id = sai_supremacy_arkship.22
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			OR = { is_ship_size = sai_supremacy_arkship_tier_1 is_ship_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+			OR = { is_ship_size = sai_supremacy_arkship_tier_2 is_ship_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+			OR = { OR = { is_ship_size = sai_supremacy_arkship_tier_3 is_ship_size = sai_supremacy_arkship_tier_3_shell_foc_lowest } is_ship_size = sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	immediate = {
+        # Source-style invisible module conversion is allowed only immediately
+        # after our NEW-ship native initializer. Never repack old player modules.
+        if = {
+            limit = { has_ship_flag = foc_v1718i_fresh_native_modules exists = starbase }
+            owner = { country_event = { id = sai_supremacy_arkship.17 } }
+            remove_ship_flag = foc_v1718i_fresh_native_modules
+        }
+        if = {
+            limit = { exists = starbase }
+            foc_v1718h_sync_supremacy_build_mode = yes
+            if = {
+                limit = {
+                    has_ship_flag = foc_v1718i_native_init_called
+                    starbase = { is_arkship_starbase = yes arkship_starbase_has_shipwright_module = yes }
+                }
+                set_ship_flag = sai_supremacy_arkship_core_initialized
+            }
+        }
+        else = { log = "FOC_V1718I_STARBASE_MISSING: [This.GetName]; no object recreated." }
+        owner = { country_event = { id = foc_v1718i_arkship.10 days = 1 } }
+        ship_event = { id = foc_v1718h_arkship.2 days = 1 }
+}
+}
+
+# v17.18i legacy-only upgrade bridge for upgrades queued under earlier FOC versions.
+# New upgrades stay entirely within the custom Supremacy I -> II -> III family.
+# This fallback never reinitializes a colony or overwrites an entire ship design.
+ship_event = {
+	id = sai_supremacy_arkship.23
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			is_ship_size = military_arkship_tier_1
+			is_ship_size = military_arkship_tier_2
+			is_ship_size = military_arkship_tier_3
+		}
+		OR = {
+			has_modifier = sai_supremacy_arkship_stats
+			has_ship_flag = sai_supremacy_arkship
+			has_ship_flag = sai_supremacy_event_spawned_only
+		}
+	}
+
+	immediate = {
+        if = {
+            limit = { is_ship_size = military_arkship_tier_1 exists = starbase }
+            if = {
+                limit = { has_global_flag = foc_khan_strength_lowest }
+                starbase = { set_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+            }
+            else = { starbase = { set_starbase_size = sai_supremacy_arkship_tier_1 } }
+        }
+        else_if = {
+            limit = { is_ship_size = military_arkship_tier_2 exists = starbase }
+            if = {
+                limit = { has_global_flag = foc_khan_strength_lowest }
+                starbase = { set_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+            }
+            else = { starbase = { set_starbase_size = sai_supremacy_arkship_tier_2 } }
+        }
+        else_if = {
+            limit = { is_ship_size = military_arkship_tier_3 exists = starbase }
+            if = {
+                limit = { has_global_flag = foc_khan_strength_lowest }
+                starbase = { set_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+            }
+            else = { starbase = { set_starbase_size = sai_supremacy_arkship_tier_3 } }
+        }
+        set_graphical_culture = military_arkship
+        set_ship_flag = sai_supremacy_arkship
+        foc_v1718h_sync_supremacy_build_mode = yes
+        owner = { country_event = { id = foc_v1718i_arkship.10 days = 1 } }
+}
+}

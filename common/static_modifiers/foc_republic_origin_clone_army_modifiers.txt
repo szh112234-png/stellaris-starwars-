@@ -1,0 +1,110 @@
+# Granted by the Clone Army Plan for the remainder of the Republic era. The
+# Kaminoan growth vats and the Grand Army's training pipeline both feed the
+# Republic's manpower directly, which is exactly what makes the Chancellor's
+# emergency command of that army so dangerous.
+foc_republic_origin_clone_army_program = {
+    logistic_growth_mult = 0.25
+    planet_army_build_speed_mult = 0.50
+    army_damage_mult = 0.25
+    army_starting_experience_add = 200
+}
+
+# =============================================================================
+# Galactic Civil War difficulty packages
+# =============================================================================
+# V38: the old Rebel war-effort modifier granted +200% hull/armour/shields and
+# +120% weapon damage on EVERY difficulty. That made the player Rebel route
+# overpower the Empire even on the Vanilla tier. Difficulty now strengthens the
+# AI opponent instead of multiplying the player's fleet.
+#
+# The legacy key remains as a harmless logistics shell so old saves lose the
+# excessive combat stats immediately on load even before the monthly repair pass.
+foc_republic_origin_rebellion_war_effort = {
+    # V232i: retired; zero-effect shell only for old-save cleanup.
+    ships_upkeep_mult = 0
+}
+
+# Human Imperial Rebels: logistics scale with the selected combat tier, but no
+# tier gives the player a blanket combat multiplier. Vanilla starts deliberately
+# modest so the Rebel route cannot overwhelm the Galactic Empire just from its
+# opening package; ACOT only grants more logistics to face the much stronger AI.
+# Legacy/intermediate key retained for old saves and the middle tier.
+foc_republic_origin_rebellion_player_logistics = {
+    # V232i: retired; zero-effect shell only for old-save cleanup.
+    ships_upkeep_mult = 0
+}
+
+foc_republic_origin_rebellion_player_logistics_lowest = {
+    # V232i: retired; zero-effect shell only for old-save cleanup.
+    ships_upkeep_mult = 0
+}
+
+foc_republic_origin_rebellion_player_logistics_madness = {
+    # V232i: retired; zero-effect shell only for old-save cleanup.
+    ships_upkeep_mult = 0
+}
+
+# AI Rebels when the player chose the Galactic Empire.
+# Lowest / Vanilla: no direct combat stat bonus.
+foc_republic_origin_rebellion_ai_lowest = {
+    country_naval_cap_add = 1400
+    ships_upkeep_mult = -0.65
+    starbases_upkeep_mult = -0.40
+    country_base_energy_produces_add = 1500
+    country_base_alloys_produces_add = 750
+}
+
+# Intermediate / SG-FOC: enough help to keep the AI Rebellion competitive
+# against Imperial line fleets without turning MC80s into boss ships.
+foc_republic_origin_rebellion_ai_intermediate = {
+    country_naval_cap_add = 1600
+    ships_upkeep_mult = -0.70
+    starbases_upkeep_mult = -0.45
+    country_base_energy_produces_add = 1750
+    country_base_alloys_produces_add = 900
+}
+
+# Madness / ACOT: strong AI resistance, but deliberately far below the Order
+# crisis package (+600/+1000% damage and +1000/+1500% defences).
+# V13 user-approved exception: preserve the original ACOT/Madness package unchanged.
+foc_republic_origin_rebellion_ai_madness = {
+    ship_hull_mult = 1.00
+    ship_armor_mult = 1.00
+    ship_shield_mult = 1.00
+    ship_weapon_damage = 0.50
+    ship_fire_rate_mult = 0.25
+    ship_tracking_add = 10
+    ship_accuracy_add = 8
+    ship_armor_hardening_add = 0.10
+    ship_shield_hardening_add = 0.10
+    country_naval_cap_add = 2500
+    ships_upkeep_mult = -0.70
+    starbases_upkeep_mult = -0.70
+}
+
+# AI Galactic Empire when the player chose the Imperial Rebels.
+# Lowest intentionally adds no combat stats; the Empire already receives its
+# normal civil-war economy modifier and the player Rebels no longer get the old
+# +120% / +200% blanket package.
+foc_republic_origin_empire_ai_lowest = {
+    country_naval_cap_add = 0
+}
+
+# Intermediate is the baseline FOC tier: no AI-only combat multiplier.
+# Keep the key as a zero-effect compatibility shell for old saves.
+foc_republic_origin_empire_ai_intermediate = {
+    country_naval_cap_add = 0
+}
+
+# V13 user-approved exception: preserve the original ACOT/Madness package unchanged.
+foc_republic_origin_empire_ai_madness = {
+    ship_hull_mult = 2.00
+    ship_armor_mult = 2.00
+    ship_shield_mult = 2.00
+    ship_weapon_damage = 1.00
+    ship_fire_rate_mult = 0.50
+    ship_tracking_add = 15
+    ship_accuracy_add = 10
+    ship_armor_hardening_add = 0.20
+    ship_shield_hardening_add = 0.20
+}

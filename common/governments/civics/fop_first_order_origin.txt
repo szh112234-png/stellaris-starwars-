@@ -1,0 +1,49 @@
+origin_fop_first_order = {
+    is_origin = yes
+    icon = "gfx/interface/icons/origins/origin_fop_first_order.dds"
+    picture = GFX_origin_fop_first_order
+
+    flags = { custom_start_screen }
+
+    starting_colony = pc_arctic
+    habitability_preference = pc_arctic
+    initializers = { fop_ilum_system }
+    max_once_global = yes
+    advanced_start = yes
+
+    playable = { always = yes }
+    ai_playable = { always = no }
+
+    potential = {
+        species_archetype = { NOT = { value = MACHINE } }
+    }
+
+    possible = {
+        species_archetype = { NOT = { value = MACHINE } }
+        ethics = {
+            OR = {
+                value = ethic_militarist
+                value = ethic_fanatic_militarist
+            }
+            OR = {
+                value = ethic_authoritarian
+                value = ethic_fanatic_authoritarian
+            }
+        }
+        authority = {
+            NOT = { value = auth_corporate }
+            NOT = { value = auth_hive_mind }
+            NOT = { value = auth_machine_intelligence }
+        }
+        is_nomadic = no
+    }
+
+    modifier = {
+        country_naval_cap_add = 20
+        starbase_shipyard_build_speed_mult = 0.10
+    }
+
+    description = origin_fop_first_order_effects
+
+    random_weight = { base = 0 }
+}

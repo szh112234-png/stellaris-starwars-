@@ -1,0 +1,118 @@
+namespace = foc_v234
+
+# Load/start marker plus delayed read-only diagnostics, after the map bootstrap.
+event = {
+    id = foc_v234.1
+    hide_window = yes
+    is_triggered_only = yes
+    immediate = {
+        log = "FOC_V234_LOADED: fleet creation cache enabled; legacy live-settings reset retired; no capital fleet recall."
+        every_country = {
+            limit = { is_ai = no }
+            country_event = { id = foc_v234.2 days = 2 }
+        }
+    }
+}
+
+# Console: event foc_v234.2 . Read-only; safe to run after an era/ownership change.
+country_event = {
+    id = foc_v234.2
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { is_ai = no }
+    immediate = {
+        log = "FOC_V234_AUDIT_BEGIN: country=[This.GetName]."
+        every_owned_fleet = {
+            limit = { foc_v234_managed_regular_fleet = yes }
+            if = {
+                limit = { is_ship_class = shipclass_military is_mobile = yes }
+                log = "FOC_V234_FLEET_CACHE_OK: fleet=[This.GetName]; military=yes; mobile=yes. This is a cache check, not an order/merge test."
+            }
+            else = {
+                log = "FOC_V234_FLEET_CACHE_WARNING: fleet=[This.GetName]; military/mobile cache does not pass."
+            }
+            if = {
+                limit = { has_fleet_flag = foc_v232r_composition_unlocked }
+                log = "FOC_V234_LEGACY_SETTINGS_TOUCHED: fleet=[This.GetName]; the old live-settings event previously touched this fleet."
+            }
+            if = {
+                limit = { has_fleet_flag = foc_republic_origin_rebellion_garrison }
+                log = "FOC_V234_GARRISON_AUDIT: fleet=[This.GetName]; no relocation performed."
+            }
+        }
+        log = "FOC_V234_AUDIT_END: country=[This.GetName]."
+    }
+}
+
+# MANUAL ONLY: back up the save before running `event foc_v234.3`.
+# This is a cache-refresh attempt, NOT a promised cure for saved engine settings.
+# No auto/on_action entry calls this event. Only a uniquely tagged temporary
+# corvette is removed; real ships, fleet identity, owner, position and leader stay.
+country_event = {
+    id = foc_v234.3
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { is_ai = no }
+    immediate = {
+        log = "FOC_V234_MANUAL_REFRESH_BEGIN: country=[This.GetName]; temporary cache probe only, no fleet rebuilding."
+        every_owned_fleet = {
+            limit = {
+                foc_v234_managed_regular_fleet = yes
+                exists = solar_system
+                is_in_combat = no
+                NOT = { has_fleet_flag = foc_v234_manual_cache_refresh_attempted }
+                NOT = {
+                    any_owned_ship = { has_ship_flag = foc_v234_temporary_cache_probe }
+                }
+            }
+            set_fleet_flag = foc_v234_manual_cache_refresh_attempted
+            owner = {
+                if = {
+                    limit = {
+                        NOT = { has_technology = foc_tech_tibanna_mining }
+                    }
+                    give_technology = { tech = foc_tech_tibanna_mining message = no }
+                }
+                if = {
+                    limit = {
+                        NOT = { has_technology = foc_tech_std_turbo_1 }
+                    }
+                    if = {
+                        limit = { foc_v1716_republic_start_arsenal_allowed = yes }
+                        give_technology = { tech = foc_tech_std_turbo_1 message = no }
+                    }
+                }
+            }
+            if = {
+                limit = { has_global_flag = foc_khan_strength_lowest }
+                create_ship = {
+                    name = "FOC_V234_TEMPORARY_CACHE_PROBE"
+                    design = "NAME_FOC_STORY_CORVETTE_V1718E_LOWEST"
+                    graphical_culture = mammalian_01
+                    upgradable = no
+                    fleet_cache_recalc = yes
+                    effect = { set_ship_flag = foc_v234_temporary_cache_probe }
+                }
+            }
+            else = {
+                create_ship = {
+                    name = "FOC_V234_TEMPORARY_CACHE_PROBE"
+                    design = "NAME_FOC_STORY_CORVETTE"
+                    graphical_culture = mammalian_01
+                    upgradable = no
+                    fleet_cache_recalc = yes
+                    effect = { set_ship_flag = foc_v234_temporary_cache_probe }
+                }
+            }
+            every_owned_ship = {
+                limit = { has_ship_flag = foc_v234_temporary_cache_probe }
+                delete_ship = this
+            }
+            remove_auto_move_target = yes
+            clear_orders = yes
+            clear_fleet_actions = this
+            log = "FOC_V234_MANUAL_REFRESH_ATTEMPTED: fleet=[This.GetName]; current orders cleared once; test movement and merge in the UI."
+        }
+        country_event = { id = foc_v234.2 days = 1 }
+    }
+}

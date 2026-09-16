@@ -1,0 +1,11 @@
+foc_v236_adopt_cis_aircraft = {
+ if = { limit = { foc_v236_has_cis_aircraft_identity = yes }
+
+ remove_country_flag = ssp_fighter_group_all remove_country_flag = ssp_fighter_group_empire
+ remove_country_flag = ssp_fighter_group_rebel remove_country_flag = ssp_fighter_group_republic
+ set_country_flag = ssp_fighter_group_cis
+ if = { limit = { NOT = { has_technology = tech_foc_tri_hyperspace } } if = { limit = { is_ai = yes } give_technology = { tech = tech_foc_tri_hyperspace message = no } } }
+ foc_sync_ssp_strength_to_main_difficulty = yes
+
+ }
+}

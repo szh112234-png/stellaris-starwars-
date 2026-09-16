@@ -1,0 +1,30 @@
+# FOC V232 - 达斯·维达呼吸声
+#
+# 沿用本 MOD 既有的两段式写法（见 sound/starkiller_sounds.asset）：
+#   1) sound = { }       把 wav 文件注册成一个采样名
+#   2) soundeffect = { } 通过 sounds = { sound = ... } 引用该采样名
+# 事件里用 show_sound = foc_v232_vader_breathing 播放。
+#
+# 素材说明：源文件是 35.7 秒的 mp3。Stellaris 的音频后端只吃 wav / ogg，
+# 不认 mp3，因此已转成与本 MOD 其他音效一致的 44.1kHz / 16bit / 立体声
+# PCM wav，并裁成 3 个完整呼吸周期（8.4 秒），首尾各加了极短的淡入淡出，
+# 收尾正好落在呼吸间隙上，不会出现爆音。
+# 原素材峰值只有 -10dBFS，偏轻，已整体提升 7.2dB 到 -3.5dBFS。
+
+# ---- 第一阶段：注册采样 ----
+sound = {
+	name = "foc_v232_vader_breathing01"
+	file = "foc_v232_vader_breathing.wav"
+}
+
+# ---- 第二阶段：定义事件引用的音效 ----
+# is3d 不开：这是事件窗口的界面音，不该随镜头位置衰减。
+# max_audible = 1：同一时刻只允许一份呼吸声，避免多个维达事件同时弹出时叠音。
+soundeffect = {
+	name = foc_v232_vader_breathing
+	sounds = {
+		sound = foc_v232_vader_breathing01
+	}
+	max_audible = 1
+	volume = 0.85
+}

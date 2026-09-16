@@ -1,0 +1,33 @@
+# V231p - exact post-Treaty territorial split for the current full map.
+# The final ownership table is centralized in foc_v231p_treaty_territory_triggers.txt.
+# Hutt Space remains independent; the 30 explicitly retained systems go to the
+# Imperial Remnant; every other current Star-Wars-map system goes to the New Republic.
+# Ajan Kloss/D'Qar/Crait remain story-dynamic and are handled by their own chains.
+
+foc_v165_apply_exact_treaty_territories = {
+    if = {
+        limit = {
+            has_global_flag = foc_republic_origin_galactic_treaty
+            exists = event_target:foc_sw_new_republic
+            exists = event_target:foc_sw_imperial_remnant
+        }
+
+        # V231p: assign every CURRENT visible Star-Wars-map system from the same
+        # final-ownership triggers used by the Inner Rim uprising.  This replaces
+        # the obsolete partial explicit list from the smaller map.
+        every_system = {
+            limit = { foc_v231p_is_treaty_imperial_remnant_system = yes }
+            foc_republic_origin_claim_for_remnant = yes
+        }
+        every_system = {
+            limit = { foc_v231p_is_treaty_new_republic_system = yes }
+            foc_republic_origin_claim_for_republic = yes
+        }
+
+        # Hutt Space is outside both triggers and remains independent.
+        foc_mandalore_sync_concord_dawn_owner = yes
+        set_global_flag = foc_v165_exact_treaty_territories_applied
+        set_global_flag = foc_v180_exact_treaty_territories_applied
+    }
+}
+

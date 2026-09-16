@@ -1,0 +1,21 @@
+entity = {
+	name = "first_01_supremacy_entity"
+	pdxmesh = "supremacy_mesh"
+	
+	meshsettings = {
+        name = "Supremacyhull"
+        index = 0
+        texture_diffuse = "First_Order_Supremacy.dds"
+        texture_normal = "First_Order_Supremacy_B.dds"
+        texture_specular = "First_Order_Supremacy_L.dds"
+        shader = "PdxMeshTerra"
+	}
+	
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } 
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_city_planet" } }
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_city_planet_flyby" } }
+	}
+}
+
+

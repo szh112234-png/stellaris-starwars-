@@ -1,0 +1,152 @@
+# FOC Phase I - Historical Character Continuity
+# Story leaders move between political eras instead of being re-created as duplicates.
+
+foc_phase1_move_ahsoka_here = {
+    if = {
+        limit = { NOT = { any_owned_leader = { has_leader_flag = foc_canon_ahsoka_leader } } }
+        random_country = {
+            limit = { NOT = { is_same_value = root } any_owned_leader = { has_leader_flag = foc_canon_ahsoka_leader } }
+            random_owned_leader = {
+                limit = { has_leader_flag = foc_canon_ahsoka_leader }
+                save_event_target_as = foc_phase1_moving_ahsoka
+                root = { clone_leader = { target = event_target:foc_phase1_moving_ahsoka skip_background_generation = yes tier = leader_tier_legendary } }
+                kill_leader = { show_notification = no }
+            }
+        }
+    }
+}
+
+foc_phase1_move_han_here = {
+    if = {
+        limit = { NOT = { any_owned_leader = { has_leader_flag = foc_canon_han_solo_leader } } }
+        random_country = {
+            limit = { NOT = { is_same_value = root } any_owned_leader = { has_leader_flag = foc_canon_han_solo_leader } }
+            random_owned_leader = {
+                limit = { has_leader_flag = foc_canon_han_solo_leader }
+                save_event_target_as = foc_phase1_moving_han
+                root = { clone_leader = { target = event_target:foc_phase1_moving_han skip_background_generation = yes tier = leader_tier_legendary } }
+                kill_leader = { show_notification = no }
+            }
+        }
+    }
+}
+
+foc_phase1_move_luke_here = {
+    if = {
+        limit = { NOT = { any_owned_leader = { has_leader_flag = foc_saga_luke_leader } } }
+        random_country = {
+            limit = { NOT = { is_same_value = root } any_owned_leader = { has_leader_flag = foc_saga_luke_leader } }
+            random_owned_leader = {
+                limit = { has_leader_flag = foc_saga_luke_leader }
+                save_event_target_as = foc_phase1_moving_luke
+                root = { clone_leader = { target = event_target:foc_phase1_moving_luke skip_background_generation = yes tier = leader_tier_legendary } }
+                kill_leader = { show_notification = no }
+            }
+        }
+    }
+}
+
+foc_phase1_move_leia_here = {
+    if = {
+        limit = { NOT = { any_owned_leader = { has_leader_flag = foc_saga_leia_leader } } }
+        random_country = {
+            limit = { foc_v232n_is_resistance = no  NOT = { is_same_value = root } any_owned_leader = { has_leader_flag = foc_saga_leia_leader } }
+            random_owned_leader = {
+                limit = { has_leader_flag = foc_saga_leia_leader }
+                save_event_target_as = foc_phase1_moving_leia
+                root = { clone_leader = { target = event_target:foc_phase1_moving_leia skip_background_generation = yes tier = leader_tier_legendary } }
+                kill_leader = { show_notification = no }
+            }
+        }
+    }
+}
+
+foc_phase1_move_mon_mothma_here = {
+    if = {
+        limit = { foc_v232n_is_resistance = no  NOT = { any_owned_leader = { has_leader_flag = foc_saga_mon_mothma_leader } } }
+        random_country = {
+            limit = { NOT = { is_same_value = root } any_owned_leader = { has_leader_flag = foc_saga_mon_mothma_leader } }
+            random_owned_leader = {
+                limit = { has_leader_flag = foc_saga_mon_mothma_leader }
+                save_event_target_as = foc_phase1_moving_mothma
+                root = { clone_leader = { target = event_target:foc_phase1_moving_mothma skip_background_generation = yes tier = leader_tier_legendary } }
+                kill_leader = { show_notification = no }
+            }
+        }
+    }
+}
+
+foc_phase1_move_bo_katan_here = {
+    if = {
+        limit = { NOT = { any_owned_leader = { has_leader_flag = foc_bo_katan_legendary_leader } } }
+        random_country = {
+            limit = { NOT = { is_same_value = root } any_owned_leader = { has_leader_flag = foc_bo_katan_legendary_leader } }
+            random_owned_leader = {
+                limit = { has_leader_flag = foc_bo_katan_legendary_leader }
+                save_event_target_as = foc_phase1_moving_bo
+                root = { clone_leader = { target = event_target:foc_phase1_moving_bo skip_background_generation = yes tier = leader_tier_legendary } }
+                kill_leader = { show_notification = no }
+            }
+        }
+    }
+}
+
+foc_phase1_move_din_here = {
+    if = {
+        limit = { NOT = { any_owned_leader = { has_leader_flag = foc_din_djarin_legendary_leader } } }
+        random_country = {
+            limit = { NOT = { is_same_value = root } any_owned_leader = { has_leader_flag = foc_din_djarin_legendary_leader } }
+            random_owned_leader = {
+                limit = { has_leader_flag = foc_din_djarin_legendary_leader }
+                save_event_target_as = foc_phase1_moving_din
+                root = { clone_leader = { target = event_target:foc_phase1_moving_din skip_background_generation = yes tier = leader_tier_legendary } }
+                kill_leader = { show_notification = no }
+            }
+        }
+    }
+}
+
+foc_phase1_move_rey_here = {
+    if = {
+        limit = { NOT = { any_owned_leader = { has_leader_flag = foc_rey_legendary_leader } } }
+        random_country = {
+            limit = { NOT = { is_same_value = root } any_owned_leader = { has_leader_flag = foc_rey_legendary_leader } }
+            random_owned_leader = {
+                limit = { has_leader_flag = foc_rey_legendary_leader }
+                save_event_target_as = foc_phase1_moving_rey
+                root = { clone_leader = { target = event_target:foc_phase1_moving_rey skip_background_generation = yes tier = leader_tier_legendary } }
+                kill_leader = { show_notification = no }
+            }
+        }
+    }
+}
+
+foc_phase1_move_thrawn_here = {
+    if = {
+        limit = { NOT = { any_owned_leader = { has_leader_flag = foc_saga_thrawn_leader } } }
+        random_country = {
+            limit = { NOT = { is_same_value = root } any_owned_leader = { has_leader_flag = foc_saga_thrawn_leader } }
+            random_owned_leader = {
+                limit = { has_leader_flag = foc_saga_thrawn_leader }
+                save_event_target_as = foc_phase1_moving_thrawn
+                root = { clone_leader = { target = event_target:foc_phase1_moving_thrawn skip_background_generation = yes tier = leader_tier_legendary } }
+                kill_leader = { show_notification = no }
+            }
+        }
+    }
+}
+
+foc_phase1_absorb_rebel_heroes = {
+    foc_phase1_move_ahsoka_here = yes
+    foc_phase1_move_han_here = yes
+    foc_phase1_move_luke_here = yes
+    foc_phase1_move_leia_here = yes
+    foc_phase1_move_mon_mothma_here = yes
+}
+
+foc_phase1_absorb_resistance_heroes = {
+    foc_phase1_move_leia_here = yes
+    foc_phase1_move_luke_here = yes
+    foc_phase1_move_bo_katan_here = yes
+    foc_phase1_move_din_here = yes
+}

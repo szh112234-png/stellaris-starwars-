@@ -1,0 +1,59 @@
+# Required components for the Starkiller ring hull.
+#
+# THE BUG THIS FIXES (from error.log):
+#   component.cpp:538: Country ... cannot build any component in the component set
+#   power_core for design Temp 弑星者防御环 and size foc_starkiller_ring
+#   component.cpp:538: ... combat_computers ...
+#
+# The hull declares required_component_set = power_core / combat_computers, but every
+# vanilla starbase reactor and combat computer gates itself behind the scripted trigger
+# ship_uses_starbase_components (common/scripted_triggers/07_scripted_triggers_ships.txt),
+# which is a hardcoded WHITELIST of ship sizes - starbase_outpost..citadel, the three
+# orbital_ring tiers, deep space citadels and waystations. A custom hull is not on that
+# list and never can be without overriding the vanilla trigger file, which is a large
+# shared file and a bad conflict risk.
+#
+# So the hull gets its own reactor and computer instead, restricted to itself. Without
+# these the ring's design is INVALID, which means the finished base gets a broken
+# starbase - no guns, no hangars, no TIEs.
+#
+# sensor_components is deliberately not duplicated here: vanilla sensors do not gate on
+# ship_uses_starbase_components, so they resolve for this hull already. error.log
+# complained about power_core and combat_computers only, which matches.
+
+utility_component_template = {
+    key = "FOC_STARKILLER_RING_REACTOR"
+    size = large
+    icon = "GFX_ship_part_reactor_5"
+    icon_frame = 1
+    power = 48000
+    component_set = "power_core"
+    size_restriction = { foc_starkiller_ring }
+    resources = {
+        category = ship_components
+        cost = { sr_coaxium_foc = 10 }
+        upkeep = { }
+    }
+    ai_weight = { weight = 0 }
+    potential = { always = no }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+
+utility_component_template = {
+    key = "FOC_STARKILLER_RING_COMPUTER"
+    size = small
+    icon = "GFX_ship_part_computer_default"
+    icon_frame = 1
+    power = 0
+    component_set = "combat_computers"
+    size_restriction = { foc_starkiller_ring }
+    ship_behavior = "platform"
+    ship_modifier = { ship_tracking_add = 20 }
+    ai_weight = { weight = 0 }
+    potential = { always = no }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}

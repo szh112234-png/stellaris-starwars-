@@ -1,0 +1,1266 @@
+# =============================================================================
+# FOC V213 - New Republic -> Resistance direct inheritance and leader dedupe
+# =============================================================================
+# The Resistance is no longer a second state while the New Republic still exists.
+# D'Qar is prepared as an internal resistance base; after Hosnian/New Republic
+# defeat, the same country object continues as the Resistance. This preserves
+# player identity, technologies, traditions, treasury, fleets and existing leaders.
+# =============================================================================
+
+# Current country scope: this is an obsolete paired New Republic/Resistance state.
+# ROOT is the country which will survive. Copy at most one instance of each named
+# story leader before the obsolete country is removed. This helper deliberately
+# does not search unrelated countries, so Mandalore and other living states keep
+# their own characters until their normal story-transfer events fire.
+foc_v213_clone_named_rebel_leaders_from_this_country_to_root = {
+    if = {
+        limit = {
+            any_owned_leader = { has_leader_flag = foc_saga_leia_leader }
+            NOT = { has_global_flag = foc_saga_leia_dead }
+        }
+        random_owned_leader = {
+            limit = { has_leader_flag = foc_saga_leia_leader }
+            save_event_target_as = foc_v213_source_leia
+            root = {
+                clone_leader = {
+                    target = event_target:foc_v213_source_leia
+                    skip_background_generation = yes
+                    tier = leader_tier_legendary
+                }
+            }
+        }
+    }
+    if = {
+        limit = {
+            any_owned_leader = { has_leader_flag = foc_saga_luke_leader }
+            NOT = { has_global_flag = foc_saga_luke_died }
+        }
+        random_owned_leader = {
+            limit = { has_leader_flag = foc_saga_luke_leader }
+            save_event_target_as = foc_v213_source_luke
+            root = {
+                clone_leader = {
+                    target = event_target:foc_v213_source_luke
+                    skip_background_generation = yes
+                    tier = leader_tier_legendary
+                }
+            }
+        }
+    }
+    if = {
+        limit = {
+            root = { foc_v232n_is_resistance = no }
+            any_owned_leader = { has_leader_flag = foc_saga_mon_mothma_leader }
+        }
+        random_owned_leader = {
+            limit = { has_leader_flag = foc_saga_mon_mothma_leader }
+            save_event_target_as = foc_v213_source_mon_mothma
+            root = {
+                clone_leader = {
+                    target = event_target:foc_v213_source_mon_mothma
+                    skip_background_generation = yes
+                    tier = leader_tier_legendary
+                }
+            }
+        }
+    }
+    if = {
+        limit = {
+            any_owned_leader = { has_leader_flag = foc_republic_origin_ackbar_leader }
+            NOT = { has_global_flag = foc_v212_ackbar_died_on_raddus }
+        }
+        random_owned_leader = {
+            limit = { has_leader_flag = foc_republic_origin_ackbar_leader }
+            save_event_target_as = foc_v213_source_ackbar
+            root = {
+                clone_leader = {
+                    target = event_target:foc_v213_source_ackbar
+                    skip_background_generation = yes
+                    tier = leader_tier_legendary
+                }
+            }
+        }
+    }
+    if = {
+        limit = {
+            any_owned_leader = { has_leader_flag = foc_republic_origin_raddus_leader }
+            NOT = { has_global_flag = foc_v212_raddus_died_at_scarif }
+        }
+        random_owned_leader = {
+            limit = { has_leader_flag = foc_republic_origin_raddus_leader }
+            save_event_target_as = foc_v213_source_raddus
+            root = {
+                clone_leader = {
+                    target = event_target:foc_v213_source_raddus
+                    skip_background_generation = yes
+                    tier = leader_tier_legendary
+                }
+            }
+        }
+    }
+    if = {
+        limit = {
+            any_owned_leader = { has_leader_flag = foc_republic_origin_lando_leader }
+        }
+        random_owned_leader = {
+            limit = { has_leader_flag = foc_republic_origin_lando_leader }
+            save_event_target_as = foc_v213_source_lando
+            root = {
+                clone_leader = {
+                    target = event_target:foc_v213_source_lando
+                    skip_background_generation = yes
+                    tier = leader_tier_legendary
+                }
+            }
+        }
+    }
+    if = {
+        limit = {
+            any_owned_leader = { has_leader_flag = foc_canon_ahsoka_leader }
+        }
+        random_owned_leader = {
+            limit = { has_leader_flag = foc_canon_ahsoka_leader }
+            save_event_target_as = foc_v213_source_ahsoka
+            root = {
+                clone_leader = {
+                    target = event_target:foc_v213_source_ahsoka
+                    skip_background_generation = yes
+                    tier = leader_tier_legendary
+                }
+            }
+        }
+    }
+    if = {
+        limit = {
+            any_owned_leader = { has_leader_flag = foc_canon_han_solo_leader }
+            NOT = { has_global_flag = foc_saga_han_solo_dead }
+        }
+        random_owned_leader = {
+            limit = { has_leader_flag = foc_canon_han_solo_leader }
+            save_event_target_as = foc_v213_source_han
+            root = {
+                clone_leader = {
+                    target = event_target:foc_v213_source_han
+                    skip_background_generation = yes
+                    tier = leader_tier_legendary
+                }
+            }
+        }
+    }
+    if = {
+        limit = {
+            any_owned_leader = { has_leader_flag = foc_bo_katan_legendary_leader }
+        }
+        random_owned_leader = {
+            limit = { has_leader_flag = foc_bo_katan_legendary_leader }
+            save_event_target_as = foc_v213_source_bo_katan
+            root = {
+                clone_leader = {
+                    target = event_target:foc_v213_source_bo_katan
+                    skip_background_generation = yes
+                    tier = leader_tier_legendary
+                }
+            }
+        }
+    }
+    if = {
+        limit = {
+            any_owned_leader = { has_leader_flag = foc_din_djarin_legendary_leader }
+        }
+        random_owned_leader = {
+            limit = { has_leader_flag = foc_din_djarin_legendary_leader }
+            save_event_target_as = foc_v213_source_din
+            root = {
+                clone_leader = {
+                    target = event_target:foc_v213_source_din
+                    skip_background_generation = yes
+                    tier = leader_tier_legendary
+                }
+            }
+        }
+    }
+    if = {
+        limit = {
+            any_owned_leader = { has_leader_flag = foc_rey_legendary_leader }
+        }
+        random_owned_leader = {
+            limit = { has_leader_flag = foc_rey_legendary_leader }
+            save_event_target_as = foc_v213_source_rey
+            root = {
+                clone_leader = {
+                    target = event_target:foc_v213_source_rey
+                    skip_background_generation = yes
+                    tier = leader_tier_legendary
+                }
+            }
+        }
+    }
+    if = {
+        limit = {
+            any_owned_leader = { has_leader_flag = foc_canon_obiwan_returned_leader }
+            NOT = { OR = { has_global_flag = foc_v212_obiwan_force_ghost has_global_flag = foc_canon_obiwan_dead } }
+        }
+        random_owned_leader = {
+            limit = { has_leader_flag = foc_canon_obiwan_returned_leader }
+            save_event_target_as = foc_v213_source_obiwan
+            root = {
+                clone_leader = {
+                    target = event_target:foc_v213_source_obiwan
+                    skip_background_generation = yes
+                    tier = leader_tier_legendary
+                }
+            }
+        }
+    }
+}
+
+# Country scope: remove duplicate copies only inside the inheriting country.
+# A ruler copy is preferred; otherwise one existing copy is retained. Death-state
+# flags take precedence and remove stale copies rather than resurrecting them.
+foc_v213_dedupe_named_rebel_leaders = {
+    if = {
+        limit = { has_global_flag = foc_saga_leia_dead }
+        every_owned_leader = {
+            limit = { has_leader_flag = foc_saga_leia_leader }
+            set_immortal = no
+            kill_leader = { show_notification = no }
+        }
+        if = {
+            limit = { exists = event_target:foc_saga_leia }
+            clear_global_event_target = foc_saga_leia
+        }
+    }
+    else_if = {
+        limit = { any_owned_leader = { has_leader_flag = foc_saga_leia_leader } }
+        if = {
+            limit = { ruler = { has_leader_flag = foc_saga_leia_leader } }
+            ruler = { save_global_event_target_as = foc_v213_canonical_leia }
+        }
+        else = {
+            random_owned_leader = {
+                limit = { has_leader_flag = foc_saga_leia_leader }
+                save_global_event_target_as = foc_v213_canonical_leia
+            }
+        }
+        every_owned_leader = {
+            limit = {
+                has_leader_flag = foc_saga_leia_leader
+                NOT = { is_same_value = event_target:foc_v213_canonical_leia }
+            }
+            set_immortal = no
+            kill_leader = { show_notification = no }
+        }
+        if = {
+            limit = { exists = event_target:foc_v213_canonical_leia }
+            event_target:foc_v213_canonical_leia = { save_global_event_target_as = foc_saga_leia }
+        }
+        if = {
+            limit = { exists = event_target:foc_v213_canonical_leia }
+            clear_global_event_target = foc_v213_canonical_leia
+        }
+    }
+    if = {
+        limit = { has_global_flag = foc_saga_luke_died }
+        every_owned_leader = {
+            limit = { has_leader_flag = foc_saga_luke_leader }
+            set_immortal = no
+            kill_leader = { show_notification = no }
+        }
+        if = {
+            limit = { exists = event_target:foc_saga_luke }
+            clear_global_event_target = foc_saga_luke
+        }
+    }
+    else_if = {
+        limit = { any_owned_leader = { has_leader_flag = foc_saga_luke_leader } }
+        if = {
+            limit = { ruler = { has_leader_flag = foc_saga_luke_leader } }
+            ruler = { save_global_event_target_as = foc_v213_canonical_luke }
+        }
+        else = {
+            random_owned_leader = {
+                limit = { has_leader_flag = foc_saga_luke_leader }
+                save_global_event_target_as = foc_v213_canonical_luke
+            }
+        }
+        every_owned_leader = {
+            limit = {
+                has_leader_flag = foc_saga_luke_leader
+                NOT = { is_same_value = event_target:foc_v213_canonical_luke }
+            }
+            set_immortal = no
+            kill_leader = { show_notification = no }
+        }
+        if = {
+            limit = { exists = event_target:foc_v213_canonical_luke }
+            event_target:foc_v213_canonical_luke = { save_global_event_target_as = foc_saga_luke }
+        }
+        if = {
+            limit = { exists = event_target:foc_v213_canonical_luke }
+            clear_global_event_target = foc_v213_canonical_luke
+        }
+    }
+    if = {
+        limit = { any_owned_leader = { has_leader_flag = foc_saga_mon_mothma_leader } }
+        if = {
+            limit = { ruler = { has_leader_flag = foc_saga_mon_mothma_leader } }
+            ruler = { save_global_event_target_as = foc_v213_canonical_mon_mothma }
+        }
+        else = {
+            random_owned_leader = {
+                limit = { has_leader_flag = foc_saga_mon_mothma_leader }
+                save_global_event_target_as = foc_v213_canonical_mon_mothma
+            }
+        }
+        every_owned_leader = {
+            limit = {
+                has_leader_flag = foc_saga_mon_mothma_leader
+                NOT = { is_same_value = event_target:foc_v213_canonical_mon_mothma }
+            }
+            set_immortal = no
+            kill_leader = { show_notification = no }
+        }
+        if = {
+            limit = { exists = event_target:foc_v213_canonical_mon_mothma }
+            event_target:foc_v213_canonical_mon_mothma = { save_global_event_target_as = foc_saga_mon_mothma }
+        }
+        if = {
+            limit = { exists = event_target:foc_v213_canonical_mon_mothma }
+            clear_global_event_target = foc_v213_canonical_mon_mothma
+        }
+    }
+    if = {
+        limit = { has_global_flag = foc_v212_ackbar_died_on_raddus }
+        every_owned_leader = {
+            limit = { has_leader_flag = foc_republic_origin_ackbar_leader }
+            set_immortal = no
+            kill_leader = { show_notification = no }
+        }
+        if = {
+            limit = { exists = event_target:foc_khan_rebel_ackbar }
+            clear_global_event_target = foc_khan_rebel_ackbar
+        }
+    }
+    else_if = {
+        limit = { any_owned_leader = { has_leader_flag = foc_republic_origin_ackbar_leader } }
+        if = {
+            limit = { ruler = { has_leader_flag = foc_republic_origin_ackbar_leader } }
+            ruler = { save_global_event_target_as = foc_v213_canonical_ackbar }
+        }
+        else = {
+            random_owned_leader = {
+                limit = { has_leader_flag = foc_republic_origin_ackbar_leader }
+                save_global_event_target_as = foc_v213_canonical_ackbar
+            }
+        }
+        every_owned_leader = {
+            limit = {
+                has_leader_flag = foc_republic_origin_ackbar_leader
+                NOT = { is_same_value = event_target:foc_v213_canonical_ackbar }
+            }
+            set_immortal = no
+            kill_leader = { show_notification = no }
+        }
+        if = {
+            limit = { exists = event_target:foc_v213_canonical_ackbar }
+            event_target:foc_v213_canonical_ackbar = { save_global_event_target_as = foc_khan_rebel_ackbar }
+        }
+        if = {
+            limit = { exists = event_target:foc_v213_canonical_ackbar }
+            clear_global_event_target = foc_v213_canonical_ackbar
+        }
+    }
+    if = {
+        limit = { has_global_flag = foc_v212_raddus_died_at_scarif }
+        every_owned_leader = {
+            limit = { has_leader_flag = foc_republic_origin_raddus_leader }
+            set_immortal = no
+            kill_leader = { show_notification = no }
+        }
+        if = {
+            limit = { exists = event_target:foc_v212_admiral_raddus }
+            clear_global_event_target = foc_v212_admiral_raddus
+        }
+    }
+    else_if = {
+        limit = { any_owned_leader = { has_leader_flag = foc_republic_origin_raddus_leader } }
+        if = {
+            limit = { ruler = { has_leader_flag = foc_republic_origin_raddus_leader } }
+            ruler = { save_global_event_target_as = foc_v213_canonical_raddus }
+        }
+        else = {
+            random_owned_leader = {
+                limit = { has_leader_flag = foc_republic_origin_raddus_leader }
+                save_global_event_target_as = foc_v213_canonical_raddus
+            }
+        }
+        every_owned_leader = {
+            limit = {
+                has_leader_flag = foc_republic_origin_raddus_leader
+                NOT = { is_same_value = event_target:foc_v213_canonical_raddus }
+            }
+            set_immortal = no
+            kill_leader = { show_notification = no }
+        }
+        if = {
+            limit = { exists = event_target:foc_v213_canonical_raddus }
+            event_target:foc_v213_canonical_raddus = { save_global_event_target_as = foc_v212_admiral_raddus }
+        }
+        if = {
+            limit = { exists = event_target:foc_v213_canonical_raddus }
+            clear_global_event_target = foc_v213_canonical_raddus
+        }
+    }
+    if = {
+        limit = { any_owned_leader = { has_leader_flag = foc_republic_origin_lando_leader } }
+        if = {
+            limit = { ruler = { has_leader_flag = foc_republic_origin_lando_leader } }
+            ruler = { save_global_event_target_as = foc_v213_canonical_lando }
+        }
+        else = {
+            random_owned_leader = {
+                limit = { has_leader_flag = foc_republic_origin_lando_leader }
+                save_global_event_target_as = foc_v213_canonical_lando
+            }
+        }
+        every_owned_leader = {
+            limit = {
+                has_leader_flag = foc_republic_origin_lando_leader
+                NOT = { is_same_value = event_target:foc_v213_canonical_lando }
+            }
+            set_immortal = no
+            kill_leader = { show_notification = no }
+        }
+        if = {
+            limit = { exists = event_target:foc_v213_canonical_lando }
+            clear_global_event_target = foc_v213_canonical_lando
+        }
+    }
+    if = {
+        limit = { any_owned_leader = { has_leader_flag = foc_canon_ahsoka_leader } }
+        if = {
+            limit = { ruler = { has_leader_flag = foc_canon_ahsoka_leader } }
+            ruler = { save_global_event_target_as = foc_v213_canonical_ahsoka }
+        }
+        else = {
+            random_owned_leader = {
+                limit = { has_leader_flag = foc_canon_ahsoka_leader }
+                save_global_event_target_as = foc_v213_canonical_ahsoka
+            }
+        }
+        every_owned_leader = {
+            limit = {
+                has_leader_flag = foc_canon_ahsoka_leader
+                NOT = { is_same_value = event_target:foc_v213_canonical_ahsoka }
+            }
+            set_immortal = no
+            kill_leader = { show_notification = no }
+        }
+        if = {
+            limit = { exists = event_target:foc_v213_canonical_ahsoka }
+            event_target:foc_v213_canonical_ahsoka = { save_global_event_target_as = foc_canon_ahsoka }
+        }
+        if = {
+            limit = { exists = event_target:foc_v213_canonical_ahsoka }
+            clear_global_event_target = foc_v213_canonical_ahsoka
+        }
+    }
+    if = {
+        limit = { has_global_flag = foc_saga_han_solo_dead }
+        every_owned_leader = {
+            limit = { has_leader_flag = foc_canon_han_solo_leader }
+            set_immortal = no
+            kill_leader = { show_notification = no }
+        }
+        if = {
+            limit = { exists = event_target:foc_canon_han_solo }
+            clear_global_event_target = foc_canon_han_solo
+        }
+    }
+    else_if = {
+        limit = { any_owned_leader = { has_leader_flag = foc_canon_han_solo_leader } }
+        if = {
+            limit = { ruler = { has_leader_flag = foc_canon_han_solo_leader } }
+            ruler = { save_global_event_target_as = foc_v213_canonical_han }
+        }
+        else = {
+            random_owned_leader = {
+                limit = { has_leader_flag = foc_canon_han_solo_leader }
+                save_global_event_target_as = foc_v213_canonical_han
+            }
+        }
+        every_owned_leader = {
+            limit = {
+                has_leader_flag = foc_canon_han_solo_leader
+                NOT = { is_same_value = event_target:foc_v213_canonical_han }
+            }
+            set_immortal = no
+            kill_leader = { show_notification = no }
+        }
+        if = {
+            limit = { exists = event_target:foc_v213_canonical_han }
+            event_target:foc_v213_canonical_han = { save_global_event_target_as = foc_canon_han_solo }
+        }
+        if = {
+            limit = { exists = event_target:foc_v213_canonical_han }
+            clear_global_event_target = foc_v213_canonical_han
+        }
+    }
+    if = {
+        limit = { any_owned_leader = { has_leader_flag = foc_bo_katan_legendary_leader } }
+        if = {
+            limit = { ruler = { has_leader_flag = foc_bo_katan_legendary_leader } }
+            ruler = { save_global_event_target_as = foc_v213_canonical_bo_katan }
+        }
+        else = {
+            random_owned_leader = {
+                limit = { has_leader_flag = foc_bo_katan_legendary_leader }
+                save_global_event_target_as = foc_v213_canonical_bo_katan
+            }
+        }
+        every_owned_leader = {
+            limit = {
+                has_leader_flag = foc_bo_katan_legendary_leader
+                NOT = { is_same_value = event_target:foc_v213_canonical_bo_katan }
+            }
+            set_immortal = no
+            kill_leader = { show_notification = no }
+        }
+        if = {
+            limit = { exists = event_target:foc_v213_canonical_bo_katan }
+            event_target:foc_v213_canonical_bo_katan = { save_global_event_target_as = foc_bo_katan_legendary }
+        }
+        if = {
+            limit = { exists = event_target:foc_v213_canonical_bo_katan }
+            clear_global_event_target = foc_v213_canonical_bo_katan
+        }
+    }
+    if = {
+        limit = { any_owned_leader = { has_leader_flag = foc_din_djarin_legendary_leader } }
+        if = {
+            limit = { ruler = { has_leader_flag = foc_din_djarin_legendary_leader } }
+            ruler = { save_global_event_target_as = foc_v213_canonical_din }
+        }
+        else = {
+            random_owned_leader = {
+                limit = { has_leader_flag = foc_din_djarin_legendary_leader }
+                save_global_event_target_as = foc_v213_canonical_din
+            }
+        }
+        every_owned_leader = {
+            limit = {
+                has_leader_flag = foc_din_djarin_legendary_leader
+                NOT = { is_same_value = event_target:foc_v213_canonical_din }
+            }
+            set_immortal = no
+            kill_leader = { show_notification = no }
+        }
+        if = {
+            limit = { exists = event_target:foc_v213_canonical_din }
+            event_target:foc_v213_canonical_din = { save_global_event_target_as = foc_din_djarin_legendary }
+        }
+        if = {
+            limit = { exists = event_target:foc_v213_canonical_din }
+            clear_global_event_target = foc_v213_canonical_din
+        }
+    }
+    if = {
+        limit = { any_owned_leader = { has_leader_flag = foc_rey_legendary_leader } }
+        if = {
+            limit = { ruler = { has_leader_flag = foc_rey_legendary_leader } }
+            ruler = { save_global_event_target_as = foc_v213_canonical_rey }
+        }
+        else = {
+            random_owned_leader = {
+                limit = { has_leader_flag = foc_rey_legendary_leader }
+                save_global_event_target_as = foc_v213_canonical_rey
+            }
+        }
+        every_owned_leader = {
+            limit = {
+                has_leader_flag = foc_rey_legendary_leader
+                NOT = { is_same_value = event_target:foc_v213_canonical_rey }
+            }
+            set_immortal = no
+            kill_leader = { show_notification = no }
+        }
+        if = {
+            limit = { exists = event_target:foc_v213_canonical_rey }
+            event_target:foc_v213_canonical_rey = { save_global_event_target_as = foc_rey_legendary }
+        }
+        if = {
+            limit = { exists = event_target:foc_v213_canonical_rey }
+            clear_global_event_target = foc_v213_canonical_rey
+        }
+    }
+    if = {
+        limit = { OR = { has_global_flag = foc_v212_obiwan_force_ghost has_global_flag = foc_canon_obiwan_dead } }
+        every_owned_leader = {
+            limit = { has_leader_flag = foc_canon_obiwan_returned_leader }
+            set_immortal = no
+            kill_leader = { show_notification = no }
+        }
+        if = {
+            limit = { exists = event_target:foc_canon_obiwan_returned }
+            clear_global_event_target = foc_canon_obiwan_returned
+        }
+    }
+    else_if = {
+        limit = { any_owned_leader = { has_leader_flag = foc_canon_obiwan_returned_leader } }
+        if = {
+            limit = { ruler = { has_leader_flag = foc_canon_obiwan_returned_leader } }
+            ruler = { save_global_event_target_as = foc_v213_canonical_obiwan }
+        }
+        else = {
+            random_owned_leader = {
+                limit = { has_leader_flag = foc_canon_obiwan_returned_leader }
+                save_global_event_target_as = foc_v213_canonical_obiwan
+            }
+        }
+        every_owned_leader = {
+            limit = {
+                has_leader_flag = foc_canon_obiwan_returned_leader
+                NOT = { is_same_value = event_target:foc_v213_canonical_obiwan }
+            }
+            set_immortal = no
+            kill_leader = { show_notification = no }
+        }
+        if = {
+            limit = { exists = event_target:foc_v213_canonical_obiwan }
+            event_target:foc_v213_canonical_obiwan = { save_global_event_target_as = foc_canon_obiwan_returned }
+        }
+        if = {
+            limit = { exists = event_target:foc_v213_canonical_obiwan }
+            clear_global_event_target = foc_v213_canonical_obiwan
+        }
+    }
+    set_country_flag = foc_v213_named_rebel_leaders_deduped
+}
+foc_v213_ensure_resistance_high_command = {
+    foc_v213_dedupe_named_rebel_leaders = yes
+
+    inline_script = "foc_v232n_resistance_leadership"
+    if = {
+        limit = {
+            NOT = { has_global_flag = foc_saga_luke_died }
+            NOT = { any_owned_leader = { has_leader_flag = foc_saga_luke_leader } }
+        }
+        create_leader = {
+            tier = leader_tier_legendary
+            class = commander
+            species = owner_main_species
+            name = "FOC_SAGA_LUKE_NAME"
+            gender = male
+            skill = 7
+            event_leader = yes
+            skip_background_generation = yes
+            randomize_traits = no
+            effect = {
+                foc_saga_apply_luke_portrait = yes
+                set_leader_flag = foc_saga_luke_leader
+                set_immortal = yes
+                add_trait = { trait = leader_trait_foc_force_sensitive consume_selection = no }
+                add_trait = { trait = leader_trait_psionic consume_selection = no }
+                save_global_event_target_as = foc_saga_luke
+            }
+        }
+    }
+    # V232n: the Resistance never generates Mon Mothma.
+    if = {
+        limit = {
+            NOT = { has_global_flag = foc_v212_ackbar_died_on_raddus }
+            NOT = { any_owned_leader = { has_leader_flag = foc_republic_origin_ackbar_leader } }
+        }
+        create_leader = {
+            tier = leader_tier_legendary
+            class = commander
+            species = owner_main_species
+            name = "Admiral Ackbar"
+            skill = 8
+            event_leader = yes
+            skip_background_generation = yes
+            randomize_traits = no
+            effect = {
+                change_leader_portrait = rebelmoncala_male_01
+                set_leader_flag = foc_republic_origin_ackbar_leader
+                set_immortal = yes
+                save_global_event_target_as = foc_khan_rebel_ackbar
+            }
+        }
+    }
+    if = {
+        limit = {
+            NOT = { has_global_flag = foc_v212_raddus_died_at_scarif }
+            NOT = { any_owned_leader = { has_leader_flag = foc_republic_origin_raddus_leader } }
+        }
+        create_leader = {
+            tier = leader_tier_legendary
+            class = commander
+            species = owner_main_species
+            name = "FOC_V212_RADDUS_NAME"
+            skill = 7
+            event_leader = yes
+            skip_background_generation = yes
+            randomize_traits = no
+            effect = {
+                change_leader_portrait = raddus_male_01
+                set_leader_flag = foc_republic_origin_raddus_leader
+                set_immortal = yes
+                save_global_event_target_as = foc_v212_admiral_raddus
+            }
+        }
+    }
+    if = {
+        limit = { NOT = { any_owned_leader = { has_leader_flag = foc_republic_origin_lando_leader } } }
+        create_leader = {
+            tier = leader_tier_legendary
+            class = commander
+            species = owner_main_species
+            name = "Lando Calrissian"
+            skill = 6
+            event_leader = yes
+            skip_background_generation = yes
+            randomize_traits = no
+            effect = {
+                change_leader_portrait = foc_saga_lando_01
+                set_leader_flag = foc_republic_origin_lando_leader
+            }
+        }
+    }
+
+    foc_v213_dedupe_named_rebel_leaders = yes
+    set_country_flag = foc_v213_resistance_high_command_reconciled
+}
+
+# Country scope: New Republic. Leia's Bloodline break prepares D'Qar as an
+# internal network; it does not create or split off a sovereign country.
+foc_v213_prepare_resistance_movement = {
+    # V235b: destroyed/lost bases are never initialization failures.
+    if = {
+        limit = { foc_v235b_dqar_settlement_allowed = yes }
+        if = {
+            limit = {
+                has_country_flag = foc_sw_new_republic_country
+                NOT = { has_country_flag = foc_v213_new_republic_inheritance_complete }
+            }
+            # V212 could set this before the Republic actually fell. Under V213 it is
+            # reserved for the completed same-country succession.
+            remove_country_flag = foc_republic_origin_dqar_inheritance_complete
+            set_global_flag = foc_v109_bloodline_resistance_authorized
+            set_global_flag = foc_v213_resistance_movement_authorized
+            set_country_flag = foc_v213_resistance_movement_prepared
+            foc_republic_origin_prepare_dqar_for_early_resistance = yes
+
+            if = {
+                limit = {
+                    exists = event_target:foc_khan_rebel_dqar_system
+                    exists = event_target:foc_khan_rebel_capital
+                    event_target:foc_khan_rebel_capital = { foc_v235b_is_dqar_planet = yes foc_v235b_base_planet_usable = yes }
+                }
+                event_target:foc_khan_rebel_dqar_system = {
+                    if = {
+                        limit = { exists = starbase }
+                        starbase = { set_owner = root }
+                    }
+                    else = {
+                        create_starbase = { size = starbase_starhold owner = root }
+                    }
+                    every_system_megastructure = { set_owner = root }
+                }
+                event_target:foc_khan_rebel_capital = {
+                    if = {
+                        limit = { is_colony = yes }
+                        set_owner = root
+                        set_controller = root
+                        every_planet_army = { set_owner = root }
+                    }
+                    else = {
+                        create_colony = { owner = root }
+                        generate_start_deposits_and_blockers = yes
+                        clear_blockers = yes
+                        colony = {
+                            inline_script = "foc_v232i_safe_colony_layout"
+                            generate_start_pops = yes
+                            generate_home_planet_final_pass = yes
+                        }
+                    }
+                    if = {
+                        limit = { NOT = { has_modifier = foc_dqar_hidden_resistance_base } }
+                        add_modifier = { modifier = foc_dqar_hidden_resistance_base days = -1 }
+                    }
+                }
+                set_country_flag = foc_v213_dqar_refuge_ready
+                remove_global_flag = foc_khan_rebel_preparing
+            }
+        }
+    }
+}
+
+# Country scope: a live post-Treaty Resistance. Reacquire and fully secure D'Qar
+# without creating another country. This is primarily an old-save repair path;
+# the ordinary V213 New Republic transition prepares the same refuge in advance.
+foc_v213_secure_dqar_for_current_resistance = {
+    # V235b: destroyed/lost bases are never initialization failures.
+    if = {
+        limit = { foc_v235b_dqar_settlement_allowed = yes }
+        foc_republic_origin_prepare_dqar_for_early_resistance = yes
+        if = {
+            limit = {
+                exists = event_target:foc_khan_rebel_dqar_system
+                exists = event_target:foc_khan_rebel_capital
+                event_target:foc_khan_rebel_capital = { foc_v235b_is_dqar_planet = yes foc_v235b_base_planet_usable = yes }
+            }
+            event_target:foc_khan_rebel_dqar_system = {
+                save_global_event_target_as = foc_khan_rebel_system
+                save_global_event_target_as = foc_khan_rebel_dqar_system
+                if = {
+                    limit = { exists = starbase }
+                    starbase = {
+                        set_owner = root
+                        set_starbase_size = starbase_starhold
+                        set_starbase_flag = foc_khan_rebel_base_starbase
+                    }
+                }
+                else = {
+                    create_starbase = {
+                        size = starbase_starhold
+                        owner = root
+                        effect = { set_starbase_flag = foc_khan_rebel_base_starbase }
+                    }
+                }
+                every_system_megastructure = { set_owner = root }
+                every_system_planet = {
+                    limit = { is_colony = yes }
+                    set_owner = root
+                    set_controller = root
+                    every_planet_army = { set_owner = root }
+                }
+                foc_v204_finalize_dqar_resistance_markers = yes
+            }
+            event_target:foc_khan_rebel_capital = {
+                set_owner = root
+                set_controller = root
+                every_planet_army = { set_owner = root }
+                if = {
+                    limit = { NOT = { has_modifier = foc_dqar_hidden_resistance_base } }
+                    add_modifier = { modifier = foc_dqar_hidden_resistance_base days = -1 }
+                }
+                set_capital = yes
+                save_global_event_target_as = foc_khan_rebel_capital
+            }
+            set_country_flag = foc_v213_dqar_refuge_ready
+            remove_global_flag = foc_khan_rebel_preparing
+        }
+    }
+}
+
+# Country scope: New Republic. Absorb obsolete AI-created Resistance states but
+# never delete a human player's already-existing Resistance; the global migration
+# event handles that case in the opposite direction.
+foc_v213_absorb_standalone_resistance_into_new_republic = {
+    remove_country_flag = foc_v213_old_standalone_resistance_absorbed
+    every_country = {
+        limit = {
+            NOT = { is_same_value = root }
+            OR = {
+                has_country_flag = foc_khan_first_order_resistance_country
+                has_country_flag = foc_republic_origin_post_treaty_rebel_country
+                has_country_flag = foc_republic_origin_post_treaty_player_rebels
+                AND = {
+                    has_country_flag = foc_khan_rebel_alliance_country
+                    NOT = { has_country_flag = foc_republic_origin_imperial_rebel_country }
+                    NOT = { has_country_flag = foc_republic_origin_rebel_alliance_country }
+                }
+            }
+            is_ai = yes
+        }
+        foc_v213_clone_named_rebel_leaders_from_this_country_to_root = yes
+        root = { set_country_flag = foc_v213_old_standalone_resistance_absorbed }
+        every_owned_megastructure = { set_owner = root }
+        every_owned_starbase = { set_owner = root }
+        every_owned_planet = { set_owner = root }
+        every_owned_fleet = { set_owner = root }
+        destroy_country = yes
+    }
+    if = {
+        limit = { has_country_flag = foc_v213_old_standalone_resistance_absorbed }
+        if = { limit = { exists = event_target:foc_khan_rebel_alliance } clear_global_event_target = foc_khan_rebel_alliance }
+        remove_global_flag = foc_khan_rebel_spawned
+        remove_global_flag = foc_khan_rebel_preparing
+        remove_global_flag = foc_khan_rebel_destroyed
+        set_global_flag = foc_v213_old_save_country_merge_complete
+    }
+    save_global_event_target_as = foc_sw_new_republic
+    save_global_event_target_as = foc_republic_origin_republic
+    foc_v213_dedupe_named_rebel_leaders = yes
+}
+
+# Country scope: canonical post-Treaty Resistance. Absorb every other AI-created
+# Resistance state into this exact country. This repairs legacy/corrupted saves
+# even when the New Republic has already disappeared, without touching the
+# separate pre-Treaty Imperial Rebellion or any unrelated faction.
+foc_v213_absorb_other_ai_resistance_into_current_resistance = {
+    remove_country_flag = foc_v213_other_resistance_absorbed_this_pass
+    every_country = {
+        limit = {
+            is_ai = yes
+            NOT = { is_same_value = root }
+            OR = {
+                has_country_flag = foc_khan_first_order_resistance_country
+                has_country_flag = foc_republic_origin_post_treaty_rebel_country
+                has_country_flag = foc_republic_origin_post_treaty_player_rebels
+                AND = {
+                    has_country_flag = foc_khan_rebel_alliance_country
+                    NOT = { has_country_flag = foc_republic_origin_imperial_rebel_country }
+                    NOT = { has_country_flag = foc_republic_origin_rebel_alliance_country }
+                }
+            }
+        }
+        foc_v213_clone_named_rebel_leaders_from_this_country_to_root = yes
+        root = { set_country_flag = foc_v213_other_resistance_absorbed_this_pass }
+        every_owned_megastructure = { set_owner = root }
+        every_owned_starbase = { set_owner = root }
+        every_owned_planet = { set_owner = root }
+        every_owned_fleet = { set_owner = root }
+        destroy_country = yes
+    }
+    if = {
+        limit = { has_country_flag = foc_v213_other_resistance_absorbed_this_pass }
+        set_country_flag = foc_khan_rebel_alliance_country
+        set_country_flag = foc_khan_first_order_resistance_country
+        country_event = { id = foc_v1718.10 days = 1 }
+        set_country_flag = foc_republic_origin_post_treaty_rebel_country
+        if = {
+            limit = { is_ai = no }
+            set_country_flag = foc_republic_origin_post_treaty_player_rebels
+            set_country_flag = foc_republic_origin_player_rebels
+        country_event = { id = foc_v1718.10 days = 1 }
+        }
+        set_global_flag = foc_khan_rebel_spawned
+        remove_global_flag = foc_khan_rebel_preparing
+        remove_global_flag = foc_khan_rebel_destroyed
+        save_global_event_target_as = foc_khan_rebel_alliance
+        owner_main_species = { save_global_event_target_as = foc_khan_rebel_species }
+        foc_v213_secure_dqar_for_current_resistance = yes
+        foc_v213_dedupe_named_rebel_leaders = yes
+        remove_country_flag = foc_v213_other_resistance_absorbed_this_pass
+        log = "FOC_V213_INHERITANCE: duplicate AI Resistance states were merged into the canonical surviving Resistance."
+    }
+}
+
+# Country scope: human V212 Resistance. Preserve the player country and merge the
+# separately-created AI New Republic into it for save compatibility.
+foc_v213_absorb_new_republic_into_existing_player_resistance = {
+    if = {
+        limit = {
+            is_ai = no
+            OR = {
+                has_country_flag = foc_khan_first_order_resistance_country
+                has_country_flag = foc_republic_origin_post_treaty_player_rebels
+                AND = {
+                    has_country_flag = foc_khan_rebel_alliance_country
+                    NOT = { has_country_flag = foc_republic_origin_imperial_rebel_country }
+                    NOT = { has_country_flag = foc_republic_origin_rebel_alliance_country }
+                }
+            }
+            any_country = { has_country_flag = foc_sw_new_republic_country }
+        }
+        foc_v235_ensure_resistance_storage = yes
+        every_country = {
+            limit = {
+                has_country_flag = foc_sw_new_republic_country
+                NOT = { is_same_value = root }
+            }
+            # V235: treasury is an asset too; transfer it before deleting the AI donor.
+            foc_v235_transfer_treasury_to_successor = { TARGET = root }
+            foc_v213_clone_named_rebel_leaders_from_this_country_to_root = yes
+            every_owned_megastructure = { set_owner = root }
+            every_owned_starbase = { set_owner = root }
+            every_owned_planet = { set_owner = root }
+            every_owned_fleet = { set_owner = root }
+            destroy_country = yes
+        }
+        if = { limit = { exists = event_target:foc_sw_new_republic } clear_global_event_target = foc_sw_new_republic }
+        if = { limit = { exists = event_target:foc_republic_origin_republic } clear_global_event_target = foc_republic_origin_republic }
+        if = { limit = { exists = event_target:foc_republic_origin_ai_new_republic } clear_global_event_target = foc_republic_origin_ai_new_republic }
+        foc_v213_dedupe_named_rebel_leaders = yes
+        set_country_flag = foc_v213_player_resistance_inherited_new_republic
+        set_country_flag = foc_republic_origin_dqar_inheritance_complete
+        set_country_flag = foc_khan_rebel_alliance_country
+        set_country_flag = foc_khan_first_order_resistance_country
+        country_event = { id = foc_v1718.10 days = 1 }
+        set_country_flag = foc_republic_origin_post_treaty_rebel_country
+        set_country_flag = foc_republic_origin_post_treaty_player_rebels
+        set_country_flag = foc_republic_origin_player_rebels
+        country_event = { id = foc_v1718.10 days = 1 }
+        set_global_flag = foc_khan_rebel_spawned
+        remove_global_flag = foc_khan_rebel_preparing
+        remove_global_flag = foc_khan_rebel_destroyed
+        save_global_event_target_as = foc_khan_rebel_alliance
+        owner_main_species = { save_global_event_target_as = foc_khan_rebel_species }
+
+        # V219 migration: a V214-V218 save may already contain the temporary
+        # split AI New Republic. After absorbing it, retire all split markers.
+        remove_country_flag = foc_v214_player_resistance_split_parent
+        remove_global_flag = foc_v214_new_republic_resistance_split_done
+        if = {
+            limit = { exists = event_target:foc_v214_split_new_republic }
+            clear_global_event_target = foc_v214_split_new_republic
+        }
+
+        # V218/V219: defer D'Qar rebind/finalization through the Resistance
+        # controller. This preserves V213 same-country inheritance while keeping
+        # the scripted-effect post-init recursion chain below the engine limit.
+        foc_v213_ensure_resistance_high_command = yes
+        set_global_flag = foc_v213_old_save_country_merge_complete
+        country_event = { id = foc_v213_inheritance.5 days = 1 }
+    }
+}
+
+# Country scope: keep D'Qar, but hand the fallen Republic's other territory and
+# megastructures to the First Order. Fleets remain with the inheriting Resistance.
+foc_v213_transfer_non_refuge_assets_to_first_order = {
+    if = {
+        limit = {
+            exists = event_target:foc_khan_first_order
+            exists = event_target:foc_khan_rebel_dqar_system
+        }
+        every_owned_megastructure = {
+            limit = {
+                solar_system = { NOT = { is_same_value = event_target:foc_khan_rebel_dqar_system } }
+            }
+            set_owner = event_target:foc_khan_first_order
+        }
+        every_owned_starbase = {
+            limit = {
+                solar_system = { NOT = { is_same_value = event_target:foc_khan_rebel_dqar_system } }
+            }
+            set_owner = event_target:foc_khan_first_order
+        }
+        every_owned_planet = {
+            limit = {
+                is_colony = yes
+                solar_system = { NOT = { is_same_value = event_target:foc_khan_rebel_dqar_system } }
+            }
+            set_owner = event_target:foc_khan_first_order
+        }
+    }
+}
+
+# Country scope: New Republic -> Resistance, same country object.
+foc_v213_convert_new_republic_to_resistance = {
+    # V235b: destroyed/lost bases are never initialization failures.
+    if = {
+        limit = { foc_v235b_dqar_settlement_allowed = yes }
+        if = {
+            limit = {
+                has_country_flag = foc_sw_new_republic_country
+                NOT = { has_country_flag = foc_v213_new_republic_inheritance_complete }
+            }
+            set_country_flag = foc_v213_new_republic_inheritance_executing
+            foc_v213_prepare_resistance_movement = yes
+
+            if = {
+                limit = {
+                    exists = event_target:foc_khan_first_order
+                    exists = event_target:foc_khan_rebel_dqar_system
+                    exists = event_target:foc_khan_rebel_capital
+                    event_target:foc_khan_rebel_capital = { foc_v235b_is_dqar_planet = yes foc_v235b_base_planet_usable = yes }
+                }
+                foc_v235_begin_player_treasury_succession = yes
+                foc_v235_ensure_resistance_storage = yes
+                foc_v213_absorb_standalone_resistance_into_new_republic = yes
+
+                # Secure a live refuge before transferring any other colony.
+                event_target:foc_khan_rebel_dqar_system = {
+                    if = {
+                        limit = { exists = starbase }
+                        starbase = {
+                            set_owner = root
+                            set_starbase_size = starbase_starhold
+                            set_starbase_flag = foc_khan_rebel_base_starbase
+                        }
+                    }
+                    else = {
+                        create_starbase = {
+                            size = starbase_starhold
+                            owner = root
+                            effect = { set_starbase_flag = foc_khan_rebel_base_starbase }
+                        }
+                    }
+                    every_system_megastructure = { set_owner = root }
+                    every_system_planet = {
+                        limit = { is_colony = yes }
+                        set_owner = root
+                        set_controller = root
+                        every_planet_army = { set_owner = root }
+                    }
+                    foc_v204_finalize_dqar_resistance_markers = yes
+                }
+                event_target:foc_khan_rebel_capital = {
+                    set_owner = root
+                    set_controller = root
+                    every_planet_army = { set_owner = root }
+                    set_capital = yes
+                    save_global_event_target_as = foc_khan_rebel_capital
+                }
+
+                foc_v213_transfer_non_refuge_assets_to_first_order = yes
+
+                set_name = "FOC_KHAN_RESISTANCE"
+                change_country_flag = {
+                    icon = { category = "rebels" file = "rebel1.dds" }
+                    background = { category = "backgrounds" file = "00_solid.dds" }
+                    colors = { "red" "white" "null" "null" }
+                }
+                remove_country_flag = foc_sw_new_republic_country
+                remove_country_flag = foc_sw_scripted_fallen_empire
+                remove_country_flag = foc_sw_new_republic_awakened
+                remove_country_flag = foc_sw_new_republic_colossi_granted
+                remove_country_flag = foc_sw_economy_307_initialized
+                remove_country_flag = foc_republic_origin_original_new_republic_fe_configured
+                remove_country_flag = foc_republic_origin_ai_new_republic_after_dqar
+                remove_country_flag = foc_republic_origin_player_republic
+                remove_country_flag = foc_republic_origin_republic_country
+                remove_country_flag = foc_republic_origin_dqar_handover_pending
+                remove_country_flag = foc_republic_origin_dqar_handover_retry
+                remove_country_flag = foc_republic_origin_dqar_inheritance_executing
+                remove_country_flag = foc_v213_hosnian_impact_transition_pending
+                set_country_flag = foc_republic_origin_dqar_inheritance_complete
+                set_country_flag = foc_v213_new_republic_inheritance_complete
+                set_country_flag = fop_origin_bloodline_shown
+                set_country_flag = foc_khan_rebel_alliance_country
+                set_country_flag = foc_khan_first_order_resistance_country
+        country_event = { id = foc_v1718.10 days = 1 }
+                set_country_flag = foc_republic_origin_post_treaty_rebel_country
+                set_country_flag = foc_republic_origin_order_technology_locked
+                set_country_flag = foc_republic_origin_rebel_shipset_locked
+                if = {
+                    limit = { is_ai = no }
+                    set_country_flag = foc_republic_origin_post_treaty_player_rebels
+                    set_country_flag = foc_republic_origin_player_rebels
+        country_event = { id = foc_v1718.10 days = 1 }
+                }
+                # V232: Hosnian ends the Treaty order. Before V232 only the two
+                # economy modifiers below were removed, so the New Republic's
+                # peacetime package - the Military Reduction Act, post-war
+                # demobilisation and the awakened war economy - followed the same
+                # country object into the Resistance, which is a hunted insurgency
+                # and must not keep a galactic government's bonuses. Earlier eras
+                # are swept here too for old saves that reached this point through
+                # a path that never ran the Treaty cleanup.
+                foc_v232_clear_clone_wars_era_spirits = yes
+                foc_v232_clear_galactic_empire_era_spirits = yes
+                foc_v232_clear_rebellion_era_spirits = yes
+                foc_v232_clear_treaty_era_spirits = yes
+                remove_modifier = foc_sw_fallen_empire_economy_core
+                remove_modifier = foc_sw_new_republic_economy_focus
+                set_country_type = default
+                foc_republic_origin_adopt_rebel_starfighters = yes
+                set_graphical_culture = rebel_01
+                foc_saga_reculture_existing_ships = { CULTURE = rebel_01 }
+                set_city_graphical_culture = mammalian_01
+                if = { limit = { is_ai = yes } give_technology = { tech = tech_ssp_rebel_hyperspace message = no } }
+                if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } }
+                save_global_event_target_as = foc_khan_rebel_alliance
+                owner_main_species = { save_global_event_target_as = foc_khan_rebel_species }
+                if = { limit = { exists = event_target:foc_sw_new_republic } clear_global_event_target = foc_sw_new_republic }
+                if = { limit = { exists = event_target:foc_republic_origin_republic } clear_global_event_target = foc_republic_origin_republic }
+                if = { limit = { exists = event_target:foc_republic_origin_ai_new_republic } clear_global_event_target = foc_republic_origin_ai_new_republic }
+
+                set_global_flag = foc_khan_rebel_spawned
+                remove_global_flag = foc_khan_rebel_destroyed
+                remove_global_flag = foc_khan_rebel_preparing
+                set_global_flag = foc_sw_new_republic_defeated
+                set_global_flag = foc_sw_new_republic_absorbed_by_first_order
+                set_global_flag = foc_v213_new_republic_continued_as_resistance
+                set_global_flag = foc_khan_leia_expelled_announced
+                set_global_flag = foc_v109_bloodline_resistance_authorized
+
+                foc_v213_ensure_resistance_high_command = yes
+                foc_saga_open_new_republic_shipyards = yes
+                country_event = { id = foc_v134_support.3 }
+                country_event = { id = foc_v136_leia.1 }
+                country_event = { id = foc_khan_rebel.45 days = 1 }
+
+                establish_communications_no_message = event_target:foc_khan_first_order
+                set_faction_hostility = {
+                    target = event_target:foc_khan_first_order
+                    set_hostile = yes
+                    set_friendly = no
+                    set_neutral = no
+                }
+                event_target:foc_khan_first_order = {
+                    establish_communications_no_message = root
+                    set_faction_hostility = {
+                        target = root
+                        set_hostile = yes
+                        set_friendly = no
+                        set_neutral = no
+                    }
+                }
+
+                if = {
+                    limit = { is_ai = no }
+                    foc_republic_origin_clear_player_rebel_crisis_bonuses = yes
+                    foc_republic_origin_normalize_player_fleet_stance = yes
+                    country_event = { id = foc_republic_origin.192 days = 1 }
+                }
+                else = {
+                    every_owned_fleet = {
+                        limit = { any_owned_ship = { is_ship_class = shipclass_military } }
+                        set_fleet_flag = foc_khan_rebel_attack_fleet
+                        set_fleet_stance = aggressive
+                        set_aggro_range_measure_from = self
+                        set_aggro_range = 9999
+                    }
+                }
+
+                remove_country_flag = foc_v213_new_republic_inheritance_executing
+                log = "FOC_V213_INHERITANCE: New Republic continued in place as the D'Qar Resistance; no second country was created."
+
+                foc_v235_finish_player_treasury_succession = yes
+
+                # Keep government normalization last so a civic validation failure
+                # cannot interrupt ownership, identity or player-continuity changes.
+                change_government = {
+                    authority = auth_democratic
+                    cooldown = no
+                    remove_invalid_civics = yes
+                    civics = {
+                        civic = civic_idealistic_foundation
+                        civic = civic_parliamentary_system
+                    }
+                }
+            }
+        }
+    }
+}
+
+# Country scope: compatibility path for a V212 human Resistance that already
+# absorbed the AI New Republic before Hosnian fell.
+foc_v213_finalize_existing_resistance_after_hosnian = {
+    if = {
+        limit = {
+            has_country_flag = foc_v213_player_resistance_inherited_new_republic
+            has_global_flag = foc_story_hosnian_destroyed
+            NOT = { has_country_flag = foc_v213_new_republic_inheritance_complete }
+            exists = event_target:foc_khan_first_order
+        }
+        foc_v213_secure_dqar_for_current_resistance = yes
+        if = {
+            limit = {
+                exists = event_target:foc_khan_rebel_dqar_system
+                exists = event_target:foc_khan_rebel_capital
+            }
+            foc_v213_transfer_non_refuge_assets_to_first_order = yes
+            set_country_flag = foc_v213_new_republic_inheritance_complete
+            set_global_flag = foc_sw_new_republic_defeated
+            set_global_flag = foc_sw_new_republic_absorbed_by_first_order
+            set_global_flag = foc_v213_new_republic_continued_as_resistance
+            foc_v213_ensure_resistance_high_command = yes
+            country_event = { id = foc_republic_origin.192 days = 1 }
+            log = "FOC_V213_INHERITANCE: old V212 player Resistance finalized the inherited New Republic after Hosnian."
+        }
+    }
+}

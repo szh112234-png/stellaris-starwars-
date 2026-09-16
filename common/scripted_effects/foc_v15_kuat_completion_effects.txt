@@ -1,0 +1,80 @@
+# Country scope. Successful completion and legacy compensation share one reward.
+# The country armor reward and planet ring reward are separate: an unowned Kuat
+# stays pending, while an already serviced/destroyed ring is never rebuilt for free.
+foc_v15_complete_kuat_investment_rewards = {
+    if = {
+        limit = { foc_v15_kuat_expansion_really_completed = yes }
+        if = {
+            limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } }
+            if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } }
+        }
+        set_country_flag = foc_v15_kuat_durasteel_unlocked
+        country_event = { id = foc_v1718.10 }
+        if = {
+            limit = { NOT = { has_country_flag = foc_v15_kuat_ring_reward_resolved } }
+            save_event_target_as = foc_v15_kuat_expansion_owner
+            random_owned_planet = {
+                # Pegasus 4.4 owned-planet iterators return colony scope.
+                limit = {
+                    planet = {
+                        has_planet_flag = foc_sw_kuat_ring_anchor
+                        solar_system = { has_star_flag = foc_sw_kuat_home }
+                    
+                    }
+                }
+                planet = {
+                    if = {
+                        limit = {
+                            NOT = { has_planet_flag = foc_v15_kuat_ring_reward_serviced }
+                            NOT = { exists = orbital_defence }
+                            NOT = { has_carrier_flag = ruined_orbital_ring_planet }
+                            NOT = { has_carrier_flag = megastructure }
+                            NOT = { has_carrier_flag = has_megastructure }
+                            NOT = {
+                                any_megastructure = {
+                                    OR = {
+                                        is_megastructure_type = orbital_ring
+                                        is_megastructure_type = orbital_ring_ruined
+                                        is_megastructure_type = orbital_ring_restored
+                                    }
+                                }
+                            }
+                        }
+                        # Match the native orbital-ring completion cleanup.
+                        if = {
+                            limit = { has_orbital_station = yes }
+                            orbital_station = { dismantle = yes }
+                        }
+                        create_starbase = {
+                            size = orbital_ring_tier_3
+                            owner = event_target:foc_v15_kuat_expansion_owner
+                            effect = { foc_starbase_finish_scripted_shipyard_ring = yes }
+                        }
+                        set_carrier_flag = has_megastructure
+                    }
+                    # Only a ring, its construction/ruins or the prior reward marker
+                    # settles the reward. Unrelated carrier occupation stays pending.
+                    if = {
+                        limit = {
+                            OR = {
+                                has_planet_flag = foc_v15_kuat_ring_reward_serviced
+                                exists = orbital_defence
+                                has_carrier_flag = ruined_orbital_ring_planet
+                                any_megastructure = {
+                                    OR = {
+                                        is_megastructure_type = orbital_ring
+                                        is_megastructure_type = orbital_ring_ruined
+                                        is_megastructure_type = orbital_ring_restored
+                                    }
+                                }
+                            }
+                        }
+                        set_planet_flag = foc_v15_kuat_ring_reward_serviced
+                        owner = { set_country_flag = foc_v15_kuat_ring_reward_resolved }
+                    }
+                
+                }
+            }
+        }
+    }
+}

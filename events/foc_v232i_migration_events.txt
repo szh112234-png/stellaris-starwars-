@@ -1,0 +1,46 @@
+namespace = foc_v232i
+
+event = {
+    id = foc_v232i.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { NOT = { has_global_flag = foc_v232i_save_migrated } }
+    immediate = {
+        every_country = {
+            remove_modifier = foc_khan_rebel_logistics_245
+            remove_modifier = foc_republic_origin_rebellion_war_effort
+            remove_modifier = foc_republic_origin_rebellion_player_logistics
+            remove_modifier = foc_republic_origin_rebellion_player_logistics_lowest
+            remove_modifier = foc_republic_origin_rebellion_player_logistics_madness
+            if = {
+                limit = { is_variable_set = foc_v214_rebel_colony_logistics_stacks }
+                # A stale counter must not re-create a retired civil-war bonus after the Treaty.
+                if = {
+                    limit = {
+                        OR = {
+                            has_global_flag = foc_republic_origin_galactic_treaty
+                            has_country_flag = foc_republic_origin_arc_completed
+                            NOT = { has_country_flag = foc_republic_origin_imperial_rebel_country }
+                        }
+                    }
+                    set_variable = { which = foc_v214_rebel_colony_logistics_stacks value = 0 }
+                }
+                foc_v214_refresh_rebel_colony_logistics_modifier = yes
+            }
+            if = {
+                limit = {
+                    OR = { has_country_flag = foc_khan_first_order_country has_country_flag = foc_khan_final_order_country }
+                    exists = capital_scope
+                }
+                capital_scope = {
+                    if = {
+                        limit = { NOT = { has_building = building_robot_assembly_plant } NOT = { has_building = building_robot_assembly_complex } }
+                        foc_v231_seed_first_order_droid_pops = yes
+                    }
+                }
+            }
+        }
+        set_global_flag = foc_v232i_save_migrated
+        log = "FOC_V232I: retired wartime logistics removed; saved reward stacks migrated to 5%; crisis capital factories checked once."
+    }
+}

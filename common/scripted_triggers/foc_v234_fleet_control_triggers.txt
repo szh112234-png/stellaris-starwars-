@@ -1,0 +1,35 @@
+# V234 fleet scope: ship membership is used deliberately; stale fleet caches
+# must not filter the damaged formations out of diagnostics/manual repair.
+foc_v234_managed_regular_fleet = {
+    any_owned_ship = { is_ship_class = shipclass_military }
+    is_leased = no
+    OR = {
+        has_fleet_flag = foc_khan_final_order_attack_fleet
+        has_fleet_flag = foc_khan_final_order_guard_fleet
+        has_fleet_flag = foc_khan_first_order_attack_fleet
+        has_fleet_flag = foc_khan_first_order_guard_fleet
+        has_fleet_flag = foc_khan_rebel_attack_fleet
+        has_fleet_flag = foc_khan_rebel_guard_fleet
+        has_fleet_flag = foc_khan_rebel_stage_guard_311v
+        has_fleet_flag = foc_khan_supremacy_escort_fleet
+        has_fleet_flag = foc_phase1_captured_kuat_fleet
+        has_fleet_flag = foc_republic_origin_empire_isd_fleet
+        has_fleet_flag = foc_republic_origin_rebellion_fleet
+        has_fleet_flag = foc_republic_origin_republic_fleet
+        has_fleet_flag = foc_republic_origin_separatist_fleet
+        has_fleet_flag = foc_sw_imperial_executor_fleet
+        has_fleet_flag = foc_sw_imperial_remnant_isd_fleet
+        has_fleet_flag = foc_sw_new_republic_nebula_fleet
+        has_fleet_flag = foc_sw_new_republic_viscount_fleet
+        has_fleet_flag = foc_v109_scarif_guard
+    }
+    NOR = {
+        has_fleet_flag = foc_khan_rebel_home_arkship_fleet
+        has_fleet_flag = foc_millennium_falcon_unique_fleet
+        has_fleet_flag = foc_republic_origin_death_star_one_executor_reward_fleet
+        has_fleet_flag = foc_republic_origin_death_star_one_fleet
+        has_fleet_flag = foc_republic_origin_death_star_two_fleet
+        has_fleet_flag = foc_saga_cw_coruscant_strike_fleet
+        has_fleet_flag = foc_v231_home_one_fleet
+    }
+}

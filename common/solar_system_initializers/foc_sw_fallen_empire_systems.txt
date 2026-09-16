@@ -1,0 +1,784 @@
+# FOC 3.10 - Canonical five-system New Republic and five-system Imperial Remnant clusters.
+# SHIPGIRL-style edge layout: each five-system cluster is generated independently at an opposite galactic rim.
+
+foc_sw_hosnian_system = {
+    name = "NAME_FOC_SW_HOSNIAN_SYSTEM"
+    class = "sc_f"
+    usage = misc_system_init
+    flags = { foc_sw_hosnian_home foc_sw_new_republic_cluster }
+    max_instances = 1
+
+    init_effect = {
+        save_global_event_target_as = foc_sw_hosnian_system    }
+
+    planet = {
+        name = "NAME_FOC_SW_HOSNIAN_STAR"
+        class = "pc_f_star"
+        orbit_distance = 0
+        orbit_angle = 1
+        size = 22
+        has_ring = no
+    }
+    planet = {
+        name = "NAME_FOC_SW_HOSNIAN_PRIME"
+        class = "pc_continental"
+        orbit_distance = 85
+        orbit_angle = 25
+        size = 26
+        has_ring = no
+        flags = { foc_sw_hosnian_prime foc_sw_nr_colony }
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_lore_hosnian_senate_world days = -1 }
+        }
+    }
+    planet = {
+        name = "NAME_FOC_SW_HOSNIAN_MINOR"
+        class = "pc_ocean"
+        orbit_distance = 48
+        orbit_angle = 75
+        size = 19
+        has_ring = no
+        flags = { foc_sw_nr_colony foc_sw_hosnian_minor }
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_lore_hosnian_cosmopolitan_system days = -1 }
+        }
+    }
+    planet = {
+        name = "NAME_FOC_SW_HOSNIAN_3"
+        class = "pc_tropical"
+        flags = { foc_sw_hosnian_assembly_anchor foc_sw_nr_colony foc_v109_hosnian_3 }
+        orbit_distance = 46
+        orbit_angle = 125
+        size = 20
+        has_ring = no
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_lore_hosnian_cosmopolitan_system days = -1 }
+        }
+    }
+    planet = {
+        name = "NAME_FOC_SW_HOSNIAN_4"
+        class = "pc_arid"
+        flags = { foc_sw_nr_colony foc_v109_hosnian_4 }
+        orbit_distance = 54
+        orbit_angle = 175
+        size = 18
+        has_ring = no
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_lore_hosnian_cosmopolitan_system days = -1 }
+        }
+    }
+    planet = {
+        name = "NAME_FOC_SW_HOSNIAN_5"
+        class = "pc_alpine"
+        flags = { foc_sw_nr_colony foc_v109_hosnian_5 }
+        orbit_distance = 48
+        orbit_angle = 225
+        size = 17
+        has_ring = no
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_lore_hosnian_cosmopolitan_system days = -1 }
+        }
+    }
+}
+
+foc_sw_coruscant_system = {
+    name = "NAME_FOC_SW_CORUSCANT_SYSTEM"
+    class = "sc_a"
+    usage = misc_system_init
+    flags = { foc_sw_coruscant_home foc_sw_new_republic_cluster }
+    max_instances = 1
+
+    init_effect = {
+        save_global_event_target_as = foc_sw_coruscant_system    }
+
+    planet = {
+        name = "NAME_FOC_V195_CORUSCANT_PRIME_STAR"
+        class = "pc_a_star"
+        orbit_distance = 0
+        orbit_angle = 1
+        size = 22
+        has_ring = no
+    }
+    planet = {
+        name = "NAME_FOC_SW_CORUSCANT"
+        class = "pc_city"
+        orbit_distance = 90
+        orbit_angle = 20
+        size = 30
+        has_ring = no
+        flags = { foc_sw_coruscant foc_sw_nr_colony }
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_lore_coruscant_galactic_metropolis days = -1 }
+        }
+        moon = {
+            name = "NAME_FOC_SW_CENTAX_1"
+            class = "pc_barren"
+            orbit_distance = 12
+            orbit_angle = 30
+            size = 6
+            has_ring = no
+            init_effect = { prevent_anomaly = yes }
+        }
+        moon = {
+            name = "NAME_FOC_SW_CENTAX_2"
+            class = "pc_barren_cold"
+            orbit_distance = 11
+            orbit_angle = 190
+            size = 5
+            has_ring = no
+            init_effect = { prevent_anomaly = yes }
+        }
+        moon = {
+            name = "NAME_FOC_V195_CENTAX_3"
+            class = "pc_continental"
+            orbit_distance = 10
+            orbit_angle = 260
+            size = 10
+            has_ring = no
+            flags = { foc_sw_nr_colony foc_v195_centax_3 }
+            init_effect = {
+                prevent_anomaly = yes
+                add_modifier = { modifier = foc_lore_core_world_support_network days = -1 }
+            }
+        }
+        moon = {
+            name = "NAME_FOC_V195_HESPERIDIUM"
+            class = "pc_gaia"
+            orbit_distance = 12
+            orbit_angle = 330
+            size = 12
+            has_ring = no
+            flags = { foc_sw_nr_colony foc_v195_hesperidium }
+            init_effect = {
+                prevent_anomaly = yes
+                add_modifier = { modifier = foc_lore_core_world_support_network days = -1 }
+            }
+        }
+    }
+    planet = {
+        name = "NAME_FOC_SW_CORUSCANT_MINOR"
+        class = "pc_continental"
+        orbit_distance = 44
+        orbit_angle = 55
+        size = 17
+        has_ring = no
+        flags = { foc_sw_coruscant_minor }
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_lore_core_world_support_network days = -1 }
+        }
+    }
+    planet = {
+        name = "NAME_FOC_SW_TAUSEN_4"
+        class = "pc_alpine"
+        orbit_distance = 44
+        orbit_angle = 90
+        size = 15
+        has_ring = no
+        flags = { foc_sw_tausen_4 }
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_lore_core_world_support_network days = -1 }
+        }
+    }
+    planet = {
+        name = "NAME_FOC_SW_TAUSEN_7"
+        class = "pc_arid"
+        orbit_distance = 44
+        orbit_angle = 125
+        size = 16
+        has_ring = no
+        flags = { foc_sw_tausen_7 }
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_lore_core_world_support_network days = -1 }
+        }
+    }
+    planet = {
+        name = "NAME_FOC_SW_CORUSCANT_5"
+        class = "pc_barren"
+        orbit_distance = 42
+        orbit_angle = 160
+        size = 11
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+    planet = {
+        name = "NAME_FOC_SW_CORUSCANT_6"
+        class = "pc_molten"
+        orbit_distance = 42
+        orbit_angle = 195
+        size = 13
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+    planet = {
+        name = "NAME_FOC_SW_CORUSCANT_7"
+        class = "pc_gas_giant"
+        orbit_distance = 50
+        orbit_angle = 230
+        size = 30
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+    planet = {
+        name = "NAME_FOC_SW_CORUSCANT_8"
+        class = "pc_frozen"
+        orbit_distance = 46
+        orbit_angle = 265
+        size = 14
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+    planet = {
+        name = "NAME_FOC_SW_CORUSCANT_9"
+        class = "pc_barren_cold"
+        orbit_distance = 44
+        orbit_angle = 300
+        size = 12
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+}
+
+foc_sw_kuat_system = {
+    name = "NAME_FOC_SW_KUAT_SYSTEM"
+    class = "sc_f"
+    usage = misc_system_init
+    flags = { foc_sw_kuat_home foc_sw_new_republic_cluster }
+    max_instances = 1
+
+    init_effect = {
+        save_global_event_target_as = foc_sw_kuat_system    }
+
+    planet = {
+        name = "NAME_FOC_SW_KUAT_PRIME"
+        class = "pc_f_star"
+        orbit_distance = 0
+        orbit_angle = 1
+        size = 22
+        has_ring = no
+    }
+    planet = {
+        name = "NAME_FOC_SW_KUAT"
+        class = "pc_continental"
+        orbit_distance = 90
+        orbit_angle = 20
+        size = 26
+        has_ring = no
+        flags = { foc_sw_kuat foc_sw_kuat_ring_anchor foc_sw_nr_colony }
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_lore_kuat_orbital_shipbuilding days = -1 }
+        }
+    }
+    planet = {
+        name = "NAME_FOC_SW_KUAT_II"
+        class = "pc_barren"
+        orbit_distance = 44
+        orbit_angle = 90
+        size = 13
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+    planet = {
+        name = "NAME_FOC_SW_KUAT_III"
+        class = "pc_barren"
+        orbit_distance = 44
+        orbit_angle = 125
+        size = 13
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+    planet = {
+        name = "NAME_FOC_SW_KUAT_IV"
+        class = "pc_molten"
+        orbit_distance = 44
+        orbit_angle = 160
+        size = 13
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+    planet = {
+        name = "NAME_FOC_SW_KUAT_V"
+        class = "pc_gas_giant"
+        orbit_distance = 52
+        orbit_angle = 195
+        size = 28
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+    planet = {
+        name = "NAME_FOC_SW_KUAT_VI"
+        class = "pc_gas_giant"
+        orbit_distance = 54
+        orbit_angle = 230
+        size = 28
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+    planet = {
+        name = "NAME_FOC_SW_KUAT_VII"
+        class = "pc_frozen"
+        orbit_distance = 46
+        orbit_angle = 265
+        size = 13
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+    planet = {
+        name = "NAME_FOC_SW_KUAT_VIII"
+        class = "pc_barren_cold"
+        orbit_distance = 44
+        orbit_angle = 300
+        size = 13
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+}
+
+foc_sw_chandrila_system = {
+    name = "NAME_FOC_SW_CHANDRILA_SYSTEM"
+    class = "sc_g"
+    usage = misc_system_init
+    flags = { foc_sw_chandrila_home foc_sw_new_republic_cluster }
+    max_instances = 1
+
+    init_effect = {
+        save_global_event_target_as = foc_sw_chandrila_system    }
+
+    planet = {
+        name = "NAME_FOC_SW_CHANDRILA_STAR"
+        class = "pc_g_star"
+        orbit_distance = 0
+        orbit_angle = 1
+        size = 22
+        has_ring = no
+    }
+    planet = {
+        name = "NAME_FOC_SW_CHANDRILA"
+        class = "pc_gaia"
+        orbit_distance = 90
+        orbit_angle = 30
+        size = 25
+        has_ring = no
+        flags = { foc_sw_chandrila foc_sw_nr_colony }
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_lore_chandrila_republican_traditions days = -1 }
+        }
+        moon = {
+            name = "NAME_FOC_SW_CHANDRILA_MOON"
+            class = "pc_barren"
+            orbit_distance = 13
+            orbit_angle = 80
+            size = 6
+            has_ring = no
+            init_effect = { prevent_anomaly = yes }
+        }
+    }
+    planet = {
+        name = "NAME_FOC_SW_CHANDRILA_II"
+        class = "pc_barren"
+        flags = { foc_sw_chandrila_science_anchor }
+        orbit_distance = 58
+        orbit_angle = 110
+        size = 14
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+    planet = {
+        name = "NAME_FOC_SW_CHANDRILA_III"
+        class = "pc_barren_cold"
+        orbit_distance = 60
+        orbit_angle = 200
+        size = 13
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+}
+
+foc_sw_akiva_system = {
+    name = "NAME_FOC_SW_AKIVA_SYSTEM"
+    class = "sc_neutron_star"
+    usage = misc_system_init
+    flags = { foc_sw_akiva_home foc_sw_new_republic_cluster }
+    max_instances = 1
+
+    init_effect = {
+        save_global_event_target_as = foc_sw_akiva_system    }
+
+    planet = {
+        name = "NAME_FOC_SW_AKIVA_NEUTRON_STAR"
+        class = "pc_neutron_star"
+        orbit_distance = 0
+        orbit_angle = 1
+        size = 22
+        has_ring = no
+    }
+    asteroid_belt = { type = rocky_asteroid_belt radius = 330 }
+    planet = {
+        name = "NAME_FOC_SW_AKIVA"
+        class = "pc_tropical"
+        orbit_distance = 90
+        orbit_angle = 25
+        size = 24
+        has_ring = no
+        flags = { foc_sw_akiva foc_sw_nr_colony }
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_lore_akiva_droid_foundries days = -1 }
+        }
+    }
+    planet = {
+        name = "NAME_FOC_SW_AKIVA_II"
+        class = "pc_gas_giant"
+        orbit_distance = 58
+        orbit_angle = 165
+        size = 29
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+    planet = {
+        name = "NAME_FOC_SW_AKIVA_III"
+        class = "pc_gas_giant"
+        orbit_distance = 62
+        orbit_angle = 220
+        size = 34
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+    planet = {
+        name = "NAME_FOC_SW_AKIVA_IV"
+        class = "pc_gas_giant"
+        orbit_distance = 60
+        orbit_angle = 275
+        size = 27
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+    planet = {
+        name = "NAME_FOC_SW_AKIVA_BELT"
+        class = "pc_asteroid"
+        orbit_distance = 48
+        orbit_angle = 315
+        size = 6
+        has_ring = no
+        flags = { foc_sw_akiva_catapult_anchor }
+        init_effect = { prevent_anomaly = yes }
+    }
+}
+
+foc_sw_bastion_system = {
+    name = "NAME_FOC_SW_BASTION_SYSTEM"
+    class = "sc_f"
+    usage = misc_system_init
+    flags = { foc_sw_bastion_home foc_sw_imperial_remnant_cluster }
+    max_instances = 1
+
+    init_effect = {
+        save_global_event_target_as = foc_sw_bastion_system    }
+
+    planet = {
+        name = "NAME_FOC_SW_BASTION_PRIME"
+        class = "pc_f_star"
+        orbit_distance = 0
+        orbit_angle = 1
+        size = 22
+        has_ring = no
+    }
+    planet = {
+        name = "NAME_FOC_SW_BASTION"
+        class = "pc_city"
+        orbit_distance = 90
+        orbit_angle = 20
+        size = 27
+        has_ring = no
+        flags = { foc_sw_bastion foc_sw_ir_colony }
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_lore_bastion_imperial_fortress days = -1 }
+        }
+    }
+    planet = {
+        name = "NAME_FOC_SW_BASTION_II"
+        class = "pc_barren"
+        flags = { foc_sw_bastion_command_anchor }
+        orbit_distance = 48
+        orbit_angle = 130
+        size = 13
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+    planet = {
+        name = "NAME_FOC_SW_BASTION_III"
+        class = "pc_molten"
+        flags = { foc_sw_bastion_sentry_anchor }
+        orbit_distance = 48
+        orbit_angle = 175
+        size = 13
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+    planet = {
+        name = "NAME_FOC_SW_BASTION_IV"
+        class = "pc_gas_giant"
+        orbit_distance = 56
+        orbit_angle = 220
+        size = 30
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+    planet = {
+        name = "NAME_FOC_SW_BASTION_V"
+        class = "pc_frozen"
+        orbit_distance = 48
+        orbit_angle = 265
+        size = 13
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+}
+
+foc_sw_bilbringi_system = {
+    name = "NAME_FOC_SW_BILBRINGI_SYSTEM"
+    class = "sc_a"
+    usage = misc_system_init
+    flags = { foc_sw_bilbringi_home foc_sw_imperial_remnant_cluster }
+    max_instances = 1
+
+    init_effect = {
+        save_global_event_target_as = foc_sw_bilbringi_system    }
+
+    planet = {
+        name = "NAME_FOC_SW_BILBRINGI_PRIME"
+        class = "pc_a_star"
+        orbit_distance = 0
+        orbit_angle = 1
+        size = 22
+        has_ring = no
+    }
+    asteroid_belt = { type = rocky_asteroid_belt radius = 320 }
+    planet = {
+        name = "NAME_FOC_SW_BILBRINGI"
+        class = "pc_continental"
+        orbit_distance = 90
+        orbit_angle = 25
+        size = 24
+        has_ring = no
+        flags = { foc_sw_bilbringi foc_sw_bilbringi_ring_anchor foc_sw_ir_colony }
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_lore_bilbringi_military_yards days = -1 }
+        }
+    }
+    planet = {
+        name = "NAME_FOC_SW_BILBRINGI_II"
+        class = "pc_barren"
+        orbit_distance = 46
+        orbit_angle = 125
+        size = 12
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+    planet = {
+        name = "NAME_FOC_SW_BILBRINGI_III"
+        class = "pc_barren"
+        orbit_distance = 46
+        orbit_angle = 170
+        size = 12
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+    planet = {
+        name = "NAME_FOC_SW_BILBRINGI_IV"
+        class = "pc_molten"
+        orbit_distance = 46
+        orbit_angle = 215
+        size = 13
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+    planet = {
+        name = "NAME_FOC_SW_BILBRINGI_V"
+        class = "pc_gas_giant"
+        orbit_distance = 56
+        orbit_angle = 260
+        size = 30
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+    planet = {
+        name = "NAME_FOC_SW_BILBRINGI_VI"
+        class = "pc_barren_cold"
+        orbit_distance = 48
+        orbit_angle = 305
+        size = 12
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+}
+
+foc_sw_yaga_minor_system = {
+    name = "NAME_FOC_SW_YAGA_MINOR_SYSTEM"
+    class = "sc_k"
+    usage = misc_system_init
+    flags = { foc_sw_yaga_minor_home foc_sw_imperial_remnant_cluster }
+    max_instances = 1
+
+    init_effect = {
+        save_global_event_target_as = foc_sw_yaga_minor_system    }
+
+    planet = {
+        name = "NAME_FOC_SW_YAGA_MINOR_PRIME"
+        class = "pc_k_star"
+        orbit_distance = 0
+        orbit_angle = 1
+        size = 22
+        has_ring = no
+    }
+    planet = {
+        name = "NAME_FOC_SW_YAGA_MINOR"
+        class = "pc_continental"
+        orbit_distance = 90
+        orbit_angle = 20
+        size = 24
+        has_ring = no
+        flags = { foc_sw_yaga_minor foc_sw_ir_colony }
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_lore_yaga_minor_ubiqtorate days = -1 }
+        }
+    }
+    planet = {
+        name = "NAME_FOC_SW_YAGA_MINOR_II"
+        class = "pc_barren"
+        orbit_distance = 52
+        orbit_angle = 155
+        size = 13
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+    planet = {
+        name = "NAME_FOC_SW_YAGA_MINOR_III"
+        class = "pc_gas_giant"
+        orbit_distance = 60
+        orbit_angle = 210
+        size = 30
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+    planet = {
+        name = "NAME_FOC_SW_YAGA_MINOR_IV"
+        class = "pc_frozen"
+        orbit_distance = 52
+        orbit_angle = 275
+        size = 13
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+}
+
+foc_sw_rendili_system = {
+    name = "NAME_FOC_SW_RENDILI_SYSTEM"
+    class = "sc_g"
+    usage = misc_system_init
+    flags = { foc_sw_rendili_home foc_sw_imperial_remnant_cluster }
+    max_instances = 1
+
+    init_effect = {
+        save_global_event_target_as = foc_sw_rendili_system    }
+
+    planet = {
+        name = "NAME_FOC_SW_RENDILI_PRIME"
+        class = "pc_g_star"
+        orbit_distance = 0
+        orbit_angle = 1
+        size = 22
+        has_ring = no
+    }
+    planet = {
+        name = "NAME_FOC_SW_RENDILI"
+        class = "pc_continental"
+        orbit_distance = 90
+        orbit_angle = 25
+        size = 25
+        has_ring = no
+        flags = { foc_sw_rendili foc_sw_ir_colony }
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_lore_rendili_stardrive days = -1 }
+        }
+    }
+    planet = {
+        name = "NAME_FOC_SW_RENDILI_II"
+        class = "pc_barren"
+        orbit_distance = 58
+        orbit_angle = 120
+        size = 13
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+    planet = {
+        name = "NAME_FOC_SW_RENDILI_III"
+        class = "pc_gas_giant"
+        orbit_distance = 66
+        orbit_angle = 220
+        size = 31
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+}
+
+foc_sw_jakku_system = {
+    name = "NAME_FOC_SW_JAKKU_SYSTEM"
+    class = "sc_k"
+    usage = misc_system_init
+    flags = { foc_sw_jakku_home foc_sw_imperial_remnant_cluster }
+    max_instances = 1
+
+    init_effect = {
+        save_global_event_target_as = foc_sw_jakku_system
+        create_ambient_object = {
+            type = "arkship_debris_wreckage"
+            location = this
+        }
+        last_created_ambient_object = {
+            set_location = { target = prev distance = 42 angle = 220 }
+            set_ambient_object_flag = foc_sw_jakku_battle_wreckage
+        }
+    }
+
+    planet = {
+        name = "NAME_FOC_SW_JAKKU_STAR"
+        class = "pc_k_star"
+        orbit_distance = 0
+        orbit_angle = 1
+        size = 22
+        has_ring = no
+        init_effect = {
+            prevent_anomaly = yes
+            save_global_event_target_as = foc_sw_jakku_star
+        }
+    }
+    planet = {
+        name = "NAME_FOC_SW_JAKKU"
+        class = "pc_desert"
+        orbit_distance = 95
+        orbit_angle = 35
+        size = 22
+        has_ring = no
+        flags = { foc_sw_jakku foc_sw_jakku_habitat_anchor foc_sw_ir_colony }
+        init_effect = {
+            prevent_anomaly = yes
+            add_deposit = d_foc_sw_jakku_star_destroyer_graveyard
+            add_modifier = { modifier = foc_lore_jakku_ship_graveyard days = -1 }
+        }
+    }
+}

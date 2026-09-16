@@ -1,0 +1,551 @@
+namespace = foc_khan_supremacy_move
+
+# V71: reliable Supremacy pursuit controller.
+# D'Qar remains the fixed objective while it survives. Once D'Qar is lost, a
+# surviving Raddus becomes the highest-priority target. Because both flagships
+# are Arkship/starbase-class fleets, the Supremacy no longer relies on
+# auto_follow_fleet to chase Raddus. Instead, every few days it resolves the
+# Raddus fleet's CURRENT solar system and issues the Arkship-proven
+# auto_move_to_planet order against that system's real star. This makes the
+# pursuit follow Raddus system-to-system without set_location teleportation.
+# The dedicated Resurgent escort is still linked to Supremacy by foc_khan.4701.
+
+event = {
+    id = foc_khan_supremacy_move.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        NOT = { has_global_flag = foc_khan_crisis_finished }
+        any_country = {
+            OR = {
+                has_country_flag = foc_khan_first_order_country
+                has_country_flag = foc_khan_final_order_country
+            }
+            any_owned_fleet = {
+                exists = solar_system
+                is_in_combat = no
+                NOT = { has_fleet_flag = foc_khan_supremacy_order_cooldown_246 }
+                NOT = { has_fleet_flag = foc_khan_supremacy_raddus_chase_loop_v71 }
+                any_owned_ship = {
+                    has_ship_flag = foc_khan_supremacy_flagship
+                    is_disabled = no
+                }
+            }
+        }
+    }
+
+    immediate = {
+        every_country = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = foc_khan_final_order_country
+                }
+            }
+            every_owned_fleet = {
+                limit = {
+                    exists = solar_system
+                    is_in_combat = no
+                    NOT = { has_fleet_flag = foc_khan_supremacy_order_cooldown_246 }
+                    NOT = { has_fleet_flag = foc_khan_supremacy_raddus_chase_loop_v71 }
+                    any_owned_ship = {
+                        has_ship_flag = foc_khan_supremacy_flagship
+                        is_disabled = no
+                    }
+                }
+                set_fleet_flag = foc_khan_supremacy_fleet
+                remove_fleet_flag = foc_khan_first_order_attack_fleet
+                remove_fleet_flag = foc_khan_final_order_attack_fleet
+                fleet_event = { id = foc_khan_supremacy_move.2 days = 1 random = 2 }
+            }
+        }
+    }
+}
+
+# Main dispatch. After D'Qar falls, a live Raddus bypasses every static target
+# and hands control to the fast V71 pursuit loop (.5). Otherwise the original
+# colony -> hostile colony -> hostile fleet route is retained, but every move
+# target is now a genuine system planet/star scope rather than a fragile prev.
+fleet_event = {
+    id = foc_khan_supremacy_move.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        exists = this
+        exists = solar_system
+        is_in_combat = no
+        owner = {
+            OR = {
+                has_country_flag = foc_khan_first_order_country
+                has_country_flag = foc_khan_final_order_country
+            }
+        }
+        any_owned_ship = {
+            has_ship_flag = foc_khan_supremacy_flagship
+            is_disabled = no
+        }
+    }
+
+    immediate = {
+        save_event_target_as = foc_khan_supremacy_dispatch_fleet_245
+        owner = { save_event_target_as = foc_khan_supremacy_dispatch_owner_245 }
+        remove_fleet_flag = foc_khan_supremacy_order_active_245
+
+        # D'Qar loss starts the chase immediately. Country identity, rather than
+        # diplomatic hostility, locates Raddus so temporary relation/scope churn
+        # during the Resistance transition cannot make the target disappear.
+        if = {
+            limit = { has_global_flag = foc_khan_rebel_dqar_lost_311v }
+            random_country = {
+                limit = {
+                    has_country_flag = foc_khan_rebel_alliance_country
+                    any_owned_fleet = {
+                        any_owned_ship = {
+                            is_disabled = no
+                            OR = {
+                                has_ship_flag = foc_khan_rebel_home_arkship
+                                OR = { is_ship_size = foc_rebel_home_arkship_tier_3 is_ship_size = foc_rebel_home_arkship_tier_3_foc_lowest }
+                            }
+                        }
+                    }
+                }
+                random_owned_fleet = {
+                    limit = {
+                        any_owned_ship = {
+                            is_disabled = no
+                            OR = {
+                                has_ship_flag = foc_khan_rebel_home_arkship
+                                OR = { is_ship_size = foc_rebel_home_arkship_tier_3 is_ship_size = foc_rebel_home_arkship_tier_3_foc_lowest }
+                            }
+                        }
+                    }
+                    save_event_target_as = foc_khan_supremacy_raddus_fleet_v71
+                }
+            }
+        }
+
+        if = {
+            limit = { exists = event_target:foc_khan_supremacy_raddus_fleet_v71 }
+            remove_fleet_flag = foc_khan_supremacy_order_cooldown_246
+            set_fleet_flag = foc_khan_supremacy_raddus_chase_loop_v71
+            set_fleet_flag = foc_khan_supremacy_order_active_245
+            fleet_event = { id = foc_khan_supremacy_move.5 days = 1 }
+            log = "FOC_V71: D'Qar is lost; Supremacy switched to the dedicated Raddus pursuit loop."
+        }
+        else = {
+            # Arrival check for normal static objectives only. Raddus pursuit is
+            # handled above and therefore can never be trapped by a stale colony.
+            if = {
+                limit = {
+                    solar_system = {
+                        any_system_planet = {
+                            is_colony = yes
+                            exists = controller
+                            controller = {
+                                NOR = {
+                                    has_country_flag = foc_khan_first_order_country
+                                    has_country_flag = foc_khan_final_order_country
+                                    has_country_flag = foc_khan_submitted_first_order
+                                    has_country_flag = foc_khan_submitted_final_order
+                                }
+                                OR = {
+                                    has_country_flag = foc_khan_rebel_alliance_country
+                                    is_regular_empire = yes
+                                }
+                            }
+                        }
+                    }
+                }
+                set_aggro_range_measure_from = self
+                set_aggro_range = 9999
+                set_timed_fleet_flag = {
+                    flag = foc_khan_supremacy_order_cooldown_246
+                    days = 25
+                }
+            }
+            else = {
+                remove_auto_move_target = yes
+                clear_orders = yes
+                clear_fleet_actions = this
+                set_aggro_range_measure_from = self
+                set_aggro_range = 9999
+
+                # Rebel fixed colony has first priority while Raddus is absent or
+                # before D'Qar has fallen. Resolve the target through system_planet
+                # so a pc_ark ship-colony can never become an auto_move_to_planet target.
+                random_country = {
+                    limit = {
+                        has_country_flag = foc_khan_rebel_alliance_country
+                        any_owned_planet = { is_colony = yes }
+                    }
+                    save_event_target_as = foc_khan_supremacy_rebel_country_v71
+                }
+                if = {
+                    limit = { exists = event_target:foc_khan_supremacy_rebel_country_v71 }
+                    random_system = {
+                        limit = {
+                            any_system_planet = {
+                                is_colony = yes
+                                is_capital = yes
+                                exists = owner
+                                owner = { is_same_value = event_target:foc_khan_supremacy_rebel_country_v71 }
+                            }
+                        }
+                        random_system_planet = {
+                            limit = {
+                                is_colony = yes
+                                is_capital = yes
+                                exists = owner
+                                owner = { is_same_value = event_target:foc_khan_supremacy_rebel_country_v71 }
+                            }
+                            save_event_target_as = foc_khan_supremacy_target_planet_v71
+                        }
+                    }
+                    if = {
+                        limit = { NOT = { exists = event_target:foc_khan_supremacy_target_planet_v71 } }
+                        random_system = {
+                            limit = {
+                                any_system_planet = {
+                                    is_colony = yes
+                                    exists = owner
+                                    owner = { is_same_value = event_target:foc_khan_supremacy_rebel_country_v71 }
+                                }
+                            }
+                            random_system_planet = {
+                                limit = {
+                                    is_colony = yes
+                                    exists = owner
+                                    owner = { is_same_value = event_target:foc_khan_supremacy_rebel_country_v71 }
+                                }
+                                save_event_target_as = foc_khan_supremacy_target_planet_v71
+                            }
+                        }
+                    }
+                }
+                if = {
+                    limit = { exists = event_target:foc_khan_supremacy_target_planet_v71 }
+                    auto_move_to_planet = {
+                        target = event_target:foc_khan_supremacy_target_planet_v71
+                        clear_auto_move_on_arrival = no
+                    }
+                    set_fleet_flag = foc_khan_supremacy_order_active_245
+                }
+
+                # Otherwise attack a normal unsubjugated empire colony. Again,
+                # use a real system_planet target rather than colony->prev scope.
+                if = {
+                    limit = { NOT = { has_fleet_flag = foc_khan_supremacy_order_active_245 } }
+                    random_country = {
+                        limit = {
+                            is_regular_empire = yes
+                            NOR = {
+                                has_country_flag = foc_khan_first_order_country
+                                has_country_flag = foc_khan_final_order_country
+                                has_country_flag = foc_khan_submitted_first_order
+                                has_country_flag = foc_khan_submitted_final_order
+                            }
+                            any_owned_planet = { is_colony = yes }
+                        }
+                        save_event_target_as = foc_khan_supremacy_hostile_country_v71
+                    }
+                    if = {
+                        limit = { exists = event_target:foc_khan_supremacy_hostile_country_v71 }
+                        random_system = {
+                            limit = {
+                                any_system_planet = {
+                                    is_colony = yes
+                                    is_capital = yes
+                                    exists = owner
+                                    owner = { is_same_value = event_target:foc_khan_supremacy_hostile_country_v71 }
+                                }
+                            }
+                            random_system_planet = {
+                                limit = {
+                                    is_colony = yes
+                                    is_capital = yes
+                                    exists = owner
+                                    owner = { is_same_value = event_target:foc_khan_supremacy_hostile_country_v71 }
+                                }
+                                save_event_target_as = foc_khan_supremacy_target_planet_v71
+                            }
+                        }
+                        if = {
+                            limit = { NOT = { exists = event_target:foc_khan_supremacy_target_planet_v71 } }
+                            random_system = {
+                                limit = {
+                                    any_system_planet = {
+                                        is_colony = yes
+                                        exists = owner
+                                        owner = { is_same_value = event_target:foc_khan_supremacy_hostile_country_v71 }
+                                    }
+                                }
+                                random_system_planet = {
+                                    limit = {
+                                        is_colony = yes
+                                        exists = owner
+                                        owner = { is_same_value = event_target:foc_khan_supremacy_hostile_country_v71 }
+                                    }
+                                    save_event_target_as = foc_khan_supremacy_target_planet_v71
+                                }
+                            }
+                        }
+                    }
+                    if = {
+                        limit = { exists = event_target:foc_khan_supremacy_target_planet_v71 }
+                        auto_move_to_planet = {
+                            target = event_target:foc_khan_supremacy_target_planet_v71
+                            clear_auto_move_on_arrival = no
+                        }
+                        set_fleet_flag = foc_khan_supremacy_order_active_245
+                    }
+                }
+
+                # No colony available: pursue the current system of a hostile
+                # military fleet/starbase. Supremacy itself never uses
+                # auto_follow_fleet; its Arkship move command targets the real star.
+                if = {
+                    limit = { NOT = { has_fleet_flag = foc_khan_supremacy_order_active_245 } }
+                    closest_system = {
+                        max_steps = 100
+                        limit = {
+                            any_ship_in_system = {
+                                exists = owner
+                                is_disabled = no
+                                owner = {
+                                    NOR = {
+                                        has_country_flag = foc_khan_first_order_country
+                                        has_country_flag = foc_khan_final_order_country
+                                    }
+                                }
+                                OR = {
+                                    is_ship_class = shipclass_military
+                                    is_ship_class = shipclass_starbase
+                                }
+                            }
+                        }
+                        random_system_planet = {
+                            limit = { is_star = yes }
+                            save_event_target_as = foc_khan_supremacy_hostile_system_star_v71
+                        }
+                    }
+                    if = {
+                        limit = { exists = event_target:foc_khan_supremacy_hostile_system_star_v71 }
+                        auto_move_to_planet = {
+                            target = event_target:foc_khan_supremacy_hostile_system_star_v71
+                            clear_auto_move_on_arrival = no
+                        }
+                        set_fleet_flag = foc_khan_supremacy_order_active_245
+                    }
+                }
+
+                if = {
+                    limit = { has_fleet_flag = foc_khan_supremacy_order_active_245 }
+                    set_timed_fleet_flag = {
+                        flag = foc_khan_supremacy_order_cooldown_246
+                        days = 25
+                    }
+                }
+                else = {
+                    fleet_event = { id = foc_khan_supremacy_move.2 days = 30 random = 5 }
+                }
+                remove_fleet_flag = foc_khan_supremacy_order_active_245
+            }
+        }
+    }
+}
+
+# V71 fast Raddus pursuit loop. It re-resolves Raddus every seven days and moves
+# Supremacy to the star in Raddus's current system. If Raddus changes systems,
+# the next tick replaces the old route. If Raddus dies, the loop releases the
+# flagship back to the normal target controller immediately.
+fleet_event = {
+    id = foc_khan_supremacy_move.5
+    hide_window = yes
+    is_triggered_only = yes
+
+    # V161: collapse all serialized duplicate V71 pursuit chains into one.
+    # Old saves may contain dozens of already-queued .5 events; the first event
+    # in a six-day window acquires this lock and all other queued copies expire
+    # harmlessly instead of each spawning another seven-day chain.
+    trigger = {
+        exists = this
+        exists = solar_system
+        NOT = { has_fleet_flag = foc_v161_supremacy_pursuit_tick_lock }
+        owner = {
+            OR = {
+                has_country_flag = foc_khan_first_order_country
+                has_country_flag = foc_khan_final_order_country
+            }
+        }
+        any_owned_ship = {
+            has_ship_flag = foc_khan_supremacy_flagship
+            is_disabled = no
+        }
+    }
+
+    immediate = {
+        set_timed_fleet_flag = {
+            flag = foc_v161_supremacy_pursuit_tick_lock
+            days = 6
+        }
+        set_fleet_flag = foc_khan_supremacy_fleet
+        remove_fleet_flag = foc_khan_first_order_attack_fleet
+        remove_fleet_flag = foc_khan_final_order_attack_fleet
+        remove_fleet_flag = foc_khan_supremacy_order_cooldown_246
+
+        if = {
+            limit = { is_in_combat = yes }
+            set_fleet_flag = foc_khan_supremacy_raddus_chase_loop_v71
+            # Keep one and only one recurrence cadence.
+            fleet_event = { id = foc_khan_supremacy_move.5 days = 7 }
+        }
+        else = {
+            # V161: never context-switch fleet -> solar_system. A mobile Arkship
+            # in FTL has no valid solar_system scope and V158 repeatedly errored
+            # here. Resolve the system from the carried pc_ark colony instead;
+            # while Raddus is in FTL no system matches and this tick simply waits.
+            random_system = {
+                limit = {
+                    any_system_planet = {
+                        is_planet_class = pc_ark
+                        exists = owner
+                        owner = { has_country_flag = foc_khan_rebel_alliance_country }
+                    }
+                }
+                random_system_planet = {
+                    limit = { is_star = yes }
+                    save_event_target_as = foc_khan_supremacy_raddus_system_star_v71
+                }
+            }
+
+            if = {
+                limit = { exists = event_target:foc_khan_supremacy_raddus_system_star_v71 }
+                set_fleet_flag = foc_khan_supremacy_raddus_chase_loop_v71
+
+                # Re-issue the expensive Arkship route only when Raddus actually
+                # changes systems. Repeating clear_orders/auto_move every tick was
+                # causing severe command churn even after duplicate chains formed.
+                if = {
+                    limit = {
+                        OR = {
+                            NOT = { exists = event_target:foc_v161_supremacy_last_raddus_star }
+                            event_target:foc_khan_supremacy_raddus_system_star_v71 = {
+                                NOT = { is_same_value = event_target:foc_v161_supremacy_last_raddus_star }
+                            }
+                        }
+                    }
+                    remove_auto_move_target = yes
+                    clear_orders = yes
+                    clear_fleet_actions = this
+                    set_aggro_range_measure_from = self
+                    set_aggro_range = 9999
+                    auto_move_to_planet = {
+                        target = event_target:foc_khan_supremacy_raddus_system_star_v71
+                        clear_auto_move_on_arrival = no
+                    }
+                    event_target:foc_khan_supremacy_raddus_system_star_v71 = {
+                        save_global_event_target_as = foc_v161_supremacy_last_raddus_star
+                    }
+                    log = "FOC_V161: Supremacy pursuit retargeted because Raddus changed solar systems."
+                }
+                fleet_event = { id = foc_khan_supremacy_move.5 days = 7 }
+            }
+            else = {
+                # Raddus may simply be in FTL. Keep the chase alive without
+                # clearing orders or creating a parallel chain. If the Rebel
+                # Arkship is truly gone, the normal monthly dispatcher will take
+                # over after the chase flag is released below.
+                if = {
+                    limit = {
+                        any_country = {
+                            has_country_flag = foc_khan_rebel_alliance_country
+                            any_owned_ship = {
+                                is_disabled = no
+                                OR = {
+                                    has_ship_flag = foc_khan_rebel_home_arkship
+                                    OR = {
+                                        is_ship_size = foc_rebel_home_arkship_tier_3
+                                        is_ship_size = foc_rebel_home_arkship_tier_3_foc_lowest
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    set_fleet_flag = foc_khan_supremacy_raddus_chase_loop_v71
+                    fleet_event = { id = foc_khan_supremacy_move.5 days = 7 }
+                }
+                else = {
+                    remove_fleet_flag = foc_khan_supremacy_raddus_chase_loop_v71
+                    remove_auto_move_target = yes
+                    clear_orders = yes
+                    clear_fleet_actions = this
+                    log = "FOC_V161: Raddus no longer exists; Supremacy returned to normal target selection."
+                    fleet_event = { id = foc_khan_supremacy_move.2 days = 3 }
+                }
+            }
+        }
+    }
+}
+
+# V71 old-save migration. Clear serialized pre-V71 route state once and hand the
+# flagship to the current controller. Existing saves that already lost D'Qar will
+# immediately discover Raddus and enter .5.
+event = {
+    id = foc_khan_supremacy_move.4
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        any_country = {
+            OR = {
+                has_country_flag = foc_khan_first_order_country
+                has_country_flag = foc_khan_final_order_country
+            }
+            NOT = { has_country_flag = foc_khan_supremacy_native_route_restored_v71 }
+            any_owned_fleet = {
+                any_owned_ship = { has_ship_flag = foc_khan_supremacy_flagship }
+            }
+        }
+    }
+
+    immediate = {
+        every_country = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = foc_khan_final_order_country
+                }
+                NOT = { has_country_flag = foc_khan_supremacy_native_route_restored_v71 }
+                any_owned_fleet = {
+                    any_owned_ship = { has_ship_flag = foc_khan_supremacy_flagship }
+                }
+            }
+            set_country_flag = foc_khan_supremacy_native_route_restored_v71
+            every_owned_fleet = {
+                limit = {
+                    any_owned_ship = { has_ship_flag = foc_khan_supremacy_flagship }
+                }
+                set_fleet_flag = foc_khan_supremacy_fleet
+                remove_fleet_flag = foc_khan_first_order_attack_fleet
+                remove_fleet_flag = foc_khan_final_order_attack_fleet
+                remove_fleet_flag = foc_khan_supremacy_order_cooldown_v65
+                remove_fleet_flag = foc_khan_supremacy_order_cooldown_246
+                remove_fleet_flag = foc_khan_supremacy_raddus_chase_loop_v71
+                remove_auto_move_target = yes
+                clear_orders = yes
+                clear_fleet_actions = this
+                fleet_event = { id = foc_khan_supremacy_move.2 days = 1 }
+            }
+        }
+    }
+}
+
+# Old save compatibility ID.
+fleet_event = {
+    id = foc_khan_supremacy_move.3
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { always = no }
+}

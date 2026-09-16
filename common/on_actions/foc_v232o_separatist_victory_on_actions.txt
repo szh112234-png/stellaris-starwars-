@@ -1,0 +1,6 @@
+# From supplied vanilla common/on_actions/00_on_actions.txt:
+# on_leader_death: This = Country, From = dead Leader. Fired != death.
+on_leader_death = { events = { foc_v232o_cis.1 } }
+on_single_player_save_game_load = { events = { foc_v232o_cis.2 } }
+# Global scope, so existing wars also get the fallback regardless of country type.
+on_monthly_pulse = { events = { foc_v232o_cis.2 } }

@@ -1,0 +1,911 @@
+# Independent crisis fleet quantity. Combat strength is configured separately.
+# Four actual quantity sets are preserved; former High and Madness shared counts.
+
+foc_khan_spawn_first_resurgent_attack_fleet = {
+    create_fleet = {
+        name = random
+        effect = {
+            set_owner = event_target:foc_khan_first_order
+            # V15 full-armor prerequisite: foc_v15_defense_4a1db7a18097.
+            owner = {
+                if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+            }
+            
+            # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_3 message = no } } }
+}
+            
+
+            
+
+            
+            set_location = event_target:foc_khan_starkiller_anchor
+            if = {
+                limit = { has_global_flag = foc_khan_fleet_scale_low }
+                while = { count = 7 create_ship = { name = random design = "NAME_FOC_KHAN_RESURGENT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } } }
+            }
+            else_if = {
+                limit = { has_global_flag = foc_khan_fleet_scale_standard }
+                while = { count = 14 create_ship = { name = random design = "NAME_FOC_KHAN_RESURGENT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } } }
+            }
+            else_if = {
+                limit = { has_global_flag = foc_khan_fleet_scale_large }
+                while = { count = 20 create_ship = { name = random design = "NAME_FOC_KHAN_RESURGENT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } } }
+            }
+            else = {
+                while = { count = 27 create_ship = { name = random design = "NAME_FOC_KHAN_RESURGENT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } } }
+            }
+            set_fleet_flag = foc_khan_first_order_attack_fleet
+            set_aggro_range_measure_from = self
+            set_aggro_range = 500
+            set_formation_scale = 3
+        }
+        settings = { can_upgrade = no can_disband = yes can_change_composition = no spawn_debris = yes ai_ignore_strength = yes }
+    }
+}
+
+foc_khan_spawn_first_supremacy_resurgent_fleet = {
+    create_fleet = {
+        name = "FOC_KHAN_SUPREMACY_ESCORT"
+        effect = {
+            set_owner = event_target:foc_khan_first_order
+            # V15 full-armor prerequisite: foc_v15_defense_a83ce5216199.
+            owner = {
+                if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+            }
+            
+            # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_3 message = no } } }
+}
+            
+
+            
+
+            
+            set_location = event_target:foc_khan_starkiller_anchor
+            if = {
+                limit = { has_global_flag = foc_khan_fleet_scale_low }
+                while = { count = 7 create_ship = { name = random design = "NAME_FOC_KHAN_RESURGENT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } } }
+            }
+            else_if = {
+                limit = { has_global_flag = foc_khan_fleet_scale_standard }
+                while = { count = 14 create_ship = { name = random design = "NAME_FOC_KHAN_RESURGENT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } } }
+            }
+            else_if = {
+                limit = { has_global_flag = foc_khan_fleet_scale_large }
+                while = { count = 20 create_ship = { name = random design = "NAME_FOC_KHAN_RESURGENT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } } }
+            }
+            else = {
+                while = { count = 27 create_ship = { name = random design = "NAME_FOC_KHAN_RESURGENT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } } }
+            }
+            set_fleet_flag = foc_khan_supremacy_escort_fleet
+            set_aggro_range_measure_from = self
+            set_aggro_range = 300
+            set_formation_scale = 3
+        }
+        settings = { can_upgrade = no can_disband = yes can_change_composition = no spawn_debris = yes ai_ignore_strength = yes }
+    }
+}
+
+foc_khan_spawn_first_guard_fleet = {
+    # V234: player-owned formations must not inherit native AI garrison mode.
+    if = {
+        limit = { event_target:foc_khan_first_order = { is_ai = no } }
+        create_fleet = {
+            name = "FOC_KHAN_FIRST_ORDER_RESURGENT_GUARD"
+            effect = {
+                set_owner = event_target:foc_khan_first_order
+                # V15 full-armor prerequisite: foc_v15_defense_306d30c4b315.
+                owner = {
+                    if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+                }
+                
+                # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_3 message = no } } }
+}
+                
+
+                
+
+                
+                set_location = event_target:foc_khan_starkiller_anchor
+                if = {
+                    limit = { has_global_flag = foc_khan_fleet_scale_low }
+                    while = { count = 7 create_ship = { name = random design = "NAME_FOC_KHAN_RESURGENT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } } }
+                }
+                else_if = {
+                    limit = { has_global_flag = foc_khan_fleet_scale_standard }
+                    while = { count = 14 create_ship = { name = random design = "NAME_FOC_KHAN_RESURGENT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } } }
+                }
+                else_if = {
+                    limit = { has_global_flag = foc_khan_fleet_scale_large }
+                    while = { count = 20 create_ship = { name = random design = "NAME_FOC_KHAN_RESURGENT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } } }
+                }
+                else = {
+                    while = { count = 27 create_ship = { name = random design = "NAME_FOC_KHAN_RESURGENT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } } }
+                }
+                set_fleet_flag = foc_khan_first_order_guard_fleet
+                set_fleet_stance = passive
+                set_aggro_range_measure_from = self
+                set_aggro_range = 300
+                set_formation_scale = 3
+            }
+            settings = { garrison = no can_upgrade = no can_disband = yes can_change_composition = no spawn_debris = yes ai_ignore_strength = yes }
+        }
+    }
+    else = {
+        create_fleet = {
+            name = "FOC_KHAN_FIRST_ORDER_RESURGENT_GUARD"
+            effect = {
+                set_owner = event_target:foc_khan_first_order
+                # V15 full-armor prerequisite: foc_v15_defense_416c725cd105.
+                owner = {
+                    if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+                }
+                
+                # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_3 message = no } } }
+}
+                
+
+                
+
+                
+                set_location = event_target:foc_khan_starkiller_anchor
+                if = {
+                    limit = { has_global_flag = foc_khan_fleet_scale_low }
+                    while = { count = 7 create_ship = { name = random design = "NAME_FOC_KHAN_RESURGENT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } } }
+                }
+                else_if = {
+                    limit = { has_global_flag = foc_khan_fleet_scale_standard }
+                    while = { count = 14 create_ship = { name = random design = "NAME_FOC_KHAN_RESURGENT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } } }
+                }
+                else_if = {
+                    limit = { has_global_flag = foc_khan_fleet_scale_large }
+                    while = { count = 20 create_ship = { name = random design = "NAME_FOC_KHAN_RESURGENT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } } }
+                }
+                else = {
+                    while = { count = 27 create_ship = { name = random design = "NAME_FOC_KHAN_RESURGENT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } } }
+                }
+                set_fleet_flag = foc_khan_first_order_guard_fleet
+                set_fleet_stance = passive
+                set_aggro_range_measure_from = self
+                set_aggro_range = 300
+                set_formation_scale = 3
+            }
+            settings = { garrison = yes can_upgrade = no can_disband = yes can_change_composition = no spawn_debris = yes ai_ignore_strength = yes }
+        }
+    }
+}
+
+# Initial Phase-I pure-Resurgent fleets remain 2 / 4 / 6 / 8 / 8. Exactly one
+# fleet follows the Supremacy. Lowest keeps one home guard because its total is
+# only two; every other tier receives two home guards. All remaining fleets attack.
+foc_khan_spawn_first_initial_fleet_package = {
+    if = {
+        limit = { has_global_flag = foc_khan_fleet_scale_low }
+        foc_khan_spawn_first_supremacy_resurgent_fleet = yes
+        foc_khan_spawn_first_guard_fleet = yes
+    }
+    else_if = {
+        limit = { has_global_flag = foc_khan_fleet_scale_standard }
+        foc_khan_spawn_first_supremacy_resurgent_fleet = yes
+        foc_khan_spawn_first_guard_fleet = yes
+        foc_khan_spawn_first_guard_fleet = yes
+        foc_khan_spawn_first_resurgent_attack_fleet = yes
+    }
+    else_if = {
+        limit = { has_global_flag = foc_khan_fleet_scale_large }
+        foc_khan_spawn_first_supremacy_resurgent_fleet = yes
+        foc_khan_spawn_first_guard_fleet = yes
+        foc_khan_spawn_first_guard_fleet = yes
+        foc_khan_spawn_first_resurgent_attack_fleet = yes
+        foc_khan_spawn_first_resurgent_attack_fleet = yes
+        foc_khan_spawn_first_resurgent_attack_fleet = yes
+    }
+    else = {
+        foc_khan_spawn_first_supremacy_resurgent_fleet = yes
+        foc_khan_spawn_first_guard_fleet = yes
+        foc_khan_spawn_first_guard_fleet = yes
+        foc_khan_spawn_first_resurgent_attack_fleet = yes
+        foc_khan_spawn_first_resurgent_attack_fleet = yes
+        foc_khan_spawn_first_resurgent_attack_fleet = yes
+        foc_khan_spawn_first_resurgent_attack_fleet = yes
+        foc_khan_spawn_first_resurgent_attack_fleet = yes
+    }
+}
+
+# Compatibility name retained for old scheduled events.
+foc_khan_spawn_first_attack_fleet = { foc_khan_spawn_first_resurgent_attack_fleet = yes }
+
+foc_khan_spawn_final_xyston_attack_fleet = {
+    create_fleet = {
+        name = random
+        effect = {
+            set_owner = event_target:foc_khan_final_order
+            # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+if = { limit = { NOT = { has_technology = tech_titans } } give_technology = { tech = tech_titans message = no } }
+}
+            
+
+            
+
+            
+            set_location = event_target:foc_khan_exegol_capital
+            if = {
+                limit = { has_global_flag = foc_khan_fleet_scale_low }
+                while = { count = 7 create_ship = { name = random design = "NAME_FOC_KHAN_XYSTON_COMBAT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } } }
+            }
+            else_if = {
+                limit = { has_global_flag = foc_khan_fleet_scale_standard }
+                while = { count = 14 create_ship = { name = random design = "NAME_FOC_KHAN_XYSTON_COMBAT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } } }
+            }
+            else_if = {
+                limit = { has_global_flag = foc_khan_fleet_scale_large }
+                while = { count = 20 create_ship = { name = random design = "NAME_FOC_KHAN_XYSTON_COMBAT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } } }
+            }
+            else = {
+                while = { count = 27 create_ship = { name = random design = "NAME_FOC_KHAN_XYSTON_COMBAT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } } }
+            }
+            set_fleet_flag = foc_khan_final_order_attack_fleet
+            set_aggro_range_measure_from = self
+            set_aggro_range = 500
+            set_formation_scale = 3
+        }
+        settings = { can_upgrade = no can_disband = yes can_change_composition = no spawn_debris = yes ai_ignore_strength = yes }
+    }
+}
+
+foc_khan_spawn_final_attack_fleet = { foc_khan_spawn_final_xyston_attack_fleet = yes }
+
+foc_khan_spawn_final_guard_fleet = {
+    # V234: player-owned formations must not inherit native AI garrison mode.
+    if = {
+        limit = { event_target:foc_khan_final_order = { is_ai = no } }
+        create_fleet = {
+            name = random
+            effect = {
+                set_owner = event_target:foc_khan_final_order
+                # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+if = { limit = { NOT = { has_technology = tech_titans } } give_technology = { tech = tech_titans message = no } }
+}
+                
+
+                
+
+                
+                set_location = event_target:foc_khan_exegol_capital
+                create_ship = { name = random design = "NAME_FOC_KHAN_ECLIPSE" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } }
+                create_ship = { name = random design = "NAME_FOC_KHAN_ECLIPSE_II" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } }
+                create_ship = { name = random design = "NAME_FOC_KHAN_RESURGENT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } }
+                if = {
+                    limit = { has_global_flag = foc_khan_fleet_scale_low }
+                    while = { count = 14 create_ship = { name = random design = "NAME_FOC_KHAN_XYSTON_COMBAT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } } }
+                }
+                else_if = {
+                    limit = { has_global_flag = foc_khan_fleet_scale_standard }
+                    while = { count = 27 create_ship = { name = random design = "NAME_FOC_KHAN_XYSTON_COMBAT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } } }
+                }
+                else_if = {
+                    limit = { has_global_flag = foc_khan_fleet_scale_large }
+                    while = { count = 41 create_ship = { name = random design = "NAME_FOC_KHAN_XYSTON_COMBAT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } } }
+                }
+                else = {
+                    while = { count = 54 create_ship = { name = random design = "NAME_FOC_KHAN_XYSTON_COMBAT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } } }
+                }
+                set_fleet_flag = foc_khan_final_order_guard_fleet
+                set_fleet_stance = passive
+                set_aggro_range_measure_from = self
+                set_aggro_range = 300
+                set_formation_scale = 3
+            }
+            settings = { garrison = no can_upgrade = no can_disband = yes can_change_composition = no spawn_debris = yes ai_ignore_strength = yes }
+        }
+    }
+    else = {
+        create_fleet = {
+            name = random
+            effect = {
+                set_owner = event_target:foc_khan_final_order
+                # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+if = { limit = { NOT = { has_technology = tech_titans } } give_technology = { tech = tech_titans message = no } }
+}
+                
+
+                
+
+                
+                set_location = event_target:foc_khan_exegol_capital
+                create_ship = { name = random design = "NAME_FOC_KHAN_ECLIPSE" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } }
+                create_ship = { name = random design = "NAME_FOC_KHAN_ECLIPSE_II" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } }
+                create_ship = { name = random design = "NAME_FOC_KHAN_RESURGENT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } }
+                if = {
+                    limit = { has_global_flag = foc_khan_fleet_scale_low }
+                    while = { count = 14 create_ship = { name = random design = "NAME_FOC_KHAN_XYSTON_COMBAT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } } }
+                }
+                else_if = {
+                    limit = { has_global_flag = foc_khan_fleet_scale_standard }
+                    while = { count = 27 create_ship = { name = random design = "NAME_FOC_KHAN_XYSTON_COMBAT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } } }
+                }
+                else_if = {
+                    limit = { has_global_flag = foc_khan_fleet_scale_large }
+                    while = { count = 41 create_ship = { name = random design = "NAME_FOC_KHAN_XYSTON_COMBAT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } } }
+                }
+                else = {
+                    while = { count = 54 create_ship = { name = random design = "NAME_FOC_KHAN_XYSTON_COMBAT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } } }
+                }
+                set_fleet_flag = foc_khan_final_order_guard_fleet
+                set_fleet_stance = passive
+                set_aggro_range_measure_from = self
+                set_aggro_range = 300
+                set_formation_scale = 3
+            }
+            settings = { garrison = yes can_upgrade = no can_disband = yes can_change_composition = no spawn_debris = yes ai_ignore_strength = yes }
+        }
+    }
+}
+
+# Phase-II starts with one home guard and 2 / 3 / 5 / 6 / 6 pure-Xyston fleets.
+foc_khan_spawn_final_initial_fleet_package = {
+    foc_khan_spawn_final_guard_fleet = yes
+    if = {
+        limit = { has_global_flag = foc_khan_fleet_scale_low }
+        foc_khan_spawn_final_xyston_attack_fleet = yes
+        foc_khan_spawn_final_xyston_attack_fleet = yes
+    }
+    else_if = {
+        limit = { has_global_flag = foc_khan_fleet_scale_standard }
+        foc_khan_spawn_final_xyston_attack_fleet = yes
+        foc_khan_spawn_final_xyston_attack_fleet = yes
+        foc_khan_spawn_final_xyston_attack_fleet = yes
+    }
+    else_if = {
+        limit = { has_global_flag = foc_khan_fleet_scale_large }
+        foc_khan_spawn_final_xyston_attack_fleet = yes
+        foc_khan_spawn_final_xyston_attack_fleet = yes
+        foc_khan_spawn_final_xyston_attack_fleet = yes
+        foc_khan_spawn_final_xyston_attack_fleet = yes
+        foc_khan_spawn_final_xyston_attack_fleet = yes
+    }
+    else = {
+        foc_khan_spawn_final_xyston_attack_fleet = yes
+        foc_khan_spawn_final_xyston_attack_fleet = yes
+        foc_khan_spawn_final_xyston_attack_fleet = yes
+        foc_khan_spawn_final_xyston_attack_fleet = yes
+        foc_khan_spawn_final_xyston_attack_fleet = yes
+        foc_khan_spawn_final_xyston_attack_fleet = yes
+    }
+}
+
+
+foc_khan_spawn_first_monthly_support_fleet = {
+    if = {
+        limit = {
+            event_target:foc_khan_first_order = {
+                check_variable = { which = foc_khan_first_support_spawned value < 864 }
+            }
+        }
+        create_fleet = {
+            name = "FOC_KHAN_FIRST_ORDER_MONTHLY_SUPPORT"
+            effect = {
+                set_owner = event_target:foc_khan_first_order
+                # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+}
+                
+
+                
+
+                
+                set_location = event_target:foc_khan_starkiller_anchor
+
+                # Small set: 4 Imperial + 3 Resurgent (+1 Mandator below).
+                if = {
+                    limit = { has_global_flag = foc_khan_fleet_scale_low }
+                    while = {
+                        count = 4
+                        if = {
+                            limit = { event_target:foc_khan_first_order = { check_variable = { which = foc_khan_first_support_spawned value < 864 } } }
+                            create_ship = { name = random design = "NAME_FOC_KHAN_IMPERIAL_SD_TIEVN" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } }
+                            event_target:foc_khan_first_order = { change_variable = { which = foc_khan_first_support_spawned value = 1 } }
+                        }
+                    }
+                    while = {
+                        count = 3
+                        if = {
+                            limit = { event_target:foc_khan_first_order = { check_variable = { which = foc_khan_first_support_spawned value < 864 } } }
+                            create_ship = { name = random design = "NAME_FOC_KHAN_RESURGENT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } }
+                            event_target:foc_khan_first_order = { change_variable = { which = foc_khan_first_support_spawned value = 1 } }
+                        }
+                    }
+                }
+                # Standard set: 8 Imperial + 5 Resurgent (+1 Mandator below).
+                else_if = {
+                    limit = { has_global_flag = foc_khan_fleet_scale_standard }
+                    while = {
+                        count = 8
+                        if = {
+                            limit = { event_target:foc_khan_first_order = { check_variable = { which = foc_khan_first_support_spawned value < 864 } } }
+                            create_ship = { name = random design = "NAME_FOC_KHAN_IMPERIAL_SD_TIEVN" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } }
+                            event_target:foc_khan_first_order = { change_variable = { which = foc_khan_first_support_spawned value = 1 } }
+                        }
+                    }
+                    while = {
+                        count = 5
+                        if = {
+                            limit = { event_target:foc_khan_first_order = { check_variable = { which = foc_khan_first_support_spawned value < 864 } } }
+                            create_ship = { name = random design = "NAME_FOC_KHAN_RESURGENT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } }
+                            event_target:foc_khan_first_order = { change_variable = { which = foc_khan_first_support_spawned value = 1 } }
+                        }
+                    }
+                }
+                # Large set: 12 Imperial + 8 Resurgent (+1 Mandator below).
+                else_if = {
+                    limit = { has_global_flag = foc_khan_fleet_scale_large }
+                    while = {
+                        count = 12
+                        if = {
+                            limit = { event_target:foc_khan_first_order = { check_variable = { which = foc_khan_first_support_spawned value < 864 } } }
+                            create_ship = { name = random design = "NAME_FOC_KHAN_IMPERIAL_SD_TIEVN" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } }
+                            event_target:foc_khan_first_order = { change_variable = { which = foc_khan_first_support_spawned value = 1 } }
+                        }
+                    }
+                    while = {
+                        count = 8
+                        if = {
+                            limit = { event_target:foc_khan_first_order = { check_variable = { which = foc_khan_first_support_spawned value < 864 } } }
+                            create_ship = { name = random design = "NAME_FOC_KHAN_RESURGENT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } }
+                            event_target:foc_khan_first_order = { change_variable = { which = foc_khan_first_support_spawned value = 1 } }
+                        }
+                    }
+                }
+                # Maximum set uses the existing 27-ship reinforcement fleet:
+                # 16 Imperial, 10 Resurgent and 1 Mandator.
+                
+                else_if = {
+                    limit = {
+                        has_global_flag = foc_khan_fleet_scale_max
+                    }
+                    while = {
+                        count = 16
+                        if = {
+                            limit = { event_target:foc_khan_first_order = { check_variable = { which = foc_khan_first_support_spawned value < 864 } } }
+                            create_ship = { name = random design = "NAME_FOC_KHAN_IMPERIAL_SD_TIEVN" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } }
+                            event_target:foc_khan_first_order = { change_variable = { which = foc_khan_first_support_spawned value = 1 } }
+                        }
+                    }
+                    while = {
+                        count = 10
+                        if = {
+                            limit = { event_target:foc_khan_first_order = { check_variable = { which = foc_khan_first_support_spawned value < 864 } } }
+                            create_ship = { name = random design = "NAME_FOC_KHAN_RESURGENT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } }
+                            event_target:foc_khan_first_order = { change_variable = { which = foc_khan_first_support_spawned value = 1 } }
+                        }
+                    }
+                }
+                # Safe fallback: Intermediate quantities.
+                else = {
+                    while = {
+                        count = 12
+                        if = {
+                            limit = { event_target:foc_khan_first_order = { check_variable = { which = foc_khan_first_support_spawned value < 864 } } }
+                            create_ship = { name = random design = "NAME_FOC_KHAN_IMPERIAL_SD_TIEVN" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } }
+                            event_target:foc_khan_first_order = { change_variable = { which = foc_khan_first_support_spawned value = 1 } }
+                        }
+                    }
+                    while = {
+                        count = 8
+                        if = {
+                            limit = { event_target:foc_khan_first_order = { check_variable = { which = foc_khan_first_support_spawned value < 864 } } }
+                            create_ship = { name = random design = "NAME_FOC_KHAN_RESURGENT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } }
+                            event_target:foc_khan_first_order = { change_variable = { which = foc_khan_first_support_spawned value = 1 } }
+                        }
+                    }
+                }
+
+                # Every tier receives one Mandator-class super capital.
+                if = {
+                    limit = { event_target:foc_khan_first_order = { check_variable = { which = foc_khan_first_support_spawned value < 864 } } }
+                    create_ship = { name = random design = "NAME_FOC_KHAN_MANDATOR" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } }
+                    event_target:foc_khan_first_order = { change_variable = { which = foc_khan_first_support_spawned value = 1 } }
+                }
+
+                set_fleet_flag = foc_khan_first_order_attack_fleet
+                set_aggro_range_measure_from = self
+                set_aggro_range = 500
+                set_formation_scale = 3
+            }
+            settings = {
+                can_upgrade = no
+                can_disband = yes
+                can_change_composition = no
+                spawn_debris = yes
+                ai_ignore_strength = yes
+            }
+        }
+    }
+}
+
+
+# Compatibility alias for old references. The controller now calls it annually.
+foc_khan_spawn_first_annual_support_fleet = {
+	foc_khan_spawn_first_monthly_support_fleet = yes
+}
+
+# One support cycle: 1 / 2 / 3 / 4 fleets, selected independently of combat tier.
+foc_khan_spawn_first_scaled_support_wave = {
+    if = {
+        limit = { event_target:foc_khan_first_order = { is_ai = no } }
+        foc_v211_spawn_first_support_wave_standard = yes
+    }
+    else_if = {
+        limit = { NOT = { has_global_flag = foc_v211_ai_support_first_order_disabled } }
+        if = {
+            limit = { has_global_flag = foc_v211_ai_support_first_order_half }
+            foc_v211_spawn_first_support_wave_half = yes
+        }
+        else_if = {
+            limit = { has_global_flag = foc_v211_ai_support_first_order_one_and_half }
+            foc_v211_spawn_first_support_wave_one_and_half = yes
+        }
+        else_if = {
+            limit = { has_global_flag = foc_v211_ai_support_first_order_double }
+            foc_v211_spawn_first_support_wave_double = yes
+        }
+        else = {
+            foc_v211_spawn_first_support_wave_standard = yes
+        }
+    }
+}
+
+foc_khan_spawn_final_monthly_support_fleet = {
+    if = {
+        limit = {
+            event_target:foc_khan_final_order = {
+                check_variable = { which = foc_khan_xyston_support_spawned value < 864 }
+            }
+        }
+        create_fleet = {
+            name = "FOC_KHAN_FINAL_ORDER_MONTHLY_SUPPORT"
+            effect = {
+                set_owner = event_target:foc_khan_final_order
+                # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+if = { limit = { NOT = { has_technology = tech_titans } } give_technology = { tech = tech_titans message = no } }
+}
+                
+
+                
+
+                
+                set_location = event_target:foc_khan_exegol_capital
+
+                if = {
+                    limit = { has_global_flag = foc_khan_fleet_scale_low }
+                    while = {
+                        count = 7
+                        if = {
+                            limit = { event_target:foc_khan_final_order = { check_variable = { which = foc_khan_xyston_support_spawned value < 864 } } }
+                            create_ship = { name = random design = "NAME_FOC_KHAN_XYSTON_COMBAT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } }
+                            event_target:foc_khan_final_order = { change_variable = { which = foc_khan_xyston_support_spawned value = 1 } }
+                        }
+                    }
+                }
+                else_if = {
+                    limit = { has_global_flag = foc_khan_fleet_scale_standard }
+                    while = {
+                        count = 14
+                        if = {
+                            limit = { event_target:foc_khan_final_order = { check_variable = { which = foc_khan_xyston_support_spawned value < 864 } } }
+                            create_ship = { name = random design = "NAME_FOC_KHAN_XYSTON_COMBAT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } }
+                            event_target:foc_khan_final_order = { change_variable = { which = foc_khan_xyston_support_spawned value = 1 } }
+                        }
+                    }
+                }
+                else_if = {
+                    limit = { has_global_flag = foc_khan_fleet_scale_large }
+                    while = {
+                        count = 20
+                        if = {
+                            limit = { event_target:foc_khan_final_order = { check_variable = { which = foc_khan_xyston_support_spawned value < 864 } } }
+                            create_ship = { name = random design = "NAME_FOC_KHAN_XYSTON_COMBAT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } }
+                            event_target:foc_khan_final_order = { change_variable = { which = foc_khan_xyston_support_spawned value = 1 } }
+                        }
+                    }
+                }
+                else_if = {
+                    limit = {
+                        has_global_flag = foc_khan_fleet_scale_max
+                    }
+                    while = {
+                        count = 27
+                        if = {
+                            limit = { event_target:foc_khan_final_order = { check_variable = { which = foc_khan_xyston_support_spawned value < 864 } } }
+                            create_ship = { name = random design = "NAME_FOC_KHAN_XYSTON_COMBAT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } }
+                            event_target:foc_khan_final_order = { change_variable = { which = foc_khan_xyston_support_spawned value = 1 } }
+                        }
+                    }
+                }
+                else = {
+                    while = {
+                        count = 20
+                        if = {
+                            limit = { event_target:foc_khan_final_order = { check_variable = { which = foc_khan_xyston_support_spawned value < 864 } } }
+                            create_ship = { name = random design = "NAME_FOC_KHAN_XYSTON_COMBAT" graphical_culture = first_01 upgradable = no fleet_cache_recalc = yes effect = { add_modifier = { modifier = foc_khan_spawn_corridor_acceleration days = 60 } } }
+                            event_target:foc_khan_final_order = { change_variable = { which = foc_khan_xyston_support_spawned value = 1 } }
+                        }
+                    }
+                }
+
+                set_fleet_flag = foc_khan_final_order_attack_fleet
+                set_aggro_range_measure_from = self
+                set_aggro_range = 500
+                set_formation_scale = 2
+            }
+            settings = {
+                can_upgrade = no
+                can_disband = yes
+                can_change_composition = no
+                spawn_debris = yes
+                ai_ignore_strength = yes
+            }
+        }
+    }
+}
+
+foc_khan_spawn_final_scaled_support_wave = {
+    if = {
+        limit = { event_target:foc_khan_final_order = { is_ai = no } }
+        foc_v211_spawn_final_support_wave_standard = yes
+    }
+    else_if = {
+        limit = { NOT = { has_global_flag = foc_v211_ai_support_final_order_disabled } }
+        if = {
+            limit = { has_global_flag = foc_v211_ai_support_final_order_half }
+            foc_v211_spawn_final_support_wave_half = yes
+        }
+        else_if = {
+            limit = { has_global_flag = foc_v211_ai_support_final_order_one_and_half }
+            foc_v211_spawn_final_support_wave_one_and_half = yes
+        }
+        else_if = {
+            limit = { has_global_flag = foc_v211_ai_support_final_order_double }
+            foc_v211_spawn_final_support_wave_double = yes
+        }
+        else = {
+            foc_v211_spawn_final_support_wave_standard = yes
+        }
+    }
+}
+
+
+
+
+# 2.03 old-save migration group: 17 ordinary combat Xystons + 1 independent planet killer.
+foc_khan_spawn_final_xyston_203_migration_group = {
+    # Compatibility alias used by old migration events. It now creates only
+    # ordinary combat Xystons and never installs a planet-killer controller.
+    create_fleet = {
+        name = "FOC_KHAN_FINAL_ORDER_COMBAT_XYSTONS"
+        effect = {
+            set_owner = event_target:foc_khan_final_order
+            # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+if = { limit = { NOT = { has_technology = tech_titans } } give_technology = { tech = tech_titans message = no } }
+}
+            
+
+            
+
+            
+            set_location = event_target:foc_khan_exegol_capital
+            while = {
+                count = 18
+                create_ship = {
+                    name = random
+                    design = "NAME_FOC_KHAN_XYSTON_COMBAT"
+                    graphical_culture = first_01
+                    upgradable = no
+                    fleet_cache_recalc = yes
+                    effect = {
+                        add_modifier = {
+                            modifier = foc_khan_spawn_corridor_acceleration
+                            days = 60
+                        }
+                    }
+                }
+            }
+            set_fleet_flag = foc_khan_final_order_attack_fleet
+            set_aggro_range_measure_from = self
+            set_aggro_range = 500
+            set_formation_scale = 3
+        }
+        settings = {
+            can_upgrade = no
+            can_disband = yes
+            can_change_composition = no
+            spawn_debris = yes
+            ai_ignore_strength = yes
+        }
+    }
+}
+
+
+
+# FOC 3.11t compatibility name. FOC 3.11u no longer creates a third pure-Xyston
+# guard; old serialized callers simply schedule the redistribution migration.
+foc_khan_spawn_final_xyston_guard_fleet_311t = {
+    if = {
+        limit = { exists = event_target:foc_khan_final_order }
+        event_target:foc_khan_final_order = {
+            country_event = { id = foc_final_guard.1 days = 1 }
+        }
+    }
+}
+
+
+# Older compatibility alias. It likewise creates no independent fleet.
+foc_khan_spawn_final_planet_killer_fleet_204 = {
+    if = {
+        limit = { exists = event_target:foc_khan_final_order }
+        event_target:foc_khan_final_order = {
+            country_event = { id = foc_final_guard.1 days = 1 }
+        }
+    }
+}
+
+
+# 2.12 stable Final Order invasion fleet.
+# Uses the Final Order's current main species directly, so it also works in old
+# saves where the original species event target was not restored.
+foc_khan_spawn_final_invasion_fleet_212 = {
+    create_fleet = {
+        name = "FOC_KHAN_FINAL_ORDER_INVASION_FORCE"
+        effect = {
+            set_owner = event_target:foc_khan_final_order
+            while = {
+                count = 36
+                create_army_transport = {
+                    army_type = assault_army
+                    species = event_target:foc_khan_final_order.owner_main_species
+                }
+            }
+            set_location = {
+                target = event_target:foc_khan_exegol_capital
+                distance = 20
+                angle = random
+            }
+            set_fleet_flag = foc_khan_final_order_invasion_force
+            set_fleet_flag = foc_khan_acot_native_transport_233
+        }
+        settings = {
+            can_upgrade = no
+            can_disband = no
+            can_change_composition = yes
+            spawn_debris = no
+        }
+    }
+}

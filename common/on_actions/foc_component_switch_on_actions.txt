@@ -1,0 +1,9 @@
+on_game_start_country = {
+    events = { foc_component.1 foc_lowest_complete.1 }
+}
+
+on_monthly_pulse_country = {
+    # Keep only the lightweight player component-mode flag synchronization.
+    # The full existing-ship conversion/repair event is no longer monthly.
+    events = { foc_component.1 }
+}

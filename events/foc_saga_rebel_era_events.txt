@@ -1,0 +1,356 @@
+namespace = foc_reb
+
+# =============================================================================
+# 义军时代支线
+# =============================================================================
+# 罗萨（一颗星球的反抗）→ 杰达（圣城与索·格雷拉）→ 蒙卡拉马利（船坞加入）
+#   → 曼达洛（暗黑剑）→ 义军同盟正式成立
+#
+# 蒙卡拉马利那一条是有机制意义的：它把星云级 / 子爵级的来路交代清楚了——
+# 那两艘船的设计本来就出自蒙卡拉的船台。
+# =============================================================================
+
+# --- 罗萨：一颗星球的反抗 ------------------------------------------------------
+country_event = {
+    id = foc_reb.1
+    title = foc_reb.1.name
+    desc = foc_reb.1.desc
+    picture = GFX_foc_saga_lothal_street
+    is_triggered_only = yes
+
+    trigger = {
+        is_regular_empire = yes
+        has_global_flag = foc_republic_origin_jedi_purged
+        any_country = { has_country_flag = foc_republic_origin_empire_country }
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        NOT = { has_country_flag = foc_saga_reb_lothal_shown }
+        # V92: this story beat belongs specifically to the Imperial Rebellion.
+        # It also runs for AI Rebels when the player chose the Empire, ensuring
+        # Lothal changes hands in both player routes.
+        has_country_flag = foc_republic_origin_imperial_rebel_country
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_reb_lothal_shown
+        set_timed_country_flag = { flag = foc_saga_reb_jedha_wait days = 540 }
+
+        # V92: "A Rebellion on One Planet" is now territorial, not only
+        # narrative. Lothal joins the Imperial Rebellion when the event fires.
+        if = {
+            limit = { NOT = { exists = event_target:foc_swmap_lothal_system } }
+            random_system = {
+                limit = { has_star_flag = foc_swmap_lothal_home }
+                save_global_event_target_as = foc_swmap_lothal_system
+            }
+        }
+        if = {
+            limit = { exists = event_target:foc_swmap_lothal_system }
+            event_target:foc_swmap_lothal_system = {
+                if = {
+                    limit = { exists = starbase }
+                    starbase = { set_owner = root }
+                }
+                else = {
+                    create_starbase = { size = starbase_outpost owner = root }
+                }
+                every_system_planet = {
+                    limit = { is_colony = yes }
+                    set_owner = root
+                    set_controller = root
+                    every_planet_army = { set_owner = root }
+                }
+                every_system_megastructure = { set_owner = root }
+                every_system_planet = {
+                    set_surveyed = { surveyed = yes surveyor = root }
+                }
+                root = { set_visited = prev }
+            }
+        }
+    }
+
+    # 起义的火可以现在点，也可以等能接应的时候再点。
+    option = {
+        name = foc_reb.1.a
+        add_modifier = { modifier = foc_saga_reb_open_uprising days = -1 }
+    }
+    option = {
+        name = foc_reb.1.b
+        add_modifier = { modifier = foc_saga_reb_cell_network days = -1 }
+    }
+}
+
+# --- Jedha: the Rebels learn the outcome of the Imperial decision. -----------
+country_event = {
+    id = foc_reb.2
+    title = foc_jedha_choice.rebel.name
+    desc = {
+        trigger = { has_global_flag = foc_jedha_spared }
+        text = foc_jedha_choice.rebel_spared.desc
+    }
+    desc = {
+        trigger = { has_global_flag = foc_jedha_destroyed_by_death_star }
+        text = foc_jedha_choice.rebel_destroyed.desc
+    }
+    desc = {
+        trigger = { NOT = { has_global_flag = foc_jedha_choice_resolved } }
+        text = foc_reb.2.desc
+    }
+    picture = GFX_foc_saga_jedha
+    location = event_target:foc_swmap_jedha_system
+    show_sound = event_ship_bridge
+    is_triggered_only = yes
+
+    trigger = {
+        foc_jedha_is_imperial_rebel = yes
+        has_country_flag = foc_saga_reb_lothal_shown
+        foc_jedha_story_resolved = yes
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        NOT = { has_country_flag = foc_saga_reb_jedha_shown }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_reb_jedha_shown
+        set_timed_country_flag = { flag = foc_saga_reb_moncala_wait days = 540 }
+    }
+
+    option = { name = foc_jedha_choice.rebel.a }
+}
+
+# --- 蒙卡拉马利：船台 ----------------------------------------------------------
+country_event = {
+    id = foc_reb.3
+    title = foc_reb.3.name
+    desc = foc_reb.3.desc
+    picture = GFX_foc_saga_mon_cala
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_saga_reb_jedha_shown
+        NOT = { has_country_flag = foc_saga_reb_moncala_shown }
+        NOT = { has_country_flag = foc_saga_reb_moncala_wait }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_reb_moncala_shown
+        set_global_flag = foc_saga_mon_cala_joined
+        set_timed_country_flag = { flag = foc_saga_reb_mandalore_wait days = 720 }
+    }
+
+    option = {
+        name = foc_reb.3.a
+        add_modifier = { modifier = foc_saga_reb_mon_cala_yards days = -1 }
+    }
+}
+
+
+
+# --- 蒙·卡拉马里星际巡洋舰设计 -----------------------------------------------
+# V87: this is the one and only construction unlock for the dedicated MC80 line.
+# Starting scripted fleets may already contain commissioned MC80s, but the hull
+# cannot appear in a shipyard until the Imperial Rebellion actually exists and
+# this event has fired for that country.
+country_event = {
+    id = foc_reb.6
+    title = foc_reb.6.name
+    desc = foc_reb.6.desc
+    picture = GFX_foc_saga_mon_cala
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_republic_origin_imperial_rebel_country
+        NOT = { has_country_flag = foc_rebel_mc80_design_unlocked }
+    }
+
+    immediate = {
+        set_country_flag = foc_rebel_mc80_design_unlocked
+        set_global_flag = foc_rebel_mc80_design_first_unlocked
+        foc_story_grant_imperial_rebel_mc80_design = yes
+    }
+
+    option = {
+        name = foc_reb.6.a
+    }
+}
+
+# --- 曼达洛：暗黑剑 ------------------------------------------------------------
+country_event = {
+    id = foc_reb.4
+    title = foc_reb.4.name
+    desc = foc_reb.4.desc
+    picture = GFX_foc_saga_darksaber
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_saga_reb_moncala_shown
+        NOT = { has_country_flag = foc_saga_reb_mandalore_shown }
+        NOT = { has_country_flag = foc_saga_reb_mandalore_wait }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_reb_mandalore_shown
+        set_timed_country_flag = { flag = foc_saga_reb_alliance_wait days = 540 }
+    }
+
+    # 支持谁掌剑，决定我们得到的是一支舰队还是一批人。
+    option = {
+        name = foc_reb.4.a
+        add_modifier = { modifier = foc_saga_reb_mandalorian_fleet days = -1 }
+    }
+    option = {
+        name = foc_reb.4.b
+        add_modifier = { modifier = foc_saga_reb_mandalorian_commandos days = -1 }
+    }
+}
+
+# --- 义军同盟正式成立 ----------------------------------------------------------
+country_event = {
+    id = foc_reb.5
+    title = foc_reb.5.name
+    desc = foc_reb.5.desc
+    picture = GFX_foc_saga_rebel_alliance_formed
+    show_sound = event_ship_bridge
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        is_regular_empire = yes
+        # V72 / 2227: Mon Mothma's declaration and the formal Rebel Alliance are
+        # a calendar anchor, not a reward for finishing the later Jedha/Mon Cala/
+        # Mandalore side chain. Those events can continue independently.
+        has_global_flag = foc_republic_origin_jedi_purged
+        any_country = { has_country_flag = foc_republic_origin_empire_country }
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        NOT = { has_country_flag = foc_saga_reb_alliance_shown }
+        OR = {
+            has_country_flag = foc_republic_origin_imperial_rebel_country
+            has_country_flag = foc_khan_rebel_alliance_country
+            has_country_flag = foc_republic_origin_rebel_alliance_country
+        }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_reb_alliance_shown
+        set_global_flag = foc_saga_rebel_alliance_declared
+
+        # V107: the Corellian Treaty is now territorial as well as narrative.
+        # When the Rebel Alliance is formally unified, Corellia joins the
+        # Imperial Rebellion immediately. Transfer the whole system so the
+        # starbase, colony, armies and any megastructures do not remain behind.
+        if = {
+            limit = { NOT = { exists = event_target:foc_swmap_corellia_system } }
+            random_system = {
+                limit = { has_star_flag = foc_swmap_corellia_home }
+                save_global_event_target_as = foc_swmap_corellia_system
+            }
+        }
+        if = {
+            limit = { exists = event_target:foc_swmap_corellia_system }
+            event_target:foc_swmap_corellia_system = {
+                if = {
+                    limit = { exists = starbase }
+                    starbase = { set_owner = root }
+                }
+                else = {
+                    create_starbase = { size = starbase_outpost owner = root }
+                }
+                every_system_planet = {
+                    limit = { is_colony = yes }
+                    set_owner = root
+                    set_controller = root
+                    every_planet_army = { set_owner = root }
+                }
+                every_system_megastructure = { set_owner = root }
+                every_system_planet = {
+                    set_surveyed = { surveyed = yes surveyor = root }
+                }
+                root = { set_visited = prev }
+            }
+            set_country_flag = foc_saga_reb_corellia_granted
+        }
+    }
+
+    option = {
+        name = foc_reb.5.a
+        add_modifier = { modifier = foc_saga_reb_declaration days = -1 }
+    }
+}
+
+# --- V107 old-save repair: grant Corellia once if the treaty already fired -------
+country_event = {
+    id = foc_reb.7
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_regular_empire = yes
+        has_country_flag = foc_saga_reb_alliance_shown
+        NOT = { has_country_flag = foc_saga_reb_corellia_granted }
+        OR = {
+            has_country_flag = foc_republic_origin_imperial_rebel_country
+            has_country_flag = foc_khan_rebel_alliance_country
+            has_country_flag = foc_republic_origin_rebel_alliance_country
+        }
+    }
+
+    immediate = {
+        if = {
+            limit = { NOT = { exists = event_target:foc_swmap_corellia_system } }
+            random_system = {
+                limit = { has_star_flag = foc_swmap_corellia_home }
+                save_global_event_target_as = foc_swmap_corellia_system
+            }
+        }
+        if = {
+            limit = { exists = event_target:foc_swmap_corellia_system }
+            event_target:foc_swmap_corellia_system = {
+                if = {
+                    limit = { exists = starbase }
+                    starbase = { set_owner = root }
+                }
+                else = {
+                    create_starbase = { size = starbase_outpost owner = root }
+                }
+                every_system_planet = {
+                    limit = { is_colony = yes }
+                    set_owner = root
+                    set_controller = root
+                    every_planet_army = { set_owner = root }
+                }
+                every_system_megastructure = { set_owner = root }
+                every_system_planet = {
+                    set_surveyed = { surveyed = yes surveyor = root }
+                }
+                root = { set_visited = prev }
+            }
+            set_country_flag = foc_saga_reb_corellia_granted
+        }
+    }
+}
+
+
+
+# V131 - old-save/self-heal: foc_reb.6 in earlier versions only set the unlock
+# flag, so a country could have the story event but still lack a registered MC80
+# design in its ship designer / shipyard. Run once and hard-install the design.
+country_event = {
+    id = foc_reb.8
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_rebel_mc80_design_unlocked
+        NOT = { has_country_flag = foc_rebel_mc80_design_registered_v131 }
+        OR = {
+            has_country_flag = foc_republic_origin_imperial_rebel_country
+            has_country_flag = foc_republic_origin_rebel_alliance_country
+            has_country_flag = foc_republic_origin_post_treaty_rebel_country
+            has_country_flag = foc_sw_new_republic_country
+        }
+    }
+
+    immediate = {
+        foc_story_grant_imperial_rebel_mc80_design = yes
+    }
+}

@@ -1,0 +1,117 @@
+imperialsd = {
+    formation_priority = 5
+    max_speed = 150
+    acceleration = 0.25
+    rotation_speed = 0.1
+    collision_radius = 8
+    max_hitpoints = 180933
+    modifier = {
+        ship_evasion_add = 30
+        ship_armor_add = 90467
+        ship_shield_add = 68200
+        ship_shield_regen_add_static = 300
+        ship_armor_regen_add_static = 300
+        ship_hull_regen_add_static = 300
+    }
+    ship_modifier = {
+        ship_weapon_range_mult = 0.25
+    }
+    size_multiplier = 57
+    fleet_slot_size = 8
+    section_slots = {
+        bow = {
+            locator = "part1"
+        }
+        mid = {
+            locator = "part2"
+        }
+        stern = {
+            locator = "part3"
+        }
+    }
+    num_target_locators = 5
+    is_space_station = no
+    map_counter_icon = ship_counter_32
+    icon = ship_size_military_8
+    use_shipnames_from = destroyer
+    base_buildtime = 180
+    can_have_federation_design = no
+    enable_default_design = yes
+    enable_3dview_in_ship_browser = yes
+    default_behavior = picket
+    potential_country = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        OR = {
+            foc_ai_capital_is_imperial_class_country = yes
+            any_owned_fleet = {
+                any_owned_ship = {
+                    is_ship_size = imperialsd
+                }
+            }
+        }
+    }
+    possible_country = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        OR = {
+            foc_ai_capital_is_imperial_class_country = yes
+            any_owned_fleet = {
+                any_owned_ship = {
+                    is_ship_size = imperialsd
+                }
+            }
+        }
+    }
+    prerequisites = { "tech_destroyers" "foc_tech_dark_legacy_imperial" }
+    combat_disengage_chance = 0.10
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    possible_construction = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        exists = owner
+        owner = {
+            foc_ai_capital_is_imperial_class_country = yes
+            NOT = {
+                has_country_flag = foc_phase1_imperial_sd_retired
+            }
+        }
+    }
+    required_component_set = "power_core"
+    required_component_set = "ftl_components"
+    required_component_set = "thruster_components"
+    required_component_set = "sensor_components"
+    required_component_set = "combat_computers"
+    required_component_set = "imperialsd_crew"
+    resources = {
+        category = ships
+        cost = {
+            alloys = 1000
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 66
+    }
+    ai_ship_data = {
+        fraction = {
+            base = 0
+            modifier = {
+                add = 120
+                foc_ai_capital_is_imperial_class_country = yes
+                has_technology = foc_tech_dark_legacy_imperial
+                NOT = {
+                    has_country_flag = foc_phase1_imperial_sd_retired
+                }
+            }
+        }
+    }
+    available_to_everyone = no
+
+    is_designable = yes
+
+
+}

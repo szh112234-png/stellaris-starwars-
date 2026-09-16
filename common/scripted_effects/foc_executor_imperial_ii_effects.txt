@@ -1,0 +1,8 @@
+# Country scope, only called while creating Executor escort packages.
+# The recipient flag permits the fixed escort technology on all story routes.
+foc_executor_prepare_imperial_ii_escorts = {
+    set_country_flag = foc_executor_imperial_ii_support_access
+    if = { limit = { NOT = { has_technology = tech_destroyers } } give_technology = { tech = tech_destroyers message = no } }
+    if = { limit = { NOT = { has_technology = foc_tech_dark_legacy_imperial } } give_technology = { tech = foc_tech_dark_legacy_imperial message = no } }
+    if = { limit = { NOT = { has_technology = foc_v17_tech_imperialsd2 } } give_technology = { tech = foc_v17_tech_imperialsd2 message = no } }
+}

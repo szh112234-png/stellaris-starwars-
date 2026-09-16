@@ -1,0 +1,34 @@
+# The Jedha decision is shared by the human and AI Galactic Empire.
+foc_jedha_is_imperial_rebel = {
+    NOT = { has_country_flag = foc_khan_first_order_resistance_country }
+    OR = {
+        has_country_flag = foc_republic_origin_imperial_rebel_country
+        has_country_flag = foc_republic_origin_rebel_alliance_country
+        has_country_flag = foc_khan_rebel_alliance_country
+    }
+}
+
+foc_jedha_story_resolved = {
+    OR = {
+        has_global_flag = foc_jedha_choice_resolved
+        # Preserve already-completed story progress in older saves.
+        has_global_flag = foc_saga_jedha_destroyed
+    }
+}
+
+foc_jedha_tarkin_allowed = {
+    has_global_flag = foc_jedha_destroyed_by_death_star
+    NOT = { has_global_flag = foc_jedha_tarkin_permanently_blocked }
+    NOT = { has_global_flag = foc_jedha_spared }
+}
+
+# Planet scope. Canonical planet flags remain available for names and map lookup.
+foc_jedha_is_destroyed_planet = {
+    OR = {
+        has_planet_flag = foc_jedha_destroyed_by_death_star
+        AND = {
+            has_planet_flag = foc_swmap_jedha
+            is_planet_class = pc_shattered
+        }
+    }
+}

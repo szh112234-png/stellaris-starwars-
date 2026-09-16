@@ -1,0 +1,9 @@
+# V17.17f: keep the existing deposit ID for saves; its base yield is now 100.
+# Manual placement only. Ordinary Tibanna deposits keep their existing yields.
+d_foc_bespin_tibanna_gas_1000 = {
+    resources = { category = orbital_mining_deposits produces = { sr_tibanna_swgs = 100 } }
+    station = shipclass_mining_station
+    is_for_colonizable = no
+    potential = { is_planet_class = pc_gas_giant solar_system = { has_star_flag = foc_swmap_bespin_home } }
+    drop_weight = { weight = 0 }
+}

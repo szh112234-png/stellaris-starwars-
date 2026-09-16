@@ -1,0 +1,89 @@
+# V196 - a Hutt-species version of the Hazbuzan Syndicate megacorp design.
+#
+# V232 FIX: the original V196 comment assumed that a later filename would make
+# this block *override* Stellaris' 94_megacorp_prescripted_countries.txt entry
+# of the same key. That is not how prescripted_countries works in 4.x - entries
+# sharing a key are MERGED, and repeated list fields (trait / ethic / civic /
+# ruler trait) are appended rather than replaced. The result was one design
+# carrying ten species traits, four ethics, four civics and two ruler traits, so
+# the game rejected it outright:
+#   "Hiding invalid prescripted empire design 'hazbuzan':
+#    选择的思潮超过了点数阈值 / 选择的国民理念超过了点数阈值 /
+#    复制特质有机体 ... 你为你的物种选择了太多的特质"
+# The vanilla Hazbuzan design was destroyed along with it, so BOTH designs
+# disappeared from the empire picker.
+#
+# The key is now unique, which restores the vanilla design and makes this one a
+# valid standalone Hutt option. Everything below is unchanged from V196.
+
+# Hazbuzan Syndicate (Hutt)
+foc_v196_hazbuzan_hutt = {
+	name = "EMPIRE_DESIGN_foc_v196_hazbuzan_hutt"
+	adjective = "PRESCRIPTED_adjective_hazbuzan"
+	spawn_enabled = yes # yes / no / always
+	ignore_portrait_duplication = yes
+
+	playable = has_megacorp
+
+	ship_prefix = "PRESCRIPTED_ship_prefix_hazbuzan"
+
+	species = {
+		class = "MAM"
+		portrait = "foc_v187_hutt_species_01"
+		name = "foc_v187_hutt_name"
+		plural = "foc_v187_hutt_plural"
+		adjective = "foc_v187_hutt_adjective"
+		name_list = "REP3"
+		trait = "trait_organic"
+		trait = "trait_ingenious"
+		trait = "trait_thrifty"
+		trait = "trait_deviants"
+		trait = "trait_quarrelsome"
+	}
+
+	room = "personality_ruthless_capitalists_room"
+
+	ethic = ethic_fanatic_militarist
+	ethic = ethic_spiritualist
+	authority = "auth_corporate"
+	government = "gov_criminal_syndicate"
+	civics = { "civic_criminal_heritage" "civic_franchising" }
+	origin = "origin_default"
+
+	planet_name = "PRESCRIPTED_planet_name_hazbuzan"
+	planet_class = "pc_savannah"
+	system_name = "PRESCRIPTED_system_name_hazbuzan"
+	initializer = ""
+
+	graphical_culture = "reptilian_01"
+	city_graphical_culture = "reptilian_01"
+
+	empire_flag = {
+		icon = {
+			category = "corporate"
+			file = "corporate_03.dds"
+		}
+		background = {
+			category = "backgrounds"
+			file = "circle.dds"
+		}
+		colors = {
+			"yellow"
+			"black"
+			"null"
+			"null"
+		}
+	}
+
+	ruler = {
+		name = "PRESCRIPTED_ruler_name_hazbuzan"
+		gender = female
+		portrait = "foc_v187_hutt_species_01"
+		texture = 0
+		clothes = 0
+		ruler_title = "PRESCRIPTED_ruler_title_hazbuzan"
+		ruler_title_female = "PRESCRIPTED_ruler_title_hazbuzan_female"
+		trait = "leader_trait_spycraft"
+		leader_class = official
+	}
+}

@@ -1,0 +1,42 @@
+foc_phase1_malachor_memory_site = {
+    desc = "foc_phase1_malachor_memory_site_intro"
+    picture = GFX_foc_saga_holocron
+    stages = 4
+    weight = 0
+    allow = { exists = leader leader = { leader_class = scientist owner = { is_ai = no } } }
+    visible = { default_site_visible_trigger = yes }
+    stage = { difficulty = 2 icon = GFX_archaeology_runes_D1 event = foc_phase1_arch.1 }
+    stage = { difficulty = 3 icon = GFX_archaeology_runes_D2 event = foc_phase1_arch.2 }
+    stage = { difficulty = 4 icon = GFX_archaeology_runes_D3 event = foc_phase1_arch.3 }
+    stage = { difficulty = 5 icon = GFX_archaeology_runes_D4 event = foc_phase1_arch.4 }
+    on_roll_failed = { from? = { standard_archaeological_site_on_roll_failed = { RANDOM_EVENTS = all_random_events } } }
+}
+
+
+foc_phase1_ossus_jedi_archive_site = {
+    desc = "foc_phase1_ossus_jedi_archive_site_intro"
+    picture = GFX_foc_saga_holocron
+    stages = 4
+    weight = 0
+    allow = { exists = leader leader = { leader_class = scientist owner = { is_ai = no } } }
+    visible = { default_site_visible_trigger = yes }
+    stage = { difficulty = 2 icon = GFX_archaeology_runes_D1 event = foc_phase1_arch.10 }
+    stage = { difficulty = 3 icon = GFX_archaeology_runes_D2 event = foc_phase1_arch.11 }
+    stage = { difficulty = 4 icon = GFX_archaeology_runes_D3 event = foc_phase1_arch.12 }
+    stage = { difficulty = 5 icon = GFX_archaeology_runes_D4 event = foc_phase1_arch.13 }
+    on_roll_failed = { from? = { standard_archaeological_site_on_roll_failed = { RANDOM_EVENTS = all_random_events } } }
+}
+
+foc_phase1_mandalore_clan_vault_site = {
+    desc = "foc_phase1_mandalore_clan_vault_site_intro"
+    picture = GFX_foc_saga_darksaber
+    stages = 4
+    weight = 0
+    allow = { exists = leader leader = { leader_class = scientist owner = { is_ai = no } } }
+    visible = { default_site_visible_trigger = yes }
+    stage = { difficulty = 2 icon = GFX_archaeology_runes_D1 event = foc_phase1_arch.20 }
+    stage = { difficulty = 3 icon = GFX_archaeology_runes_D2 event = foc_phase1_arch.21 }
+    stage = { difficulty = 4 icon = GFX_archaeology_runes_D3 event = foc_phase1_arch.22 }
+    stage = { difficulty = 5 icon = GFX_archaeology_runes_D4 event = foc_phase1_arch.23 }
+    on_roll_failed = { from? = { standard_archaeological_site_on_roll_failed = { RANDOM_EVENTS = all_random_events } } }
+}

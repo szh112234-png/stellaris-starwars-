@@ -1,0 +1,131 @@
+namespace = foc_v152_ai_project
+
+# V152 - AI participation in the two hidden-route special projects.
+#
+# WHY THIS FILE EXISTS
+# Script-side both projects were already open to the AI: neither
+# FOC_STARKILLER_COORDINATES_PROJECT nor FOC_SITH_WAYFINDER_PROJECT carries an
+# is_ai gate, and both enabling events (foc_starkiller_coords.1 / foc_wayfinder.1)
+# fire for every regular empire on the monthly pulse.
+#
+# The real blocker is the engine. A special project with location = yes has to be
+# worked by a science ship parked at the location - here Jakku's star. During the
+# crisis Jakku is regularly hostile, blockaded or outright unreachable, and the
+# Stellaris AI will simply never assign a science ship it cannot route there. In
+# practice the AI therefore holds the project in its situation log forever.
+#
+# The Wayfinder already had a partial safety net (foc_sith_wayfinder_emergency_open,
+# 1080 days) but that only hands out route knowledge - the AI could still never win
+# the relic, even though foc_wayfinder.2 is explicitly written to expect an AI
+# holder ("cannot be locked out by an AI that got the artifact first"). The
+# Starkiller coordinates project had no fallback at all, so if no player ever
+# completed it the Imperial Remnant route stayed locked for the whole game.
+#
+# Both now resolve the same way: once an AI empire actually holds the project, it
+# runs a 720-day off-screen survey and then completes it through the ordinary
+# on_success event. Nothing is skipped - the AI goes through the same
+# foc_starkiller_coords.2 / foc_wayfinder.2 handlers a player does, so the relic
+# award, the galaxy-wide unlock and the player notification all behave identically.
+#
+# 720 days is deliberately slower than a player working a 12000-cost project, so
+# the AI joins the race without winning it by default.
+
+
+# ---------------------------------------------------------------------------
+# Starkiller coordinates - AI survey start
+# ---------------------------------------------------------------------------
+country_event = {
+    id = foc_v152_ai_project.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = yes
+        is_regular_empire = yes
+        has_special_project = FOC_STARKILLER_COORDINATES_PROJECT
+        NOT = { has_global_flag = foc_imperial_remnant_route_unlocked }
+        NOT = { has_country_flag = foc_v152_starkiller_ai_survey_started }
+    }
+
+    immediate = {
+        set_country_flag = foc_v152_starkiller_ai_survey_started
+        set_timed_country_flag = {
+            flag = foc_v152_starkiller_ai_survey_running
+            days = 720
+        }
+    }
+}
+
+# Starkiller coordinates - AI survey complete
+country_event = {
+    id = foc_v152_ai_project.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = yes
+        is_regular_empire = yes
+        has_country_flag = foc_v152_starkiller_ai_survey_started
+        NOT = { has_country_flag = foc_v152_starkiller_ai_survey_running }
+        NOT = { has_global_flag = foc_imperial_remnant_route_unlocked }
+        has_special_project = FOC_STARKILLER_COORDINATES_PROJECT
+    }
+
+    immediate = {
+        log = "FOC_V152_AI_PROJECT: AI completed the Starkiller coordinate survey."
+        # foc_starkiller_coords.2 sets the global unlock and aborts every
+        # outstanding copy of the project, including this country's own.
+        country_event = { id = foc_starkiller_coords.2 }
+    }
+}
+
+
+# ---------------------------------------------------------------------------
+# Sith Wayfinder - AI survey start
+# ---------------------------------------------------------------------------
+country_event = {
+    id = foc_v152_ai_project.3
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = yes
+        is_regular_empire = yes
+        has_special_project = FOC_SITH_WAYFINDER_PROJECT
+        NOT = { has_country_flag = foc_sith_wayfinder_route_known }
+        NOT = { has_relic = r_foc_sith_wayfinder }
+        NOT = { has_country_flag = foc_v152_wayfinder_ai_survey_started }
+    }
+
+    immediate = {
+        set_country_flag = foc_v152_wayfinder_ai_survey_started
+        set_timed_country_flag = {
+            flag = foc_v152_wayfinder_ai_survey_running
+            days = 720
+        }
+    }
+}
+
+# Sith Wayfinder - AI survey complete
+country_event = {
+    id = foc_v152_ai_project.4
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = yes
+        is_regular_empire = yes
+        has_country_flag = foc_v152_wayfinder_ai_survey_started
+        NOT = { has_country_flag = foc_v152_wayfinder_ai_survey_running }
+        NOT = { has_country_flag = foc_sith_wayfinder_route_known }
+        has_special_project = FOC_SITH_WAYFINDER_PROJECT
+    }
+
+    immediate = {
+        log = "FOC_V152_AI_PROJECT: AI decoded the Sith Wayfinder clue."
+        abort_special_project = { type = FOC_SITH_WAYFINDER_PROJECT }
+        # foc_wayfinder.2 awards the physical relic to the first decoder and
+        # grants this country its own Exegol route knowledge.
+        country_event = { id = foc_wayfinder.2 }
+    }
+}

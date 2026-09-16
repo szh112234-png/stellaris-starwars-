@@ -1,0 +1,261 @@
+namespace = foc_v1716_blueprints
+
+# Retry only designs already offered by their original story. No new story rewards.
+country_event = {
+    id = foc_v1716_blueprints.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { is_ai = no }
+    immediate = {
+        if = {
+            limit = {
+                has_country_flag = foc_v1716_design_pending_a72963d88d63
+                NOT = { has_global_flag = foc_khan_strength_lowest }
+                foc_v1716_design_researched_a72963d88d63 = yes
+            }
+            create_ship_design = { design = "NAME_FOC_KHAN_IMPERIAL_SD" }
+            foc_v1716_register_design_a72963d88d63 = yes
+        }
+        if = {
+            limit = { has_country_flag = foc_v1716_design_pending_8aebc9f9790d has_global_flag = foc_khan_strength_lowest foc_v1716_design_researched_8aebc9f9790d = yes }
+            create_ship_design = { design = "NAME_FOC_KHAN_IMPERIAL_SD_FOC_LOWEST" }
+            foc_v1716_register_design_8aebc9f9790d = yes
+        }
+        if = {
+            limit = {
+                has_country_flag = foc_v1716_design_pending_70cc1bfbca29
+                NOT = { has_global_flag = foc_khan_strength_lowest }
+                foc_v1716_design_researched_70cc1bfbca29 = yes
+            }
+            create_ship_design = { design = "NAME_FOC_PLAYER_ECLIPSE" }
+            foc_v1716_register_design_70cc1bfbca29 = yes
+        }
+        if = {
+            limit = { has_country_flag = foc_v1716_design_pending_69915f024e3d has_global_flag = foc_khan_strength_lowest foc_v1716_design_researched_69915f024e3d = yes }
+            create_ship_design = { design = "NAME_FOC_PLAYER_ECLIPSE_FOC_LOWEST" }
+            foc_v1716_register_design_69915f024e3d = yes
+        }
+        if = {
+            limit = {
+                has_country_flag = foc_v1716_design_pending_e063534e4531
+                NOT = { has_global_flag = foc_khan_strength_lowest }
+                foc_v1716_design_researched_e063534e4531 = yes
+            }
+            create_ship_design = { design = "NAME_FOC_PLAYER_MANDATOR" }
+            foc_v1716_register_design_e063534e4531 = yes
+        }
+        if = {
+            limit = { has_country_flag = foc_v1716_design_pending_f17f39052507 has_global_flag = foc_khan_strength_lowest foc_v1716_design_researched_f17f39052507 = yes }
+            create_ship_design = { design = "NAME_FOC_PLAYER_MANDATOR_FOC_LOWEST" }
+            foc_v1716_register_design_f17f39052507 = yes
+        }
+        if = {
+            limit = {
+                has_country_flag = foc_v1716_design_pending_fae02a6556df
+                NOT = { has_global_flag = foc_khan_strength_lowest }
+                foc_v1716_design_researched_fae02a6556df = yes
+            }
+            create_ship_design = { design = "NAME_FOC_REBEL_MC158" }
+            foc_v1716_register_design_fae02a6556df = yes
+        }
+        if = {
+            limit = { has_country_flag = foc_v1716_design_pending_89e7aa3d5810 has_global_flag = foc_khan_strength_lowest foc_v1716_design_researched_89e7aa3d5810 = yes }
+            create_ship_design = { design = "NAME_FOC_REBEL_MC158_FOC_LOWEST" }
+            foc_v1716_register_design_89e7aa3d5810 = yes
+        }
+        if = {
+            limit = {
+                has_country_flag = foc_v1716_design_pending_5fb08b9fa397
+                NOT = { has_global_flag = foc_khan_strength_lowest }
+                foc_v1716_design_researched_5fb08b9fa397 = yes
+            }
+            create_ship_design = { design = "NAME_FOC_REBEL_MC158_NR" }
+            foc_v1716_register_design_5fb08b9fa397 = yes
+        }
+        if = {
+            limit = { has_country_flag = foc_v1716_design_pending_1faa25e0941a has_global_flag = foc_khan_strength_lowest foc_v1716_design_researched_1faa25e0941a = yes }
+            create_ship_design = { design = "NAME_FOC_REBEL_MC158_NR_FOC_LOWEST" }
+            foc_v1716_register_design_1faa25e0941a = yes
+        }
+        if = {
+            limit = {
+                has_country_flag = foc_v1716_design_pending_09176763799a
+                NOT = { has_global_flag = foc_khan_strength_lowest }
+                foc_v1716_design_researched_09176763799a = yes
+            }
+            create_ship_design = { design = "NAME_FOC_REBEL_MC80_LINE" }
+            foc_v1716_register_design_09176763799a = yes
+        }
+        if = {
+            limit = { has_country_flag = foc_v1716_design_pending_17dcfd79e3fc has_global_flag = foc_khan_strength_lowest foc_v1716_design_researched_17dcfd79e3fc = yes }
+            create_ship_design = { design = "NAME_FOC_REBEL_MC80_LINE_FOC_LOWEST" }
+            foc_v1716_register_design_17dcfd79e3fc = yes
+        }
+        if = {
+            limit = {
+                has_country_flag = foc_v1716_design_pending_a19be55e065e
+                NOT = { has_global_flag = foc_khan_strength_lowest }
+                foc_v1716_design_researched_a19be55e065e = yes
+            }
+            create_ship_design = { design = "NAME_FOC_REBEL_NEBULA" }
+            foc_v1716_register_design_a19be55e065e = yes
+        }
+        if = {
+            limit = { has_country_flag = foc_v1716_design_pending_176d4484b640 has_global_flag = foc_khan_strength_lowest foc_v1716_design_researched_176d4484b640 = yes }
+            create_ship_design = { design = "NAME_FOC_REBEL_NEBULA_FOC_LOWEST" }
+            foc_v1716_register_design_176d4484b640 = yes
+        }
+        if = {
+            limit = {
+                has_country_flag = foc_v1716_design_pending_b29cdafbf38e
+                NOT = { has_global_flag = foc_khan_strength_lowest }
+                foc_v1716_design_researched_b29cdafbf38e = yes
+            }
+            create_ship_design = { design = "NAME_FOC_REBEL_NEBULA_NR" }
+            foc_v1716_register_design_b29cdafbf38e = yes
+        }
+        if = {
+            limit = { has_country_flag = foc_v1716_design_pending_97d520bed8a2 has_global_flag = foc_khan_strength_lowest foc_v1716_design_researched_97d520bed8a2 = yes }
+            create_ship_design = { design = "NAME_FOC_REBEL_NEBULA_NR_FOC_LOWEST" }
+            foc_v1716_register_design_97d520bed8a2 = yes
+        }
+        if = {
+            limit = {
+                has_country_flag = foc_v1716_design_pending_938c45aed7c4
+                NOT = { has_global_flag = foc_khan_strength_lowest }
+                foc_v1716_design_researched_938c45aed7c4 = yes
+            }
+            create_ship_design = { design = "NAME_FOC_REPUBLIC_VENATOR_STORY" }
+            foc_v1716_register_design_938c45aed7c4 = yes
+        }
+        if = {
+            limit = { has_country_flag = foc_v1716_design_pending_6d47e8957c1f has_global_flag = foc_khan_strength_lowest foc_v1716_design_researched_6d47e8957c1f = yes }
+            create_ship_design = { design = "NAME_FOC_REPUBLIC_VENATOR_STORY_FOC_LOWEST" }
+            foc_v1716_register_design_6d47e8957c1f = yes
+        }
+        if = {
+            limit = {
+                has_country_flag = foc_v1716_design_pending_f59c6f1b6fcc
+                NOT = { has_global_flag = foc_khan_strength_lowest }
+                foc_v1716_design_researched_f59c6f1b6fcc = yes
+            }
+            create_ship_design = { design = "NAME_FOC_SW_LUSANKYA" }
+            foc_v1716_register_design_f59c6f1b6fcc = yes
+        }
+        if = {
+            limit = { has_country_flag = foc_v1716_design_pending_98f62a80ce11 has_global_flag = foc_khan_strength_lowest foc_v1716_design_researched_98f62a80ce11 = yes }
+            create_ship_design = { design = "NAME_FOC_SW_LUSANKYA_FOC_LOWEST" }
+            foc_v1716_register_design_98f62a80ce11 = yes
+        }
+        if = {
+            limit = {
+                has_country_flag = foc_v1716_design_pending_438496b9959b
+                NOT = { has_global_flag = foc_khan_strength_lowest }
+                OR = {
+                    foc_v236_has_cis_aircraft_identity = no
+                    NOT = { has_global_flag = foc_khan_strength_madness }
+                }
+                foc_v1716_design_researched_438496b9959b = yes
+            }
+            create_ship_design = { design = "NAME_FOC_TRADE_LUCREHULK" }
+            foc_v1716_register_design_438496b9959b = yes
+        }
+        if = {
+            limit = { has_country_flag = foc_v1716_design_pending_6e5132689bfa has_global_flag = foc_khan_strength_lowest foc_v1716_design_researched_6e5132689bfa = yes }
+            create_ship_design = { design = "NAME_FOC_TRADE_LUCREHULK_FOC_LOWEST" }
+            foc_v1716_register_design_6e5132689bfa = yes
+        }
+        if = {
+            limit = { has_country_flag = foc_v1716_design_pending_3807ea65c2ec foc_v1716_design_researched_3807ea65c2ec = yes }
+            if = {
+                limit = { has_global_flag = foc_khan_strength_lowest }
+                create_ship_design = { design = "NAME_FOC_V1714_PLAYER_XYSTON_ISD1_V1718E_LOWEST" }
+            }
+            else = {
+                create_ship_design = { design = "NAME_FOC_V1714_PLAYER_XYSTON_ISD1" }
+            }
+            foc_v1716_register_design_3807ea65c2ec = yes
+        }
+        if = {
+            limit = { has_country_flag = foc_v1716_design_pending_6e03976c0f5b has_global_flag = foc_khan_strength_madness foc_v1716_design_researched_6e03976c0f5b = yes }
+            create_ship_design = { design = "NAME_FOC_V236_CIS_BATTLESHIP_ENHANCED" }
+            foc_v1716_register_design_6e03976c0f5b = yes
+        }
+        if = {
+            limit = { has_country_flag = foc_v1716_design_pending_68c2130890ce has_global_flag = foc_khan_strength_lowest foc_v1716_design_researched_68c2130890ce = yes }
+            create_ship_design = { design = "NAME_FOC_V236_CIS_BATTLESHIP_LOWEST" }
+            foc_v1716_register_design_68c2130890ce = yes
+        }
+        if = {
+            limit = {
+                has_country_flag = foc_v1716_design_pending_35ffa917511b
+                NOR = { has_global_flag = foc_khan_strength_lowest has_global_flag = foc_khan_strength_madness }
+                foc_v1716_design_researched_35ffa917511b = yes
+            }
+            create_ship_design = { design = "NAME_FOC_V236_CIS_BATTLESHIP_SG" }
+            foc_v1716_register_design_35ffa917511b = yes
+        }
+        if = {
+            limit = { has_country_flag = foc_v1716_design_pending_7abae8d66d64 has_global_flag = foc_khan_strength_madness foc_v1716_design_researched_7abae8d66d64 = yes }
+            create_ship_design = { design = "NAME_FOC_V236_CIS_CORVETTE_ENHANCED" }
+            foc_v1716_register_design_7abae8d66d64 = yes
+        }
+        if = {
+            limit = { has_country_flag = foc_v1716_design_pending_ec7fb356dca8 has_global_flag = foc_khan_strength_lowest foc_v1716_design_researched_ec7fb356dca8 = yes }
+            create_ship_design = { design = "NAME_FOC_V236_CIS_CORVETTE_LOWEST" }
+            foc_v1716_register_design_ec7fb356dca8 = yes
+        }
+        if = {
+            limit = {
+                has_country_flag = foc_v1716_design_pending_26b1f465a37e
+                NOR = { has_global_flag = foc_khan_strength_lowest has_global_flag = foc_khan_strength_madness }
+                foc_v1716_design_researched_26b1f465a37e = yes
+            }
+            create_ship_design = { design = "NAME_FOC_V236_CIS_CORVETTE_SG" }
+            foc_v1716_register_design_26b1f465a37e = yes
+        }
+        if = {
+            limit = { has_country_flag = foc_v1716_design_pending_63e36f89fa76 has_global_flag = foc_khan_strength_madness foc_v1716_design_researched_63e36f89fa76 = yes }
+            create_ship_design = { design = "NAME_FOC_V236_CIS_CRUISER_ENHANCED" }
+            foc_v1716_register_design_63e36f89fa76 = yes
+        }
+        if = {
+            limit = { has_country_flag = foc_v1716_design_pending_5d74bd1496a3 has_global_flag = foc_khan_strength_lowest foc_v1716_design_researched_5d74bd1496a3 = yes }
+            create_ship_design = { design = "NAME_FOC_V236_CIS_CRUISER_LOWEST" }
+            foc_v1716_register_design_5d74bd1496a3 = yes
+        }
+        if = {
+            limit = {
+                has_country_flag = foc_v1716_design_pending_f82fdae1cdbf
+                NOR = { has_global_flag = foc_khan_strength_lowest has_global_flag = foc_khan_strength_madness }
+                foc_v1716_design_researched_f82fdae1cdbf = yes
+            }
+            create_ship_design = { design = "NAME_FOC_V236_CIS_CRUISER_SG" }
+            foc_v1716_register_design_f82fdae1cdbf = yes
+        }
+        if = {
+            limit = { has_country_flag = foc_v1716_design_pending_e1e13dbd2378 has_global_flag = foc_khan_strength_madness foc_v1716_design_researched_e1e13dbd2378 = yes }
+            create_ship_design = { design = "NAME_FOC_V236_CIS_DESTROYER_ENHANCED" }
+            foc_v1716_register_design_e1e13dbd2378 = yes
+        }
+        if = {
+            limit = { has_country_flag = foc_v1716_design_pending_7129063a5ce6 has_global_flag = foc_khan_strength_lowest foc_v1716_design_researched_7129063a5ce6 = yes }
+            create_ship_design = { design = "NAME_FOC_V236_CIS_DESTROYER_LOWEST" }
+            foc_v1716_register_design_7129063a5ce6 = yes
+        }
+        if = {
+            limit = {
+                has_country_flag = foc_v1716_design_pending_7274e0e91491
+                NOR = { has_global_flag = foc_khan_strength_lowest has_global_flag = foc_khan_strength_madness }
+                foc_v1716_design_researched_7274e0e91491 = yes
+            }
+            create_ship_design = { design = "NAME_FOC_V236_CIS_DESTROYER_SG" }
+            foc_v1716_register_design_7274e0e91491 = yes
+        }
+        if = {
+            limit = { has_country_flag = foc_v1716_design_pending_d87acffc65c1 has_global_flag = foc_khan_strength_madness foc_v1716_design_researched_d87acffc65c1 = yes }
+            create_ship_design = { design = "NAME_FOC_V236_CIS_LUCREHULK_ENHANCED" }
+            foc_v1716_register_design_d87acffc65c1 = yes
+        }
+    }
+}

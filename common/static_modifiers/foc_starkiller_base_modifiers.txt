@@ -1,0 +1,37 @@
+# Shared Starkiller Base planet modifier.
+#
+# Applied by BOTH the crisis base (myk_starkiller_base_final) and the player origin
+# base (fop_starkiller_base_final), so the completed installation buffs its world
+# identically in either case.
+#
+# NOTE ON OVERLAP: the defensive lines here (army_defense_health_mult and
+# planet_orbital_bombardment_damage) used to live in fop_starkiller_world in
+# common/static_modifiers/fop_ilum_modifiers.txt. They were moved here and REMOVED
+# from that modifier - leaving them in both would have double-stacked on the player
+# origin only, pushing bombardment damage to -1.00 (outright immunity) while the
+# crisis version got nothing. fop_starkiller_world keeps its origin-flavour economy
+# lines (districts, build speed) and is still applied alongside this one.
+#
+# All modifier keys below are verified against vanilla common/static_modifiers and
+# common/buildings. Watch out: planet_fortification_damage and
+# planet_engineers_engineering_research_produces_mult do NOT exist in the game and
+# fail silently if used.
+
+foc_starkiller_base_world = {
+	# --- Defence ---
+	# The base is dug through the planet's entire crust, so the world itself is the
+	# fortification: a huge standing garrison, hardened against orbital fire.
+	planet_defense_armies_add = 10
+	army_defense_health_mult = 1.00
+	army_defense_damage_mult = 0.50
+	planet_orbital_bombardment_damage = -0.50
+	planet_stability_add = 10
+
+	# --- Engineering research ---
+	# The thermal oscillator, containment field and phantom-energy work make the
+	# planet the First Order's foremost engineering site.
+	planet_jobs_engineering_research_produces_mult = 0.25
+
+	icon = "gfx/interface/icons/planet_modifiers/thermal_oscillator.dds"
+	icon_frame = 1
+}

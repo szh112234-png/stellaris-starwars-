@@ -1,0 +1,15 @@
+foc_tri_strike = {
+ user_scope = fleet
+ scope = self
+ possible = { custom_tooltip = { fail_text = SSP_SOURCE_IN_COMBAT is_in_combat = no } }
+ button_clickable = { always = yes }
+ on_completed = on_foc_tri_strike_completed
+ tooltip = FOC_TRI_ACTION_DESC
+ icon = "GFX_fleet_order_button_ground_support_seismic_bombing"
+ icon_selected = "GFX_fleet_order_button_ground_support_seismic_bombing_selected"
+ activity_key = FOC_TRI_ACTIVITY
+ context_menu_name = FOC_TRI_ACTION
+ progress_activity_key = FOC_TRI_ACTIVITY
+ required_progress = 0 cooldown = 140 wait = no on_click_sound = "deep_space_citadel_select"
+ ai = { ai_minister = military weight = { base = 0 } }
+}

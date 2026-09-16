@@ -1,0 +1,30 @@
+namespace = foc_v232m
+
+event = {
+    id = foc_v232m.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { NOT = { has_global_flag = foc_v232m_save_checked } }
+    immediate = {
+        every_country = {
+            foc_v232j_refresh_fleet_caps = yes
+            foc_v232m_repair_country = yes
+        }
+        set_global_flag = foc_v232m_save_checked
+        log = "FOC_V232M: all-country naval capacity applied; existing successor fighter permits and eligible capital factories checked once. Command limits unchanged."
+    }
+}
+
+country_event = {
+    id = foc_v232m.2
+    hide_window = yes
+    is_triggered_only = yes
+    immediate = { country_event = { id = foc_v232m.3 days = 1 } }
+}
+
+country_event = {
+    id = foc_v232m.3
+    hide_window = yes
+    is_triggered_only = yes
+    immediate = { foc_v232m_repair_country = yes }
+}

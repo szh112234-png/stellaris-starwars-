@@ -1,0 +1,64 @@
+myk_starkiller_dyson_shoot = {
+    user_scope = megastructure
+    scope = galactic_object
+
+    possible = {
+        custom_tooltip = {
+            fail_text = foc_dark_order_legacy_required
+            fromfrom = {
+                owner = {
+                    is_ai = no
+                    has_country_flag = foc_dark_order_legacy_access
+                }
+            }
+        }
+        custom_tooltip = {
+            fail_text = "no_targeting_own_colonies"
+            solar_system = {
+                NOT = {
+                    any_system_planet = {
+                        is_colony = yes
+                        is_owned_by = fromfrom.owner
+                    }
+                }
+            }
+        }
+        custom_tooltip = {
+            fail_text = myk_starkiller_busy_fail
+            fromfrom = {
+                NOR = {
+                    has_megastructure_flag = myk_starkiller_player_busy
+                    has_megastructure_flag = myk_starkiller_player_shot_scheduled
+                    has_megastructure_flag = myk_starkiller_player_cooldown_active
+                }
+            }
+        }
+    }
+
+    ai = {
+        ai_minister = military
+        weight = { base = 0 }
+    }
+
+    icon = GFX_myk_starkiller_build_small_icon
+    icon_selected = GFX_myk_starkiller_build_small_icon
+
+    # The native action is only a one-day target-selector shell. Its native
+    # cooldown is disabled so closing/cancelling the target menu cannot consume
+    # the real firing cooldown. After target confirmation, the megastructure
+    # flags checked in `possible` block reuse throughout charging and recharge.
+    on_completed = on_myk_starkiller_dyson_selector_completed
+    on_started = on_myk_starkiller_dyson_shoot_started
+
+    context_menu_name = "myk_starkiller_dyson_shot_action"
+    activity_key = "myk_starkiller_dyson_shot_activity_key"
+    tooltip = myk_starkiller_dyson_gun_button
+
+    # 1.96: cooldown 0 is intentional. The confirmed-shot flags provide the
+    # actual 180-day charge plus 180-day recharge lock; cancellation sets none.
+    cooldown = 0
+    required_progress = 1
+
+    begin_anim_state = "working"
+    progress_anim_state = "working_looping"
+}

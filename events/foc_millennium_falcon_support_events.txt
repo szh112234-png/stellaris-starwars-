@@ -1,0 +1,361 @@
+namespace = foc_falcon_support
+
+# Easter egg: the unique Millennium Falcon reaches the isolated Final Order system.
+# Direct hook: on_entering_system_fleet. Root = entering fleet; From = system.
+fleet_event = {
+    id = foc_falcon_support.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_khan_phase_two
+        NOT = { has_global_flag = foc_falcon_galactic_support_triggered }
+        exists = event_target:foc_khan_final_order
+        exists = event_target:foc_khan_final_order_system
+        exists = event_target:foc_khan_exegol_capital
+        from = { has_star_flag = foc_khan_exegol_home }
+        any_owned_ship = { has_ship_flag = foc_millennium_falcon_unique_ship }
+        controller = {
+            is_regular_empire = yes
+            NOT = { has_country_flag = foc_khan_first_order_country }
+            NOT = { has_country_flag = foc_khan_final_order_country }
+        }
+    }
+
+    immediate = {
+        # Set this before any delayed effects so simultaneous entry callbacks cannot duplicate the fleet.
+        set_global_flag = foc_falcon_galactic_support_triggered
+        controller = { save_global_event_target_as = foc_falcon_support_owner }
+
+        # Prefer the established Rebel Alliance. If it has already been destroyed or is unavailable,
+        # the Falcon's controller receives the support groups directly.
+        if = {
+            limit = {
+                exists = event_target:foc_khan_rebel_alliance
+                NOT = { has_global_flag = foc_khan_rebel_destroyed }
+                event_target:foc_khan_rebel_alliance = {
+                    has_country_flag = foc_khan_rebel_alliance_country
+                }
+            }
+            event_target:foc_khan_rebel_alliance = {
+                save_global_event_target_as = foc_falcon_support_owner
+            }
+        }
+
+        # Crisis hostility is reciprocal, so the arriving fleets immediately engage the Final Order.
+        event_target:foc_falcon_support_owner = {
+            establish_communications_no_message = event_target:foc_khan_final_order
+            set_faction_hostility = {
+                target = event_target:foc_khan_final_order
+                set_hostile = yes
+                set_friendly = no
+                set_neutral = no
+            }
+        }
+        event_target:foc_khan_final_order = {
+            establish_communications_no_message = event_target:foc_falcon_support_owner
+            set_faction_hostility = {
+                target = event_target:foc_falcon_support_owner
+                set_hostile = yes
+                set_friendly = no
+                set_neutral = no
+            }
+        }
+
+        # Four capital-heavy groups, eleven ships each (44 total). This is deliberately below
+        # the large crisis waves to preserve the cinematic effect without adding hundreds of hulls.
+        event_target:foc_khan_final_order_system = {
+            create_fleet = {
+                name = "FOC_GALACTIC_SUPPORT_FLEET_1"
+                settings = {
+                    uses_naval_capacity = no
+                    can_upgrade = no
+                    can_disband = yes
+                    can_change_composition = no
+                    can_change_leader = yes
+                    spawn_debris = yes
+                    ai_ignore_strength = yes
+                }
+                effect = {
+                    set_owner = event_target:foc_falcon_support_owner
+                    # V15 full-armor prerequisite: foc_v15_defense_83855fa9dd8b.
+                    owner = {
+                        if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+                    }
+                    
+                    # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_2 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_octuple_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_octuple_1 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_octuple_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_octuple_2 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_octuple_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_octuple_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_2 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_quad_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_2 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_3 message = no } } }
+}
+                    
+
+                    
+
+                    
+                    set_location = { target = event_target:foc_khan_exegol_capital distance = 95 angle = 20 }
+                    create_ship = { name = random design = "NAME_FOC_REBEL_MC158" graphical_culture = rebel_01 upgradable = no }
+                    while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_NEBULA" graphical_culture = rebel_01 upgradable = no } }
+                    while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_MC80" graphical_culture = rebel_01 upgradable = no } }
+                    while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_MC30" graphical_culture = rebel_01 upgradable = no } }
+                    while = { count = 4 create_ship = { name = random design = "NAME_FOC_REBEL_CR90" graphical_culture = rebel_01 upgradable = no } }
+                    set_fleet_flag = foc_falcon_galactic_support_fleet
+                    set_fleet_flag = foc_khan_rebel_attack_fleet
+                    set_fleet_stance = aggressive
+                    set_aggro_range_measure_from = self
+                    set_aggro_range = 9999
+                    fleet_event = { id = foc_khan_rebel.31 days = 1 }
+                }
+            }
+            create_fleet = {
+                name = "FOC_GALACTIC_SUPPORT_FLEET_2"
+                settings = {
+                    uses_naval_capacity = no
+                    can_upgrade = no
+                    can_disband = yes
+                    can_change_composition = no
+                    can_change_leader = yes
+                    spawn_debris = yes
+                    ai_ignore_strength = yes
+                }
+                effect = {
+                    set_owner = event_target:foc_falcon_support_owner
+                    # V15 full-armor prerequisite: foc_v15_defense_41b2e509a62d.
+                    owner = {
+                        if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+                    }
+                    
+                    # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_2 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_octuple_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_octuple_1 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_octuple_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_octuple_2 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_octuple_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_octuple_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_2 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_quad_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_2 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_3 message = no } } }
+}
+                    
+
+                    
+
+                    
+                    set_location = { target = event_target:foc_khan_exegol_capital distance = 105 angle = 110 }
+                    create_ship = { name = random design = "NAME_FOC_REBEL_MC158" graphical_culture = rebel_01 upgradable = no }
+                    while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_NEBULA" graphical_culture = rebel_01 upgradable = no } }
+                    while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_MC80" graphical_culture = rebel_01 upgradable = no } }
+                    while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_MC30" graphical_culture = rebel_01 upgradable = no } }
+                    while = { count = 4 create_ship = { name = random design = "NAME_FOC_REBEL_CR90" graphical_culture = rebel_01 upgradable = no } }
+                    set_fleet_flag = foc_falcon_galactic_support_fleet
+                    set_fleet_flag = foc_khan_rebel_attack_fleet
+                    set_fleet_stance = aggressive
+                    set_aggro_range_measure_from = self
+                    set_aggro_range = 9999
+                    fleet_event = { id = foc_khan_rebel.31 days = 1 }
+                }
+            }
+            create_fleet = {
+                name = "FOC_GALACTIC_SUPPORT_FLEET_3"
+                settings = {
+                    uses_naval_capacity = no
+                    can_upgrade = no
+                    can_disband = yes
+                    can_change_composition = no
+                    can_change_leader = yes
+                    spawn_debris = yes
+                    ai_ignore_strength = yes
+                }
+                effect = {
+                    set_owner = event_target:foc_falcon_support_owner
+                    # V15 full-armor prerequisite: foc_v15_defense_4005d5b50def.
+                    owner = {
+                        if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+                    }
+                    
+                    # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_2 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_octuple_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_octuple_1 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_octuple_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_octuple_2 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_octuple_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_octuple_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_2 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_quad_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_2 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_3 message = no } } }
+}
+                    
+
+                    
+
+                    
+                    set_location = { target = event_target:foc_khan_exegol_capital distance = 115 angle = 200 }
+                    create_ship = { name = random design = "NAME_FOC_REBEL_MC158" graphical_culture = rebel_01 upgradable = no }
+                    while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_NEBULA" graphical_culture = rebel_01 upgradable = no } }
+                    while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_MC80" graphical_culture = rebel_01 upgradable = no } }
+                    while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_MC30" graphical_culture = rebel_01 upgradable = no } }
+                    while = { count = 4 create_ship = { name = random design = "NAME_FOC_REBEL_CR90" graphical_culture = rebel_01 upgradable = no } }
+                    set_fleet_flag = foc_falcon_galactic_support_fleet
+                    set_fleet_flag = foc_khan_rebel_attack_fleet
+                    set_fleet_stance = aggressive
+                    set_aggro_range_measure_from = self
+                    set_aggro_range = 9999
+                    fleet_event = { id = foc_khan_rebel.31 days = 1 }
+                }
+            }
+            create_fleet = {
+                name = "FOC_GALACTIC_SUPPORT_FLEET_4"
+                settings = {
+                    uses_naval_capacity = no
+                    can_upgrade = no
+                    can_disband = yes
+                    can_change_composition = no
+                    can_change_leader = yes
+                    spawn_debris = yes
+                    ai_ignore_strength = yes
+                }
+                effect = {
+                    set_owner = event_target:foc_falcon_support_owner
+                    # V15 full-armor prerequisite: foc_v15_defense_d2e6059fe344.
+                    owner = {
+                        if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+                    }
+                    
+                    # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_2 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_octuple_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_octuple_1 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_octuple_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_octuple_2 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_octuple_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_octuple_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_2 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_quad_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_2 message = no } } }
+if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_reb_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_3 message = no } } }
+}
+                    
+
+                    
+
+                    
+                    set_location = { target = event_target:foc_khan_exegol_capital distance = 125 angle = 290 }
+                    create_ship = { name = random design = "NAME_FOC_REBEL_MC158" graphical_culture = rebel_01 upgradable = no }
+                    while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_NEBULA" graphical_culture = rebel_01 upgradable = no } }
+                    while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_MC80" graphical_culture = rebel_01 upgradable = no } }
+                    while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_MC30" graphical_culture = rebel_01 upgradable = no } }
+                    while = { count = 4 create_ship = { name = random design = "NAME_FOC_REBEL_CR90" graphical_culture = rebel_01 upgradable = no } }
+                    set_fleet_flag = foc_falcon_galactic_support_fleet
+                    set_fleet_flag = foc_khan_rebel_attack_fleet
+                    set_fleet_stance = aggressive
+                    set_aggro_range_measure_from = self
+                    set_aggro_range = 9999
+                    fleet_event = { id = foc_khan_rebel.31 days = 1 }
+                }
+            }
+        }
+
+        every_playable_country = {
+            country_event = { id = foc_falcon_support.10 days = 1 }
+        }
+
+        clear_global_event_target = foc_falcon_support_owner
+    }
+}
+
+# Low-frequency save/compatibility fallback in case another mod suppresses the direct on_action hook.
+event = {
+    id = foc_falcon_support.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_khan_phase_two
+        NOT = { has_global_flag = foc_falcon_galactic_support_triggered }
+        exists = event_target:foc_khan_final_order_system
+        event_target:foc_khan_final_order_system = {
+            any_fleet_in_system = {
+                any_owned_ship = { has_ship_flag = foc_millennium_falcon_unique_ship }
+                controller = {
+                    is_regular_empire = yes
+                    NOT = { has_country_flag = foc_khan_first_order_country }
+                    NOT = { has_country_flag = foc_khan_final_order_country }
+                }
+            }
+        }
+    }
+
+    immediate = {
+        event_target:foc_khan_final_order_system = {
+            random_fleet_in_system = {
+                limit = {
+                    any_owned_ship = { has_ship_flag = foc_millennium_falcon_unique_ship }
+                    controller = {
+                        is_regular_empire = yes
+                        NOT = { has_country_flag = foc_khan_first_order_country }
+                        NOT = { has_country_flag = foc_khan_final_order_country }
+                    }
+                }
+                fleet_event = { id = foc_falcon_support.1 scopes = { from = event_target:foc_khan_final_order_system } }
+            }
+        }
+    }
+}
+
+# Galaxy-wide news window after the fleets have already arrived.
+country_event = {
+    id = foc_falcon_support.10
+    title = foc_falcon_support.10.name
+    desc = foc_falcon_support.10.desc
+    picture = GFX_foc_story_galactic_support
+    location = event_target:foc_khan_final_order_system
+    show_sound = event_ship_bridge
+    is_triggered_only = yes
+    force_open = yes
+
+    option = { name = foc_falcon_support.10.a }
+}

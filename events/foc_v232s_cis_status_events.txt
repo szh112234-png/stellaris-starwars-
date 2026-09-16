@@ -1,0 +1,22 @@
+namespace = foc_v232s_cis
+
+# Read-only status panel. Force-surrender remains a separate direct command.
+country_event = {
+    id = foc_v232s_cis.1
+    title = foc_v232s.status.name
+    desc = foc_v232s.status.desc
+    picture = GFX_foc_sep_victory
+    is_triggered_only = yes
+    force_open = yes
+    trigger = { is_ai = no has_country_flag = foc_republic_origin_republic_country }
+    immediate = { foc_v232s_refresh_cis_status = yes }
+    option = {
+        name = foc_v232s.status.refresh
+        hidden_effect = { country_event = { id = foc_v232s_cis.1 } }
+    }
+    option = {
+        name = foc_v232s.status.back
+        hidden_effect = { country_event = { id = foc_republic_origin_command.1 } }
+    }
+    option = { name = foc_republic_origin_command.1.close }
+}

@@ -1,0 +1,76 @@
+# V16: shared protocol may be granted to authorized recipients; zero research weights and component gates are retained.
+foc_tech_swgs_defence_turbo = {
+    icon = tech_flak_batteries_3
+    area = physics
+    cost = 30000
+    tier = 4
+    category = { particles }
+    is_rare = yes
+    is_dangerous = yes
+    is_reverse_engineerable = no
+    ai_update_type = military
+    gateway = energy_weapons
+    prerequisites = { "tech_flak_batteries_3" "tech_lasers_5" }
+    potential = {
+        foc_v1718_allowed_country = yes
+        NOT = {
+            is_country_type = fallen_empire
+        }
+        NOT = {
+            is_country_type = awakened_fallen_empire
+        }
+    
+        foc_v1718_allowed_country = yes
+    }
+    weight = 35
+    weight_modifier = {
+        modifier = {
+            factor = 1.5
+            has_ethic = ethic_militarist
+        }
+        modifier = {
+            factor = 2
+            has_ethic = ethic_fanatic_militarist
+        }
+    }
+    ai_weight = {
+        factor = 1
+    }
+}
+foc_tech_swgs_crisis_point_defence = {
+    icon = tech_flak_batteries_3
+    area = physics
+    cost = 1
+    tier = 5
+    category = { particles }
+    is_rare = yes
+    is_dangerous = yes
+    is_reverse_engineerable = no
+    potential = {
+        always = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+    weight = 0
+    ai_weight = {
+        factor = 0
+    }
+}
+foc_tech_rebel_ship_sections = {
+    icon = tech_flak_batteries_3
+    area = engineering
+    cost = 1
+    tier = 1
+    category = { voidcraft }
+    is_rare = yes
+    is_reverse_engineerable = no
+    potential = {
+        always = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+    weight = 0
+    ai_weight = {
+        factor = 0
+    }
+}

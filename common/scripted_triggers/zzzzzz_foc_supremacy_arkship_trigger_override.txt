@@ -1,0 +1,124 @@
+# FOC 3.06: late Arkship recognition override.
+# Loaded after compatibility mods so upgraded Supremacy hulls remain valid Arkships.
+
+is_arkship_ship = {
+    OR = {
+        # V232q: Home One is a genuine maximum-tier military Arkship.
+        is_ship_size = foc_v231_home_one_arkship
+
+        is_ship_size = civilian_arkship_tier_1
+        is_ship_size = civilian_arkship_tier_2
+        is_ship_size = civilian_arkship_tier_3
+        is_ship_size = science_arkship_tier_1
+        is_ship_size = science_arkship_tier_2
+        is_ship_size = science_arkship_tier_3
+        is_ship_size = military_arkship_tier_1
+        is_ship_size = military_arkship_tier_2
+        is_ship_size = military_arkship_tier_3
+        is_ship_size = military_arkship_champions_forge
+        OR = { is_ship_size = sai_supremacy_arkship_tier_1 is_ship_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+        OR = { is_ship_size = sai_supremacy_arkship_tier_2 is_ship_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+        OR = { OR = { is_ship_size = sai_supremacy_arkship_tier_3 is_ship_size = sai_supremacy_arkship_tier_3_shell_foc_lowest } is_ship_size = sai_supremacy_arkship_tier_3_foc_lowest }
+        OR = { is_ship_size = foc_sai_supremacy_arkship_tier_1 is_ship_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+        OR = { is_ship_size = foc_sai_supremacy_arkship_tier_2 is_ship_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+        OR = { is_ship_size = foc_sai_supremacy_arkship_tier_3 is_ship_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		OR = { is_ship_size = foc_rebel_home_arkship_tier_3 is_ship_size = foc_rebel_home_arkship_tier_3_foc_lowest }
+    }
+}
+
+is_arkship_starbase = {
+    OR = {
+        # V232q: Home One is a genuine maximum-tier military Arkship.
+        has_starbase_size = foc_v231_home_one_arkship
+
+        has_starbase_size = civilian_arkship_tier_1
+        has_starbase_size = civilian_arkship_tier_2
+        has_starbase_size = civilian_arkship_tier_3
+        has_starbase_size = science_arkship_tier_1
+        has_starbase_size = science_arkship_tier_2
+        has_starbase_size = science_arkship_tier_3
+        has_starbase_size = military_arkship_tier_1
+        has_starbase_size = military_arkship_tier_2
+        has_starbase_size = military_arkship_tier_3
+        has_starbase_size = military_arkship_champions_forge
+        OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+        OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+        OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+        OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+        OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+        OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		has_starbase_size = foc_rebel_home_arkship_tier_3
+    }
+}
+
+is_military_arkship = {
+    OR = {
+        # V232q: Home One is a genuine maximum-tier military Arkship.
+        is_ship_size = foc_v231_home_one_arkship
+
+        is_ship_size = military_arkship_tier_1
+        is_ship_size = military_arkship_tier_2
+        is_ship_size = military_arkship_tier_3
+        is_ship_size = military_arkship_champions_forge
+        OR = { is_ship_size = sai_supremacy_arkship_tier_1 is_ship_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+        OR = { is_ship_size = sai_supremacy_arkship_tier_2 is_ship_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+        OR = { OR = { is_ship_size = sai_supremacy_arkship_tier_3 is_ship_size = sai_supremacy_arkship_tier_3_shell_foc_lowest } is_ship_size = sai_supremacy_arkship_tier_3_foc_lowest }
+        OR = { is_ship_size = foc_sai_supremacy_arkship_tier_1 is_ship_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+        OR = { is_ship_size = foc_sai_supremacy_arkship_tier_2 is_ship_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+        OR = { is_ship_size = foc_sai_supremacy_arkship_tier_3 is_ship_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		OR = { is_ship_size = foc_rebel_home_arkship_tier_3 is_ship_size = foc_rebel_home_arkship_tier_3_foc_lowest }
+    }
+}
+
+is_military_arkship_starbase = {
+    OR = {
+        # V232q: Home One is a genuine maximum-tier military Arkship.
+        has_starbase_size = foc_v231_home_one_arkship
+
+        has_starbase_size = military_arkship_tier_1
+        has_starbase_size = military_arkship_tier_2
+        has_starbase_size = military_arkship_tier_3
+        OR = { has_starbase_size = sai_supremacy_arkship_tier_1 has_starbase_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+        OR = { has_starbase_size = sai_supremacy_arkship_tier_2 has_starbase_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+        OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+        OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_1 has_starbase_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+        OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_2 has_starbase_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+        OR = { has_starbase_size = foc_sai_supremacy_arkship_tier_3 has_starbase_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		has_starbase_size = foc_rebel_home_arkship_tier_3
+    }
+}
+
+is_arkship_tier_1 = {
+    OR = {
+        is_ship_size = civilian_arkship_tier_1
+        is_ship_size = science_arkship_tier_1
+        is_ship_size = military_arkship_tier_1
+        OR = { is_ship_size = sai_supremacy_arkship_tier_1 is_ship_size = sai_supremacy_arkship_tier_1_shell_foc_lowest }
+        OR = { is_ship_size = foc_sai_supremacy_arkship_tier_1 is_ship_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+    }
+}
+
+is_arkship_tier_2 = {
+    OR = {
+        is_ship_size = civilian_arkship_tier_2
+        is_ship_size = science_arkship_tier_2
+        is_ship_size = military_arkship_tier_2
+        OR = { is_ship_size = sai_supremacy_arkship_tier_2 is_ship_size = sai_supremacy_arkship_tier_2_shell_foc_lowest }
+        OR = { is_ship_size = foc_sai_supremacy_arkship_tier_2 is_ship_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+    }
+}
+
+is_arkship_tier_3 = {
+    OR = {
+        # V232q: Home One is a genuine maximum-tier military Arkship.
+        is_ship_size = foc_v231_home_one_arkship
+
+        is_ship_size = civilian_arkship_tier_3
+        is_ship_size = science_arkship_tier_3
+        is_ship_size = military_arkship_tier_3
+        is_ship_size = military_arkship_champions_forge
+        OR = { OR = { is_ship_size = sai_supremacy_arkship_tier_3 is_ship_size = sai_supremacy_arkship_tier_3_shell_foc_lowest } is_ship_size = sai_supremacy_arkship_tier_3_foc_lowest }
+        OR = { is_ship_size = foc_sai_supremacy_arkship_tier_3 is_ship_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+		OR = { is_ship_size = foc_rebel_home_arkship_tier_3 is_ship_size = foc_rebel_home_arkship_tier_3_foc_lowest }
+    }
+}

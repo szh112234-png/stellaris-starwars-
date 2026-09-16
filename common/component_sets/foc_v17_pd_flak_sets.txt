@@ -1,0 +1,23 @@
+# FOC V17: dedicated point-defence / flak / durasteel-armour component sets.
+# One set per tier per stat profile, matching what V16 already did for the
+# branched arsenal. The old FOC_STD_GEN_PD_SET / FOC_STD_GEN_FLAK_SET carried
+# every tier AND both stat profiles at once, so with "hide obsolete components"
+# enabled the group could collapse onto a member whose potential does not apply
+# to the country, leaving no point defence visible at all.
+# The old sets stay defined because deactivated V10/V11 rows still name them.
+component_set = { key = "FOC_V17_STD_PD_T1_FOC_SET" icon = "GFX_ship_part_defence_turbo_g_1" icon_frame = 1 }
+component_set = { key = "FOC_V17_STD_PD_T2_FOC_SET" icon = "GFX_ship_part_defence_turbo_g_2" icon_frame = 1 }
+component_set = { key = "FOC_V17_STD_PD_T3_FOC_SET" icon = "GFX_ship_part_defence_turbo_g_3" icon_frame = 1 }
+component_set = { key = "FOC_V17_STD_PD_T1_LOWEST_SET" icon = "GFX_ship_part_defence_turbo_g_1" icon_frame = 1 }
+component_set = { key = "FOC_V17_STD_PD_T2_LOWEST_SET" icon = "GFX_ship_part_defence_turbo_g_2" icon_frame = 1 }
+component_set = { key = "FOC_V17_STD_PD_T3_LOWEST_SET" icon = "GFX_ship_part_defence_turbo_g_3" icon_frame = 1 }
+component_set = { key = "FOC_V17_STD_FLAK_T1_FOC_SET" icon = "GFX_ship_part_quad_turbo_g_1" icon_frame = 1 }
+component_set = { key = "FOC_V17_STD_FLAK_T2_FOC_SET" icon = "GFX_ship_part_quad_turbo_g_2" icon_frame = 1 }
+component_set = { key = "FOC_V17_STD_FLAK_T1_LOWEST_SET" icon = "GFX_ship_part_quad_turbo_g_1" icon_frame = 1 }
+component_set = { key = "FOC_V17_STD_FLAK_T2_LOWEST_SET" icon = "GFX_ship_part_quad_turbo_g_2" icon_frame = 1 }
+
+# Advanced durasteel (adaptive defence) armour: the LOWEST stat profile used to
+# share FOC_KHAN_ADAPTIVE_DEFENSE_ARMOR with the normal profile, and all six rows
+# are visible in the designer, so the group could collapse onto a row the country
+# cannot use and the whole armour entry disappeared.
+component_set = { key = "FOC_V17_KHAN_ADAPTIVE_DEFENSE_ARMOR_LOWEST_SET" icon = "GFX_ship_part_adaptive_defense_armor" icon_frame = 1 }

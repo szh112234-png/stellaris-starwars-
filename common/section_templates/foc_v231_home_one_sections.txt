@@ -1,0 +1,231 @@
+# FOC V231 - Home One core section.
+#
+# The weapon-slot census is copied exactly from the three-section MC80 fixed
+# design (foc_rebel_mc80_line_design.txt):
+#   10 large, 10 medium, 5 small, 7 point-defence, 4 strike craft,
+#   12 large utility, 3 aux utility.
+# Home One therefore carries a normal MC80's armament on an Arkship frame,
+# rather than Raddus's far larger battery.
+
+ship_section_template = {
+	key = "FOC_V231_HOME_ONE_CORE"
+	ship_size = foc_v231_home_one_arkship
+	ai_weight = { weight = 100 }
+	# The MC80 mesh has fewer turret locators than the logical slot count, so
+	# the fixed weapons function while staying visually integrated.
+	should_draw_components = no
+	fits_on_slot = mid
+	entity = "foc_rebel_mc80_line_bow_entity"
+	icon = "GFX_ship_part_core_mid"
+	component_slot = {
+		name = "LARGE_GUN_01"
+		template = "foc_v231_home_one_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_02"
+		template = "foc_v231_home_one_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_03"
+		template = "foc_v231_home_one_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_04"
+		template = "foc_v231_home_one_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_05"
+		template = "foc_v231_home_one_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_06"
+		template = "foc_v231_home_one_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_07"
+		template = "foc_v231_home_one_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_08"
+		template = "foc_v231_home_one_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_09"
+		template = "foc_v231_home_one_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_10"
+		template = "foc_v231_home_one_large_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "MEDIUM_GUN_01"
+		template = "foc_v231_home_one_medium_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "MEDIUM_GUN_02"
+		template = "foc_v231_home_one_medium_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "MEDIUM_GUN_03"
+		template = "foc_v231_home_one_medium_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "MEDIUM_GUN_04"
+		template = "foc_v231_home_one_medium_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "MEDIUM_GUN_05"
+		template = "foc_v231_home_one_medium_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "MEDIUM_GUN_06"
+		template = "foc_v231_home_one_medium_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "MEDIUM_GUN_07"
+		template = "foc_v231_home_one_medium_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "MEDIUM_GUN_08"
+		template = "foc_v231_home_one_medium_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "MEDIUM_GUN_09"
+		template = "foc_v231_home_one_medium_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "MEDIUM_GUN_10"
+		template = "foc_v231_home_one_medium_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_01"
+		template = "foc_v231_home_one_small_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_02"
+		template = "foc_v231_home_one_small_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_03"
+		template = "foc_v231_home_one_small_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_04"
+		template = "foc_v231_home_one_small_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_05"
+		template = "foc_v231_home_one_small_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "POINT_DEFENCE_01"
+		template = "foc_v231_home_one_point_defence_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "POINT_DEFENCE_02"
+		template = "foc_v231_home_one_point_defence_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "POINT_DEFENCE_03"
+		template = "foc_v231_home_one_point_defence_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "POINT_DEFENCE_04"
+		template = "foc_v231_home_one_point_defence_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "POINT_DEFENCE_05"
+		template = "foc_v231_home_one_point_defence_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "POINT_DEFENCE_06"
+		template = "foc_v231_home_one_point_defence_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "POINT_DEFENCE_07"
+		template = "foc_v231_home_one_point_defence_fixed"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "STRIKE_CRAFT_01"
+		template = "large_strike_craft"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "STRIKE_CRAFT_02"
+		template = "large_strike_craft"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "STRIKE_CRAFT_03"
+		template = "large_strike_craft"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "STRIKE_CRAFT_04"
+		template = "large_strike_craft"
+		locatorname = "large_gun_01"
+	}
+
+	large_utility_slots = 12
+	aux_utility_slots = 3
+}
+
+# Invisible module section for the six functional Arkship module positions.
+# Private to Home One; it cannot appear on Raddus, a vanilla Arkship or either
+# Supremacy.
+ship_section_template = {
+	key = "FOC_V231_HOME_ONE_HIDDEN_EMPTY_MODULE"
+	ship_size = foc_v231_home_one_arkship
+	fits_on_slot = "1"
+	fits_on_slot = "2"
+	fits_on_slot = "3"
+	fits_on_slot = "4"
+	fits_on_slot = "5"
+	fits_on_slot = "6"
+	should_draw_components = no
+	entity = "invisible_turret_entity"
+	icon = "GFX_ship_part_core_mid"
+}
+
+# The fixed axial mount. Structurally the same arrangement Raddus uses: a
+# functional spinal_mount_1 section that adds no foreign geometry.
+ship_section_template = {
+	key = "FOC_V231_HOME_ONE_STRIKE_COMMAND_SECTION"
+	ship_size = foc_v231_home_one_arkship
+	fits_on_slot = "spinal_mount_1"
+	should_draw_components = no
+	entity = "invisible_turret_entity"
+	icon = "GFX_ship_part_core_mid"
+}

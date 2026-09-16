@@ -1,0 +1,194 @@
+namespace = foc_v136_leia
+
+# Leia support eligibility covers ordinary-origin and First-Order-origin
+# Resistance countries as well as migrated old saves. Palpatine-era Imperial
+# Rebels from the Republic-origin civil war are explicitly excluded.
+
+country_event = {
+    id = foc_v136_leia.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = yes
+        NOT = { has_global_flag = foc_khan_rebel_destroyed }
+        OR = {
+            any_owned_fleet = {
+                OR = {
+                    has_fleet_flag = foc_khan_rebel_home_arkship_fleet
+                    any_owned_ship = {
+                        is_disabled = no
+                        has_ship_flag = foc_khan_rebel_home_arkship
+                    }
+                }
+                solar_system = {
+                    exists = space_owner
+                    space_owner = { is_same_value = root }
+                    NOT = {
+                        any_system_planet = {
+                            is_colony = yes
+                            NOT = { owner = { is_same_value = root } }
+                        }
+                    }
+                }
+            }
+            AND = {
+                NOT = {
+                    any_owned_fleet = {
+                        OR = {
+                            has_fleet_flag = foc_khan_rebel_home_arkship_fleet
+                            any_owned_ship = {
+                                is_disabled = no
+                                has_ship_flag = foc_khan_rebel_home_arkship
+                            }
+                        }
+                    }
+                }
+                any_system = {
+                    space_owner? = { is_same_value = root }
+                    NOT = {
+                        any_system_planet = {
+                            is_colony = yes
+                            NOT = { owner = { is_same_value = root } }
+                        }
+                    }
+                }
+            }
+        }
+        NOT = { has_country_flag = foc_v136_leia_annual_support_active }
+        NOT = { has_country_flag = foc_republic_origin_imperial_rebel_country }
+        NOT = { has_country_flag = foc_republic_origin_rebel_alliance_country }
+        OR = {
+            has_country_flag = foc_khan_first_order_resistance_country
+            AND = {
+                has_country_flag = foc_khan_rebel_alliance_country
+                OR = {
+                    has_global_flag = foc_khan_phase_one
+                    has_global_flag = foc_khan_phase_two
+                    any_country = { has_country_flag = fop_origin_galactic_war_declared }
+                }
+            }
+        }
+    }
+
+    immediate = {
+        set_country_flag = foc_v136_leia_annual_support_active
+        # V142: activation marks the outbreak of the Order-era war; no fleet is
+        # granted now. The first 10-Nebula support arrives after 360 days.
+        set_timed_country_flag = { flag = foc_v136_leia_annual_support_cooldown days = 360 }
+    }
+}
+
+# First fleet after 360 days of war, then exactly one 10-Nebula fleet every 360 days. This event is AI-only.
+country_event = {
+    id = foc_v136_leia.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = yes
+        has_country_flag = foc_v136_leia_annual_support_active
+        NOT = { has_country_flag = foc_v136_leia_annual_support_cooldown }
+        NOT = { has_global_flag = foc_khan_rebel_destroyed }
+        OR = {
+            any_owned_fleet = {
+                OR = {
+                    has_fleet_flag = foc_khan_rebel_home_arkship_fleet
+                    any_owned_ship = {
+                        is_disabled = no
+                        has_ship_flag = foc_khan_rebel_home_arkship
+                    }
+                }
+                solar_system = {
+                    exists = space_owner
+                    space_owner = { is_same_value = root }
+                    NOT = {
+                        any_system_planet = {
+                            is_colony = yes
+                            NOT = { owner = { is_same_value = root } }
+                        }
+                    }
+                }
+            }
+            AND = {
+                NOT = {
+                    any_owned_fleet = {
+                        OR = {
+                            has_fleet_flag = foc_khan_rebel_home_arkship_fleet
+                            any_owned_ship = {
+                                is_disabled = no
+                                has_ship_flag = foc_khan_rebel_home_arkship
+                            }
+                        }
+                    }
+                }
+                any_system = {
+                    space_owner? = { is_same_value = root }
+                    NOT = {
+                        any_system_planet = {
+                            is_colony = yes
+                            NOT = { owner = { is_same_value = root } }
+                        }
+                    }
+                }
+            }
+        }
+        NOT = { has_country_flag = foc_republic_origin_imperial_rebel_country }
+        NOT = { has_country_flag = foc_republic_origin_rebel_alliance_country }
+        OR = {
+            has_country_flag = foc_khan_first_order_resistance_country
+            AND = {
+                has_country_flag = foc_khan_rebel_alliance_country
+                OR = {
+                    has_global_flag = foc_khan_phase_one
+                    has_global_flag = foc_khan_phase_two
+                    any_country = { has_country_flag = fop_origin_galactic_war_declared }
+                }
+            }
+        }
+    }
+
+    immediate = {
+        foc_v136_spawn_leia_10_nebula = yes
+        set_timed_country_flag = { flag = foc_v136_leia_annual_support_cooldown days = 360 }
+    }
+}
+
+# Cleanup if a country ceases to be Leia's Order-era Rebel/Resistance state.
+# A future valid reformation starts a fresh 360-day countdown through .1.
+country_event = {
+    id = foc_v136_leia.3
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_v136_leia_annual_support_active
+        OR = {
+            is_ai = no
+            has_global_flag = foc_khan_rebel_destroyed
+            has_country_flag = foc_republic_origin_imperial_rebel_country
+            has_country_flag = foc_republic_origin_rebel_alliance_country
+            AND = {
+                NOT = { has_country_flag = foc_khan_first_order_resistance_country }
+                NOT = {
+                    AND = {
+                        has_country_flag = foc_khan_rebel_alliance_country
+                        OR = {
+                            has_global_flag = foc_khan_phase_one
+                            has_global_flag = foc_khan_phase_two
+                            has_global_flag = fop_origin_player_crisis_exists
+                            exists = event_target:foc_khan_first_order
+                            exists = event_target:foc_khan_final_order
+                            exists = event_target:fop_first_order_crisis_country
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    immediate = {
+        remove_country_flag = foc_v136_leia_annual_support_active
+        remove_country_flag = foc_v136_leia_annual_support_cooldown
+    }
+}

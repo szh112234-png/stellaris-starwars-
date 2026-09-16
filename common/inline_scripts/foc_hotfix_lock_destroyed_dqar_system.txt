@@ -1,0 +1,15 @@
+# Same-scope expansion avoids the engine scripted-effect post-init depth limit.
+    if = {
+        limit = { foc_v235b_is_dqar_system = yes }
+        if = {
+            limit = { NOT = { has_global_flag = foc_v235b_dqar_destroyed } }
+            log = "FOC_V235B_DQAR_DESTROYED: permanent no-refoundation lock set."
+        }
+        set_global_flag = foc_v235b_dqar_destroyed
+        set_global_flag = foc_v235b_dqar_foundation_closed
+        if = {
+            limit = { NOT = { has_global_flag = foc_republic_origin_empire_rebel_stage } }
+            remove_global_flag = foc_khan_rebel_preparing
+            remove_global_flag = foc_khan_rebel_dqar_migration_preparing_311v
+        }
+    }

@@ -1,0 +1,24 @@
+sai_supremacy_arkship_stats = {
+	# 3.11w: player Supremacy arkship defence set equal to the crisis Supremacy
+	# (foc_sai_supremacy_arkship_stats). Hull / armour / shield now come entirely
+	# from the tier ship_size in zzz_sai_supremacy_arkship_sizes.txt, so the old
+	# x99 hull multiplier and the flat armour/shield adds are removed -- leaving
+	# them in would multiply the new absolute hull by 100.
+	# v17.17c: full tier 3 includes 24 durasteel components (+86,400
+	# per layer). Hull/armor are 5/4 of full Viscount; shields are equal.
+	# Base totals: 6,107,173.75 hull / 601,576.25 armor / 2,228,000 shield.
+	# Component damage reduction is normalized to 0.0125 each (0.30 total).
+	
+	ship_weapon_range_mult = 0.15
+	ship_tracking_add = 25
+	# V132: component-level reduction is normalized; no legacy cancellation needed.
+	ship_damage_reduction_add = 0
+	ship_armor_hardening_add = 0.60
+	ship_shield_hardening_add = 0.60
+	ship_hull_regen_add_perc = 0.02
+	ship_armor_regen_add_perc = 0.02
+	starbase_shipyard_capacity_add = 2
+	starbase_module_capacity_add = 4
+	starbase_building_capacity_add = 8
+	planet_max_districts_add = 18
+}

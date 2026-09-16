@@ -1,0 +1,46 @@
+# V90 SG ARC-170 package used by both Venator and Lucrehulk.
+strike_craft_component_template = {
+    hidden = yes # Legacy save compatibility only; new Venators use strategic ARC-170.
+
+	key = "VCSD_ARC170"
+	size = LARGE
+	entity = "venatorclass_arc170_entity"
+	potential = { always = no 
+        from = { foc_v1718_allowed_country = yes }
+    }
+	weapon_type = instant
+	projectile_gfx = "strike_craft_laser_3"
+	power = -50
+	resources = { category = ship_components cost = { alloys = 20 
+            sr_tibanna_swgs = 8
+        } }
+	count = 2
+	regeneration_per_day = 5
+	launch_time = 2
+	damage = { min = 1250 max = 1250 }
+	cooldown = 2.5
+	range = 15
+	engagement_range = 500
+	accuracy = 1
+	tracking = 1
+	health = 40
+	armor = 40
+	shield = 20
+	evasion = 0.85
+	speed = 650
+	rotation_speed = 0.3
+	acceleration = 1
+	shield_penetration = 1
+	armor_damage = 1.5
+	hull_damage = 1.25
+	ship_behavior = "bombers_behavior"
+	icon = "GFX_VCSD_ARC170"
+	icon_frame = 1
+	component_set = "VCSD_ARC170"
+	size_restriction = { venatorclass foc_trade_lucrehulk venatorclass_foc_lowest foc_trade_lucrehulk_foc_lowest }
+	tags = { weapon_type_strike_craft }
+	ai_tags = { weapon_role_anti_hull }
+	ai_weight = { weight = 99999 }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}

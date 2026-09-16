@@ -1,0 +1,26 @@
+special_project = {
+    key = "FOP_ENSLAVE_FORCE_PROJECT"
+    cost = 60000
+    tech_department = physics_technology
+    timelimit = -1
+    location = yes
+    picture = GFX_evt_shrouded_planet
+    icon = "gfx/interface/icons/situation_log/situation_log_physics.dds"
+    event_scope = country_event
+on_success = { country_event = { id = fop_origin.80 } }
+    abort_trigger = { has_country_flag = fop_force_enslaved }
+}
+
+special_project = {
+    key = "FOP_COSMIC_ASCENSION_PROJECT"
+    cost = 120000
+    tech_department = physics_technology
+    timelimit = -1
+    location = yes
+    picture = GFX_evt_shrouded_planet
+    icon = "gfx/interface/icons/situation_log/situation_log_physics.dds"
+    event_scope = country_event
+
+    on_success = { country_event = { id = fop_origin.100 } }
+    abort_trigger = { has_country_flag = fop_new_cosmic_deity }
+}

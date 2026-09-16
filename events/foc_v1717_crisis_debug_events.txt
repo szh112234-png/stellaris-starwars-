@@ -1,0 +1,48 @@
+namespace = foc_v1717_crisis_debug
+
+# Explicitly invoked by the crisis menu. Reuse the real Exegol chain and choices.
+country_event = {
+    id = foc_v1717_crisis_debug.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { is_ai = no }
+    immediate = {
+        # Recover saved targets before deciding whether country creation is needed.
+        if = {
+            limit = { any_country = { has_country_flag = foc_khan_final_order_country } }
+            random_country = {
+                limit = { has_country_flag = foc_khan_final_order_country }
+                save_global_event_target_as = foc_khan_final_order
+            }
+        }
+        if = {
+            limit = {
+                OR = {
+                    exists = event_target:foc_khan_final_order
+                    any_country = { has_country_flag = fop_player_final_order }
+                }
+            }
+            # Existing Final Order: restore pending human choices, never spawn a copy.
+            every_playable_country = {
+                limit = { foc_v17_player_first_order_pending = yes }
+                country_event = { id = fop_origin.45 }
+            }
+            log = "FOC_V1717_FINAL_ORDER_DEBUG: existing Final Order retained; pending choices refreshed."
+        }
+        else = {
+            remove_global_flag = foc_khan_crisis_disabled
+            remove_global_flag = foc_khan_crisis_spawn_scheduled
+            remove_global_flag = foc_khan_phase_one_preparing
+            set_global_flag = foc_khan_crisis_started
+            set_global_flag = foc_v1717_final_order_debug_requested
+            foc_v1717_refresh_starkiller_history = yes
+            # Do not fabricate Phase I or destruction of an unbuilt Starkiller.
+            log = "FOC_V1717_FINAL_ORDER_DEBUG: explicit menu request; starting the real Exegol chain."
+            if = {
+                limit = { has_global_flag = foc_khan_phase_two_preparing }
+                country_event = { id = foc_khan.61 }
+            }
+            else = { country_event = { id = foc_khan.60 } }
+        }
+    }
+}

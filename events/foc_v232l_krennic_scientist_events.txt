@@ -1,0 +1,37 @@
+namespace = foc_v232l_krennic
+
+# V232l: update the existing character, preserving identity, portrait, skill and age.
+# A deceased character is not recreated; the Scarif death logic remains unchanged.
+country_event = {
+    id = foc_v232l_krennic.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        any_owned_leader = {
+            has_leader_flag = foc_v223_krennic_leader
+            NOT = { leader_class = scientist }
+        }
+    }
+
+    immediate = {
+        every_owned_leader = {
+            limit = {
+                has_leader_flag = foc_v223_krennic_leader
+                NOT = { leader_class = scientist }
+            }
+            # Vacate the old assignment, but do not depose an elected ruler/heir.
+            if = {
+                limit = { is_ruler = no is_heir = no }
+                unassign_leader = this
+            }
+            # Remove obsolete official veteran subclasses only, not other traits.
+            remove_trait = subclass_official_delegate
+            remove_trait = subclass_official_governor
+            remove_trait = subclass_official_diplomacy_councilor
+            remove_trait = subclass_official_economy_councilor
+            change_leader_class = scientist
+            log = "FOC_V232L_KRENNIC: existing Krennic converted in place to scientist; portrait and identity retained."
+        }
+    }
+}

@@ -1,0 +1,57 @@
+fop_ambition_stage_1_locked = {
+    potential = { NOT = { check_variable = { which = fop_force_dominion_level value >= 1 } } }
+    allow = { custom_tooltip = { fail_text = fop_ambition_stage_1_locked_tt always = no } }
+    effect = { }
+}
+fop_ambition_stage_1_active = {
+    potential = { check_variable = { which = fop_force_dominion_level value >= 1 } }
+    allow = { always = yes }
+    effect = { custom_tooltip = fop_ambition_stage_1_active_tt }
+}
+fop_ambition_stage_2_locked = {
+    potential = { NOT = { check_variable = { which = fop_force_dominion_level value >= 2 } } }
+    allow = { custom_tooltip = { fail_text = fop_ambition_stage_2_locked_tt always = no } }
+    effect = { }
+}
+fop_ambition_stage_2_active = {
+    potential = { check_variable = { which = fop_force_dominion_level value >= 2 } }
+    allow = { always = yes }
+    effect = { custom_tooltip = fop_ambition_stage_2_active_tt }
+}
+fop_ambition_stage_3_locked = {
+    potential = { NOT = { check_variable = { which = fop_force_dominion_level value >= 3 } } }
+    allow = { custom_tooltip = { fail_text = fop_ambition_stage_3_locked_tt always = no } }
+    effect = { }
+}
+fop_ambition_stage_3_active = {
+    potential = { check_variable = { which = fop_force_dominion_level value >= 3 } }
+    allow = { always = yes }
+    effect = { custom_tooltip = fop_ambition_stage_3_active_tt }
+}
+fop_ambition_stage_4_locked = {
+    potential = { NOT = { check_variable = { which = fop_force_dominion_level value >= 4 } } }
+    allow = { custom_tooltip = { fail_text = fop_ambition_stage_4_locked_tt always = no } }
+    effect = { }
+}
+fop_ambition_stage_4_active = {
+    potential = { check_variable = { which = fop_force_dominion_level value >= 4 } }
+    allow = { always = yes }
+    effect = { custom_tooltip = fop_ambition_stage_4_active_tt }
+}
+fop_ambition_stage_5_locked = {
+    potential = { NOT = { check_variable = { which = fop_force_dominion_level value >= 5 } } }
+    allow = { custom_tooltip = { fail_text = fop_ambition_stage_5_locked_tt always = no } }
+    effect = { }
+}
+fop_ambition_stage_5_active = {
+    potential = { check_variable = { which = fop_force_dominion_level value >= 5 } }
+    allow = { always = yes }
+    effect = { custom_tooltip = fop_ambition_stage_5_active_tt }
+}
+
+# V210: text-only effect button used to render the live ambition variable.
+fop_ambition_points_display = {
+    potential = { always = yes }
+    allow = { always = yes }
+    effect = { }
+}

@@ -1,0 +1,54 @@
+# WinUP
+
+entity = {
+	name = "swgs_superlaser_epii_windup_entity"
+	
+	default_state = "attack"
+	get_state_from_parent = no
+	state = { 
+		name = "attack" state_time = 7.0 looping = no
+		start_event = { trigger_once = yes sound = { soundeffect = "sw_Superlaser_windup" } }
+		event = { time = 3.0 entity = "swgs_epii_superlaserbeam_1_entity" trigger_once = yes life = 4.0 }
+		event = { time = 3.4 entity = "swgs_epii_superlaserbeam_2_entity" trigger_once = yes life = 3.6 }
+		event = { time = 3.8 entity = "swgs_epii_superlaserbeam_3_entity" trigger_once = yes life = 3.2 }
+		event = { time = 4.2 entity = "swgs_epii_superlaserbeam_4_entity" trigger_once = yes life = 2.8 }
+	}
+}
+
+entity = {
+	name = "swgs_epii_superlaserbeam_1_entity"
+	pdxmesh = "swgs_epii_superlaserbeam_1_mesh"
+}
+
+entity = {
+	name = "swgs_epii_superlaserbeam_2_entity"
+	pdxmesh = "swgs_epii_superlaserbeam_2_mesh"
+}
+
+entity = {
+	name = "swgs_epii_superlaserbeam_3_entity"
+	pdxmesh = "swgs_epii_superlaserbeam_3_mesh"
+}
+
+entity = {
+	name = "swgs_epii_superlaserbeam_4_entity"
+	pdxmesh = "swgs_epii_superlaserbeam_4_mesh"
+}
+
+entity = {
+	name = "swgs_sithlaser_windup_entity"
+	
+	default_state = "attack"
+	get_state_from_parent = no
+	state = { 
+		name = "attack" state_time = 2.5 looping = no
+		start_event = { trigger_once = yes sound = { soundeffect = "sw_Superlaser_windup" } }		
+		event = { time = 0.0 use_parent_nodes = yes node = MainCannon_1 particle = "particle_lance_windup_effect" }
+		event = { time = 0.2 use_parent_nodes = yes node = MainCannon_1 particle = "particle_lance_windup_effect" }
+		event = { time = 0.4 use_parent_nodes = yes node = MainCannon_1 particle = "particle_lance_windup_effect" }
+		event = { time = 0.6 use_parent_nodes = yes node = MainCannon_1 particle = "particle_lance_windup_effect" }
+		event = { time = 0.8 use_parent_nodes = yes node = MainCannon_1 particle = "particle_lance_windup_effect" }
+		event = { time = 1.0 use_parent_nodes = yes node = MainCannon_1 particle = "particle_lance_windup_effect" }
+	}
+}
+

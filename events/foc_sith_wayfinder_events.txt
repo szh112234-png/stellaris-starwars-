@@ -1,0 +1,313 @@
+namespace = foc_wayfinder
+
+country_event = {
+    id = foc_wayfinder.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_regular_empire = yes
+        has_global_flag = foc_khan_phase_two
+        has_country_flag = foc_sith_wayfinder_clue_found
+        NOT = { has_country_flag = foc_khan_first_order_country }
+        NOT = { has_country_flag = foc_khan_final_order_country }
+        NOT = { has_special_project = FOC_SITH_WAYFINDER_PROJECT }
+        NOT = { has_country_flag = foc_sith_wayfinder_route_known }
+        NOT = { has_relic = r_foc_sith_wayfinder }
+        exists = event_target:foc_sw_jakku_system
+    }
+
+    immediate = {
+        # Anchor the project to Jakku's star, not the Jakku planet. The planet may
+        # be cracked or depopulated during the crisis, while the star remains a
+        # stable planet-scope location for the situation-log project.
+        event_target:foc_sw_jakku_system = {
+            star = {
+                save_global_event_target_as = foc_sw_jakku_star
+                enable_special_project = {
+                    name = FOC_SITH_WAYFINDER_PROJECT
+                    location = this
+                    owner = root
+                }
+            }
+        }
+    }
+}
+
+# on_ship_destroyed_perp: Root is the attacker country and From is the owner of
+# the destroyed ship. Destroying any Final Order ship reveals a Wayfinder clue.
+country_event = {
+    id = foc_wayfinder.6
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_regular_empire = yes
+        NOT = { has_country_flag = foc_khan_first_order_country }
+        NOT = { has_country_flag = foc_khan_final_order_country }
+        NOT = { has_country_flag = foc_sith_wayfinder_clue_found }
+        NOT = { has_country_flag = foc_sith_wayfinder_route_known }
+        from = { has_country_flag = foc_khan_final_order_country }
+    }
+
+    immediate = {
+        set_country_flag = foc_sith_wayfinder_clue_found
+        country_event = { id = foc_wayfinder.1 days = 1 }
+    }
+}
+
+country_event = {
+    id = foc_wayfinder.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    immediate = {
+        # First successful decoder receives the physical relic. Later empires
+        # decode independent coordinates and therefore cannot be locked out by
+        # an AI that got the artifact first.
+        if = {
+            limit = {
+                NOT = { has_relic = r_foc_sith_wayfinder }
+                NOT = { any_country = { has_relic = r_foc_sith_wayfinder } }
+            }
+            add_relic = r_foc_sith_wayfinder
+            set_global_flag = foc_sith_wayfinder_relic_recovered
+        }
+
+        add_seen_bypass_type = foc_sith_wayfinder
+        set_country_flag = foc_sith_wayfinder_route_known
+        set_global_flag = foc_sith_wayfinder_unlocked
+
+        country_event = { id = foc_wayfinder.3 days = 1 }
+    }
+}
+
+country_event = {
+    id = foc_wayfinder.3
+    title = foc_wayfinder.3.name
+    desc = foc_wayfinder.3.desc
+    picture = GFX_foc_event_exegol_route
+    location = event_target:foc_sw_jakku_system
+    is_triggered_only = yes
+    option = { name = foc_wayfinder.3.a }
+}
+
+
+# V141: the emergency-route notice existed in localisation and was called by .4,
+# but the event definition itself was missing. Keep it informational: route
+# knowledge is already granted by foc_wayfinder.4 before this notice fires.
+country_event = {
+    id = foc_wayfinder.8
+    title = foc_wayfinder.8.name
+    desc = foc_wayfinder.8.desc
+    picture = GFX_foc_event_exegol_route
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_sith_wayfinder_emergency_open
+        has_country_flag = foc_sith_wayfinder_route_known
+    }
+
+    option = { name = foc_wayfinder.8.a }
+}
+
+# Countries created after a previous completion must also know and use the route.
+# Countries created later, relic thieves, and the late-war emergency route
+# are all handled here. Personal route knowledge remains after losing the relic.
+country_event = {
+    id = foc_wayfinder.4
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        NOT = { has_country_flag = foc_sith_wayfinder_route_known }
+        OR = {
+            has_relic = r_foc_sith_wayfinder
+            has_global_flag = foc_sith_wayfinder_emergency_open
+            has_country_flag = foc_khan_final_order_country
+            has_country_flag = fop_player_final_order
+            is_country_type = foc_final_order_crisis_country
+        }
+    }
+
+    immediate = {
+        add_seen_bypass_type = foc_sith_wayfinder
+        set_country_flag = foc_sith_wayfinder_route_known
+
+        if = {
+            limit = {
+                has_global_flag = foc_sith_wayfinder_emergency_open
+                NOT = { has_relic = r_foc_sith_wayfinder }
+                is_ai = no
+                NOT = { has_country_flag = foc_sith_wayfinder_emergency_notice_shown }
+            }
+            set_country_flag = foc_sith_wayfinder_emergency_notice_shown
+            country_event = { id = foc_wayfinder.8 days = 1 }
+        }
+    }
+}
+
+country_event = {
+    id = foc_wayfinder.5
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_khan_final_order_country
+        exists = event_target:foc_khan_final_order_system
+        exists = event_target:foc_sw_jakku_system
+    }
+
+    immediate = {
+        # V130 anti-softlock insurance: the Wayfinder grants immediate safe access,
+        # but after three years of open Final Order activity the galaxy can piece
+        # together an emergency assault route even if an AI holds the relic.
+        if = {
+            limit = { NOT = { has_global_flag = foc_sith_wayfinder_emergency_timer_started } }
+            set_global_flag = foc_sith_wayfinder_emergency_timer_started
+            set_timed_global_flag = {
+                flag = foc_sith_wayfinder_emergency_countdown
+                days = 1080
+            }
+        }
+        if = {
+            limit = {
+                has_global_flag = foc_sith_wayfinder_emergency_timer_started
+                NOT = { has_global_flag = foc_sith_wayfinder_emergency_countdown }
+                NOT = { has_global_flag = foc_sith_wayfinder_emergency_open }
+            }
+            set_global_flag = foc_sith_wayfinder_emergency_open
+        }
+
+        # Rebuild a permanent star target every month. This keeps the project and
+        # Final Order exit route functional even if Jakku itself was destroyed.
+        event_target:foc_sw_jakku_system = {
+            star = { save_global_event_target_as = foc_sw_jakku_star }
+        }
+
+        # Route knowledge is independent of the public project unlock.
+        add_seen_bypass_type = foc_sith_wayfinder
+        set_country_flag = foc_sith_wayfinder_route_known
+        set_visited = event_target:foc_khan_final_order_system
+        set_visited = event_target:foc_sw_jakku_system
+
+        # Ensure both endpoint systems are fully known to the crisis pathfinder.
+        event_target:foc_khan_final_order_system = {
+            every_system_planet = {
+                set_surveyed = { surveyed = yes surveyor = root }
+            }
+        }
+        event_target:foc_sw_jakku_system = {
+            every_system_planet = {
+                set_surveyed = { surveyed = yes surveyor = root }
+            }
+        }
+
+        # Recreate either endpoint if a save migration or another mod removed it.
+        if = {
+            limit = {
+                event_target:foc_khan_final_order_system = {
+                    NOT = { any_system_megastructure = { is_megastructure_type = foc_sith_wayfinder_gate } }
+                }
+            }
+            event_target:foc_khan_final_order_system = {
+                spawn_megastructure = {
+                    type = foc_sith_wayfinder_gate
+                    owner = root
+                    planet = star
+                    orbit_distance = 180
+                    orbit_angle = 45
+                    init_effect = {
+                        set_name = "NAME_FOC_SITH_WAYFINDER_EXEGOL_GATE"
+                        set_megastructure_flag = foc_sith_wayfinder_exegol_gate
+                        save_global_event_target_as = foc_sith_wayfinder_exegol_gate
+                    }
+                }
+            }
+        }
+        if = {
+            limit = {
+                event_target:foc_sw_jakku_system = {
+                    NOT = { any_system_megastructure = { is_megastructure_type = foc_sith_wayfinder_gate } }
+                }
+            }
+            event_target:foc_sw_jakku_system = {
+                spawn_megastructure = {
+                    type = foc_sith_wayfinder_gate
+                    owner = root
+                    planet = star
+                    orbit_distance = 230
+                    orbit_angle = 300
+                    init_effect = {
+                        set_name = "NAME_FOC_SITH_WAYFINDER_JAKKU_GATE"
+                        set_megastructure_flag = foc_sith_wayfinder_jakku_gate
+                        save_global_event_target_as = foc_sith_wayfinder_jakku_gate
+                    }
+                }
+            }
+        }
+
+        # Repair endpoint-specific names in existing saves as well as newly
+        # recreated gates. The type's generic name remains a localized fallback.
+        event_target:foc_khan_final_order_system = {
+            every_system_megastructure = {
+                limit = { is_megastructure_type = foc_sith_wayfinder_gate }
+                set_name = "NAME_FOC_SITH_WAYFINDER_EXEGOL_GATE"
+            }
+        }
+        event_target:foc_sw_jakku_system = {
+            every_system_megastructure = {
+                limit = { is_megastructure_type = foc_sith_wayfinder_gate }
+                set_name = "NAME_FOC_SITH_WAYFINDER_JAKKU_GATE"
+            }
+        }
+
+        # Mobile Final Order fleets get one normal gate-path attempt. If the
+        # same fleet is still inside Exegol on the next monthly check, teleport
+        # it safely to Jakku instead of resetting the route forever. This hard
+        # fallback never touches garrison or engineering fleets.
+        every_owned_fleet = {
+            limit = {
+                exists = solar_system
+                solar_system = { has_star_flag = foc_khan_exegol_home }
+                OR = {
+                    has_fleet_flag = foc_khan_final_order_attack_fleet
+                    has_fleet_flag = foc_khan_final_order_invasion_force
+                    has_fleet_flag = foc_khan_acot_native_transport_233
+                }
+                NOR = {
+                    has_fleet_flag = foc_khan_final_order_guard_fleet
+                    has_fleet_flag = foc_khan_final_order_engineering_fleet
+                }
+            }
+            if = {
+                limit = { has_fleet_flag = foc_sith_wayfinder_exit_attempted }
+                remove_auto_move_target = yes
+                clear_orders = yes
+                clear_fleet_actions = this
+                set_location = {
+                    target = event_target:foc_sw_jakku_star
+                    distance = 35
+                    angle = random
+                }
+                remove_fleet_flag = foc_sith_wayfinder_exit_attempted
+                set_fleet_stance = aggressive
+                set_aggro_range_measure_from = self
+                set_aggro_range = 9999
+            }
+            else = {
+                set_fleet_flag = foc_sith_wayfinder_exit_attempted
+                remove_auto_move_target = yes
+                clear_orders = yes
+                clear_fleet_actions = this
+                set_fleet_stance = aggressive
+                set_aggro_range_measure_from = self
+                set_aggro_range = 500
+                auto_move_to_planet = {
+                    target = event_target:foc_sw_jakku_star
+                    clear_auto_move_on_arrival = yes
+                }
+            }
+        }
+    }
+}

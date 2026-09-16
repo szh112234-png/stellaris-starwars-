@@ -1,0 +1,14 @@
+# Preserve vanilla diplomatic and planetary consequences for the supplied
+# Death Star's custom world-cracker weapon.
+on_destroy_planet_with_DEATH_STAR_WEAPON = {
+    events = {
+        planet_destruction.100
+        planet_destruction.110
+        planet_destruction.600
+    }
+}
+
+# 4.4 planet-killer dispatch probes these variant hooks. They are intentionally
+# empty: the unsuffixed hook above owns the actual consequences, avoiding double events.
+on_destroy_planet_with_DEATH_STAR_WEAPON_queued = { }
+on_destroy_planet_with_DEATH_STAR_WEAPON_unqueued = { }

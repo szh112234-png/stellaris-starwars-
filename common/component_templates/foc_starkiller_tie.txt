@@ -1,0 +1,107 @@
+# TIE wing for the Starkiller Base defensive ring.
+#
+# Why a separate component instead of reusing an existing one: every TIE in the mod is
+# size_restricted to hulls the ring is not (Arkship tiers, or the Star Destroyer /
+# super capital hulls), and they all carry ai_weight = { weight = 0 }. Starbases are
+# AUTO-DESIGNED, so a weight of 0 means an auto-design would never pick them at all.
+#
+# MODEL AND STATS are taken from FOC_KHAN_SUPREMACY_TIE
+# (foc_khan_supremacy_crisis_components.txt), which is the First Order TIE/fo:
+#   - FirstOrder_TIEFighter_entity is the TIE/fo model. The mod's other TIEs use
+#     swg_starship_01_fighter_entity / sai_supremacy_tie_fighter_entity, which are the
+#     generic Imperial TIE models - wrong faction for a First Order installation.
+#     Starkiller Base was defended by TIE/fo: Hux dispatched them against the
+#     Resistance's Blue and Red Squadrons.
+# COMBAT STATS: damage-neutral rebalance of the mod's heavy TIE profile.
+#
+# The heavy profile (FOC_KHAN_CRISIS_TIE, SAI_SUPREMACY_TIE_FIGHTER) is 1200 damage at
+# count = 2, i.e. 2 x 1200 = 2400 burst per wing. This component spreads that same 2400
+# across a larger wing instead:
+#
+#     count = 24 x 100 damage = 2400 per wing  <- identical
+#
+# cooldown is unchanged at 2.3, so DPS per wing is identical too, not merely the burst.
+# 12 divides 2400 exactly (18 would give 133.3 and lose 0.25% to rounding), and 12 is an
+# established wing size in this mod - RESURGENTBATTLECRUISER_TIE uses it.
+#
+# Net effect across the ring: 3 wings x 2400 = 7,200 burst, with 72 TIE/fo on the board.
+
+strike_craft_component_template = {
+	key = "FOC_STARKILLER_TIE"
+	size = LARGE
+	entity = "FirstOrder_TIEFighter_entity"
+
+	weapon_type = instant
+	projectile_gfx = "strike_craft_laser_3"
+
+	# Deliberately 0, NOT the -60 the other heavy TIE components use. The ring carries 3
+	# of these; at -60 each that is -180, which would blow past the ring's power core and
+	# make the auto-design invalid - leaving the base with no strike craft at all.
+	power = 0
+
+	resources = {
+		category = ship_components
+		cost = { 
+            sr_tibanna_swgs = 8
+        }
+		upkeep = { }
+	}
+
+	count = 24
+	regeneration_per_day = 5
+	launch_time = 2
+
+	damage = { min = 100 max = 100 }
+	cooldown = 2.3
+	range = 15
+	engagement_range = 500
+	accuracy = 1.0
+	tracking = 1.0
+
+	# Per-fighter durability is left at the heavy profile's 40/40 + 95% evasion. Note this
+	# is NOT damage-neutral the way the damage split is: 24 fighters at 40 hull is 960 hull
+	# per wing against the old 2 x 40 = 80, so the wing soaks far more point defence before
+	# it stops shooting. Scaling hull down proportionally would mean ~7 per fighter, which
+	# would just delete the whole wing to a single PD burst. 40 is left as the honest
+	# middle - TIE/fo are meant to be fragile but not free kills.
+	health = 40
+	armor = 40
+	shield = 0
+	evasion = 0.95
+
+	speed = 750
+	rotation_speed = 0.1
+	acceleration = 1.0
+
+	shield_penetration = 1.0
+	armor_damage = 1.5
+
+	ship_behavior = "foc_swgs_fighters_behavior"
+
+	icon = "GFX_RESURGENTBATTLECRUISER_TIE"
+	icon_frame = 1
+	component_set = "FOC_STARKILLER_TIE_SET"
+
+	size_restriction = {
+		foc_starkiller_ring
+	}
+
+	tags = {
+		weapon_type_strike_craft
+		weapon_type_kuat_strikcrafe_scale
+	}
+	ai_tags = { weapon_role_anti_hull carrier }
+
+	# Belt and braces. size_restriction already confines this to the Starkiller hull,
+	# which only the base owner can ever have, but the country check costs nothing.
+	potential = { always = no 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+	# Must outweigh vanilla strike craft or the auto-designer picks those instead.
+	ai_weight = { weight = 10 }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}

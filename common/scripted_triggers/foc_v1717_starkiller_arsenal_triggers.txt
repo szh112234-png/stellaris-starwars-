@@ -1,0 +1,27 @@
+# Country scope. Only actual completion can earn this permanent milestone.
+# The V185 notice and first real shot are historical, completion-only evidence.
+# A construction site, paid upgrade, blueprint and hostility/story flags are not.
+foc_v1717_starkiller_completed_for_arsenal = {
+    OR = {
+        has_country_flag = foc_v1717_starkiller_arsenal_unlocked
+        has_country_flag = foc_v185_starkiller_completion_notice
+        has_country_flag = fop_origin_starkiller_first_real_impact
+        any_owned_megastructure = {
+            OR = {
+                is_megastructure_type = fop_starkiller_base_final
+                is_megastructure_type = myk_starkiller_base_final
+            }
+            is_upgrading = no
+        }
+    }
+}
+
+# Shared first-generation weapons and facility/hull construction stay available.
+# Human First Order origins must finish Starkiller before Imperial weapon research.
+foc_v1717_first_order_empire_arsenal_allowed = {
+    OR = {
+        is_ai = yes
+        NOT = { has_origin = origin_fop_first_order }
+        foc_v1717_starkiller_completed_for_arsenal = yes
+    }
+}

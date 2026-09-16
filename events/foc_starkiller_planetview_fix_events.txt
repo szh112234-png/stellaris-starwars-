@@ -1,0 +1,31 @@
+namespace = foc_starkiller_planetview
+
+# FOC 3.10d: one-time migration for saves where the Starkiller planet-view
+# background was stored as the nonexistent myk_pc_starkiller picture key.
+country_event = {
+    id = foc_starkiller_planetview.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        NOT = { has_global_flag = foc_starkiller_planetview_310d_fixed }
+    }
+
+    immediate = {
+        set_global_flag = foc_starkiller_planetview_310d_fixed
+
+        every_galaxy_planet = {
+            limit = {
+                OR = {
+                    has_planet_flag = myk_starkiller_base_planet_flag
+                    has_planet_flag = foc_khan_starkiller_anchor
+                }
+            }
+            set_planet_entity = {
+                picture = pc_arctic
+            }
+        }
+
+        log = "FOC_3.10D: repaired Starkiller Base planet-view background to pc_arctic."
+    }
+}

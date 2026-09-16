@@ -1,0 +1,88 @@
+# FOC 4.9 - MC80 user-supplied model + three combat sections + distributed point defense.
+# Visible hull is the exact rebel_MC80_battleship_bow.mesh supplied by the user.
+# Mid/stern use locator helper entities at 0.001 visual scale so no extra hull is rendered.
+# Gun distribution is intentionally even across all three sections.
+
+ship_section_template = {
+    key = "FOC_REBEL_MC80_LINE_BOW"
+    ship_size = foc_rebel_mc80_line
+    ship_size = foc_rebel_mc80_line_foc_lowest
+    fits_on_slot = bow
+    entity = "foc_v1717j_mc80_line_bow_entity"
+    icon = "GFX_ship_part_core_bow"
+    ai_weight = { factor = 0 }
+
+    # Bow: 4L + 3M + 2S + 2PD + 1H
+    component_slot = { name = "LARGE_GUN_01" template = "large_turret" locatorname = "large_gun_01" }
+    component_slot = { name = "LARGE_GUN_02" template = "large_turret" locatorname = "large_gun_02" }
+    component_slot = { name = "LARGE_GUN_03" template = "large_turret" locatorname = "large_gun_01" }
+    component_slot = { name = "LARGE_GUN_04" template = "large_turret" locatorname = "large_gun_02" }
+    component_slot = { name = "MEDIUM_GUN_01" template = "medium_turret" locatorname = "medium_gun_01" }
+    component_slot = { name = "MEDIUM_GUN_02" template = "medium_turret" locatorname = "medium_gun_02" }
+    component_slot = { name = "MEDIUM_GUN_03" template = "medium_turret" locatorname = "medium_gun_03" }
+    component_slot = { name = "SMALL_GUN_01" template = "small_turret" locatorname = "small_gun_01" }
+    component_slot = { name = "SMALL_GUN_02" template = "small_turret" locatorname = "small_gun_02" }
+    component_slot = { name = "POINT_DEFENCE_01" template = "foc_rebel_mc80_point_defence_turret" locatorname = "small_gun_03" }
+    component_slot = { name = "POINT_DEFENCE_02" template = "foc_rebel_mc80_point_defence_turret" locatorname = "small_gun_04" }
+    component_slot = { name = "STRIKE_CRAFT_01" template = "large_strike_craft" locatorname = "strike_craft_locator_01" }
+
+    large_utility_slots = 5
+    aux_utility_slots = 0
+    resources = { category = ship_sections cost = { } }
+}
+
+ship_section_template = {
+    key = "FOC_REBEL_MC80_LINE_MID"
+    ship_size = foc_rebel_mc80_line
+    ship_size = foc_rebel_mc80_line_foc_lowest
+    fits_on_slot = mid
+    entity = "foc_rebel_mc80_line_mid_entity"
+    icon = "GFX_ship_part_core_mid"
+    ai_weight = { factor = 0 }
+
+    # Mid: 3L + 4M + 1S + 3PD + 2H
+    component_slot = { name = "LARGE_GUN_01" template = "large_turret" locatorname = "large_gun_01" }
+    component_slot = { name = "LARGE_GUN_02" template = "large_turret" locatorname = "large_gun_02" }
+    component_slot = { name = "LARGE_GUN_03" template = "large_turret" locatorname = "large_gun_01" }
+    component_slot = { name = "MEDIUM_GUN_01" template = "medium_turret" locatorname = "medium_gun_01" }
+    component_slot = { name = "MEDIUM_GUN_02" template = "medium_turret" locatorname = "medium_gun_02" }
+    component_slot = { name = "MEDIUM_GUN_03" template = "medium_turret" locatorname = "medium_gun_03" }
+    component_slot = { name = "MEDIUM_GUN_04" template = "medium_turret" locatorname = "medium_gun_01" }
+    component_slot = { name = "SMALL_GUN_01" template = "small_turret" locatorname = "small_gun_03" }
+    component_slot = { name = "POINT_DEFENCE_01" template = "foc_rebel_mc80_point_defence_turret" locatorname = "small_gun_01" }
+    component_slot = { name = "POINT_DEFENCE_02" template = "foc_rebel_mc80_point_defence_turret" locatorname = "small_gun_02" }
+    component_slot = { name = "POINT_DEFENCE_03" template = "foc_rebel_mc80_point_defence_turret" locatorname = "small_gun_04" }
+    component_slot = { name = "STRIKE_CRAFT_01" template = "large_strike_craft" locatorname = "strike_craft_locator_01" }
+    component_slot = { name = "STRIKE_CRAFT_02" template = "large_strike_craft" locatorname = "strike_craft_locator_01" }
+
+    large_utility_slots = 5
+    aux_utility_slots = 0
+    resources = { category = ship_sections cost = { } }
+}
+
+ship_section_template = {
+    key = "FOC_REBEL_MC80_LINE_STERN"
+    ship_size = foc_rebel_mc80_line
+    ship_size = foc_rebel_mc80_line_foc_lowest
+    fits_on_slot = stern
+    entity = "foc_rebel_mc80_line_stern_entity"
+    icon = "GFX_ship_part_core_stern"
+    ai_weight = { factor = 0 }
+
+    # Stern: 3L + 3M + 2S + 2PD + 1H
+    component_slot = { name = "LARGE_GUN_01" template = "large_turret" locatorname = "large_gun_01" }
+    component_slot = { name = "LARGE_GUN_02" template = "large_turret" locatorname = "large_gun_02" }
+    component_slot = { name = "LARGE_GUN_03" template = "large_turret" locatorname = "large_gun_01" }
+    component_slot = { name = "MEDIUM_GUN_01" template = "medium_turret" locatorname = "medium_gun_01" }
+    component_slot = { name = "MEDIUM_GUN_02" template = "medium_turret" locatorname = "medium_gun_02" }
+    component_slot = { name = "MEDIUM_GUN_03" template = "medium_turret" locatorname = "medium_gun_03" }
+    component_slot = { name = "SMALL_GUN_01" template = "small_turret" locatorname = "small_gun_03" }
+    component_slot = { name = "SMALL_GUN_02" template = "small_turret" locatorname = "small_gun_04" }
+    component_slot = { name = "POINT_DEFENCE_01" template = "foc_rebel_mc80_point_defence_turret" locatorname = "small_gun_01" }
+    component_slot = { name = "POINT_DEFENCE_02" template = "foc_rebel_mc80_point_defence_turret" locatorname = "small_gun_02" }
+    component_slot = { name = "STRIKE_CRAFT_01" template = "large_strike_craft" locatorname = "strike_craft_locator_01" }
+
+    large_utility_slots = 2
+    aux_utility_slots = 3
+    resources = { category = ship_sections cost = { } }
+}

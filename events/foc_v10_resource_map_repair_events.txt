@@ -1,0 +1,70 @@
+namespace = foc_std_resource
+
+# FOC V13: repairs v12 saves even if their old seeded flag is already present.
+# A short cooldown makes the galaxy sweep run once per monthly pulse in multiplayer/AI games.
+country_event = {
+    id = foc_std_resource.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { NOT = { has_global_flag = foc_v13_kyber_repair_cooldown } }
+    immediate = {
+        every_system = {
+            every_system_planet = { foc_v13_repair_kyber_planet = yes }
+            # Bespin uses its own 100/month source; ordinary galaxy deposits remain unchanged.
+            if = {
+                limit = { has_star_flag = foc_swmap_bespin_home }
+                every_system_planet = {
+                    limit = { is_planet_class = pc_gas_giant }
+                    # Replace old sources once; never stack another 1000 on repeated sweeps.
+                    if = { limit = { NOT = { has_deposit = d_foc_bespin_tibanna_gas_1000 } } add_deposit = d_foc_bespin_tibanna_gas_1000 }
+if = { limit = { has_deposit = d_foc_tibanna_gas_2 } remove_deposit = d_foc_tibanna_gas_2 }
+if = { limit = { has_deposit = d_foc_tibanna_gas_3 } remove_deposit = d_foc_tibanna_gas_3 }
+if = { limit = { has_deposit = d_foc_tibanna_gas_6 } remove_deposit = d_foc_tibanna_gas_6 }
+                }
+            }
+        }
+        set_timed_global_flag = { flag = foc_v13_kyber_repair_cooldown days = 25 }
+        set_global_flag = foc_v13_kyber_planet_modifiers_seeded
+    }
+}
+
+# Fixed monthly stockpile income. Recheck owned planets before paying, so a colony
+# rebuilt after the sweep still receives its exact 100/10/5 allocation this month.
+country_event = {
+    id = foc_std_resource.2
+    hide_window = yes
+    is_triggered_only = yes
+    immediate = {
+        every_owned_starbase = {
+            # V17b: every_owned_planet yields COLONY scope in 4.4.6, and has_planet_flag
+            # only accepts planet. Owned starbases give one entry per owned system, and
+            # every_system_planet from there is a genuine planet scope.
+            solar_system = {
+                every_system_planet = {
+                    foc_v13_repair_kyber_planet = yes
+                if = {
+                    limit = { has_modifier = foc_kyber_source_tier_1 }
+                    root = { add_resource = { sr_kyber_swgs = 100 } }
+                }
+                else_if = {
+                    limit = { has_modifier = foc_kyber_source_tier_2 }
+                    root = { add_resource = { sr_kyber_swgs = 10 } }
+                }
+                else_if = {
+                    limit = { has_modifier = foc_kyber_source_tier_3 }
+                    root = { add_resource = { sr_kyber_swgs = 5 } }
+                }
+            
+                }
+            }
+        }
+    }
+}
+
+# Restore a source immediately after terraforming or scripted planet reconstruction.
+planet_event = {
+    id = foc_std_resource.3
+    hide_window = yes
+    is_triggered_only = yes
+    immediate = { foc_v13_repair_kyber_planet = yes }
+}

@@ -1,0 +1,38 @@
+entity = {
+    name = "foc_millennium_falcon_entity"
+    pdxmesh = "foc_millennium_falcon_frame_mesh"
+    default_state = "idle"
+    state = { name = "idle" state_time = 5 }
+    state = {
+        name = "moving"
+        state_time = 5
+        event = { time = 0 node = "engine1" particle = "mammalian_01_1_45_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+        event = { time = 0 node = "engine2" particle = "mammalian_01_2_35_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+    }
+    state = {
+        name = "death"
+        state_time = 4
+        looping = no
+        event = { time = 0.0 node = "mid" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+        event = { time = 0.2 node = "mid" particle = "ship_burn_particle" }
+        event = { time = 3.4 node = "mid" particle = "ship_explosion_particle" }
+    }
+    scale = 1
+}
+
+entity = {
+    name = "foc_millennium_falcon_section_entity"
+    pdxmesh = "foc_millennium_falcon_section_mesh"
+    default_state = "idle"
+    state = {
+        name = "idle"
+        state_time = 5
+        event = { time = 0 node = "engine1" particle = "mammalian_01_1_45_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+    }
+    state = {
+        name = "moving"
+        state_time = 5
+        event = { time = 0 node = "engine1" particle = "mammalian_01_1_45_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+        event = { time = 0 node = "engine2" particle = "mammalian_01_2_35_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+    }
+}

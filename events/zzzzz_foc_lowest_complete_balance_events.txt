@@ -1,0 +1,1440 @@
+namespace = foc_lowest_complete
+
+country_event = {
+    id = foc_lowest_complete.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        OR = {
+            has_global_flag = foc_khan_strength_lowest
+            any_owned_ship = {
+                OR = {
+                    OR = { is_ship_size = imperialsd is_ship_size = imperialsd_foc_lowest }
+                    OR = { is_ship_size = foc_rebel_mc80_line is_ship_size = foc_rebel_mc80_line_foc_lowest }
+                    OR = { is_ship_size = resurgentbattlecruiser is_ship_size = resurgentbattlecruiser_foc_lowest }
+                    OR = { is_ship_size = foc_khan_starkiller_fixed_station is_ship_size = foc_khan_starkiller_fixed_station_foc_lowest }
+                    OR = { is_ship_size = foc_rebel_nebula is_ship_size = foc_rebel_nebula_foc_lowest }
+                    OR = { is_ship_size = foc_khan_xystonsd is_ship_size = foc_khan_xystonsd_foc_lowest }
+                    OR = { is_ship_size = foc_khan_xystonsd_combat is_ship_size = foc_khan_xystonsd_combat_foc_lowest }
+                    is_ship_size = xystonsd
+                    OR = { is_ship_size = foc_khan_mandator is_ship_size = foc_khan_mandator_foc_lowest }
+                    OR = { is_ship_size = foc_khan_eclipse is_ship_size = foc_khan_eclipse_foc_lowest }
+                    OR = { is_ship_size = foc_khan_eclipse_ii is_ship_size = foc_khan_eclipse_ii_foc_lowest }
+                    OR = { is_ship_size = foc_sw_lusankya is_ship_size = foc_sw_lusankya_foc_lowest }
+                    OR = { is_ship_size = foc_rebel_mc158 is_ship_size = foc_rebel_mc158_foc_lowest }
+                    OR = { is_ship_size = foc_rebel_home_arkship_tier_3 is_ship_size = foc_rebel_home_arkship_tier_3_foc_lowest }
+                    OR = { is_ship_size = foc_millennium_falcon is_ship_size = foc_millennium_falcon_foc_lowest }
+                    OR = { is_ship_size = foc_immobilizer418 is_ship_size = foc_immobilizer418_foc_lowest }
+                    OR = { is_ship_size = venatorclass is_ship_size = venatorclass_foc_lowest }
+                    OR = { is_ship_size = foc_trade_lucrehulk is_ship_size = foc_trade_lucrehulk_foc_lowest }
+                    OR = { is_ship_size = foc_sai_supremacy_arkship_tier_1 is_ship_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+                    OR = { is_ship_size = foc_sai_supremacy_arkship_tier_2 is_ship_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+                    OR = { is_ship_size = foc_sai_supremacy_arkship_tier_3 is_ship_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+                    is_ship_size = colossus
+                    is_ship_size = deathstarbattlestation
+                    is_ship_size = sai_supremacy_arkship_tier_1_shell_foc_lowest
+                    is_ship_size = sai_supremacy_arkship_tier_2_shell_foc_lowest
+                    is_ship_size = sai_supremacy_arkship_tier_3_shell_foc_lowest
+                    is_ship_size = sai_supremacy_arkship_tier_1
+                    is_ship_size = sai_supremacy_arkship_tier_2
+                    OR = { is_ship_size = sai_supremacy_arkship_tier_3 is_ship_size = sai_supremacy_arkship_tier_3_foc_lowest }
+                }
+            }
+        }
+    }
+    immediate = {
+        foc_v177_sync_supremacy_shell_country = yes
+        country_event = { id = foc_lowest_deathstar.1 }
+        if = {
+            limit = { has_global_flag = foc_khan_strength_lowest }
+            every_owned_ship = {
+                if = {
+                    limit = {
+                        OR = {
+                            is_ship_size = corvette
+                            is_ship_size = destroyer
+                            is_ship_size = cruiser
+                            is_ship_size = battleship
+                        }
+                        OR = { has_component = FOC_KHAN_SMALL_ADAPTIVE_DEFENSE_ARMOR has_component = FOC_KHAN_MEDIUM_ADAPTIVE_DEFENSE_ARMOR has_component = FOC_KHAN_ADAPTIVE_DEFENSE_ARMOR }
+                    }
+                    if = {
+                        limit = {
+                            owner = {
+                                OR = {
+                                    has_country_flag = foc_republic_origin_empire_country
+                                    has_country_flag = foc_sw_imperial_remnant_country
+                                    has_country_flag = foc_khan_first_order_country
+                                    has_country_flag = foc_khan_final_order_country
+                                }
+                            }
+                        }
+                        if = {
+                            limit = { is_ship_size = corvette }
+                            if = {
+                                limit = { has_global_flag = foc_khan_strength_lowest }
+                                set_ship_design = { design = "NAME_FOC_STORY_EMPIRE_CORVETTE_V1718E_LOWEST" }
+                            }
+                            else = {
+                                set_ship_design = { design = NAME_FOC_STORY_EMPIRE_CORVETTE }
+                            }
+                        }
+                        else_if = {
+                            limit = { is_ship_size = destroyer }
+                            if = {
+                                limit = { has_global_flag = foc_khan_strength_lowest }
+                                set_ship_design = { design = "NAME_FOC_STORY_EMPIRE_DESTROYER_V1718E_LOWEST" }
+                            }
+                            else = {
+                                set_ship_design = { design = NAME_FOC_STORY_EMPIRE_DESTROYER }
+                            }
+                        }
+                        else_if = {
+                            limit = { is_ship_size = cruiser }
+                            if = {
+                                limit = { has_global_flag = foc_khan_strength_lowest }
+                                set_ship_design = { design = "NAME_FOC_STORY_EMPIRE_CRUISER_V1718E_LOWEST" }
+                            }
+                            else = {
+                                set_ship_design = { design = NAME_FOC_STORY_EMPIRE_CRUISER }
+                            }
+                        }
+                        else_if = {
+                            limit = { is_ship_size = battleship }
+                            if = {
+                                limit = { has_global_flag = foc_khan_strength_lowest }
+                                set_ship_design = { design = "NAME_FOC_STORY_EMPIRE_BATTLESHIP_V1718E_LOWEST" }
+                            }
+                            else = {
+                                set_ship_design = { design = NAME_FOC_STORY_EMPIRE_BATTLESHIP }
+                            }
+                        }
+                    }
+                    else_if = {
+                        limit = {
+                            owner = {
+                                OR = {
+                                    has_country_flag = foc_khan_rebel_alliance_country
+                                    has_country_flag = foc_republic_origin_rebel_alliance_country
+                                    has_country_flag = foc_republic_origin_imperial_rebel_country
+                                    has_country_flag = foc_republic_origin_post_treaty_rebel_country
+                                    has_country_flag = foc_khan_first_order_resistance_country
+                                    has_country_flag = foc_sw_new_republic_country
+                                }
+                            }
+                        }
+                        if = {
+                            limit = { is_ship_size = corvette }
+                            set_ship_design = { design = NAME_FOC_REBEL_CR90_FOC_LOWEST }
+                        }
+                        else_if = {
+                            limit = { is_ship_size = destroyer }
+                            if = {
+                                limit = { has_global_flag = foc_khan_strength_lowest }
+                                set_ship_design = { design = "NAME_FOC_STORY_DESTROYER_V1718E_LOWEST" }
+                            }
+                            else = {
+                                set_ship_design = { design = NAME_FOC_STORY_DESTROYER }
+                            }
+                        }
+                        else_if = {
+                            limit = { is_ship_size = cruiser }
+                            set_ship_design = { design = NAME_FOC_REBEL_MC30_FOC_LOWEST }
+                        }
+                        else_if = {
+                            limit = { is_ship_size = battleship }
+                            owner = {
+                                if = {
+                                    limit = {
+                                        NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                                    }
+                                    if = {
+                                        limit = { is_ai = yes }
+                                        give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                                    }
+                                }
+                            }
+                            set_ship_design = { design = NAME_FOC_REBEL_MC80_FOC_LOWEST }
+                        }
+                    }
+                    else = {
+                        if = {
+                            limit = { is_ship_size = corvette }
+                            if = {
+                                limit = { has_global_flag = foc_khan_strength_lowest }
+                                set_ship_design = { design = "NAME_FOC_STORY_CORVETTE_V1718E_LOWEST" }
+                            }
+                            else = {
+                                set_ship_design = { design = NAME_FOC_STORY_CORVETTE }
+                            }
+                        }
+                        else_if = {
+                            limit = { is_ship_size = destroyer }
+                            if = {
+                                limit = { has_global_flag = foc_khan_strength_lowest }
+                                set_ship_design = { design = "NAME_FOC_STORY_DESTROYER_V1718E_LOWEST" }
+                            }
+                            else = {
+                                set_ship_design = { design = NAME_FOC_STORY_DESTROYER }
+                            }
+                        }
+                        else_if = {
+                            limit = { is_ship_size = cruiser }
+                            if = {
+                                limit = { has_global_flag = foc_khan_strength_lowest }
+                                set_ship_design = { design = "NAME_FOC_STORY_CRUISER_V1718E_LOWEST" }
+                            }
+                            else = {
+                                set_ship_design = { design = NAME_FOC_STORY_CRUISER }
+                            }
+                        }
+                        else_if = {
+                            limit = { is_ship_size = battleship }
+                            if = {
+                                limit = { has_global_flag = foc_khan_strength_lowest }
+                                set_ship_design = { design = "NAME_FOC_STORY_BATTLESHIP_V1718E_LOWEST" }
+                            }
+                            else = {
+                                set_ship_design = { design = NAME_FOC_STORY_BATTLESHIP }
+                            }
+                        }
+                    }
+                    set_ship_flag = foc_v150_legacy_durasteel_repaired
+                }
+                if = {
+                    limit = { has_modifier = foc_sai_supremacy_arkship_stats }
+                    remove_modifier = foc_sai_supremacy_arkship_stats
+                    set_ship_flag = foc_lowest_restore_foc_supremacy_stats
+                }
+                if = {
+                    limit = { has_modifier = sai_supremacy_arkship_stats }
+                    remove_modifier = sai_supremacy_arkship_stats
+                    set_ship_flag = foc_lowest_restore_sai_supremacy_stats
+                }
+                if = {
+                    limit = { has_modifier = foc_khan_supremacy_heavy_ark_slowdown }
+                    remove_modifier = foc_khan_supremacy_heavy_ark_slowdown
+                    set_ship_flag = foc_lowest_restore_supremacy_heavy
+                }
+                if = {
+                    limit = { has_modifier = foc_khan_vanilla_balance_standard_ship }
+                    remove_modifier = foc_khan_vanilla_balance_standard_ship
+                }
+                if = {
+                    limit = { has_modifier = foc_khan_vanilla_balance_heavy_ship }
+                    remove_modifier = foc_khan_vanilla_balance_heavy_ship
+                }
+                if = {
+                    limit = { has_modifier = foc_khan_vanilla_balance_xyston }
+                    remove_modifier = foc_khan_vanilla_balance_xyston
+                }
+                if = {
+                    limit = { has_modifier = foc_khan_vanilla_balance_supercapital }
+                    remove_modifier = foc_khan_vanilla_balance_supercapital
+                }
+                if = {
+                    limit = { has_modifier = foc_khan_vanilla_balance_ultracapital }
+                    remove_modifier = foc_khan_vanilla_balance_ultracapital
+                }
+                if = {
+                    limit = { has_modifier = foc_khan_vanilla_balance_player_supremacy }
+                    remove_modifier = foc_khan_vanilla_balance_player_supremacy
+                }
+                if = {
+                    limit = { has_modifier = foc_khan_vanilla_balance_arkship }
+                    remove_modifier = foc_khan_vanilla_balance_arkship
+                }
+                if = {
+                    limit = {
+                        OR = { is_ship_size = imperialsd is_ship_size = imperialsd_foc_lowest }
+                    }
+                    if = {
+                        limit = {
+                            OR = {
+                                has_component = FOC_STD_TURBO_L_T4_G_V01
+                                has_component = FOC_STD_PD_P_T4_G_V02
+                                has_component = FOC_KHAN_ADAPTIVE_DEFENSE_ARMOR
+                                has_component = FOC_STD_TURBO_M_T4_G_V01
+                                has_component = FOC_STD_TURBO_S_T4_G_V01
+                                has_component = SSP_IMPERIAL_TIE_HANGAR_01_SG
+                                has_component = SSP_IMPERIAL_TIE_HANGAR_02_SG
+                                has_component = SSP_IMPERIAL_TIE_HANGAR_03_SG
+                                has_component = FOC_KHAN_DEFLECTOR_SHIELD_ARRAY
+                                has_component = SSP_IMPERIAL_COMMAND_CORE
+                                has_component = ISD_REACTOR
+                                has_component = ISD_JUMPDRIVE
+                                has_component = ISD_THRUSTER
+                                has_component = ISD_CORE
+                                has_component = ISD_CREW
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_01_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_02_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_03_SG
+                            }
+                        }
+                        owner = {
+                            if = {
+                                limit = {
+                                    NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                                }
+                                if = {
+                                    limit = { is_ai = yes }
+                                    give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                                }
+                            }
+                        }
+                        set_ship_design = { design = NAME_FOC_KHAN_IMPERIAL_SD_FOC_LOWEST }
+                        set_ship_flag = foc_lowest_fixed_swapped_imperialsd
+                    }
+                }
+                if = {
+                    limit = {
+                        OR = { is_ship_size = foc_rebel_mc80_line is_ship_size = foc_rebel_mc80_line_foc_lowest }
+                    }
+                    if = {
+                        limit = {
+                            NOT = { has_ship_flag = foc_lowest_fixed_swapped_mc80_line }
+                        }
+                        owner = {
+                            if = {
+                                limit = {
+                                    NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                                }
+                                if = {
+                                    limit = { is_ai = yes }
+                                    give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                                }
+                            }
+                        }
+                        set_ship_design = { design = NAME_FOC_REBEL_MC80_LINE_FOC_LOWEST }
+                        set_ship_flag = foc_lowest_fixed_swapped_mc80_line
+                    }
+                }
+                if = {
+                    limit = {
+                        OR = { is_ship_size = resurgentbattlecruiser is_ship_size = resurgentbattlecruiser_foc_lowest }
+                    }
+                    if = {
+                        limit = {
+                            OR = {
+                                has_component = FOC_STD_SPINAL_X_T4_N_V01
+                                has_component = FOC_STD_TURBO_L_T4_G_V06
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_01_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_02_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_03_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_04_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_05_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_06_SG
+                                has_component = FOC_KHAN_ADAPTIVE_DEFENSE_ARMOR
+                                has_component = FOC_KHAN_DEFLECTOR_SHIELD_ARRAY
+                                has_component = SSP_IMPERIAL_COMMAND_CORE
+                                has_component = RESURGENTBATTLECRUISER_REACTOR
+                                has_component = RESURGENTBATTLECRUISER_JUMPDRIVE
+                                has_component = RESURGENTBATTLECRUISER_THRUSTER
+                                has_component = RESURGENTBATTLECRUISER_CORE
+                                has_component = RESURGENTBATTLECRUISER_CREW_ACTUAL
+                                has_component = RESURGENTBATTLECRUISER_SNARE
+                            }
+                        }
+                        owner = {
+                            if = {
+                                limit = {
+                                    NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                                }
+                                if = {
+                                    limit = { is_ai = yes }
+                                    give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                                }
+                            }
+                        }
+                        set_ship_design = { design = NAME_FOC_KHAN_RESURGENT_FOC_LOWEST }
+                        set_ship_flag = foc_lowest_fixed_swapped_resurgentbattlecruiser
+                    }
+                }
+                if = {
+                    limit = {
+                        OR = { is_ship_size = foc_rebel_nebula is_ship_size = foc_rebel_nebula_foc_lowest }
+                    }
+                    if = {
+                        limit = {
+                            OR = {
+                                has_component = FOC_STD_SPINAL_X_T4_R_V02
+                                has_component = FOC_STD_SPINAL_X_T4_R_V01
+                                has_component = FOC_STD_QUAD_L_T4_R_V01
+                                has_component = SSP_XWING_HANGAR_01_SG
+                                has_component = SSP_XWING_HANGAR_02_SG
+                                has_component = FOC_NEBULA_SG_LARGE_ADAPTIVE_DEFENSE_ARMOR
+                                has_component = FOC_NEBULA_SG_DEFLECTOR_SHIELD_ARRAY
+                                has_component = SSP_XWING_HANGAR_03_SG
+                                has_component = SSP_XWING_HANGAR_04_SG
+                                has_component = SSP_XWING_HANGAR_05_SG
+                                has_component = SSP_XWING_HANGAR_06_SG
+                                has_component = SSP_XWING_HANGAR_07_SG
+                                has_component = SSP_XWING_HANGAR_08_SG
+                                has_component = FOC_NEBULA_SG_COLOSSUS_REACTOR
+                                has_component = FOC_NEBULA_SG_DSWARP_DRIVE
+                                has_component = FOC_NEBULA_SG_STARDESTROYER_THRUSTER
+                                has_component = FOC_NEBULA_SG_SENSOR
+                                has_component = FOC_NEBULA_SG_STRANGE_CARRIER_COMPUTER
+                            }
+                        }
+                        owner = {
+                            if = {
+                                limit = {
+                                    NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                                }
+                                if = {
+                                    limit = { is_ai = yes }
+                                    give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                                }
+                            }
+                        }
+                        set_ship_design = { design = NAME_FOC_REBEL_NEBULA_FOC_LOWEST }
+                        set_ship_flag = foc_lowest_fixed_swapped_foc_rebel_nebula
+                    }
+                }
+                if = {
+                    limit = {
+                        OR = { is_ship_size = foc_khan_xystonsd is_ship_size = foc_khan_xystonsd_foc_lowest }
+                    }
+                    if = {
+                        limit = {
+                            OR = {
+                                has_component = PLANET_KILLER_XYSTON_WEAPON
+                                has_component = XYSTONSD_GUN
+                                has_component = FOC_STD_TURBO_L_T5_R_V02
+                                has_component = FOC_STD_TURBO_M_T4_G_V01
+                                has_component = FOC_STD_TURBO_S_T4_G_V01
+                                has_component = FOC_STD_PD_P_T4_G_V02
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_01_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_02_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_03_SG
+                                has_component = FOC_KHAN_XYSTON_SG_ARMOR
+                                has_component = FOC_KHAN_XYSTON_DEFLECTOR_ARRAY
+                                has_component = SSP_IMPERIAL_COMMAND_CORE
+                                has_component = XYSTONSD_REACTOR
+                                has_component = XYSTONSD_JUMPDRIVE
+                                has_component = XYSTONSD_THRUSTER
+                                has_component = XYSTONSD_CORE_COMPONENT
+                                has_component = XYSTONSD_CREW
+                            }
+                        }
+                        owner = {
+                            if = {
+                                limit = {
+                                    NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                                }
+                                if = {
+                                    limit = { is_ai = yes }
+                                    give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                                }
+                            }
+                        }
+                        set_ship_design = { design = NAME_FOC_KHAN_XYSTON_FOC_LOWEST }
+                        set_ship_flag = foc_lowest_fixed_swapped_foc_khan_xystonsd
+                    }
+                }
+                if = {
+                    limit = {
+                        OR = { is_ship_size = foc_khan_xystonsd_combat is_ship_size = foc_khan_xystonsd_combat_foc_lowest }
+                    }
+                    if = {
+                        limit = {
+                            OR = {
+                                has_component = XYSTONSD_GUN
+                                has_component = FOC_STD_TURBO_L_T5_R_V02
+                                has_component = FOC_STD_TURBO_M_T4_G_V01
+                                has_component = FOC_STD_TURBO_S_T4_G_V01
+                                has_component = FOC_STD_PD_P_T4_G_V02
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_01_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_02_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_03_SG
+                                has_component = FOC_KHAN_XYSTON_SG_ARMOR
+                                has_component = FOC_KHAN_XYSTON_DEFLECTOR_ARRAY
+                                has_component = SSP_IMPERIAL_COMMAND_CORE
+                                has_component = XYSTONSD_REACTOR
+                                has_component = XYSTONSD_JUMPDRIVE
+                                has_component = XYSTONSD_THRUSTER
+                                has_component = XYSTONSD_CORE_COMPONENT
+                                has_component = XYSTONSD_CREW
+                            }
+                        }
+                        owner = {
+                            if = {
+                                limit = {
+                                    NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                                }
+                                if = {
+                                    limit = { is_ai = yes }
+                                    give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                                }
+                            }
+                        }
+                        set_ship_design = { design = NAME_FOC_KHAN_XYSTON_COMBAT_FOC_LOWEST }
+                        set_ship_flag = foc_lowest_fixed_swapped_foc_khan_xystonsd_combat
+                    }
+                }
+                if = {
+                    limit = {
+                        OR = { is_ship_size = foc_khan_mandator is_ship_size = foc_khan_mandator_foc_lowest }
+                    }
+                    if = {
+                        limit = {
+                            OR = {
+                                has_component = FOC_KHAN_MANDATOR_SIEGE_LASER
+                                has_component = FOC_KHAN_MANDATOR_SIEGE_LASER_SECONDARY
+                                has_component = FOC_KHAN_ADAPTIVE_DEFENSE_ARMOR
+                                has_component = FOC_KHAN_DEFLECTOR_SHIELD_ARRAY
+                                has_component = FOC_STD_PD_P_T4_G_V02
+                                has_component = FOC_KHAN_SUPERCAP_REACTOR
+                                has_component = FOC_KHAN_SUPERCAP_THRUSTER
+                                has_component = FOC_KHAN_SUPERCAP_COMBAT_COMPUTER
+                            }
+                        }
+                        owner = {
+                            if = {
+                                limit = {
+                                    NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                                }
+                                if = {
+                                    limit = { is_ai = yes }
+                                    give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                                }
+                            }
+                        }
+                        set_ship_design = { design = NAME_FOC_KHAN_MANDATOR_FOC_LOWEST }
+                        set_ship_flag = foc_lowest_fixed_swapped_foc_khan_mandator
+                    }
+                }
+                if = {
+                    limit = {
+                        OR = { is_ship_size = foc_khan_eclipse is_ship_size = foc_khan_eclipse_foc_lowest }
+                    }
+                    if = {
+                        limit = {
+                            OR = {
+                                has_component = FOC_KHAN_ECLIPSE_SUPERLASER
+                                has_component = FOC_KHAN_ECLIPSE_DEFENSE
+                                has_component = FOC_STD_TURBO_L_T4_G_V01
+                                has_component = FOC_STD_PD_P_T4_G_V02
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_01_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_02_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_03_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_04_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_05_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_06_SG
+                                has_component = FOC_KHAN_DEFLECTOR_SHIELD_ARRAY
+                                has_component = FOC_KHAN_SUPERCAP_REACTOR
+                                has_component = FOC_KHAN_SUPERCAP_THRUSTER
+                                has_component = FOC_KHAN_SUPERCAP_COMBAT_COMPUTER
+                            }
+                        }
+                        owner = {
+                            if = {
+                                limit = {
+                                    NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                                }
+                                if = {
+                                    limit = { is_ai = yes }
+                                    give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                                }
+                            }
+                        }
+                        set_ship_design = { design = NAME_FOC_KHAN_ECLIPSE_FOC_LOWEST }
+                        set_ship_flag = foc_lowest_fixed_swapped_foc_khan_eclipse
+                    }
+                }
+                if = {
+                    limit = {
+                        OR = { is_ship_size = foc_khan_eclipse_ii is_ship_size = foc_khan_eclipse_ii_foc_lowest }
+                    }
+                    if = {
+                        limit = {
+                            OR = {
+                                has_component = FOC_KHAN_ECLIPSE_II_SUPERLASER
+                                has_component = FOC_STD_TURBO_L_T4_G_V01
+                                has_component = FOC_KHAN_ECLIPSE_DEFENSE
+                                has_component = FOC_KHAN_DEFLECTOR_SHIELD_ARRAY
+                                has_component = FOC_STD_SPINAL_X_T4_N_V01
+                                has_component = FOC_KHAN_SUPERCAP_REACTOR
+                                has_component = FOC_KHAN_SUPERCAP_THRUSTER
+                                has_component = FOC_KHAN_SUPERCAP_COMBAT_COMPUTER
+                            }
+                        }
+                        owner = {
+                            if = {
+                                limit = {
+                                    NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                                }
+                                if = {
+                                    limit = { is_ai = yes }
+                                    give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                                }
+                            }
+                        }
+                        set_ship_design = { design = NAME_FOC_KHAN_ECLIPSE_II_FOC_LOWEST }
+                        set_ship_flag = foc_lowest_fixed_swapped_foc_khan_eclipse_ii
+                    }
+                }
+                if = {
+                    limit = {
+                        OR = { is_ship_size = foc_sw_lusankya is_ship_size = foc_sw_lusankya_foc_lowest }
+                    }
+                    if = {
+                        limit = {
+                            OR = {
+                                has_component = FOC_STD_SPINAL_X_T3_G_V01
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_01_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_02_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_03_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_04_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_05_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_06_SG
+                                has_component = FOC_LUS_LARGE_ADAPTIVE_DEFENSE_ARMOR
+                                has_component = FOC_STD_OCTUPLE_L_T3_R_V01
+                                has_component = FOC_LUS_COLOSSUS_REACTOR
+                                has_component = FOC_LUS_DSWARP_DRIVE
+                                has_component = FOC_LUS_STARDESTROYER_THRUSTER
+                                has_component = FOC_LUS_SENSOR
+                                has_component = FOC_LUS_STRANGE_CARRIER_COMPUTER
+                                has_component = FOC_IMMOBILIZER418_SNARE
+                                has_component = FOC_STD_SPINAL_X_T3_G_V02
+                                has_component = FOC_LUS_LARGE_ADAPTIVE_DEFENSE_ARMOR_EC
+                                has_component = FOC_STD_OCTUPLE_L_T3_R_V02
+                                has_component = FOC_LUS_AURA_ATK_EC
+                                has_component = FOC_LUS_AURA_DEF_EC
+                                has_component = FOC_LUS_AURA_AFK
+                            }
+                        }
+                        owner = {
+                            if = {
+                                limit = {
+                                    NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                                }
+                                if = {
+                                    limit = { is_ai = yes }
+                                    give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                                }
+                            }
+                        }
+                        set_ship_design = { design = NAME_FOC_SW_LUSANKYA_FOC_LOWEST }
+                        set_ship_flag = foc_lowest_fixed_swapped_foc_sw_lusankya
+                    }
+                }
+                if = {
+                    limit = {
+                        OR = { is_ship_size = foc_rebel_mc158 is_ship_size = foc_rebel_mc158_foc_lowest }
+                    }
+                    if = {
+                        limit = {
+                            OR = {
+                                has_component = FOC_STD_TURBO_L_T4_G_V04
+                                has_component = FOC_STD_QUAD_L_T4_B_V01
+                                has_component = FOC_STD_QUAD_L_T4_G_V01
+                                has_component = FOC_STD_OCTUPLE_L_T4_R_V01
+                                has_component = FOC_STD_OCTUPLE_L_T4_B_V01
+                                has_component = FOC_STD_OCTUPLE_L_T4_G_V01
+                                has_component = SSP_XWING_HANGAR_01_SG
+                                has_component = SSP_XWING_HANGAR_02_SG
+                                has_component = SSP_XWING_HANGAR_03_SG
+                                has_component = SSP_XWING_HANGAR_04_SG
+                                has_component = SSP_XWING_HANGAR_05_SG
+                                has_component = SSP_XWING_HANGAR_06_SG
+                                has_component = SSP_XWING_HANGAR_07_SG
+                                has_component = SSP_XWING_HANGAR_08_SG
+                                has_component = FOC_MC158_SG_LARGE_ADAPTIVE_DEFENSE_ARMOR
+                                has_component = FOC_MC158_SG_COLOSSUS_REACTOR
+                                has_component = FOC_MC158_SG_DSWARP_DRIVE
+                                has_component = FOC_MC158_SG_STARDESTROYER_THRUSTER
+                                has_component = FOC_MC158_SG_SENSOR
+                                has_component = FOC_MC158_SG_STRANGE_CARRIER_COMPUTER
+                                has_component = FOC_IMMOBILIZER418_SNARE
+                            }
+                        }
+                        owner = {
+                            if = {
+                                limit = {
+                                    NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                                }
+                                if = {
+                                    limit = { is_ai = yes }
+                                    give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                                }
+                            }
+                        }
+                        set_ship_design = { design = NAME_FOC_REBEL_MC158_FOC_LOWEST }
+                        set_ship_flag = foc_lowest_fixed_swapped_foc_rebel_mc158
+                    }
+                }
+                if = {
+                    limit = {
+                        OR = { is_ship_size = foc_rebel_home_arkship_tier_3 is_ship_size = foc_rebel_home_arkship_tier_3_foc_lowest }
+                    }
+                    if = {
+                        limit = {
+                            OR = {
+                                has_component = FOC_STD_TURBO_L_T3_R_V01
+                                has_component = FOC_STD_TURBO_M_T3_R_V01
+                                has_component = FOC_STD_TURBO_S_T3_R_V01
+                                has_component = FOC_STD_PD_P_T3_R_V03
+                                has_component = SSP_XWING_HANGAR_01_SG
+                                has_component = SSP_XWING_HANGAR_02_SG
+                                has_component = SSP_XWING_HANGAR_03_SG
+                                has_component = SSP_XWING_HANGAR_04_SG
+                                has_component = SSP_XWING_HANGAR_05_SG
+                                has_component = SSP_XWING_HANGAR_06_SG
+                                has_component = SSP_XWING_HANGAR_07_SG
+                                has_component = SSP_XWING_HANGAR_08_SG
+                                has_component = SSP_XWING_HANGAR_09_SG
+                                has_component = SSP_YWING_HANGAR_01_SG
+                                has_component = SSP_YWING_HANGAR_02_SG
+                                has_component = SSP_YWING_HANGAR_03_SG
+                                has_component = SSP_YWING_HANGAR_04_SG
+                                has_component = SSP_YWING_HANGAR_05_SG
+                                has_component = SSP_YWING_HANGAR_06_SG
+                                has_component = SSP_YWING_HANGAR_07_SG
+                                has_component = SSP_YWING_HANGAR_08_SG
+                                has_component = SSP_YWING_HANGAR_09_SG
+                                has_component = FOC_STD_SPINAL_X_T3_R_V01
+                                has_component = FOC_REBEL_HOME_ARKSHIP_DEFENSE
+                                has_component = FOC_REBEL_HOME_ARKSHIP_AUX_DEFLECTOR
+                                has_component = SSP_REBEL_COMMAND_CORE
+                                has_component = FOC_REBEL_HOME_ARKSHIP_REACTOR
+                                has_component = FOC_REBEL_HOME_ARKSHIP_FTL
+                                has_component = FOC_REBEL_HOME_ARKSHIP_THRUSTER
+                                has_component = FOC_REBEL_HOME_ARKSHIP_SENSOR
+                                has_component = FOC_REBEL_HOME_ARKSHIP_COMPUTER
+                            }
+                        }
+                        set_ship_design = { design = NAME_FOC_REBEL_ARKSHIP_RADDUS_FOC_LOWEST }
+                        set_ship_flag = foc_lowest_fixed_swapped_foc_rebel_home_arkship_tier_3
+                    }
+                }
+                if = {
+                    limit = {
+                        OR = { is_ship_size = foc_millennium_falcon is_ship_size = foc_millennium_falcon_foc_lowest }
+                    }
+                    if = {
+                        limit = {
+                            OR = {
+                                has_component = FOC_STD_QUAD_S_T3_R_V01
+                                has_component = FOC_MILLENNIUM_FALCON_REACTOR
+                                has_component = FOC_MILLENNIUM_FALCON_HYPERDRIVE
+                                has_component = FOC_MILLENNIUM_FALCON_THRUSTER
+                                has_component = FOC_MILLENNIUM_FALCON_SENSOR
+                                has_component = FOC_MILLENNIUM_FALCON_COMPUTER
+                            }
+                        }
+                        set_ship_design = { design = NAME_FOC_MILLENNIUM_FALCON_FOC_LOWEST }
+                        set_ship_flag = foc_lowest_fixed_swapped_foc_millennium_falcon
+                    }
+                }
+                if = {
+                    limit = {
+                        OR = { is_ship_size = foc_immobilizer418 is_ship_size = foc_immobilizer418_foc_lowest }
+                    }
+                    if = {
+                        limit = {
+                            OR = {
+                                has_component = FOC_STD_TURBO_M_T3_G_V03
+                                has_component = FOC_STD_PD_P_T3_G_V01
+                                has_component = FOC_IMMOBILIZER418_INTERCEPTOR_HANGAR
+                                has_component = FOC_IMMOBILIZER418_REACTOR
+                                has_component = FOC_IMMOBILIZER418_JUMPDRIVE
+                                has_component = FOC_IMMOBILIZER418_THRUSTER
+                                has_component = FOC_IMMOBILIZER418_CORE
+                                has_component = FOC_IMMOBILIZER418_CREW
+                                has_component = FOC_IMMOBILIZER418_SNARE
+                            }
+                        }
+                        set_ship_design = { design = NAME_FOC_IMMOBILIZER_418_FOC_LOWEST }
+                        set_ship_flag = foc_lowest_fixed_swapped_foc_immobilizer418
+                    }
+                }
+                if = {
+                    limit = {
+                        OR = { is_ship_size = venatorclass is_ship_size = venatorclass_foc_lowest }
+                    }
+                    if = {
+                        limit = { has_modifier = foc_acot_sync_venator_lucrehulk }
+                        remove_modifier = foc_acot_sync_venator_lucrehulk
+                    }
+                }
+                if = {
+                    limit = {
+                        OR = { is_ship_size = foc_trade_lucrehulk is_ship_size = foc_trade_lucrehulk_foc_lowest }
+                    }
+                    if = {
+                        limit = { has_modifier = foc_acot_sync_venator_lucrehulk }
+                        remove_modifier = foc_acot_sync_venator_lucrehulk
+                    }
+                }
+                if = {
+                    limit = {
+                        OR = { is_ship_size = foc_sai_supremacy_arkship_tier_1 is_ship_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+                    }
+                    if = {
+                        limit = {
+                            OR = {
+                                has_component = FOC_STD_TURBO_L_T4_G_V01
+                                has_component = FOC_STD_TURBO_M_T4_G_V01
+                                has_component = FOC_STD_TURBO_S_T4_G_V01
+                                has_component = FOC_STD_PD_P_T4_G_V02
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_01_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_02_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_03_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_04_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_05_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_06_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_07_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_08_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_09_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_10_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_11_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_12_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_13_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_14_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_15_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_16_SG
+                                has_component = FOC_SSP_FO_INTERCEPTOR_HANGAR_17
+                                has_component = FOC_SSP_FO_INTERCEPTOR_HANGAR_18
+                                has_component = FOC_KHAN_ADAPTIVE_DEFENSE_ARMOR
+                                has_component = FOC_KHAN_DEFLECTOR_SHIELD_ARRAY
+                                has_component = SSP_IMPERIAL_COMMAND_CORE
+                            }
+                        }
+                        owner = {
+                            if = {
+                                limit = {
+                                    NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                                }
+                                if = {
+                                    limit = { is_ai = yes }
+                                    give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                                }
+                            }
+                        }
+                        set_ship_design = { design = NAME_FOC_SAI_SUPREMACY_ARKSHIP_TIER_1_FOC_LOWEST }
+                        set_ship_flag = foc_lowest_fixed_swapped_foc_sai_supremacy_arkship_tier_1
+                    }
+                }
+                if = {
+                    limit = {
+                        OR = { is_ship_size = foc_sai_supremacy_arkship_tier_2 is_ship_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+                    }
+                    if = {
+                        limit = {
+                            OR = {
+                                has_component = FOC_STD_TURBO_L_T4_G_V01
+                                has_component = FOC_STD_TURBO_M_T4_G_V01
+                                has_component = FOC_STD_TURBO_S_T4_G_V01
+                                has_component = FOC_STD_PD_P_T4_G_V02
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_01_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_02_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_03_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_04_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_05_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_06_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_07_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_08_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_09_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_10_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_11_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_12_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_13_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_14_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_15_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_16_SG
+                                has_component = FOC_SSP_FO_INTERCEPTOR_HANGAR_17
+                                has_component = FOC_SSP_FO_INTERCEPTOR_HANGAR_18
+                                has_component = FOC_KHAN_ADAPTIVE_DEFENSE_ARMOR
+                                has_component = FOC_KHAN_DEFLECTOR_SHIELD_ARRAY
+                                has_component = SSP_IMPERIAL_COMMAND_CORE
+                            }
+                        }
+                        owner = {
+                            if = {
+                                limit = {
+                                    NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                                }
+                                if = {
+                                    limit = { is_ai = yes }
+                                    give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                                }
+                            }
+                        }
+                        set_ship_design = { design = NAME_FOC_SAI_SUPREMACY_ARKSHIP_TIER_2_FOC_LOWEST }
+                        set_ship_flag = foc_lowest_fixed_swapped_foc_sai_supremacy_arkship_tier_2
+                    }
+                }
+                if = {
+                    limit = {
+                        OR = { is_ship_size = foc_sai_supremacy_arkship_tier_3 is_ship_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+                    }
+                    if = {
+                        limit = {
+                            OR = {
+                                has_component = FOC_STD_TURBO_L_T4_G_V01
+                                has_component = FOC_STD_TURBO_M_T4_G_V01
+                                has_component = FOC_STD_TURBO_S_T4_G_V01
+                                has_component = FOC_STD_PD_P_T4_G_V02
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_01_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_02_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_03_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_04_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_05_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_06_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_07_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_08_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_09_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_10_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_11_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_12_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_13_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_14_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_15_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_16_SG
+                                has_component = FOC_SSP_FO_INTERCEPTOR_HANGAR_17
+                                has_component = FOC_SSP_FO_INTERCEPTOR_HANGAR_18
+                                has_component = FOC_STD_SPINAL_X_T4_N_V01
+                                has_component = FOC_KHAN_ADAPTIVE_DEFENSE_ARMOR
+                                has_component = FOC_KHAN_DEFLECTOR_SHIELD_ARRAY
+                                has_component = SSP_IMPERIAL_COMMAND_CORE
+                                has_component = FOC_KHAN_SUPREMACY_REACTOR
+                                has_component = FOC_KHAN_SUPREMACY_THRUSTER
+                                has_component = FOC_KHAN_SUPREMACY_COMBAT_COMPUTER
+                            }
+                        }
+                        owner = {
+                            if = {
+                                limit = {
+                                    NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                                }
+                                if = {
+                                    limit = { is_ai = yes }
+                                    give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                                }
+                            }
+                        }
+                        set_ship_design = { design = NAME_FOC_KHAN_SUPREMACY_CRISIS_FOC_LOWEST }
+                        set_ship_flag = foc_lowest_fixed_swapped_foc_sai_supremacy_arkship_tier_3
+                    }
+                }
+                if = {
+                    limit = {
+                        OR = { is_ship_size = sai_supremacy_arkship_tier_3 is_ship_size = sai_supremacy_arkship_tier_3_foc_lowest }
+                    }
+                    if = {
+                        limit = {
+                            OR = {
+                                has_component = FOC_STD_TURBO_L_T4_G_V07
+                                has_component = FOC_STD_TURBO_M_T4_G_V04
+                                has_component = FOC_STD_TURBO_S_T4_G_V03
+                                has_component = FOC_STD_PD_P_T4_G_V06
+                                has_component = SAI_SUPREMACY_TIE_FIGHTER
+                                has_component = SAI_SUPREMACY_LARGE_DURASTEEL_ARMOR
+                                has_component = SAI_SUPREMACY_DEFLECTOR_ARRAY
+                                has_component = SAI_SUPREMACY_SG_REACTOR_FIRE_CONTROL
+                                has_component = SAI_SUPREMACY_SG_WARP_DRIVE
+                                has_component = SAI_SUPREMACY_SG_THRUSTER
+                                has_component = SAI_SUPREMACY_SG_SENSOR
+                            }
+                        }
+                        set_ship_design = { design = NAME_SAI_SUPREMACY_ARKSHIP_TIER_3_FULL_FOC_LOWEST }
+                        set_ship_flag = foc_lowest_fixed_swapped_sai_supremacy_arkship_tier_3
+                    }
+                }
+                if = {
+                    limit = {
+                        OR = { is_ship_size = foc_khan_starkiller_fixed_station is_ship_size = foc_khan_starkiller_fixed_station_foc_lowest }
+                    }
+                    if = {
+                        limit = {
+                            OR = {
+                                has_component = FOC_STD_SPINAL_X_T4_N_V01
+                                has_component = FOC_STD_PD_P_T4_G_V02
+                                has_component = FOC_KHAN_ADAPTIVE_DEFENSE_ARMOR
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_01_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_02_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_03_SG
+                                has_component = SSP_FO_INTERCEPTOR_HANGAR_04_SG
+                                has_component = RESURGENTBATTLECRUISER_REACTOR
+                                has_component = RESURGENTBATTLECRUISER_CORE
+                            }
+                        }
+                        owner = {
+                            if = {
+                                limit = {
+                                    NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                                }
+                                if = {
+                                    limit = { is_ai = yes }
+                                    give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                                }
+                            }
+                        }
+                        set_ship_design = { design = NAME_FOC_KHAN_STARKILLER_FIXED_STATION_FOC_LOWEST }
+                        set_ship_flag = foc_lowest_fixed_swapped_starkiller_station
+                    }
+                }
+                if = {
+                    limit = {
+                        is_ship_size = corvette
+                        OR = {
+                            has_component = FOC_STD_TURBO_S_T3_R_V02
+                            has_component = FOC_STD_TURBO_M_T3_R_V02
+                            has_component = FOC_STD_TURBO_L_T3_R_V02
+                            has_component = FOC_STD_TURBO_T_T3_R_V01
+                        }
+                    }
+                    set_ship_design = { design = NAME_FOC_REBEL_CR90_FOC_LOWEST }
+                }
+                if = {
+                    limit = {
+                        is_ship_size = cruiser
+                        OR = {
+                            has_component = FOC_STD_TURBO_S_T3_R_V02
+                            has_component = FOC_STD_TURBO_M_T3_R_V02
+                            has_component = FOC_STD_TURBO_L_T3_R_V02
+                            has_component = FOC_STD_TURBO_T_T3_R_V01
+                        }
+                    }
+                    set_ship_design = { design = NAME_FOC_REBEL_MC30_FOC_LOWEST }
+                }
+                if = {
+                    limit = {
+                        is_ship_size = battleship
+                        OR = {
+                            has_component = FOC_STD_TURBO_S_T3_R_V02
+                            has_component = FOC_STD_TURBO_M_T3_R_V02
+                            has_component = FOC_STD_TURBO_L_T3_R_V02
+                            has_component = FOC_STD_TURBO_T_T3_R_V01
+                        }
+                    }
+                    owner = {
+                        if = {
+                            limit = {
+                                NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                            }
+                            if = {
+                                limit = { is_ai = yes }
+                                give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                            }
+                        }
+                    }
+                    set_ship_design = { design = NAME_FOC_REBEL_MC80_FOC_LOWEST }
+                }
+                if = {
+                    limit = {
+                        is_ship_size = titan
+                        OR = {
+                            has_component = FOC_STD_TURBO_S_T3_R_V02
+                            has_component = FOC_STD_TURBO_M_T3_R_V02
+                            has_component = FOC_STD_TURBO_L_T3_R_V02
+                            has_component = FOC_STD_TURBO_T_T3_R_V01
+                        }
+                    }
+                    owner = {
+                        if = {
+                            limit = {
+                                NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                            }
+                            if = {
+                                limit = { is_ai = yes }
+                                give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                            }
+                        }
+                    }
+                    set_ship_design = { design = NAME_FOC_REBEL_HOME_ONE_FOC_LOWEST }
+                }
+            }
+        }
+        else = {
+            every_owned_ship = {
+                if = {
+                    limit = { has_modifier = foc_lowest_norm_starkiller_fixed_station }
+                    remove_modifier = foc_lowest_norm_starkiller_fixed_station
+                }
+                if = {
+                    limit = { has_ship_flag = foc_lowest_fixed_swapped_starkiller_station }
+                    owner = {
+                        if = {
+                            limit = {
+                                NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                            }
+                            if = {
+                                limit = { is_ai = yes }
+                                give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                            }
+                        }
+                    }
+                    set_ship_design = { design = NAME_FOC_KHAN_STARKILLER_FIXED_STATION }
+                    remove_ship_flag = foc_lowest_fixed_swapped_starkiller_station
+                }
+                if = {
+                    limit = { has_modifier = foc_lowest_norm_eclipse }
+                    remove_modifier = foc_lowest_norm_eclipse
+                }
+                if = {
+                    limit = { has_modifier = foc_lowest_norm_falcon }
+                    remove_modifier = foc_lowest_norm_falcon
+                }
+                if = {
+                    limit = { has_modifier = foc_lowest_norm_heavy }
+                    remove_modifier = foc_lowest_norm_heavy
+                }
+                if = {
+                    limit = { has_modifier = foc_lowest_norm_resurgent }
+                    remove_modifier = foc_lowest_norm_resurgent
+                }
+                if = {
+                    limit = { has_modifier = foc_lowest_norm_immobilizer }
+                    remove_modifier = foc_lowest_norm_immobilizer
+                }
+                if = {
+                    limit = { has_modifier = foc_lowest_norm_isd }
+                    remove_modifier = foc_lowest_norm_isd
+                }
+                if = {
+                    limit = { has_modifier = foc_lowest_norm_mc80_line }
+                    remove_modifier = foc_lowest_norm_mc80_line
+                }
+                if = {
+                    limit = { has_modifier = foc_lowest_norm_lusankya }
+                    remove_modifier = foc_lowest_norm_lusankya
+                }
+                if = {
+                    limit = { has_modifier = foc_lowest_norm_mandator }
+                    remove_modifier = foc_lowest_norm_mandator
+                }
+                if = {
+                    limit = { has_modifier = foc_lowest_norm_mc158 }
+                    remove_modifier = foc_lowest_norm_mc158
+                }
+                if = {
+                    limit = { has_modifier = foc_lowest_norm_raddus }
+                    remove_modifier = foc_lowest_norm_raddus
+                }
+                if = {
+                    limit = { has_modifier = foc_lowest_norm_sai_supremacy }
+                    remove_modifier = foc_lowest_norm_sai_supremacy
+                }
+                if = {
+                    limit = { has_modifier = foc_lowest_norm_sai_supremacy_t1 }
+                    remove_modifier = foc_lowest_norm_sai_supremacy_t1
+                }
+                if = {
+                    limit = { has_modifier = foc_lowest_norm_sai_supremacy_t2 }
+                    remove_modifier = foc_lowest_norm_sai_supremacy_t2
+                }
+                if = {
+                    limit = { has_ship_flag = foc_lowest_restore_foc_supremacy_stats }
+                    add_modifier = { modifier = foc_sai_supremacy_arkship_stats days = -1 }
+                    remove_ship_flag = foc_lowest_restore_foc_supremacy_stats
+                }
+                if = {
+                    limit = { has_ship_flag = foc_lowest_restore_sai_supremacy_stats }
+                    add_modifier = { modifier = sai_supremacy_arkship_stats days = -1 }
+                    remove_ship_flag = foc_lowest_restore_sai_supremacy_stats
+                }
+                if = {
+                    limit = { has_ship_flag = foc_lowest_restore_supremacy_heavy }
+                    add_modifier = { modifier = foc_khan_supremacy_heavy_ark_slowdown days = -1 }
+                    remove_ship_flag = foc_lowest_restore_supremacy_heavy
+                }
+                if = {
+                    limit = { has_modifier = foc_lowest_norm_supremacy_t1 }
+                    remove_modifier = foc_lowest_norm_supremacy_t1
+                }
+                if = {
+                    limit = { has_modifier = foc_lowest_norm_supremacy_t2 }
+                    remove_modifier = foc_lowest_norm_supremacy_t2
+                }
+                if = {
+                    limit = { has_modifier = foc_lowest_norm_supremacy_t3 }
+                    remove_modifier = foc_lowest_norm_supremacy_t3
+                }
+                if = {
+                    limit = { has_modifier = foc_lowest_norm_venator }
+                    remove_modifier = foc_lowest_norm_venator
+                }
+                if = {
+                    limit = { has_modifier = foc_lowest_norm_lucrehulk }
+                    remove_modifier = foc_lowest_norm_lucrehulk
+                }
+                if = {
+                    limit = { has_modifier = foc_lowest_norm_xyston }
+                    remove_modifier = foc_lowest_norm_xyston
+                }
+                if = {
+                    limit = { has_ship_flag = foc_lowest_fixed_swapped_imperialsd }
+                    owner = {
+                        if = {
+                            limit = {
+                                NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                            }
+                            if = {
+                                limit = { is_ai = yes }
+                                give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                            }
+                        }
+                    }
+                    set_ship_design = { design = NAME_FOC_KHAN_IMPERIAL_SD }
+                    remove_ship_flag = foc_lowest_fixed_swapped_imperialsd
+                }
+                if = {
+                    limit = { has_ship_flag = foc_lowest_fixed_swapped_mc80_line }
+                    owner = {
+                        if = {
+                            limit = {
+                                NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                            }
+                            if = {
+                                limit = { is_ai = yes }
+                                give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                            }
+                        }
+                    }
+                    set_ship_design = { design = NAME_FOC_REBEL_MC80_LINE }
+                    remove_ship_flag = foc_lowest_fixed_swapped_mc80_line
+                }
+                if = {
+                    limit = { has_ship_flag = foc_lowest_fixed_swapped_resurgentbattlecruiser }
+                    owner = {
+                        if = {
+                            limit = {
+                                NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                            }
+                            if = {
+                                limit = { is_ai = yes }
+                                give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                            }
+                        }
+                    }
+                    set_ship_design = { design = NAME_FOC_KHAN_RESURGENT }
+                    remove_ship_flag = foc_lowest_fixed_swapped_resurgentbattlecruiser
+                }
+                if = {
+                    limit = { has_ship_flag = foc_lowest_fixed_swapped_foc_khan_xystonsd_combat }
+                    owner = {
+                        if = {
+                            limit = {
+                                NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                            }
+                            if = {
+                                limit = { is_ai = yes }
+                                give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                            }
+                        }
+                    }
+                    set_ship_design = { design = NAME_FOC_KHAN_XYSTON_COMBAT }
+                    remove_ship_flag = foc_lowest_fixed_swapped_foc_khan_xystonsd_combat
+                }
+                if = {
+                    limit = { has_ship_flag = foc_lowest_fixed_swapped_foc_khan_xystonsd }
+                    owner = {
+                        if = {
+                            limit = {
+                                NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                            }
+                            if = {
+                                limit = { is_ai = yes }
+                                give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                            }
+                        }
+                    }
+                    set_ship_design = { design = NAME_FOC_KHAN_XYSTON }
+                    remove_ship_flag = foc_lowest_fixed_swapped_foc_khan_xystonsd
+                }
+                if = {
+                    limit = { has_ship_flag = foc_lowest_fixed_swapped_foc_khan_mandator }
+                    owner = {
+                        if = {
+                            limit = {
+                                NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                            }
+                            if = {
+                                limit = { is_ai = yes }
+                                give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                            }
+                        }
+                    }
+                    set_ship_design = { design = NAME_FOC_KHAN_MANDATOR }
+                    remove_ship_flag = foc_lowest_fixed_swapped_foc_khan_mandator
+                }
+                if = {
+                    limit = { has_ship_flag = foc_lowest_fixed_swapped_foc_khan_eclipse }
+                    owner = {
+                        if = {
+                            limit = {
+                                NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                            }
+                            if = {
+                                limit = { is_ai = yes }
+                                give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                            }
+                        }
+                    }
+                    set_ship_design = { design = NAME_FOC_KHAN_ECLIPSE }
+                    remove_ship_flag = foc_lowest_fixed_swapped_foc_khan_eclipse
+                }
+                if = {
+                    limit = { has_ship_flag = foc_lowest_fixed_swapped_foc_khan_eclipse_ii }
+                    owner = {
+                        if = {
+                            limit = {
+                                NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                            }
+                            if = {
+                                limit = { is_ai = yes }
+                                give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                            }
+                        }
+                    }
+                    set_ship_design = { design = NAME_FOC_KHAN_ECLIPSE_II }
+                    remove_ship_flag = foc_lowest_fixed_swapped_foc_khan_eclipse_ii
+                }
+                if = {
+                    limit = { has_ship_flag = foc_lowest_fixed_swapped_foc_sw_lusankya }
+                    owner = {
+                        if = {
+                            limit = {
+                                NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                            }
+                            if = {
+                                limit = { is_ai = yes }
+                                give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                            }
+                        }
+                    }
+                    set_ship_design = { design = NAME_FOC_SW_LUSANKYA }
+                    remove_ship_flag = foc_lowest_fixed_swapped_foc_sw_lusankya
+                }
+                if = {
+                    limit = { has_ship_flag = foc_lowest_fixed_swapped_foc_rebel_home_arkship_tier_3 }
+                    set_ship_design = { design = NAME_FOC_REBEL_ARKSHIP_RADDUS }
+                    remove_ship_flag = foc_lowest_fixed_swapped_foc_rebel_home_arkship_tier_3
+                }
+                if = {
+                    limit = { has_ship_flag = foc_lowest_fixed_swapped_foc_millennium_falcon }
+                    set_ship_design = { design = NAME_FOC_MILLENNIUM_FALCON }
+                    remove_ship_flag = foc_lowest_fixed_swapped_foc_millennium_falcon
+                }
+                if = {
+                    limit = { has_ship_flag = foc_lowest_fixed_swapped_foc_immobilizer418 }
+                    set_ship_design = { design = NAME_FOC_IMMOBILIZER_418 }
+                    remove_ship_flag = foc_lowest_fixed_swapped_foc_immobilizer418
+                }
+                if = {
+                    limit = { has_ship_flag = foc_lowest_fixed_swapped_foc_rebel_nebula }
+                    owner = {
+                        if = {
+                            limit = {
+                                NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                            }
+                            if = {
+                                limit = { is_ai = yes }
+                                give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                            }
+                        }
+                    }
+                    set_ship_design = { design = NAME_FOC_REBEL_NEBULA }
+                    remove_ship_flag = foc_lowest_fixed_swapped_foc_rebel_nebula
+                }
+                if = {
+                    limit = { has_ship_flag = foc_lowest_fixed_swapped_foc_rebel_mc158 }
+                    owner = {
+                        if = {
+                            limit = {
+                                NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                            }
+                            if = {
+                                limit = { is_ai = yes }
+                                give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                            }
+                        }
+                    }
+                    set_ship_design = { design = NAME_FOC_REBEL_MC158 }
+                    remove_ship_flag = foc_lowest_fixed_swapped_foc_rebel_mc158
+                }
+                if = {
+                    limit = { has_ship_flag = foc_lowest_fixed_swapped_foc_sai_supremacy_arkship_tier_1 }
+                    owner = {
+                        if = {
+                            limit = {
+                                NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                            }
+                            if = {
+                                limit = { is_ai = yes }
+                                give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                            }
+                        }
+                    }
+                    set_ship_design = { design = NAME_FOC_SAI_SUPREMACY_ARKSHIP_TIER_1 }
+                    remove_ship_flag = foc_lowest_fixed_swapped_foc_sai_supremacy_arkship_tier_1
+                }
+                if = {
+                    limit = { has_ship_flag = foc_lowest_fixed_swapped_foc_sai_supremacy_arkship_tier_2 }
+                    owner = {
+                        if = {
+                            limit = {
+                                NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                            }
+                            if = {
+                                limit = { is_ai = yes }
+                                give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                            }
+                        }
+                    }
+                    set_ship_design = { design = NAME_FOC_SAI_SUPREMACY_ARKSHIP_TIER_2 }
+                    remove_ship_flag = foc_lowest_fixed_swapped_foc_sai_supremacy_arkship_tier_2
+                }
+                if = {
+                    limit = { has_ship_flag = foc_lowest_fixed_swapped_foc_sai_supremacy_arkship_tier_3 }
+                    owner = {
+                        if = {
+                            limit = {
+                                NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                            }
+                            if = {
+                                limit = { is_ai = yes }
+                                give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                            }
+                        }
+                    }
+                    set_ship_design = { design = NAME_FOC_KHAN_SUPREMACY_CRISIS }
+                    remove_ship_flag = foc_lowest_fixed_swapped_foc_sai_supremacy_arkship_tier_3
+                }
+                if = {
+                    limit = { has_ship_flag = foc_lowest_fixed_swapped_sai_supremacy_arkship_tier_3 }
+                    set_ship_design = { design = NAME_SAI_SUPREMACY_ARKSHIP_TIER_3_FULL }
+                    remove_ship_flag = foc_lowest_fixed_swapped_sai_supremacy_arkship_tier_3
+                }
+            }
+            every_owned_ship = {
+                if = {
+                    limit = {
+                        OR = {
+                            OR = { is_ship_size = venatorclass is_ship_size = venatorclass_foc_lowest }
+                            OR = { is_ship_size = foc_trade_lucrehulk is_ship_size = foc_trade_lucrehulk_foc_lowest }
+                        }
+                    }
+                    if = {
+                        limit = { has_global_flag = foc_khan_strength_madness }
+                        if = {
+                            limit = {
+                                NOT = { has_modifier = foc_acot_sync_venator_lucrehulk }
+                            }
+                            add_modifier = { modifier = foc_acot_sync_venator_lucrehulk days = -1 }
+                        }
+                    }
+                    else = {
+                        if = {
+                            limit = { has_modifier = foc_acot_sync_venator_lucrehulk }
+                            remove_modifier = foc_acot_sync_venator_lucrehulk
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

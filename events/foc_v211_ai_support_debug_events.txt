@@ -1,0 +1,565 @@
+namespace = foc_v211_support_debug
+
+# Human-only runtime debugger for scripted AI fleet support. It changes future
+# support packages only; existing fleets are never deleted or resized.
+country_event = {
+    id = foc_v211_support_debug.1
+    title = foc_v211_support_debug.1.name
+    desc = foc_v211_support_debug.1.desc
+    picture = GFX_evt_star_neutron
+    is_triggered_only = yes
+
+    trigger = { is_ai = no }
+
+    option = {
+        name = foc_v211_support_debug.1.republic
+        country_event = { id = foc_v211_support_debug.10 }
+    }
+    option = {
+        name = foc_v211_support_debug.1.cis
+        country_event = { id = foc_v211_support_debug.20 }
+    }
+    option = {
+        name = foc_v211_support_debug.1.empire
+        country_event = { id = foc_v211_support_debug.30 }
+    }
+    option = {
+        name = foc_v211_support_debug.1.rebel
+        country_event = { id = foc_v211_support_debug.40 }
+    }
+    option = {
+        name = foc_v211_support_debug.1.first_order
+        country_event = { id = foc_v211_support_debug.50 }
+    }
+    option = {
+        name = foc_v211_support_debug.1.final_order
+        country_event = { id = foc_v211_support_debug.60 }
+    }
+    option = {
+        name = foc_v211_support_debug.1.reset
+        custom_tooltip = foc_v211_support_debug.1.reset_tt
+        hidden_effect = {
+            foc_v211_reset_all_ai_support_scales = yes
+            country_event = { id = foc_v211_support_debug.1 }
+        }
+    }
+    option = {
+        name = foc_v211_support_debug.back_settings
+        country_event = { id = foc_khan_settings.10 }
+    }
+}
+
+# Galactic Republic recurring Venator support.
+country_event = {
+    id = foc_v211_support_debug.10
+    title = foc_v211_support_debug.10.name
+    desc = foc_v211_support_debug.10.desc
+    desc = {
+        trigger = { has_global_flag = foc_v211_ai_support_republic_disabled }
+        text = foc_v211_support_debug.current.disabled
+    }
+    desc = {
+        trigger = { has_global_flag = foc_v211_ai_support_republic_half }
+        text = foc_v211_support_debug.current.half
+    }
+    desc = {
+        trigger = { has_global_flag = foc_v211_ai_support_republic_one_and_half }
+        text = foc_v211_support_debug.current.one_and_half
+    }
+    desc = {
+        trigger = { has_global_flag = foc_v211_ai_support_republic_double }
+        text = foc_v211_support_debug.current.double
+    }
+    desc = {
+        trigger = {
+            NOR = {
+                has_global_flag = foc_v211_ai_support_republic_disabled
+                has_global_flag = foc_v211_ai_support_republic_half
+                has_global_flag = foc_v211_ai_support_republic_one_and_half
+                has_global_flag = foc_v211_ai_support_republic_double
+            }
+        }
+        text = foc_v211_support_debug.current.standard
+    }
+    picture = GFX_evt_star_neutron
+    is_triggered_only = yes
+
+    option = {
+        name = foc_v211_support_debug.scale.disabled
+        custom_tooltip = foc_v211_support_debug.10.disabled_tt
+        hidden_effect = {
+            foc_v211_clear_republic_ai_support_scale = yes
+            set_global_flag = foc_v211_ai_support_republic_disabled
+            country_event = { id = foc_v211_support_debug.10 }
+        }
+    }
+    option = {
+        name = foc_v211_support_debug.scale.half
+        custom_tooltip = foc_v211_support_debug.10.half_tt
+        hidden_effect = {
+            foc_v211_clear_republic_ai_support_scale = yes
+            set_global_flag = foc_v211_ai_support_republic_half
+            country_event = { id = foc_v211_support_debug.10 }
+        }
+    }
+    option = {
+        name = foc_v211_support_debug.scale.standard
+        custom_tooltip = foc_v211_support_debug.10.standard_tt
+        hidden_effect = {
+            foc_v211_clear_republic_ai_support_scale = yes
+            country_event = { id = foc_v211_support_debug.10 }
+        }
+    }
+    option = {
+        name = foc_v211_support_debug.scale.one_and_half
+        custom_tooltip = foc_v211_support_debug.10.one_and_half_tt
+        hidden_effect = {
+            foc_v211_clear_republic_ai_support_scale = yes
+            set_global_flag = foc_v211_ai_support_republic_one_and_half
+            country_event = { id = foc_v211_support_debug.10 }
+        }
+    }
+    option = {
+        name = foc_v211_support_debug.scale.double
+        custom_tooltip = foc_v211_support_debug.10.double_tt
+        hidden_effect = {
+            foc_v211_clear_republic_ai_support_scale = yes
+            set_global_flag = foc_v211_ai_support_republic_double
+            country_event = { id = foc_v211_support_debug.10 }
+        }
+    }
+    option = {
+        name = foc_v211_support_debug.back
+        country_event = { id = foc_v211_support_debug.1 }
+    }
+}
+
+# Confederacy recurring Lucrehulk support. The V205 opening garrisons and the
+# V209 Coruscant invasion remain fixed story fleets and are not scaled here.
+country_event = {
+    id = foc_v211_support_debug.20
+    title = foc_v211_support_debug.20.name
+    desc = foc_v211_support_debug.20.desc
+    desc = {
+        trigger = { has_global_flag = foc_v211_ai_support_cis_disabled }
+        text = foc_v211_support_debug.current.disabled
+    }
+    desc = {
+        trigger = { has_global_flag = foc_v211_ai_support_cis_half }
+        text = foc_v211_support_debug.current.half
+    }
+    desc = {
+        trigger = { has_global_flag = foc_v211_ai_support_cis_one_and_half }
+        text = foc_v211_support_debug.current.one_and_half
+    }
+    desc = {
+        trigger = { has_global_flag = foc_v211_ai_support_cis_double }
+        text = foc_v211_support_debug.current.double
+    }
+    desc = {
+        trigger = {
+            NOR = {
+                has_global_flag = foc_v211_ai_support_cis_disabled
+                has_global_flag = foc_v211_ai_support_cis_half
+                has_global_flag = foc_v211_ai_support_cis_one_and_half
+                has_global_flag = foc_v211_ai_support_cis_double
+            }
+        }
+        text = foc_v211_support_debug.current.standard
+    }
+    picture = GFX_evt_star_neutron
+    is_triggered_only = yes
+
+    option = {
+        name = foc_v211_support_debug.scale.disabled
+        custom_tooltip = foc_v211_support_debug.20.disabled_tt
+        hidden_effect = {
+            foc_v211_clear_cis_ai_support_scale = yes
+            set_global_flag = foc_v211_ai_support_cis_disabled
+            country_event = { id = foc_v211_support_debug.20 }
+        }
+    }
+    option = {
+        name = foc_v211_support_debug.scale.half
+        custom_tooltip = foc_v211_support_debug.20.half_tt
+        hidden_effect = {
+            foc_v211_clear_cis_ai_support_scale = yes
+            set_global_flag = foc_v211_ai_support_cis_half
+            country_event = { id = foc_v211_support_debug.20 }
+        }
+    }
+    option = {
+        name = foc_v211_support_debug.scale.standard
+        custom_tooltip = foc_v211_support_debug.20.standard_tt
+        hidden_effect = {
+            foc_v211_clear_cis_ai_support_scale = yes
+            country_event = { id = foc_v211_support_debug.20 }
+        }
+    }
+    option = {
+        name = foc_v211_support_debug.scale.one_and_half
+        custom_tooltip = foc_v211_support_debug.20.one_and_half_tt
+        hidden_effect = {
+            foc_v211_clear_cis_ai_support_scale = yes
+            set_global_flag = foc_v211_ai_support_cis_one_and_half
+            country_event = { id = foc_v211_support_debug.20 }
+        }
+    }
+    option = {
+        name = foc_v211_support_debug.scale.double
+        custom_tooltip = foc_v211_support_debug.20.double_tt
+        hidden_effect = {
+            foc_v211_clear_cis_ai_support_scale = yes
+            set_global_flag = foc_v211_ai_support_cis_double
+            country_event = { id = foc_v211_support_debug.20 }
+        }
+    }
+    option = {
+        name = foc_v211_support_debug.back
+        country_event = { id = foc_v211_support_debug.1 }
+    }
+}
+
+# Galactic Empire annual support and non-origin Imperial Remnant War-in-Heaven
+# reinforcements share one scale.
+country_event = {
+    id = foc_v211_support_debug.30
+    title = foc_v211_support_debug.30.name
+    desc = foc_v211_support_debug.30.desc
+    desc = {
+        trigger = { has_global_flag = foc_v211_ai_support_empire_disabled }
+        text = foc_v211_support_debug.current.disabled
+    }
+    desc = {
+        trigger = { has_global_flag = foc_v211_ai_support_empire_half }
+        text = foc_v211_support_debug.current.half
+    }
+    desc = {
+        trigger = { has_global_flag = foc_v211_ai_support_empire_one_and_half }
+        text = foc_v211_support_debug.current.one_and_half
+    }
+    desc = {
+        trigger = { has_global_flag = foc_v211_ai_support_empire_double }
+        text = foc_v211_support_debug.current.double
+    }
+    desc = {
+        trigger = {
+            NOR = {
+                has_global_flag = foc_v211_ai_support_empire_disabled
+                has_global_flag = foc_v211_ai_support_empire_half
+                has_global_flag = foc_v211_ai_support_empire_one_and_half
+                has_global_flag = foc_v211_ai_support_empire_double
+            }
+        }
+        text = foc_v211_support_debug.current.standard
+    }
+    picture = GFX_evt_star_neutron
+    is_triggered_only = yes
+
+    option = {
+        name = foc_v211_support_debug.scale.disabled
+        custom_tooltip = foc_v211_support_debug.30.disabled_tt
+        hidden_effect = {
+            foc_v211_clear_empire_ai_support_scale = yes
+            set_global_flag = foc_v211_ai_support_empire_disabled
+            country_event = { id = foc_v211_support_debug.30 }
+        }
+    }
+    option = {
+        name = foc_v211_support_debug.scale.half
+        custom_tooltip = foc_v211_support_debug.30.half_tt
+        hidden_effect = {
+            foc_v211_clear_empire_ai_support_scale = yes
+            set_global_flag = foc_v211_ai_support_empire_half
+            country_event = { id = foc_v211_support_debug.30 }
+        }
+    }
+    option = {
+        name = foc_v211_support_debug.scale.standard
+        custom_tooltip = foc_v211_support_debug.30.standard_tt
+        hidden_effect = {
+            foc_v211_clear_empire_ai_support_scale = yes
+            country_event = { id = foc_v211_support_debug.30 }
+        }
+    }
+    option = {
+        name = foc_v211_support_debug.scale.one_and_half
+        custom_tooltip = foc_v211_support_debug.30.one_and_half_tt
+        hidden_effect = {
+            foc_v211_clear_empire_ai_support_scale = yes
+            set_global_flag = foc_v211_ai_support_empire_one_and_half
+            country_event = { id = foc_v211_support_debug.30 }
+        }
+    }
+    option = {
+        name = foc_v211_support_debug.scale.double
+        custom_tooltip = foc_v211_support_debug.30.double_tt
+        hidden_effect = {
+            foc_v211_clear_empire_ai_support_scale = yes
+            set_global_flag = foc_v211_ai_support_empire_double
+            country_event = { id = foc_v211_support_debug.30 }
+        }
+    }
+    option = {
+        name = foc_v211_support_debug.back
+        country_event = { id = foc_v211_support_debug.1 }
+    }
+}
+
+# Rebel Alliance, New Republic and Resistance scripted AI support share one
+# scale. Player conquest-choice fleets remain fixed at the original 20 MC80s.
+country_event = {
+    id = foc_v211_support_debug.40
+    title = foc_v211_support_debug.40.name
+    desc = foc_v211_support_debug.40.desc
+    desc = {
+        trigger = { has_global_flag = foc_v211_ai_support_rebel_disabled }
+        text = foc_v211_support_debug.current.disabled
+    }
+    desc = {
+        trigger = { has_global_flag = foc_v211_ai_support_rebel_half }
+        text = foc_v211_support_debug.current.half
+    }
+    desc = {
+        trigger = { has_global_flag = foc_v211_ai_support_rebel_one_and_half }
+        text = foc_v211_support_debug.current.one_and_half
+    }
+    desc = {
+        trigger = { has_global_flag = foc_v211_ai_support_rebel_double }
+        text = foc_v211_support_debug.current.double
+    }
+    desc = {
+        trigger = {
+            NOR = {
+                has_global_flag = foc_v211_ai_support_rebel_disabled
+                has_global_flag = foc_v211_ai_support_rebel_half
+                has_global_flag = foc_v211_ai_support_rebel_one_and_half
+                has_global_flag = foc_v211_ai_support_rebel_double
+            }
+        }
+        text = foc_v211_support_debug.current.standard
+    }
+    picture = GFX_evt_star_neutron
+    is_triggered_only = yes
+
+    option = {
+        name = foc_v211_support_debug.scale.disabled
+        custom_tooltip = foc_v211_support_debug.40.disabled_tt
+        hidden_effect = {
+            foc_v211_clear_rebel_ai_support_scale = yes
+            set_global_flag = foc_v211_ai_support_rebel_disabled
+            country_event = { id = foc_v211_support_debug.40 }
+        }
+    }
+    option = {
+        name = foc_v211_support_debug.scale.half
+        custom_tooltip = foc_v211_support_debug.40.half_tt
+        hidden_effect = {
+            foc_v211_clear_rebel_ai_support_scale = yes
+            set_global_flag = foc_v211_ai_support_rebel_half
+            country_event = { id = foc_v211_support_debug.40 }
+        }
+    }
+    option = {
+        name = foc_v211_support_debug.scale.standard
+        custom_tooltip = foc_v211_support_debug.40.standard_tt
+        hidden_effect = {
+            foc_v211_clear_rebel_ai_support_scale = yes
+            country_event = { id = foc_v211_support_debug.40 }
+        }
+    }
+    option = {
+        name = foc_v211_support_debug.scale.one_and_half
+        custom_tooltip = foc_v211_support_debug.40.one_and_half_tt
+        hidden_effect = {
+            foc_v211_clear_rebel_ai_support_scale = yes
+            set_global_flag = foc_v211_ai_support_rebel_one_and_half
+            country_event = { id = foc_v211_support_debug.40 }
+        }
+    }
+    option = {
+        name = foc_v211_support_debug.scale.double
+        custom_tooltip = foc_v211_support_debug.40.double_tt
+        hidden_effect = {
+            foc_v211_clear_rebel_ai_support_scale = yes
+            set_global_flag = foc_v211_ai_support_rebel_double
+            country_event = { id = foc_v211_support_debug.40 }
+        }
+    }
+    option = {
+        name = foc_v211_support_debug.back
+        country_event = { id = foc_v211_support_debug.1 }
+    }
+}
+
+# First Order annual crisis support. This multiplier is applied after the normal
+# crisis fleet-quantity setting; it never changes the opening invasion package.
+country_event = {
+    id = foc_v211_support_debug.50
+    title = foc_v211_support_debug.50.name
+    desc = foc_v211_support_debug.50.desc
+    desc = {
+        trigger = { has_global_flag = foc_v211_ai_support_first_order_disabled }
+        text = foc_v211_support_debug.current.disabled
+    }
+    desc = {
+        trigger = { has_global_flag = foc_v211_ai_support_first_order_half }
+        text = foc_v211_support_debug.current.half
+    }
+    desc = {
+        trigger = { has_global_flag = foc_v211_ai_support_first_order_one_and_half }
+        text = foc_v211_support_debug.current.one_and_half
+    }
+    desc = {
+        trigger = { has_global_flag = foc_v211_ai_support_first_order_double }
+        text = foc_v211_support_debug.current.double
+    }
+    desc = {
+        trigger = {
+            NOR = {
+                has_global_flag = foc_v211_ai_support_first_order_disabled
+                has_global_flag = foc_v211_ai_support_first_order_half
+                has_global_flag = foc_v211_ai_support_first_order_one_and_half
+                has_global_flag = foc_v211_ai_support_first_order_double
+            }
+        }
+        text = foc_v211_support_debug.current.standard
+    }
+    picture = GFX_evt_star_neutron
+    is_triggered_only = yes
+
+    option = {
+        name = foc_v211_support_debug.scale.disabled
+        custom_tooltip = foc_v211_support_debug.50.disabled_tt
+        hidden_effect = {
+            foc_v211_clear_first_order_ai_support_scale = yes
+            set_global_flag = foc_v211_ai_support_first_order_disabled
+            country_event = { id = foc_v211_support_debug.50 }
+        }
+    }
+    option = {
+        name = foc_v211_support_debug.scale.half
+        custom_tooltip = foc_v211_support_debug.50.half_tt
+        hidden_effect = {
+            foc_v211_clear_first_order_ai_support_scale = yes
+            set_global_flag = foc_v211_ai_support_first_order_half
+            country_event = { id = foc_v211_support_debug.50 }
+        }
+    }
+    option = {
+        name = foc_v211_support_debug.scale.standard
+        custom_tooltip = foc_v211_support_debug.50.standard_tt
+        hidden_effect = {
+            foc_v211_clear_first_order_ai_support_scale = yes
+            country_event = { id = foc_v211_support_debug.50 }
+        }
+    }
+    option = {
+        name = foc_v211_support_debug.scale.one_and_half
+        custom_tooltip = foc_v211_support_debug.50.one_and_half_tt
+        hidden_effect = {
+            foc_v211_clear_first_order_ai_support_scale = yes
+            set_global_flag = foc_v211_ai_support_first_order_one_and_half
+            country_event = { id = foc_v211_support_debug.50 }
+        }
+    }
+    option = {
+        name = foc_v211_support_debug.scale.double
+        custom_tooltip = foc_v211_support_debug.50.double_tt
+        hidden_effect = {
+            foc_v211_clear_first_order_ai_support_scale = yes
+            set_global_flag = foc_v211_ai_support_first_order_double
+            country_event = { id = foc_v211_support_debug.50 }
+        }
+    }
+    option = {
+        name = foc_v211_support_debug.back
+        country_event = { id = foc_v211_support_debug.1 }
+    }
+}
+
+# Final Order annual crisis support. This multiplier is applied after the normal
+# crisis fleet-quantity setting; it never changes the Phase-II opening package.
+country_event = {
+    id = foc_v211_support_debug.60
+    title = foc_v211_support_debug.60.name
+    desc = foc_v211_support_debug.60.desc
+    desc = {
+        trigger = { has_global_flag = foc_v211_ai_support_final_order_disabled }
+        text = foc_v211_support_debug.current.disabled
+    }
+    desc = {
+        trigger = { has_global_flag = foc_v211_ai_support_final_order_half }
+        text = foc_v211_support_debug.current.half
+    }
+    desc = {
+        trigger = { has_global_flag = foc_v211_ai_support_final_order_one_and_half }
+        text = foc_v211_support_debug.current.one_and_half
+    }
+    desc = {
+        trigger = { has_global_flag = foc_v211_ai_support_final_order_double }
+        text = foc_v211_support_debug.current.double
+    }
+    desc = {
+        trigger = {
+            NOR = {
+                has_global_flag = foc_v211_ai_support_final_order_disabled
+                has_global_flag = foc_v211_ai_support_final_order_half
+                has_global_flag = foc_v211_ai_support_final_order_one_and_half
+                has_global_flag = foc_v211_ai_support_final_order_double
+            }
+        }
+        text = foc_v211_support_debug.current.standard
+    }
+    picture = GFX_evt_star_neutron
+    is_triggered_only = yes
+
+    option = {
+        name = foc_v211_support_debug.scale.disabled
+        custom_tooltip = foc_v211_support_debug.60.disabled_tt
+        hidden_effect = {
+            foc_v211_clear_final_order_ai_support_scale = yes
+            set_global_flag = foc_v211_ai_support_final_order_disabled
+            country_event = { id = foc_v211_support_debug.60 }
+        }
+    }
+    option = {
+        name = foc_v211_support_debug.scale.half
+        custom_tooltip = foc_v211_support_debug.60.half_tt
+        hidden_effect = {
+            foc_v211_clear_final_order_ai_support_scale = yes
+            set_global_flag = foc_v211_ai_support_final_order_half
+            country_event = { id = foc_v211_support_debug.60 }
+        }
+    }
+    option = {
+        name = foc_v211_support_debug.scale.standard
+        custom_tooltip = foc_v211_support_debug.60.standard_tt
+        hidden_effect = {
+            foc_v211_clear_final_order_ai_support_scale = yes
+            country_event = { id = foc_v211_support_debug.60 }
+        }
+    }
+    option = {
+        name = foc_v211_support_debug.scale.one_and_half
+        custom_tooltip = foc_v211_support_debug.60.one_and_half_tt
+        hidden_effect = {
+            foc_v211_clear_final_order_ai_support_scale = yes
+            set_global_flag = foc_v211_ai_support_final_order_one_and_half
+            country_event = { id = foc_v211_support_debug.60 }
+        }
+    }
+    option = {
+        name = foc_v211_support_debug.scale.double
+        custom_tooltip = foc_v211_support_debug.60.double_tt
+        hidden_effect = {
+            foc_v211_clear_final_order_ai_support_scale = yes
+            set_global_flag = foc_v211_ai_support_final_order_double
+            country_event = { id = foc_v211_support_debug.60 }
+        }
+    }
+    option = {
+        name = foc_v211_support_debug.back
+        country_event = { id = foc_v211_support_debug.1 }
+    }
+}

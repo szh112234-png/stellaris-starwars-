@@ -1,0 +1,55 @@
+entity = { 
+	name = "processor_outbursts_entity"
+	pdxmesh = "pulsar_outbursts_mesh"
+	
+	default_state = "idle"
+	state = { name = "idle" state_time = 5
+		event = { time = 0.0 node = "polar_effect_1" particle = "pulsar_star_outburst_effect"  keep_particle = no trigger_once = yes  sound = { soundeffect = "pulsar_star_idle_hum" } }
+	}
+	
+	scale = 25.0
+	
+	game_data = {
+		uv_animation_speed   = -0.1
+		uv_animation_direction  = { 0.4 0.4 }
+		bloom_factor = 0.5
+	}	
+}
+
+entity = {
+	name = "star_forge_entity"
+	pdxmesh = "activated_mesh"
+	
+	locator = { name = "fwroot"	position = { 0 -50 0 } }
+	
+	attach = { "fwroot" = "processor_outbursts_entity" }
+	
+	
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } 
+		start_event = { trigger_once = yes sound = { soundeffect = "habitat_pc_amb_03" } }
+	}
+	
+	cull_radius = 500
+}
+
+entity = {
+	name = "star_forge_deactivated_entity"
+	pdxmesh = "star_forge_mesh"
+	
+	meshsettings = {
+        name = "StarForgeHull"
+        index = 0
+        texture_diffuse = "PLANETMODULE_ING_Starforge-CL.dds"
+		texture_normal = "PLANETMODULE_ING_Starforge-NM.dds"
+		texture_specular = "PLANETMODULE_ING_Starforge-DA.dds"
+        shader = "PdxMeshPlanet"
+	}
+	
+	
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } 
+		start_event = { trigger_once = yes sound = { soundeffect = "habitat_pc_amb_03" } }
+	}
+	
+	cull_radius = 500
+}
+

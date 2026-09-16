@@ -1,0 +1,863 @@
+# V187 - additive species only. Existing FOC native species are intentionally untouched.
+
+foc_v187_seed_twilek = {
+    if = {
+        limit = {
+            is_colony = yes
+            NOT = { has_planet_flag = foc_v187_twilek_seeded }
+        }
+
+        create_species = {
+            name = foc_v187_twilek_name
+            plural = foc_v187_twilek_plural
+            adjective = foc_v187_twilek_adjective
+            name_list = "rebels"
+            class = "HUM"
+            portrait = "foc_v187_twilek_species_01"
+            homeworld = this
+            traits = {
+                trait = "trait_adaptive"
+                trait = "trait_charismatic"
+                trait = "trait_sedentary"
+            }
+        }
+
+        last_created_species = {
+            set_species_flag = foc_v187_twilek_species
+            save_global_event_target_as = foc_v187_twilek_species
+            set_citizenship_type = { country = prev.owner type = citizenship_full cooldown = no }
+            set_military_service_type = { country = prev.owner type = military_service_full cooldown = no }
+            set_population_controls = { country = prev.owner type = population_control_no cooldown = no }
+            set_migration_controls = { country = prev.owner type = migration_control_no cooldown = no }
+            set_colonization_controls = { country = prev.owner type = colonization_control_no cooldown = no }
+        }
+
+        while = {
+            count = 3
+            create_pop_group = {
+                size = 100
+                species = last_created_species
+            }
+        }
+
+        set_planet_flag = foc_v187_twilek_seeded
+    }
+}
+
+foc_v187_seed_bothan = {
+    if = {
+        limit = {
+            is_colony = yes
+            NOT = { has_planet_flag = foc_v187_bothan_seeded }
+        }
+
+        create_species = {
+            name = foc_v187_bothan_name
+            plural = foc_v187_bothan_plural
+            adjective = foc_v187_bothan_adjective
+            name_list = "rebels"
+            class = "MAM"
+            portrait = "foc_v187_bothan_species_01"
+            homeworld = this
+            traits = {
+                trait = "trait_intelligent"
+                trait = "trait_charismatic"
+                trait = "trait_weak"
+            }
+        }
+
+        last_created_species = {
+            set_species_flag = foc_v187_bothan_species
+            save_global_event_target_as = foc_v187_bothan_species
+            set_citizenship_type = { country = prev.owner type = citizenship_full cooldown = no }
+            set_military_service_type = { country = prev.owner type = military_service_full cooldown = no }
+            set_population_controls = { country = prev.owner type = population_control_no cooldown = no }
+            set_migration_controls = { country = prev.owner type = migration_control_no cooldown = no }
+            set_colonization_controls = { country = prev.owner type = colonization_control_no cooldown = no }
+        }
+
+        while = {
+            count = 2
+            create_pop_group = {
+                size = 100
+                species = last_created_species
+            }
+        }
+
+        set_planet_flag = foc_v187_bothan_seeded
+    }
+}
+
+foc_v187_seed_neimoidian = {
+    if = {
+        limit = {
+            is_colony = yes
+            NOT = { has_planet_flag = foc_v187_neimoidian_seeded }
+        }
+
+        create_species = {
+            name = foc_v187_neimoidian_name
+            plural = foc_v187_neimoidian_plural
+            adjective = foc_v187_neimoidian_adjective
+            name_list = "cis"
+            class = "MOL"
+            portrait = "foc_v187_neimoidian_species_01"
+            homeworld = this
+            traits = {
+                trait = "trait_thrifty"
+                trait = "trait_conformists"
+                trait = "trait_weak"
+            }
+        }
+
+        last_created_species = {
+            set_species_flag = foc_v187_neimoidian_species
+            save_global_event_target_as = foc_v187_neimoidian_species
+            set_citizenship_type = { country = prev.owner type = citizenship_full cooldown = no }
+            set_military_service_type = { country = prev.owner type = military_service_full cooldown = no }
+            set_population_controls = { country = prev.owner type = population_control_no cooldown = no }
+            set_migration_controls = { country = prev.owner type = migration_control_no cooldown = no }
+            set_colonization_controls = { country = prev.owner type = colonization_control_no cooldown = no }
+        }
+
+        while = {
+            count = 2
+            create_pop_group = {
+                size = 100
+                species = last_created_species
+            }
+        }
+
+        set_planet_flag = foc_v187_neimoidian_seeded
+    }
+}
+
+foc_v187_seed_hutt = {
+    if = {
+        limit = {
+            is_colony = yes
+            NOT = { has_planet_flag = foc_v187_hutt_seeded }
+        }
+
+        create_species = {
+            name = foc_v187_hutt_name
+            plural = foc_v187_hutt_plural
+            adjective = foc_v187_hutt_adjective
+            name_list = "rebels"
+            class = "MAM"
+            portrait = "foc_v187_hutt_species_01"
+            homeworld = this
+            traits = {
+                trait = "trait_venerable"
+                trait = "trait_thrifty"
+                trait = "trait_slow_breeders"
+                trait = "trait_sedentary"
+            }
+        }
+
+        last_created_species = {
+            set_species_flag = foc_v187_hutt_species
+            save_global_event_target_as = foc_v187_hutt_species
+            set_citizenship_type = { country = prev.owner type = citizenship_full cooldown = no }
+            set_military_service_type = { country = prev.owner type = military_service_full cooldown = no }
+            set_population_controls = { country = prev.owner type = population_control_no cooldown = no }
+            set_migration_controls = { country = prev.owner type = migration_control_no cooldown = no }
+            set_colonization_controls = { country = prev.owner type = colonization_control_no cooldown = no }
+        }
+
+        while = {
+            count = 2
+            create_pop_group = {
+                size = 100
+                species = last_created_species
+            }
+        }
+
+        set_planet_flag = foc_v187_hutt_seeded
+    }
+}
+
+foc_v187_seed_sith = {
+    if = {
+        limit = {
+            is_colony = yes
+            NOT = { has_planet_flag = foc_v187_sith_seeded }
+        }
+
+        create_species = {
+            name = foc_v187_sith_name
+            plural = foc_v187_sith_plural
+            adjective = foc_v187_sith_adjective
+            name_list = "imperial"
+            class = "HUM"
+            portrait = "foc_v187_sith_species_01"
+            homeworld = this
+            traits = {
+                trait = "trait_strong"
+                trait = "trait_enduring"
+                trait = "trait_natural_sociologists"
+            }
+        }
+
+        last_created_species = {
+            set_species_flag = foc_v187_sith_species
+            save_global_event_target_as = foc_v187_sith_species
+            set_citizenship_type = { country = prev.owner type = citizenship_full cooldown = no }
+            set_military_service_type = { country = prev.owner type = military_service_full cooldown = no }
+            set_population_controls = { country = prev.owner type = population_control_no cooldown = no }
+            set_migration_controls = { country = prev.owner type = migration_control_no cooldown = no }
+            set_colonization_controls = { country = prev.owner type = colonization_control_no cooldown = no }
+        }
+
+        while = {
+            count = 2
+            create_pop_group = {
+                size = 100
+                species = last_created_species
+            }
+        }
+
+        set_planet_flag = foc_v187_sith_seeded
+    }
+}
+
+foc_v187_seed_zabrak = {
+    if = {
+        limit = {
+            is_colony = yes
+            NOT = { has_planet_flag = foc_v187_zabrak_seeded }
+        }
+
+        create_species = {
+            name = foc_v187_zabrak_name
+            plural = foc_v187_zabrak_plural
+            adjective = foc_v187_zabrak_adjective
+            name_list = "rebels"
+            class = "HUM"
+            portrait = "foc_v187_zabrak_species_01"
+            homeworld = this
+            traits = {
+                trait = "trait_strong"
+                trait = "trait_resilient"
+                trait = "trait_adaptive"
+                trait = "trait_unruly"
+            }
+        }
+
+        last_created_species = {
+            set_species_flag = foc_v187_zabrak_species
+            save_global_event_target_as = foc_v187_zabrak_species
+            set_citizenship_type = { country = prev.owner type = citizenship_full cooldown = no }
+            set_military_service_type = { country = prev.owner type = military_service_full cooldown = no }
+            set_population_controls = { country = prev.owner type = population_control_no cooldown = no }
+            set_migration_controls = { country = prev.owner type = migration_control_no cooldown = no }
+            set_colonization_controls = { country = prev.owner type = colonization_control_no cooldown = no }
+        }
+
+        while = {
+            count = 2
+            create_pop_group = {
+                size = 100
+                species = last_created_species
+            }
+        }
+
+        set_planet_flag = foc_v187_zabrak_seeded
+    }
+}
+
+foc_v187_seed_chiss = {
+    if = {
+        limit = {
+            is_colony = yes
+            NOT = { has_planet_flag = foc_v187_chiss_seeded }
+        }
+
+        create_species = {
+            name = foc_v187_chiss_name
+            plural = foc_v187_chiss_plural
+            adjective = foc_v187_chiss_adjective
+            name_list = "imperial"
+            class = "HUM"
+            portrait = "foc_v187_chiss_species_01"
+            homeworld = this
+            traits = {
+                trait = "trait_intelligent"
+                trait = "trait_talented"
+                trait = "trait_slow_breeders"
+            }
+        }
+
+        last_created_species = {
+            set_species_flag = foc_v187_chiss_species
+            save_global_event_target_as = foc_v187_chiss_species
+            set_citizenship_type = { country = prev.owner type = citizenship_full cooldown = no }
+            set_military_service_type = { country = prev.owner type = military_service_full cooldown = no }
+            set_population_controls = { country = prev.owner type = population_control_no cooldown = no }
+            set_migration_controls = { country = prev.owner type = migration_control_no cooldown = no }
+            set_colonization_controls = { country = prev.owner type = colonization_control_no cooldown = no }
+        }
+
+        while = {
+            count = 1
+            create_pop_group = {
+                size = 100
+                species = last_created_species
+            }
+        }
+
+        set_planet_flag = foc_v187_chiss_seeded
+    }
+}
+
+foc_v187_seed_duros = {
+    if = {
+        limit = {
+            is_colony = yes
+            NOT = { has_planet_flag = foc_v187_duros_seeded }
+        }
+
+        create_species = {
+            name = foc_v187_duros_name
+            plural = foc_v187_duros_plural
+            adjective = foc_v187_duros_adjective
+            name_list = "rebels"
+            class = "MOL"
+            portrait = "foc_v187_duros_species_01"
+            homeworld = this
+            traits = {
+                trait = "trait_natural_engineers"
+                trait = "trait_nomadic"
+                trait = "trait_weak"
+            }
+        }
+
+        last_created_species = {
+            set_species_flag = foc_v187_duros_species
+            save_global_event_target_as = foc_v187_duros_species
+            set_citizenship_type = { country = prev.owner type = citizenship_full cooldown = no }
+            set_military_service_type = { country = prev.owner type = military_service_full cooldown = no }
+            set_population_controls = { country = prev.owner type = population_control_no cooldown = no }
+            set_migration_controls = { country = prev.owner type = migration_control_no cooldown = no }
+            set_colonization_controls = { country = prev.owner type = colonization_control_no cooldown = no }
+        }
+
+        while = {
+            count = 1
+            create_pop_group = {
+                size = 100
+                species = last_created_species
+            }
+        }
+
+        set_planet_flag = foc_v187_duros_seeded
+    }
+}
+
+foc_v187_seed_rodian = {
+    if = {
+        limit = {
+            is_colony = yes
+            NOT = { has_planet_flag = foc_v187_rodian_seeded }
+        }
+
+        create_species = {
+            name = foc_v187_rodian_name
+            plural = foc_v187_rodian_plural
+            adjective = foc_v187_rodian_adjective
+            name_list = "rebels"
+            class = "REP"
+            portrait = "foc_v187_rodian_species_01"
+            homeworld = this
+            traits = {
+                trait = "trait_quick_learners"
+                trait = "trait_adaptive"
+                trait = "trait_weak"
+            }
+        }
+
+        last_created_species = {
+            set_species_flag = foc_v187_rodian_species
+            save_global_event_target_as = foc_v187_rodian_species
+            set_citizenship_type = { country = prev.owner type = citizenship_full cooldown = no }
+            set_military_service_type = { country = prev.owner type = military_service_full cooldown = no }
+            set_population_controls = { country = prev.owner type = population_control_no cooldown = no }
+            set_migration_controls = { country = prev.owner type = migration_control_no cooldown = no }
+            set_colonization_controls = { country = prev.owner type = colonization_control_no cooldown = no }
+        }
+
+        while = {
+            count = 1
+            create_pop_group = {
+                size = 100
+                species = last_created_species
+            }
+        }
+
+        set_planet_flag = foc_v187_rodian_seeded
+    }
+}
+
+foc_v187_seed_skakoan = {
+    if = {
+        limit = {
+            is_colony = yes
+            NOT = { has_planet_flag = foc_v187_skakoan_seeded }
+        }
+
+        create_species = {
+            name = foc_v187_skakoan_name
+            plural = foc_v187_skakoan_plural
+            adjective = foc_v187_skakoan_adjective
+            name_list = "cis"
+            class = "MAM"
+            portrait = "foc_v187_skakoan_species_01"
+            homeworld = this
+            traits = {
+                trait = "trait_intelligent"
+                trait = "trait_natural_engineers"
+                trait = "trait_nonadaptive"
+            }
+        }
+
+        last_created_species = {
+            set_species_flag = foc_v187_skakoan_species
+            save_global_event_target_as = foc_v187_skakoan_species
+            set_citizenship_type = { country = prev.owner type = citizenship_full cooldown = no }
+            set_military_service_type = { country = prev.owner type = military_service_full cooldown = no }
+            set_population_controls = { country = prev.owner type = population_control_no cooldown = no }
+            set_migration_controls = { country = prev.owner type = migration_control_no cooldown = no }
+            set_colonization_controls = { country = prev.owner type = colonization_control_no cooldown = no }
+        }
+
+        while = {
+            count = 1
+            create_pop_group = {
+                size = 100
+                species = last_created_species
+            }
+        }
+
+        set_planet_flag = foc_v187_skakoan_seeded
+    }
+}
+
+foc_v187_seed_togruta = {
+    if = {
+        limit = {
+            is_colony = yes
+            NOT = { has_planet_flag = foc_v187_togruta_seeded }
+        }
+
+        create_species = {
+            name = foc_v187_togruta_name
+            plural = foc_v187_togruta_plural
+            adjective = foc_v187_togruta_adjective
+            name_list = "rebels"
+            class = "HUM"
+            portrait = "foc_v187_togruta_species_01"
+            homeworld = this
+            traits = {
+                trait = "trait_communal"
+                trait = "trait_charismatic"
+                trait = "trait_adaptive"
+            }
+        }
+
+        last_created_species = {
+            set_species_flag = foc_v187_togruta_species
+            save_global_event_target_as = foc_v187_togruta_species
+            set_citizenship_type = { country = prev.owner type = citizenship_full cooldown = no }
+            set_military_service_type = { country = prev.owner type = military_service_full cooldown = no }
+            set_population_controls = { country = prev.owner type = population_control_no cooldown = no }
+            set_migration_controls = { country = prev.owner type = migration_control_no cooldown = no }
+            set_colonization_controls = { country = prev.owner type = colonization_control_no cooldown = no }
+        }
+
+        while = {
+            count = 1
+            create_pop_group = {
+                size = 100
+                species = last_created_species
+            }
+        }
+
+        set_planet_flag = foc_v187_togruta_seeded
+    }
+}
+
+foc_v187_seed_kel_dor = {
+    if = {
+        limit = {
+            is_colony = yes
+            NOT = { has_planet_flag = foc_v187_kel_dor_seeded }
+        }
+
+        create_species = {
+            name = foc_v187_kel_dor_name
+            plural = foc_v187_kel_dor_plural
+            adjective = foc_v187_kel_dor_adjective
+            name_list = "rebels"
+            class = "HUM"
+            portrait = "foc_v187_kel_dor_species_01"
+            homeworld = this
+            traits = {
+                trait = "trait_intelligent"
+                trait = "trait_natural_physicists"
+                trait = "trait_nonadaptive"
+            }
+        }
+
+        last_created_species = {
+            set_species_flag = foc_v187_kel_dor_species
+            save_global_event_target_as = foc_v187_kel_dor_species
+            set_citizenship_type = { country = prev.owner type = citizenship_full cooldown = no }
+            set_military_service_type = { country = prev.owner type = military_service_full cooldown = no }
+            set_population_controls = { country = prev.owner type = population_control_no cooldown = no }
+            set_migration_controls = { country = prev.owner type = migration_control_no cooldown = no }
+            set_colonization_controls = { country = prev.owner type = colonization_control_no cooldown = no }
+        }
+
+        while = {
+            count = 1
+            create_pop_group = {
+                size = 100
+                species = last_created_species
+            }
+        }
+
+        set_planet_flag = foc_v187_kel_dor_seeded
+    }
+}
+
+foc_v187_seed_echani = {
+    if = {
+        limit = {
+            is_colony = yes
+            NOT = { has_planet_flag = foc_v187_echani_seeded }
+        }
+
+        create_species = {
+            name = foc_v187_echani_name
+            plural = foc_v187_echani_plural
+            adjective = foc_v187_echani_adjective
+            name_list = "rebels"
+            class = "HUM"
+            portrait = "foc_v187_echani_species_01"
+            homeworld = this
+            traits = {
+                trait = "trait_strong"
+                trait = "trait_quick_learners"
+                trait = "trait_sedentary"
+            }
+        }
+
+        last_created_species = {
+            set_species_flag = foc_v187_echani_species
+            save_global_event_target_as = foc_v187_echani_species
+            set_citizenship_type = { country = prev.owner type = citizenship_full cooldown = no }
+            set_military_service_type = { country = prev.owner type = military_service_full cooldown = no }
+            set_population_controls = { country = prev.owner type = population_control_no cooldown = no }
+            set_migration_controls = { country = prev.owner type = migration_control_no cooldown = no }
+            set_colonization_controls = { country = prev.owner type = colonization_control_no cooldown = no }
+        }
+
+        while = {
+            count = 1
+            create_pop_group = {
+                size = 100
+                species = last_created_species
+            }
+        }
+
+        set_planet_flag = foc_v187_echani_seeded
+    }
+}
+
+foc_v187_seed_arkanian = {
+    if = {
+        limit = {
+            is_colony = yes
+            NOT = { has_planet_flag = foc_v187_arkanian_seeded }
+        }
+
+        create_species = {
+            name = foc_v187_arkanian_name
+            plural = foc_v187_arkanian_plural
+            adjective = foc_v187_arkanian_adjective
+            name_list = "rebels"
+            class = "HUM"
+            portrait = "foc_v187_arkanian_species_01"
+            homeworld = this
+            traits = {
+                trait = "trait_intelligent"
+                trait = "trait_natural_engineers"
+                trait = "trait_decadent"
+            }
+        }
+
+        last_created_species = {
+            set_species_flag = foc_v187_arkanian_species
+            save_global_event_target_as = foc_v187_arkanian_species
+            set_citizenship_type = { country = prev.owner type = citizenship_full cooldown = no }
+            set_military_service_type = { country = prev.owner type = military_service_full cooldown = no }
+            set_population_controls = { country = prev.owner type = population_control_no cooldown = no }
+            set_migration_controls = { country = prev.owner type = migration_control_no cooldown = no }
+            set_colonization_controls = { country = prev.owner type = colonization_control_no cooldown = no }
+        }
+
+        while = {
+            count = 1
+            create_pop_group = {
+                size = 100
+                species = last_created_species
+            }
+        }
+
+        set_planet_flag = foc_v187_arkanian_seeded
+    }
+}
+
+foc_v187_seed_arkanian_offshoot = {
+    if = {
+        limit = {
+            is_colony = yes
+            NOT = { has_planet_flag = foc_v187_arkanian_offshoot_seeded }
+        }
+
+        create_species = {
+            name = foc_v187_arkanian_offshoot_name
+            plural = foc_v187_arkanian_offshoot_plural
+            adjective = foc_v187_arkanian_offshoot_adjective
+            name_list = "rebels"
+            class = "HUM"
+            portrait = "foc_v187_arkanian_offshoot_species_01"
+            homeworld = this
+            traits = {
+                trait = "trait_adaptive"
+                trait = "trait_industrious"
+                trait = "trait_communal"
+            }
+        }
+
+        last_created_species = {
+            set_species_flag = foc_v187_arkanian_offshoot_species
+            save_global_event_target_as = foc_v187_arkanian_offshoot_species
+            set_citizenship_type = { country = prev.owner type = citizenship_full cooldown = no }
+            set_military_service_type = { country = prev.owner type = military_service_full cooldown = no }
+            set_population_controls = { country = prev.owner type = population_control_no cooldown = no }
+            set_migration_controls = { country = prev.owner type = migration_control_no cooldown = no }
+            set_colonization_controls = { country = prev.owner type = colonization_control_no cooldown = no }
+        }
+
+        while = {
+            count = 1
+            create_pop_group = {
+                size = 100
+                species = last_created_species
+            }
+        }
+
+        set_planet_flag = foc_v187_arkanian_offshoot_seeded
+    }
+}
+
+foc_v187_seed_zeltron = {
+    if = {
+        limit = {
+            is_colony = yes
+            NOT = { has_planet_flag = foc_v187_zeltron_seeded }
+        }
+
+        create_species = {
+            name = foc_v187_zeltron_name
+            plural = foc_v187_zeltron_plural
+            adjective = foc_v187_zeltron_adjective
+            name_list = "rebels"
+            class = "HUM"
+            portrait = "foc_v187_zeltron_species_01"
+            homeworld = this
+            traits = {
+                trait = "trait_charismatic"
+                trait = "trait_communal"
+                trait = "trait_deviants"
+            }
+        }
+
+        last_created_species = {
+            set_species_flag = foc_v187_zeltron_species
+            save_global_event_target_as = foc_v187_zeltron_species
+            set_citizenship_type = { country = prev.owner type = citizenship_full cooldown = no }
+            set_military_service_type = { country = prev.owner type = military_service_full cooldown = no }
+            set_population_controls = { country = prev.owner type = population_control_no cooldown = no }
+            set_migration_controls = { country = prev.owner type = migration_control_no cooldown = no }
+            set_colonization_controls = { country = prev.owner type = colonization_control_no cooldown = no }
+        }
+
+        while = {
+            count = 1
+            create_pop_group = {
+                size = 100
+                species = last_created_species
+            }
+        }
+
+        set_planet_flag = foc_v187_zeltron_seeded
+    }
+}
+
+foc_v187_seed_korunnai = {
+    if = {
+        limit = {
+            is_colony = yes
+            NOT = { has_planet_flag = foc_v187_korunnai_seeded }
+        }
+
+        create_species = {
+            name = foc_v187_korunnai_name
+            plural = foc_v187_korunnai_plural
+            adjective = foc_v187_korunnai_adjective
+            name_list = "rebels"
+            class = "HUM"
+            portrait = "foc_v187_korunnai_species_01"
+            homeworld = this
+            traits = {
+                trait = "trait_strong"
+                trait = "trait_resilient"
+                trait = "trait_traditional"
+            }
+        }
+
+        last_created_species = {
+            set_species_flag = foc_v187_korunnai_species
+            save_global_event_target_as = foc_v187_korunnai_species
+            set_citizenship_type = { country = prev.owner type = citizenship_full cooldown = no }
+            set_military_service_type = { country = prev.owner type = military_service_full cooldown = no }
+            set_population_controls = { country = prev.owner type = population_control_no cooldown = no }
+            set_migration_controls = { country = prev.owner type = migration_control_no cooldown = no }
+            set_colonization_controls = { country = prev.owner type = colonization_control_no cooldown = no }
+        }
+
+        while = {
+            count = 1
+            create_pop_group = {
+                size = 100
+                species = last_created_species
+            }
+        }
+
+        set_planet_flag = foc_v187_korunnai_seeded
+    }
+}
+
+foc_v187_seed_chalactan = {
+    if = {
+        limit = {
+            is_colony = yes
+            NOT = { has_planet_flag = foc_v187_chalactan_seeded }
+        }
+
+        create_species = {
+            name = foc_v187_chalactan_name
+            plural = foc_v187_chalactan_plural
+            adjective = foc_v187_chalactan_adjective
+            name_list = "rebels"
+            class = "HUM"
+            portrait = "foc_v187_chalactan_species_01"
+            homeworld = this
+            traits = {
+                trait = "trait_traditional"
+                trait = "trait_communal"
+                trait = "trait_quick_learners"
+            }
+        }
+
+        last_created_species = {
+            set_species_flag = foc_v187_chalactan_species
+            save_global_event_target_as = foc_v187_chalactan_species
+            set_citizenship_type = { country = prev.owner type = citizenship_full cooldown = no }
+            set_military_service_type = { country = prev.owner type = military_service_full cooldown = no }
+            set_population_controls = { country = prev.owner type = population_control_no cooldown = no }
+            set_migration_controls = { country = prev.owner type = migration_control_no cooldown = no }
+            set_colonization_controls = { country = prev.owner type = colonization_control_no cooldown = no }
+        }
+
+        while = {
+            count = 1
+            create_pop_group = {
+                size = 100
+                species = last_created_species
+            }
+        }
+
+        set_planet_flag = foc_v187_chalactan_seeded
+    }
+}
+
+foc_v187_seed_thyrsian = {
+    if = {
+        limit = {
+            is_colony = yes
+            NOT = { has_planet_flag = foc_v187_thyrsian_seeded }
+        }
+
+        create_species = {
+            name = foc_v187_thyrsian_name
+            plural = foc_v187_thyrsian_plural
+            adjective = foc_v187_thyrsian_adjective
+            name_list = "imperial"
+            class = "HUM"
+            portrait = "foc_v187_thyrsian_species_01"
+            homeworld = this
+            traits = {
+                trait = "trait_strong"
+                trait = "trait_resilient"
+                trait = "trait_unruly"
+            }
+        }
+
+        last_created_species = {
+            set_species_flag = foc_v187_thyrsian_species
+            save_global_event_target_as = foc_v187_thyrsian_species
+            set_citizenship_type = { country = prev.owner type = citizenship_full cooldown = no }
+            set_military_service_type = { country = prev.owner type = military_service_full cooldown = no }
+            set_population_controls = { country = prev.owner type = population_control_no cooldown = no }
+            set_migration_controls = { country = prev.owner type = migration_control_no cooldown = no }
+            set_colonization_controls = { country = prev.owner type = colonization_control_no cooldown = no }
+        }
+
+        while = {
+            count = 1
+            create_pop_group = {
+                size = 100
+                species = last_created_species
+            }
+        }
+
+        set_planet_flag = foc_v187_thyrsian_seeded
+    }
+}
+
+foc_v187_add_hutt_diaspora = {
+    if = {
+        limit = {
+            is_colony = yes
+            exists = event_target:foc_v187_hutt_species
+            NOT = { has_planet_flag = foc_v187_hutt_diaspora_seeded }
+        }
+
+        event_target:foc_v187_hutt_species = {
+            set_citizenship_type = { country = prev.owner type = citizenship_full cooldown = no }
+            set_military_service_type = { country = prev.owner type = military_service_full cooldown = no }
+            set_population_controls = { country = prev.owner type = population_control_no cooldown = no }
+            set_migration_controls = { country = prev.owner type = migration_control_no cooldown = no }
+            set_colonization_controls = { country = prev.owner type = colonization_control_no cooldown = no }
+        }
+
+        create_pop_group = {
+            size = 100
+            species = event_target:foc_v187_hutt_species
+        }
+        set_planet_flag = foc_v187_hutt_diaspora_seeded
+    }
+}

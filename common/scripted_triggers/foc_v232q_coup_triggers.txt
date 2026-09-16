@@ -1,0 +1,13 @@
+# Espionage-operation scope, used again at each player choice.
+foc_v232q_coup_target_valid = {
+    exists = target
+    target = { has_country_flag = foc_republic_origin_empire_country }
+    NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+    exists = event_target:foc_gcw_active_uprising_target
+    event_target:foc_gcw_active_uprising_target = {
+        is_colony = yes
+        exists = owner
+        owner = { has_country_flag = foc_republic_origin_empire_country }
+        foc_v202_system_has_no_imperial_fleet = yes
+    }
+}

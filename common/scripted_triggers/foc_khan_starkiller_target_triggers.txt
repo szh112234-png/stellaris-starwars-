@@ -1,0 +1,31 @@
+# Scope: country. In Stellaris 4.4, any_owned_planet iterates a colony scope.
+# Planet-only triggers such as has_planet_flag must therefore be evaluated
+# through planet = { ... }. This keeps the Starkiller capital-target test valid
+# after the 4.4 scope change while preserving the same target semantics.
+foc_khan_has_live_starkiller_capital_311x = {
+	any_owned_planet = {
+		is_capital = yes
+		is_colony = yes
+		# Arkships/mobile capitals expose a colony scope whose planet accessor is a ship.
+		# They are not valid Starkiller targets and must be filtered before planet-only triggers.
+		NOT = { ship? = { always = yes } }
+		planet = {
+			NOT = { has_planet_flag = myk_starkiller_planet_destroyed }
+			exists = solar_system
+			solar_system = {
+				NOT = { has_star_flag = star_cracked }
+				star = { NOT = { is_planet_class = pc_black_hole } }
+			}
+		}
+	}
+}
+
+# Scope: system. A final guard immediately before scheduling the beam.
+foc_khan_is_live_starkiller_target_system_311x = {
+	NOT = { has_star_flag = star_cracked }
+	star = { NOT = { is_planet_class = pc_black_hole } }
+	any_system_planet = {
+		is_colony = yes
+		NOT = { has_planet_flag = myk_starkiller_planet_destroyed }
+	}
+}

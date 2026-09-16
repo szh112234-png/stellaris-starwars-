@@ -1,0 +1,1380 @@
+utility_component_template = {
+    key = "FOC_PLAYER_ADAPTIVE_DEFENSE_ARMOR"
+    hidden = yes
+    size_restriction = { foc_player_mandator }
+    size = large
+    component_set = "FOC_KHAN_ADAPTIVE_DEFENSE_ARMOR"
+    icon = "GFX_ship_part_adaptive_defense_armor"
+    icon_frame = 1
+    power = -350
+    modifier = {
+        ship_hull_add = 3600
+        ship_hull_regen_add_static = 43.875
+        ship_shield_add = 3600
+        ship_armor_add = 3600
+        ship_shield_regen_add_static = 43.875
+        ship_armor_regen_add_static = 43.875
+    }
+    ship_modifier = {
+        ship_damage_reduction_add = 0.0125
+        ship_armor_hardening_add = 0.09
+        ship_shield_hardening_add = 0.09
+    }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    ai_weight = {
+        weight = 5000000
+    }
+    potential = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        from = {
+            is_ai = no
+            OR = {
+                has_technology = tech_foc_player_mandator_blueprint
+                has_technology = tech_foc_player_eclipse_blueprint
+            }
+        }
+    }
+}
+utility_component_template = {
+    key = "FOC_PLAYER_ADAPTIVE_DEFENSE_ARMOR_FOC_LOWEST"
+    hidden = yes
+    size_restriction = { foc_player_mandator_foc_lowest }
+    size = large
+    component_set = "FOC_KHAN_ADAPTIVE_DEFENSE_ARMOR"
+    icon = "GFX_ship_part_adaptive_defense_armor"
+    icon_frame = 1
+    power = -40
+    modifier = { ship_armor_add = 600 ship_shield_add = 600 }
+    ship_modifier = { ship_damage_reduction_add = 0 ship_armor_hardening_add = 0 ship_shield_hardening_add = 0 }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 8 }
+        upkeep = { }
+    }
+    ai_weight = { weight = 1000000 }
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+        from = {
+            is_ai = no
+            OR = { has_technology = tech_foc_player_mandator_blueprint has_technology = tech_foc_player_eclipse_blueprint }
+        }
+    }
+}
+weapon_component_template = {
+    key = "FOC_STD_PD_P_T4_G_V05"
+    hidden = yes
+    size_restriction = { foc_player_eclipse foc_player_mandator }
+    size = point_defence
+    type = point_defence
+    icon = "GFX_ship_part_defence_turbo_g_3"
+    icon_frame = 1
+    damage = {
+        min = 18
+        max = 30
+    }
+    windup = {
+        min = 1
+        max = 5
+    }
+    total_fire_time = 8
+    range = 40
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 1.0
+    power = -7.5
+    component_set = "FOC_KHAN_DEFENCE_TURBO_G_EC"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 13
+            sr_tibanna_swgs = 3
+        }
+        upkeep = {
+            energy = 0.13
+            alloys = 0.13
+        }
+    }
+    ai_weight = {
+        weight = 5000000
+    }
+    shield_damage = 1.25
+    armor_damage = 1.25
+    hull_damage = 1.25
+    point_defence_targets = { "missile" "strike_craft" }
+    potential = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        from = {
+            foc_v1718_allowed_country = yes
+            OR = {
+                has_technology = tech_foc_player_mandator_blueprint
+                has_technology = tech_foc_player_eclipse_blueprint
+            }
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    projectile_gfx = "white_laser_pd"
+    prerequisites = { "foc_tech_std_pd_3" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_STD_PD_P_T4_G_V05_LOWEST"
+    hidden = yes
+    size_restriction = { foc_player_eclipse_foc_lowest foc_player_mandator_foc_lowest }
+    size = point_defence
+    type = point_defence
+    icon = "GFX_ship_part_defence_turbo_g_3"
+    icon_frame = 1
+    damage = {
+        min = 6
+        max = 12
+    }
+    windup = {
+        min = 1
+        max = 5
+    }
+    total_fire_time = 1.5
+    range = 30
+    accuracy = 0.9
+    tracking = 0.75
+    shield_penetration = 1.0
+    power = -7.5
+    component_set = "FOC_KHAN_DEFENCE_TURBO_G_EC"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 13
+            sr_tibanna_swgs = 3
+        }
+        upkeep = {
+            energy = 0.13
+            alloys = 0.13
+        }
+    }
+    ai_weight = {
+        weight = 1000000
+    }
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    point_defence_targets = { "missile" "strike_craft" }
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+        from = {
+            foc_v1718_allowed_country = yes
+            OR = {
+                has_technology = tech_foc_player_mandator_blueprint
+                has_technology = tech_foc_player_eclipse_blueprint
+            }
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    projectile_gfx = "white_laser_pd"
+    prerequisites = { "foc_tech_std_pd_3" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+utility_component_template = {
+    key = "FOC_PLAYER_DEFLECTOR_SHIELD_ARRAY"
+    hidden = yes
+    size_restriction = { foc_player_eclipse foc_player_mandator }
+    size = aux
+    icon = "GFX_ship_part_swgs_deflectorshieldarray"
+    icon_frame = 1
+    power = -40
+    modifier = {
+        ship_accuracy_add = 10
+        ship_hull_regen_add_static = 43.875
+        ship_shield_regen_add_static = 43.875
+        ship_armor_regen_add_static = 43.875
+    }
+    component_set = "FOC_KHAN_DEFLECTOR_SHIELD_ARRAY"
+    resources = {
+        category = ship_components
+        cost = { }
+        upkeep = { }
+    }
+    ai_weight = {
+        weight = 0
+    }
+    potential = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        from = {
+            is_ai = no
+            OR = {
+                has_technology = tech_foc_player_mandator_blueprint
+                has_technology = tech_foc_player_eclipse_blueprint
+            }
+        }
+    }
+}
+utility_component_template = {
+    key = "FOC_PLAYER_DEFLECTOR_SHIELD_ARRAY_FOC_LOWEST"
+    hidden = yes
+    size_restriction = { foc_player_eclipse_foc_lowest foc_player_mandator_foc_lowest }
+    size = aux
+    icon = "GFX_ship_part_swgs_deflectorshieldarray"
+    icon_frame = 1
+    power = -20
+    modifier = { ship_accuracy_add = 5 }
+    component_set = "FOC_KHAN_DEFLECTOR_SHIELD_ARRAY"
+    resources = {
+        category = ship_components
+        cost = { }
+        upkeep = { }
+    }
+    ai_weight = { weight = 1000000 }
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+        from = {
+            is_ai = no
+            OR = { has_technology = tech_foc_player_mandator_blueprint has_technology = tech_foc_player_eclipse_blueprint }
+        }
+    }
+}
+utility_component_template = {
+    key = "FOC_PLAYER_ECLIPSE_DEFENSE"
+    hidden = yes
+    size_restriction = { foc_player_eclipse }
+    size = large
+    component_set = "FOC_KHAN_ADAPTIVE_DEFENSE_ARMOR"
+    icon = "GFX_ship_part_adaptive_defense_armor"
+    icon_frame = 1
+    power = -350
+    modifier = {
+        ship_hull_add = 3600
+        ship_shield_add = 3600
+        ship_armor_add = 3600
+        ship_hull_regen_add_static = 5
+        ship_shield_regen_add_static = 5
+        ship_armor_regen_add_static = 5
+    }
+    ship_modifier = {
+        ship_armor_hardening_add = 0.002
+        ship_shield_hardening_add = 0.002
+    }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    ai_weight = {
+        weight = 0
+    }
+    potential = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        from = {
+            is_ai = no
+            has_technology = tech_foc_player_eclipse_blueprint
+        }
+    }
+}
+utility_component_template = {
+    key = "FOC_PLAYER_ECLIPSE_DEFENSE_FOC_LOWEST"
+    hidden = yes
+    size_restriction = { foc_player_eclipse_foc_lowest }
+    size = large
+    component_set = "FOC_KHAN_ADAPTIVE_DEFENSE_ARMOR"
+    icon = "GFX_ship_part_adaptive_defense_armor"
+    icon_frame = 1
+    power = -40
+    modifier = { ship_armor_add = 600 ship_shield_add = 600 }
+    ship_modifier = { ship_damage_reduction_add = 0 ship_armor_hardening_add = 0 ship_shield_hardening_add = 0 }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 8 }
+        upkeep = { }
+    }
+    ai_weight = { weight = 1000000 }
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+        from = { is_ai = no has_technology = tech_foc_player_eclipse_blueprint }
+    }
+}
+weapon_component_template = {
+    key = "FOC_STD_TURBO_L_T4_G_V05"
+    size_restriction = { foc_player_eclipse }
+    size = large
+    type = instant
+    icon = "GFX_ship_part_turbo_laser_g_4"
+    icon_frame = 1
+    damage = {
+        min = 1200
+        max = 1320
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 240
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -30
+    component_set = "FOC_KHAN_XX9_HEAVY_TURBO_G"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 12
+        }
+        upkeep = { }
+    }
+    prerequisites = { "foc_tech_sw_turbolaser_4" }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_STD_TURBO_L_T4_G_V05_LOWEST"
+    size_restriction = { foc_player_eclipse_foc_lowest }
+    size = large
+    type = instant
+    icon = "GFX_ship_part_turbo_laser_g_4"
+    icon_frame = 1
+    damage = {
+        min = 100
+        max = 180
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -30
+    component_set = "FOC_KHAN_XX9_HEAVY_TURBO_G"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 12
+        }
+        upkeep = { }
+    }
+    prerequisites = { "foc_tech_sw_turbolaser_4" }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+utility_component_template = {
+    key = "FOC_PLAYER_SUPERCAP_COMBAT_COMPUTER"
+    hidden = yes
+    size_restriction = { foc_player_eclipse foc_player_mandator }
+    size = small
+    icon = "GFX_ship_part_computer_artillery_sapient"
+    icon_frame = 1
+    power = -100
+    resources = {
+        category = ship_components
+        cost = { }
+        upkeep = { }
+    }
+    class_restriction = { shipclass_military }
+    component_set = "combat_computers"
+    ship_behavior = "line"
+    ship_modifier = {
+        ship_weapon_range_mult = 0.25
+        ship_tracking_add = 5
+        ship_disengage_chance_mult = -9999
+        ship_emergency_ftl_min_days_mult = 9999
+    }
+    ai_weight = { weight = 0 }
+    potential = { always = no }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "FOC_PLAYER_SUPERCAP_COMBAT_COMPUTER_FOC_LOWEST"
+    hidden = yes
+    size_restriction = { foc_player_eclipse_foc_lowest foc_player_mandator_foc_lowest }
+    size = small
+    icon = "GFX_ship_part_computer_artillery_sapient"
+    icon_frame = 1
+    power = -100
+    resources = {
+        category = ship_components
+        cost = { }
+        upkeep = { }
+    }
+    class_restriction = { shipclass_military }
+    component_set = "combat_computers"
+    ship_behavior = "line"
+    ship_modifier = {
+        ship_weapon_range_mult = 0.10
+        ship_tracking_add = 10
+        ship_armor_hardening_add = 0
+        ship_shield_hardening_add = 0
+    }
+    ai_weight = { weight = 0 }
+    potential = { always = no }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "FOC_PLAYER_SUPERCAP_REACTOR"
+    hidden = yes
+    size_restriction = { foc_player_eclipse foc_player_mandator }
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_reactor"
+    icon_frame = 1
+    power = 55000
+    resources = {
+        category = ship_components
+        cost = { sr_coaxium_foc = 10 }
+        upkeep = { }
+    }
+    component_set = "power_core"
+    ai_weight = { weight = 0 }
+    potential = { always = no }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "FOC_PLAYER_SUPERCAP_REACTOR_FOC_LOWEST"
+    hidden = yes
+    size_restriction = { foc_player_eclipse_foc_lowest foc_player_mandator_foc_lowest }
+    modifier = { }
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_reactor"
+    icon_frame = 1
+    power = 14000
+    resources = {
+        category = ship_components
+        cost = { sr_coaxium_foc = 10 }
+        upkeep = { }
+    }
+    component_set = "power_core"
+    ai_weight = { weight = 0 }
+    potential = { always = no }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "FOC_PLAYER_SUPERCAP_THRUSTER"
+    hidden = yes
+    size_restriction = { foc_player_eclipse foc_player_mandator }
+    size = small
+    icon = "GFX_ship_part_thruster_5"
+    icon_frame = 1
+    power = -500
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 10 sr_coaxium_foc = 10 }
+        upkeep = { }
+    }
+    modifier = { ship_base_speed_mult = 0.10 ship_evasion_add = 1 }
+    component_set = "thruster_components"
+    ai_weight = { weight = 0 }
+    potential = { always = no }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "FOC_PLAYER_SUPERCAP_THRUSTER_FOC_LOWEST"
+    hidden = yes
+    size_restriction = { foc_player_eclipse_foc_lowest foc_player_mandator_foc_lowest }
+    size = small
+    icon = "GFX_ship_part_thruster_5"
+    icon_frame = 1
+    power = -500
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 10 sr_coaxium_foc = 10 }
+        upkeep = { }
+    }
+    modifier = { ship_base_speed_mult = 0.10 ship_evasion_add = 5 }
+    component_set = "thruster_components"
+    ai_weight = { weight = 0 }
+    potential = { always = no }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    show_tech_unlock_if = { always = no }
+}
+strike_craft_component_template = {
+    key = "FOC_PLAYER_SSP_FO_INTERCEPTOR_HANGAR_01_SG"
+    hidden = yes
+    size_restriction = { foc_player_eclipse }
+    size = LARGE
+    entity = "ssp_fo_interceptor_entity"
+    weapon_type = point_defence
+    point_defence_targets = { "strike_craft" }
+    projectile_gfx = "strike_craft_laser_3"
+    power = -60
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 165
+        
+            sr_tibanna_swgs = 8
+        }
+        upkeep = {
+            energy = 3
+            alloys = 2
+        }
+    }
+    count = 4
+    regeneration_per_day = 0.125
+    custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+    launch_time = 2
+    damage = {
+        min = 417.6
+        max = 626.4
+    }
+    cooldown = 1.044
+    attack_range = 15
+    range = 15
+    engagement_range = 12000
+    accuracy = 1
+    tracking = 1
+    health = 372
+    armor = 108
+    shield = 630
+    evasion = 0.97
+    speed = 1675.6
+    rotation_speed = 1.15
+    acceleration = 1.25
+    shield_penetration = 0.6
+    armor_penetration = 0.5
+    shield_damage = 1.65
+    armor_damage = 1.75
+    hull_damage = 1.7
+    ship_behavior = "fighters_behavior"
+    icon = "GFX_ship_part_ssp_fo_interceptor"
+    icon_frame = 1
+    component_set = "SSP_FO_INTERCEPTOR_01_SET"
+    tags = { weapon_type_strike_craft }
+    ship_limit = 1
+    ai_weight = {
+        weight = 1000
+    }
+    potential = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        from = {
+            foc_v1718_allowed_country = yes
+            has_technology = tech_foc_player_eclipse_blueprint
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+strike_craft_component_template = {
+    key = "FOC_PLAYER_SSP_FO_INTERCEPTOR_HANGAR_01_SG_FOC_LOWEST"
+    hidden = yes
+    size_restriction = { foc_player_eclipse_foc_lowest }
+    size = LARGE
+    entity = "ssp_fo_interceptor_entity"
+    weapon_type = point_defence
+    point_defence_targets = { "strike_craft" }
+    projectile_gfx = "strike_craft_laser_3"
+    power = -60
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 165
+        
+            sr_tibanna_swgs = 8
+        }
+        upkeep = {
+            energy = 3
+            alloys = 2
+        }
+    }
+    count = 8
+    regeneration_per_day = 0.125
+    custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+    launch_time = 2
+    damage = {
+        min = 8
+        max = 12
+    }
+    cooldown = 2.6
+    attack_range = 15
+    range = 15
+    engagement_range = 12000
+    accuracy = 0.9
+    tracking = 0.9
+    health = 40
+    armor = 40
+    shield = 0
+    evasion = 0.8
+    speed = 1675.6
+    rotation_speed = 1.15
+    acceleration = 1.25
+    shield_penetration = 0.6
+    armor_penetration = 0.5
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    ship_behavior = "fighters_behavior"
+    icon = "GFX_ship_part_ssp_fo_interceptor"
+    icon_frame = 1
+    component_set = "SSP_FO_INTERCEPTOR_01_SET"
+    tags = { weapon_type_strike_craft }
+    ship_limit = 1
+    ai_weight = {
+        weight = 1000000
+    }
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+        from = {
+            foc_v1718_allowed_country = yes
+            has_technology = tech_foc_player_eclipse_blueprint
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+strike_craft_component_template = {
+    key = "FOC_PLAYER_SSP_FO_INTERCEPTOR_HANGAR_02_SG"
+    hidden = yes
+    size_restriction = { foc_player_eclipse }
+    size = LARGE
+    entity = "ssp_fo_interceptor_entity"
+    weapon_type = point_defence
+    point_defence_targets = { "strike_craft" }
+    projectile_gfx = "strike_craft_laser_3"
+    power = -60
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 165
+        
+            sr_tibanna_swgs = 8
+        }
+        upkeep = {
+            energy = 3
+            alloys = 2
+        }
+    }
+    count = 4
+    regeneration_per_day = 0.125
+    custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+    launch_time = 2
+    damage = {
+        min = 417.6
+        max = 626.4
+    }
+    cooldown = 1.044
+    attack_range = 15
+    range = 15
+    engagement_range = 12000
+    accuracy = 1
+    tracking = 1
+    health = 372
+    armor = 108
+    shield = 630
+    evasion = 0.97
+    speed = 1675.6
+    rotation_speed = 1.15
+    acceleration = 1.25
+    shield_penetration = 0.6
+    armor_penetration = 0.5
+    shield_damage = 1.65
+    armor_damage = 1.75
+    hull_damage = 1.7
+    ship_behavior = "fighters_behavior"
+    icon = "GFX_ship_part_ssp_fo_interceptor"
+    icon_frame = 1
+    component_set = "SSP_FO_INTERCEPTOR_02_SET"
+    tags = { weapon_type_strike_craft }
+    ship_limit = 1
+    ai_weight = {
+        weight = 1000
+    }
+    potential = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        from = {
+            foc_v1718_allowed_country = yes
+            has_technology = tech_foc_player_eclipse_blueprint
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+strike_craft_component_template = {
+    key = "FOC_PLAYER_SSP_FO_INTERCEPTOR_HANGAR_02_SG_FOC_LOWEST"
+    hidden = yes
+    size_restriction = { foc_player_eclipse_foc_lowest }
+    size = LARGE
+    entity = "ssp_fo_interceptor_entity"
+    weapon_type = point_defence
+    point_defence_targets = { "strike_craft" }
+    projectile_gfx = "strike_craft_laser_3"
+    power = -60
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 165
+        
+            sr_tibanna_swgs = 8
+        }
+        upkeep = {
+            energy = 3
+            alloys = 2
+        }
+    }
+    count = 8
+    regeneration_per_day = 0.125
+    custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+    launch_time = 2
+    damage = {
+        min = 8
+        max = 12
+    }
+    cooldown = 2.6
+    attack_range = 15
+    range = 15
+    engagement_range = 12000
+    accuracy = 0.9
+    tracking = 0.9
+    health = 40
+    armor = 40
+    shield = 0
+    evasion = 0.8
+    speed = 1675.6
+    rotation_speed = 1.15
+    acceleration = 1.25
+    shield_penetration = 0.6
+    armor_penetration = 0.5
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    ship_behavior = "fighters_behavior"
+    icon = "GFX_ship_part_ssp_fo_interceptor"
+    icon_frame = 1
+    component_set = "SSP_FO_INTERCEPTOR_02_SET"
+    tags = { weapon_type_strike_craft }
+    ship_limit = 1
+    ai_weight = {
+        weight = 1000000
+    }
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+        from = {
+            foc_v1718_allowed_country = yes
+            has_technology = tech_foc_player_eclipse_blueprint
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+strike_craft_component_template = {
+    key = "FOC_PLAYER_SSP_FO_INTERCEPTOR_HANGAR_03_SG"
+    hidden = yes
+    size_restriction = { foc_player_eclipse }
+    size = LARGE
+    entity = "ssp_fo_interceptor_entity"
+    weapon_type = point_defence
+    point_defence_targets = { "strike_craft" }
+    projectile_gfx = "strike_craft_laser_3"
+    power = -60
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 165
+        
+            sr_tibanna_swgs = 8
+        }
+        upkeep = {
+            energy = 3
+            alloys = 2
+        }
+    }
+    count = 4
+    regeneration_per_day = 0.125
+    custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+    launch_time = 2
+    damage = {
+        min = 417.6
+        max = 626.4
+    }
+    cooldown = 1.044
+    attack_range = 15
+    range = 15
+    engagement_range = 12000
+    accuracy = 1
+    tracking = 1
+    health = 372
+    armor = 108
+    shield = 630
+    evasion = 0.97
+    speed = 1675.6
+    rotation_speed = 1.15
+    acceleration = 1.25
+    shield_penetration = 0.6
+    armor_penetration = 0.5
+    shield_damage = 1.65
+    armor_damage = 1.75
+    hull_damage = 1.7
+    ship_behavior = "fighters_behavior"
+    icon = "GFX_ship_part_ssp_fo_interceptor"
+    icon_frame = 1
+    component_set = "SSP_FO_INTERCEPTOR_03_SET"
+    tags = { weapon_type_strike_craft }
+    ship_limit = 1
+    ai_weight = {
+        weight = 1000
+    }
+    potential = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        from = {
+            foc_v1718_allowed_country = yes
+            has_technology = tech_foc_player_eclipse_blueprint
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+strike_craft_component_template = {
+    key = "FOC_PLAYER_SSP_FO_INTERCEPTOR_HANGAR_03_SG_FOC_LOWEST"
+    hidden = yes
+    size_restriction = { foc_player_eclipse_foc_lowest }
+    size = LARGE
+    entity = "ssp_fo_interceptor_entity"
+    weapon_type = point_defence
+    point_defence_targets = { "strike_craft" }
+    projectile_gfx = "strike_craft_laser_3"
+    power = -60
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 165
+        
+            sr_tibanna_swgs = 8
+        }
+        upkeep = {
+            energy = 3
+            alloys = 2
+        }
+    }
+    count = 8
+    regeneration_per_day = 0.125
+    custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+    launch_time = 2
+    damage = {
+        min = 8
+        max = 12
+    }
+    cooldown = 2.6
+    attack_range = 15
+    range = 15
+    engagement_range = 12000
+    accuracy = 0.9
+    tracking = 0.9
+    health = 40
+    armor = 40
+    shield = 0
+    evasion = 0.8
+    speed = 1675.6
+    rotation_speed = 1.15
+    acceleration = 1.25
+    shield_penetration = 0.6
+    armor_penetration = 0.5
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    ship_behavior = "fighters_behavior"
+    icon = "GFX_ship_part_ssp_fo_interceptor"
+    icon_frame = 1
+    component_set = "SSP_FO_INTERCEPTOR_03_SET"
+    tags = { weapon_type_strike_craft }
+    ship_limit = 1
+    ai_weight = {
+        weight = 1000000
+    }
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+        from = {
+            foc_v1718_allowed_country = yes
+            has_technology = tech_foc_player_eclipse_blueprint
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+strike_craft_component_template = {
+    key = "FOC_PLAYER_SSP_FO_INTERCEPTOR_HANGAR_04_SG"
+    hidden = yes
+    size_restriction = { foc_player_eclipse }
+    size = LARGE
+    entity = "ssp_fo_interceptor_entity"
+    weapon_type = point_defence
+    point_defence_targets = { "strike_craft" }
+    projectile_gfx = "strike_craft_laser_3"
+    power = -60
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 165
+        
+            sr_tibanna_swgs = 8
+        }
+        upkeep = {
+            energy = 3
+            alloys = 2
+        }
+    }
+    count = 4
+    regeneration_per_day = 0.125
+    custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+    launch_time = 2
+    damage = {
+        min = 417.6
+        max = 626.4
+    }
+    cooldown = 1.044
+    attack_range = 15
+    range = 15
+    engagement_range = 12000
+    accuracy = 1
+    tracking = 1
+    health = 372
+    armor = 108
+    shield = 630
+    evasion = 0.97
+    speed = 1675.6
+    rotation_speed = 1.15
+    acceleration = 1.25
+    shield_penetration = 0.6
+    armor_penetration = 0.5
+    shield_damage = 1.65
+    armor_damage = 1.75
+    hull_damage = 1.7
+    ship_behavior = "fighters_behavior"
+    icon = "GFX_ship_part_ssp_fo_interceptor"
+    icon_frame = 1
+    component_set = "SSP_FO_INTERCEPTOR_04_SET"
+    tags = { weapon_type_strike_craft }
+    ship_limit = 1
+    ai_weight = {
+        weight = 1000
+    }
+    potential = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        from = {
+            foc_v1718_allowed_country = yes
+            has_technology = tech_foc_player_eclipse_blueprint
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+strike_craft_component_template = {
+    key = "FOC_PLAYER_SSP_FO_INTERCEPTOR_HANGAR_04_SG_FOC_LOWEST"
+    hidden = yes
+    size_restriction = { foc_player_eclipse_foc_lowest }
+    size = LARGE
+    entity = "ssp_fo_interceptor_entity"
+    weapon_type = point_defence
+    point_defence_targets = { "strike_craft" }
+    projectile_gfx = "strike_craft_laser_3"
+    power = -60
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 165
+        
+            sr_tibanna_swgs = 8
+        }
+        upkeep = {
+            energy = 3
+            alloys = 2
+        }
+    }
+    count = 8
+    regeneration_per_day = 0.125
+    custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+    launch_time = 2
+    damage = {
+        min = 8
+        max = 12
+    }
+    cooldown = 2.6
+    attack_range = 15
+    range = 15
+    engagement_range = 12000
+    accuracy = 0.9
+    tracking = 0.9
+    health = 40
+    armor = 40
+    shield = 0
+    evasion = 0.8
+    speed = 1675.6
+    rotation_speed = 1.15
+    acceleration = 1.25
+    shield_penetration = 0.6
+    armor_penetration = 0.5
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    ship_behavior = "fighters_behavior"
+    icon = "GFX_ship_part_ssp_fo_interceptor"
+    icon_frame = 1
+    component_set = "SSP_FO_INTERCEPTOR_04_SET"
+    tags = { weapon_type_strike_craft }
+    ship_limit = 1
+    ai_weight = {
+        weight = 1000000
+    }
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+        from = {
+            foc_v1718_allowed_country = yes
+            has_technology = tech_foc_player_eclipse_blueprint
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+strike_craft_component_template = {
+    key = "FOC_PLAYER_SSP_FO_INTERCEPTOR_HANGAR_05_SG"
+    hidden = yes
+    size_restriction = { foc_player_eclipse }
+    size = LARGE
+    entity = "ssp_fo_interceptor_entity"
+    weapon_type = point_defence
+    point_defence_targets = { "strike_craft" }
+    projectile_gfx = "strike_craft_laser_3"
+    power = -60
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 165
+        
+            sr_tibanna_swgs = 8
+        }
+        upkeep = {
+            energy = 3
+            alloys = 2
+        }
+    }
+    count = 4
+    regeneration_per_day = 0.125
+    custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+    launch_time = 2
+    damage = {
+        min = 417.6
+        max = 626.4
+    }
+    cooldown = 1.044
+    attack_range = 15
+    range = 15
+    engagement_range = 12000
+    accuracy = 1
+    tracking = 1
+    health = 372
+    armor = 108
+    shield = 630
+    evasion = 0.97
+    speed = 1675.6
+    rotation_speed = 1.15
+    acceleration = 1.25
+    shield_penetration = 0.6
+    armor_penetration = 0.5
+    shield_damage = 1.65
+    armor_damage = 1.75
+    hull_damage = 1.7
+    ship_behavior = "fighters_behavior"
+    icon = "GFX_ship_part_ssp_fo_interceptor"
+    icon_frame = 1
+    component_set = "SSP_FO_INTERCEPTOR_05_SET"
+    tags = { weapon_type_strike_craft }
+    ship_limit = 1
+    ai_weight = {
+        weight = 1000
+    }
+    potential = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        from = {
+            foc_v1718_allowed_country = yes
+            has_technology = tech_foc_player_eclipse_blueprint
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+strike_craft_component_template = {
+    key = "FOC_PLAYER_SSP_FO_INTERCEPTOR_HANGAR_05_SG_FOC_LOWEST"
+    hidden = yes
+    size_restriction = { foc_player_eclipse_foc_lowest }
+    size = LARGE
+    entity = "ssp_fo_interceptor_entity"
+    weapon_type = point_defence
+    point_defence_targets = { "strike_craft" }
+    projectile_gfx = "strike_craft_laser_3"
+    power = -60
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 165
+        
+            sr_tibanna_swgs = 8
+        }
+        upkeep = {
+            energy = 3
+            alloys = 2
+        }
+    }
+    count = 8
+    regeneration_per_day = 0.125
+    custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+    launch_time = 2
+    damage = {
+        min = 8
+        max = 12
+    }
+    cooldown = 2.6
+    attack_range = 15
+    range = 15
+    engagement_range = 12000
+    accuracy = 0.9
+    tracking = 0.9
+    health = 40
+    armor = 40
+    shield = 0
+    evasion = 0.8
+    speed = 1675.6
+    rotation_speed = 1.15
+    acceleration = 1.25
+    shield_penetration = 0.6
+    armor_penetration = 0.5
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    ship_behavior = "fighters_behavior"
+    icon = "GFX_ship_part_ssp_fo_interceptor"
+    icon_frame = 1
+    component_set = "SSP_FO_INTERCEPTOR_05_SET"
+    tags = { weapon_type_strike_craft }
+    ship_limit = 1
+    ai_weight = {
+        weight = 1000000
+    }
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+        from = {
+            foc_v1718_allowed_country = yes
+            has_technology = tech_foc_player_eclipse_blueprint
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+strike_craft_component_template = {
+    key = "FOC_PLAYER_SSP_FO_INTERCEPTOR_HANGAR_06_SG"
+    hidden = yes
+    size_restriction = { foc_player_eclipse }
+    size = LARGE
+    entity = "ssp_fo_interceptor_entity"
+    weapon_type = point_defence
+    point_defence_targets = { "strike_craft" }
+    projectile_gfx = "strike_craft_laser_3"
+    power = -60
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 165
+        
+            sr_tibanna_swgs = 8
+        }
+        upkeep = {
+            energy = 3
+            alloys = 2
+        }
+    }
+    count = 4
+    regeneration_per_day = 0.125
+    custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+    launch_time = 2
+    damage = {
+        min = 417.6
+        max = 626.4
+    }
+    cooldown = 1.044
+    attack_range = 15
+    range = 15
+    engagement_range = 12000
+    accuracy = 1
+    tracking = 1
+    health = 372
+    armor = 108
+    shield = 630
+    evasion = 0.97
+    speed = 1675.6
+    rotation_speed = 1.15
+    acceleration = 1.25
+    shield_penetration = 0.6
+    armor_penetration = 0.5
+    shield_damage = 1.65
+    armor_damage = 1.75
+    hull_damage = 1.7
+    ship_behavior = "fighters_behavior"
+    icon = "GFX_ship_part_ssp_fo_interceptor"
+    icon_frame = 1
+    component_set = "SSP_FO_INTERCEPTOR_06_SET"
+    tags = { weapon_type_strike_craft }
+    ship_limit = 1
+    ai_weight = {
+        weight = 1000
+    }
+    potential = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        from = {
+            foc_v1718_allowed_country = yes
+            has_technology = tech_foc_player_eclipse_blueprint
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+strike_craft_component_template = {
+    key = "FOC_PLAYER_SSP_FO_INTERCEPTOR_HANGAR_06_SG_FOC_LOWEST"
+    hidden = yes
+    size_restriction = { foc_player_eclipse_foc_lowest }
+    size = LARGE
+    entity = "ssp_fo_interceptor_entity"
+    weapon_type = point_defence
+    point_defence_targets = { "strike_craft" }
+    projectile_gfx = "strike_craft_laser_3"
+    power = -60
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 165
+        
+            sr_tibanna_swgs = 8
+        }
+        upkeep = {
+            energy = 3
+            alloys = 2
+        }
+    }
+    count = 8
+    regeneration_per_day = 0.125
+    custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+    launch_time = 2
+    damage = {
+        min = 8
+        max = 12
+    }
+    cooldown = 2.6
+    attack_range = 15
+    range = 15
+    engagement_range = 12000
+    accuracy = 0.9
+    tracking = 0.9
+    health = 40
+    armor = 40
+    shield = 0
+    evasion = 0.8
+    speed = 1675.6
+    rotation_speed = 1.15
+    acceleration = 1.25
+    shield_penetration = 0.6
+    armor_penetration = 0.5
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    ship_behavior = "fighters_behavior"
+    icon = "GFX_ship_part_ssp_fo_interceptor"
+    icon_frame = 1
+    component_set = "SSP_FO_INTERCEPTOR_06_SET"
+    tags = { weapon_type_strike_craft }
+    ship_limit = 1
+    ai_weight = {
+        weight = 1000000
+    }
+    potential = {
+        has_global_flag = foc_khan_strength_lowest
+        from = {
+            foc_v1718_allowed_country = yes
+            has_technology = tech_foc_player_eclipse_blueprint
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}

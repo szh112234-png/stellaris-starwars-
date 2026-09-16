@@ -1,0 +1,15 @@
+# Same scopes used by Shipgirl's custom crisis point system.
+# This = winning ship owner; From = destroyed ship owner.
+on_ship_destroyed_perp = {
+    events = { fop_ambition.10 }
+}
+
+# This = conquered colony; From = new owner.
+on_colony_conquer = {
+    events = { fop_ambition.11 }
+}
+
+# This = destroyed country; From = optional destroying country.
+on_country_destroyed = {
+    events = { fop_ambition.12 }
+}

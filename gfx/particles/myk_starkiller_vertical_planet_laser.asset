@@ -1,0 +1,171 @@
+particle = {
+    name = "myk_foc_starkiller_planet_external_particledef"
+    subsystem = {
+        name = "starkiller_external_planet_laser"
+        max_amount = 16000
+        slave_particles = 0
+        emitter_type = "point"
+        invert = no
+        trail = no
+        spritesheet_animation = no
+        spritesheet_animation_loop = 1.000000
+        local_space = yes
+        billboard = yes
+        hide = no
+        texture = {
+            file = "gfx/particles/cloud.dds"
+            x = 1
+            y = 1
+            shader = "ParticleAdditive"
+        }
+        color = {
+            x = 255
+            y = 100
+            z = 100
+            alpha = { 100 alpha_fade }
+        }
+        # Kuat-style offset: the visible stream begins well outside the target
+        # and crosses inward toward the planet instead of being born on it.
+        position = { x = -100 }
+        duration = -1
+        velocity = -20
+        life = { 4 1.5 }
+        emission = 5000
+        size = 0.4
+    }
+    subsystem = {
+        name = "starkiller_external_planet_smoke_2"
+        max_amount = 50
+        slave_particles = 0
+        emitter_type = "box"
+        box_emitter_x = { 0 2 }
+        invert = no
+        trail = no
+        spritesheet_animation = no
+        spritesheet_animation_loop = 1.000000
+        local_space = yes
+        billboard = no
+        hide = no
+        texture = {
+            file = "gfx/particles/cloud.dds"
+            x = 1
+            y = 1
+            shader = "ParticleAdditive"
+        }
+        color = {
+            x = 200
+            y = 100
+            z = 180
+            alpha = 255,explore_anim
+        }
+        start = 5
+        duration = -1
+        life = 0.4
+        emission = 20
+        size = { 2 0 }
+        particle_yaw = { 90 0 }
+        particle_pitch = { 0 180 }
+        rotation = { 90 180 }
+    }
+    subsystem = {
+        name = "starkiller_external_planet_core"
+        max_amount = 1500
+        slave_particles = 0
+        emitter_type = "point"
+        invert = no
+        trail = no
+        spritesheet_animation = no
+        spritesheet_animation_loop = 1.000000
+        local_space = yes
+        billboard = yes
+        hide = no
+        texture = {
+            file = "gfx/particles/cloud.dds"
+            x = 1
+            y = 1
+            shader = "ParticleAdditive"
+        }
+        color = {
+            x = 255
+            y = 50
+            z = 100
+            alpha = 150,explore_anim
+        }
+        start = 5
+        duration = -1
+        velocity_pitch = { 0 360 }
+        velocity_yaw = { 0 45 }
+        velocity = { -0.5 -0.9 }
+        life = { 1 0.5 }
+        emission = 100
+        size = { 1 20 }
+    }
+    subsystem = {
+        name = "starkiller_external_planet_smoke"
+        max_amount = 50
+        slave_particles = 0
+        emitter_type = "point"
+        invert = no
+        trail = no
+        spritesheet_animation = no
+        spritesheet_animation_loop = 1.000000
+        local_space = yes
+        billboard = yes
+        hide = no
+        texture = {
+            file = "gfx/particles/cloud.dds"
+            x = 1
+            y = 1
+            shader = "ParticleAdditive"
+        }
+        color = {
+            x = 200
+            y = 100
+            z = 180
+            alpha = 100,explore_anim
+        }
+        start = 5
+        duration = -1
+        velocity_pitch = { 0 360 }
+        velocity_yaw = 0
+        velocity = { -1 -0.2 }
+        life = 0.75
+        emission = 20
+        size = { 2 0.5 }
+        particle_yaw = { 0 0 }
+        particle_pitch = { 0 0 }
+        rotation = { 0 180 }
+    }
+    animation = {
+        name = "alpha_fade"
+        start = 0
+        duration = 1
+        repeat = no
+        minValue = 0
+        maxValue = 1
+        curve = { 0 1 0.26176 0.79688 0.51765 0.98438 0.77353 0.78906 1 1 }
+        op = "MUL"
+        time = "life"
+    }
+    animation = {
+        name = "explore_anim"
+        start = 0
+        duration = 1
+        repeat = no
+        minValue = 0
+        maxValue = 1
+        curve = { 0 0 0.22941 0.73438 0.51471 1 0.81176 0.72656 1 0 }
+        op = "MUL"
+        time = "life_abs"
+    }
+    force = {
+        type = "planar"
+        name = "force0"
+        position = { 0 0 0 }
+        direction = { 0 1 0 }
+        local_force = yes
+        yaw = 0
+        division = 16
+        amount = 5
+    }
+}

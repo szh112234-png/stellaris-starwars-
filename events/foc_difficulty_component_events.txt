@@ -1,0 +1,35 @@
+namespace = foc_component
+
+# V151: AI does NOT receive foc_khan_component_lowest globally. High-strength combat armor is
+# blocked directly by global Lowest conditions instead, so special mandatory core/crew slots remain valid.
+
+# Human-country component selector. Lowest exposes direct vanilla-scale FOC components;
+# every other tier exposes the original SG/FOC components.
+country_event = {
+    id = foc_component.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    immediate = {
+        if = {
+            limit = { is_ai = no has_global_flag = foc_khan_strength_lowest }
+            remove_country_flag = foc_khan_component_sg
+            set_country_flag = foc_khan_component_lowest
+            if = {
+                limit = { NOT = { has_country_flag = foc_khan_component_259_logged } }
+                set_country_flag = foc_khan_component_259_logged
+                log = "FOC_2.59_COMPONENT_SWITCH_ACTIVE: human country uses direct Lowest component variants."
+            }
+        }
+        else_if = {
+            limit = { is_ai = no }
+            remove_country_flag = foc_khan_component_lowest
+            set_country_flag = foc_khan_component_sg
+            remove_country_flag = foc_khan_component_259_logged
+        }
+        else = {
+            remove_country_flag = foc_khan_component_lowest
+            remove_country_flag = foc_khan_component_sg
+        }
+    }
+}

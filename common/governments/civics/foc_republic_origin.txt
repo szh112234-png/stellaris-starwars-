@@ -1,0 +1,41 @@
+origin_foc_republic_unification = {
+    is_origin = yes
+    icon = "gfx/interface/icons/origins/foc_republic_unification.dds"
+    picture = GFX_foc_event_war_in_heaven
+
+    flags = { custom_start_screen }
+    max_once_global = yes
+    # Do not use the engine advanced-start package here. It can grant high-tier
+    # technologies/designs (including the vanilla Titan path) before our origin
+    # bootstrap runs. The Republic receives its intended arsenal explicitly.
+    advanced_start = no
+
+    # A real initializer is required for both custom empires and the supplied
+    # prescripted Republic. It is only an engine staging home; event .1 moves
+    # every pop and fleet to Coruscant before removing its temporary colony.
+    initializers = { foc_republic_origin_staging_system }
+
+    playable = { always = yes }
+    ai_playable = { always = no }
+
+    potential = {
+        species_class = { value = HUM }
+    }
+
+    possible = {
+        # Republic-era player species are Human; their selected portrait may vary.
+        species_class = { value = HUM }
+        is_nomadic = no
+    }
+
+    modifier = {
+        country_naval_cap_add = 500
+        command_limit_add = 50
+        country_starbase_capacity_add = 20
+        ships_upkeep_mult = -0.15
+        country_war_exhaustion_mult = -0.25
+    }
+
+    description = origin_foc_republic_unification_effects
+    random_weight = { base = 0 }
+}

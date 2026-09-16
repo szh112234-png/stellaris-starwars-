@@ -1,0 +1,86 @@
+# FOC V231a - droid species traits, imported from the
+# "Star Wars: Starting Systems and Portrait Collection Pack" (1708335879).
+#
+# Values are copied verbatim from the pack's 00_species_traits_battledroid.txt.
+# The keys are unchanged from the pack, because FOC defines no trait by either
+# name (verified) and both are referenced by key from the V231 droid species.
+
+trait_robot_battledroid = {
+	cost = 2
+
+	randomized = no
+
+	allowed_archetypes = { ROBOT MACHINE }
+
+	modifier = {
+		planet_army_build_speed_mult = 0.20
+		planet_pop_assembly_mult = 0.10
+		army_damage_mult = 0.10
+		army_experience_gain_mult = -0.50
+	}
+
+	icon = "gfx/interface/icons/traits/trait_robot_battledroid.dds"
+
+	ai_weight = {
+		weight = 0
+	}
+}
+
+trait_robot_tacticaldroid = {
+	cost = 2
+
+	randomized = no
+
+	allowed_archetypes = { ROBOT MACHINE }
+
+	modifier = {
+		leader_skill_levels = 1
+		army_morale_damage_mult = 0.30
+		species_leader_exp_gain = 0.15
+		planet_jobs_produces_mult = 0.05
+		leaders_upkeep_mult = 0.20
+		leaders_cost_mult = 0.20
+	}
+
+	icon = "gfx/interface/icons/traits/trait_robot_tacticaldroid.dds"
+
+	ai_weight = {
+		weight = 0
+	}
+}
+
+# Iokath Gemini droid trait, from the pack's 00_species_leader_traits_zakuul.txt.
+# Imported for completeness so that every ROBOT/MACHINE trait the pack defines
+# is available here. FOC has no Gemini species, so no droid species currently
+# takes it; it is ready if one is ever added.
+trait_robot_gemini = {
+	cost = 0
+
+	initial = no
+	randomized = no
+	species_potential_add = {
+		always = no
+	}
+	species_possible_remove = {
+		always = no
+	}
+	species_possible_merge_add = {
+		always = no
+	}
+	immortal_leaders = yes
+	allowed_archetypes = { ROBOT MACHINE }
+
+	modifier = {
+		commander_skill_levels = 2
+		species_leader_exp_gain = 0.25
+		planet_jobs_produces_mult = 0.05
+		leaders_upkeep_mult = 0.10
+		leaders_cost_mult = 0.10
+	}
+
+	icon = "gfx/interface/icons/traits/trait_robot_gemini.dds"
+
+	ai_weight = {
+		weight = 0
+	}
+}

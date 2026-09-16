@@ -1,0 +1,361 @@
+# Scope: military fleet.
+# 0.65: restore the movement path that was proven to move in 0.60, but use the
+# planet OWNER (not system controller) and retain the vanilla Marauder/Khan
+# orbit order so the fleet can bombard after arrival.
+#
+# Important: do not set a permanent order-lock flag. If no target can be found,
+# the fleet retries instead of becoming permanently excluded by the dispatcher.
+
+foc_khan_invasion_fleet_action = {
+    # 2.37 compatibility: legacy scheduled calls no longer select or overwrite targets.
+    remove_auto_move_target = yes
+    clear_orders = yes
+    clear_fleet_actions = this
+}
+
+# Scope: transport fleet. Khan-style invasion controller.
+# Sends assault-army transports to the nearest hostile colony. The aggressive
+# fleet stance lets the transport execute the invasion when it reaches orbit.
+foc_khan_army_fleet_action = {
+	optimize_memory
+	save_event_target_as = foc_khan_army_current_fleet
+
+
+	# Absolute invasion priority: land armies on the nearest colony belonging to
+	# an empire that owns a completed Starkiller Base.
+	if = {
+		limit = {
+			any_country = {
+				has_country_flag = foc_khan_starkiller_owner_enemy
+				any_owned_planet = { is_colony = yes }
+			}
+		}
+
+		if = {
+			limit = {
+				exists = solar_system
+				solar_system = {
+					any_system_planet = {
+						is_colony = yes
+						exists = controller
+						controller = { has_country_flag = foc_khan_starkiller_owner_enemy }
+					}
+				}
+			}
+			solar_system = {
+				random_system_planet = {
+					limit = {
+						is_colony = yes
+						exists = controller
+						controller = { has_country_flag = foc_khan_starkiller_owner_enemy }
+					}
+					event_target:foc_khan_army_current_fleet = {
+						auto_move_to_planet = {
+							target = prev
+							clear_auto_move_on_arrival = yes
+						}
+					}
+				}
+			}
+		}
+		else = {
+			closest_system = {
+				max_steps = 100
+				limit = {
+					any_system_planet = {
+						is_colony = yes
+						exists = controller
+						controller = { has_country_flag = foc_khan_starkiller_owner_enemy }
+					}
+				}
+				save_event_target_as = foc_khan_army_priority_starkiller_system
+			}
+			if = {
+				limit = { exists = event_target:foc_khan_army_priority_starkiller_system }
+				event_target:foc_khan_army_priority_starkiller_system = {
+					random_system_planet = {
+						limit = {
+							is_colony = yes
+							exists = controller
+							controller = { has_country_flag = foc_khan_starkiller_owner_enemy }
+						}
+						event_target:foc_khan_army_current_fleet = {
+							auto_move_to_planet = {
+								target = prev
+								clear_auto_move_on_arrival = yes
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	# Invade a hostile colony in the current system first.
+	else_if = {
+		limit = {
+			exists = solar_system
+			solar_system = {
+				any_system_planet = {
+					is_colony = yes
+					exists = controller
+					controller = {
+						is_regular_empire = yes
+						NOR = {
+							has_country_flag = foc_khan_first_order_country
+							has_country_flag = foc_khan_final_order_country
+							has_country_flag = foc_khan_submitted_first_order
+							has_country_flag = foc_khan_submitted_final_order
+						}
+					}
+				}
+			}
+		}
+		solar_system = {
+			random_system_planet = {
+				limit = {
+					is_colony = yes
+					exists = controller
+					controller = {
+						is_regular_empire = yes
+						NOR = {
+							has_country_flag = foc_khan_first_order_country
+							has_country_flag = foc_khan_final_order_country
+							has_country_flag = foc_khan_submitted_first_order
+							has_country_flag = foc_khan_submitted_final_order
+						}
+					}
+				}
+				event_target:foc_khan_army_current_fleet = {
+					auto_move_to_planet = {
+						target = prev
+						clear_auto_move_on_arrival = yes
+					}
+				}
+			}
+		}
+	}
+	else = {
+		closest_system = {
+			max_steps = 50
+			limit = {
+				any_system_planet = {
+					is_colony = yes
+					exists = controller
+					controller = {
+						is_regular_empire = yes
+						NOR = {
+							has_country_flag = foc_khan_first_order_country
+							has_country_flag = foc_khan_final_order_country
+							has_country_flag = foc_khan_submitted_first_order
+							has_country_flag = foc_khan_submitted_final_order
+						}
+					}
+				}
+				event_target:foc_khan_army_current_fleet = { can_access_system = prev }
+			}
+			save_event_target_as = foc_khan_army_target_system
+		}
+		if = {
+			limit = { exists = event_target:foc_khan_army_target_system }
+			event_target:foc_khan_army_target_system = {
+				random_system_planet = {
+					limit = {
+						is_colony = yes
+						exists = controller
+						controller = {
+							is_regular_empire = yes
+							NOR = {
+								has_country_flag = foc_khan_first_order_country
+								has_country_flag = foc_khan_final_order_country
+								has_country_flag = foc_khan_submitted_first_order
+								has_country_flag = foc_khan_submitted_final_order
+							}
+						}
+					}
+					event_target:foc_khan_army_current_fleet = {
+						auto_move_to_planet = {
+							target = prev
+							clear_auto_move_on_arrival = yes
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+
+# Scope: Starkiller Base planet after colony creation.
+# Fill available building capacity with fortress infrastructure and establish a massive garrison.
+foc_khan_fortify_starkiller_planet = {
+	set_planet_flag = foc_khan_starkiller_fortified
+	add_modifier = { modifier = foc_khan_starkiller_fortress_network days = -1 }
+
+	# Expand urban infrastructure first so fortress buildings have usable slots.
+	while = {
+		count = 8
+		add_district = district_city
+	}
+
+	# Planetary shield plus a dense ring of fortresses.
+	add_building = { building = building_planetary_shield_generator }
+	while = {
+		count = 10
+		add_building = { building = building_fortress }
+	}
+
+	# Permanent standing garrison.
+	while = {
+		count = 80
+		create_army = {
+			owner = event_target:foc_khan_first_order
+			species = event_target:foc_khan_first_order_species
+			type = "defense_army"
+		}
+	}
+}
+
+
+# Scope: military fleet. Force Rebel fleets against the Order countries.
+# 2.24 uses direct planet scope (prev inside random_system_planet) and never
+# stores a colony/ship as a planet event target. First Order is preferred.
+foc_khan_anti_order_fleet_action = {
+	optimize_memory
+	save_event_target_as = foc_khan_anti_order_current_fleet_224
+
+	# First priority: the closest First Order colony. Border access is ignored by
+	# the dedicated Rebel country type, so do not reject a valid target here.
+	closest_system = {
+		max_steps = 100
+		limit = {
+			any_system_planet = {
+				is_colony = yes
+				exists = owner
+				owner = {
+					OR = {
+						has_country_flag = foc_khan_first_order_country
+						has_country_flag = fop_player_first_order
+						has_country_flag = foc_republic_origin_player_empire
+					}
+				}
+			}
+		}
+		save_event_target_as = foc_khan_anti_order_target_system_224
+	}
+
+	# If the First Order has no colony left, continue against the Final Order.
+	if = {
+		limit = { NOT = { exists = event_target:foc_khan_anti_order_target_system_224 } }
+		closest_system = {
+			max_steps = 100
+			limit = {
+				any_system_planet = {
+					is_colony = yes
+					exists = owner
+					owner = {
+						OR = {
+							has_country_flag = foc_khan_final_order_country
+							has_country_flag = fop_player_final_order
+						}
+					}
+				}
+			}
+			save_event_target_as = foc_khan_anti_order_target_system_224
+		}
+	}
+
+	if = {
+		limit = { exists = event_target:foc_khan_anti_order_target_system_224 }
+		event_target:foc_khan_anti_order_target_system_224 = {
+			random_system_planet = {
+				limit = {
+					is_colony = yes
+					exists = owner
+					owner = {
+						OR = {
+							has_country_flag = foc_khan_first_order_country
+							has_country_flag = foc_khan_final_order_country
+							has_country_flag = fop_player_first_order
+							has_country_flag = fop_player_final_order
+							has_country_flag = foc_republic_origin_player_empire
+						}
+					}
+				}
+				owner = { save_event_target_as = foc_khan_anti_order_victim_224 }
+				event_target:foc_khan_anti_order_current_fleet_224 = {
+					owner = {
+						set_faction_hostility = {
+							target = event_target:foc_khan_anti_order_victim_224
+							set_hostile = yes
+							set_friendly = no
+							set_neutral = no
+						}
+					}
+					auto_move_to_planet = {
+						target = prev
+						clear_auto_move_on_arrival = no
+					}
+				}
+			}
+		}
+	}
+	else = {
+		# No colony remains. Hunt the closest Order military fleet/starbase.
+		closest_system = {
+			max_steps = 100
+			limit = {
+				any_ship_in_system = {
+					exists = owner
+					owner = {
+						OR = {
+							has_country_flag = foc_khan_first_order_country
+							has_country_flag = foc_khan_final_order_country
+							has_country_flag = fop_player_first_order
+							has_country_flag = fop_player_final_order
+							has_country_flag = foc_republic_origin_player_empire
+						}
+					}
+					is_disabled = no
+					OR = {
+						is_ship_class = shipclass_military
+						is_ship_class = shipclass_starbase
+					}
+				}
+			}
+			save_event_target_as = foc_khan_anti_order_target_system_224
+		}
+		if = {
+			limit = { exists = event_target:foc_khan_anti_order_target_system_224 }
+			event_target:foc_khan_anti_order_target_system_224 = {
+				random_ship_in_system = {
+					limit = {
+						exists = owner
+						owner = {
+							OR = {
+								has_country_flag = foc_khan_first_order_country
+								has_country_flag = foc_khan_final_order_country
+								has_country_flag = fop_player_first_order
+								has_country_flag = fop_player_final_order
+								has_country_flag = foc_republic_origin_player_empire
+							}
+						}
+						is_disabled = no
+						OR = {
+							is_ship_class = shipclass_military
+							is_ship_class = shipclass_starbase
+						}
+					}
+					event_target:foc_khan_anti_order_current_fleet_224 = {
+						auto_follow_fleet = { target = prev.fleet attack_fleet = yes }
+					}
+				}
+			}
+		}
+		else = {
+			event_target:foc_khan_anti_order_current_fleet_224 = {
+				fleet_event = { id = $ID$ days = 30 random = 5 }
+			}
+		}
+	}
+}

@@ -1,0 +1,28 @@
+namespace = foc_v17_isd2
+
+# Fired from on_yearly_pulse_country once the Death Star I has been destroyed.
+# One option: commit to the refit, which grants foc_v17_tech_imperialsd2 and
+# thereby unlocks foc_imperialsd2 construction.
+country_event = {
+    id = foc_v17_isd2.1
+    title = "foc_v17_isd2.1.name"
+    desc = "foc_v17_isd2.1.desc"
+    picture = GFX_evt_exploding_ship
+    show_sound = event_ship_bridge
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    trigger = {
+        OR = {
+            has_country_flag = foc_republic_origin_empire_country
+            foc_ai_capital_is_imperial_class_country = yes
+        }
+        has_global_flag = foc_republic_origin_death_star_one_destroyed
+        NOT = { has_technology = foc_v17_tech_imperialsd2 }
+    }
+
+    option = {
+        name = "foc_v17_isd2.1.a"
+        give_technology = { tech = foc_v17_tech_imperialsd2 message = no }
+    }
+}

@@ -1,0 +1,19 @@
+# BWing2 compatibility-only alias. New designs use SSP_REBEL_COMMAND_CORE.
+# Keep the old ID and action for previously saved BWing1 designs; hide it from new selection.
+utility_component_template = {
+ key = "FOC_BWING_COMMAND_CORE"
+ hidden = yes
+ size = aux
+ icon = "GFX_ship_part_foc_bwing"
+ icon_frame = 1
+ component_set = "SSP_REBEL_COMMAND_CORE_SET"
+ power = -25
+ ship_limit = 1
+ resources = { category = ship_components cost = { alloys = 40 } upkeep = { energy = 1 } }
+ potential = {
+  from = { OR = { has_country_flag = ssp_fighter_group_all has_country_flag = ssp_fighter_group_rebel has_technology = tech_ssp_rebel_hyperspace } }
+ }
+ prerequisites = { "tech_ssp_rebel_hyperspace" }
+ scripted_action = { ssp_rebel_strike }
+ ai_weight = { weight = 0 }
+}

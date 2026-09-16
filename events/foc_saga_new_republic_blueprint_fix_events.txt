@@ -1,0 +1,330 @@
+namespace = foc_nr_fix
+
+# =============================================================================
+# 新共和国：星云级 / 子爵级建造权限修复
+# =============================================================================
+# 真正的门是设计上的 allow_buildable_trigger = foc_sw_new_republic_special_buildable，
+# 而不是科技。该触发器只认 foc_sw_new_republic_country，而这个旗标只在
+# foc_republic_origin_configure_original_new_republic_fe 的一次性开关里才置上。
+# 触发器本身已由 common/scripted_triggers/foc_sw_shipyard_triggers.txt 放宽。
+#
+# 这里负责把三样东西补齐，并且**不依赖 foc_sw_new_republic_country**——因为
+# 那个旗标缺失恰恰就是故障本身，拿它当前置条件等于修不了：
+#   1. 专用授权旗标 foc_saga_new_republic_shipyard_access
+#   2. 两项蓝图科技（决定舰体 possible_construction）
+#   3. 两份固定设计进建造列表（两个舰体都是 is_designable = no）
+#
+# 判定身份用的是条约事件在守卫之外置上的旗标，所以三条条约路径
+# （.60 / .160 / .161）和 AI 新共和国都能命中。
+# =============================================================================
+
+country_event = {
+    id = foc_nr_fix.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_republic_origin_galactic_treaty
+        # Imperial Remnant also receives foc_republic_origin_treaty_completed.
+        # Never treat that shared treaty marker as New Republic identity.
+        NOT = {
+            OR = {
+                has_country_flag = foc_sw_imperial_remnant_country
+                has_country_flag = foc_republic_origin_player_imperial_remnant
+                has_country_flag = foc_republic_origin_empire_country
+                has_country_flag = foc_republic_origin_player_empire
+                has_country_flag = foc_khan_first_order_country
+                has_country_flag = foc_khan_final_order_country
+                has_country_flag = foc_republic_origin_became_first_order
+                has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+                has_country_flag = fop_player_first_order
+                has_country_flag = fop_player_final_order
+            }
+        }
+        # 抵抗力量按设计只用义军时代舰船，排除。
+        NOT = { has_country_flag = foc_republic_origin_post_treaty_player_rebels }
+        NOT = { has_country_flag = foc_republic_origin_post_treaty_rebel_country }
+        NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+        # 身份判定放宽：条约之后任何一个共和国方国家都算，不再要求特定旗标组合。
+        # 之前那套组合依赖 foc_sw_new_republic_country 等旗标，而它们本身就可能
+        # 因为一次性开关没跑到而缺失——拿可能缺失的东西当前置，等于修不了。
+        OR = {
+            has_country_flag = foc_sw_new_republic_country
+            has_country_flag = foc_republic_origin_player_republic
+            has_country_flag = foc_republic_origin_ai_new_republic_after_dqar
+            has_country_flag = foc_republic_origin_republic_country
+            has_country_flag = foc_republic_origin_treaty_completed
+            has_country_flag = foc_republic_origin_post_treaty_new_republic
+            AND = {
+                exists = event_target:foc_sw_new_republic
+                is_same_value = event_target:foc_sw_new_republic
+            }
+        }
+        OR = {
+            NOT = { has_country_flag = foc_saga_new_republic_shipyard_access }
+            NOT = { has_technology = tech_foc_rebel_nebula_blueprint }
+            NOT = { has_technology = tech_foc_rebel_viscount_blueprint }
+            NOT = { has_country_flag = foc_saga_nr_designs_added }
+        }
+    }
+
+    immediate = { foc_saga_open_new_republic_shipyards = yes }
+}
+
+# 最高统帅部战局推演台里的手动补发。自动判定万一仍然漏掉，玩家可以自己点。
+# v19 更正：这个按钮原本只给**点击者**发授权。玩家扮演帝国时点它，结果是帝国
+# 拿到了星云级与子爵级，而义军和新共和国什么也没有——这正是上一轮观察到的现象，
+# 也说明授权机制本身是好的（帝国那边完整生效了），缺的只是「发给谁」。
+#
+# 现在改成：发给点击者，**同时**发给共和国一侧的所有国家。这样无论玩家扮演哪一边，
+# 按一次都能把义军 / 新共和国的船坞打通。
+country_event = {
+    id = foc_nr_fix.3
+    hide_window = yes
+    is_triggered_only = yes
+
+    immediate = {
+        log = "FOC_SAGA_NR_YARDS: manual reissue requested."
+
+        # 一、点击者只有在共和国一侧时才允许补发。
+        # 旧版这里无条件给点击者发蓝图，玩家控制帝国/帝国残余点击测试按钮后
+        # 会错误获得星云级与子爵级。现在帝国路线明确排除。
+        if = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_sw_new_republic_country
+                    has_country_flag = foc_republic_origin_player_republic
+                    has_country_flag = foc_republic_origin_ai_new_republic_after_dqar
+                    has_country_flag = foc_republic_origin_republic_country
+                    has_country_flag = foc_republic_origin_post_treaty_new_republic
+                    has_country_flag = foc_khan_rebel_alliance_country
+                    has_country_flag = foc_republic_origin_rebel_alliance_country
+                    has_country_flag = foc_republic_origin_imperial_rebel_country
+                }
+                NOT = {
+                    OR = {
+                        has_country_flag = foc_sw_imperial_remnant_country
+                        has_country_flag = foc_republic_origin_player_imperial_remnant
+                        has_country_flag = foc_republic_origin_empire_country
+                        has_country_flag = foc_republic_origin_player_empire
+                        has_country_flag = foc_khan_first_order_country
+                        has_country_flag = foc_republic_origin_became_first_order
+                        has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+                        has_country_flag = fop_player_first_order
+                    }
+                }
+            }
+            if = {
+                limit = {
+                    OR = {
+                        NOT = { has_technology = tech_foc_rebel_nebula_blueprint }
+                        NOT = { has_technology = tech_foc_rebel_viscount_blueprint }
+                    }
+                }
+                remove_country_flag = foc_saga_nr_designs_added
+                remove_country_flag = foc_saga_rebel_nebula_design_added
+            }
+            foc_saga_open_new_republic_shipyards = yes
+        }
+
+        # 二、共和国一侧的所有国家——义军同盟、新共和国、条约后的共和国方，
+        #     以及脚本化的新共和国堕落帝国。
+        every_country = {
+            limit = {
+                is_regular_empire = yes
+                NOT = { is_same_value = root }
+                NOT = {
+                    OR = {
+                        has_country_flag = foc_sw_imperial_remnant_country
+                        has_country_flag = foc_republic_origin_player_imperial_remnant
+                        has_country_flag = foc_republic_origin_empire_country
+                        has_country_flag = foc_republic_origin_player_empire
+                        has_country_flag = foc_khan_first_order_country
+                        has_country_flag = foc_khan_final_order_country
+                        has_country_flag = foc_republic_origin_became_first_order
+                        has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+                        has_country_flag = fop_player_first_order
+                        has_country_flag = fop_player_final_order
+                    }
+                }
+                OR = {
+                    has_country_flag = foc_khan_rebel_alliance_country
+                    has_country_flag = foc_republic_origin_rebel_alliance_country
+                    has_country_flag = foc_republic_origin_imperial_rebel_country
+                    has_country_flag = foc_republic_origin_republic_country
+                    has_country_flag = foc_sw_new_republic_country
+                    has_country_flag = foc_republic_origin_player_republic
+                    has_country_flag = foc_republic_origin_ai_new_republic_after_dqar
+                }
+            }
+            log = "FOC_SAGA_NR_YARDS: reissuing to a republic-side country."
+            if = {
+                limit = {
+                    OR = {
+                        NOT = { has_technology = tech_foc_rebel_nebula_blueprint }
+                        NOT = { has_technology = tech_foc_rebel_viscount_blueprint }
+                    }
+                }
+                remove_country_flag = foc_saga_nr_designs_added
+            remove_country_flag = foc_saga_rebel_nebula_design_added
+            }
+            foc_saga_open_new_republic_shipyards = yes
+        }
+
+        # 三、两个具名事件目标兜底，防止上面那批旗标一个都没置上。
+        if = {
+            limit = { exists = event_target:foc_khan_rebel_alliance }
+            event_target:foc_khan_rebel_alliance = {
+                foc_saga_open_new_republic_shipyards = yes
+            }
+        }
+        if = {
+            limit = { exists = event_target:foc_sw_new_republic }
+            event_target:foc_sw_new_republic = {
+                foc_saga_open_new_republic_shipyards = yes
+            }
+        }
+    }
+}
+
+# 修复完成的通知。只在真的补过东西时出现一次。
+country_event = {
+    id = foc_nr_fix.2
+    title = foc_nr_fix.2.name
+    desc = foc_nr_fix.2.desc
+    picture = GFX_foc_saga_rebel_fleet
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        NOT = { has_country_flag = foc_saga_nr_blueprint_notice_shown }
+    }
+
+    immediate = { set_country_flag = foc_saga_nr_blueprint_notice_shown }
+
+    option = { name = foc_nr_fix.2.a }
+}
+
+# =============================================================================
+# 帝国路线旧档清理：星云级 / 子爵级属于新共和国舰种。
+# 即使旧版本误发了科技或固定设计，帝国、帝国残余和其第一秩序继承线
+# 也会被舰体 possible_construction 硬锁；这里额外清理已经误造/误继承的舰船。
+# =============================================================================
+country_event = {
+    id = foc_nr_fix.6
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        OR = {
+            has_country_flag = foc_sw_imperial_remnant_country
+            has_country_flag = foc_republic_origin_player_imperial_remnant
+            has_country_flag = foc_republic_origin_empire_country
+            has_country_flag = foc_republic_origin_player_empire
+            has_country_flag = foc_khan_first_order_country
+            has_country_flag = foc_khan_final_order_country
+            has_country_flag = foc_republic_origin_became_first_order
+            has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+            has_country_flag = fop_player_first_order
+            has_country_flag = fop_player_final_order
+        }
+        OR = {
+            has_country_flag = foc_saga_new_republic_shipyard_access
+            has_country_flag = foc_saga_nr_designs_added
+            has_country_flag = foc_saga_rebel_nebula_design_added
+            has_country_flag = foc_saga_rebel_nebula_granted
+            any_owned_ship = {
+                OR = {
+                    OR = { is_ship_size = foc_rebel_nebula is_ship_size = foc_rebel_nebula_foc_lowest }
+                    OR = { is_ship_size = foc_rebel_mc158 is_ship_size = foc_rebel_mc158_foc_lowest }
+                }
+            }
+        }
+    }
+
+    immediate = {
+        every_owned_fleet = {
+            every_owned_ship = {
+                limit = {
+                    OR = {
+                        OR = { is_ship_size = foc_rebel_nebula is_ship_size = foc_rebel_nebula_foc_lowest }
+                        OR = { is_ship_size = foc_rebel_mc158 is_ship_size = foc_rebel_mc158_foc_lowest }
+                    }
+                }
+                delete_ship = this
+            }
+        }
+        remove_country_flag = foc_saga_new_republic_shipyard_access
+        remove_country_flag = foc_saga_nr_designs_added
+        remove_country_flag = foc_saga_rebel_nebula_design_added
+        remove_country_flag = foc_saga_rebel_nebula_granted
+    }
+}
+
+# =============================================================================
+# 诊断：为什么 foc_nr_fix.1 没有触发
+# =============================================================================
+# 上一次的 error.log 里一行 FOC_SAGA_NR_YARDS 都没有，说明授权事件的 trigger
+# 从未成立，而不是授权失败。这一条只输出状态，不做任何改动，每个玩家国家跑一次。
+# 下次把日志发来就能直接定位是哪一个前置不满足。
+# =============================================================================
+
+country_event = {
+    id = foc_nr_fix.5
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        is_regular_empire = yes
+        NOT = { has_country_flag = foc_saga_nr_diagnostic_done }
+        # 等剧情真正进入共和国起源流程之后再报，避免开局刷屏。
+        OR = {
+            has_global_flag = foc_republic_origin_both_death_stars_destroyed
+            has_global_flag = foc_republic_origin_galactic_treaty
+            has_country_flag = foc_republic_origin_republic_country
+            has_country_flag = foc_republic_origin_imperial_rebel_country
+        }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_nr_diagnostic_done
+        log = "FOC_SAGA_DIAG: ---- New Republic shipyard diagnostic ----"
+        if = {
+            limit = { has_global_flag = foc_republic_origin_galactic_treaty }
+            log = "FOC_SAGA_DIAG: global galactic_treaty = SET"
+        }
+        else = { log = "FOC_SAGA_DIAG: global galactic_treaty = MISSING" }
+        if = {
+            limit = { has_country_flag = foc_sw_new_republic_country }
+            log = "FOC_SAGA_DIAG: foc_sw_new_republic_country = SET"
+        }
+        else = { log = "FOC_SAGA_DIAG: foc_sw_new_republic_country = missing" }
+        if = {
+            limit = { has_country_flag = foc_republic_origin_republic_country }
+            log = "FOC_SAGA_DIAG: foc_republic_origin_republic_country = SET"
+        }
+        else = { log = "FOC_SAGA_DIAG: foc_republic_origin_republic_country = missing" }
+        if = {
+            limit = { has_country_flag = foc_republic_origin_treaty_completed }
+            log = "FOC_SAGA_DIAG: foc_republic_origin_treaty_completed = SET"
+        }
+        else = { log = "FOC_SAGA_DIAG: foc_republic_origin_treaty_completed = missing" }
+        if = {
+            limit = { has_country_flag = foc_republic_origin_imperial_rebel_country }
+            log = "FOC_SAGA_DIAG: foc_republic_origin_imperial_rebel_country = SET"
+        }
+        else = { log = "FOC_SAGA_DIAG: foc_republic_origin_imperial_rebel_country = missing" }
+        if = {
+            limit = { has_technology = tech_foc_rebel_nebula_blueprint }
+            log = "FOC_SAGA_DIAG: nebula tech = HELD"
+        }
+        else = { log = "FOC_SAGA_DIAG: nebula tech = missing" }
+        if = {
+            limit = { has_technology = tech_foc_rebel_viscount_blueprint }
+            log = "FOC_SAGA_DIAG: viscount tech = HELD"
+        }
+        else = { log = "FOC_SAGA_DIAG: viscount tech = missing" }
+    }
+}
+

@@ -1,0 +1,119 @@
+namespace = foc_269_starkiller_fixed
+country_event = {
+    id = foc_269_starkiller_fixed.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_khan_first_order_country
+        OR = {
+            any_owned_starbase = { has_starbase_size = foc_starkiller_ring }
+            AND = {
+                any_owned_planet = {
+                    planet = { has_planet_flag = myk_starkiller_base_planet_flag }
+                }
+                NOT = {
+                    any_owned_ship = { OR = { is_ship_size = foc_khan_starkiller_fixed_station is_ship_size = foc_khan_starkiller_fixed_station_foc_lowest } }
+                }
+            }
+        }
+    }
+
+    immediate = {
+        give_technology = { tech = tech_battleships message = no }
+        if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } }
+        if = { limit = { is_ai = yes } give_technology = { tech = tech_ssp_imperial_hyperspace message = no } }
+        set_country_flag = ssp_fighter_group_empire
+        set_country_flag = ssp_strength_sg
+        set_country_flag = ssp_size_original
+        remove_country_flag = ssp_strength_balanced
+        remove_country_flag = ssp_strength_enhanced
+        remove_country_flag = ssp_strength_extreme
+        foc_sync_ssp_strength_to_main_difficulty = yes
+        remove_country_flag = ssp_size_2x
+        remove_country_flag = ssp_size_5x
+        remove_country_flag = ssp_size_10x
+
+        if = {
+            limit = {
+                any_owned_starbase = { has_starbase_size = foc_starkiller_ring }
+            }
+            random_owned_starbase = {
+                limit = { has_starbase_size = foc_starkiller_ring }
+                save_event_target_as = foc_269_starkiller_anchor
+            }
+        }
+        else = {
+            random_owned_planet = {
+                limit = { planet = { has_planet_flag = myk_starkiller_base_planet_flag } }
+                planet = { save_event_target_as = foc_269_starkiller_anchor }
+            }
+        }
+
+        if = {
+            limit = {
+                exists = event_target:foc_269_starkiller_anchor
+                NOT = {
+                    any_owned_ship = { OR = { is_ship_size = foc_khan_starkiller_fixed_station is_ship_size = foc_khan_starkiller_fixed_station_foc_lowest } }
+                }
+            }
+            create_fleet = {
+                name = "NAME_FOC_KHAN_STARKILLER_FIXED_FLEET"
+                settings = {
+                    spawn_debris = no
+                    can_disband = no
+                }
+                effect = {
+                    set_owner = root
+                    # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+}
+                    
+
+                    
+                    set_fleet_flag = foc_khan_starkiller_fixed_station_fleet
+                    create_ship = {
+                        name = "NAME_FOC_KHAN_STARKILLER_FIXED_STATION"
+                        design = "NAME_FOC_KHAN_STARKILLER_FIXED_STATION"
+                        effect = {
+                            set_ship_flag = foc_khan_starkiller_fixed_station
+                            set_ship_flag = foc_khan_starkiller_base_survives
+                        }
+                    }
+                    set_location = {
+                        target = event_target:foc_269_starkiller_anchor
+                        distance = -1
+                        angle = 0
+                    }
+                }
+            }
+        }
+
+        # Remove the old auto-designed ring only after the fixed station is confirmed.
+        if = {
+            limit = {
+                any_owned_ship = { OR = { is_ship_size = foc_khan_starkiller_fixed_station is_ship_size = foc_khan_starkiller_fixed_station_foc_lowest } }
+            }
+            every_owned_starbase = {
+                limit = { has_starbase_size = foc_starkiller_ring }
+                delete_ship = this
+            }
+        }
+
+        set_country_flag = foc_269_starkiller_fixed_design_active
+        log = "FOC_2.69_KUAT_FIXED_STARKILLER: fixed global design spawned; auto-designed crisis ring removed."
+    }
+}

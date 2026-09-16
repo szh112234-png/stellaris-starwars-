@@ -1,0 +1,104 @@
+namespace = foc_khan_236
+
+event = {
+    id = foc_khan_236.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        NOT = { has_global_flag = foc_khan_236_special_xyston_removed }
+        any_country = { has_country_flag = foc_khan_final_order_country }
+    }
+
+    immediate = {
+        set_global_flag = foc_khan_236_special_xyston_removed
+
+        every_country = {
+            limit = { has_country_flag = foc_khan_final_order_country }
+            save_event_target_as = foc_khan_236_final_order
+            set_variable = { which = foc_khan_236_special_count value = 0 }
+
+            every_owned_ship = {
+                limit = { OR = { is_ship_size = foc_khan_xystonsd is_ship_size = foc_khan_xystonsd_foc_lowest } }
+                owner = {
+                    change_variable = { which = foc_khan_236_special_count value = 1 }
+                }
+                destroy_ship = this
+            }
+
+            if = {
+                limit = {
+                    check_variable = { which = foc_khan_236_special_count value > 0 }
+                    exists = event_target:foc_khan_exegol_capital
+                }
+                create_fleet = {
+                    name = "FOC_KHAN_CONVERTED_COMBAT_XYSTONS"
+                    effect = {
+                        set_owner = event_target:foc_khan_236_final_order
+                        # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+if = { limit = { NOT = { has_technology = tech_titans } } give_technology = { tech = tech_titans message = no } }
+}
+                        
+
+                        
+
+                        
+                        set_location = event_target:foc_khan_exegol_capital
+                        while = {
+                            count = 1080
+                            if = {
+                                limit = {
+                                    event_target:foc_khan_236_final_order = {
+                                        check_variable = { which = foc_khan_236_special_count value > 0 }
+                                    }
+                                }
+                                create_ship = {
+                                    name = random
+                                    design = "NAME_FOC_KHAN_XYSTON_COMBAT"
+                                    graphical_culture = first_01
+                                    upgradable = no
+                                    fleet_cache_recalc = yes
+                                }
+                                event_target:foc_khan_236_final_order = {
+                                    subtract_variable = { which = foc_khan_236_special_count value = 1 }
+                                }
+                            }
+                        }
+                        set_fleet_flag = foc_khan_final_order_attack_fleet
+                        set_aggro_range_measure_from = self
+                        set_aggro_range = 500
+                        set_formation_scale = 3
+                    }
+                    settings = {
+                        can_upgrade = no
+                        can_disband = yes
+                        can_change_composition = no
+                        spawn_debris = yes
+                        ai_ignore_strength = yes
+                    }
+                }
+            }
+
+            every_owned_fleet = {
+                remove_fleet_flag = foc_khan_xyston_planet_killer_fleet
+                remove_fleet_flag = foc_khan_xyston_cinematic_cooldown_234
+                remove_fleet_flag = foc_khan_xyston_active_single_order_225
+                remove_fleet_flag = foc_khan_xyston_cleanup_scheduled_225
+                remove_fleet_flag = foc_khan_xyston_retarget_pending_218
+            }
+
+            clear_variable = foc_khan_236_special_count
+        }
+
+        clear_global_event_target = foc_khan_236_final_order
+    }
+}

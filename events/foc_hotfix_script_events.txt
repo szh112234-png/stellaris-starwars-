@@ -1,0 +1,34 @@
+namespace = foc_hotfix_scripts
+
+country_event = {
+    id = foc_hotfix_scripts.24
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { NOT = { has_country_flag = foc_republic_origin_kuat_investment_done } }
+    immediate = {
+        if = {
+            limit = { foc_hotfix_can_receive_venator = yes }
+            country_event = { id = foc_republic_origin.24 }
+        }
+        else = { country_event = { id = foc_hotfix_scripts.25 } }
+    }
+}
+
+country_event = {
+    id = foc_hotfix_scripts.25
+    title = foc_hotfix_scripts.25.name
+    desc = foc_hotfix_scripts.25.desc
+    picture = GFX_evt_ship_in_orbit_3
+    show_sound = event_default
+    is_triggered_only = yes
+    trigger = {
+        NOT = { has_country_flag = foc_republic_origin_kuat_investment_done }
+        NOT = { foc_hotfix_can_receive_venator = yes }
+    }
+    immediate = {
+        set_country_flag = foc_republic_origin_kuat_investment_done
+        set_country_flag = foc_v15_kuat_expansion_refunded
+        add_resource = { engineering_research = 3200 }
+    }
+    option = { name = OK }
+}

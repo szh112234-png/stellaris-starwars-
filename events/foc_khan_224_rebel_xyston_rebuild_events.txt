@@ -1,0 +1,145 @@
+namespace = foc_khan_224
+
+# One-shot migration from the broken 2.23 Rebel target and repeating Xyston queue.
+event = {
+	id = foc_khan_224.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_global_flag = foc_khan_224_rebel_xyston_migrated }
+		OR = {
+			any_country = { has_country_flag = foc_khan_rebel_alliance_country }
+			any_country = { has_country_flag = foc_khan_final_order_country }
+		}
+	}
+
+	immediate = {
+		set_global_flag = foc_khan_224_rebel_xyston_migrated
+
+		# Clear obsolete reservations and preserve all already ruined worlds.
+		every_system = {
+			remove_star_flag = foc_khan_xyston_system_reserved_212
+			every_system_planet = {
+				remove_planet_flag = foc_khan_xyston_target_reserved
+				if = {
+					limit = {
+						OR = {
+							is_planet_class = pc_shattered
+							is_planet_class = pc_shattered_2
+							is_planet_class = pc_broken
+							is_planet_class = pc_black_hole
+						}
+					}
+					set_planet_flag = foc_khan_xyston_destroyed_target_213
+				}
+			}
+		}
+
+		# Rebuild every special Xyston as a one-target queue.
+		every_country = {
+			limit = { has_country_flag = foc_khan_final_order_country }
+			every_owned_fleet = {
+				limit = { any_owned_ship = { OR = { is_ship_size = foc_khan_xystonsd is_ship_size = foc_khan_xystonsd_foc_lowest } } }
+				remove_fleet_flag = foc_khan_xyston_retarget_pending_218
+				remove_auto_move_target = yes
+				clear_orders = yes
+				clear_fleet_actions = this
+				fleet_event = { id = foc_khan_xyston_ai.10 days = 2 random = 12 }
+			}
+		}
+
+		# Restore forced Rebel orders and add eight more reinforced battle groups to
+		# existing saves. New games already create sixteen groups directly.
+		if = {
+			limit = {
+				exists = event_target:foc_khan_rebel_alliance
+				exists = event_target:foc_khan_rebel_system
+				exists = event_target:foc_khan_rebel_capital
+				event_target:foc_khan_rebel_alliance = { NOT = { has_country_flag = foc_story_rebel_surrendered_to_first_order } }
+			}
+			event_target:foc_khan_rebel_alliance = {
+				if = {
+					# 3.11v-normal: keep the Rebel Alliance on the vanilla default type.
+					limit = { NOT = { is_country_type = default } }
+					set_country_type = default
+				}
+			}
+			event_target:foc_khan_rebel_system = {
+				while = {
+					count = 2
+					create_fleet = {
+						name = "FOC_KHAN_REBEL_FLEET"
+						effect = {
+							set_owner = event_target:foc_khan_rebel_alliance
+							# V15 full-armor prerequisite: foc_v15_defense_b1be0a850651.
+							owner = {
+							    if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+							}
+							
+							# V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_2 message = no } } }
+}
+							
+
+							
+
+							
+							set_location = event_target:foc_khan_rebel_capital
+							create_ship = { name = random design = "NAME_FOC_REBEL_NEBULA" upgradable = no }
+							while = { count = 3 create_ship = { name = random design = "NAME_FOC_REBEL_NEBULA" upgradable = no } }
+							while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_MC80" graphical_culture = rebel_01 upgradable = no } }
+							while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_MC30" graphical_culture = rebel_01 upgradable = no } }
+							while = { count = 4 create_ship = { name = random design = "NAME_FOC_REBEL_CR90" graphical_culture = rebel_01 upgradable = no } }
+							set_fleet_flag = foc_khan_rebel_attack_fleet
+							set_fleet_stance = aggressive
+							set_aggro_range_measure_from = self
+							set_aggro_range = 9999
+							fleet_event = { id = foc_khan_rebel.31 days = 2 random = 8 }
+						}
+						settings = {
+							can_upgrade = no
+							can_disband = yes
+							can_change_composition = no
+							spawn_debris = yes
+							ai_ignore_strength = yes
+						}
+					}
+				}
+			}
+		}
+
+		every_country = {
+			limit = {
+                has_country_flag = foc_khan_rebel_alliance_country
+                NOT = { has_country_flag = foc_story_rebel_surrendered_to_first_order }
+            }
+			every_owned_fleet = {
+				limit = {
+				    owner = { is_ai = yes }
+				    NOT = { has_fleet_flag = foc_republic_origin_rebellion_garrison }
+					has_fleet_flag = foc_khan_rebel_attack_fleet
+					any_owned_ship = { is_ship_class = shipclass_military }
+				}
+				remove_auto_move_target = yes
+				clear_orders = yes
+				clear_fleet_actions = this
+				fleet_event = { id = foc_khan_rebel.31 days = 2 random = 8 }
+			}
+		}
+	}
+}

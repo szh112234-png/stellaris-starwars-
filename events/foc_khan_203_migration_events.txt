@@ -1,0 +1,34 @@
+namespace = foc_khan_203
+
+# Existing 2.02 saves already have the original 30 Resurgent + 2 Eclipse initial force,
+# but lack the newly requested 72 Xystons. Add them once and release the 68 ordinary
+# combat ships to ACOT's military minister.
+event = {
+	id = foc_khan_203.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_global_flag = foc_khan_phase_two
+		NOT = { has_global_flag = foc_khan_crisis_finished }
+		exists = event_target:foc_khan_final_order
+		exists = event_target:foc_khan_final_order_system
+		exists = event_target:foc_khan_exegol_capital
+		event_target:foc_khan_final_order = {
+			has_country_flag = foc_khan_final_order_country
+			NOT = { has_country_flag = foc_khan_final_initial_72_xyston_203_done }
+		}
+	}
+
+	immediate = {
+		event_target:foc_khan_final_order_system = {
+			foc_khan_spawn_final_xyston_203_migration_group = yes
+			foc_khan_spawn_final_xyston_203_migration_group = yes
+			foc_khan_spawn_final_xyston_203_migration_group = yes
+			foc_khan_spawn_final_xyston_203_migration_group = yes
+		}
+		event_target:foc_khan_final_order = {
+			set_country_flag = foc_khan_final_initial_72_xyston_203_done
+		}
+	}
+}

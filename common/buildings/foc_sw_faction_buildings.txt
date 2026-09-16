@@ -1,0 +1,444 @@
+# V110 - faction buildings using artwork from the supplied Star Wars package.
+
+building_foc_sw_republic_barracks = {
+    base_buildtime = 360 can_build = yes can_demolish = yes base_cap_amount = 1 category = army
+    building_sets = { fortress government }
+    icon = "building_republic_barracks"
+    potential = {
+        exists = owner
+        owner = {
+            has_country_flag = foc_republic_origin_republic_country
+            NOT = { has_country_flag = foc_sw_new_republic_country }
+            NOT = { has_country_flag = foc_republic_origin_empire_country }
+            NOT = { has_country_flag = foc_republic_origin_jedi_purged }
+        }
+    }
+    allow = { has_upgraded_capital = yes }
+    planet_modifier = { job_soldier_add = 2 planet_army_build_speed_mult = 0.25 army_defense_health_mult = 0.10 }
+    army_modifier = { army_starting_experience_add = 75 }
+    resources = { category = planet_buildings cost = { minerals = 600 } upkeep = { energy = 2 } }
+    ai_weight = { weight = 5 }
+
+    destroy_trigger = {
+        exists = owner
+        NOT = {
+            owner = {
+                has_country_flag = foc_republic_origin_republic_country
+                NOT = { has_country_flag = foc_sw_new_republic_country }
+                NOT = { has_country_flag = foc_republic_origin_empire_country }
+                NOT = { has_country_flag = foc_republic_origin_jedi_purged }
+            }
+        }
+    }
+}
+
+building_foc_sw_republic_factory = {
+    base_buildtime = 480 can_build = yes can_demolish = yes base_cap_amount = 1 category = manufacturing
+    building_sets = { manufacturing urban }
+    icon = "building_republic_factory"
+    potential = {
+        exists = owner
+        owner = {
+            has_country_flag = foc_republic_origin_republic_country
+            NOT = { has_country_flag = foc_sw_new_republic_country }
+            NOT = { has_country_flag = foc_republic_origin_empire_country }
+            NOT = { has_country_flag = foc_republic_origin_jedi_purged }
+        }
+    }
+    allow = { has_upgraded_capital = yes }
+    planet_modifier = { planet_jobs_alloys_produces_mult = 0.10 planet_jobs_engineering_research_produces_mult = 0.05 planet_army_build_speed_mult = 0.10 }
+    resources = { category = planet_buildings cost = { minerals = 900 } upkeep = { energy = 3 } }
+    ai_weight = { weight = 4 }
+
+    destroy_trigger = {
+        exists = owner
+        NOT = {
+            owner = {
+                has_country_flag = foc_republic_origin_republic_country
+                NOT = { has_country_flag = foc_sw_new_republic_country }
+                NOT = { has_country_flag = foc_republic_origin_empire_country }
+                NOT = { has_country_flag = foc_republic_origin_jedi_purged }
+            }
+        }
+    }
+}
+
+building_foc_sw_separatist_parliament = {
+    base_buildtime = 420 can_build = yes can_demolish = yes base_cap_amount = 1 category = government
+    building_sets = { government urban }
+    icon = "building_separatist_parliament"
+    potential = { exists = owner owner = { has_country_flag = foc_republic_origin_separatist_country } is_capital = yes }
+    allow = { has_upgraded_capital = yes }
+    planet_modifier = { planet_stability_add = 5 planet_jobs_unity_produces_mult = 0.10 planet_jobs_trade_produces_mult = 0.10 }
+    resources = { category = planet_buildings cost = { minerals = 900 } upkeep = { energy = 2 } }
+    ai_weight = { weight = 10 }
+
+    destroy_trigger = {
+        exists = owner
+        NOT = {
+            owner = {
+                has_country_flag = foc_republic_origin_separatist_country
+            }
+        }
+    }
+}
+
+building_foc_sw_geonosian_arena = {
+    base_buildtime = 360 can_build = yes can_demolish = no base_cap_amount = 1 category = government
+    building_sets = { government urban }
+    icon = "building_geonosian_arena"
+    potential = { has_modifier = foc_lore_geonosis_droid_foundries }
+    allow = { has_upgraded_capital = yes }
+    planet_modifier = { planet_jobs_unity_produces_mult = 0.10 army_defense_health_mult = 0.15 planet_amenities_add = 10 }
+    resources = { category = planet_buildings cost = { minerals = 600 } upkeep = { energy = 1 } }
+    ai_weight = { weight = 2 }
+}
+
+building_foc_sw_imperial_barracks = {
+    base_buildtime = 330 can_build = yes can_demolish = yes base_cap_amount = 1 category = army
+    building_sets = { fortress government }
+    icon = "building_imperial_barracks"
+        potential = {
+            exists = owner
+            owner = {
+                OR = {
+                    has_country_flag = foc_republic_origin_empire_country
+                    has_country_flag = foc_republic_origin_player_empire
+                    has_country_flag = foc_sw_imperial_remnant_country
+                    has_country_flag = foc_republic_origin_player_imperial_remnant
+                }
+                NOT = { has_country_flag = foc_sw_new_republic_country }
+                NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+                NOT = { has_country_flag = foc_khan_first_order_country }
+                NOT = { has_country_flag = foc_khan_final_order_country }
+                NOT = { has_country_flag = fop_player_first_order }
+                NOT = { has_country_flag = fop_player_final_order }
+            }
+        }
+    allow = { has_upgraded_capital = yes }
+    planet_modifier = { job_soldier_add = 3 planet_army_build_speed_mult = 0.30 army_defense_health_mult = 0.15 }
+    army_modifier = { army_starting_experience_add = 100 army_damage_mult = 0.10 }
+    resources = { category = planet_buildings cost = { minerals = 650 } upkeep = { energy = 2.5 } }
+    ai_weight = { weight = 8 }
+
+    destroy_trigger = {
+        exists = owner
+        NOT = {
+            owner = {
+                OR = {
+                    has_country_flag = foc_republic_origin_empire_country
+                    has_country_flag = foc_republic_origin_player_empire
+                    has_country_flag = foc_sw_imperial_remnant_country
+                    has_country_flag = foc_republic_origin_player_imperial_remnant
+                }
+                NOT = { has_country_flag = foc_sw_new_republic_country }
+                NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+                NOT = { has_country_flag = foc_khan_first_order_country }
+                NOT = { has_country_flag = foc_khan_final_order_country }
+                NOT = { has_country_flag = fop_player_first_order }
+                NOT = { has_country_flag = fop_player_final_order }
+            }
+        }
+    }
+}
+
+building_foc_sw_imperial_factory = {
+    base_buildtime = 480 can_build = yes can_demolish = yes base_cap_amount = 1 category = manufacturing
+    building_sets = { manufacturing urban }
+    icon = "building_imperial_factory"
+        potential = {
+            exists = owner
+            owner = {
+                OR = {
+                    has_country_flag = foc_republic_origin_empire_country
+                    has_country_flag = foc_republic_origin_player_empire
+                    has_country_flag = foc_sw_imperial_remnant_country
+                    has_country_flag = foc_republic_origin_player_imperial_remnant
+                }
+                NOT = { has_country_flag = foc_sw_new_republic_country }
+                NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+                NOT = { has_country_flag = foc_khan_first_order_country }
+                NOT = { has_country_flag = foc_khan_final_order_country }
+                NOT = { has_country_flag = fop_player_first_order }
+                NOT = { has_country_flag = fop_player_final_order }
+            }
+        }
+    allow = { has_upgraded_capital = yes }
+    planet_modifier = { planet_jobs_alloys_produces_mult = 0.12 planet_jobs_engineering_research_produces_mult = 0.08 planet_building_build_speed_mult = 0.10 }
+    resources = { category = planet_buildings cost = { minerals = 1100 } upkeep = { energy = 4 } }
+    ai_weight = { weight = 6 }
+
+    destroy_trigger = {
+        exists = owner
+        NOT = {
+            owner = {
+                OR = {
+                    has_country_flag = foc_republic_origin_empire_country
+                    has_country_flag = foc_republic_origin_player_empire
+                    has_country_flag = foc_sw_imperial_remnant_country
+                    has_country_flag = foc_republic_origin_player_imperial_remnant
+                }
+                NOT = { has_country_flag = foc_sw_new_republic_country }
+                NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+                NOT = { has_country_flag = foc_khan_first_order_country }
+                NOT = { has_country_flag = foc_khan_final_order_country }
+                NOT = { has_country_flag = fop_player_first_order }
+                NOT = { has_country_flag = fop_player_final_order }
+            }
+        }
+    }
+}
+
+building_foc_sw_imperial_palace = {
+    base_buildtime = 720 can_build = yes can_demolish = yes base_cap_amount = 1 category = government
+    building_sets = { government urban }
+    icon = "building_imperialpalace"
+        potential = {
+            has_modifier = foc_lore_coruscant_galactic_metropolis
+            exists = owner
+            owner = {
+                OR = {
+                    has_country_flag = foc_republic_origin_empire_country
+                    has_country_flag = foc_republic_origin_player_empire
+                }
+                NOT = { has_country_flag = foc_sw_new_republic_country }
+                NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+                NOT = { has_country_flag = fop_player_first_order }
+            }
+        }
+    allow = { has_upgraded_capital = yes }
+    planet_modifier = { planet_stability_add = 10 planet_jobs_unity_produces_mult = 0.15 pop_government_ethic_attraction = 0.15 planet_orbital_bombardment_damage = -0.25 }
+    country_modifier = { country_base_influence_produces_add = 0.5 }
+    resources = { category = planet_buildings cost = { minerals = 1800 } upkeep = { energy = 5 } }
+    ai_weight = { weight = 20 }
+
+    destroy_trigger = {
+        exists = owner
+        NOT = {
+            owner = {
+                OR = {
+                    has_country_flag = foc_republic_origin_empire_country
+                    has_country_flag = foc_republic_origin_player_empire
+                }
+                NOT = { has_country_flag = foc_sw_new_republic_country }
+                NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+                NOT = { has_country_flag = fop_player_first_order }
+            }
+        }
+    }
+}
+
+building_foc_sw_fortress_vader = {
+    base_buildtime = 600 can_build = yes can_demolish = yes base_cap_amount = 1 category = army
+    building_sets = { fortress government }
+    icon = "building_fortress_vader"
+        potential = {
+            has_modifier = foc_lore_mustafar_mineral_world
+            exists = owner
+            owner = {
+                OR = {
+                    has_country_flag = foc_republic_origin_empire_country
+                    has_country_flag = foc_republic_origin_player_empire
+                }
+                NOT = { has_country_flag = foc_sw_new_republic_country }
+                NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+                NOT = { has_country_flag = fop_player_first_order }
+            }
+        }
+    allow = { has_upgraded_capital = yes }
+    planet_modifier = { army_defense_health_mult = 0.25 army_defense_damage_mult = 0.15 planet_orbital_bombardment_damage = -0.35 planet_jobs_society_research_produces_mult = 0.10 }
+    resources = { category = planet_buildings cost = { minerals = 1400 } upkeep = { energy = 5 } }
+    ai_weight = { weight = 8 }
+
+    destroy_trigger = {
+        exists = owner
+        NOT = {
+            owner = {
+                OR = {
+                    has_country_flag = foc_republic_origin_empire_country
+                    has_country_flag = foc_republic_origin_player_empire
+                }
+                NOT = { has_country_flag = foc_sw_new_republic_country }
+                NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+                NOT = { has_country_flag = fop_player_first_order }
+            }
+        }
+    }
+}
+
+building_foc_sw_rebel_command_center = {
+    base_buildtime = 360 can_build = yes can_demolish = yes base_cap_amount = 1 category = government
+    building_sets = { government fortress }
+    icon = "building_massassi_great_temple"
+        potential = {
+            exists = owner
+            owner = {
+                OR = {
+                    has_country_flag = foc_republic_origin_imperial_rebel_country
+                    has_country_flag = foc_republic_origin_rebel_alliance_country
+                }
+                NOT = { has_country_flag = foc_khan_first_order_resistance_country }
+                NOT = { has_country_flag = foc_republic_origin_post_treaty_rebel_country }
+                NOT = { has_country_flag = foc_sw_new_republic_country }
+            }
+        }
+    allow = { has_upgraded_capital = yes }
+    planet_modifier = { planet_jobs_unity_produces_mult = 0.10 planet_army_build_speed_mult = 0.20 army_defense_health_mult = 0.10 planet_amenities_add = 10 }
+    army_modifier = { army_starting_experience_add = 75 }
+    resources = { category = planet_buildings cost = { minerals = 500 } upkeep = { energy = 2 } }
+    ai_weight = { weight = 8 }
+
+    destroy_trigger = {
+        exists = owner
+        NOT = {
+            owner = {
+                OR = {
+                    has_country_flag = foc_republic_origin_imperial_rebel_country
+                    has_country_flag = foc_republic_origin_rebel_alliance_country
+                }
+                NOT = { has_country_flag = foc_khan_first_order_resistance_country }
+                NOT = { has_country_flag = foc_republic_origin_post_treaty_rebel_country }
+                NOT = { has_country_flag = foc_sw_new_republic_country }
+            }
+        }
+    }
+}
+
+building_foc_sw_hoth_ion_cannon = {
+    base_buildtime = 480 can_build = yes can_demolish = yes base_cap_amount = 1 category = army
+    building_sets = { fortress government }
+    icon = "building_hothioncannon"
+        potential = {
+            has_modifier = foc_lore_hoth_echo_base
+            exists = owner
+            owner = {
+                OR = {
+                    has_country_flag = foc_republic_origin_imperial_rebel_country
+                    has_country_flag = foc_republic_origin_rebel_alliance_country
+                }
+                NOT = { has_country_flag = foc_khan_first_order_resistance_country }
+                NOT = { has_country_flag = foc_republic_origin_post_treaty_rebel_country }
+                NOT = { has_country_flag = foc_sw_new_republic_country }
+            }
+        }
+    allow = { has_upgraded_capital = yes }
+    planet_modifier = { planet_orbital_bombardment_damage = -0.50 army_defense_health_mult = 0.20 job_soldier_add = 2 }
+    resources = { category = planet_buildings cost = { minerals = 900 } upkeep = { energy = 5 } }
+    ai_weight = { weight = 15 }
+
+    destroy_trigger = {
+        exists = owner
+        NOT = {
+            owner = {
+                OR = {
+                    has_country_flag = foc_republic_origin_imperial_rebel_country
+                    has_country_flag = foc_republic_origin_rebel_alliance_country
+                }
+                NOT = { has_country_flag = foc_khan_first_order_resistance_country }
+                NOT = { has_country_flag = foc_republic_origin_post_treaty_rebel_country }
+                NOT = { has_country_flag = foc_sw_new_republic_country }
+            }
+        }
+    }
+}
+
+building_foc_sw_new_republic_senate = {
+    base_buildtime = 600 can_build = yes can_demolish = yes base_cap_amount = 1 category = government
+    building_sets = { government urban }
+    icon = "building_newrepublic_senate"
+    potential = { has_modifier = foc_lore_hosnian_senate_world exists = owner owner = { has_country_flag = foc_sw_new_republic_country } }
+    allow = { has_upgraded_capital = yes }
+    planet_modifier = { planet_stability_add = 10 planet_jobs_unity_produces_mult = 0.15 planet_jobs_trade_produces_mult = 0.10 pop_government_ethic_attraction = 0.10 }
+    country_modifier = { country_base_influence_produces_add = 0.5 }
+    resources = { category = planet_buildings cost = { minerals = 1600 } upkeep = { energy = 4 } }
+    ai_weight = { weight = 20 }
+
+    destroy_trigger = {
+        exists = owner
+        NOT = {
+            owner = {
+                has_country_flag = foc_sw_new_republic_country
+                NOT = { has_country_flag = foc_khan_first_order_resistance_country }
+                NOT = { has_country_flag = foc_khan_first_order_country }
+                NOT = { has_country_flag = foc_khan_final_order_country }
+            }
+        }
+    }
+}
+
+building_foc_sw_first_order_training_center = {
+    base_buildtime = 360 can_build = yes can_demolish = yes base_cap_amount = 1 category = army
+    building_sets = { fortress government }
+    icon = "building_imperial_barracks"
+        potential = {
+            exists = owner
+            owner = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = fop_player_first_order
+                }
+                NOT = { has_country_flag = foc_khan_final_order_country }
+                NOT = { has_country_flag = fop_player_final_order }
+                NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+                NOT = { has_country_flag = foc_sw_new_republic_country }
+            }
+        }
+    allow = { has_upgraded_capital = yes }
+    planet_modifier = { job_soldier_add = 3 planet_army_build_speed_mult = 0.30 army_defense_health_mult = 0.15 }
+    army_modifier = { army_damage_mult = 0.15 army_starting_experience_add = 100 }
+    resources = { category = planet_buildings cost = { minerals = 800 } upkeep = { energy = 3 } }
+    ai_weight = { weight = 10 }
+
+    destroy_trigger = {
+        exists = owner
+        NOT = {
+            owner = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = fop_player_first_order
+                }
+                NOT = { has_country_flag = foc_khan_final_order_country }
+                NOT = { has_country_flag = fop_player_final_order }
+                NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+                NOT = { has_country_flag = foc_sw_new_republic_country }
+            }
+        }
+    }
+}
+
+# V111 - sequel-era D'Qar/Crait Resistance infrastructure, separate from the Galactic Civil War base network.
+building_foc_sw_resistance_command_post = {
+    base_buildtime = 360 can_build = yes can_demolish = yes base_cap_amount = 1 category = government
+    building_sets = { government fortress }
+    icon = "building_massassi_great_temple"
+    potential = {
+        exists = owner
+        owner = {
+            OR = {
+                has_country_flag = foc_khan_first_order_resistance_country
+                has_country_flag = foc_republic_origin_post_treaty_rebel_country
+            }
+            NOT = { has_country_flag = foc_republic_origin_imperial_rebel_country }
+            NOT = { has_country_flag = foc_sw_new_republic_country }
+        }
+    }
+    destroy_trigger = {
+        exists = owner
+        NOT = {
+            owner = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_resistance_country
+                    has_country_flag = foc_republic_origin_post_treaty_rebel_country
+                }
+                NOT = { has_country_flag = foc_republic_origin_imperial_rebel_country }
+                NOT = { has_country_flag = foc_sw_new_republic_country }
+            }
+        }
+    }
+    allow = { has_upgraded_capital = yes }
+    planet_modifier = { planet_jobs_unity_produces_mult = 0.08 planet_army_build_speed_mult = 0.25 army_defense_health_mult = 0.12 planet_amenities_add = 8 }
+    army_modifier = { army_starting_experience_add = 100 }
+    resources = { category = planet_buildings cost = { minerals = 550 } upkeep = { energy = 2 } }
+    ai_weight = { weight = 8 }
+}
+

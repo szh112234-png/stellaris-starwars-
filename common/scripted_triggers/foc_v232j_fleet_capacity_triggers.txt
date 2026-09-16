@@ -1,0 +1,11 @@
+# Compatibility predicate: true exactly when the selected naval profile uses
+# the original 99999 bonus. Unset choices follow the main difficulty.
+foc_v232j_uses_fleet_capacity_99999 = {
+    OR = {
+        has_global_flag = foc_v1717_naval_override_99999
+        AND = {
+            foc_v1717_naval_capacity_follows_difficulty = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+        }
+    }
+}

@@ -1,0 +1,396 @@
+foc_player_mandator = {
+    available_to_everyone = yes
+    formation_priority = 42
+    max_speed = 100
+    acceleration = 0.1
+    rotation_speed = 0.1
+    collision_radius = 8
+    max_hitpoints = 933622
+    modifier = {
+        ship_evasion_add = 30
+        ship_armor_add = 145878
+        ship_shield_add = 247800
+        ship_shield_regen_add_static = 400
+        ship_armor_regen_add_static = 400
+        ship_hull_regen_add_static = 400
+    }
+    ship_modifier = {
+        ship_weapon_range_mult = 0.25
+    }
+    size_multiplier = 270
+    fleet_slot_size = 8
+    section_slots = {
+        main = {
+            locator = "part1"
+        }
+        bow = {
+            locator = "part2"
+        }
+        mid = {
+            locator = "part3"
+        }
+        stern = {
+            locator = "part4"
+        }
+    }
+    num_target_locators = 4
+    is_space_station = no
+    map_counter_icon = ship_counter_64
+    icon = ship_size_military_8
+    use_shipnames_from = battleship
+    base_buildtime = 1800
+    can_have_federation_design = no
+    entity = "Manator_entity"
+    enable_default_design = yes
+    is_designable = yes
+    enable_3dview_in_ship_browser = yes
+    combat_disengage_chance = 0.5
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    required_component_set = "power_core"
+    required_component_set = "ftl_components"
+    required_component_set = "thruster_components"
+    required_component_set = "sensor_components"
+    required_component_set = "combat_computers"
+    required_component_set = "FOC_KHAN_MANDATOR_SIEGE_LASER_SET"
+    required_component_set = "FOC_KHAN_MANDATOR_SIEGE_LASER_SECONDARY_SET"
+    prerequisites = { tech_foc_player_mandator_blueprint }
+    potential_country = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        is_ai = no
+        has_technology = tech_foc_player_mandator_blueprint
+    }
+    possible_country = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        is_ai = no
+        has_technology = tech_foc_player_mandator_blueprint
+    }
+    possible_construction = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        exists = owner
+        owner = {
+            is_ai = no
+            has_technology = tech_foc_player_mandator_blueprint
+            has_technology = foc_tech_dark_legacy_resurgent
+        }
+    }
+    resources = {
+        category = ships
+        cost = {
+            alloys = 3000
+        }
+        upkeep = {
+            energy = 5
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 500
+    }
+    ai_ship_data = {
+        min = 0
+        max = 0
+    }
+
+
+}
+foc_player_mandator_foc_lowest = {
+    available_to_everyone = yes
+    formation_priority = 42
+    max_speed = 100
+    acceleration = 0.1
+    rotation_speed = 0.1
+    collision_radius = 8
+    modifier = {
+        ship_evasion_add = 5
+        ship_armor_add = 4291.27517
+        ship_shield_add = 13429.5302
+    }
+    ship_modifier = {
+
+    }
+    size_multiplier = 270
+    fleet_slot_size = 8
+    section_slots = {
+        main = {
+            locator = part1
+        }
+        bow = {
+            locator = part2
+        }
+        mid = {
+            locator = part3
+        }
+        stern = {
+            locator = part4
+        }
+    }
+    num_target_locators = 4
+    is_space_station = no
+    map_counter_icon = ship_counter_64
+    icon = ship_size_military_8
+    use_shipnames_from = battleship
+    base_buildtime = 1800
+    can_have_federation_design = no
+    entity = Manator_entity
+    enable_default_design = yes
+    is_designable = yes
+    enable_3dview_in_ship_browser = yes
+    combat_disengage_chance = 0.5
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    required_component_set = power_core
+    required_component_set = ftl_components
+    required_component_set = thruster_components
+    required_component_set = sensor_components
+    required_component_set = combat_computers
+    required_component_set = FOC_KHAN_MANDATOR_SIEGE_LASER_SET
+    required_component_set = FOC_KHAN_MANDATOR_SIEGE_LASER_SECONDARY_SET
+    prerequisites = {
+        tech_foc_player_mandator_blueprint
+    }
+    potential_country = {
+        has_global_flag = foc_khan_strength_lowest
+        is_ai = no
+        has_technology = tech_foc_player_mandator_blueprint
+    }
+    possible_country = {
+        has_global_flag = foc_khan_strength_lowest
+        is_ai = no
+        has_technology = tech_foc_player_mandator_blueprint
+    }
+    possible_construction = {
+        has_global_flag = foc_khan_strength_lowest
+        exists = owner
+        owner = {
+            is_ai = no
+            has_technology = tech_foc_player_mandator_blueprint
+            has_technology = foc_tech_dark_legacy_resurgent
+        }
+    }
+    resources = {
+        category = ships
+        cost = {
+            alloys = 3000
+        }
+        upkeep = {
+            energy = 5
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 500
+    }
+    ai_ship_data = {
+        min = 0
+        max = 0
+    }
+    max_hitpoints = 17165.1007
+
+
+}
+foc_player_eclipse = {
+    available_to_everyone = yes
+    formation_priority = 30
+    max_speed = 100
+    acceleration = 0.1
+    rotation_speed = 0.1
+    collision_radius = 32
+    max_hitpoints = 5815351
+    modifier = {
+        ship_evasion_add = 10
+        ship_armor_add = 908649
+        ship_shield_add = 1789200
+        ship_shield_regen_add_static = 1600
+        ship_armor_regen_add_static = 1600
+        ship_hull_regen_add_static = 1600
+        ship_disengage_chance_mult = -9999
+        ship_emergency_ftl_min_days_mult = 9999
+    }
+    ship_modifier = {
+        ship_weapon_range_mult = 1.00
+    }
+    size_multiplier = 618
+    fleet_slot_size = 16
+    combat_size_multiplier = 80
+    section_slots = {
+        mid = {
+            locator = "part1"
+        }
+        bow = {
+            locator = "part2"
+        }
+        core = {
+            locator = "part3"
+        }
+        data = {
+            locator = "part4"
+        }
+        stern = {
+            locator = "part5"
+        }
+    }
+    num_target_locators = 8
+    is_space_station = no
+    map_counter_icon = ship_counter_128
+    icon = ship_size_military_32
+    use_shipnames_from = titan
+    base_buildtime = 2400
+    can_have_federation_design = no
+    entity = "eclipse_frame_entity"
+    enable_default_design = yes
+    is_designable = yes
+    enable_3dview_in_ship_browser = yes
+    combat_disengage_chance = 0
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    required_component_set = "power_core"
+    required_component_set = "ftl_components"
+    required_component_set = "thruster_components"
+    required_component_set = "sensor_components"
+    required_component_set = "combat_computers"
+    prerequisites = { tech_foc_player_eclipse_blueprint }
+    potential_country = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        is_ai = no
+        has_technology = tech_foc_player_eclipse_blueprint
+    }
+    possible_country = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        is_ai = no
+        has_technology = tech_foc_player_eclipse_blueprint
+    }
+    possible_construction = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        exists = owner
+        owner = {
+            is_ai = no
+            has_technology = tech_foc_player_eclipse_blueprint
+        }
+    }
+    resources = {
+        category = ships
+        cost = {
+            alloys = 3000000
+        }
+        upkeep = {
+            energy = 5
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 500
+    }
+    ai_ship_data = {
+        min = 0
+        max = 0
+    }
+
+
+}
+foc_player_eclipse_foc_lowest = {
+    available_to_everyone = yes
+    formation_priority = 30
+    max_speed = 100
+    acceleration = 0.1
+    rotation_speed = 0.1
+    collision_radius = 32
+    modifier = {
+        ship_evasion_add = 5
+        ship_disengage_chance_mult = -9999
+        ship_emergency_ftl_min_days_mult = 9999
+        ship_armor_add = 3974.89919
+        ship_shield_add = 17926.2601
+    }
+    ship_modifier = {
+
+    }
+    size_multiplier = 618
+    fleet_slot_size = 16
+    combat_size_multiplier = 80
+    section_slots = {
+        mid = {
+            locator = part1
+        }
+        bow = {
+            locator = part2
+        }
+        core = {
+            locator = part3
+        }
+        data = {
+            locator = part4
+        }
+        stern = {
+            locator = part5
+        }
+    }
+    num_target_locators = 8
+    is_space_station = no
+    map_counter_icon = ship_counter_128
+    icon = ship_size_military_32
+    use_shipnames_from = titan
+    base_buildtime = 2400
+    can_have_federation_design = no
+    entity = eclipse_frame_entity
+    enable_default_design = yes
+    is_designable = yes
+    enable_3dview_in_ship_browser = yes
+    combat_disengage_chance = 0
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    required_component_set = power_core
+    required_component_set = ftl_components
+    required_component_set = thruster_components
+    required_component_set = sensor_components
+    required_component_set = combat_computers
+    prerequisites = {
+        tech_foc_player_eclipse_blueprint
+    }
+    potential_country = {
+        has_global_flag = foc_khan_strength_lowest
+        is_ai = no
+        has_technology = tech_foc_player_eclipse_blueprint
+    }
+    possible_country = {
+        has_global_flag = foc_khan_strength_lowest
+        is_ai = no
+        has_technology = tech_foc_player_eclipse_blueprint
+    }
+    possible_construction = {
+        has_global_flag = foc_khan_strength_lowest
+        exists = owner
+        owner = {
+            is_ai = no
+            has_technology = tech_foc_player_eclipse_blueprint
+        }
+    }
+    resources = {
+        category = ships
+        cost = {
+            alloys = 3000000
+        }
+        upkeep = {
+            energy = 5
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 500
+    }
+    ai_ship_data = {
+        min = 0
+        max = 0
+    }
+    max_hitpoints = 21199.3241
+
+
+}

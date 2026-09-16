@@ -1,0 +1,268 @@
+# =============================================================================
+# AI faction capital-ship identity gates
+# =============================================================================
+# Country flags are the authoritative boundary. Technology, captured designs,
+# federation sharing and debug grants can never make these hulls constructible
+# for a random empire or for the wrong Star Wars successor state.
+# =============================================================================
+
+# Galactic Republic only. New Republic, Empire, Rebels and post-Treaty states
+# are excluded even if an old save retains a stale Republic marker.
+foc_ai_capital_is_republic_venator_country = {
+    OR = {
+        has_country_flag = foc_republic_origin_republic_country
+        has_country_flag = foc_republic_origin_player_republic
+    }
+    NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+    NOT = { has_country_flag = foc_republic_origin_jedi_purged }
+    NOT = {
+        OR = {
+            has_country_flag = foc_republic_origin_separatist_country
+            has_country_flag = foc_republic_origin_empire_country
+            has_country_flag = foc_republic_origin_empire_crisis
+            has_country_flag = foc_sw_imperial_remnant_country
+            has_country_flag = foc_republic_origin_player_empire
+            has_country_flag = foc_republic_origin_player_imperial_remnant
+            has_country_flag = foc_republic_origin_imperial_rebel_country
+            has_country_flag = foc_republic_origin_rebel_alliance_country
+            has_country_flag = foc_republic_origin_post_treaty_rebel_country
+            has_country_flag = foc_republic_origin_post_treaty_player_rebels
+            has_country_flag = foc_khan_rebel_alliance_country
+            has_country_flag = foc_khan_first_order_resistance_country
+            has_country_flag = foc_sw_new_republic_country
+            has_country_flag = foc_republic_origin_ai_new_republic_after_dqar
+            has_country_flag = foc_republic_origin_post_treaty_new_republic
+            has_country_flag = foc_khan_first_order_country
+            has_country_flag = foc_khan_final_order_country
+            has_country_flag = foc_republic_origin_became_first_order
+            has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+            has_country_flag = fop_player_first_order
+            has_country_flag = fop_player_final_order
+        }
+    }
+}
+
+# Confederacy of Independent Systems only.
+foc_ai_capital_is_separatist_lucrehulk_country = {
+    has_country_flag = foc_republic_origin_separatist_country
+    NOT = {
+        OR = {
+            has_country_flag = foc_republic_origin_republic_country
+            has_country_flag = foc_republic_origin_player_republic
+            has_country_flag = foc_republic_origin_empire_country
+            has_country_flag = foc_republic_origin_empire_crisis
+            has_country_flag = foc_sw_imperial_remnant_country
+            has_country_flag = foc_republic_origin_player_empire
+            has_country_flag = foc_republic_origin_player_imperial_remnant
+            has_country_flag = foc_republic_origin_imperial_rebel_country
+            has_country_flag = foc_republic_origin_rebel_alliance_country
+            has_country_flag = foc_republic_origin_post_treaty_rebel_country
+            has_country_flag = foc_khan_rebel_alliance_country
+            has_country_flag = foc_sw_new_republic_country
+            has_country_flag = foc_republic_origin_ai_new_republic_after_dqar
+            has_country_flag = foc_khan_first_order_country
+            has_country_flag = foc_khan_final_order_country
+        }
+    }
+}
+
+# Imperial-class Star Destroyer: Galactic Empire and Imperial Remnant only.
+# First Order/Final Order are deliberately excluded; they use their own hull line.
+foc_ai_capital_is_imperial_class_country = {
+    OR = {
+        has_country_flag = foc_republic_origin_empire_country
+        has_country_flag = foc_republic_origin_empire_crisis
+        has_country_flag = foc_sw_imperial_remnant_country
+        has_country_flag = foc_republic_origin_player_empire
+        has_country_flag = foc_republic_origin_player_imperial_remnant
+    }
+    NOT = {
+        OR = {
+            has_country_flag = foc_republic_origin_republic_country
+            has_country_flag = foc_republic_origin_player_republic
+            has_country_flag = foc_republic_origin_separatist_country
+            has_country_flag = foc_republic_origin_imperial_rebel_country
+            has_country_flag = foc_republic_origin_rebel_alliance_country
+            has_country_flag = foc_republic_origin_post_treaty_rebel_country
+            has_country_flag = foc_republic_origin_post_treaty_player_rebels
+            has_country_flag = foc_khan_rebel_alliance_country
+            has_country_flag = foc_khan_first_order_resistance_country
+            has_country_flag = foc_sw_new_republic_country
+            has_country_flag = foc_republic_origin_ai_new_republic_after_dqar
+            has_country_flag = foc_republic_origin_post_treaty_new_republic
+            has_country_flag = foc_khan_first_order_country
+            has_country_flag = foc_khan_final_order_country
+            has_country_flag = foc_republic_origin_became_first_order
+            has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+            has_country_flag = fop_player_first_order
+            has_country_flag = fop_player_final_order
+        }
+    }
+}
+
+# Rebel Alliance identity for MC80 access. New Republic is handled separately.
+# The Resistance is deliberately excluded; it uses its own sequel-era hull line.
+foc_ai_capital_is_rebel_mc80_country = {
+    OR = {
+        has_country_flag = foc_republic_origin_imperial_rebel_country
+        has_country_flag = foc_republic_origin_rebel_alliance_country
+        has_country_flag = foc_republic_origin_post_treaty_rebel_country
+        has_country_flag = foc_republic_origin_post_treaty_player_rebels
+        has_country_flag = foc_khan_rebel_alliance_country
+        has_country_flag = foc_republic_origin_player_rebels
+    }
+    NOT = {
+        OR = {
+            has_country_flag = foc_republic_origin_separatist_country
+            has_country_flag = foc_republic_origin_empire_country
+            has_country_flag = foc_republic_origin_empire_crisis
+            has_country_flag = foc_sw_imperial_remnant_country
+            has_country_flag = foc_republic_origin_player_empire
+            has_country_flag = foc_republic_origin_player_imperial_remnant
+            has_country_flag = foc_sw_new_republic_country
+            has_country_flag = foc_republic_origin_ai_new_republic_after_dqar
+            has_country_flag = foc_republic_origin_post_treaty_new_republic
+            has_country_flag = foc_khan_first_order_resistance_country
+            has_country_flag = foc_khan_first_order_country
+            has_country_flag = foc_khan_final_order_country
+            has_country_flag = foc_republic_origin_became_first_order
+            has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+            has_country_flag = fop_player_first_order
+            has_country_flag = fop_player_final_order
+        }
+    }
+}
+
+# Pre-Treaty Rebel Alliance identity used by the early Nebula blueprint path.
+# Resistance is intentionally excluded, matching the existing story rule.
+foc_ai_capital_is_pre_treaty_rebel_country = {
+    foc_ai_capital_is_rebel_mc80_country = yes
+    NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+    NOT = {
+        OR = {
+            has_country_flag = foc_republic_origin_post_treaty_rebel_country
+            has_country_flag = foc_republic_origin_post_treaty_player_rebels
+            has_country_flag = foc_khan_first_order_resistance_country
+        }
+    }
+}
+
+# New Republic only. The Treaty fallback catches reused Republic country objects,
+# while explicit Imperial/Rebel/First Order denials prevent the shared Treaty
+# completion marker from leaking the ship family to the wrong successor.
+foc_ai_capital_is_new_republic_country = {
+    OR = {
+        has_country_flag = foc_sw_new_republic_country
+        has_country_flag = foc_republic_origin_ai_new_republic_after_dqar
+        has_country_flag = foc_republic_origin_post_treaty_new_republic
+        AND = {
+            has_global_flag = foc_republic_origin_galactic_treaty
+            OR = {
+                has_country_flag = foc_republic_origin_republic_country
+                has_country_flag = foc_republic_origin_player_republic
+                has_country_flag = foc_republic_origin_treaty_completed
+            }
+        }
+    }
+    NOT = {
+        OR = {
+            has_country_flag = foc_republic_origin_separatist_country
+            has_country_flag = foc_republic_origin_empire_country
+            has_country_flag = foc_republic_origin_empire_crisis
+            has_country_flag = foc_sw_imperial_remnant_country
+            has_country_flag = foc_republic_origin_player_empire
+            has_country_flag = foc_republic_origin_player_imperial_remnant
+            has_country_flag = foc_republic_origin_imperial_rebel_country
+            has_country_flag = foc_republic_origin_rebel_alliance_country
+            has_country_flag = foc_republic_origin_post_treaty_rebel_country
+            has_country_flag = foc_republic_origin_post_treaty_player_rebels
+            has_country_flag = foc_khan_rebel_alliance_country
+            has_country_flag = foc_khan_first_order_resistance_country
+            has_country_flag = foc_republic_origin_player_rebels
+            has_country_flag = foc_khan_first_order_resistance_country
+            has_country_flag = foc_khan_first_order_country
+            has_country_flag = foc_khan_final_order_country
+            has_country_flag = foc_republic_origin_became_first_order
+            has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+            has_country_flag = fop_player_first_order
+            has_country_flag = fop_player_final_order
+        }
+    }
+}
+
+
+# Resistance only. This identity may legitimately coexist with post-Treaty Rebel
+# markers, so those are not treated as conflicts. Order/Imperial/CIS identities
+# remain hard exclusions to prevent stale flags from leaking sequel-era hulls.
+foc_ai_capital_is_resistance_country = {
+    has_country_flag = foc_khan_first_order_resistance_country
+    NOT = {
+        OR = {
+            has_country_flag = foc_republic_origin_separatist_country
+            has_country_flag = foc_republic_origin_empire_country
+            has_country_flag = foc_republic_origin_empire_crisis
+            has_country_flag = foc_sw_imperial_remnant_country
+            has_country_flag = foc_republic_origin_player_empire
+            has_country_flag = foc_republic_origin_player_imperial_remnant
+            has_country_flag = foc_khan_first_order_country
+            has_country_flag = foc_khan_final_order_country
+            has_country_flag = foc_republic_origin_became_first_order
+            has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+            has_country_flag = fop_player_first_order
+            has_country_flag = fop_player_final_order
+        }
+    }
+}
+
+foc_ai_capital_is_nebula_country = {
+    OR = {
+        foc_ai_capital_is_pre_treaty_rebel_country = yes
+        foc_ai_capital_is_new_republic_country = yes
+        foc_ai_capital_is_resistance_country = yes
+    }
+}
+
+foc_ai_capital_is_viscount_country = {
+    OR = {
+        foc_ai_capital_is_new_republic_country = yes
+        foc_ai_capital_is_resistance_country = yes
+    }
+}
+
+foc_ai_capital_is_mc80_country = {
+    OR = {
+        foc_ai_capital_is_rebel_mc80_country = yes
+        foc_ai_capital_is_new_republic_country = yes
+    }
+}
+
+foc_ai_capital_can_build_mc80 = {
+    foc_ai_capital_is_mc80_country = yes
+    has_technology = tech_destroyers
+    has_country_flag = foc_rebel_mc80_design_unlocked
+    NOT = { has_country_flag = foc_phase1_mc80_retired }
+}
+
+foc_ai_capital_can_build_nebula = {
+    has_technology = tech_foc_rebel_nebula_blueprint
+    OR = {
+        AND = {
+            foc_ai_capital_is_pre_treaty_rebel_country = yes
+            has_country_flag = foc_saga_rebel_nebula_granted
+        }
+        AND = {
+            foc_ai_capital_is_new_republic_country = yes
+            has_country_flag = foc_saga_new_republic_shipyard_access
+        }
+        AND = {
+            foc_ai_capital_is_resistance_country = yes
+            has_country_flag = foc_saga_new_republic_shipyard_access
+        }
+    }
+}
+
+foc_ai_capital_can_build_viscount = {
+    foc_ai_capital_is_viscount_country = yes
+    has_technology = tech_foc_rebel_viscount_blueprint
+    has_country_flag = foc_saga_new_republic_shipyard_access
+}

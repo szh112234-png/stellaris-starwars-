@@ -1,0 +1,588 @@
+# V110 - Star Wars ground forces. Values take the supplied reference mod as a baseline,
+# but recruitment is bound to FOC's story-country flags so no external civic/trait is required.
+
+foc_sw_clone_legion = {
+    damage = 1.50 health = 1.50 morale = 1.50 morale_damage = 1.00 collateral_damage = 1.00 war_exhaustion = 1.50
+    time = 120 has_species = no pop_limited = no icon = GFX_foc_sw_army_clone
+    resources = { category = armies cost = { minerals = 200 } upkeep = { energy = 2 } }
+    potential = {
+        owner = {
+            has_country_flag = foc_republic_origin_republic_country
+            has_country_flag = foc_republic_origin_clone_army_plan
+            NOT = { has_country_flag = foc_sw_new_republic_country }
+            NOT = { has_country_flag = foc_republic_origin_empire_country }
+            NOT = { has_country_flag = foc_republic_origin_jedi_purged }
+        }
+    }
+}
+
+foc_sw_clone_arc_troopers = {
+    damage = 2.40 health = 1.80 morale = 2.50 morale_damage = 1.50 collateral_damage = 0.75 war_exhaustion = 2.00
+    time = 150 has_species = no pop_limited = no icon = GFX_foc_sw_army_clone
+    resources = { category = armies cost = { minerals = 350 } upkeep = { energy = 3 } }
+    potential = {
+        owner = {
+            has_country_flag = foc_republic_origin_republic_country
+            has_country_flag = foc_republic_origin_clone_army_plan
+            NOT = { has_country_flag = foc_sw_new_republic_country }
+            NOT = { has_country_flag = foc_republic_origin_empire_country }
+            NOT = { has_country_flag = foc_republic_origin_jedi_purged }
+        }
+    }
+}
+
+foc_sw_clone_commandos = {
+    damage = 2.10 health = 2.20 morale = 2.20 morale_damage = 1.30 collateral_damage = 0.50 war_exhaustion = 2.25
+    time = 165 has_species = no pop_limited = no icon = GFX_foc_sw_army_clone
+    resources = { category = armies cost = { minerals = 375 } upkeep = { energy = 3 } }
+    potential = {
+        owner = {
+            has_country_flag = foc_republic_origin_republic_country
+            has_country_flag = foc_republic_origin_clone_army_plan
+            NOT = { has_country_flag = foc_sw_new_republic_country }
+            NOT = { has_country_flag = foc_republic_origin_empire_country }
+            NOT = { has_country_flag = foc_republic_origin_jedi_purged }
+        }
+    }
+}
+
+foc_sw_cis_b1_droids = {
+    damage = 0.45 health = 1.00 has_morale = no morale_damage = 0.60 collateral_damage = 1.00 war_exhaustion = 0.25
+    time = 55 has_species = no pop_limited = no icon = GFX_foc_sw_army_cis
+    resources = { category = armies cost = { minerals = 60 } upkeep = { energy = 0.5 } }
+    potential = { owner = { has_country_flag = foc_republic_origin_separatist_country } }
+}
+
+foc_sw_cis_b2_droids = {
+    damage = 1.20 health = 1.35 has_morale = no morale_damage = 1.00 collateral_damage = 1.25 war_exhaustion = 0.50
+    time = 100 has_species = no pop_limited = no icon = GFX_foc_sw_army_cis
+    resources = { category = armies cost = { minerals = 120 } upkeep = { energy = 1.2 } }
+    potential = { owner = { has_country_flag = foc_republic_origin_separatist_country } }
+}
+
+foc_sw_cis_droidekas = {
+    damage = 1.75 health = 2.60 has_morale = no morale_damage = 1.50 collateral_damage = 1.20 war_exhaustion = 1.50
+    time = 180 has_species = no pop_limited = no icon = GFX_foc_sw_army_cis
+    resources = { category = armies cost = { minerals = 300 } upkeep = { energy = 2.5 } }
+    potential = { owner = { has_country_flag = foc_republic_origin_separatist_country } }
+}
+
+foc_sw_cis_commando_droids = {
+    damage = 2.10 health = 1.80 has_morale = no morale_damage = 2.00 collateral_damage = 0.60 war_exhaustion = 2.50
+    time = 145 has_species = no pop_limited = no icon = GFX_foc_sw_army_cis
+    resources = { category = armies cost = { minerals = 300 } upkeep = { energy = 3 } }
+    potential = { owner = { has_country_flag = foc_republic_origin_separatist_country } }
+}
+
+foc_sw_imperial_stormtroopers = {
+    damage = 1.15 health = 1.10 morale = 1.25 morale_damage = 1.10 collateral_damage = 1.00 war_exhaustion = 1.00
+    time = 85 has_species = no pop_limited = no icon = GFX_foc_sw_army_empire
+    resources = { category = armies cost = { minerals = 110 } upkeep = { energy = 1 } }
+        potential = {
+            owner = {
+                OR = {
+                    has_country_flag = foc_republic_origin_empire_country
+                    has_country_flag = foc_republic_origin_player_empire
+                    has_country_flag = foc_sw_imperial_remnant_country
+                    has_country_flag = foc_republic_origin_player_imperial_remnant
+                }
+                NOT = { has_country_flag = foc_sw_new_republic_country }
+                NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+                NOT = { has_country_flag = foc_khan_first_order_country }
+                NOT = { has_country_flag = foc_khan_final_order_country }
+                NOT = { has_country_flag = fop_player_first_order }
+                NOT = { has_country_flag = fop_player_final_order }
+            }
+        }
+}
+
+foc_sw_imperial_storm_commandos = {
+    damage = 1.70 health = 1.60 morale = 1.70 morale_damage = 1.60 collateral_damage = 0.75 war_exhaustion = 1.50
+    time = 145 has_species = no pop_limited = no icon = GFX_foc_sw_army_empire
+    resources = { category = armies cost = { minerals = 225 } upkeep = { energy = 2 } }
+        potential = {
+            owner = {
+                OR = {
+                    has_country_flag = foc_republic_origin_empire_country
+                    has_country_flag = foc_republic_origin_player_empire
+                    has_country_flag = foc_sw_imperial_remnant_country
+                    has_country_flag = foc_republic_origin_player_imperial_remnant
+                }
+                NOT = { has_country_flag = foc_sw_new_republic_country }
+                NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+                NOT = { has_country_flag = foc_khan_first_order_country }
+                NOT = { has_country_flag = foc_khan_final_order_country }
+                NOT = { has_country_flag = fop_player_first_order }
+                NOT = { has_country_flag = fop_player_final_order }
+            }
+        }
+}
+
+foc_sw_imperial_dark_troopers = {
+    damage = 2.80 health = 3.00 has_morale = no morale_damage = 2.00 collateral_damage = 2.00 war_exhaustion = 2.50
+    time = 240 has_species = no pop_limited = no icon = GFX_foc_sw_army_empire
+    resources = { category = armies cost = { minerals = 500 } upkeep = { energy = 5 } }
+        potential = {
+            owner = {
+                OR = {
+                    has_country_flag = foc_republic_origin_empire_country
+                    has_country_flag = foc_republic_origin_player_empire
+                    has_country_flag = foc_sw_imperial_remnant_country
+                    has_country_flag = foc_republic_origin_player_imperial_remnant
+                }
+                NOT = { has_country_flag = foc_sw_new_republic_country }
+                NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+                NOT = { has_country_flag = foc_khan_first_order_country }
+                NOT = { has_country_flag = foc_khan_final_order_country }
+                NOT = { has_country_flag = fop_player_first_order }
+                NOT = { has_country_flag = fop_player_final_order }
+            }
+        }
+    allow = { has_active_building = building_foc_sw_imperial_factory }
+}
+
+# V119 - AT-AT integrated from the supplied 17 Star Wars mod.
+# Restricted to Galactic Empire / Imperial Remnant story countries only.
+foc_sw_imperial_at_at = {
+    damage = 5.00
+    health = 6.00
+    morale = 3.00
+    morale_damage = 2.00
+    collateral_damage = 3.00
+    war_exhaustion = 3.00
+    time = 240
+    has_species = no
+    pop_limited = no
+    icon = GFX_foc_sw_army_empire
+
+    resources = {
+        category = armies
+        cost = { minerals = 800 }
+        upkeep = { energy = 8 }
+    }
+
+    potential = {
+        owner = {
+            OR = {
+                has_country_flag = foc_republic_origin_empire_country
+                has_country_flag = foc_republic_origin_player_empire
+                has_country_flag = foc_sw_imperial_remnant_country
+                has_country_flag = foc_republic_origin_player_imperial_remnant
+            }
+            NOT = { has_country_flag = foc_republic_origin_republic_country }
+            NOT = { has_country_flag = foc_republic_origin_imperial_rebel_country }
+            NOT = { has_country_flag = foc_republic_origin_rebel_alliance_country }
+            NOT = { has_country_flag = foc_sw_new_republic_country }
+            NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+            NOT = { has_country_flag = foc_khan_first_order_country }
+            NOT = { has_country_flag = foc_khan_final_order_country }
+            NOT = { has_country_flag = fop_player_first_order }
+            NOT = { has_country_flag = fop_player_final_order }
+        }
+    }
+
+    allow = {
+        has_active_building = building_foc_sw_imperial_factory
+    }
+}
+
+# =============================================================================
+# V119 - Imperial Inquisitorius
+# Adapted from the supplied 17 Star Wars mod's imperial_inquisitors army.
+# FOC uses the existing Inquisitorius-foundation story flag as the unlock.
+# =============================================================================
+foc_sw_imperial_inquisitors = {
+    damage = 2.60
+    health = 1.80
+    morale = 1.80
+    morale_damage = 2.00
+    collateral_damage = 0.75
+    war_exhaustion = 3.00
+    time = 165
+    has_species = no
+    pop_limited = no
+    icon = GFX_foc_sw_army_inquisitor
+
+    resources = {
+        category = armies
+        cost = { minerals = 350 }
+        upkeep = { energy = 3 }
+    }
+
+    potential = {
+        owner = {
+            OR = {
+                has_country_flag = foc_republic_origin_empire_country
+                has_country_flag = foc_republic_origin_player_empire
+            }
+            has_country_flag = foc_republic_origin_inquisitorius_founded
+
+            # The Inquisitorius is an Imperial-era institution. It does not
+            # survive as a normal recruitable arm after the Galactic Treaty.
+            NOT = { has_country_flag = foc_sw_imperial_remnant_country }
+            NOT = { has_country_flag = foc_republic_origin_player_imperial_remnant }
+            NOT = { has_country_flag = foc_republic_origin_imperial_rebel_country }
+            NOT = { has_country_flag = foc_republic_origin_rebel_alliance_country }
+            NOT = { has_country_flag = foc_sw_new_republic_country }
+            NOT = { has_country_flag = foc_khan_first_order_country }
+            NOT = { has_country_flag = foc_khan_final_order_country }
+            NOT = { has_country_flag = fop_player_first_order }
+            NOT = { has_country_flag = fop_player_final_order }
+        }
+
+        planet = {
+            OR = {
+                has_active_building = building_foc_sw_imperial_factory
+                has_modifier = foc_lore_nur_inquisitor_fortress
+            }
+        }
+    }
+
+    allow = {
+        OR = {
+            has_active_building = building_foc_sw_imperial_factory
+            has_modifier = foc_lore_nur_inquisitor_fortress
+        }
+    }
+
+    army_modifier = {
+        army_morale_damage_mult = 0.10
+        army_disengage_chance_mult = 0.10
+    }
+
+    ai_weight = {
+        base = 80
+    }
+}
+
+foc_sw_rebel_infantry = {
+    damage = 1.00 health = 1.05 morale = 1.25 morale_damage = 1.10 collateral_damage = 0.75 war_exhaustion = 0.80
+    time = 80 has_species = no pop_limited = no icon = GFX_foc_sw_army_rebel
+    resources = { category = armies cost = { minerals = 90 } upkeep = { energy = 0.8 } }
+        potential = {
+            owner = {
+                OR = {
+                    has_country_flag = foc_republic_origin_imperial_rebel_country
+                    has_country_flag = foc_republic_origin_rebel_alliance_country
+                }
+                NOT = { has_country_flag = foc_khan_first_order_resistance_country }
+                NOT = { has_country_flag = foc_republic_origin_post_treaty_rebel_country }
+                NOT = { has_country_flag = foc_sw_new_republic_country }
+            }
+        }
+}
+
+foc_sw_rebel_pathfinders = {
+    damage = 1.90 health = 1.50 morale = 2.00 morale_damage = 1.80 collateral_damage = 0.40 war_exhaustion = 1.25
+    time = 135 has_species = no pop_limited = no icon = GFX_foc_sw_army_rebel
+    resources = { category = armies cost = { minerals = 230 } upkeep = { energy = 2 } }
+        potential = {
+            owner = {
+                OR = {
+                    has_country_flag = foc_republic_origin_imperial_rebel_country
+                    has_country_flag = foc_republic_origin_rebel_alliance_country
+                }
+                NOT = { has_country_flag = foc_khan_first_order_resistance_country }
+                NOT = { has_country_flag = foc_republic_origin_post_treaty_rebel_country }
+                NOT = { has_country_flag = foc_sw_new_republic_country }
+            }
+        }
+}
+
+
+
+# V111 - sequel-era Resistance is deliberately separated from the Galactic Civil War Rebel Alliance.
+foc_sw_resistance_fighters = {
+    damage = 1.10 health = 1.05 morale = 1.40 morale_damage = 1.20 collateral_damage = 0.60 war_exhaustion = 0.75
+    time = 80 has_species = no pop_limited = no icon = GFX_foc_sw_army_rebel
+    resources = { category = armies cost = { minerals = 95 } upkeep = { energy = 0.9 } }
+    potential = {
+        owner = {
+            OR = {
+                has_country_flag = foc_khan_first_order_resistance_country
+                has_country_flag = foc_republic_origin_post_treaty_rebel_country
+            }
+            NOT = { has_country_flag = foc_republic_origin_imperial_rebel_country }
+            NOT = { has_country_flag = foc_sw_new_republic_country }
+        }
+    }
+}
+
+foc_sw_resistance_commandos = {
+    damage = 1.85 health = 1.45 morale = 2.10 morale_damage = 1.75 collateral_damage = 0.35 war_exhaustion = 1.10
+    time = 135 has_species = no pop_limited = no icon = GFX_foc_sw_army_rebel
+    resources = { category = armies cost = { minerals = 225 } upkeep = { energy = 2 } }
+    potential = {
+        owner = {
+            OR = {
+                has_country_flag = foc_khan_first_order_resistance_country
+                has_country_flag = foc_republic_origin_post_treaty_rebel_country
+            }
+            NOT = { has_country_flag = foc_republic_origin_imperial_rebel_country }
+            NOT = { has_country_flag = foc_sw_new_republic_country }
+        }
+    }
+}
+foc_sw_new_republic_marines = {
+    damage = 1.45 health = 1.50 morale = 1.70 morale_damage = 1.30 collateral_damage = 0.65 war_exhaustion = 1.00
+    time = 110 has_species = no pop_limited = no icon = GFX_foc_sw_army_republic
+    resources = { category = armies cost = { minerals = 160 } upkeep = { energy = 1.5 } }
+    potential = { owner = { has_country_flag = foc_sw_new_republic_country } }
+}
+
+foc_sw_first_order_stormtroopers = {
+    damage = 1.35 health = 1.30 morale = 1.60 morale_damage = 1.20 collateral_damage = 1.00 war_exhaustion = 1.20
+    time = 100 has_species = no pop_limited = no icon = GFX_foc_sw_army_first_order
+    resources = { category = armies cost = { minerals = 150 } upkeep = { energy = 1.5 } }
+        potential = {
+            owner = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = fop_player_first_order
+                }
+                NOT = { has_country_flag = foc_khan_final_order_country }
+                NOT = { has_country_flag = fop_player_final_order }
+                NOT = { has_country_flag = foc_sw_new_republic_country }
+                NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+            }
+        }
+}
+
+foc_sw_first_order_heavy_troopers = {
+    damage = 1.65 health = 1.75 morale = 1.80 morale_damage = 1.30 collateral_damage = 1.50 war_exhaustion = 1.50
+    time = 145 has_species = no pop_limited = no icon = GFX_foc_sw_army_first_order
+    resources = { category = armies cost = { minerals = 230 } upkeep = { energy = 2.2 } }
+        potential = {
+            owner = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = fop_player_first_order
+                }
+                NOT = { has_country_flag = foc_khan_final_order_country }
+                NOT = { has_country_flag = fop_player_final_order }
+                NOT = { has_country_flag = foc_sw_new_republic_country }
+                NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+            }
+        }
+}
+
+foc_sw_first_order_elite_troopers = {
+    damage = 2.10 health = 2.00 morale = 2.30 morale_damage = 1.70 collateral_damage = 0.70 war_exhaustion = 2.00
+    time = 175 has_species = no pop_limited = no icon = GFX_foc_sw_army_first_order
+    resources = { category = armies cost = { minerals = 320 } upkeep = { energy = 3 } }
+        potential = {
+            owner = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = fop_player_first_order
+                }
+                NOT = { has_country_flag = foc_khan_final_order_country }
+                NOT = { has_country_flag = fop_player_final_order }
+                NOT = { has_country_flag = foc_sw_new_republic_country }
+                NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+            }
+        }
+}
+
+# V119 - First Order modernization of the Imperial AT-AT.
+# The existing FOC AT-M6 remains the heavier siege walker above this unit.
+foc_sw_first_order_at_at = {
+    damage = 5.00
+    health = 6.50
+    morale = 3.00
+    morale_damage = 2.00
+    collateral_damage = 3.00
+    war_exhaustion = 3.00
+    time = 240
+    has_species = no
+    pop_limited = no
+    icon = GFX_foc_sw_army_first_order
+
+    resources = {
+        category = armies
+        cost = { minerals = 825 }
+        upkeep = { energy = 8 }
+    }
+
+    potential = {
+        owner = {
+            OR = {
+                has_country_flag = foc_khan_first_order_country
+                has_country_flag = fop_player_first_order
+            }
+            NOT = { has_country_flag = foc_khan_final_order_country }
+            NOT = { has_country_flag = fop_player_final_order }
+            NOT = { has_country_flag = foc_republic_origin_empire_country }
+            NOT = { has_country_flag = foc_sw_imperial_remnant_country }
+            NOT = { has_country_flag = foc_sw_new_republic_country }
+            NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+            NOT = { has_country_flag = foc_khan_first_order_resistance_country }
+        }
+    }
+
+    allow = {
+        has_active_building = building_foc_sw_first_order_training_center
+    }
+}
+
+foc_sw_first_order_at_m6 = {
+    damage = 5.00 health = 6.00 morale = 3.00 morale_damage = 2.00 collateral_damage = 4.00 war_exhaustion = 3.50
+    time = 330 has_species = no pop_limited = no icon = GFX_foc_sw_army_first_order
+    resources = { category = armies cost = { minerals = 900 } upkeep = { energy = 9 } }
+        potential = {
+            owner = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = fop_player_first_order
+                }
+                NOT = { has_country_flag = foc_khan_final_order_country }
+                NOT = { has_country_flag = fop_player_final_order }
+                NOT = { has_country_flag = foc_sw_new_republic_country }
+                NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+            }
+        }
+    allow = { has_active_building = building_foc_sw_first_order_training_center }
+}
+
+# =============================================================================
+# V119 - Knights of Ren
+# First Order dark-side special force. The player's unlock follows foc_kylo.11
+# exactly through its permanent Knights-of-Ren modifier; AI First Order can use
+# the formation once Ben Solo's fall has occurred globally.
+# =============================================================================
+foc_sw_knights_of_ren = {
+    damage = 3.40
+    health = 2.40
+    morale = 3.20
+    morale_damage = 3.60
+    collateral_damage = 0.50
+    war_exhaustion = 2.00
+    time = 240
+    has_species = no
+    pop_limited = no
+    icon = GFX_foc_sw_army_knights_of_ren
+
+    resources = {
+        category = armies
+        cost = { minerals = 650 }
+        upkeep = { energy = 6 }
+    }
+
+    potential = {
+        owner = {
+            OR = {
+                has_country_flag = foc_khan_first_order_country
+                has_country_flag = fop_player_first_order
+                has_country_flag = foc_republic_origin_became_first_order
+            }
+
+            # Player timing follows the dedicated Knights-of-Ren story event.
+            # AI First Order gets the same unit once Ben Solo has fallen.
+            OR = {
+                has_modifier = foc_saga_knights_of_ren
+                AND = {
+                    is_ai = yes
+                    has_global_flag = foc_saga_ben_solo_fallen
+                }
+            }
+
+            # Once Ben has returned to the light, no new Knights are raised.
+            NOT = { has_global_flag = foc_saga_ben_solo_returned }
+
+            NOT = { has_country_flag = foc_khan_final_order_country }
+            NOT = { has_country_flag = fop_player_final_order }
+            NOT = { has_country_flag = foc_republic_origin_empire_country }
+            NOT = { has_country_flag = foc_sw_imperial_remnant_country }
+            NOT = { has_country_flag = foc_sw_new_republic_country }
+            NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+            NOT = { has_country_flag = foc_khan_first_order_resistance_country }
+        }
+
+        planet = {
+            has_active_building = building_foc_sw_first_order_training_center
+        }
+    }
+
+    allow = {
+        has_active_building = building_foc_sw_first_order_training_center
+
+        # The Knights are a single order, not a mass-produced army branch.
+        custom_tooltip = {
+            text = foc_sw_knights_of_ren_limit_tt
+            owner = {
+                check_variable = {
+                    which = "foc_sw_knights_of_ren_count"
+                    value < 1
+                }
+            }
+        }
+    }
+
+    on_queued = {
+        owner = {
+            change_variable = {
+                which = "foc_sw_knights_of_ren_count"
+                value = 1
+            }
+        }
+    }
+
+    on_unqueued = {
+        owner = {
+            change_variable = {
+                which = "foc_sw_knights_of_ren_count"
+                value = -1
+            }
+        }
+    }
+
+    army_modifier = {
+        army_morale_damage_mult = 0.25
+        army_damage_mult = 0.10
+        army_disengage_chance_mult = 0.20
+    }
+
+    ai_weight = {
+        base = 200
+        modifier = {
+            set = 0
+            check_variable = {
+                which = "foc_sw_knights_of_ren_count"
+                value >= 1
+            }
+        }
+    }
+}
+
+foc_sw_sith_eternal_troopers = {
+    damage = 2.50 health = 2.60 morale = 3.00 morale_damage = 1.50 collateral_damage = 1.20 war_exhaustion = 2.00
+    time = 190 has_species = no pop_limited = no icon = GFX_foc_sw_army_sith_eternal
+    resources = { category = armies cost = { minerals = 350 } upkeep = { energy = 3.5 } }
+    potential = { owner = { OR = { has_country_flag = foc_khan_final_order_country has_country_flag = fop_player_final_order } } }
+}
+
+foc_sw_mandalorian_warriors = {
+    damage = 2.00 health = 2.20 morale = 2.10 morale_damage = 1.30 collateral_damage = 1.00 war_exhaustion = 1.80
+    time = 125 has_species = no pop_limited = no icon = GFX_foc_sw_army_mandalorian
+    resources = { category = armies cost = { minerals = 260 } upkeep = { energy = 2.5 } }
+    potential = {
+        planet = { has_modifier = foc_lore_mandalore_beskar_warrior_clans }
+        owner = {
+            has_country_flag = foc_mandalore_independent_country
+            NOT = { has_authority = auth_machine_intelligence }
+        }
+    }
+}
+
+foc_sw_mandalorian_elite = {
+    damage = 2.60 health = 2.50 morale = 2.80 morale_damage = 1.60 collateral_damage = 1.20 war_exhaustion = 2.50
+    time = 165 has_species = no pop_limited = no icon = GFX_foc_sw_army_mandalorian_elite
+    resources = { category = armies cost = { minerals = 400 } upkeep = { energy = 4 } }
+    potential = {
+        planet = { has_modifier = foc_lore_mandalore_beskar_warrior_clans }
+        owner = {
+            has_country_flag = foc_mandalore_independent_country
+            NOT = { has_authority = auth_machine_intelligence }
+        }
+    }
+}

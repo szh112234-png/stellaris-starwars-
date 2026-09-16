@@ -1,0 +1,17 @@
+fop_force_ascension_status_edict = {
+    # Shipgirl keeps its crisis-screen launcher visible with a one-day edict.
+    # A zero-length edict can expire before the outliner refreshes.
+    length = 1
+    icon = "GFX_fop_ambition_edict"
+    potential = {
+        is_ai = no
+        OR = { has_origin = origin_fop_first_order has_country_flag = foc_republic_origin_empire_crisis }
+        has_country_flag = fop_origin_crisis_active
+        has_ascension_perk = ap_fop_new_order_crisis
+    }
+    allow = { always = yes }
+    effect = {
+        hidden_effect = { country_event = { id = fop_ambition.1 } }
+    }
+    ai_weight = { weight = 0 }
+}

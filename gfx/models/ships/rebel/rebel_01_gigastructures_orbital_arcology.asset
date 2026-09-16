@@ -1,0 +1,101 @@
+##########
+# Orbital Arcology
+##########
+
+entity = {
+	name = "rebel_01_orbital_arcology_25_entity"
+	pdxmesh = "rebel_orbital_arcology_mesh"
+	cull_radius = 1000
+
+	default_state = "idle"
+	state = { name = "idle" }
+
+	scale = 1
+}
+
+entity = {
+	name = "rebel_01_orbital_arcology_21_entity"
+	pdxmesh = "rebel_orbital_arcology_mesh"
+	cull_radius = 1000
+
+	default_state = "idle"
+	state = { name = "idle" }
+
+	scale = 0.9
+}
+
+entity = {
+	name = "rebel_01_orbital_arcology_13_entity"
+	pdxmesh = "rebel_orbital_arcology_mesh"
+	cull_radius = 1000
+
+	default_state = "idle"
+	state = { name = "idle" }
+
+	scale = 0.525
+}
+
+entity = {
+	name = "rebel_01_orbital_arcology_object_entity"
+	pdxmesh = "rebel_orbital_arcology_mesh"
+	cull_radius = 1000
+
+	default_state = "idle"
+	state = { name = "idle" }
+
+	scale = 1
+}
+
+entity = {
+	name = "rebel_01_orbital_arcology_double_object_entity"
+	pdxmesh = "sw_empty_mesh"
+	cull_radius = 1000
+
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	locator = { name = "loc102" position = { 0 0 0 } rotation = { 0 90 0 } }
+
+	attach = { "loc101" = "rebel_01_orbital_arcology_object_entity" }
+	attach = { "loc102" = "rebel_01_orbital_arcology_object_entity" }
+
+	scale = 1
+}
+
+entity = {
+	name = "rebel_01_orbital_arcology_double_object_construction_entity"
+	pdxmesh = "sw_empty_mesh"
+	cull_radius = 1000
+
+	locator = { name = "loc102" position = { 0 0 0 } rotation = { 0 90 0 } }
+
+	attach = { "loc102" = "rebel_01_orbital_arcology_object_entity" }
+
+	scale = 1
+}
+
+entity = {
+	name = "rebel_01_orbital_arcology_triple_object_entity"
+	pdxmesh = "sw_empty_mesh"
+	cull_radius = 1000
+
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	locator = { name = "loc102" position = { 0 0 0 } rotation = { 0 90 0 } }
+	locator = { name = "loc103" position = { 0 0 0 } rotation = { 0 0 90 } }
+
+	attach = { "loc101" = "rebel_01_orbital_arcology_object_entity" }
+	attach = { "loc102" = "rebel_01_orbital_arcology_object_entity" }
+	attach = { "loc103" = "rebel_01_orbital_arcology_object_entity" }
+
+	scale = 1
+}
+
+entity = {
+	name = "rebel_01_orbital_arcology_triple_object_construction_entity"
+	pdxmesh = "sw_empty_mesh"
+	cull_radius = 1000
+
+	locator = { name = "loc103" position = { 0 0 0 } rotation = { 0 0 90 } }
+
+	attach = { "loc103" = "rebel_01_orbital_arcology_object_entity" }
+
+	scale = 1
+}

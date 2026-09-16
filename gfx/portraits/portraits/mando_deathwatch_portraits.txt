@@ -1,0 +1,107 @@
+portraits = {
+	deathwatch_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "mandaloriandw_male_clothes_01"	attachment_selector = "mandaloriandw_male_01_hair"	greeting_sound = "human_male_greetings_01"
+		character_textures = { "gfx/models/portraits/human/human_male_body_01.dds" }
+	}
+	deathwatch_female_01 = { entity = "portrait_human_female_01_entity"	clothes_selector = "mandaloriandw_female_clothes_01"	attachment_selector = "mandaloriandw_female_01_hair"	greeting_sound = "human_female_greetings_01"
+		character_textures = { "gfx/models/portraits/human/human_female_body_01.dds" }
+	}
+	previzsla_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "previzsla_male_clothes_01"	attachment_selector = "previzsla_male_01_hair"	greeting_sound = "human_male_greetings_01"
+		character_textures = { "gfx/models/portraits/human/human_male_body_01.dds" }
+	}
+}
+
+portrait_groups = {
+	deathwatch1 = {
+		default = deathwatch_male_01
+		game_setup = { #will run with a limited country scope. species and government is set but the country does not actually exist
+			add = {
+				trigger = {
+					ruler = {
+						OR = {
+							gender = male
+							gender = indeterminable
+						}
+					}
+				}
+				portraits = {
+					deathwatch_male_01
+					previzsla_male_01
+				}
+			}
+			add = {
+				trigger = {
+					ruler = {
+						OR = {
+							gender = female
+							gender = indeterminable
+						}
+					}
+				}
+				portraits = {
+					deathwatch_female_01
+				}
+			}
+		}		
+		
+		#species scope
+		species = { #generic portrait for a species
+			add = {
+				portraits = {
+					deathwatch_male_01
+				}
+			}
+		}		
+		
+		#pop scope
+		pop_group = { #for a specific pop
+			add = {
+				portraits = {
+					deathwatch_male_01
+					deathwatch_female_01
+				}
+			}
+		}
+		
+		#leader scope
+		leader = { #scientists, generals, admirals, governor
+			add = {
+				trigger = {
+					gender = male
+				}
+				portraits = {
+					deathwatch_male_01
+					previzsla_male_01
+				}
+			}
+			add = {
+				trigger = {
+					gender = female
+				}
+				portraits = {
+					deathwatch_female_01
+				}
+			}
+		}
+
+			
+		#leader scope 
+		ruler = {
+			add = {
+				trigger = {
+					gender = male
+				}
+				portraits = {
+					previzsla_male_01
+				}
+			}
+			add = {
+				trigger = {
+					gender = female
+				}
+				portraits = {
+					deathwatch_female_01
+				}
+			}
+		}
+	}	
+}

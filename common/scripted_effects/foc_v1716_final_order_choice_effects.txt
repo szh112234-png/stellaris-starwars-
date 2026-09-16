@@ -1,0 +1,125 @@
+# V17.16. Country scope: the player chooses before crisis hostility is applied.
+foc_v1716_restore_final_order_target = {
+    if = {
+        limit = { NOT = { exists = event_target:foc_khan_final_order } }
+        random_country = {
+            limit = { has_country_flag = foc_khan_final_order_country }
+            save_global_event_target_as = foc_khan_final_order
+        }
+    }
+}
+
+foc_v1716_hold_final_order_hostility = {
+    foc_v1716_restore_final_order_target = yes
+    if = {
+        limit = {
+            exists = event_target:foc_khan_final_order
+            NOT = { is_same_value = event_target:foc_khan_final_order }
+        }
+        establish_communications_no_message = event_target:foc_khan_final_order
+        set_faction_hostility = {
+            target = event_target:foc_khan_final_order
+            set_hostile = no
+            set_neutral = yes
+            set_friendly = no
+        }
+        event_target:foc_khan_final_order = {
+            set_faction_hostility = {
+                target = prev
+                set_hostile = no
+                set_neutral = yes
+                set_friendly = no
+            }
+        }
+    }
+}
+
+foc_v1716_resist_final_order = {
+    foc_v1716_restore_final_order_target = yes
+    if = {
+        limit = {
+            exists = event_target:foc_khan_final_order
+            NOT = { is_same_value = event_target:foc_khan_final_order }
+        }
+        # Recover players who were incorrectly offered ordinary satrapy in old saves.
+        if = {
+            limit = {
+                is_subject = yes
+                overlord = { is_same_value = event_target:foc_khan_final_order }
+            }
+            set_subject_of = { who = none }
+        }
+        remove_country_flag = foc_khan_submitted_final_order
+        establish_communications_no_message = event_target:foc_khan_final_order
+        set_faction_hostility = {
+            target = event_target:foc_khan_final_order
+            set_hostile = yes
+            set_neutral = no
+            set_friendly = no
+        }
+        event_target:foc_khan_final_order = {
+            set_faction_hostility = {
+                target = prev
+                set_hostile = yes
+                set_neutral = no
+                set_friendly = no
+            }
+        }
+    }
+}
+
+# Join after an independent NPC Final Order already exists (old-save recovery).
+# Transfer its assets before replacing the global owner target. Player technology
+# remains untouched: inherited fixed-design ships carry their existing equipment.
+foc_v1716_inherit_existing_final_order = {
+    foc_v1716_restore_final_order_target = yes
+    if = {
+        limit = {
+            exists = event_target:foc_khan_final_order
+            event_target:foc_khan_final_order = {
+                is_ai = yes
+                has_country_flag = foc_khan_final_order_country
+            }
+            NOT = { is_same_value = event_target:foc_khan_final_order }
+        }
+        set_country_flag = foc_v1716_inherited_final_order_assets
+        if = {
+            limit = {
+                is_subject = yes
+                overlord = { is_same_value = event_target:foc_khan_final_order }
+            }
+            set_subject_of = { who = none }
+        }
+        remove_country_flag = foc_khan_submitted_final_order
+        save_event_target_as = foc_v1716_ascending_player
+        event_target:foc_khan_final_order = {
+            every_subject = {
+                set_subject_of = { who = event_target:foc_v1716_ascending_player preset = preset_foc_khan_satrapy }
+                set_country_flag = fop_force_bound_subject
+                remove_country_flag = foc_khan_submitted_final_order
+            }
+            every_owned_fleet = {
+                remove_auto_move_target = yes
+                clear_orders = yes
+                clear_fleet_actions = this
+                remove_fleet_flag = foc_khan_final_order_attack_fleet
+                remove_fleet_flag = foc_khan_final_order_guard_fleet
+                remove_fleet_flag = foc_khan_final_order_engineering_fleet
+                remove_fleet_flag = foc_khan_final_order_invasion_force
+                remove_fleet_flag = foc_khan_xyston_planet_killer_fleet
+                set_owner = event_target:foc_v1716_ascending_player
+            }
+            every_owned_planet = {
+                set_owner = event_target:foc_v1716_ascending_player
+                set_controller = event_target:foc_v1716_ascending_player
+                every_planet_army = { set_owner = event_target:foc_v1716_ascending_player }
+            }
+            every_owned_starbase = { set_owner = event_target:foc_v1716_ascending_player }
+            every_owned_megastructure = { set_owner = event_target:foc_v1716_ascending_player }
+            remove_country_flag = foc_khan_final_order_country
+            destroy_country = yes
+        }
+        save_global_event_target_as = foc_khan_final_order
+        remove_global_flag = foc_khan_final_reinforcements_active
+    }
+}

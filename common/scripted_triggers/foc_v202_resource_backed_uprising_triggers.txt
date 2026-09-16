@@ -1,0 +1,47 @@
+# V220 - Planet scope: only an actual mobile Imperial combat force suppresses
+# directed uprising activity. Starbases, defence platforms, science ships,
+# construction ships, colony ships and transports do NOT count as a fleet here.
+# shipclass_military_special is included for mobile special warships such as
+# scripted super-capitals/planet-killer hulls.
+foc_v202_system_has_no_imperial_fleet = {
+    solar_system = {
+        NOT = {
+            any_fleet_in_system = {
+                exists = owner
+                owner = { has_country_flag = foc_republic_origin_empire_country }
+                # Stellaris 4.4: is_mobile is a FLEET-scope trigger.
+                is_mobile = yes
+                any_owned_ship = {
+                    OR = {
+                        is_ship_class = shipclass_military
+                        is_ship_class = shipclass_military_special
+                    }
+                }
+            }
+        }
+    }
+}
+
+# Country scope (Imperial Rebels / Rebel Alliance): at least one non-capital
+# Imperial colony is adjacent to Rebel territory and lacks an Imperial combat fleet.
+foc_v202_has_unguarded_imperial_border_colony = {
+    any_country = {
+        has_country_flag = foc_republic_origin_empire_country
+        is_at_war_with = root
+        NOR = {
+            has_country_flag = foc_republic_origin_death_star_completed
+            has_country_flag = foc_republic_origin_death_star_one_built
+            has_country_flag = foc_republic_origin_death_star_two_built
+        }
+        any_owned_planet = {
+            is_colony = yes
+            is_capital = no
+            foc_v202_system_has_no_imperial_fleet = yes
+            solar_system = {
+                any_neighbor_system = {
+                    space_owner? = { is_same_value = root }
+                }
+            }
+        }
+    }
+}

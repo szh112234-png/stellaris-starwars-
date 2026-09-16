@@ -1,0 +1,2329 @@
+# FOC v17.7 rebalance 0.8:1:2:2.5; shared technology values, full weapon slots, no ship-specific nerf components.
+# Additional X-slot heavy main batteries. Existing L/S/M component IDs and upgrades remain intact.
+
+weapon_component_template = {
+    icon = "GFX_ship_part_octuple_turbo_g_2"
+    icon_frame = 1
+    damage = {
+        min = 7750
+        max = 7750
+    }
+    windup = {
+        min = 1.25
+        max = 23.75
+    }
+    total_fire_time = 37.5
+    accuracy = 1
+    tracking = 0.1
+    power = -280
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "gamma_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 48
+            sr_tibanna_swgs = 16
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 1
+    armor_damage = 1.5
+    hull_damage = 1.25
+    key = "FOC_EMP_OCTUPLE_X_GEN2_BALANCED"
+    component_set = "FOC_V1710_EMP_OCTUPLE_MK11_SET"
+    prerequisites = { "foc_tech_emp_octuple_2" }
+    upgrades_to = "FOC_EMP_OCTUPLE_X_GEN3_V178_STEP_1"
+    potential = {
+        from = { foc_v1717_first_order_empire_arsenal_allowed = yes }
+
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_empire_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.05
+    armor_penetration = 0
+    range = 312
+    show_tech_unlock_if = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_empire_arsenal = yes
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_octuple_turbo_g_2"
+    icon_frame = 1
+    damage = { min = 5291.743376 max = 9995.390232 }
+    windup = { min = 12.830438 max = 12.830438 }
+    total_fire_time = 60.901
+    accuracy = 0.836511642073
+    tracking = 0.1
+    power = -200
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "gamma_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 41.485491573466
+            sr_tibanna_swgs = 9.189586839976
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 0.574349177499
+    armor_damage = 1.5
+    hull_damage = 1.820564203026
+    key = "FOC_EMP_OCTUPLE_X_GEN2_BRIDGE_1"
+    component_set = "FOC_V1710_EMP_OCTUPLE_MK03_SET"
+    prerequisites = { "foc_tech_emp_octuple_2_bridge_1" }
+    upgrades_to = "FOC_EMP_OCTUPLE_X_GEN2_V178_STEP_3"
+    potential = {
+        from = { foc_v1717_first_order_empire_arsenal_allowed = yes }
+
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_empire_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.01
+    armor_penetration = 0
+    range = 312
+    show_tech_unlock_if = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_empire_arsenal = yes
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_octuple_turbo_g_2"
+    icon_frame = 1
+    damage = { min = 5900.050573 max = 9439.996226 }
+    windup = { min = 12.960492 max = 12.960492 }
+    total_fire_time = 53.948
+    accuracy = 0.874689659155
+    tracking = 0.1
+    power = -220
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "gamma_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 43.026150277303
+            sr_tibanna_swgs = 10.556063286183
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 0.659753955386
+    armor_damage = 1.5
+    hull_damage = 1.65722700867
+    key = "FOC_EMP_OCTUPLE_X_GEN2_BRIDGE_2"
+    component_set = "FOC_V1710_EMP_OCTUPLE_MK05_SET"
+    prerequisites = { "foc_tech_emp_octuple_2_bridge_2" }
+    upgrades_to = "FOC_EMP_OCTUPLE_X_GEN2_BRIDGE_3"
+    potential = {
+        from = { foc_v1717_first_order_empire_arsenal_allowed = yes }
+
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_empire_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.02
+    armor_penetration = 0
+    range = 312
+    show_tech_unlock_if = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_empire_arsenal = yes
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_octuple_turbo_g_2"
+    icon_frame = 1
+    damage = { min = 6205.745641 max = 9160.795283 }
+    windup = { min = 12.962443 max = 12.962443 }
+    total_fire_time = 50.775
+    accuracy = 0.894427191
+    tracking = 0.1
+    power = -230
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "gamma_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 43.817804600413
+            sr_tibanna_swgs = 11.313708498985
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 0.707106781187
+    armor_damage = 1.5
+    hull_damage = 1.581138830084
+    key = "FOC_EMP_OCTUPLE_X_GEN2_BRIDGE_3"
+    component_set = "FOC_V1710_EMP_OCTUPLE_MK06_SET"
+    prerequisites = { "foc_tech_emp_octuple_2_bridge_3" }
+    upgrades_to = "FOC_EMP_OCTUPLE_X_GEN2_V178_STEP_6"
+    potential = {
+        from = { foc_v1717_first_order_empire_arsenal_allowed = yes }
+
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_empire_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.025
+    armor_penetration = 0
+    range = 312
+    show_tech_unlock_if = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_empire_arsenal = yes
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_octuple_turbo_g_2"
+    icon_frame = 1
+    damage = { min = 6820.269847 max = 8599.433663 }
+    windup = { min = 12.861224 max = 12.861224 }
+    total_fire_time = 44.978
+    accuracy = 0.935248447823
+    tracking = 0.1
+    power = -250
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "gamma_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 45.445079087956
+            sr_tibanna_swgs = 12.9960383417
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 0.812252396356
+    armor_damage = 1.5
+    hull_damage = 1.439282377033
+    key = "FOC_EMP_OCTUPLE_X_GEN2_BRIDGE_4"
+    component_set = "FOC_V1710_EMP_OCTUPLE_MK08_SET"
+    prerequisites = { "foc_tech_emp_octuple_2_bridge_4" }
+    upgrades_to = "FOC_EMP_OCTUPLE_X_GEN2_V178_STEP_8"
+    potential = {
+        from = { foc_v1717_first_order_empire_arsenal_allowed = yes }
+
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_empire_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.035
+    armor_penetration = 0
+    range = 312
+    show_tech_unlock_if = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_empire_arsenal = yes
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_octuple_turbo_g_2"
+    icon_frame = 1
+    damage = { min = 7439.000664 max = 8034.109327 }
+    windup = { min = 12.644025 max = 12.644025 }
+    total_fire_time = 39.843
+    accuracy = 0.977932768543
+    tracking = 0.1
+    power = -270
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "gamma_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 47.132786138972
+            sr_tibanna_swgs = 14.928527864589
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 0.933032991537
+    armor_damage = 1.5
+    hull_damage = 1.310152986836
+    key = "FOC_EMP_OCTUPLE_X_GEN2_BRIDGE_5"
+    component_set = "FOC_V1710_EMP_OCTUPLE_MK10_SET"
+    prerequisites = { "foc_tech_emp_octuple_2_bridge_5" }
+    upgrades_to = "FOC_EMP_OCTUPLE_X_GEN2_BALANCED"
+    potential = {
+        from = { foc_v1717_first_order_empire_arsenal_allowed = yes }
+
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_empire_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.045
+    armor_penetration = 0
+    range = 312
+    show_tech_unlock_if = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_empire_arsenal = yes
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_octuple_turbo_g_2"
+    icon_frame = 1
+    damage = { min = 11500 max = 11500 }
+    windup = {
+        min = 1.25
+        max = 23.75
+    }
+    total_fire_time = 37.5
+    accuracy = 1
+    tracking = 0.1
+    power = -480
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "gamma_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 56
+            sr_tibanna_swgs = 24
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 1
+    armor_damage = 1.5
+    hull_damage = 1.25
+    key = "FOC_EMP_OCTUPLE_X_GEN3_BALANCED"
+    component_set = "FOC_V1710_EMP_OCTUPLE_MK22_SET"
+    prerequisites = { "foc_tech_emp_octuple_3" }
+    potential = {
+        from = { foc_v1717_first_order_empire_arsenal_allowed = yes }
+
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_empire_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.1
+    armor_penetration = 0.05
+    range = 312
+    show_tech_unlock_if = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_empire_arsenal = yes
+    }
+
+    upgrades_to = "FOC_EMP_OCTUPLE_X_GEN4_V179_STEP_1"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_octuple_turbo_g_2"
+    icon_frame = 1
+    damage = { min = 8630.701645 max = 8630.701645 }
+    windup = { min = 12.5 max = 12.5 }
+    total_fire_time = 37.5
+    accuracy = 1
+    tracking = 0.1
+    power = -334.545454545455
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "gamma_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 50.060992169127
+            sr_tibanna_swgs = 17.870836088753
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 1
+    armor_damage = 1.5
+    hull_damage = 1.25
+    key = "FOC_EMP_OCTUPLE_X_GEN3_BRIDGE_1"
+    component_set = "FOC_V1710_EMP_OCTUPLE_MK14_SET"
+    prerequisites = { "foc_tech_emp_octuple_3_bridge_1" }
+    potential = {
+        from = { foc_v1717_first_order_empire_arsenal_allowed = yes }
+
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_empire_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.063636363636
+    armor_penetration = 0.013636363636
+    range = 312
+    show_tech_unlock_if = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_empire_arsenal = yes
+    }
+    upgrades_to = "FOC_EMP_OCTUPLE_X_GEN3_V178_STEP_4"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_octuple_turbo_g_2"
+    icon_frame = 1
+    damage = { min = 9611.485276 max = 9611.485276 }
+    windup = { min = 12.5 max = 12.5 }
+    total_fire_time = 37.5
+    accuracy = 1
+    tracking = 0.1
+    power = -389.090909090909
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "gamma_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 52.210477853278
+            sr_tibanna_swgs = 19.960423906943
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 1
+    armor_damage = 1.5
+    hull_damage = 1.25
+    key = "FOC_EMP_OCTUPLE_X_GEN3_BRIDGE_2"
+    component_set = "FOC_V1710_EMP_OCTUPLE_MK17_SET"
+    prerequisites = { "foc_tech_emp_octuple_3_bridge_2" }
+    potential = {
+        from = { foc_v1717_first_order_empire_arsenal_allowed = yes }
+
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_empire_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.077272727273
+    armor_penetration = 0.027272727273
+    range = 312
+    show_tech_unlock_if = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_empire_arsenal = yes
+    }
+    upgrades_to = "FOC_EMP_OCTUPLE_X_GEN3_V178_STEP_7"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_octuple_turbo_g_2"
+    icon_frame = 1
+    damage = { min = 10703.724101 max = 10703.724101 }
+    windup = { min = 12.5 max = 12.5 }
+    total_fire_time = 37.5
+    accuracy = 1
+    tracking = 0.1
+    power = -443.636363636364
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "gamma_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 54.452256728319
+            sr_tibanna_swgs = 22.294341493938
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 1
+    armor_damage = 1.5
+    hull_damage = 1.25
+    key = "FOC_EMP_OCTUPLE_X_GEN3_BRIDGE_3"
+    component_set = "FOC_V1710_EMP_OCTUPLE_MK20_SET"
+    prerequisites = { "foc_tech_emp_octuple_3_bridge_3" }
+    potential = {
+        from = { foc_v1717_first_order_empire_arsenal_allowed = yes }
+
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_empire_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.090909090909
+    armor_penetration = 0.040909090909
+    range = 312
+    show_tech_unlock_if = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_empire_arsenal = yes
+    }
+    upgrades_to = "FOC_EMP_OCTUPLE_X_GEN3_V178_STEP_10"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_quad_turbo_g_2"
+    icon_frame = 1
+    damage = {
+        min = 5668.874466
+        max = 7018.625534
+    }
+    windup = {
+        min = 0
+        max = 50
+    }
+    total_fire_time = 62.5
+    range = 264
+    accuracy = 0.8
+    tracking = 0.25
+    shield_damage = 0.50
+    armor_damage = 1.25
+    hull_damage = 1.00
+    power = -90
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "gamma_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 48
+            sr_tibanna_swgs = 16
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    key = "FOC_EMP_QUAD_X_GEN2_BALANCED"
+    component_set = "FOC_V1710_EMP_QUAD_MK04_SET"
+    prerequisites = { "foc_tech_emp_quad_2" }
+    upgrades_to = "FOC_EMP_QUAD_X_GEN3_V178_STEP_1"
+    potential = {
+        from = { foc_v1717_first_order_empire_arsenal_allowed = yes }
+
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_empire_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.05
+    armor_penetration = 0
+    show_tech_unlock_if = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_empire_arsenal = yes
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_quad_turbo_g_3"
+    icon_frame = 1
+    damage = { min = 3942.857143 max = 5257.142857 }
+    windup = {
+        min = 1.25
+        max = 23.75
+    }
+    total_fire_time = 37.5
+    accuracy = 1
+    tracking = 0.25
+    power = -300
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "gamma_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 56
+            sr_tibanna_swgs = 24
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 1
+    armor_damage = 1
+    hull_damage = 1
+    key = "FOC_EMP_QUAD_X_GEN3_BALANCED"
+    component_set = "FOC_V1710_EMP_QUAD_MK15_SET"
+    prerequisites = { "foc_tech_emp_quad_3" }
+    potential = {
+        from = { foc_v1717_first_order_empire_arsenal_allowed = yes }
+
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_empire_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.1
+    armor_penetration = 0.05
+    range = 264
+    show_tech_unlock_if = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_empire_arsenal = yes
+    }
+
+    upgrades_to = "FOC_EMP_QUAD_X_GEN4_V179_STEP_1"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_quad_turbo_g_3"
+    icon_frame = 1
+    damage = { min = 5307.445201 max = 6659.949166 }
+    windup = { min = 22.078561 max = 22.078561 }
+    total_fire_time = 56.957
+    accuracy = 0.833124659685
+    tracking = 0.25
+    power = -128.181818181818
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "gamma_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 49.364345235705
+            sr_tibanna_swgs = 17.224101465585
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 0.590909090909
+    armor_damage = 1.204545454545
+    hull_damage = 1
+    key = "FOC_EMP_QUAD_X_GEN3_BRIDGE_1"
+    component_set = "FOC_V1710_EMP_QUAD_MK06_SET"
+    prerequisites = { "foc_tech_emp_quad_3_bridge_1" }
+    potential = {
+        from = { foc_v1717_first_order_empire_arsenal_allowed = yes }
+
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_empire_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.059090909091
+    armor_penetration = 0.009090909091
+    range = 264
+    show_tech_unlock_if = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_empire_arsenal = yes
+    }
+    upgrades_to = "FOC_EMP_QUAD_X_GEN3_V178_STEP_3"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_quad_turbo_g_3"
+    icon_frame = 1
+    damage = { min = 4968.724552 max = 6319.305326 }
+    windup = { min = 19.48412 max = 19.48412 }
+    total_fire_time = 51.905
+    accuracy = 0.867620873218
+    tracking = 0.25
+    power = -166.363636363636
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "gamma_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 50.767470428123
+            sr_tibanna_swgs = 18.541854456048
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 0.681818181818
+    armor_damage = 1.159090909091
+    hull_damage = 1
+    key = "FOC_EMP_QUAD_X_GEN3_BRIDGE_2"
+    component_set = "FOC_V1710_EMP_QUAD_MK08_SET"
+    prerequisites = { "foc_tech_emp_quad_3_bridge_2" }
+    potential = {
+        from = { foc_v1717_first_order_empire_arsenal_allowed = yes }
+
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_empire_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.068181818182
+    armor_penetration = 0.018181818182
+    range = 264
+    show_tech_unlock_if = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_empire_arsenal = yes
+    }
+    upgrades_to = "FOC_EMP_QUAD_X_GEN3_BRIDGE_3"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_quad_turbo_g_3"
+    icon_frame = 1
+    damage = { min = 4807.494811 max = 6155.541258 }
+    windup = { min = 18.298491 max = 18.298491 }
+    total_fire_time = 49.55
+    accuracy = 0.885400968921
+    tracking = 0.25
+    power = -185.454545454545
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "gamma_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 51.483918755806
+            sr_tibanna_swgs = 19.238068379221
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 0.727272727273
+    armor_damage = 1.136363636364
+    hull_damage = 1
+    key = "FOC_EMP_QUAD_X_GEN3_BRIDGE_3"
+    component_set = "FOC_V1710_EMP_QUAD_MK09_SET"
+    prerequisites = { "foc_tech_emp_quad_3_bridge_3" }
+    potential = {
+        from = { foc_v1717_first_order_empire_arsenal_allowed = yes }
+
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_empire_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.072727272727
+    armor_penetration = 0.022727272727
+    range = 264
+    show_tech_unlock_if = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_empire_arsenal = yes
+    }
+    upgrades_to = "FOC_EMP_QUAD_X_GEN3_V178_STEP_6"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_quad_turbo_g_3"
+    icon_frame = 1
+    damage = { min = 4500.297461 max = 5840.391836 }
+    windup = { min = 16.129378 max = 16.129378 }
+    total_fire_time = 45.155
+    accuracy = 0.922061726146
+    tracking = 0.25
+    power = -223.636363636364
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "gamma_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 52.947290407263
+            sr_tibanna_swgs = 20.709902610348
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 0.818181818182
+    armor_damage = 1.090909090909
+    hull_damage = 1
+    key = "FOC_EMP_QUAD_X_GEN3_BRIDGE_4"
+    component_set = "FOC_V1710_EMP_QUAD_MK11_SET"
+    prerequisites = { "foc_tech_emp_quad_3_bridge_4" }
+    potential = {
+        from = { foc_v1717_first_order_empire_arsenal_allowed = yes }
+
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_empire_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.081818181818
+    armor_penetration = 0.031818181818
+    range = 264
+    show_tech_unlock_if = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_empire_arsenal = yes
+    }
+    upgrades_to = "FOC_EMP_QUAD_X_GEN3_BRIDGE_5"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_quad_turbo_g_3"
+    icon_frame = 1
+    damage = { min = 4354.053626 max = 5688.856969 }
+    windup = { min = 15.138559 max = 15.138559 }
+    total_fire_time = 43.106
+    accuracy = 0.940957474555
+    tracking = 0.25
+    power = -242.727272727273
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "gamma_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 53.694501118133
+            sr_tibanna_swgs = 21.48752291683
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 0.863636363636
+    armor_damage = 1.068181818182
+    hull_damage = 1
+    key = "FOC_EMP_QUAD_X_GEN3_BRIDGE_5"
+    component_set = "FOC_V1710_EMP_QUAD_MK12_SET"
+    prerequisites = { "foc_tech_emp_quad_3_bridge_5" }
+    potential = {
+        from = { foc_v1717_first_order_empire_arsenal_allowed = yes }
+
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_empire_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.086363636364
+    armor_penetration = 0.036363636364
+    range = 264
+    show_tech_unlock_if = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_empire_arsenal = yes
+    }
+    upgrades_to = "FOC_EMP_QUAD_X_GEN3_V178_STEP_9"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_quad_turbo_g_3"
+    icon_frame = 1
+    damage = { min = 4075.519217 max = 5397.38132 }
+    windup = { min = 13.327167 max = 13.327167 }
+    total_fire_time = 39.283
+    accuracy = 0.979918594708
+    tracking = 0.25
+    power = -280.909090909091
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "gamma_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 55.220706051135
+            sr_tibanna_swgs = 23.131454685223
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 0.954545454545
+    armor_damage = 1.022727272727
+    hull_damage = 1
+    key = "FOC_EMP_QUAD_X_GEN3_BRIDGE_6"
+    component_set = "FOC_V1710_EMP_QUAD_MK14_SET"
+    prerequisites = { "foc_tech_emp_quad_3_bridge_6" }
+    potential = {
+        from = { foc_v1717_first_order_empire_arsenal_allowed = yes }
+
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_empire_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.095454545455
+    armor_penetration = 0.045454545455
+    range = 264
+    show_tech_unlock_if = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_empire_arsenal = yes
+    }
+    upgrades_to = "FOC_EMP_QUAD_X_GEN3_BALANCED"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_octuple_turbo_r_2"
+    icon_frame = 1
+    damage = {
+        min = 2750
+        max = 2750
+    }
+    windup = {
+        min = 0.625
+        max = 11.875
+    }
+    total_fire_time = 18.75
+    accuracy = 1
+    tracking = 0.1
+    power = -280
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "infrared_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 48
+            sr_tibanna_swgs = 16
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 1
+    armor_damage = 1.25
+    hull_damage = 2.3
+    key = "FOC_REB_OCTUPLE_X_GEN2_BALANCED"
+    component_set = "FOC_V1710_REB_OCTUPLE_MK08_SET"
+    prerequisites = { "foc_tech_reb_octuple_2" }
+    upgrades_to = "FOC_REB_OCTUPLE_X_GEN3_V178_STEP_1"
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_rebel_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    range = 221
+    show_tech_unlock_if = {
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_rebel_arsenal = yes
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_octuple_turbo_r_2"
+    icon_frame = 1
+    damage = { min = 2516.88453 max = 4423.566853 }
+    windup = { min = 6.454216 max = 6.454216 }
+    total_fire_time = 28.909
+    accuracy = 0.852665246614
+    tracking = 0.1
+    power = -208.571428571429
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "infrared_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 42.138900965526
+            sr_tibanna_swgs = 9.752109233636
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 0.609506827102
+    armor_damage = 1.423862479211
+    hull_damage = 2.3
+    key = "FOC_REB_OCTUPLE_X_GEN2_BRIDGE_1"
+    component_set = "FOC_V1710_REB_OCTUPLE_MK03_SET"
+    prerequisites = { "foc_tech_reb_octuple_2_bridge_1" }
+    upgrades_to = "FOC_REB_OCTUPLE_X_GEN2_BRIDGE_2"
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_rebel_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.142857142857
+    armor_penetration = 0.142857142857
+    range = 221
+    show_tech_unlock_if = {
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_rebel_arsenal = yes
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_octuple_turbo_r_2"
+    icon_frame = 1
+    damage = { min = 2584.468975 max = 4040.473491 }
+    windup = { min = 6.482532 max = 6.482532 }
+    total_fire_time = 26.511
+    accuracy = 0.880284084112
+    tracking = 0.1
+    power = -222.857142857143
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "infrared_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 43.25086634037
+            sr_tibanna_swgs = 10.767201541059
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 0.672950096316
+    armor_damage = 1.387255448893
+    hull_damage = 2.3
+    key = "FOC_REB_OCTUPLE_X_GEN2_BRIDGE_2"
+    component_set = "FOC_V1710_REB_OCTUPLE_MK04_SET"
+    prerequisites = { "foc_tech_reb_octuple_2_bridge_2" }
+    upgrades_to = "FOC_REB_OCTUPLE_X_GEN2_V178_STEP_4"
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_rebel_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.214285714286
+    armor_penetration = 0.214285714286
+    range = 221
+    show_tech_unlock_if = {
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_rebel_arsenal = yes
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_octuple_turbo_r_2"
+    icon_frame = 1
+    damage = { min = 2686.46263 max = 3349.773022 }
+    windup = { min = 6.424587 max = 6.424587 }
+    total_fire_time = 22.295
+    accuracy = 0.938234557087
+    tracking = 0.1
+    power = -251.428571428571
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "infrared_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 45.563599334752
+            sr_tibanna_swgs = 13.125365696122
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 0.820335356008
+    armor_damage = 1.316840655173
+    hull_damage = 2.3
+    key = "FOC_REB_OCTUPLE_X_GEN2_BRIDGE_3"
+    component_set = "FOC_V1710_REB_OCTUPLE_MK06_SET"
+    prerequisites = { "foc_tech_reb_octuple_2_bridge_3" }
+    upgrades_to = "FOC_REB_OCTUPLE_X_GEN2_BRIDGE_4"
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_rebel_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.357142857143
+    armor_penetration = 0.357142857143
+    range = 221
+    show_tech_unlock_if = {
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_rebel_arsenal = yes
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_octuple_turbo_r_2"
+    icon_frame = 1
+    damage = { min = 2722.675904 max = 3039.25996 }
+    windup = { min = 6.349575 max = 6.349575 }
+    total_fire_time = 20.446
+    accuracy = 0.968625085927
+    tracking = 0.1
+    power = -265.714285714286
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "infrared_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 46.765935979814
+            sr_tibanna_swgs = 14.491578628223
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 0.905723664264
+    armor_damage = 1.282985120321
+    hull_damage = 2.3
+    key = "FOC_REB_OCTUPLE_X_GEN2_BRIDGE_4"
+    component_set = "FOC_V1710_REB_OCTUPLE_MK07_SET"
+    prerequisites = { "foc_tech_reb_octuple_2_bridge_4" }
+    upgrades_to = "FOC_REB_OCTUPLE_X_GEN2_BALANCED"
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_rebel_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.428571428571
+    armor_penetration = 0.428571428571
+    range = 221
+    show_tech_unlock_if = {
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_rebel_arsenal = yes
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_octuple_turbo_r_2"
+    icon_frame = 1
+    damage = { min = 4500 max = 4500 }
+    windup = {
+        min = 0.625
+        max = 11.875
+    }
+    total_fire_time = 18.75
+    accuracy = 1
+    tracking = 0.1
+    power = -480
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "infrared_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 56
+            sr_tibanna_swgs = 24
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 1
+    armor_damage = 1.25
+    hull_damage = 1.5
+    key = "FOC_REB_OCTUPLE_X_GEN3_BALANCED"
+    component_set = "FOC_V1710_REB_OCTUPLE_MK21_SET"
+    prerequisites = { "foc_tech_reb_octuple_3" }
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_rebel_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.75
+    armor_penetration = 0.75
+    range = 221
+    show_tech_unlock_if = {
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_rebel_arsenal = yes
+    }
+
+    upgrades_to = "FOC_REB_OCTUPLE_X_GEN4_V179_STEP_1"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_octuple_turbo_r_2"
+    icon_frame = 1
+    damage = { min = 3199.94025 max = 3199.94025 }
+    windup = { min = 6.25 max = 6.25 }
+    total_fire_time = 18.75
+    accuracy = 1
+    tracking = 0.1
+    power = -341.538461538462
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "infrared_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 50.331543570684
+            sr_tibanna_swgs = 18.125997197897
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 1
+    armor_damage = 1.25
+    hull_damage = 1.5
+    key = "FOC_REB_OCTUPLE_X_GEN3_BRIDGE_1"
+    component_set = "FOC_V1710_REB_OCTUPLE_MK12_SET"
+    prerequisites = { "foc_tech_reb_octuple_3_bridge_1" }
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_rebel_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.576923076923
+    armor_penetration = 0.576923076923
+    range = 221
+    show_tech_unlock_if = {
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_rebel_arsenal = yes
+    }
+    upgrades_to = "FOC_REB_OCTUPLE_X_GEN3_V178_STEP_5"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_octuple_turbo_r_2"
+    icon_frame = 1
+    damage = { min = 3585.07917 max = 3585.07917 }
+    windup = { min = 6.25 max = 6.25 }
+    total_fire_time = 18.75
+    accuracy = 1
+    tracking = 0.1
+    power = -387.692307692308
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "infrared_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 52.154226494651
+            sr_tibanna_swgs = 19.903907876289
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 1
+    armor_damage = 1.25
+    hull_damage = 1.5
+    key = "FOC_REB_OCTUPLE_X_GEN3_BRIDGE_2"
+    component_set = "FOC_V1710_REB_OCTUPLE_MK15_SET"
+    prerequisites = { "foc_tech_reb_octuple_3_bridge_2" }
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_rebel_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.634615384615
+    armor_penetration = 0.634615384615
+    range = 221
+    show_tech_unlock_if = {
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_rebel_arsenal = yes
+    }
+    upgrades_to = "FOC_REB_OCTUPLE_X_GEN3_V178_STEP_8"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_octuple_turbo_r_2"
+    icon_frame = 1
+    damage = { min = 4016.572701 max = 4016.572701 }
+    windup = { min = 6.25 max = 6.25 }
+    total_fire_time = 18.75
+    accuracy = 1
+    tracking = 0.1
+    power = -433.846153846154
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "infrared_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 54.042915203572
+            sr_tibanna_swgs = 21.856207105327
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 1
+    armor_damage = 1.25
+    hull_damage = 1.5
+    key = "FOC_REB_OCTUPLE_X_GEN3_BRIDGE_3"
+    component_set = "FOC_V1710_REB_OCTUPLE_MK18_SET"
+    prerequisites = { "foc_tech_reb_octuple_3_bridge_3" }
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_rebel_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.692307692308
+    armor_penetration = 0.692307692308
+    range = 221
+    show_tech_unlock_if = {
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_rebel_arsenal = yes
+    }
+    upgrades_to = "FOC_REB_OCTUPLE_X_GEN3_V178_STEP_11"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_quad_turbo_r_2"
+    icon_frame = 1
+    damage = {
+        min = 2267.549786
+        max = 2807.450214
+    }
+    windup = {
+        min = 0
+        max = 25
+    }
+    total_fire_time = 31.25
+    range = 187
+    accuracy = 0.8
+    tracking = 0.25
+    shield_damage = 0.50
+    armor_damage = 1.25
+    hull_damage = 1.35
+    power = -90
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "infrared_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 48
+            sr_tibanna_swgs = 16
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    key = "FOC_REB_QUAD_X_GEN2_BALANCED"
+    component_set = "FOC_V1710_REB_QUAD_MK03_SET"
+    prerequisites = { "foc_tech_reb_quad_2" }
+    upgrades_to = "FOC_REB_QUAD_X_GEN3_V178_STEP_1"
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_rebel_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    show_tech_unlock_if = {
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_rebel_arsenal = yes
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_quad_turbo_r_3"
+    icon_frame = 1
+    damage = {
+        min = 1573.609242
+        max = 2098.145656
+    }
+    windup = {
+        min = 0.625
+        max = 11.875
+    }
+    total_fire_time = 18.75
+    accuracy = 1
+    tracking = 0.25
+    power = -300
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "infrared_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 56
+            sr_tibanna_swgs = 24
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 1
+    armor_damage = 1
+    hull_damage = 1
+    key = "FOC_REB_QUAD_X_GEN3_BALANCED"
+    component_set = "FOC_V1710_REB_QUAD_MK11_SET"
+    prerequisites = { "foc_tech_reb_quad_3" }
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_rebel_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.75
+    armor_penetration = 0.75
+    range = 187
+    show_tech_unlock_if = {
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_rebel_arsenal = yes
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_quad_turbo_r_3"
+    icon_frame = 1
+    damage = { min = 2069.851316 max = 2610.599546 }
+    windup = {
+        min = 10.534396
+        max = 10.534396
+    }
+    total_fire_time = 27.503
+    accuracy = 0.845897010752
+    tracking = 0.25
+    power = -128.181818
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "infrared_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 49.88591412602
+            sr_tibanna_swgs = 17.706910715205
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 0.594603557501
+    armor_damage = 1.182177011254
+    hull_damage = 1
+    key = "FOC_REB_QUAD_X_GEN3_BRIDGE_1"
+    component_set = "FOC_V1710_REB_QUAD_MK05_SET"
+    prerequisites = { "foc_tech_reb_quad_3_bridge_1" }
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_rebel_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.55334095985
+    armor_penetration = 0.55334095985
+    range = 187
+    show_tech_unlock_if = {
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_rebel_arsenal = yes
+    }
+    upgrades_to = "FOC_REB_QUAD_X_GEN3_BRIDGE_2"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_quad_turbo_r_3"
+    icon_frame = 1
+    damage = { min = 1977.537807 max = 2517.380371 }
+    windup = {
+        min = 9.665895
+        max = 9.665895
+    }
+    total_fire_time = 25.802
+    accuracy = 0.869823710416
+    tracking = 0.25
+    power = -166.363636
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "infrared_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 50.856478364415
+            sr_tibanna_swgs = 18.627484247374
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 0.648419777326
+    armor_damage = 1.149658244567
+    hull_damage = 1
+    key = "FOC_REB_QUAD_X_GEN3_BRIDGE_2"
+    component_set = "FOC_V1710_REB_QUAD_MK06_SET"
+    prerequisites = { "foc_tech_reb_quad_3_bridge_2" }
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_rebel_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.58210888273
+    armor_penetration = 0.58210888273
+    range = 187
+    show_tech_unlock_if = {
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_rebel_arsenal = yes
+    }
+    upgrades_to = "FOC_REB_QUAD_X_GEN3_BRIDGE_3"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_quad_turbo_r_3"
+    icon_frame = 1
+    damage = { min = 1889.2856 max = 2427.418172 }
+    windup = {
+        min = 8.865692
+        max = 8.865692
+    }
+    total_fire_time = 24.206
+    accuracy = 0.894427191
+    tracking = 0.25
+    power = -185.454545
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "infrared_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 51.845925587263
+            sr_tibanna_swgs = 19.595917942265
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 0.707106781187
+    armor_damage = 1.11803398875
+    hull_damage = 1
+    key = "FOC_REB_QUAD_X_GEN3_BRIDGE_3"
+    component_set = "FOC_V1710_REB_QUAD_MK07_SET"
+    prerequisites = { "foc_tech_reb_quad_3_bridge_3" }
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_rebel_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.612372435696
+    armor_penetration = 0.612372435696
+    range = 187
+    show_tech_unlock_if = {
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_rebel_arsenal = yes
+    }
+    upgrades_to = "FOC_REB_QUAD_X_GEN3_BRIDGE_4"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_quad_turbo_r_3"
+    icon_frame = 1
+    damage = { min = 1804.955859 max = 2340.650162 }
+    windup = {
+        min = 8.128754
+        max = 8.128754
+    }
+    total_fire_time = 22.709
+    accuracy = 0.919726595654
+    tracking = 0.25
+    power = -223.636364
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "infrared_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 52.854623175812
+            sr_tibanna_swgs = 20.614700026072
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 0.771105412704
+    armor_damage = 1.08727963802
+    hull_damage = 1
+    key = "FOC_REB_QUAD_X_GEN3_BRIDGE_4"
+    component_set = "FOC_V1710_REB_QUAD_MK08_SET"
+    prerequisites = { "foc_tech_reb_quad_3_bridge_4" }
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_rebel_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.644209375815
+    armor_penetration = 0.644209375815
+    range = 187
+    show_tech_unlock_if = {
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_rebel_arsenal = yes
+    }
+    upgrades_to = "FOC_REB_QUAD_X_GEN3_BRIDGE_5"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_quad_turbo_r_3"
+    icon_frame = 1
+    damage = { min = 1724.306867 max = 2256.874545 }
+    windup = {
+        min = 7.44993
+        max = 7.44993
+    }
+    total_fire_time = 21.304
+    accuracy = 0.945741609003
+    tracking = 0.25
+    power = -242.727273
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "infrared_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 53.882945658963
+            sr_tibanna_swgs = 21.686448086636
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 0.840896415254
+    armor_damage = 1.057371263441
+    hull_damage = 1
+    key = "FOC_REB_QUAD_X_GEN3_BRIDGE_5"
+    component_set = "FOC_V1710_REB_QUAD_MK09_SET"
+    prerequisites = { "foc_tech_reb_quad_3_bridge_5" }
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_rebel_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.677701502707
+    armor_penetration = 0.677701502707
+    range = 187
+    show_tech_unlock_if = {
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_rebel_arsenal = yes
+    }
+    upgrades_to = "FOC_REB_QUAD_X_GEN3_BRIDGE_6"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_quad_turbo_r_3"
+    icon_frame = 1
+    damage = { min = 1647.232745 max = 2176.059497 }
+    windup = {
+        min = 6.825017
+        max = 6.825017
+    }
+    total_fire_time = 19.986
+    accuracy = 0.972492472466
+    tracking = 0.25
+    power = -280.909091
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "infrared_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 54.931274852327
+            sr_tibanna_swgs = 22.813915798899
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 0.917004043205
+    armor_damage = 1.028285594298
+    hull_damage = 1
+    key = "FOC_REB_QUAD_X_GEN3_BRIDGE_6"
+    component_set = "FOC_V1710_REB_QUAD_MK10_SET"
+    prerequisites = { "foc_tech_reb_quad_3_bridge_6" }
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_rebel_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.712934868716
+    armor_penetration = 0.712934868716
+    range = 187
+    show_tech_unlock_if = {
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+        foc_v14_can_research_rebel_arsenal = yes
+    }
+    upgrades_to = "FOC_REB_QUAD_X_GEN3_BALANCED"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_octuple_turbo_g_1"
+    icon_frame = 1
+    damage = {
+        min = 3750.043131706951
+        max = 8437.456868293048
+    }
+    windup = {
+        min = 0.0
+        max = 20.0
+    }
+    total_fire_time = 55.0
+    range = 260
+    accuracy = 0.8
+    tracking = 0.1
+    shield_damage = 0.5
+    armor_damage = 1.5
+    hull_damage = 2
+    power = -180.00
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "infrared_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 40
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    key = "FOC_STD_OCTUPLE_X_GEN1_BALANCED"
+    upgrades_to = "FOC_EMP_OCTUPLE_X_GEN2_V178_STEP_1"
+    component_set = "FOC_V16_STD_OCTUPLE_T1_FOC_SET_BALANCED_X_MAIN_BATTERY"
+    prerequisites = { "foc_tech_std_octuple_1" }
+    potential = {
+        from = { foc_v1716_republic_start_arsenal_allowed = yes }
+ from = { NOT = { has_country_flag = foc_khan_component_lowest } foc_v14_advanced_arsenal_era_allowed = no } 
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0
+    armor_penetration = 0
+    show_tech_unlock_if = {
+        foc_v1716_republic_start_arsenal_allowed = yes
+
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_quad_turbo_g_1"
+    icon_frame = 1
+    damage = {
+        min = 2934.04898020296
+        max = 4012.35726979704
+    }
+    windup = {
+        min = 0.0
+        max = 40.0
+    }
+    total_fire_time = 50.0
+    range = 220
+    accuracy = 0.8
+    tracking = 0.25
+    shield_damage = 0.50
+    armor_damage = 1.25
+    hull_damage = 1.00
+    power = -68
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "infrared_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 40
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    key = "FOC_STD_QUAD_X_GEN1_BALANCED"
+    upgrades_to = "FOC_EMP_QUAD_X_GEN2_V178_STEP_1"
+    component_set = "FOC_V16_STD_QUAD_T1_FOC_SET_BALANCED_X_MAIN_BATTERY"
+    prerequisites = { "foc_tech_std_quad_1" }
+    potential = {
+        from = { foc_v1716_republic_start_arsenal_allowed = yes }
+ from = { NOT = { has_country_flag = foc_khan_component_lowest } foc_v14_advanced_arsenal_era_allowed = no } 
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0
+    armor_penetration = 0
+    show_tech_unlock_if = {
+        foc_v1716_republic_start_arsenal_allowed = yes
+
+        NOT = {
+            has_country_flag = foc_khan_component_lowest
+        }
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_octuple_turbo_g_2"
+    icon_frame = 1
+    damage = {
+        min = 3452.380952
+        max = 3797.619048
+    }
+    windup = {
+        min = 1.25
+        max = 23.75
+    }
+    total_fire_time = 37.5
+    accuracy = 1.0
+    tracking = 0.1
+    power = -60
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "gamma_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 48
+            sr_tibanna_swgs = 16
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 1
+    armor_damage = 1
+    hull_damage = 1
+    key = "FOC_EMP_OCTUPLE_X_GEN2_FIXED_BUDGET"
+    component_set = "FOC_EMP_OCTUPLE_X_GEN2_FIXED_BUDGET_SET"
+    prerequisites = { "foc_tech_emp_turbo_2" }
+    potential = {
+        from = { foc_v1717_first_order_empire_arsenal_allowed = yes }
+
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_empire_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.05
+    armor_penetration = 0
+    range = 312
+
+    show_tech_unlock_if = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+ always = no }
+    hidden = yes
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+weapon_component_template = {
+    icon = "GFX_ship_part_octuple_turbo_r_2"
+    icon_frame = 1
+    damage = {
+        min = 3690.47619
+        max = 4059.52381
+    }
+    windup = {
+        min = 0.625
+        max = 11.875
+    }
+    total_fire_time = 18.75
+    accuracy = 1.0
+    tracking = 0.1
+    power = -60
+    size = extra_large
+    entity = "invisible_turret_entity"
+    ai_weight = {
+        weight = 1
+    }
+    ai_tags = { weapon_role_artillery }
+    type = instant
+    projectile_gfx = "infrared_laser_l"
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 48
+            sr_tibanna_swgs = 16
+        }
+        upkeep = { }
+    }
+    tags = { weapon_type_energy }
+    shield_damage = 1
+    armor_damage = 1.25
+    hull_damage = 2.3
+    key = "FOC_REB_OCTUPLE_X_GEN2_FIXED_BUDGET"
+    component_set = "FOC_REB_OCTUPLE_X_GEN2_FIXED_BUDGET_SET"
+    prerequisites = { "foc_tech_reb_turbo_2" }
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+            foc_v14_can_research_rebel_arsenal = yes
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    range = 221
+
+    show_tech_unlock_if = { always = no }
+    hidden = yes
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}

@@ -1,0 +1,101 @@
+entity = {
+	name = "malachor_planet_02_entity"
+	pdxmesh = "malachor_planet_01_destroyed_mesh"
+	default_state = "idle"
+	playback_rate = -1.0 # Rotation is reversed
+	state = { name = "idle" animation = "idle" 
+		event = { time = 0 node = "part1_locator" particle = "destroyed_planet_trail_particle" keep_particle = yes trigger_once = yes }
+		event = { time = 0 node = "part2_locator" particle = "destroyed_planet_trail_particle" keep_particle = yes trigger_once = yes }
+		event = { time = 0 node = "part3_locator" particle = "destroyed_planet_trail_particle" keep_particle = yes trigger_once = yes }
+		event = { time = 0 node = "hole_locator_1" particle = "destroyed_planet_dust_particle" keep_particle = yes trigger_once = yes }
+		event = { time = 0 node = "hole_locator_2" particle = "destroyed_planet_dust_particle" keep_particle = yes trigger_once = yes }
+		event = { time = 0 node = "rock_belt_locator" particle = "destroyed_planet_dust_particle" keep_particle = yes trigger_once = yes }
+		#event = { time = 0 node = "nucleus_locator" particle = red_laser_medium_hit_effect light = "destroyed_planet_light" }
+	}
+	
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 }
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_planet_class" } }
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_planet_class_02" } }
+	}
+}
+
+
+#entity = {
+#	name = "malachor_asteroid_01_entity"
+#	pdxmesh = "malachor_01_mesh"
+#	
+#	default_state = "idle"
+#	state = { name = "idle" animation = "idle" time_offset = { 0 100 }
+#		start_event = { trigger_once = yes sound = { soundeffect = "amb_planet_class" } }
+#		start_event = { trigger_once = yes sound = { soundeffect = "amb_planet_class_02" } }
+#	}
+#	#state = { name = "idle" animation = "idle" time_offset = { 0 100 } }
+#	scale = 3.0
+#}
+
+
+entity = {
+	name = "malachor_planet_01_entity"
+	pdxmesh = "malachor_cracked_planet_mesh"
+	
+	meshsettings = {
+		name = "triSphere1Shape"
+		index = 0
+		texture_diffuse = "malachor_cracked_planet_core_glow.dds"
+		texture_normal = "nospec.dds"
+		texture_specular = "nospec.dds"
+		shader = "PdxMeshAlphaAdditive"
+	}
+
+	meshsettings = {
+		name = "pieceShape1"
+		index = 0
+		texture_diffuse = "cracked_infected_planet_01_diffuse.dds"
+		texture_normal = "cracked_infected_planet_01_normal.dds"
+		texture_specular = "cracked_infected_planet_01_specular.dds"
+		shader = "PdxMeshPlanetEmissive"
+	}
+	
+	#scale = 1
+	scale = 0.23
+	
+	default_state = "idle"
+
+	# Will be used initially instead of default_state if set
+	state = { name = "class_change" animation = "idle" looping = no next_state = "explosion" animation_speed = 100.0 }
+	
+	state = { name = "explosion" animation = "explosion" looping = no next_state = "idle"
+		event = { time = 0 node = "planet_main" particle = "shattered_infected_planet_inner_effect" keep_particle = yes trigger_once = yes }
+	
+		event = { time = 0.6 node = "crack_locator_02" particle = "shattered_infected_planet_crack_effect" keep_particle = yes trigger_once = yes }
+		event = { time = 0.7 node = "crack_locator_010" particle = "shattered_infected_planet_crack_effect" keep_particle = yes trigger_once = yes }
+		event = { time = 0.7 node = "crack_locator_06" particle = "shattered_infected_planet_crack_effect" keep_particle = yes trigger_once = yes }
+		event = { time = 0.7 node = "crack_locator_09" particle = "shattered_infected_planet_crack_effect" keep_particle = yes trigger_once = yes }
+		event = { time = 0.8 node = "crack_locator_017" particle = "shattered_infected_planet_crack_effect" keep_particle = yes trigger_once = yes }
+		event = { time = 0.8 node = "crack_locator_021" particle = "shattered_infected_planet_crack_effect" keep_particle = yes trigger_once = yes }
+		event = { time = 0.8 node = "crack_locator_022" particle = "shattered_infected_planet_crack_effect" keep_particle = yes trigger_once = yes }
+		event = { time = 2.3 node = "crack_locator_010" particle = "shattered_infected_planet_crack_effect" keep_particle = yes trigger_once = yes }
+		event = { time = 2.8 node = "crack_locator_013" particle = "shattered_infected_planet_crack_effect" keep_particle = yes trigger_once = yes }
+		event = { time = 2.8 node = "crack_locator_026" particle = "shattered_infected_planet_crack_effect" keep_particle = yes trigger_once = yes }
+		event = { time = 3.3 node = "crack_locator_025" particle = "shattered_infected_planet_crack_effect" keep_particle = yes trigger_once = yes }
+		event = { time = 3.3 node = "crack_locator_011" particle = "shattered_infected_planet_crack_effect" keep_particle = yes trigger_once = yes }
+		event = { time = 3.3 node = "crack_locator_03" particle = "shattered_infected_planet_crack_effect" keep_particle = yes trigger_once = yes }
+		event = { time = 2.4 node = "crack_locator_013" particle = "shattered_infected_planet_crack_effect" keep_particle = yes trigger_once = yes }
+		event = { time = 4.3 node = "crack_locator_015" particle = "shattered_infected_planet_crack_effect" keep_particle = yes trigger_once = yes }
+		event = { time = 4.3 node = "crack_locator_016" particle = "shattered_infected_planet_crack_effect" keep_particle = yes trigger_once = yes }
+		event = { time = 4.3 node = "crack_locator_01" particle = "shattered_infected_planet_crack_effect" keep_particle = yes trigger_once = yes }
+		event = { time = 4.4 node = "crack_locator_019" particle = "shattered_infected_planet_crack_effect" keep_particle = yes trigger_once = yes }
+		event = { time = 4.06 node = "crack_locator_07" particle = "shattered_infected_planet_crack_effect" keep_particle = yes trigger_once = yes }
+		event = { time = 4.36 node = "crack_locator_05" particle = "shattered_infected_planet_crack_effect" keep_particle = yes trigger_once = yes }
+		event = { time = 4.55 node = "crack_locator_020" particle = "shattered_infected_planet_crack_effect" keep_particle = yes trigger_once = yes }
+		event = { time = 4.55 node = "crack_locator_02" particle = "shattered_infected_planet_crack_effect" keep_particle = yes trigger_once = yes }
+		
+		event = { time = 10 node = "planet_main" particle = "shattered_infected_planet_debris_effect" keep_particle = yes trigger_once = yes }
+
+		event = { trigger_once = yes sound = { soundeffect = "shattered_planet_explosion" } }
+	}
+	
+	state = { name = "idle" animation = "idle"
+		event = { time = 0 node = "planet_main" particle = "shattered_infected_planet_debris_effect" keep_particle = yes trigger_once = yes }
+	}
+}

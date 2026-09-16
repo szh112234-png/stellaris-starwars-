@@ -1,0 +1,27 @@
+# Star Wars droids — static portraits
+portraits = {
+	bb8_head  = { texturefile = "gfx/models/portraits/star_wars_droids/bb8_head.dds"  }
+	bb8_body  = { texturefile = "gfx/models/portraits/star_wars_droids/bb8_body.dds"  }
+	k2so_head = { texturefile = "gfx/models/portraits/star_wars_droids/k2so_head.dds" }
+	k2so_body = { texturefile = "gfx/models/portraits/star_wars_droids/k2so_body.dds" }
+}
+
+portrait_groups = {
+	bb8_droid = {
+		default = bb8_body
+		game_setup = { add = { portraits = { bb8_body } } }
+		species    = { add = { portraits = { bb8_head } } }
+		pop        = { add = { portraits = { bb8_head } } }
+		leader     = { add = { portraits = { bb8_body } } }
+		ruler      = { add = { portraits = { bb8_body } } }
+	}
+
+	k2so_droid = {
+		default = k2so_body
+		game_setup = { add = { portraits = { k2so_body } } }
+		species    = { add = { portraits = { k2so_head } } }
+		pop        = { add = { portraits = { k2so_head } } }
+		leader     = { add = { portraits = { k2so_body } } }
+		ruler      = { add = { portraits = { k2so_body } } }
+	}
+}

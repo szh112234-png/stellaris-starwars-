@@ -1,0 +1,7308 @@
+# V14: original point defense retained; retired ordinary aliases remain inert.
+weapon_component_template = {
+    type = instant
+    key = "VCSD_TURBOCANNON_GUN"
+    size = large
+    icon = "GFX_DBY827"
+    icon_frame = 1
+    component_set = "VCSD_TURBOCANNON_GUN"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_type_kinetic weapon_role_artillery L_slot }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    size_restriction = { venatorclass foc_trade_lucrehulk venatorclass_foc_lowest foc_trade_lucrehulk_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 5
+        
+            sr_tibanna_swgs = 8
+        }
+    }
+    power = -140
+    damage = {
+        min = 1800
+        max = 2400
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 220
+    accuracy = 1
+    tracking = 1
+    shield_penetration = 1
+    armor_penetration = 1
+    hull_damage = 1
+    armor_damage = 1
+    shield_damage = 1
+    target_weights = {
+        titan = 5
+        battleship = 4
+        cruiser = 3
+        destroyer = 2
+        frigate = 1
+        corvette = 1
+    }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "VCSD_SPAHT_BEAM"
+    size = extra_large
+    icon = "GFX_DBY827"
+    icon_frame = 1
+    component_set = "VCSD_SPAHT_BEAM"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_role_artillery XL_slot }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    size_restriction = { venatorclass venatorclass_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 20
+        
+            sr_tibanna_swgs = 32
+        }
+    }
+    power = -1400
+    damage = {
+        min = 15000
+        max = 30000
+    }
+    windup = {
+        min = 0
+        max = 0
+    }
+    total_fire_time = 180
+    range = 240
+    accuracy = 1
+    tracking = 0.25
+    firing_arc = 50
+    shield_penetration = 1
+    armor_penetration = 1
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    entity = "invisible_turret_entity"
+    type = instant
+    key = "FOC_KHAN_ISD_L"
+    size = large
+    component_set = "FOC_KHAN_ISD_TURBOLASER"
+    projectile_gfx = "infrared_laser_l"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_role_artillery L_slot }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { imperialsd imperialsd_foc_lowest foc_v118_imperialsd_bastion_foc_lowest foc_imperialsd2 foc_imperialsd2_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 3900
+        max = 5700
+    }
+    windup = {
+        min = 1
+        max = 3
+    }
+    total_fire_time = 4
+    range = 180
+    accuracy = 0.9
+    tracking = 0.25
+    hull_damage = 1
+    armor_damage = 2.0
+    shield_damage = 2.0
+    shield_penetration = 0
+    armor_penetration = 0
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    entity = "invisible_turret_entity"
+    type = instant
+    key = "FOC_KHAN_ISD_M"
+    size = medium
+    component_set = "FOC_KHAN_ISD_TURBOLASER"
+    projectile_gfx = "infrared_laser_m"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_role_medium M_slot }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { imperialsd imperialsd_foc_lowest foc_v118_imperialsd_bastion_foc_lowest foc_imperialsd2 foc_imperialsd2_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 4
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 1800
+        max = 2700
+    }
+    windup = {
+        min = 1
+        max = 3
+    }
+    total_fire_time = 3
+    range = 140
+    accuracy = 0.92
+    tracking = 0.45
+    hull_damage = 1
+    armor_damage = 2.0
+    shield_damage = 2.0
+    shield_penetration = 0
+    armor_penetration = 0
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    entity = "invisible_turret_entity"
+    type = instant
+    key = "FOC_KHAN_ISD_S"
+    size = small
+    component_set = "FOC_KHAN_ISD_TURBOLASER"
+    projectile_gfx = "infrared_laser_s"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_role_anti_hull S_slot }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { imperialsd imperialsd_foc_lowest foc_v118_imperialsd_bastion_foc_lowest foc_imperialsd2 foc_imperialsd2_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 840
+        max = 1320
+    }
+    windup = {
+        min = 1
+        max = 3
+    }
+    total_fire_time = 2
+    range = 100
+    accuracy = 0.95
+    tracking = 0.7
+    hull_damage = 1
+    armor_damage = 2.0
+    shield_damage = 2.0
+    shield_penetration = 0
+    armor_penetration = 0
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_KHAN_ISD_PD"
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    size = point_defence
+    component_set = "FOC_KHAN_ISD_TURBOLASER"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_point_defence weapon_role_point_defence }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { imperialsd imperialsd_foc_lowest foc_v118_imperialsd_bastion_foc_lowest foc_imperialsd2 foc_imperialsd2_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 90
+        max = 140
+    }
+    windup = {
+        min = 1
+        max = 3
+    }
+    total_fire_time = 1
+    range = 60
+    accuracy = 1.0
+    tracking = 1.0
+    hull_damage = 1
+    armor_damage = 1.0
+    shield_damage = 1.0
+    shield_penetration = 0
+    armor_penetration = 0
+    ai_weight = {
+        weight = 10
+    }
+    projectile_gfx = "white_laser_pd"
+    entity = "invisible_turret_entity"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    entity = "invisible_turret_entity"
+    type = instant
+    key = "FOC_KHAN_RES_XL"
+    size = extra_large
+    component_set = "FOC_KHAN_RESURGENT_TURBOLASER"
+    projectile_gfx = "particle_lance"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    firing_arc = 0.35
+    tags = { weapon_type_energy weapon_role_artillery XL_slot }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { resurgentbattlecruiser resurgentbattlecruiser_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 32
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 30000
+        max = 60000
+    }
+    windup = {
+        min = 1
+        max = 3
+    }
+    total_fire_time = 7
+    range = 230
+    accuracy = 0.9
+    tracking = 0.15
+    hull_damage = 1
+    armor_damage = 2.0
+    shield_damage = 2.0
+    shield_penetration = 0
+    armor_penetration = 0
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    entity = "invisible_turret_entity"
+    type = instant
+    key = "FOC_KHAN_RES_L"
+    size = large
+    component_set = "FOC_KHAN_RESURGENT_TURBOLASER"
+    projectile_gfx = "infrared_laser_l"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_role_artillery L_slot }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { resurgentbattlecruiser resurgentbattlecruiser_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 5700
+        max = 8400
+    }
+    windup = {
+        min = 1
+        max = 3
+    }
+    total_fire_time = 4
+    range = 190
+    accuracy = 0.9
+    tracking = 0.3
+    hull_damage = 1
+    armor_damage = 2.0
+    shield_damage = 2.0
+    shield_penetration = 0
+    armor_penetration = 0
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    entity = "invisible_turret_entity"
+    type = instant
+    key = "FOC_KHAN_RES_M"
+    size = medium
+    component_set = "FOC_KHAN_RESURGENT_TURBOLASER"
+    projectile_gfx = "infrared_laser_m"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_role_medium M_slot }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { resurgentbattlecruiser resurgentbattlecruiser_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 4
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 2700
+        max = 4200
+    }
+    windup = {
+        min = 1
+        max = 3
+    }
+    total_fire_time = 3
+    range = 150
+    accuracy = 0.94
+    tracking = 0.5
+    hull_damage = 1
+    armor_damage = 2.0
+    shield_damage = 2.0
+    shield_penetration = 0
+    armor_penetration = 0
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_KHAN_RES_PD"
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    size = point_defence
+    component_set = "FOC_KHAN_RESURGENT_TURBOLASER"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_point_defence weapon_role_point_defence }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { resurgentbattlecruiser resurgentbattlecruiser_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 120
+        max = 200
+    }
+    windup = {
+        min = 1
+        max = 3
+    }
+    total_fire_time = 1
+    range = 70
+    accuracy = 1.0
+    tracking = 1.0
+    hull_damage = 1
+    armor_damage = 1.5
+    shield_damage = 1.5
+    shield_penetration = 0
+    armor_penetration = 0
+    ai_weight = {
+        weight = 10
+    }
+    projectile_gfx = "white_laser_pd"
+    entity = "invisible_turret_entity"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    entity = "invisible_turret_entity"
+    type = instant
+    key = "FOC_KHAN_XYS_L"
+    size = large
+    component_set = "FOC_KHAN_XYSTON_TURBOLASER"
+    projectile_gfx = "infrared_laser_l"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_role_artillery L_slot }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { xystonsd }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 9000
+        max = 13200
+    }
+    windup = {
+        min = 1
+        max = 3
+    }
+    total_fire_time = 4
+    range = 210
+    accuracy = 0.92
+    tracking = 0.3
+    hull_damage = 1
+    armor_damage = 2.0
+    shield_damage = 2.0
+    shield_penetration = 0
+    armor_penetration = 0
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    entity = "invisible_turret_entity"
+    type = instant
+    key = "FOC_KHAN_XYS_M"
+    size = medium
+    component_set = "FOC_KHAN_XYSTON_TURBOLASER"
+    projectile_gfx = "infrared_laser_m"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_role_medium M_slot }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { xystonsd }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 4
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 4200
+        max = 6300
+    }
+    windup = {
+        min = 1
+        max = 3
+    }
+    total_fire_time = 3
+    range = 165
+    accuracy = 0.95
+    tracking = 0.5
+    hull_damage = 1
+    armor_damage = 2.0
+    shield_damage = 2.0
+    shield_penetration = 0
+    armor_penetration = 0
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    entity = "invisible_turret_entity"
+    type = instant
+    key = "FOC_KHAN_XYS_S"
+    size = small
+    component_set = "FOC_KHAN_XYSTON_TURBOLASER"
+    projectile_gfx = "infrared_laser_s"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_role_anti_hull S_slot }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { xystonsd }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 1800
+        max = 3000
+    }
+    windup = {
+        min = 1
+        max = 3
+    }
+    total_fire_time = 2
+    range = 110
+    accuracy = 0.98
+    tracking = 0.75
+    hull_damage = 1
+    armor_damage = 2.0
+    shield_damage = 2.0
+    shield_penetration = 0
+    armor_penetration = 0
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_KHAN_XYS_PD"
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    size = point_defence
+    component_set = "FOC_KHAN_XYSTON_TURBOLASER"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_point_defence weapon_role_point_defence }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { xystonsd }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 160
+        max = 260
+    }
+    windup = {
+        min = 1
+        max = 3
+    }
+    total_fire_time = 1
+    range = 75
+    accuracy = 1.0
+    tracking = 1.0
+    hull_damage = 1
+    armor_damage = 1.5
+    shield_damage = 1.5
+    shield_penetration = 0
+    armor_penetration = 0
+    ai_weight = {
+        weight = 10
+    }
+    projectile_gfx = "white_laser_pd"
+    entity = "invisible_turret_entity"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "ARKSHIP_DEVASTATOR_WEAPON_FOC_LOWEST"
+    size = titanic
+    type = instant
+    prio_projectile = yes
+    icon = "GFX_ship_part_arkship_devastator"
+    icon_frame = 1
+    resources = {
+        category = ship_components
+        upkeep = {
+            alloys = @titanic_t7_upkeep_alloys
+            energy = @titanic_t7_upkeep_energy
+        }
+    
+        cost = { sr_tibanna_swgs = 64 }
+    }
+    collateral_damage = @arkship_devastator_fleet_damage
+    collateral_range = @arkship_devastator_collateral_range
+    firing_arc = 15.0
+    min_range = 30.0
+    tags = { weapon_type_energy weapon_role_artillery t_slot }
+    component_set = "ARKSHIP_DEVASTATOR_WEAPON"
+    projectile_gfx = "arkship_01_devastator_laser"
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    entity = "invisible_turret_entity"
+    type = instant
+    key = "FOC_REBEL_S_FOC_LOWEST"
+    size = small
+    component_set = "FOC_REBEL_TURBOLASER"
+    projectile_gfx = "infrared_laser_s"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_role_anti_hull S_slot }
+    ai_tags = { weapon_role_anti_hull }
+    size_restriction = { corvette destroyer cruiser battleship titan foc_rebel_nebula foc_rebel_mc158 foc_rebel_nebula_foc_lowest foc_rebel_mc158_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 20
+        max = 35
+    }
+    windup = {
+        min = 0.5
+        max = 1.0
+    }
+    total_fire_time = 3.0
+    range = 50
+    accuracy = 0.85
+    tracking = 0.6
+    armor_damage = 1.0
+    shield_damage = 1.0
+    hull_damage = 1.0
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    entity = "invisible_turret_entity"
+    type = instant
+    key = "FOC_REBEL_M_FOC_LOWEST"
+    size = medium
+    component_set = "FOC_REBEL_TURBOLASER"
+    projectile_gfx = "infrared_laser_m"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_role_medium M_slot }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { destroyer cruiser battleship titan }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 4
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 45
+        max = 80
+    }
+    windup = {
+        min = 0.5
+        max = 1.0
+    }
+    total_fire_time = 4.5
+    range = 75
+    accuracy = 0.8
+    tracking = 0.35
+    armor_damage = 1.0
+    shield_damage = 1.0
+    hull_damage = 1.0
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    entity = "invisible_turret_entity"
+    type = instant
+    key = "FOC_REBEL_L_FOC_LOWEST"
+    size = large
+    component_set = "FOC_REBEL_TURBOLASER"
+    projectile_gfx = "infrared_laser_l"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_role_artillery L_slot }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { cruiser battleship titan }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 100
+        max = 180
+    }
+    windup = {
+        min = 0.5
+        max = 1.3
+    }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    armor_damage = 1.0
+    shield_damage = 1.0
+    hull_damage = 1.0
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    entity = "invisible_turret_entity"
+    type = instant
+    key = "FOC_REBEL_T_FOC_LOWEST"
+    size = titanic
+    component_set = "FOC_REBEL_TURBOLASER"
+    projectile_gfx = "particle_lance"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_role_artillery T_slot }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { titan }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 64
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 3500
+        max = 5500
+    }
+    windup = {
+        min = 0.5
+        max = 3.0
+    }
+    total_fire_time = 20.0
+    range = 250
+    accuracy = 0.9
+    tracking = 0.05
+    armor_damage = 1.0
+    shield_damage = 1.0
+    hull_damage = 1.0
+    min_range = 45
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_KHAN_SUPERCAP_L_FOC_LOWEST"
+    size = large
+    entity = "invisible_turret_entity"
+    type = instant
+    component_set = "FOC_KHAN_XYSTON_TURBOLASER"
+    projectile_gfx = "infrared_laser_l"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_role_artillery L_slot }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { foc_khan_eclipse foc_khan_eclipse_ii foc_khan_mandator foc_khan_mandator_foc_lowest foc_khan_eclipse_foc_lowest foc_khan_eclipse_ii_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 100
+        max = 180
+    }
+    windup = {
+        min = 0.5
+        max = 1.5
+    }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    hull_damage = 1.0
+    armor_damage = 1.0
+    shield_damage = 1.0
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_KHAN_SUPERCAP_PD_FOC_LOWEST"
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    hidden = yes
+    size = point_defence
+    type = instant
+    component_set = "FOC_KHAN_XYSTON_TURBOLASER"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_point_defence weapon_role_point_defence }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { foc_khan_eclipse foc_khan_eclipse_ii foc_khan_mandator foc_khan_mandator_foc_lowest foc_khan_eclipse_foc_lowest foc_khan_eclipse_ii_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 6
+        max = 12
+    }
+    windup = {
+        min = 0.5
+        max = 1.0
+    }
+    total_fire_time = 1.5
+    range = 30
+    accuracy = 0.9
+    tracking = 0.75
+    hull_damage = 1.0
+    armor_damage = 1.0
+    shield_damage = 1.0
+    ai_weight = {
+        weight = 0
+    }
+    projectile_gfx = "white_laser_pd"
+    entity = "invisible_turret_entity"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_KHAN_SMALL_XX9_HEAVY_TURBO_G_FOC_LOWEST"
+    size = small
+    type = instant
+    icon = "GFX_ship_part_swgs_xx_9_turbolaser_g"
+    icon_frame = 1
+    damage = {
+        min = 20
+        max = 35
+    }
+    windup = {
+        min = 0.5
+        max = 1.0
+    }
+    total_fire_time = 3.0
+    range = 50
+    accuracy = 0.85
+    tracking = 0.6
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -5
+    prerequisites = { "foc_tech_swgs_crisis_point_defence" }
+    component_set = "FOC_KHAN_XX9_HEAVY_TURBO_G"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_KHAN_MEDIUM_XX9_HEAVY_TURBO_G_FOC_LOWEST"
+    size = medium
+    type = instant
+    icon = "GFX_ship_part_swgs_xx_9_turbolaser_g"
+    icon_frame = 1
+    damage = { min = 45 max = 80 }
+    windup = { min = 0.5 max = 1.0 }
+    total_fire_time = 4.5
+    range = 75
+    accuracy = 0.8
+    tracking = 0.35
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -20
+    prerequisites = { "foc_tech_swgs_crisis_point_defence" }
+    component_set = "FOC_KHAN_XX9_HEAVY_TURBO_G"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 4 }
+        upkeep = { }
+    }
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_KHAN_LARGE_XX9_HEAVY_TURBO_G_FOC_LOWEST"
+    size = large
+    type = instant
+    icon = "GFX_ship_part_swgs_xx_9_turbolaser_g"
+    icon_frame = 1
+    damage = {
+        min = 100
+        max = 180
+    }
+    windup = {
+        min = 0.5
+        max = 1.3
+    }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -30
+    prerequisites = { "foc_tech_swgs_crisis_point_defence" }
+    component_set = "FOC_KHAN_XX9_HEAVY_TURBO_G"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_REBEL_SMALL_XX9_HEAVY_TURBO_R_FOC_LOWEST"
+    size = small
+    type = instant
+    icon = "GFX_ship_part_swgs_xx_9_turbolaser_r"
+    icon_frame = 1
+    damage = {
+        min = 20
+        max = 35
+    }
+    windup = {
+        min = 0.5
+        max = 1.0
+    }
+    total_fire_time = 3.0
+    range = 50
+    accuracy = 0.85
+    tracking = 0.6
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -5
+    prerequisites = { "foc_tech_swgs_crisis_point_defence" }
+    component_set = "FOC_REBEL_XX9_HEAVY_TURBO_R"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_REBEL_MEDIUM_XX9_HEAVY_TURBO_R_FOC_LOWEST"
+    size = medium
+    type = instant
+    icon = "GFX_ship_part_swgs_xx_9_turbolaser_r"
+    icon_frame = 1
+    damage = { min = 45 max = 80 }
+    windup = { min = 0.5 max = 1.0 }
+    total_fire_time = 4.5
+    range = 75
+    accuracy = 0.8
+    tracking = 0.35
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -20
+    prerequisites = { "foc_tech_swgs_crisis_point_defence" }
+    component_set = "FOC_REBEL_XX9_HEAVY_TURBO_R"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 4 }
+        upkeep = { }
+    }
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_REBEL_LARGE_XX9_HEAVY_TURBO_R_FOC_LOWEST"
+    size = large
+    type = instant
+    icon = "GFX_ship_part_swgs_xx_9_turbolaser_r"
+    icon_frame = 1
+    damage = {
+        min = 100
+        max = 180
+    }
+    windup = {
+        min = 0.5
+        max = 1.3
+    }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -30
+    prerequisites = { "foc_tech_swgs_crisis_point_defence" }
+    component_set = "FOC_REBEL_XX9_HEAVY_TURBO_R"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_KHAN_DEFENCE_TURBO_G_EC_FOC_LOWEST"
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    hidden = yes
+    size = point_defence
+    type = point_defence
+    icon = "GFX_ship_part_swgs_defence_turbo_g"
+    icon_frame = 1
+    damage = { min = 6 max = 12 }
+    windup = { min = 0.5 max = 1.0 }
+    total_fire_time = 1.5
+    range = 30
+    accuracy = 0.9
+    tracking = 0.75
+    shield_penetration = 1.0
+    power = -10
+    component_set = "FOC_KHAN_DEFENCE_TURBO_G_EC"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { alloys = 13 sr_tibanna_swgs = 2 }
+        upkeep = { energy = 0.13 alloys = 0.13 }
+    }
+    ai_weight = { weight = 0 }
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    point_defence_targets = { "missile" "strike_craft" }
+    projectile_gfx = "white_laser_pd"
+    prerequisites = { "foc_tech_swgs_crisis_point_defence" }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_REBEL_DEFENCE_TURBO_R_EC_FOC_LOWEST"
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    hidden = yes
+    size = point_defence
+    type = point_defence
+    icon = "GFX_ship_part_swgs_defence_turbo_r"
+    icon_frame = 1
+    damage = { min = 6 max = 12 }
+    windup = { min = 0.5 max = 1.0 }
+    total_fire_time = 1.5
+    range = 30
+    accuracy = 0.9
+    tracking = 0.75
+    shield_penetration = 1.0
+    power = -10
+    component_set = "FOC_REBEL_DEFENCE_TURBO_R_EC"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { alloys = 13 sr_tibanna_swgs = 2 }
+        upkeep = { energy = 0.13 alloys = 0.13 }
+    }
+    ai_weight = { weight = 0 }
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    point_defence_targets = { "missile" "strike_craft" }
+    projectile_gfx = "white_laser_pd"
+    prerequisites = { "foc_tech_swgs_crisis_point_defence" }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_KHAN_SPAHT_BEAM_FOC_LOWEST"
+    entity = "invisible_turret_entity"
+    size = extra_large
+    type = instant
+    icon = "GFX_ship_part_swgs_spaht_beam"
+    icon_frame = 1
+    damage = { min = 350 max = 600 }
+    windup = { min = 0.5 max = 2.0 }
+    total_fire_time = 8.0
+    range = 150
+    accuracy = 0.85
+    tracking = 0.05
+    shield_penetration = 1.0
+    armor_penetration = 1.0
+    power = -125
+    prerequisites = { "tech_battleships" }
+    component_set = "FOC_KHAN_SPAHT_BEAM"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 32 }
+        upkeep = { }
+    }
+    firing_arc = 50
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    min_range = 35
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_SWGS_REBEL_T_FOC_LOWEST"
+    size = titanic
+    type = instant
+    icon = "GFX_ship_part_swgs_xx_9_turbolaser_r"
+    icon_frame = 1
+    damage = { min = 3500 max = 5500 }
+    windup = { min = 0.5 max = 3.0 }
+    total_fire_time = 20.0
+    range = 250
+    accuracy = 0.9
+    tracking = 0.05
+    shield_penetration = 1.0
+    armor_penetration = 1.0
+    power = -300
+    prerequisites = { "foc_tech_swgs_crisis_point_defence" }
+    component_set = "FOC_SWGS_REBEL_T"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 64 }
+        upkeep = { }
+    }
+    firing_arc = 35
+    size_restriction = { titan foc_rebel_nebula foc_rebel_mc158 foc_rebel_nebula_foc_lowest foc_rebel_mc158_foc_lowest }
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    min_range = 45
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_KHAN_DEFENCE_TURBO_G_FOC_LOWEST"
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    hidden = yes
+    size = point_defence
+    type = point_defence
+    icon = "GFX_ship_part_swgs_defence_turbo_g"
+    icon_frame = 1
+    damage = { min = 6 max = 12 }
+    windup = { min = 0.5 max = 1.0 }
+    total_fire_time = 1.5
+    range = 30
+    accuracy = 0.9
+    tracking = 0.75
+    shield_penetration = 1.0
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    power = -10
+    component_set = "FOC_KHAN_DEFENCE_TURBO_G"
+    tags = { weapon_type_point_defense weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_point_defense }
+    point_defence_targets = { "missile" "strike_craft" }
+    resources = {
+        category = ship_components
+        cost = { alloys = 13 sr_tibanna_swgs = 2 }
+        upkeep = { energy = 0.13 alloys = 0.13 }
+    }
+    ai_weight = { weight = 0 }
+    projectile_gfx = "white_laser_pd"
+    prerequisites = { "foc_tech_swgs_defence_turbo" }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_REBEL_DEFENCE_TURBO_R_FOC_LOWEST"
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    hidden = yes
+    size = point_defence
+    type = point_defence
+    icon = "GFX_ship_part_swgs_defence_turbo_r"
+    icon_frame = 1
+    damage = { min = 6 max = 12 }
+    windup = { min = 0.5 max = 1.0 }
+    total_fire_time = 1.5
+    range = 30
+    accuracy = 0.9
+    tracking = 0.75
+    shield_penetration = 1.0
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    power = -10
+    component_set = "FOC_REBEL_DEFENCE_TURBO_R"
+    tags = { weapon_type_point_defense weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_point_defense }
+    point_defence_targets = { "missile" "strike_craft" }
+    resources = {
+        category = ship_components
+        cost = { alloys = 13 sr_tibanna_swgs = 2 }
+        upkeep = { energy = 0.13 alloys = 0.13 }
+    }
+    ai_weight = { weight = 0 }
+    projectile_gfx = "white_laser_pd"
+    prerequisites = { "foc_tech_swgs_defence_turbo" }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "ISB_TURBOCANNON_GUN_FOC_LOWEST"
+    size = large
+    icon = "GFX_quadturbolasers"
+    icon_frame = 1
+    prerequisites = { "tech_destroyers" }
+    component_set = "ISB_TURBOCANNON_GUN"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_role_artillery L_slot }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = {
+        corvette
+        destroyer
+        cruiser
+        battleship
+        titan
+        juggernaut
+        imperialsd
+        imperialsd_foc_lowest
+        foc_v118_imperialsd_bastion_foc_lowest
+        foc_imperialsd2
+        foc_imperialsd2_foc_lowest
+    }
+    ai_tag_weight = 0
+    resources = {
+        category = ship_components
+        cost = { alloys = 50 sr_tibanna_swgs = 8 }
+        upkeep = { }
+    }
+    power = -40
+    damage = { min = 100 max = 180 }
+    windup = { min = 0.5 max = 1.5 }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    hull_damage = 1.0
+    armor_damage = 1.0
+    shield_damage = 1.0
+    shield_penetration = 0
+    armor_penetration = 0
+    target_weights = {
+        titan = 5
+        battleship = 4
+        cruiser = 3
+        destroyer = 2
+        frigate = 1
+        corvette = 1
+    }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "RESURGENTBATTLECRUISER_TURBOCANNON_GUN_FOC_LOWEST"
+    size = large
+    icon = "GFX_resurgentbattlecruiser_dualheavyturbolasers"
+    icon_frame = 1
+    prerequisites = { "tech_plasma_3" "tech_battleships" }
+    component_set = "RESURGENTBATTLECRUISER_TURBOCANNON_GUN"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_role_artillery L_slot }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { resurgentbattlecruiser resurgentbattlecruiser_foc_lowest }
+    ai_tag_weight = 0
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 8 }
+    }
+    power = -40
+    damage = { min = 100 max = 180 }
+    windup = { min = 0.5 max = 1.5 }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    hull_damage = 1.0
+    armor_damage = 1.0
+    shield_damage = 1.0
+    shield_penetration = 0
+    armor_penetration = 0
+    target_weights = {
+        titan = 5
+        battleship = 4
+        cruiser = 3
+        destroyer = 2
+        frigate = 1
+        corvette = 1
+    }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "SAI_SUPREMACY_LARGE_TURBOLASER_FOC_LOWEST"
+    size = large
+    type = instant
+    icon = "GFX_supremacy_dualturbolasers"
+    icon_frame = 1
+    damage = { min = 100 max = 180 }
+    windup = { min = 0.5 max = 1.3 }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    shield_penetration = 1.0
+    armor_penetration = 1.0
+    power = -40
+    component_set = "SAI_SUPREMACY_TURBOLASER"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 8 }
+        upkeep = { }
+    }
+    size_restriction = { sai_supremacy_arkship_tier_1 sai_supremacy_arkship_tier_2 sai_supremacy_arkship_tier_3 sai_supremacy_arkship_tier_3_foc_lowest }
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "SAI_SUPREMACY_MEDIUM_TURBOLASER_FOC_LOWEST"
+    size = medium
+    type = instant
+    icon = "GFX_supremacy_dualturbolasers"
+    icon_frame = 1
+    damage = { min = 45 max = 80 }
+    windup = { min = 0.5 max = 1.0 }
+    total_fire_time = 4.5
+    range = 75
+    accuracy = 0.8
+    tracking = 0.35
+    shield_penetration = 0.75
+    armor_penetration = 0.75
+    power = -20
+    component_set = "SAI_SUPREMACY_TURBOLASER"
+    projectile_gfx = "infrared_laser_m"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 4 }
+        upkeep = { }
+    }
+    size_restriction = { sai_supremacy_arkship_tier_1 sai_supremacy_arkship_tier_2 sai_supremacy_arkship_tier_3 sai_supremacy_arkship_tier_3_foc_lowest }
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "SAI_SUPREMACY_SMALL_TURBOLASER_FOC_LOWEST"
+    size = small
+    type = instant
+    icon = "GFX_supremacy_dualturbolasers"
+    icon_frame = 1
+    damage = {
+        min = 20
+        max = 35
+    }
+    windup = {
+        min = 0.5
+        max = 1.0
+    }
+    total_fire_time = 3.0
+    range = 50
+    accuracy = 0.85
+    tracking = 0.6
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -5
+    component_set = "SAI_SUPREMACY_TURBOLASER"
+    projectile_gfx = "infrared_laser_s"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    size_restriction = { sai_supremacy_arkship_tier_1 sai_supremacy_arkship_tier_2 sai_supremacy_arkship_tier_3 sai_supremacy_arkship_tier_3_foc_lowest }
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "SAI_SUPREMACY_POINT_DEFENCE_TURBOLASER_FOC_LOWEST"
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    hidden = yes
+    size = point_defence
+    type = point_defence
+    icon = "GFX_supremacy_dualturbolasers"
+    icon_frame = 1
+    damage = { min = 6 max = 12 }
+    windup = { min = 0.5 max = 1.0 }
+    total_fire_time = 1.5
+    range = 30
+    accuracy = 0.9
+    tracking = 0.75
+    shield_penetration = 1.0
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    power = -10
+    component_set = "SAI_SUPREMACY_POINT_DEFENCE_TURBOLASER"
+    point_defence_targets = { "missile" "strike_craft" }
+    tags = { weapon_type_point_defense weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_point_defense }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 2 }
+        upkeep = { }
+    }
+    size_restriction = { sai_supremacy_arkship_tier_1 sai_supremacy_arkship_tier_2 sai_supremacy_arkship_tier_3 sai_supremacy_arkship_tier_3_foc_lowest }
+    ai_weight = { weight = 0 }
+    projectile_gfx = "white_laser_pd"
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "XYSTON_TURBOCANNON_GUN_FOC_LOWEST"
+    size = large
+    icon = "GFX_xystonsd_quadturbolasers"
+    icon_frame = 1
+    prerequisites = { "tech_titans" }
+    component_set = "XYSTON_TURBOCANNON_GUN"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_kinetic }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { xystonsd foc_khan_xystonsd foc_khan_xystonsd_combat foc_khan_xystonsd_foc_lowest foc_khan_xystonsd_combat_foc_lowest }
+    ai_tag_weight = 0
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 8 }
+        upkeep = { }
+    }
+    power = -40
+    damage = { min = 100 max = 180 }
+    windup = { min = 0.5 max = 1.5 }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    hull_damage = 1.0
+    armor_damage = 1.0
+    shield_damage = 1.0
+    shield_penetration = 0
+    armor_penetration = 0
+    target_weights = {
+        titan = 5
+        battleship = 4
+        cruiser = 3
+        destroyer = 2
+        frigate = 1
+        corvette = 1
+    }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_DEATH_STAR_II_LARGE_BATTERY"
+    size = large
+    type = instant
+    entity = "ds_empty_turret_entity"
+    projectile_gfx = "infrared_laser_l"
+    icon = "GFX_ship_part_swgs_xx_9_turbolaser_g"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_artillery }
+    component_set = "FOC_DEATH_STAR_BATTERY_SET"
+    size_restriction = { colossus deathstarbattlestation }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    power = -500
+    damage = {
+        min = 17160
+        max = 23400
+    }
+    windup = {
+        min = 1
+        max = 5
+    }
+    total_fire_time = 8
+    range = 400
+    accuracy = 1.0
+    tracking = 0.65
+    shield_penetration = 0.25
+    armor_penetration = 0.25
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_DEATH_STAR_II_MEDIUM_BATTERY"
+    size = medium
+    type = instant
+    entity = "ds_empty_turret_entity"
+    projectile_gfx = "infrared_laser_m"
+    icon = "GFX_ship_part_swgs_xx_9_turbolaser_g"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    component_set = "FOC_DEATH_STAR_BATTERY_SET"
+    size_restriction = { colossus deathstarbattlestation }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 4
+        }
+        upkeep = { }
+    }
+    power = -300
+    damage = {
+        min = 9360
+        max = 14040
+    }
+    windup = {
+        min = 1
+        max = 4
+    }
+    total_fire_time = 6
+    range = 300
+    accuracy = 1.0
+    tracking = 0.80
+    shield_penetration = 0.20
+    armor_penetration = 0.20
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_DEATH_STAR_II_SMALL_BATTERY"
+    size = small
+    type = instant
+    entity = "ds_empty_turret_entity"
+    projectile_gfx = "infrared_laser_s"
+    icon = "GFX_ship_part_swgs_xx_9_turbolaser_g"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    component_set = "FOC_DEATH_STAR_BATTERY_SET"
+    size_restriction = { colossus deathstarbattlestation }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    power = -150
+    damage = {
+        min = 4680
+        max = 7020
+    }
+    windup = {
+        min = 1
+        max = 3
+    }
+    total_fire_time = 4
+    range = 220
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 0.15
+    armor_penetration = 0.15
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_DEATH_STAR_II_POINT_DEFENSE"
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    size = small
+    type = point_defence
+    point_defence_targets = { "strike_craft" "missile" }
+    icon = "GFX_ship_part_point_defense_3"
+    icon_frame = 1
+    tags = { weapon_type_energy }
+    ai_tags = { weapon_role_point_defense }
+    component_set = "FOC_DEATH_STAR_POINT_DEFENSE_SET"
+    size_restriction = { colossus deathstarbattlestation }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    power = -100
+    damage = {
+        min = 2340
+        max = 3510
+    }
+    total_fire_time = 1
+    range = 180
+    accuracy = 1.0
+    tracking = 1.0
+    ai_weight = {
+        weight = 10
+    }
+    projectile_gfx = "strike_craft_laser_3"
+    entity = "ds_empty_turret_entity"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "ARKSHIP_DEVASTATOR_WEAPON"
+    size = titanic
+    type = instant
+    prio_projectile = yes
+    icon = "GFX_ship_part_arkship_devastator"
+    icon_frame = 1
+    resources = {
+        category = ship_components
+        upkeep = {
+            alloys = @titanic_t7_upkeep_alloys
+            energy = @titanic_t7_upkeep_energy
+        }
+    
+        cost = { sr_tibanna_swgs = 64 }
+    }
+    collateral_damage = @arkship_devastator_fleet_damage
+    collateral_range = @arkship_devastator_collateral_range
+    firing_arc = 15.0
+    min_range = 30.0
+    tags = { weapon_type_energy weapon_role_artillery t_slot }
+    component_set = "ARKSHIP_DEVASTATOR_WEAPON"
+    projectile_gfx = "arkship_01_devastator_laser"
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "RESURGENTBATTLECRUISER_TURBOCANNON_GUN"
+    size = large
+    icon = "GFX_resurgentbattlecruiser_dualheavyturbolasers"
+    icon_frame = 1
+    prerequisites = { "tech_plasma_3" "tech_battleships" }
+    component_set = "RESURGENTBATTLECRUISER_TURBOCANNON_GUN"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_role_artillery L_slot }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { resurgentbattlecruiser resurgentbattlecruiser_foc_lowest }
+    ai_tag_weight = 0
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+    }
+    power = -300
+    damage = {
+        min = 834
+        max = 1572
+    }
+    windup = {
+        min = 2
+        max = 2
+    }
+    total_fire_time = 2
+    range = 110
+    accuracy = 0.7
+    tracking = 0.4
+    hull_damage = 1
+    armor_damage = 2
+    shield_damage = 3
+    shield_penetration = 0
+    armor_penetration = 0
+    target_weights = {
+        titan = 5
+        battleship = 4
+        cruiser = 3
+        destroyer = 2
+        frigate = 1
+        corvette = 1
+    }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_MC158_SG_XSD_HEAVY_TURBO_G"
+    size = large
+    size_restriction = { foc_rebel_mc158 foc_rebel_mc158_foc_lowest }
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    damage = {
+        min = 1800
+        max = 2400
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 220
+    accuracy = 1
+    tracking = 1
+    shield_penetration = 1
+    armor_penetration = 1
+    power = -140
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    component_set = "FOC_MC158_SG_XSD_HEAVY_TURBO_G"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_artillery }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_MC158_SG_LARGE_QUAD_TURBO_B"
+    size = large
+    size_restriction = { foc_rebel_mc158 foc_rebel_mc158_foc_lowest }
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    damage = {
+        min = 1800
+        max = 2400
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 220
+    accuracy = 1
+    tracking = 1
+    shield_penetration = 0.75
+    armor_penetration = 0.75
+    power = -30
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    component_set = "FOC_MC158_SG_LARGE_QUAD_TURBO_B"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_MC158_SG_LARGE_QUAD_TURBO_G"
+    size = large
+    size_restriction = { foc_rebel_mc158 foc_rebel_mc158_foc_lowest }
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    damage = {
+        min = 1800
+        max = 2400
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 220
+    accuracy = 1
+    tracking = 1
+    shield_penetration = 0.75
+    armor_penetration = 0.75
+    power = -30
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    component_set = "FOC_MC158_SG_LARGE_QUAD_TURBO_G"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_MC158_SG_OCTUPLE_TURBO_R"
+    size = large
+    size_restriction = { foc_rebel_mc158 foc_rebel_mc158_foc_lowest }
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    damage = {
+        min = 3000
+        max = 3000
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 220
+    accuracy = 1
+    tracking = 0.2
+    shield_penetration = 1
+    armor_penetration = 1
+    power = -140
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    component_set = "FOC_MC158_SG_OCTUPLE_TURBO_R"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_artillery }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_MC158_SG_OCTUPLE_TURBO_B"
+    size = large
+    size_restriction = { foc_rebel_mc158 foc_rebel_mc158_foc_lowest }
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    damage = {
+        min = 3000
+        max = 3000
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 220
+    accuracy = 1
+    tracking = 0.2
+    shield_penetration = 1
+    armor_penetration = 1
+    power = -140
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    component_set = "FOC_MC158_SG_OCTUPLE_TURBO_B"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_artillery }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_MC158_SG_OCTUPLE_TURBO_G"
+    size = large
+    size_restriction = { foc_rebel_mc158 foc_rebel_mc158_foc_lowest }
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    damage = {
+        min = 3000
+        max = 3000
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 220
+    accuracy = 1
+    tracking = 0.2
+    shield_penetration = 1
+    armor_penetration = 1
+    power = -140
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    component_set = "FOC_MC158_SG_OCTUPLE_TURBO_G"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_artillery }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_NEBULA_SG_TURBO_ARRAY"
+    size = extra_large
+    size_restriction = { foc_rebel_nebula foc_rebel_nebula_foc_lowest }
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    damage = {
+        min = 30000
+        max = 60000
+    }
+    windup = {
+        min = 0
+        max = 0
+    }
+    total_fire_time = 120
+    range = 190
+    accuracy = 1
+    tracking = 1
+    shield_penetration = 1
+    armor_penetration = 1
+    shield_damage = 1
+    armor_damage = 1
+    hull_damage = 3
+    power = -800
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 32
+        }
+        upkeep = { }
+    }
+    component_set = "FOC_NEBULA_SG_TURBO_ARRAY"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_NEBULA_SG_TRACTOR_BEAM"
+    size = extra_large
+    size_restriction = { foc_rebel_nebula foc_rebel_nebula_foc_lowest }
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    damage = {
+        min = 600
+        max = 1800
+    }
+    windup = {
+        min = 0
+        max = 0
+    }
+    total_fire_time = 30
+    range = 260
+    accuracy = 1
+    tracking = 1
+    shield_penetration = 1
+    armor_penetration = 1
+    shield_damage = 4
+    armor_damage = 4
+    hull_damage = 4
+    power = -10
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 32
+        }
+        upkeep = { }
+    }
+    component_set = "FOC_NEBULA_SG_TRACTOR_BEAM"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_NEBULA_SG_LARGE_QUAD_TURBO_R"
+    size = large
+    size_restriction = { foc_rebel_nebula foc_rebel_nebula_foc_lowest }
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    damage = {
+        min = 1800
+        max = 2400
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 220
+    accuracy = 1
+    tracking = 1
+    shield_penetration = 0.75
+    armor_penetration = 0.75
+    power = -30
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    component_set = "FOC_NEBULA_SG_LARGE_QUAD_TURBO_R"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_KHAN_SUPREMACY_L"
+    size = large
+    entity = "invisible_turret_entity"
+    type = instant
+    component_set = "FOC_KHAN_SUPREMACY_TURBOLASER_SET"
+    projectile_gfx = "infrared_laser_l"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_role_artillery L_slot }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { foc_sai_supremacy_arkship_tier_3 foc_sai_supremacy_arkship_tier_3_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 7200
+        max = 10800
+    }
+    windup = {
+        min = 1
+        max = 3
+    }
+    total_fire_time = 4
+    range = 220
+    accuracy = 0.92
+    tracking = 0.35
+    hull_damage = 1.0
+    armor_damage = 1.75
+    shield_damage = 1.75
+    shield_penetration = 0
+    armor_penetration = 0
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_KHAN_SUPREMACY_M"
+    size = medium
+    entity = "invisible_turret_entity"
+    type = instant
+    component_set = "FOC_KHAN_SUPREMACY_TURBOLASER_SET"
+    projectile_gfx = "infrared_laser_m"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_role_medium M_slot }
+    ai_tags = { weapon_role_medium }
+    size_restriction = { foc_sai_supremacy_arkship_tier_3 foc_sai_supremacy_arkship_tier_3_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 4
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 3300
+        max = 5100
+    }
+    windup = {
+        min = 1
+        max = 3
+    }
+    total_fire_time = 3
+    range = 165
+    accuracy = 0.95
+    tracking = 0.55
+    hull_damage = 1.0
+    armor_damage = 1.75
+    shield_damage = 1.75
+    shield_penetration = 0
+    armor_penetration = 0
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_KHAN_SUPREMACY_S"
+    size = small
+    entity = "invisible_turret_entity"
+    type = instant
+    component_set = "FOC_KHAN_SUPREMACY_TURBOLASER_SET"
+    projectile_gfx = "infrared_laser_s"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_role_anti_hull S_slot }
+    ai_tags = { weapon_role_anti_hull }
+    size_restriction = { foc_sai_supremacy_arkship_tier_3 foc_sai_supremacy_arkship_tier_3_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 1320
+        max = 2160
+    }
+    windup = {
+        min = 1
+        max = 3
+    }
+    total_fire_time = 2
+    range = 110
+    accuracy = 0.98
+    tracking = 0.80
+    hull_damage = 1.0
+    armor_damage = 1.50
+    shield_damage = 1.50
+    shield_penetration = 0
+    armor_penetration = 0
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_KHAN_SUPREMACY_PD"
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    size = point_defence
+    type = instant
+    component_set = "FOC_KHAN_SUPREMACY_PD_SET"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_point_defence weapon_role_point_defence }
+    ai_tags = { weapon_role_point_defence }
+    size_restriction = { foc_sai_supremacy_arkship_tier_3 foc_sai_supremacy_arkship_tier_3_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 130
+        max = 210
+    }
+    windup = {
+        min = 1
+        max = 2
+    }
+    total_fire_time = 1
+    range = 80
+    accuracy = 1.0
+    tracking = 1.0
+    hull_damage = 1.0
+    armor_damage = 1.25
+    shield_damage = 1.25
+    shield_penetration = 0
+    armor_penetration = 0
+    ai_weight = {
+        weight = 10
+    }
+    projectile_gfx = "white_laser_pd"
+    entity = "invisible_turret_entity"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    entity = "invisible_turret_entity"
+    type = instant
+    key = "FOC_REBEL_S"
+    size = small
+    component_set = "FOC_REBEL_TURBOLASER"
+    projectile_gfx = "infrared_laser_s"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_role_anti_hull S_slot }
+    ai_tags = { weapon_role_anti_hull }
+    size_restriction = { corvette destroyer cruiser battleship titan foc_rebel_nebula foc_rebel_mc158 foc_rebel_nebula_foc_lowest foc_rebel_mc158_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 540
+        max = 900
+    }
+    windup = {
+        min = 0.5
+        max = 1.5
+    }
+    total_fire_time = 2
+    range = 100
+    accuracy = 0.95
+    tracking = 0.75
+    armor_damage = 1.35
+    shield_damage = 1.20
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    entity = "invisible_turret_entity"
+    type = instant
+    key = "FOC_REBEL_M"
+    size = medium
+    component_set = "FOC_REBEL_TURBOLASER"
+    projectile_gfx = "infrared_laser_m"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_role_medium M_slot }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { destroyer cruiser battleship titan }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 4
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 1140
+        max = 1860
+    }
+    windup = {
+        min = 0.8
+        max = 2
+    }
+    total_fire_time = 3
+    range = 135
+    accuracy = 0.92
+    tracking = 0.50
+    armor_damage = 1.45
+    shield_damage = 1.25
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    entity = "invisible_turret_entity"
+    type = instant
+    key = "FOC_REBEL_L"
+    size = large
+    component_set = "FOC_REBEL_TURBOLASER"
+    projectile_gfx = "infrared_laser_l"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_role_artillery L_slot }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { cruiser battleship titan }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 2280
+        max = 3720
+    }
+    windup = {
+        min = 1
+        max = 3
+    }
+    total_fire_time = 4
+    range = 175
+    accuracy = 0.90
+    tracking = 0.30
+    armor_damage = 1.60
+    shield_damage = 1.35
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    entity = "invisible_turret_entity"
+    type = instant
+    key = "FOC_REBEL_T"
+    size = titanic
+    component_set = "FOC_REBEL_TURBOLASER"
+    projectile_gfx = "particle_lance"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_role_artillery T_slot }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { titan }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 64
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 1200
+        max = 1900
+    }
+    windup = {
+        min = 2
+        max = 4
+    }
+    total_fire_time = 8
+    range = 250
+    accuracy = 0.95
+    tracking = 0.10
+    armor_damage = 1.75
+    shield_damage = 1.50
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_REBEL_HOME_ARKSHIP_WEAPON"
+    size = large
+    type = instant
+    entity = "invisible_turret_entity"
+    projectile_gfx = "infrared_laser_l"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_artillery }
+    component_set = "FOC_REBEL_HOME_ARKSHIP_WEAPON_SET"
+    size_restriction = { foc_rebel_home_arkship_tier_3 foc_rebel_home_arkship_tier_3_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    power = -30
+    damage = {
+        min = 1200
+        max = 1320
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 240
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_REBEL_HOME_ARKSHIP_MEDIUM_WEAPON"
+    size = medium
+    type = instant
+    entity = "invisible_turret_entity"
+    projectile_gfx = "infrared_laser_m"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_artillery }
+    component_set = "FOC_REBEL_HOME_ARKSHIP_WEAPON_SET"
+    size_restriction = { foc_rebel_home_arkship_tier_3 foc_rebel_home_arkship_tier_3_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 4
+        }
+        upkeep = { }
+    }
+    power = -30
+    damage = {
+        min = 780
+        max = 900
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 160
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_REBEL_HOME_ARKSHIP_SMALL_WEAPON"
+    size = small
+    type = instant
+    entity = "invisible_turret_entity"
+    projectile_gfx = "infrared_laser_s"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    component_set = "FOC_REBEL_HOME_ARKSHIP_WEAPON_SET"
+    size_restriction = { foc_rebel_home_arkship_tier_3 foc_rebel_home_arkship_tier_3_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    power = -5
+    damage = {
+        min = 600
+        max = 600
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 120
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_REBEL_HOME_ARKSHIP_POINT_DEFENSE"
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    size = point_defence
+    type = point_defence
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_point_defense weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_point_defense }
+    component_set = "FOC_REBEL_HOME_ARKSHIP_WEAPON_SET"
+    size_restriction = { foc_rebel_home_arkship_tier_3 foc_rebel_home_arkship_tier_3_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    power = -30
+    damage = {
+        min = 18
+        max = 30
+    }
+    windup = {
+        min = 1
+        max = 5
+    }
+    total_fire_time = 11
+    range = 40
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 1.0
+    shield_damage = 1.25
+    armor_damage = 1.25
+    hull_damage = 1.25
+    point_defence_targets = { "missile" "strike_craft" }
+    ai_weight = {
+        weight = 10
+    }
+    projectile_gfx = "white_laser_pd"
+    entity = "invisible_turret_entity"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_REBEL_HOME_ARKSHIP_SPINAL_BEAM"
+    size = extra_large
+    type = instant
+    entity = "invisible_turret_entity"
+    projectile_gfx = "particle_lance"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_artillery }
+    component_set = "FOC_REBEL_HOME_ARKSHIP_WEAPON_SET"
+    size_restriction = { foc_rebel_home_arkship_tier_3 foc_rebel_home_arkship_tier_3_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 32
+        }
+        upkeep = { }
+    }
+    power = -1400
+    damage = {
+        min = 30000
+        max = 60000
+    }
+    windup = {
+        min = 0
+        max = 0
+    }
+    total_fire_time = 180
+    range = 260
+    accuracy = 1.0
+    tracking = 0.35
+    shield_penetration = 1.0
+    armor_penetration = 1.0
+    firing_arc = 50
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "XYSTON_TURBOCANNON_GUN"
+    size = large
+    icon = "GFX_xystonsd_quadturbolasers"
+    icon_frame = 1
+    prerequisites = { "tech_titans" }
+    component_set = "XYSTON_TURBOCANNON_GUN"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_kinetic }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { xystonsd foc_khan_xystonsd foc_khan_xystonsd_combat foc_khan_xystonsd_foc_lowest foc_khan_xystonsd_combat_foc_lowest }
+    ai_tag_weight = 0
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    power = -200
+    damage = {
+        min = 1404
+        max = 2070
+    }
+    windup = {
+        min = 5
+        max = 5
+    }
+    total_fire_time = 5
+    range = 140
+    accuracy = 0.8
+    tracking = 0.2
+    hull_damage = 1
+    armor_damage = 2
+    shield_damage = 3
+    shield_penetration = 0
+    armor_penetration = 0
+    target_weights = {
+        titan = 5
+        battleship = 4
+        cruiser = 3
+        destroyer = 2
+        frigate = 1
+        corvette = 1
+    }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_LUS_SPAHT_BEAM"
+    size_restriction = { foc_sw_lusankya foc_sw_lusankya_foc_lowest foc_v118_executor_bastion_foc_lowest }
+    size = extra_large
+    type = instant
+    icon = "GFX_ship_part_swgs_spaht_beam"
+    icon_frame = 1
+    damage = {
+        min = 30000
+        max = 60000
+    }
+    windup = {
+        min = 0.0
+        max = 0.0
+    }
+    total_fire_time = 180.0
+    range = 240.0
+    accuracy = 1.00
+    tracking = 0.25
+    firing_arc = 50.0
+    shield_penetration = 1.0
+    armor_penetration = 1.0
+    power = -1400.00
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 100
+        
+            sr_tibanna_swgs = 32
+        }
+        upkeep = {
+            energy = 1
+            alloys = 1
+        }
+    }
+    component_set = "FOC_LUS_SPAHT_BEAM"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic weapon_type_kuat_artellarys_scale }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_LUS_OCTUPLE_TURBO_R"
+    size_restriction = { foc_sw_lusankya foc_sw_lusankya_foc_lowest foc_v118_executor_bastion_foc_lowest }
+    size = large
+    icon = "GFX_ship_part_swgs_octuple_turbo_r"
+    icon_frame = 1
+    damage = {
+        min = 3000.0
+        max = 3000.0
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 220
+    accuracy = 1
+    tracking = 0.2
+    shield_penetration = 1
+    armor_penetration = 1
+    power = -140
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 100
+        
+            sr_tibanna_swgs = 8
+        }
+        upkeep = {
+            energy = 1
+            alloys = 1
+        }
+    }
+    component_set = "FOC_LUS_OCTUPLE_TURBO_R"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_type_kinetic weapon_type_kuat_artellarys_scale }
+    ai_tags = { weapon_role_artillery }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_LUS_SPAHT_BEAM_EC"
+    size_restriction = { foc_sw_lusankya foc_sw_lusankya_foc_lowest foc_v118_executor_bastion_foc_lowest }
+    size = extra_large
+    type = instant
+    icon = "GFX_ship_part_swgs_spaht_beam"
+    icon_frame = 1
+    damage = {
+        min = 30000
+        max = 60000
+    }
+    windup = {
+        min = 0.0
+        max = 0.0
+    }
+    total_fire_time = 180.0
+    range = 240.0
+    accuracy = 1.00
+    tracking = 0.25
+    firing_arc = 50.0
+    shield_penetration = 2.0
+    armor_penetration = 2.0
+    power = -1400.00
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 100
+        
+            sr_tibanna_swgs = 32
+        }
+        upkeep = {
+            energy = 1
+            alloys = 1
+        }
+    }
+    component_set = "FOC_LUS_SPAHT_BEAM_EC"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic weapon_type_kuat_artellarys_scale }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_armor }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_LUS_OCTUPLE_TURBO_R_EC"
+    size_restriction = { foc_sw_lusankya foc_sw_lusankya_foc_lowest foc_v118_executor_bastion_foc_lowest }
+    size = large
+    icon = "GFX_ship_part_swgs_octuple_turbo_r"
+    icon_frame = 1
+    damage = {
+        min = 12000.0
+        max = 12000.0
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 220
+    accuracy = 1
+    tracking = 0.2
+    shield_penetration = 1
+    armor_penetration = 1
+    power = -140
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 100
+        
+            sr_tibanna_swgs = 8
+        }
+        upkeep = {
+            energy = 1
+            alloys = 1
+        }
+    }
+    tags = { weapon_type_energy weapon_type_kinetic weapon_type_kuat_artellarys_scale }
+    component_set = "FOC_LUS_OCTUPLE_TURBO_R_EC"
+    projectile_gfx = "infrared_laser_l"
+    ai_tags = { weapon_role_artillery }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_KHAN_SUPERCAP_L"
+    size = large
+    entity = "invisible_turret_entity"
+    type = instant
+    component_set = "FOC_KHAN_XYSTON_TURBOLASER"
+    projectile_gfx = "infrared_laser_l"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_role_artillery L_slot }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { foc_khan_eclipse foc_khan_eclipse_ii foc_khan_mandator foc_khan_mandator_foc_lowest foc_khan_eclipse_foc_lowest foc_khan_eclipse_ii_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 9000
+        max = 13200
+    }
+    windup = {
+        min = 1
+        max = 3
+    }
+    total_fire_time = 4
+    range = 210
+    accuracy = 0.92
+    tracking = 0.3
+    hull_damage = 1
+    armor_damage = 2.0
+    shield_damage = 2.0
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_KHAN_SUPERCAP_PD"
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    size = point_defence
+    type = instant
+    component_set = "FOC_KHAN_XYSTON_TURBOLASER"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_point_defence weapon_role_point_defence }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { foc_khan_eclipse foc_khan_eclipse_ii foc_khan_mandator foc_khan_mandator_foc_lowest foc_khan_eclipse_foc_lowest foc_khan_eclipse_ii_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 160
+        max = 260
+    }
+    windup = {
+        min = 1
+        max = 3
+    }
+    total_fire_time = 1
+    range = 75
+    accuracy = 1.0
+    tracking = 1.0
+    hull_damage = 1
+    armor_damage = 1.5
+    shield_damage = 1.5
+    ai_weight = {
+        weight = 10
+    }
+    projectile_gfx = "white_laser_pd"
+    entity = "invisible_turret_entity"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_KHAN_SMALL_XX9_HEAVY_TURBO_G"
+    size = small
+    type = instant
+    icon = "GFX_ship_part_swgs_xx_9_turbolaser_g"
+    icon_frame = 1
+    damage = {
+        min = 600
+        max = 600
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 120
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -5
+    prerequisites = { "foc_tech_swgs_crisis_point_defence" }
+    component_set = "FOC_KHAN_XX9_HEAVY_TURBO_G"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_KHAN_MEDIUM_XX9_HEAVY_TURBO_G"
+    size = medium
+    type = instant
+    icon = "GFX_ship_part_swgs_xx_9_turbolaser_g"
+    icon_frame = 1
+    damage = {
+        min = 780
+        max = 900
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 160
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -30
+    prerequisites = { "foc_tech_swgs_crisis_point_defence" }
+    component_set = "FOC_KHAN_XX9_HEAVY_TURBO_G"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 4
+        }
+        upkeep = { }
+    }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_KHAN_LARGE_XX9_HEAVY_TURBO_G"
+    size = large
+    type = instant
+    icon = "GFX_ship_part_swgs_xx_9_turbolaser_g"
+    icon_frame = 1
+    damage = {
+        min = 1200
+        max = 1320
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 240
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -30
+    prerequisites = { "foc_tech_swgs_crisis_point_defence" }
+    component_set = "FOC_KHAN_XX9_HEAVY_TURBO_G"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_REBEL_SMALL_XX9_HEAVY_TURBO_R"
+    size = small
+    type = instant
+    icon = "GFX_ship_part_swgs_xx_9_turbolaser_r"
+    icon_frame = 1
+    damage = {
+        min = 600
+        max = 600
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 120
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -5
+    prerequisites = { "foc_tech_swgs_crisis_point_defence" }
+    component_set = "FOC_REBEL_XX9_HEAVY_TURBO_R"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_REBEL_MEDIUM_XX9_HEAVY_TURBO_R"
+    size = medium
+    type = instant
+    icon = "GFX_ship_part_swgs_xx_9_turbolaser_r"
+    icon_frame = 1
+    damage = {
+        min = 780
+        max = 900
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 160
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -30
+    prerequisites = { "foc_tech_swgs_crisis_point_defence" }
+    component_set = "FOC_REBEL_XX9_HEAVY_TURBO_R"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 4
+        }
+        upkeep = { }
+    }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_REBEL_LARGE_XX9_HEAVY_TURBO_R"
+    size = large
+    type = instant
+    icon = "GFX_ship_part_swgs_xx_9_turbolaser_r"
+    icon_frame = 1
+    damage = {
+        min = 1200
+        max = 1320
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 240
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -30
+    prerequisites = { "foc_tech_swgs_crisis_point_defence" }
+    component_set = "FOC_REBEL_XX9_HEAVY_TURBO_R"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_KHAN_DEFENCE_TURBO_G_EC"
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    size = point_defence
+    type = point_defence
+    icon = "GFX_ship_part_swgs_defence_turbo_g"
+    icon_frame = 1
+    damage = {
+        min = 18
+        max = 30
+    }
+    windup = {
+        min = 1
+        max = 5
+    }
+    total_fire_time = 11
+    range = 40
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 1.0
+    power = -30
+    component_set = "FOC_KHAN_DEFENCE_TURBO_G_EC"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 13
+        
+            sr_tibanna_swgs = 2
+        }
+        upkeep = {
+            energy = 0.13
+            alloys = 0.13
+        }
+    }
+    ai_weight = {
+        weight = 10
+    }
+    shield_damage = 1.25
+    armor_damage = 1.25
+    hull_damage = 1.25
+    point_defence_targets = { "missile" "strike_craft" }
+    projectile_gfx = "white_laser_pd"
+    prerequisites = { "foc_tech_swgs_crisis_point_defence" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_REBEL_DEFENCE_TURBO_R_EC"
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    size = point_defence
+    type = point_defence
+    icon = "GFX_ship_part_swgs_defence_turbo_r"
+    icon_frame = 1
+    damage = {
+        min = 18
+        max = 30
+    }
+    windup = {
+        min = 1
+        max = 5
+    }
+    total_fire_time = 11
+    range = 40
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 1.0
+    power = -30
+    component_set = "FOC_REBEL_DEFENCE_TURBO_R_EC"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 13
+        
+            sr_tibanna_swgs = 2
+        }
+        upkeep = {
+            energy = 0.13
+            alloys = 0.13
+        }
+    }
+    ai_weight = {
+        weight = 10
+    }
+    shield_damage = 1.25
+    armor_damage = 1.25
+    hull_damage = 1.25
+    point_defence_targets = { "missile" "strike_craft" }
+    projectile_gfx = "white_laser_pd"
+    prerequisites = { "foc_tech_swgs_crisis_point_defence" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_KHAN_SPAHT_BEAM"
+    entity = "invisible_turret_entity"
+    size = extra_large
+    type = instant
+    icon = "GFX_ship_part_swgs_spaht_beam"
+    icon_frame = 1
+    damage = {
+        min = 30000
+        max = 60000
+    }
+    windup = {
+        min = 0
+        max = 0
+    }
+    total_fire_time = 180
+    range = 240
+    accuracy = 1.0
+    tracking = 0.25
+    shield_penetration = 1.0
+    armor_penetration = 1.0
+    power = -1400
+    prerequisites = { "tech_battleships" }
+    component_set = "FOC_KHAN_SPAHT_BEAM"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 32
+        }
+        upkeep = { }
+    }
+    firing_arc = 50
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_SWGS_REBEL_T"
+    size = titanic
+    type = instant
+    icon = "GFX_ship_part_swgs_xx_9_turbolaser_r"
+    icon_frame = 1
+    damage = {
+        min = 5000
+        max = 10000
+    }
+    windup = {
+        min = 10
+        max = 30
+    }
+    total_fire_time = 90
+    range = 320
+    accuracy = 1.0
+    tracking = 0.25
+    shield_penetration = 1.0
+    armor_penetration = 1.0
+    power = -1000
+    prerequisites = { "foc_tech_swgs_crisis_point_defence" }
+    component_set = "FOC_SWGS_REBEL_T"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 64
+        }
+        upkeep = { }
+    }
+    firing_arc = 35
+    size_restriction = { titan foc_rebel_nebula foc_rebel_mc158 foc_rebel_nebula_foc_lowest foc_rebel_mc158_foc_lowest }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_KHAN_DEFENCE_TURBO_G"
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    size = point_defence
+    type = point_defence
+    icon = "GFX_ship_part_swgs_defence_turbo_g"
+    icon_frame = 1
+    damage = {
+        min = 18
+        max = 30
+    }
+    windup = {
+        min = 1
+        max = 5
+    }
+    total_fire_time = 11
+    range = 40
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 1.0
+    shield_damage = 1.25
+    armor_damage = 1.25
+    hull_damage = 1.25
+    power = -30
+    component_set = "FOC_KHAN_DEFENCE_TURBO_G"
+    tags = { weapon_type_point_defense weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_point_defense }
+    point_defence_targets = { "missile" "strike_craft" }
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 13
+        
+            sr_tibanna_swgs = 2
+        }
+        upkeep = {
+            energy = 0.13
+            alloys = 0.13
+        }
+    }
+    ai_weight = {
+        weight = 10
+    }
+    projectile_gfx = "white_laser_pd"
+    prerequisites = { "foc_tech_swgs_defence_turbo" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_REBEL_DEFENCE_TURBO_R"
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    size = point_defence
+    type = point_defence
+    icon = "GFX_ship_part_swgs_defence_turbo_r"
+    icon_frame = 1
+    damage = {
+        min = 18
+        max = 30
+    }
+    windup = {
+        min = 1
+        max = 5
+    }
+    total_fire_time = 11
+    range = 40
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 1.0
+    shield_damage = 1.25
+    armor_damage = 1.25
+    hull_damage = 1.25
+    power = -30
+    component_set = "FOC_REBEL_DEFENCE_TURBO_R"
+    tags = { weapon_type_point_defense weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_point_defense }
+    point_defence_targets = { "missile" "strike_craft" }
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 13
+        
+            sr_tibanna_swgs = 2
+        }
+        upkeep = {
+            energy = 0.13
+            alloys = 0.13
+        }
+    }
+    ai_weight = {
+        weight = 10
+    }
+    projectile_gfx = "white_laser_pd"
+    prerequisites = { "foc_tech_swgs_defence_turbo" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_V231_HOME_ONE_LARGE_TURBO"
+    size = large
+    type = instant
+    icon = "GFX_ship_part_swgs_xx_9_turbolaser_r"
+    icon_frame = 1
+    damage = {
+        min = 1200
+        max = 1320
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 240
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -30
+    component_set = "FOC_V231_HOME_ONE_LARGE_TURBO"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    size_restriction = { foc_v231_home_one_arkship }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_V231_HOME_ONE_MEDIUM_TURBO"
+    size = medium
+    type = instant
+    icon = "GFX_ship_part_swgs_xx_9_turbolaser_r"
+    icon_frame = 1
+    damage = {
+        min = 780
+        max = 900
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 160
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -30
+    component_set = "FOC_V231_HOME_ONE_MEDIUM_TURBO"
+    projectile_gfx = "infrared_laser_m"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    size_restriction = { foc_v231_home_one_arkship }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 4
+        }
+        upkeep = { }
+    }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_V231_HOME_ONE_SMALL_TURBO"
+    size = small
+    type = instant
+    icon = "GFX_ship_part_swgs_xx_9_turbolaser_r"
+    icon_frame = 1
+    damage = {
+        min = 600
+        max = 600
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 120
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -5
+    component_set = "FOC_V231_HOME_ONE_SMALL_TURBO"
+    projectile_gfx = "infrared_laser_s"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    size_restriction = { foc_v231_home_one_arkship }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_V231_HOME_ONE_POINT_DEFENSE"
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    size = point_defence
+    type = point_defence
+    icon = "GFX_ship_part_swgs_defence_turbo_r"
+    icon_frame = 1
+    damage = {
+        min = 18
+        max = 30
+    }
+    windup = {
+        min = 1
+        max = 5
+    }
+    total_fire_time = 11
+    range = 40
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 1.0
+    shield_damage = 1.25
+    armor_damage = 1.25
+    hull_damage = 1.25
+    power = -30
+    component_set = "FOC_V231_HOME_ONE_POINT_DEFENSE"
+    tags = { weapon_type_point_defense weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_point_defense }
+    point_defence_targets = { "missile" "strike_craft" }
+    size_restriction = { foc_v231_home_one_arkship }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    ai_weight = {
+        weight = 10
+    }
+    projectile_gfx = "white_laser_pd"
+    entity = "invisible_turret_entity"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_MILLENNIUM_FALCON_QUAD_LASER"
+    size = small
+    type = instant
+    entity = "invisible_turret_entity"
+    projectile_gfx = "infrared_laser_s"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    component_set = "FOC_MILLENNIUM_FALCON_QUAD_LASER"
+    tags = { weapon_type_energy weapon_role_anti_hull S_slot }
+    ai_tags = { weapon_role_anti_hull }
+    power = -25
+    damage = {
+        min = 1320
+        max = 2040
+    }
+    windup = {
+        min = 0.25
+        max = 0.75
+    }
+    total_fire_time = 2
+    range = 90
+    accuracy = 0.95
+    tracking = 0.90
+    armor_damage = 1.10
+    shield_damage = 1.10
+    hull_damage = 1.20
+    size_restriction = { foc_millennium_falcon foc_millennium_falcon_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = point_defence
+    key = "FOC_IMMOBILIZER418_POINT_DEFENCE_FOC_FIXED_LOWEST"
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    hidden = yes
+    size = point_defence
+    icon = "GFX_ship_part_point_defense_3"
+    icon_frame = 1
+    component_set = "FOC_IMMOBILIZER418_POINT_DEFENCE"
+    tags = { weapon_type_point_defense weapon_type_energy }
+    ai_tags = { weapon_role_point_defense screen }
+    resources = {
+        category = ship_components
+        cost = { alloys = 13 sr_tibanna_swgs = 2 }
+        upkeep = { }
+    }
+    power = -10
+    damage = { min = 6 max = 12 }
+    total_fire_time = 1.5
+    range = 30
+    accuracy = 0.9
+    tracking = 0.75
+    point_defence_targets = { "missile" "strike_craft" }
+    ai_weight = { weight = 0 }
+    projectile_gfx = "white_laser_pd"
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_IMMOBILIZER418_TURBOCANNON_FOC_FIXED_LOWEST"
+    size = medium
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    component_set = "FOC_IMMOBILIZER418_TURBOCANNON"
+    projectile_gfx = "infrared_laser_m"
+    tags = { weapon_type_energy weapon_role_artillery M_slot }
+    ai_tags = { weapon_role_artillery }
+    ai_tag_weight = 0
+    resources = {
+        category = ship_components
+        cost = { alloys = 25 sr_tibanna_swgs = 4 }
+        upkeep = { }
+    }
+    power = -20
+    damage = { min = 45 max = 80 }
+    windup = { min = 8 max = 8 }
+    total_fire_time = 4.5
+    range = 75
+    accuracy = 0.8
+    tracking = 0.35
+    hull_damage = 1.0
+    armor_damage = 1.0
+    shield_damage = 1.0
+    target_weights = {
+        titan = 1
+        battleship = 2
+        cruiser = 3
+        destroyer = 4
+        frigate = 5
+        corvette = 5
+    }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_KHAN_DEFENCE_TURBO_G_EC_FOC_FIXED_LOWEST"
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    hidden = yes
+    size = point_defence
+    type = point_defence
+    icon = "GFX_ship_part_swgs_defence_turbo_g"
+    icon_frame = 1
+    damage = { min = 6 max = 12 }
+    windup = { min = 1 max = 5 }
+    total_fire_time = 1.5
+    range = 30
+    accuracy = 0.9
+    tracking = 0.75
+    shield_penetration = 1.0
+    power = -10
+    component_set = "FOC_KHAN_DEFENCE_TURBO_G_EC"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { alloys = 13 sr_tibanna_swgs = 2 }
+        upkeep = { energy = 0.13 alloys = 0.13 }
+    }
+    ai_weight = { weight = 0 }
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    point_defence_targets = { "missile" "strike_craft" }
+    projectile_gfx = "white_laser_pd"
+    prerequisites = { "foc_tech_swgs_crisis_point_defence" }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_KHAN_LARGE_XX9_HEAVY_TURBO_G_FOC_FIXED_LOWEST"
+    size = large
+    type = instant
+    icon = "GFX_ship_part_swgs_xx_9_turbolaser_g"
+    icon_frame = 1
+    damage = {
+        min = 100
+        max = 180
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -30
+    prerequisites = { "foc_tech_swgs_crisis_point_defence" }
+    component_set = "FOC_KHAN_XX9_HEAVY_TURBO_G"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_KHAN_MEDIUM_XX9_HEAVY_TURBO_G_FOC_FIXED_LOWEST"
+    size = medium
+    type = instant
+    icon = "GFX_ship_part_swgs_xx_9_turbolaser_g"
+    icon_frame = 1
+    damage = { min = 45 max = 80 }
+    windup = { min = 1 max = 19 }
+    total_fire_time = 4.5
+    range = 75
+    accuracy = 0.8
+    tracking = 0.35
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -20
+    prerequisites = { "foc_tech_swgs_crisis_point_defence" }
+    component_set = "FOC_KHAN_XX9_HEAVY_TURBO_G"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 4 }
+        upkeep = { }
+    }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_KHAN_SMALL_XX9_HEAVY_TURBO_G_FOC_FIXED_LOWEST"
+    size = small
+    type = instant
+    icon = "GFX_ship_part_swgs_xx_9_turbolaser_g"
+    icon_frame = 1
+    damage = {
+        min = 20
+        max = 35
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 3.0
+    range = 50
+    accuracy = 0.85
+    tracking = 0.6
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -5
+    prerequisites = { "foc_tech_swgs_crisis_point_defence" }
+    component_set = "FOC_KHAN_XX9_HEAVY_TURBO_G"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_KHAN_SPAHT_BEAM_FOC_FIXED_LOWEST"
+    entity = "invisible_turret_entity"
+    size = extra_large
+    type = instant
+    icon = "GFX_ship_part_swgs_spaht_beam"
+    icon_frame = 1
+    damage = { min = 350 max = 600 }
+    windup = { min = 0 max = 0 }
+    total_fire_time = 8.0
+    range = 150
+    accuracy = 0.85
+    tracking = 0.05
+    shield_penetration = 1.0
+    armor_penetration = 1.0
+    power = -125
+    prerequisites = { "tech_battleships" }
+    component_set = "FOC_KHAN_SPAHT_BEAM"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 32 }
+        upkeep = { }
+    }
+    firing_arc = 50
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_LUS_OCTUPLE_TURBO_R_FOC_FIXED_LOWEST"
+    size_restriction = { foc_sw_lusankya foc_sw_lusankya_foc_lowest foc_v118_executor_bastion_foc_lowest }
+    size = large
+    icon = "GFX_ship_part_swgs_octuple_turbo_r"
+    icon_frame = 1
+    damage = { min = 100 max = 180 }
+    windup = { min = 1 max = 19 }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    shield_penetration = 1
+    armor_penetration = 1
+    power = -40
+    resources = {
+        category = ship_components
+        cost = { alloys = 100 sr_tibanna_swgs = 8 }
+        upkeep = { energy = 1 alloys = 1 }
+    }
+    component_set = "FOC_LUS_OCTUPLE_TURBO_R"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_type_kinetic weapon_type_kuat_artellarys_scale }
+    ai_tags = { weapon_role_artillery }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_LUS_OCTUPLE_TURBO_R_EC_FOC_FIXED_LOWEST"
+    size_restriction = { foc_sw_lusankya foc_sw_lusankya_foc_lowest foc_v118_executor_bastion_foc_lowest }
+    size = large
+    icon = "GFX_ship_part_swgs_octuple_turbo_r"
+    icon_frame = 1
+    damage = { min = 100 max = 180 }
+    windup = { min = 1 max = 19 }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    shield_penetration = 1
+    armor_penetration = 1
+    power = -40
+    resources = {
+        category = ship_components
+        cost = { alloys = 100 sr_tibanna_swgs = 8 }
+        upkeep = { energy = 1 alloys = 1 }
+    }
+    tags = { weapon_type_energy weapon_type_kinetic weapon_type_kuat_artellarys_scale }
+    component_set = "FOC_LUS_OCTUPLE_TURBO_R_EC"
+    projectile_gfx = "infrared_laser_l"
+    ai_tags = { weapon_role_artillery }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_LUS_SPAHT_BEAM_FOC_FIXED_LOWEST"
+    size_restriction = { foc_sw_lusankya foc_sw_lusankya_foc_lowest foc_v118_executor_bastion_foc_lowest }
+    size = extra_large
+    type = instant
+    icon = "GFX_ship_part_swgs_spaht_beam"
+    icon_frame = 1
+    damage = { min = 350 max = 600 }
+    windup = { min = 0.0 max = 0.0 }
+    total_fire_time = 8.0
+    range = 150
+    accuracy = 0.85
+    tracking = 0.05
+    firing_arc = 50.0
+    shield_penetration = 1.0
+    armor_penetration = 1.0
+    power = -125
+    resources = {
+        category = ship_components
+        cost = { alloys = 100 sr_tibanna_swgs = 32 }
+        upkeep = { energy = 1 alloys = 1 }
+    }
+    component_set = "FOC_LUS_SPAHT_BEAM"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic weapon_type_kuat_artellarys_scale }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_LUS_SPAHT_BEAM_EC_FOC_FIXED_LOWEST"
+    size_restriction = { foc_sw_lusankya foc_sw_lusankya_foc_lowest foc_v118_executor_bastion_foc_lowest }
+    size = extra_large
+    type = instant
+    icon = "GFX_ship_part_swgs_spaht_beam"
+    icon_frame = 1
+    damage = { min = 350 max = 600 }
+    windup = { min = 0.0 max = 0.0 }
+    total_fire_time = 8.0
+    range = 150
+    accuracy = 0.85
+    tracking = 0.05
+    firing_arc = 50.0
+    shield_penetration = 1.0
+    armor_penetration = 1.0
+    power = -125
+    resources = {
+        category = ship_components
+        cost = { alloys = 100 sr_tibanna_swgs = 32 }
+        upkeep = { energy = 1 alloys = 1 }
+    }
+    component_set = "FOC_LUS_SPAHT_BEAM_EC"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic weapon_type_kuat_artellarys_scale }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_armor }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_MC158_SG_LARGE_QUAD_TURBO_B_FOC_FIXED_LOWEST"
+    size = large
+    size_restriction = { foc_rebel_mc158 foc_rebel_mc158_foc_lowest }
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    damage = {
+        min = 100
+        max = 180
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    shield_penetration = 0.75
+    armor_penetration = 0.75
+    power = -30
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    component_set = "FOC_MC158_SG_LARGE_QUAD_TURBO_B"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_MC158_SG_LARGE_QUAD_TURBO_G_FOC_FIXED_LOWEST"
+    size = large
+    size_restriction = { foc_rebel_mc158 foc_rebel_mc158_foc_lowest }
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    damage = {
+        min = 100
+        max = 180
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    shield_penetration = 0.75
+    armor_penetration = 0.75
+    power = -30
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    component_set = "FOC_MC158_SG_LARGE_QUAD_TURBO_G"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_MC158_SG_OCTUPLE_TURBO_B_FOC_FIXED_LOWEST"
+    size = large
+    size_restriction = { foc_rebel_mc158 foc_rebel_mc158_foc_lowest }
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    damage = { min = 100 max = 180 }
+    windup = { min = 1 max = 19 }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    shield_penetration = 1
+    armor_penetration = 1
+    power = -40
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 8 }
+        upkeep = { }
+    }
+    component_set = "FOC_MC158_SG_OCTUPLE_TURBO_B"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_artillery }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_MC158_SG_OCTUPLE_TURBO_G_FOC_FIXED_LOWEST"
+    size = large
+    size_restriction = { foc_rebel_mc158 foc_rebel_mc158_foc_lowest }
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    damage = { min = 100 max = 180 }
+    windup = { min = 1 max = 19 }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    shield_penetration = 1
+    armor_penetration = 1
+    power = -40
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 8 }
+        upkeep = { }
+    }
+    component_set = "FOC_MC158_SG_OCTUPLE_TURBO_G"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_artillery }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_MC158_SG_OCTUPLE_TURBO_R_FOC_FIXED_LOWEST"
+    size = large
+    size_restriction = { foc_rebel_mc158 foc_rebel_mc158_foc_lowest }
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    damage = { min = 100 max = 180 }
+    windup = { min = 1 max = 19 }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    shield_penetration = 1
+    armor_penetration = 1
+    power = -40
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 8 }
+        upkeep = { }
+    }
+    component_set = "FOC_MC158_SG_OCTUPLE_TURBO_R"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_artillery }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_MC158_SG_XSD_HEAVY_TURBO_G_FOC_FIXED_LOWEST"
+    size = large
+    size_restriction = { foc_rebel_mc158 foc_rebel_mc158_foc_lowest }
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    damage = { min = 100 max = 180 }
+    windup = { min = 1 max = 19 }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    shield_penetration = 1
+    armor_penetration = 1
+    power = -40
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 8 }
+        upkeep = { }
+    }
+    component_set = "FOC_MC158_SG_XSD_HEAVY_TURBO_G"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_artillery }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_MILLENNIUM_FALCON_QUAD_LASER_FOC_FIXED_LOWEST"
+    size = small
+    type = instant
+    entity = "invisible_turret_entity"
+    projectile_gfx = "infrared_laser_s"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    component_set = "FOC_MILLENNIUM_FALCON_QUAD_LASER"
+    tags = { weapon_type_energy weapon_role_anti_hull S_slot }
+    ai_tags = { weapon_role_anti_hull }
+    power = -10
+    damage = { min = 20 max = 35 }
+    windup = { min = 0.25 max = 0.75 }
+    total_fire_time = 3.0
+    range = 50
+    accuracy = 0.85
+    tracking = 0.6
+    armor_damage = 1.0
+    shield_damage = 1.0
+    hull_damage = 1.0
+    size_restriction = { foc_millennium_falcon foc_millennium_falcon_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 2 }
+        upkeep = { }
+    }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_NEBULA_SG_LARGE_QUAD_TURBO_R_FOC_FIXED_LOWEST"
+    size = large
+    size_restriction = { foc_rebel_nebula foc_rebel_nebula_foc_lowest }
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    damage = {
+        min = 100
+        max = 180
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    shield_penetration = 0.75
+    armor_penetration = 0.75
+    power = -30
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    component_set = "FOC_NEBULA_SG_LARGE_QUAD_TURBO_R"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_NEBULA_SG_TRACTOR_BEAM_FOC_FIXED_LOWEST"
+    size = extra_large
+    size_restriction = { foc_rebel_nebula foc_rebel_nebula_foc_lowest }
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    damage = {
+        min = 350
+        max = 600
+    }
+    windup = {
+        min = 0
+        max = 0
+    }
+    total_fire_time = 8.0
+    range = 150
+    accuracy = 0.85
+    tracking = 0.05
+    shield_penetration = 1
+    armor_penetration = 1
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    power = -10
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 32
+        }
+        upkeep = { }
+    }
+    component_set = "FOC_NEBULA_SG_TRACTOR_BEAM"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_NEBULA_SG_TURBO_ARRAY_FOC_FIXED_LOWEST"
+    size = extra_large
+    size_restriction = { foc_rebel_nebula foc_rebel_nebula_foc_lowest }
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    damage = { min = 350 max = 600 }
+    windup = { min = 0 max = 0 }
+    total_fire_time = 8.0
+    range = 150
+    accuracy = 0.85
+    tracking = 0.05
+    shield_penetration = 1
+    armor_penetration = 1
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    power = -125
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 32 }
+        upkeep = { }
+    }
+    component_set = "FOC_NEBULA_SG_TURBO_ARRAY"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_REBEL_HOME_ARKSHIP_MEDIUM_WEAPON_FOC_FIXED_LOWEST"
+    size = medium
+    type = instant
+    entity = "invisible_turret_entity"
+    projectile_gfx = "infrared_laser_m"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_artillery }
+    component_set = "FOC_REBEL_HOME_ARKSHIP_WEAPON_SET"
+    size_restriction = { foc_rebel_home_arkship_tier_3 foc_rebel_home_arkship_tier_3_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 4 }
+        upkeep = { }
+    }
+    power = -20
+    damage = { min = 45 max = 80 }
+    windup = { min = 1 max = 19 }
+    total_fire_time = 4.5
+    range = 75
+    accuracy = 0.8
+    tracking = 0.35
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_REBEL_HOME_ARKSHIP_POINT_DEFENSE_FOC_FIXED_LOWEST"
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    hidden = yes
+    size = point_defence
+    type = point_defence
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_point_defense weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_point_defense }
+    component_set = "FOC_REBEL_HOME_ARKSHIP_WEAPON_SET"
+    size_restriction = { foc_rebel_home_arkship_tier_3 foc_rebel_home_arkship_tier_3_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 2 }
+        upkeep = { }
+    }
+    power = -10
+    damage = { min = 6 max = 12 }
+    windup = { min = 1 max = 5 }
+    total_fire_time = 1.5
+    range = 30
+    accuracy = 0.9
+    tracking = 0.75
+    shield_penetration = 1.0
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    point_defence_targets = { "missile" "strike_craft" }
+    ai_weight = { weight = 0 }
+    projectile_gfx = "white_laser_pd"
+    entity = "invisible_turret_entity"
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_REBEL_HOME_ARKSHIP_SMALL_WEAPON_FOC_FIXED_LOWEST"
+    size = small
+    type = instant
+    entity = "invisible_turret_entity"
+    projectile_gfx = "infrared_laser_s"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    component_set = "FOC_REBEL_HOME_ARKSHIP_WEAPON_SET"
+    size_restriction = { foc_rebel_home_arkship_tier_3 foc_rebel_home_arkship_tier_3_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    power = -5
+    damage = {
+        min = 20
+        max = 35
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 3.0
+    range = 50
+    accuracy = 0.85
+    tracking = 0.6
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_REBEL_HOME_ARKSHIP_SPINAL_BEAM_FOC_FIXED_LOWEST"
+    size = extra_large
+    type = instant
+    entity = "invisible_turret_entity"
+    projectile_gfx = "particle_lance"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_artillery }
+    component_set = "FOC_REBEL_HOME_ARKSHIP_WEAPON_SET"
+    size_restriction = { foc_rebel_home_arkship_tier_3 foc_rebel_home_arkship_tier_3_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 32 }
+        upkeep = { }
+    }
+    power = -125
+    damage = { min = 350 max = 600 }
+    windup = { min = 0 max = 0 }
+    total_fire_time = 8.0
+    range = 150
+    accuracy = 0.85
+    tracking = 0.05
+    shield_penetration = 1.0
+    armor_penetration = 1.0
+    firing_arc = 50
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_REBEL_HOME_ARKSHIP_WEAPON_FOC_FIXED_LOWEST"
+    size = large
+    type = instant
+    entity = "invisible_turret_entity"
+    projectile_gfx = "infrared_laser_l"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_artillery }
+    component_set = "FOC_REBEL_HOME_ARKSHIP_WEAPON_SET"
+    size_restriction = { foc_rebel_home_arkship_tier_3 foc_rebel_home_arkship_tier_3_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    power = -30
+    damage = {
+        min = 100
+        max = 180
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_REBEL_LARGE_XX9_HEAVY_TURBO_R_FOC_FIXED_LOWEST"
+    size = large
+    type = instant
+    icon = "GFX_ship_part_swgs_xx_9_turbolaser_r"
+    icon_frame = 1
+    damage = {
+        min = 100
+        max = 180
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -30
+    prerequisites = { "foc_tech_swgs_crisis_point_defence" }
+    component_set = "FOC_REBEL_XX9_HEAVY_TURBO_R"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_REBEL_MEDIUM_XX9_HEAVY_TURBO_R_FOC_FIXED_LOWEST"
+    size = medium
+    type = instant
+    icon = "GFX_ship_part_swgs_xx_9_turbolaser_r"
+    icon_frame = 1
+    damage = { min = 45 max = 80 }
+    windup = { min = 1 max = 19 }
+    total_fire_time = 4.5
+    range = 75
+    accuracy = 0.8
+    tracking = 0.35
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -20
+    prerequisites = { "foc_tech_swgs_crisis_point_defence" }
+    component_set = "FOC_REBEL_XX9_HEAVY_TURBO_R"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 4 }
+        upkeep = { }
+    }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_REBEL_SMALL_XX9_HEAVY_TURBO_R_FOC_FIXED_LOWEST"
+    size = small
+    type = instant
+    icon = "GFX_ship_part_swgs_xx_9_turbolaser_r"
+    icon_frame = 1
+    damage = {
+        min = 20
+        max = 35
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 3.0
+    range = 50
+    accuracy = 0.85
+    tracking = 0.6
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -5
+    prerequisites = { "foc_tech_swgs_crisis_point_defence" }
+    component_set = "FOC_REBEL_XX9_HEAVY_TURBO_R"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "RESURGENTBATTLECRUISER_TURBOCANNON_GUN_FOC_FIXED_LOWEST"
+    size = large
+    icon = "GFX_resurgentbattlecruiser_dualheavyturbolasers"
+    icon_frame = 1
+    prerequisites = { "tech_plasma_3" "tech_battleships" }
+    component_set = "RESURGENTBATTLECRUISER_TURBOCANNON_GUN"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_role_artillery L_slot }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { resurgentbattlecruiser resurgentbattlecruiser_foc_lowest }
+    ai_tag_weight = 0
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 8 }
+    }
+    power = -40
+    damage = { min = 100 max = 180 }
+    windup = { min = 2 max = 2 }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    hull_damage = 1.0
+    armor_damage = 1.0
+    shield_damage = 1.0
+    shield_penetration = 0
+    armor_penetration = 0
+    target_weights = {
+        titan = 5
+        battleship = 4
+        cruiser = 3
+        destroyer = 2
+        frigate = 1
+        corvette = 1
+    }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "SAI_SUPREMACY_LARGE_TURBOLASER_FOC_FIXED_LOWEST"
+    size = large
+    type = instant
+    icon = "GFX_supremacy_dualturbolasers"
+    icon_frame = 1
+    damage = { min = 100 max = 180 }
+    windup = { min = 1 max = 19 }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    shield_penetration = 1.0
+    armor_penetration = 1.0
+    power = -40
+    component_set = "SAI_SUPREMACY_TURBOLASER"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 8 }
+        upkeep = { }
+    }
+    size_restriction = { sai_supremacy_arkship_tier_1 sai_supremacy_arkship_tier_2 sai_supremacy_arkship_tier_3 sai_supremacy_arkship_tier_3_foc_lowest }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "SAI_SUPREMACY_MEDIUM_TURBOLASER_FOC_FIXED_LOWEST"
+    size = medium
+    type = instant
+    icon = "GFX_supremacy_dualturbolasers"
+    icon_frame = 1
+    damage = { min = 45 max = 80 }
+    windup = { min = 1 max = 19 }
+    total_fire_time = 4.5
+    range = 75
+    accuracy = 0.8
+    tracking = 0.35
+    shield_penetration = 0.75
+    armor_penetration = 0.75
+    power = -20
+    component_set = "SAI_SUPREMACY_TURBOLASER"
+    projectile_gfx = "infrared_laser_m"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 4 }
+        upkeep = { }
+    }
+    size_restriction = { sai_supremacy_arkship_tier_1 sai_supremacy_arkship_tier_2 sai_supremacy_arkship_tier_3 sai_supremacy_arkship_tier_3_foc_lowest }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "SAI_SUPREMACY_POINT_DEFENCE_TURBOLASER_FOC_FIXED_LOWEST"
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    hidden = yes
+    size = point_defence
+    type = point_defence
+    icon = "GFX_supremacy_dualturbolasers"
+    icon_frame = 1
+    damage = { min = 6 max = 12 }
+    windup = { min = 1 max = 5 }
+    total_fire_time = 1.5
+    range = 30
+    accuracy = 0.9
+    tracking = 0.75
+    shield_penetration = 1.0
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    power = -10
+    component_set = "SAI_SUPREMACY_POINT_DEFENCE_TURBOLASER"
+    point_defence_targets = { "missile" "strike_craft" }
+    tags = { weapon_type_point_defense weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_point_defense }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 2 }
+        upkeep = { }
+    }
+    size_restriction = { sai_supremacy_arkship_tier_1 sai_supremacy_arkship_tier_2 sai_supremacy_arkship_tier_3 sai_supremacy_arkship_tier_3_foc_lowest }
+    ai_weight = { weight = 0 }
+    projectile_gfx = "white_laser_pd"
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "SAI_SUPREMACY_SMALL_TURBOLASER_FOC_FIXED_LOWEST"
+    size = small
+    type = instant
+    icon = "GFX_supremacy_dualturbolasers"
+    icon_frame = 1
+    damage = {
+        min = 20
+        max = 35
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 3.0
+    range = 50
+    accuracy = 0.85
+    tracking = 0.6
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -5
+    component_set = "SAI_SUPREMACY_TURBOLASER"
+    projectile_gfx = "infrared_laser_s"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    size_restriction = { sai_supremacy_arkship_tier_1 sai_supremacy_arkship_tier_2 sai_supremacy_arkship_tier_3 sai_supremacy_arkship_tier_3_foc_lowest }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "XYSTON_TURBOCANNON_GUN_FOC_FIXED_LOWEST"
+    size = large
+    icon = "GFX_xystonsd_quadturbolasers"
+    icon_frame = 1
+    prerequisites = { "tech_titans" }
+    component_set = "XYSTON_TURBOCANNON_GUN"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_kinetic }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { xystonsd foc_khan_xystonsd foc_khan_xystonsd_combat foc_khan_xystonsd_foc_lowest foc_khan_xystonsd_combat_foc_lowest }
+    ai_tag_weight = 0
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 8 }
+        upkeep = { }
+    }
+    power = -40
+    damage = { min = 100 max = 180 }
+    windup = { min = 5 max = 5 }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    hull_damage = 1.0
+    armor_damage = 1.0
+    shield_damage = 1.0
+    shield_penetration = 0
+    armor_penetration = 0
+    target_weights = {
+        titan = 5
+        battleship = 4
+        cruiser = 3
+        destroyer = 2
+        frigate = 1
+        corvette = 1
+    }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "VCSD_TURBOCANNON_GUN_FOC_FIXED_LOWEST"
+    size = large
+    icon = "GFX_DBY827"
+    icon_frame = 1
+    component_set = "VCSD_TURBOCANNON_GUN"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_role_artillery L_slot }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { venatorclass_foc_lowest foc_trade_lucrehulk_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { alloys = 5 sr_tibanna_swgs = 8 }
+        upkeep = { }
+    }
+    power = -40
+    damage = { min = 100 max = 180 }
+    windup = { min = 2 max = 2 }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    hull_damage = 1.0
+    armor_damage = 1.0
+    shield_damage = 1.0
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "VCSD_SPAHT_BEAM_FOC_FIXED_LOWEST"
+    size = extra_large
+    icon = "GFX_DBY827"
+    icon_frame = 1
+    component_set = "VCSD_SPAHT_BEAM"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_role_artillery XL_slot }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { venatorclass_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { alloys = 10 sr_tibanna_swgs = 32 }
+        upkeep = { }
+    }
+    power = -125
+    damage = { min = 350 max = 600 }
+    windup = { min = 2 max = 2 }
+    total_fire_time = 6.5
+    range = 150
+    accuracy = 0.85
+    tracking = 0.05
+    hull_damage = 1
+    armor_damage = 1
+    shield_damage = 1
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_PLAYER_DEFENCE_TURBO_G_EC"
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    hidden = yes
+    size_restriction = { foc_player_eclipse foc_player_mandator }
+    size = point_defence
+    type = point_defence
+    icon = "GFX_ship_part_swgs_defence_turbo_g"
+    icon_frame = 1
+    damage = {
+        min = 18
+        max = 30
+    }
+    windup = {
+        min = 1
+        max = 5
+    }
+    total_fire_time = 11
+    range = 40
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 1.0
+    power = -30
+    component_set = "FOC_KHAN_DEFENCE_TURBO_G_EC"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 13
+        
+            sr_tibanna_swgs = 2
+        }
+        upkeep = {
+            energy = 0.13
+            alloys = 0.13
+        }
+    }
+    ai_weight = {
+        weight = 0
+    }
+    shield_damage = 1.25
+    armor_damage = 1.25
+    hull_damage = 1.25
+    point_defence_targets = { "missile" "strike_craft" }
+    projectile_gfx = "white_laser_pd"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_PLAYER_DEFENCE_TURBO_G_EC_FOC_LOWEST"
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    hidden = yes
+    size_restriction = { foc_player_eclipse_foc_lowest foc_player_mandator_foc_lowest }
+    size = point_defence
+    type = point_defence
+    icon = "GFX_ship_part_swgs_defence_turbo_g"
+    icon_frame = 1
+    damage = { min = 6 max = 12 }
+    windup = { min = 1 max = 5 }
+    total_fire_time = 1.5
+    range = 30
+    accuracy = 0.9
+    tracking = 0.75
+    shield_penetration = 1.0
+    power = -10
+    component_set = "FOC_KHAN_DEFENCE_TURBO_G_EC"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { alloys = 13 sr_tibanna_swgs = 2 }
+        upkeep = { energy = 0.13 alloys = 0.13 }
+    }
+    ai_weight = { weight = 0 }
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    point_defence_targets = { "missile" "strike_craft" }
+    projectile_gfx = "white_laser_pd"
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_PLAYER_LARGE_XX9_HEAVY_TURBO_G"
+    size_restriction = { foc_player_eclipse }
+    size = large
+    type = instant
+    icon = "GFX_ship_part_swgs_xx_9_turbolaser_g"
+    icon_frame = 1
+    damage = {
+        min = 1200
+        max = 1320
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 240
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -30
+    component_set = "FOC_KHAN_XX9_HEAVY_TURBO_G"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_PLAYER_LARGE_XX9_HEAVY_TURBO_G_FOC_LOWEST"
+    size_restriction = { foc_player_eclipse_foc_lowest }
+    size = large
+    type = instant
+    icon = "GFX_ship_part_swgs_xx_9_turbolaser_g"
+    icon_frame = 1
+    damage = {
+        min = 100
+        max = 180
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -30
+    component_set = "FOC_KHAN_XX9_HEAVY_TURBO_G"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_LUS_SPAHT_BEAM_FOC_LOWEST"
+    size_restriction = { foc_sw_lusankya foc_sw_lusankya_foc_lowest foc_v118_executor_bastion_foc_lowest }
+    size = extra_large
+    type = instant
+    icon = "GFX_ship_part_swgs_spaht_beam"
+    icon_frame = 1
+    damage = { min = 350 max = 600 }
+    windup = { min = 0.0 max = 0.0 }
+    total_fire_time = 8.0
+    range = 150
+    accuracy = 0.85
+    tracking = 0.05
+    firing_arc = 50.0
+    shield_penetration = 1.0
+    armor_penetration = 1.0
+    power = -125
+    resources = {
+        category = ship_components
+        cost = { alloys = 100 sr_tibanna_swgs = 32 }
+        upkeep = { energy = 1 alloys = 1 }
+    }
+    component_set = "FOC_LUS_SPAHT_BEAM"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic weapon_type_kuat_artellarys_scale }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_LUS_OCTUPLE_TURBO_R_FOC_LOWEST"
+    size_restriction = { foc_sw_lusankya foc_sw_lusankya_foc_lowest foc_v118_executor_bastion_foc_lowest }
+    size = large
+    icon = "GFX_ship_part_swgs_octuple_turbo_r"
+    icon_frame = 1
+    damage = { min = 100 max = 180 }
+    windup = { min = 1 max = 19 }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    shield_penetration = 1
+    armor_penetration = 1
+    power = -40
+    resources = {
+        category = ship_components
+        cost = { alloys = 100 sr_tibanna_swgs = 8 }
+        upkeep = { energy = 1 alloys = 1 }
+    }
+    component_set = "FOC_LUS_OCTUPLE_TURBO_R"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_type_kinetic weapon_type_kuat_artellarys_scale }
+    ai_tags = { weapon_role_artillery }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_LUS_SPAHT_BEAM_EC_FOC_LOWEST"
+    size_restriction = { foc_sw_lusankya foc_sw_lusankya_foc_lowest foc_v118_executor_bastion_foc_lowest }
+    size = extra_large
+    type = instant
+    icon = "GFX_ship_part_swgs_spaht_beam"
+    icon_frame = 1
+    damage = { min = 350 max = 600 }
+    windup = { min = 0.0 max = 0.0 }
+    total_fire_time = 8.0
+    range = 150
+    accuracy = 0.85
+    tracking = 0.05
+    firing_arc = 50.0
+    shield_penetration = 1.0
+    armor_penetration = 1.0
+    power = -125
+    resources = {
+        category = ship_components
+        cost = { alloys = 100 sr_tibanna_swgs = 32 }
+        upkeep = { energy = 1 alloys = 1 }
+    }
+    component_set = "FOC_LUS_SPAHT_BEAM_EC"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic weapon_type_kuat_artellarys_scale }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_armor }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_LUS_OCTUPLE_TURBO_R_EC_FOC_LOWEST"
+    size_restriction = { foc_sw_lusankya foc_sw_lusankya_foc_lowest foc_v118_executor_bastion_foc_lowest }
+    size = large
+    icon = "GFX_ship_part_swgs_octuple_turbo_r"
+    icon_frame = 1
+    damage = { min = 100 max = 180 }
+    windup = { min = 1 max = 19 }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    shield_penetration = 1
+    armor_penetration = 1
+    power = -40
+    resources = {
+        category = ship_components
+        cost = { alloys = 100 sr_tibanna_swgs = 8 }
+        upkeep = { energy = 1 alloys = 1 }
+    }
+    tags = { weapon_type_energy weapon_type_kinetic weapon_type_kuat_artellarys_scale }
+    component_set = "FOC_LUS_OCTUPLE_TURBO_R_EC"
+    projectile_gfx = "infrared_laser_l"
+    ai_tags = { weapon_role_artillery }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_REBEL_HOME_ARKSHIP_WEAPON_FOC_LOWEST"
+    size = large
+    type = instant
+    entity = "invisible_turret_entity"
+    projectile_gfx = "infrared_laser_l"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_artillery }
+    component_set = "FOC_REBEL_HOME_ARKSHIP_WEAPON_SET"
+    size_restriction = { foc_rebel_home_arkship_tier_3 foc_rebel_home_arkship_tier_3_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    power = -30
+    damage = {
+        min = 100
+        max = 180
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_REBEL_HOME_ARKSHIP_MEDIUM_WEAPON_FOC_LOWEST"
+    size = medium
+    type = instant
+    entity = "invisible_turret_entity"
+    projectile_gfx = "infrared_laser_m"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_artillery }
+    component_set = "FOC_REBEL_HOME_ARKSHIP_WEAPON_SET"
+    size_restriction = { foc_rebel_home_arkship_tier_3 foc_rebel_home_arkship_tier_3_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 4 }
+        upkeep = { }
+    }
+    power = -20
+    damage = { min = 45 max = 80 }
+    windup = { min = 1 max = 19 }
+    total_fire_time = 4.5
+    range = 75
+    accuracy = 0.8
+    tracking = 0.35
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_REBEL_HOME_ARKSHIP_SMALL_WEAPON_FOC_LOWEST"
+    size = small
+    type = instant
+    entity = "invisible_turret_entity"
+    projectile_gfx = "infrared_laser_s"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    component_set = "FOC_REBEL_HOME_ARKSHIP_WEAPON_SET"
+    size_restriction = { foc_rebel_home_arkship_tier_3 foc_rebel_home_arkship_tier_3_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    power = -5
+    damage = {
+        min = 20
+        max = 35
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 3.0
+    range = 50
+    accuracy = 0.85
+    tracking = 0.6
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_REBEL_HOME_ARKSHIP_POINT_DEFENSE_FOC_LOWEST"
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    hidden = yes
+    size = point_defence
+    type = point_defence
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_point_defense weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_point_defense }
+    component_set = "FOC_REBEL_HOME_ARKSHIP_WEAPON_SET"
+    size_restriction = { foc_rebel_home_arkship_tier_3 foc_rebel_home_arkship_tier_3_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 2 }
+        upkeep = { }
+    }
+    power = -10
+    damage = { min = 6 max = 12 }
+    windup = { min = 1 max = 5 }
+    total_fire_time = 1.5
+    range = 30
+    accuracy = 0.9
+    tracking = 0.75
+    shield_penetration = 1.0
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    point_defence_targets = { "missile" "strike_craft" }
+    ai_weight = { weight = 0 }
+    projectile_gfx = "white_laser_pd"
+    entity = "invisible_turret_entity"
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_REBEL_HOME_ARKSHIP_SPINAL_BEAM_FOC_LOWEST"
+    size = extra_large
+    type = instant
+    entity = "invisible_turret_entity"
+    projectile_gfx = "particle_lance"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_artillery }
+    component_set = "FOC_REBEL_HOME_ARKSHIP_WEAPON_SET"
+    size_restriction = { foc_rebel_home_arkship_tier_3 foc_rebel_home_arkship_tier_3_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 32 }
+        upkeep = { }
+    }
+    power = -125
+    damage = { min = 350 max = 600 }
+    windup = { min = 0 max = 0 }
+    total_fire_time = 8.0
+    range = 150
+    accuracy = 0.85
+    tracking = 0.05
+    shield_penetration = 1.0
+    armor_penetration = 1.0
+    firing_arc = 50
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_MILLENNIUM_FALCON_QUAD_LASER_FOC_LOWEST"
+    size = small
+    type = instant
+    entity = "invisible_turret_entity"
+    projectile_gfx = "infrared_laser_s"
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    component_set = "FOC_MILLENNIUM_FALCON_QUAD_LASER"
+    tags = { weapon_type_energy weapon_role_anti_hull S_slot }
+    ai_tags = { weapon_role_anti_hull }
+    power = -10
+    damage = { min = 20 max = 35 }
+    windup = { min = 0.25 max = 0.75 }
+    total_fire_time = 3.0
+    range = 50
+    accuracy = 0.85
+    tracking = 0.6
+    armor_damage = 1.0
+    shield_damage = 1.0
+    hull_damage = 1.0
+    size_restriction = { foc_millennium_falcon foc_millennium_falcon_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 2 }
+        upkeep = { }
+    }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_IMMOBILIZER418_TURBOCANNON_FOC_LOWEST"
+    size = medium
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    component_set = "FOC_IMMOBILIZER418_TURBOCANNON"
+    projectile_gfx = "infrared_laser_m"
+    tags = { weapon_type_energy weapon_role_artillery M_slot }
+    ai_tags = { weapon_role_artillery }
+    ai_tag_weight = 0
+    resources = {
+        category = ship_components
+        cost = { alloys = 25 sr_tibanna_swgs = 4 }
+        upkeep = { }
+    }
+    power = -20
+    damage = { min = 45 max = 80 }
+    windup = { min = 8 max = 8 }
+    total_fire_time = 4.5
+    range = 75
+    accuracy = 0.8
+    tracking = 0.35
+    hull_damage = 1.0
+    armor_damage = 1.0
+    shield_damage = 1.0
+    target_weights = {
+        titan = 1
+        battleship = 2
+        cruiser = 3
+        destroyer = 4
+        frigate = 5
+        corvette = 5
+    }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = point_defence
+    key = "FOC_IMMOBILIZER418_POINT_DEFENCE_FOC_LOWEST"
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    hidden = yes
+    size = point_defence
+    icon = "GFX_ship_part_point_defense_3"
+    icon_frame = 1
+    component_set = "FOC_IMMOBILIZER418_POINT_DEFENCE"
+    tags = { weapon_type_point_defense weapon_type_energy }
+    ai_tags = { weapon_role_point_defense screen }
+    resources = {
+        category = ship_components
+        cost = { alloys = 13 sr_tibanna_swgs = 2 }
+        upkeep = { }
+    }
+    power = -10
+    damage = { min = 6 max = 12 }
+    total_fire_time = 1.5
+    range = 30
+    accuracy = 0.9
+    tracking = 0.75
+    point_defence_targets = { "missile" "strike_craft" }
+    ai_weight = { weight = 0 }
+    projectile_gfx = "white_laser_pd"
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "VCSD_TURBOCANNON_GUN_FOC_LOWEST"
+    size = large
+    icon = "GFX_DBY827"
+    icon_frame = 1
+    component_set = "VCSD_TURBOCANNON_GUN"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_role_artillery L_slot }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { venatorclass foc_trade_lucrehulk venatorclass_foc_lowest foc_trade_lucrehulk_foc_lowest }
+    ai_tag_weight = 0
+    resources = {
+        category = ship_components
+        cost = { alloys = 5 sr_tibanna_swgs = 8 }
+        upkeep = { }
+    }
+    power = -40
+    damage = { min = 100 max = 180 }
+    windup = { min = 2 max = 2 }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    hull_damage = 1.0
+    armor_damage = 1.0
+    shield_damage = 1.0
+    shield_penetration = 0
+    armor_penetration = 0
+    target_weights = {
+        titan = 5
+        battleship = 4
+        cruiser = 3
+        destroyer = 2
+        frigate = 1
+        corvette = 1
+    }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "VCSD_SPAHT_BEAM_FOC_LOWEST"
+    size = extra_large
+    icon = "GFX_DBY827"
+    icon_frame = 1
+    component_set = "VCSD_SPAHT_BEAM"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_role_artillery XL_slot }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { venatorclass venatorclass_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { alloys = 10 sr_tibanna_swgs = 32 }
+    }
+    power = -125
+    damage = { min = 200 max = 360 }
+    windup = { min = 2 max = 2 }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    hull_damage = 1
+    armor_damage = 1
+    shield_damage = 1
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_MC158_SG_XSD_HEAVY_TURBO_G_FOC_LOWEST"
+    size = large
+    size_restriction = { foc_rebel_mc158 foc_rebel_mc158_foc_lowest }
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    damage = { min = 100 max = 180 }
+    windup = { min = 1 max = 19 }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    shield_penetration = 1
+    armor_penetration = 1
+    power = -40
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 8 }
+        upkeep = { }
+    }
+    component_set = "FOC_MC158_SG_XSD_HEAVY_TURBO_G"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_artillery }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_MC158_SG_LARGE_QUAD_TURBO_B_FOC_LOWEST"
+    size = large
+    size_restriction = { foc_rebel_mc158 foc_rebel_mc158_foc_lowest }
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    damage = {
+        min = 100
+        max = 180
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    shield_penetration = 0.75
+    armor_penetration = 0.75
+    power = -30
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    component_set = "FOC_MC158_SG_LARGE_QUAD_TURBO_B"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_MC158_SG_LARGE_QUAD_TURBO_G_FOC_LOWEST"
+    size = large
+    size_restriction = { foc_rebel_mc158 foc_rebel_mc158_foc_lowest }
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    damage = {
+        min = 100
+        max = 180
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    shield_penetration = 0.75
+    armor_penetration = 0.75
+    power = -30
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    component_set = "FOC_MC158_SG_LARGE_QUAD_TURBO_G"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_MC158_SG_OCTUPLE_TURBO_R_FOC_LOWEST"
+    size = large
+    size_restriction = { foc_rebel_mc158 foc_rebel_mc158_foc_lowest }
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    damage = { min = 100 max = 180 }
+    windup = { min = 1 max = 19 }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    shield_penetration = 1
+    armor_penetration = 1
+    power = -40
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 8 }
+        upkeep = { }
+    }
+    component_set = "FOC_MC158_SG_OCTUPLE_TURBO_R"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_artillery }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_MC158_SG_OCTUPLE_TURBO_B_FOC_LOWEST"
+    size = large
+    size_restriction = { foc_rebel_mc158 foc_rebel_mc158_foc_lowest }
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    damage = { min = 100 max = 180 }
+    windup = { min = 1 max = 19 }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    shield_penetration = 1
+    armor_penetration = 1
+    power = -40
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 8 }
+        upkeep = { }
+    }
+    component_set = "FOC_MC158_SG_OCTUPLE_TURBO_B"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_artillery }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_MC158_SG_OCTUPLE_TURBO_G_FOC_LOWEST"
+    size = large
+    size_restriction = { foc_rebel_mc158 foc_rebel_mc158_foc_lowest }
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    damage = { min = 100 max = 180 }
+    windup = { min = 1 max = 19 }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    shield_penetration = 1
+    armor_penetration = 1
+    power = -40
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 8 }
+        upkeep = { }
+    }
+    component_set = "FOC_MC158_SG_OCTUPLE_TURBO_G"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_artillery }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_NEBULA_SG_TURBO_ARRAY_FOC_LOWEST"
+    size = extra_large
+    size_restriction = { foc_rebel_nebula foc_rebel_nebula_foc_lowest }
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    damage = { min = 350 max = 600 }
+    windup = { min = 0 max = 0 }
+    total_fire_time = 8.0
+    range = 150
+    accuracy = 0.85
+    tracking = 0.05
+    shield_penetration = 1
+    armor_penetration = 1
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    power = -125
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 32 }
+        upkeep = { }
+    }
+    component_set = "FOC_NEBULA_SG_TURBO_ARRAY"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor }
+    hidden = yes
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_NEBULA_SG_TRACTOR_BEAM_FOC_LOWEST"
+    size = extra_large
+    size_restriction = { foc_rebel_nebula foc_rebel_nebula_foc_lowest }
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    damage = {
+        min = 350
+        max = 600
+    }
+    windup = {
+        min = 0
+        max = 0
+    }
+    total_fire_time = 8.0
+    range = 150
+    accuracy = 0.85
+    tracking = 0.05
+    shield_penetration = 1
+    armor_penetration = 1
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    power = -10
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 32
+        }
+        upkeep = { }
+    }
+    component_set = "FOC_NEBULA_SG_TRACTOR_BEAM"
+    projectile_gfx = "particle_lance"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_NEBULA_SG_LARGE_QUAD_TURBO_R_FOC_LOWEST"
+    size = large
+    size_restriction = { foc_rebel_nebula foc_rebel_nebula_foc_lowest }
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    damage = {
+        min = 100
+        max = 180
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 6.5
+    range = 100
+    accuracy = 0.75
+    tracking = 0.15
+    shield_penetration = 0.75
+    armor_penetration = 0.75
+    power = -30
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    component_set = "FOC_NEBULA_SG_LARGE_QUAD_TURBO_R"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_IMMOBILIZER418_TURBOCANNON"
+    size = medium
+    icon = "GFX_ship_part_laser_5"
+    icon_frame = 1
+    component_set = "FOC_IMMOBILIZER418_TURBOCANNON"
+    projectile_gfx = "infrared_laser_m"
+    tags = { weapon_type_energy weapon_role_artillery M_slot }
+    ai_tags = { weapon_role_artillery }
+    ai_tag_weight = 0
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 25
+        
+            sr_tibanna_swgs = 4
+        }
+        upkeep = { }
+    }
+    power = -100
+    damage = {
+        min = 228
+        max = 894
+    }
+    windup = {
+        min = 8
+        max = 8
+    }
+    total_fire_time = 4
+    range = 70
+    accuracy = 0.9
+    tracking = 0.5
+    hull_damage = 1
+    armor_damage = 2
+    shield_damage = 3
+    target_weights = {
+        titan = 1
+        battleship = 2
+        cruiser = 3
+        destroyer = 4
+        frigate = 5
+        corvette = 5
+    }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = point_defence
+    key = "FOC_IMMOBILIZER418_POINT_DEFENCE"
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    size = point_defence
+    icon = "GFX_ship_part_point_defense_3"
+    icon_frame = 1
+    component_set = "FOC_IMMOBILIZER418_POINT_DEFENCE"
+    tags = { weapon_type_point_defense weapon_type_energy }
+    ai_tags = { weapon_role_point_defense screen }
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 13
+        
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    power = -25
+    damage = {
+        min = 8
+        max = 16
+    }
+    total_fire_time = 0.5
+    range = 30
+    accuracy = 0.95
+    tracking = 1
+    point_defence_targets = { "missile" "strike_craft" }
+    ai_weight = {
+        weight = 10
+    }
+    projectile_gfx = "white_laser_pd"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_REBEL_MC80_POINT_DEFENSE"
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    size = point_defence
+    type = point_defence
+    icon = "GFX_ship_part_swgs_defence_turbo_r"
+    icon_frame = 1
+    damage = {
+        min = 18
+        max = 30
+    }
+    windup = {
+        min = 1
+        max = 5
+    }
+    total_fire_time = 11
+    range = 40
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 1.0
+    shield_damage = 1.25
+    armor_damage = 1.25
+    hull_damage = 1.25
+    power = -30
+    component_set = "FOC_REBEL_MC80_POINT_DEFENSE_SET"
+    tags = { weapon_type_point_defense weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_point_defense }
+    point_defence_targets = { "missile" "strike_craft" }
+    size_restriction = { foc_rebel_mc80_line foc_rebel_mc80_line_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    ai_weight = {
+        weight = 10
+    }
+    projectile_gfx = "white_laser_pd"
+    entity = "invisible_turret_entity"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = FOC_REBEL_MC80_POINT_DEFENSE_FOC_FIXED_LOWEST
+    potential = {
+        always = no
+        from = { foc_v1718_allowed_country = yes }
+    }
+    size = point_defence
+    type = point_defence
+    icon = GFX_ship_part_swgs_defence_turbo_r
+    icon_frame = 1
+    damage = { min = 1.33333333 max = 2.66666667 }
+    windup = { min = 0.5 max = 1.0 }
+    total_fire_time = 1.5
+    range = 30
+    accuracy = 0.9
+    tracking = 0.75
+    shield_penetration = 1.0
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    power = -10
+    component_set = FOC_REBEL_MC80_POINT_DEFENSE_SET
+    tags = { weapon_type_point_defense weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_point_defense }
+    point_defence_targets = { missile strike_craft }
+    size_restriction = { foc_rebel_mc80_line foc_rebel_mc80_line_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 2 }
+        upkeep = { }
+    }
+    ai_weight = { weight = 10 }
+    projectile_gfx = white_laser_pd
+    entity = invisible_turret_entity
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "SAI_SUPREMACY_LARGE_TURBOLASER"
+    size = large
+    type = instant
+    icon = "GFX_supremacy_dualturbolasers"
+    icon_frame = 1
+    damage = {
+        min = 3000
+        max = 3000
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 220
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 1.0
+    armor_penetration = 1.0
+    power = -140
+    component_set = "SAI_SUPREMACY_TURBOLASER"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    size_restriction = { sai_supremacy_arkship_tier_1 sai_supremacy_arkship_tier_2 sai_supremacy_arkship_tier_3 sai_supremacy_arkship_tier_3_foc_lowest }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "SAI_SUPREMACY_MEDIUM_TURBOLASER"
+    size = medium
+    type = instant
+    icon = "GFX_supremacy_dualturbolasers"
+    icon_frame = 1
+    damage = {
+        min = 1200
+        max = 1800
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 150
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 0.75
+    armor_penetration = 0.75
+    power = -30
+    component_set = "SAI_SUPREMACY_TURBOLASER"
+    projectile_gfx = "infrared_laser_m"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 4
+        }
+        upkeep = { }
+    }
+    size_restriction = { sai_supremacy_arkship_tier_1 sai_supremacy_arkship_tier_2 sai_supremacy_arkship_tier_3 sai_supremacy_arkship_tier_3_foc_lowest }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "SAI_SUPREMACY_SMALL_TURBOLASER"
+    size = small
+    type = instant
+    icon = "GFX_supremacy_dualturbolasers"
+    icon_frame = 1
+    damage = {
+        min = 600
+        max = 600
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 120
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -5
+    component_set = "SAI_SUPREMACY_TURBOLASER"
+    projectile_gfx = "infrared_laser_s"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    size_restriction = { sai_supremacy_arkship_tier_1 sai_supremacy_arkship_tier_2 sai_supremacy_arkship_tier_3 sai_supremacy_arkship_tier_3_foc_lowest }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "SAI_SUPREMACY_POINT_DEFENCE_TURBOLASER"
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    size = point_defence
+    type = point_defence
+    icon = "GFX_supremacy_dualturbolasers"
+    icon_frame = 1
+    damage = {
+        min = 18
+        max = 30
+    }
+    windup = {
+        min = 1
+        max = 5
+    }
+    total_fire_time = 11
+    range = 40
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 1.0
+    shield_damage = 1.25
+    armor_damage = 1.25
+    hull_damage = 1.25
+    power = -30
+    component_set = "SAI_SUPREMACY_POINT_DEFENCE_TURBOLASER"
+    point_defence_targets = { "missile" "strike_craft" }
+    tags = { weapon_type_point_defense weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_point_defense }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    size_restriction = { sai_supremacy_arkship_tier_1 sai_supremacy_arkship_tier_2 sai_supremacy_arkship_tier_3 sai_supremacy_arkship_tier_3_foc_lowest }
+    ai_weight = {
+        weight = 10
+    }
+    projectile_gfx = "white_laser_pd"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_DEATH_STAR_LARGE_BATTERY"
+    size = large
+    type = instant
+    entity = "ds_empty_turret_entity"
+    projectile_gfx = "infrared_laser_l"
+    icon = "GFX_ship_part_swgs_xx_9_turbolaser_g"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_artillery }
+    component_set = "FOC_DEATH_STAR_BATTERY_SET"
+    size_restriction = { colossus deathstarbattlestation }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    power = -500
+    damage = {
+        min = 13200
+        max = 18000
+    }
+    windup = {
+        min = 1
+        max = 5
+    }
+    total_fire_time = 8
+    range = 400
+    accuracy = 1.0
+    tracking = 0.65
+    shield_penetration = 0.25
+    armor_penetration = 0.25
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_DEATH_STAR_MEDIUM_BATTERY"
+    size = medium
+    type = instant
+    entity = "ds_empty_turret_entity"
+    projectile_gfx = "infrared_laser_m"
+    icon = "GFX_ship_part_swgs_xx_9_turbolaser_g"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    component_set = "FOC_DEATH_STAR_BATTERY_SET"
+    size_restriction = { colossus deathstarbattlestation }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 4
+        }
+        upkeep = { }
+    }
+    power = -300
+    damage = {
+        min = 7200
+        max = 10800
+    }
+    windup = {
+        min = 1
+        max = 4
+    }
+    total_fire_time = 6
+    range = 300
+    accuracy = 1.0
+    tracking = 0.80
+    shield_penetration = 0.20
+    armor_penetration = 0.20
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_DEATH_STAR_SMALL_BATTERY"
+    size = small
+    type = instant
+    entity = "ds_empty_turret_entity"
+    projectile_gfx = "infrared_laser_s"
+    icon = "GFX_ship_part_swgs_xx_9_turbolaser_g"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    component_set = "FOC_DEATH_STAR_BATTERY_SET"
+    size_restriction = { colossus deathstarbattlestation }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    power = -150
+    damage = {
+        min = 3600
+        max = 5400
+    }
+    windup = {
+        min = 1
+        max = 3
+    }
+    total_fire_time = 4
+    range = 220
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 0.15
+    armor_penetration = 0.15
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_DEATH_STAR_POINT_DEFENSE"
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    size = small
+    type = point_defence
+    point_defence_targets = { "strike_craft" "missile" }
+    icon = "GFX_ship_part_point_defense_3"
+    icon_frame = 1
+    tags = { weapon_type_energy }
+    ai_tags = { weapon_role_point_defense }
+    component_set = "FOC_DEATH_STAR_POINT_DEFENSE_SET"
+    size_restriction = { colossus deathstarbattlestation }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    power = -100
+    damage = {
+        min = 1800
+        max = 2700
+    }
+    total_fire_time = 1
+    range = 180
+    accuracy = 1.0
+    tracking = 1.0
+    ai_weight = {
+        weight = 10
+    }
+    projectile_gfx = "strike_craft_laser_3"
+    entity = "ds_empty_turret_entity"
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "ISB_TURBOCANNON_GUN"
+    size = large
+    icon = "GFX_quadturbolasers"
+    icon_frame = 1
+    prerequisites = { "tech_destroyers" }
+    component_set = "ISB_TURBOCANNON_GUN"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_role_artillery L_slot }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { corvette destroyer cruiser battleship titan juggernaut imperialsd imperialsd_foc_lowest foc_v118_imperialsd_bastion_foc_lowest foc_imperialsd2 foc_imperialsd2_foc_lowest }
+    ai_tag_weight = 0
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 50
+        
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    power = -200
+    damage = {
+        min = 558
+        max = 1224
+    }
+    windup = {
+        min = 4
+        max = 4
+    }
+    total_fire_time = 2
+    range = 100
+    accuracy = 0.85
+    tracking = 0.45
+    hull_damage = 1
+    armor_damage = 2
+    shield_damage = 3
+    shield_penetration = 0
+    armor_penetration = 0
+    target_weights = {
+        titan = 5
+        battleship = 4
+        cruiser = 3
+        destroyer = 2
+        frigate = 1
+        corvette = 1
+    }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}

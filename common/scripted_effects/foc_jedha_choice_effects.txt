@@ -1,0 +1,179 @@
+# Country scope: resolve real map/country objects instead of relying on a stale
+# Rebel-alliance target left over from another era.
+foc_jedha_prepare_targets = {
+    random_system = {
+        limit = { has_star_flag = foc_swmap_jedha_home }
+        save_global_event_target_as = foc_swmap_jedha_system
+        random_system_planet = {
+            limit = { has_planet_flag = foc_swmap_jedha }
+            save_event_target_as = foc_jedha_planet
+        }
+    }
+    if = {
+        limit = { any_country = { foc_jedha_is_imperial_rebel = yes } }
+        random_country = {
+            limit = { foc_jedha_is_imperial_rebel = yes }
+            save_event_target_as = foc_jedha_rebels
+        }
+    }
+    else = {
+        random_country = {
+            limit = { has_country_flag = foc_jedha_extremist_rebels_country }
+            save_event_target_as = foc_jedha_rebels
+        }
+    }
+}
+
+# If the main Rebellion has already been defeated, the local uprising still
+# happens. This country receives no Galactic-Civil-War flags or global alliance
+# target, so it only takes Jedha and does not restart the larger rebellion.
+foc_jedha_ensure_rebel_owner = {
+    if = {
+        limit = {
+            NOT = { has_global_flag = foc_jedha_choice_resolved }
+            NOT = {
+                any_country = {
+                    OR = {
+                        foc_jedha_is_imperial_rebel = yes
+                        has_country_flag = foc_jedha_extremist_rebels_country
+                    }
+                }
+            }
+        }
+        owner_main_species = { save_event_target_as = foc_jedha_rebel_species }
+        create_country = {
+            name = "NAME_FOC_JEDHA_EXTREMIST_REBELS"
+            type = default
+            # Jedha may already be depopulated. Keep a real system owner even
+            # without colonies/colony ships; a starbase alone does not prevent
+            # a default country with auto_delete=yes from being deleted.
+            auto_delete = no
+            ignore_initial_colony_error = yes
+            species = event_target:foc_jedha_rebel_species
+            authority = auth_oligarchic
+            origin = origin_default
+            ethos = { ethic = ethic_fanatic_militarist ethic = ethic_egalitarian }
+            civics = { civic = civic_citizen_service }
+            name_list = "rebels"
+            flag = {
+                icon = { category = "rebels" file = "rebel1.dds" }
+                background = { category = "backgrounds" file = "00_solid.dds" }
+                colors = { "red" "black" "null" "null" }
+            }
+            effect = {
+                set_country_flag = foc_jedha_extremist_rebels_country
+                set_graphical_culture = rebel_01
+                save_event_target_as = foc_jedha_rebels
+            }
+        }
+    }
+}
+
+# Country scope. This is permanent political history, not an era modifier.
+foc_jedha_clear_blocked_tarkin = {
+    remove_country_flag = foc_republic_origin_doctrine_event_pending
+    remove_country_flag = foc_republic_origin_tarkin_doctrine
+    remove_country_flag = foc_v109_jedha_fear_order_established
+    remove_modifier = foc_republic_origin_tarkin_doctrine
+    remove_modifier = foc_v109_tarkin_jedha_fear
+}
+
+# Country scope, called only by the Death Star option.
+foc_jedha_destroy_with_death_star = {
+    foc_jedha_prepare_targets = yes
+    if = {
+        limit = {
+            exists = event_target:foc_jedha_planet
+            any_owned_ship = { has_ship_flag = foc_republic_origin_death_star_one }
+            NOT = { has_global_flag = foc_jedha_choice_resolved }
+            NOT = { has_global_flag = foc_jedha_tarkin_permanently_blocked }
+        }
+        event_target:foc_jedha_planet = {
+            # Clear population/colony state before changing to an uninhabitable class.
+            if = {
+                limit = { is_colony = yes }
+                every_owned_pop_group = { kill_all_pop = yes }
+                destroy_colony = yes
+            }
+            clear_deposits = yes
+            clear_planet_modifiers = yes
+            prevent_anomaly = yes
+            change_pc = pc_shattered
+            set_planet_flag = foc_jedha_destroyed_by_death_star
+            # Generic setup/era repair must not rebuild the destroyed colony.
+            remove_planet_flag = foc_sw_ir_colony
+            remove_planet_flag = foc_sw_nr_colony
+            remove_planet_flag = foc_republic_origin_member_world
+            foc_v13_repair_kyber_planet = yes
+        }
+        set_global_flag = foc_saga_jedha_destroyed
+        set_global_flag = foc_jedha_destroyed_by_death_star
+        set_global_flag = foc_jedha_choice_resolved
+        set_country_flag = foc_rogue_one_empire_jedha_shown
+        set_timed_country_flag = { flag = foc_rogue_one_empire_galen_wait days = 30 }
+        if = {
+            limit = { NOT = { has_country_flag = foc_republic_origin_doctrine_chosen } }
+            set_country_flag = foc_republic_origin_doctrine_event_pending
+            country_event = { id = foc_republic_origin.181 days = 1 }
+        }
+    }
+}
+
+# Country scope, called only by the ignore option. Transfer the entire system,
+# including colony controllers and armies, so this is actual Rebel sovereignty.
+foc_jedha_leave_to_rebels = {
+    foc_jedha_prepare_targets = yes
+    foc_jedha_ensure_rebel_owner = yes
+    if = {
+        limit = {
+            exists = event_target:foc_swmap_jedha_system
+            exists = event_target:foc_jedha_rebels
+            NOT = { has_global_flag = foc_jedha_choice_resolved }
+        }
+        set_global_flag = foc_jedha_spared
+        set_global_flag = foc_jedha_tarkin_permanently_blocked
+        set_global_flag = foc_jedha_choice_resolved
+        set_country_flag = foc_rogue_one_empire_jedha_shown
+        set_timed_country_flag = { flag = foc_rogue_one_empire_galen_wait days = 30 }
+        foc_jedha_clear_blocked_tarkin = yes
+        every_country = {
+            limit = { has_country_flag = foc_republic_origin_empire_country }
+            foc_jedha_clear_blocked_tarkin = yes
+        }
+        event_target:foc_swmap_jedha_system = {
+            if = {
+                limit = { exists = starbase }
+                starbase = { set_owner = event_target:foc_jedha_rebels }
+            }
+            else = {
+                create_starbase = {
+                    size = starbase_outpost
+                    owner = event_target:foc_jedha_rebels
+                }
+            }
+            every_system_planet = {
+                limit = { is_colony = yes }
+                set_owner = event_target:foc_jedha_rebels
+                set_controller = event_target:foc_jedha_rebels
+                every_planet_army = { set_owner = event_target:foc_jedha_rebels }
+                remove_modifier = foc_saga_planet_ungarrisoned
+                if = {
+                    limit = {
+                        has_planet_flag = foc_swmap_jedha
+                        event_target:foc_jedha_rebels = {
+                            has_country_flag = foc_jedha_extremist_rebels_country
+                        }
+                    }
+                    set_capital = yes
+                }
+            }
+            every_system_megastructure = { set_owner = event_target:foc_jedha_rebels }
+            every_system_planet = {
+                set_surveyed = { surveyed = yes surveyor = event_target:foc_jedha_rebels }
+            }
+        }
+        event_target:foc_jedha_rebels = { set_visited = event_target:foc_swmap_jedha_system }
+        foc_republic_origin_update_imperial_fear_deficit = yes
+        foc_saga_imperial_garrison_check = yes
+    }
+}

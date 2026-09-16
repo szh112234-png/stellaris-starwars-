@@ -1,0 +1,115 @@
+namespace = foc_v232e_palpatine_return
+
+# Global old-save repair. It does not depend on a custom crisis country
+# receiving on_monthly_pulse_country.
+event = {
+    id = foc_v232e_palpatine_return.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    immediate = {
+        every_country = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_khan_final_order_country
+                    AND = {
+                        has_country_flag = fop_player_final_order
+                        has_country_flag = fop_origin_player_final_order_established
+                    }
+                }
+                NOT = { has_country_flag = foc_v232e_palpatine_return_applied }
+            }
+
+            if = {
+                limit = {
+                    ruler = {
+                        OR = {
+                            has_leader_flag = foc_khan_palpatine_ruler
+                            has_leader_flag = fop_player_palpatine_ruler
+                        }
+                    }
+                }
+                ruler = {
+                    set_name = "Emperor Palpatine"
+                    change_leader_portrait = fopalpatine_male_01
+                    set_immortal = yes
+                    set_leader_flag = foc_khan_palpatine_ruler
+                    set_leader_flag = fop_player_palpatine_ruler
+                    set_leader_flag = foc_saga_palpatine_exegol_clone
+                    save_global_event_target_as = foc_khan_palpatine_ruler
+                }
+            }
+            else = {
+                create_leader = {
+                    tier = leader_tier_legendary
+                    class = random_ruler
+                    species = owner_main_species
+                    name = "Emperor Palpatine"
+                    gender = male
+                    skill = 10
+                    immortal = yes
+                    leader_age_min = 70
+                    leader_age_max = 100
+                    event_leader = yes
+                    skip_background_generation = yes
+                    randomize_traits = no
+                    effect = {
+                        change_leader_portrait = fopalpatine_male_01
+                        set_leader_flag = foc_khan_palpatine_ruler
+                        set_leader_flag = fop_player_palpatine_ruler
+                        set_leader_flag = foc_saga_palpatine_exegol_clone
+                        save_global_event_target_as = foc_khan_palpatine_ruler
+                    }
+                }
+                set_leader = last_created_leader
+            }
+
+            set_country_flag = foc_khan_palpatine_ruler_created
+            set_country_flag = foc_khan_palpatine_portrait_fixed_085
+            set_country_flag = foc_khan_palpatine_portrait_fixed_088
+            set_country_flag = foc_saga_palpatine_returned_final_order
+            set_country_flag = foc_v232e_palpatine_return_applied
+            set_global_flag = foc_saga_palpatine_returned_final_order
+            if = {
+                limit = { has_global_flag = foc_saga_palpatine_died_at_endor }
+                set_global_flag = foc_saga_palpatine_resurrected_after_endor
+            }
+
+            every_playable_country = {
+                limit = {
+                    is_ai = no
+                    NOT = { has_country_flag = foc_v232e_palpatine_return_story_shown }
+                }
+                country_event = { id = foc_v232e_palpatine_return.2 days = 1 }
+            }
+
+            log = "FOC_V232E_PALPATINE: Final Order ruler verified/repaired as returned Exegol Palpatine."
+        }
+    }
+}
+
+# Dedicated visible resurrection story. Separate from the generic Final Order
+# rise event so the change is unmistakable in both new games and old saves.
+country_event = {
+    id = foc_v232e_palpatine_return.2
+    title = foc_v232e_palpatine_return.2.name
+    desc = foc_v232e_palpatine_return.2.desc
+    picture = GFX_foc_event_final_order_rises
+    show_sound = event_mystic_reveal
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        is_ai = no
+        has_global_flag = foc_saga_palpatine_returned_final_order
+        NOT = { has_country_flag = foc_v232e_palpatine_return_story_shown }
+    }
+
+    immediate = {
+        set_country_flag = foc_v232e_palpatine_return_story_shown
+    }
+
+    option = {
+        name = foc_v232e_palpatine_return.2.a
+    }
+}

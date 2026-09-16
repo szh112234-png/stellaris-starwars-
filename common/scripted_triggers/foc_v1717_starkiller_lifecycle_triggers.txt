@@ -1,0 +1,118 @@
+# V17.17b: pointer scopes use conditional triggers; OR/AND are not short-circuit guards.
+# V17.17: phase flags are not proof that a superweapon ever existed.
+foc_v1717_starkiller_planet_destroyed = {
+    OR = {
+        has_planet_flag = myk_starkiller_planet_destroyed
+        is_planet_class = pc_shattered
+        is_planet_class = pc_shattered_2
+        is_planet_class = pc_broken
+        is_planet_class = pc_black_hole
+    }
+}
+
+# Megastructure scope. Construction sites never satisfy this predicate.
+foc_v1717_is_live_completed_starkiller = {
+    OR = {
+        is_megastructure_type = myk_starkiller_base_final
+        is_megastructure_type = fop_starkiller_base_final
+    }
+    is_upgrading = no
+    exists = planet
+    AND = {
+        if = {
+            limit = { exists = planet }
+            planet = { NOT = { foc_v1717_starkiller_planet_destroyed = yes } }
+        }
+        else = { always = no }
+    }
+}
+
+# Scope-independent. Include a second surviving base and both player/crisis types.
+foc_v1717_starkiller_still_exists = {
+    OR = {
+        AND = {
+            if = {
+                limit = { exists = event_target:foc_khan_crisis_starkiller_base }
+                event_target:foc_khan_crisis_starkiller_base = { foc_v1717_is_live_completed_starkiller = yes }
+            }
+            else = { always = no }
+        }
+        AND = {
+            if = {
+                limit = { exists = event_target:foc_khan_first_order_system }
+                event_target:foc_khan_first_order_system = {
+                    any_system_megastructure = { foc_v1717_is_live_completed_starkiller = yes }
+                }
+            }
+            else = { always = no }
+        }
+        AND = {
+            if = {
+                limit = { exists = event_target:foc_v1717_starkiller_monitored_owner }
+                event_target:foc_v1717_starkiller_monitored_owner = {
+                    any_owned_megastructure = { foc_v1717_is_live_completed_starkiller = yes }
+                }
+            }
+            else = { always = no }
+        }
+        any_country = {
+            OR = {
+                has_country_flag = foc_khan_first_order_country
+                has_country_flag = fop_origin_crisis_active
+            }
+            any_owned_megastructure = { foc_v1717_is_live_completed_starkiller = yes }
+        }
+    }
+}
+
+foc_v1717_starkiller_was_completed = {
+    OR = {
+        has_global_flag = foc_v1717_starkiller_was_completed
+        foc_v1717_starkiller_still_exists = yes
+        # These markers were set only by real completion/firing in earlier releases.
+        has_global_flag = foc_khan_starkiller_first_system_destroyed
+        AND = {
+            if = {
+                limit = { exists = event_target:foc_khan_starkiller_anchor }
+                event_target:foc_khan_starkiller_anchor = {
+                    OR = {
+                        has_planet_flag = myk_starkiller_base_planet_flag
+                        has_planet_flag = fop_starkiller_base_planet
+                        has_modifier = foc_starkiller_base_world
+                        has_modifier = fop_starkiller_world
+                    }
+                }
+            }
+            else = { always = no }
+        }
+    }
+}
+
+foc_v1717_starkiller_loss_confirmed = {
+    has_global_flag = foc_khan_phase_one
+    foc_v1717_starkiller_was_completed = yes
+    NOT = { has_global_flag = foc_khan_starkiller_destroyed }
+    NOT = { foc_v1717_starkiller_still_exists = yes }
+    OR = {
+        NOT = { exists = event_target:foc_khan_starkiller_anchor }
+        AND = {
+            if = {
+                limit = { exists = event_target:foc_khan_starkiller_anchor }
+                event_target:foc_khan_starkiller_anchor = { foc_v1717_starkiller_planet_destroyed = yes }
+            }
+            else = { always = no }
+        }
+        AND = {
+            exists = event_target:foc_khan_first_order_system
+            AND = {
+                if = {
+                    limit = { exists = event_target:foc_khan_first_order_system }
+                    event_target:foc_khan_first_order_system = {
+                        NOT = { any_system_megastructure = { foc_v1717_is_live_completed_starkiller = yes } }
+                    }
+                }
+                else = { always = no }
+            }
+        }
+    }
+}

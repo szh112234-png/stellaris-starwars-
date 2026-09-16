@@ -1,0 +1,381 @@
+utility_component_template = {
+    key = FOC_V1718_SG_SWARM_COMPUTER
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_strange_computer"
+    icon_frame = 1
+    power = -15
+    component_set = combat_computers
+    ship_behavior = foc_v1718_swgs_swarm_ship
+    prerequisites = { foc_v1718_tech_sg_computers }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        ship_size_multiplier <= 10
+        from = {
+            foc_v1718_allowed_country = yes
+            foc_v1718_base_ready = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+        }
+    
+        # Native Arkship controller is required for Supremacy.
+        NOT = { foc_v1718h_is_supremacy_ship = yes }
+    }
+    modifier = { ship_evasion_mult = 0.30 ship_speed_mult = 0.30 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 300 }
+    }
+    ai_weight = { weight = 270000 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase }
+}
+
+utility_component_template = {
+    key = FOC_V1718_SG_PICKET_COMPUTER
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_strange_computer"
+    icon_frame = 1
+    power = -15
+    component_set = combat_computers
+    ship_behavior = foc_v1718_swgs_picket_ship
+    prerequisites = { foc_v1718_tech_sg_computers }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        ship_size_multiplier <= 40
+        from = {
+            foc_v1718_allowed_country = yes
+            foc_v1718_base_ready = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+        }
+    
+        # Native Arkship controller is required for Supremacy.
+        NOT = { foc_v1718h_is_supremacy_ship = yes }
+    }
+    modifier = { ship_speed_mult = 0.30 ship_weapon_damage = 0.30 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 300 }
+    }
+    ai_weight = { weight = 260000 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase }
+}
+
+utility_component_template = {
+    key = FOC_V1718_SG_LINE_COMPUTER
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_strange_computer"
+    icon_frame = 1
+    power = -15
+    component_set = combat_computers
+    ship_behavior = foc_v1718_swgs_line_ship
+    prerequisites = { foc_v1718_tech_sg_computers }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        OR = { is_ship_class = shipclass_military is_ship_class = shipclass_military_special is_ship_class = shipclass_starbase }
+        from = {
+            foc_v1718_allowed_country = yes
+            foc_v1718_base_ready = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+        }
+    
+        # Native Arkship controller is required for Supremacy.
+        NOT = { foc_v1718h_is_supremacy_ship = yes }
+    }
+    modifier = { ship_weapon_damage = 0.30 ship_fire_rate_mult = 0.30 ship_speed_mult = 0.30 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 300 }
+    }
+    ai_weight = { weight = 245000 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase }
+}
+
+utility_component_template = {
+    key = FOC_V1718_SG_ARTILLERY_COMPUTER
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_strange_computer"
+    icon_frame = 1
+    power = -15
+    component_set = combat_computers
+    ship_behavior = foc_v1718_swgs_artillery_ship
+    prerequisites = { foc_v1718_tech_sg_computers }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        OR = { is_ship_class = shipclass_military is_ship_class = shipclass_military_special is_ship_class = shipclass_starbase }
+        from = {
+            foc_v1718_allowed_country = yes
+            foc_v1718_base_ready = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+        }
+    
+        # Native Arkship controller is required for Supremacy.
+        NOT = { foc_v1718h_is_supremacy_ship = yes }
+    }
+    modifier = { ship_evasion_mult = -0.10 ship_weapon_range_mult = 0.30 ship_weapon_damage = 0.30 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 300 }
+    }
+    ai_weight = { weight = 250000 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase }
+}
+
+utility_component_template = {
+    key = FOC_V1718_SG_CARRIER_COMPUTER
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_strange_computer"
+    icon_frame = 1
+    power = -15
+    component_set = combat_computers
+    ship_behavior = foc_v1718_swgs_carrier_ship
+    prerequisites = { foc_v1718_tech_sg_computers }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        OR = { is_ship_class = shipclass_military is_ship_class = shipclass_military_special is_ship_class = shipclass_starbase }
+        from = {
+            foc_v1718_allowed_country = yes
+            foc_v1718_base_ready = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+        }
+    
+        # Native Arkship controller is required for Supremacy.
+        NOT = { foc_v1718h_is_supremacy_ship = yes }
+    }
+    modifier = { ship_weapon_range_mult = 0.30 ship_weapon_damage = 0.30 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 300 }
+    }
+    ai_weight = { weight = 240000 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase }
+}
+
+utility_component_template = {
+    key = FOC_V1718_SG_PLATFORM_COMPUTER
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_strange_computer"
+    icon_frame = 1
+    power = -15
+    component_set = combat_computers
+    ship_behavior = foc_v1718_swgs_platform_ship
+    prerequisites = { foc_v1718_tech_sg_computers }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        OR = { is_ship_class = shipclass_starbase is_ship_class = shipclass_military_station }
+        from = {
+            foc_v1718_allowed_country = yes
+            foc_v1718_base_ready = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+        }
+    
+        # Native Arkship controller is required for Supremacy.
+        NOT = { foc_v1718h_is_supremacy_ship = yes }
+    }
+    modifier = { ship_weapon_range_mult = 0.30 ship_weapon_damage = 0.30 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 300 }
+    }
+    ai_weight = { weight = 280000 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase }
+}
+
+utility_component_template = {
+    key = FOC_V1718_SG_MANUAL_COMPUTER
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_strange_computer"
+    icon_frame = 1
+    power = -15
+    component_set = combat_computers
+    ship_behavior = colossus
+    prerequisites = { foc_v1718_tech_sg_computers }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        OR = { is_ship_class = shipclass_military is_ship_class = shipclass_military_special is_ship_class = shipclass_starbase }
+        from = {
+            foc_v1718_allowed_country = yes
+            foc_v1718_base_ready = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+        }
+    
+        # Native Arkship controller is required for Supremacy.
+        NOT = { foc_v1718h_is_supremacy_ship = yes }
+    }
+    modifier = { ship_weapon_range_mult = 1 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 300 }
+    }
+    ai_weight = { weight = 0 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase }
+}
+
+utility_component_template = {
+    key = FOC_V1718_SG_STANDARD_SWARM_COMPUTER
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_strange_computer"
+    icon_frame = 1
+    power = -15
+    component_set = combat_computers
+    ship_behavior = foc_v1718_swgs_swarm_ship
+    prerequisites = { foc_v1718_tech_reactor_1 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        ship_size_multiplier <= 10
+        from = {
+            foc_v1718_allowed_country = yes
+            foc_v1718_base_ready = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            NOT = { has_technology = foc_v1718_tech_sg_computers }
+        }
+    
+        # Native Arkship controller is required for Supremacy.
+        NOT = { foc_v1718h_is_supremacy_ship = yes }
+    }
+    modifier = { ship_evasion_mult = 0.15 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 100 }
+    }
+    ai_weight = { weight = 120000 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase }
+    upgrades_to = "FOC_V1718_SG_SWARM_COMPUTER"
+}
+
+utility_component_template = {
+    key = FOC_V1718_SG_STANDARD_PICKET_COMPUTER
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_strange_computer"
+    icon_frame = 1
+    power = -15
+    component_set = combat_computers
+    ship_behavior = foc_v1718_swgs_picket_ship
+    prerequisites = { foc_v1718_tech_reactor_1 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        ship_size_multiplier <= 40
+        from = {
+            foc_v1718_allowed_country = yes
+            foc_v1718_base_ready = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            NOT = { has_technology = foc_v1718_tech_sg_computers }
+        }
+    
+        # Native Arkship controller is required for Supremacy.
+        NOT = { foc_v1718h_is_supremacy_ship = yes }
+    }
+    modifier = { ship_speed_mult = 0.15 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 100 }
+    }
+    ai_weight = { weight = 110000 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase }
+    upgrades_to = "FOC_V1718_SG_PICKET_COMPUTER"
+}
+
+utility_component_template = {
+    key = FOC_V1718_SG_STANDARD_LINE_COMPUTER
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_strange_computer"
+    icon_frame = 1
+    power = -15
+    component_set = combat_computers
+    ship_behavior = foc_v1718_swgs_line_ship
+    prerequisites = { foc_v1718_tech_reactor_1 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        OR = { is_ship_class = shipclass_military is_ship_class = shipclass_military_special is_ship_class = shipclass_starbase }
+        from = {
+            foc_v1718_allowed_country = yes
+            foc_v1718_base_ready = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            NOT = { has_technology = foc_v1718_tech_sg_computers }
+        }
+    
+        # Native Arkship controller is required for Supremacy.
+        NOT = { foc_v1718h_is_supremacy_ship = yes }
+    }
+    modifier = { ship_fire_rate_mult = 0.10 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 100 }
+    }
+    ai_weight = { weight = 95000 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase }
+    upgrades_to = "FOC_V1718_SG_LINE_COMPUTER"
+}
+
+utility_component_template = {
+    key = FOC_V1718_SG_STANDARD_ARTILLERY_COMPUTER
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_strange_computer"
+    icon_frame = 1
+    power = -15
+    component_set = combat_computers
+    ship_behavior = foc_v1718_swgs_artillery_ship
+    prerequisites = { foc_v1718_tech_reactor_1 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        OR = { is_ship_class = shipclass_military is_ship_class = shipclass_military_special is_ship_class = shipclass_starbase }
+        from = {
+            foc_v1718_allowed_country = yes
+            foc_v1718_base_ready = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            NOT = { has_technology = foc_v1718_tech_sg_computers }
+        }
+    
+        # Native Arkship controller is required for Supremacy.
+        NOT = { foc_v1718h_is_supremacy_ship = yes }
+    }
+    modifier = { ship_weapon_range_mult = 0.20 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 100 }
+    }
+    ai_weight = { weight = 100000 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase }
+    upgrades_to = "FOC_V1718_SG_ARTILLERY_COMPUTER"
+}
+
+utility_component_template = {
+    key = FOC_V1718_SG_STANDARD_CARRIER_COMPUTER
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_strange_computer"
+    icon_frame = 1
+    power = -15
+    component_set = combat_computers
+    ship_behavior = foc_v1718_swgs_carrier_ship
+    prerequisites = { foc_v1718_tech_reactor_1 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        OR = { is_ship_class = shipclass_military is_ship_class = shipclass_military_special is_ship_class = shipclass_starbase }
+        from = {
+            foc_v1718_allowed_country = yes
+            foc_v1718_base_ready = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            NOT = { has_technology = foc_v1718_tech_sg_computers }
+        }
+    
+        # Native Arkship controller is required for Supremacy.
+        NOT = { foc_v1718h_is_supremacy_ship = yes }
+    }
+    modifier = { ship_weapon_range_mult = 0.15 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 100 }
+    }
+    ai_weight = { weight = 90000 }
+    class_restriction = { shipclass_military shipclass_military_special shipclass_military_station shipclass_starbase }
+    upgrades_to = "FOC_V1718_SG_CARRIER_COMPUTER"
+}

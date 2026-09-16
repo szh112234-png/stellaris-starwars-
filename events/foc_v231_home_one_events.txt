@@ -1,0 +1,405 @@
+namespace = foc_v231_home_one
+
+# =============================================================================
+# 家园一号 / Home One
+# =============================================================================
+# Commissioned only after the Battle of Hoth has actually completed
+# (foc_canon_hoth_battle_completed, set by foc_canon.46). Exactly one hull is
+# ever built, for the current Rebel Alliance / Imperial Rebellion.
+#
+# V232q: register this ship in the Arkship classifiers and verify its actual
+# owner/type/location. An existing unique hull is repaired, never cloned.
+# Failed creation releases its reservation; old ambiguous loss records require
+# explicit user confirmation. New combat losses are permanently recorded.
+# =============================================================================
+
+country_event = {
+    id = foc_v231_home_one.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        has_global_flag = foc_canon_hoth_battle_completed
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        NOT = { has_global_flag = foc_v231_home_one_commissioned }
+        NOT = { has_global_flag = foc_v232q_home_one_destroyed }
+        foc_v232q_home_one_recipient = yes
+        any_owned_planet = { is_colony = yes }
+        NOT = {
+            any_country = {
+                any_owned_ship = { foc_v232q_is_home_one = yes }
+            }
+        }
+    }
+    immediate = {
+        save_event_target_as = foc_v232q_home_one_recipient
+        set_global_flag = foc_v231_home_one_commissioned
+        set_country_flag = foc_v231_home_one_commissioned
+        remove_country_flag = foc_hotfix_home_one_anchor_ready
+        if = {
+            limit = {
+                exists = capital_scope
+                capital_scope = {
+                    solar_system = { foc_v232r_home_one_safe_system = yes }
+                }
+            }
+            capital_scope = { save_event_target_as = foc_v231_home_one_spawn }
+            set_country_flag = foc_hotfix_home_one_anchor_ready
+        }
+        else = {
+            random_system = {
+                limit = { foc_v232r_home_one_safe_system = yes }
+                star = { save_event_target_as = foc_v231_home_one_spawn }
+                event_target:foc_v232q_home_one_recipient = { set_country_flag = foc_hotfix_home_one_anchor_ready }
+            }
+        }
+        if = {
+            limit = {
+                has_country_flag = foc_hotfix_home_one_anchor_ready
+                exists = event_target:foc_v231_home_one_spawn
+                event_target:foc_v231_home_one_spawn = {
+                    solar_system = { foc_v232r_home_one_safe_system = yes }
+                }
+            }
+            remove_country_flag = foc_v232r_home_one_waiting_for_safe_system
+            create_fleet = {
+                name = "NAME_FOC_V231_HOME_ONE"
+                settings = {
+                    uses_naval_capacity = no
+                    can_upgrade = no
+                    can_disband = no
+                    can_change_composition = no
+                    can_change_leader = yes
+                    spawn_debris = yes
+                    ai_ignore_strength = yes
+                }
+                effect = {
+                    set_owner = event_target:foc_v232q_home_one_recipient
+                    owner = {
+                        if = {
+                            limit = {
+                                NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+                            }
+                            if = {
+                                limit = { is_ai = yes }
+                                give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+                            }
+                        }
+                    }
+                    owner = {
+                        if = {
+                            limit = {
+                                NOT = { has_technology = foc_tech_tibanna_mining }
+                            }
+                            give_technology = { tech = foc_tech_tibanna_mining message = no }
+                        }
+                        if = {
+                            limit = {
+                                NOT = { has_technology = foc_tech_std_turbo_1 }
+                            }
+                            if = {
+                                limit = { foc_v1716_republic_start_arsenal_allowed = yes }
+                                give_technology = { tech = foc_tech_std_turbo_1 message = no }
+                            }
+                        }
+                        if = {
+                            limit = {
+                                foc_v14_can_research_rebel_arsenal = yes
+                                NOT = { has_technology = foc_tech_reb_turbo_2 }
+                            }
+                            if = {
+                                limit = { is_ai = yes }
+                                give_technology = { tech = foc_tech_reb_turbo_2 message = no }
+                            }
+                        }
+                        if = {
+                            limit = {
+                                NOT = { has_technology = foc_tech_std_pd_1 }
+                            }
+                            if = {
+                                limit = { foc_v1716_republic_start_arsenal_allowed = yes }
+                                give_technology = { tech = foc_tech_std_pd_1 message = no }
+                            }
+                        }
+                        if = {
+                            limit = {
+                                NOT = { has_technology = foc_tech_std_pd_2 }
+                            }
+                            if = {
+                                limit = { is_ai = yes }
+                                give_technology = { tech = foc_tech_std_pd_2 message = no }
+                            }
+                        }
+                    }
+                    if = {
+                        limit = { has_global_flag = foc_khan_strength_lowest }
+                        create_ship = {
+                            name = "NAME_FOC_V231_HOME_ONE"
+                            design = "NAME_FOC_V231_HOME_ONE_V1718E_LOWEST"
+                            graphical_culture = rebel_01
+                            upgradable = no
+                            effect = {
+                                set_ship_flag = foc_v231_home_one
+                                save_global_event_target_as = foc_v232q_home_one_ship
+                                ship_event = { id = foc_v231_home_one.2 days = 1 }
+                            }
+                        }
+                    }
+                    else = {
+                        create_ship = {
+                            name = "NAME_FOC_V231_HOME_ONE"
+                            design = "NAME_FOC_V231_HOME_ONE"
+                            graphical_culture = rebel_01
+                            upgradable = no
+                            effect = {
+                                set_ship_flag = foc_v231_home_one
+                                save_global_event_target_as = foc_v232q_home_one_ship
+                                ship_event = { id = foc_v231_home_one.2 days = 1 }
+                            }
+                        }
+                    }
+                    set_location = { target = event_target:foc_v231_home_one_spawn distance = 30 angle = random }
+                    set_fleet_flag = foc_v231_home_one_fleet
+                    set_fleet_stance = passive
+                    set_aggro_range_measure_from = self
+                    set_aggro_range = 300
+                    if = {
+                        limit = {
+                            NOT = {
+                                any_owned_ship = { foc_v232q_is_home_one = yes }
+                            }
+                        }
+                        delete_fleet = this
+                    }
+                }
+            }
+            if = {
+                limit = {
+                    any_owned_ship = { has_ship_flag = foc_v231_home_one }
+                }
+                log = "FOC_V231_HOME_ONE: Home One hull verified and commissioned after the Battle of Hoth."
+                country_event = { id = foc_v231_home_one.3 days = 2 }
+                country_event = { id = foc_v231_home_one.5 days = 3 }
+            }
+            else = { remove_global_flag = foc_v231_home_one_commissioned remove_country_flag = foc_v231_home_one_commissioned log = "FOC_V231_HOME_ONE: ship creation failed; commissioning reservation released." }
+        }
+        else = {
+            remove_global_flag = foc_v231_home_one_commissioned
+            remove_country_flag = foc_v231_home_one_commissioned
+            if = {
+                limit = {
+                    NOT = { has_country_flag = foc_v232r_home_one_waiting_for_safe_system }
+                }
+                set_country_flag = foc_v232r_home_one_waiting_for_safe_system
+                log = "FOC_V232R_HOME_ONE: no Rebel-owned system free of Imperial/hostile fleets; commission deferred."
+            }
+        }
+        remove_country_flag = foc_hotfix_home_one_anchor_ready
+    }
+}
+
+# Ship scope. Installs the Arkship core and the fixed axial mount one day after
+# creation, once ownership and location have both settled. This mirrors how
+# Raddus initialises its own Arkship modules and never creates a ship.
+ship_event = {
+    id = foc_v231_home_one.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = { foc_v232q_is_home_one = yes exists = starbase }
+
+    immediate = {
+        set_ship_flag = foc_v231_home_one
+        set_name = "NAME_FOC_V231_HOME_ONE"
+        save_global_event_target_as = foc_v232q_home_one_ship
+        set_graphical_culture = rebel_01
+        starbase = {
+            if = {
+                limit = { NOT = { has_starbase_module = foc_v231_home_one_engineering_bay } }
+                set_starbase_module = { slot = 1 module = foc_v231_home_one_engineering_bay }
+                set_ship_construction_type = starbase_shipyard
+            }
+            if = {
+                limit = { NOT = { has_starbase_module = foc_v231_home_one_docking_bay } }
+                set_starbase_module = { slot = 2 module = foc_v231_home_one_docking_bay }
+            }
+            if = {
+                limit = { NOT = { has_starbase_module = foc_v231_home_one_habitation_module } }
+                set_starbase_module = { slot = 3 module = foc_v231_home_one_habitation_module }
+            }
+            if = {
+                limit = { NOT = { has_starbase_module = foc_v231_home_one_sensor_array } }
+                set_starbase_module = { slot = 4 module = foc_v231_home_one_sensor_array }
+            }
+            if = {
+                limit = { NOT = { has_starbase_module = foc_v231_home_one_mining_array } }
+                set_starbase_module = { slot = 5 module = foc_v231_home_one_mining_array }
+            }
+            if = {
+                limit = { NOT = { has_starbase_module = foc_v231_home_one_archive } }
+                set_starbase_module = { slot = 6 module = foc_v231_home_one_archive }
+            }
+            if = {
+                limit = { NOT = { has_starbase_module = foc_v231_home_one_strike_command_module } }
+                set_starbase_module = { slot = 7 module = foc_v231_home_one_strike_command_module }
+            }
+        }
+    }
+}
+
+# Country scope. Save-load and starbase-rebuild repair. It restores identity and
+# re-runs module installation on an existing hull; it can never create one.
+country_event = {
+    id = foc_v231_home_one.3
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = { any_owned_ship = { foc_v232q_is_home_one = yes } }
+
+    immediate = {
+        every_owned_fleet = {
+            limit = { any_owned_ship = { foc_v232q_is_home_one = yes } }
+            set_fleet_flag = foc_v231_home_one_fleet
+            set_name = "NAME_FOC_V231_HOME_ONE"
+            set_fleet_stance = passive
+        }
+        every_owned_ship = {
+            limit = { foc_v232q_is_home_one = yes }
+            ship_event = { id = foc_v231_home_one.2 }
+        }
+    }
+}
+
+# Ownership migration keeper. If the Rebellion is reorganised into the New
+# Republic, or the ship changes hands through the normal story chain, the
+# modules are simply re-verified. No hull is created here either.
+country_event = {
+    id = foc_v231_home_one.4
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        any_owned_ship = { foc_v232q_is_home_one = yes }
+        NOT = { has_country_flag = foc_v232q_home_one_verified }
+    }
+    immediate = {
+        set_country_flag = foc_v232q_home_one_verified
+        set_country_flag = foc_v231_home_one_verified
+        set_country_flag = foc_v231_home_one_commissioned
+        set_global_flag = foc_v231_home_one_commissioned
+        country_event = { id = foc_v231_home_one.3 }
+        country_event = { id = foc_v231_home_one.5 days = 1 }
+    }
+}
+
+# Show an actual live object, not just a claim that create_ship was called.
+country_event = {
+    id = foc_v231_home_one.5
+    title = foc_v232q_home_one.5.name
+    desc = foc_v232q_home_one.5.desc
+    picture = GFX_foc_saga_rebel_fleet
+    location = event_target:foc_v232q_home_one_ship
+    is_triggered_only = yes
+    force_open = yes
+    trigger = {
+        is_ai = no
+        NOT = { has_country_flag = foc_v232q_home_one_location_reported }
+        any_owned_ship = { foc_v232q_is_home_one = yes exists = solar_system exists = fleet }
+    }
+    immediate = {
+        random_owned_ship = {
+            limit = { foc_v232q_is_home_one = yes exists = solar_system exists = fleet }
+            save_global_event_target_as = foc_v232q_home_one_ship
+            solar_system = { save_event_target_as = foc_v232q_home_one_system }
+            fleet = { save_event_target_as = foc_v232q_home_one_fleet }
+        }
+        set_country_flag = foc_v232q_home_one_location_reported
+        log = "FOC_V232Q_HOME_ONE: located an actual owned Home One hull; map-location report dispatched to its owner."
+    }
+    option = { name = foc_v232q_home_one.5.a }
+}
+
+# Permanent combat-loss record: normal play never respawns a destroyed unique ship.
+ship_event = {
+    id = foc_v231_home_one.6
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { foc_v232q_is_home_one = yes }
+    immediate = {
+        set_global_flag = foc_v232q_home_one_destroyed
+        set_global_flag = foc_v231_home_one_commissioned
+    }
+}
+
+# A pre-q save has no Home One death record. Absence cannot distinguish a failed
+# commission from a historical loss; ask once rather than silently resurrecting.
+country_event = {
+    id = foc_v231_home_one.7
+    title = foc_v232q_home_one.7.name
+    desc = foc_v232q_home_one.7.desc
+    picture = GFX_foc_saga_rebel_fleet
+    is_triggered_only = yes
+    force_open = yes
+    trigger = {
+        is_ai = no
+        foc_v232q_home_one_recipient = yes
+        has_global_flag = foc_canon_hoth_battle_completed
+        has_global_flag = foc_v231_home_one_commissioned
+        NOT = { has_global_flag = foc_v232q_home_one_destroyed }
+        NOT = { has_country_flag = foc_v232q_home_one_missing_prompted }
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        any_owned_planet = { is_colony = yes }
+        NOT = { any_country = { any_owned_ship = { foc_v232q_is_home_one = yes } } }
+    }
+    immediate = { set_country_flag = foc_v232q_home_one_missing_prompted }
+    option = {
+        name = foc_v232q_home_one.7.restore
+        hidden_effect = {
+            # Recheck at click time: an already-open report cannot create a duplicate.
+            if = {
+                limit = {
+                    NOT = { has_global_flag = foc_v232q_home_one_destroyed }
+                    NOT = { any_country = { any_owned_ship = { foc_v232q_is_home_one = yes } } }
+                }
+                remove_global_flag = foc_v231_home_one_commissioned
+                remove_country_flag = foc_v231_home_one_commissioned
+                remove_country_flag = foc_v232q_home_one_verified
+                remove_country_flag = foc_v232q_home_one_location_reported
+                country_event = { id = foc_v231_home_one.1 }
+            }
+        }
+    }
+    option = { name = foc_v232q_home_one.7.keep_loss }
+}
+
+event = {
+    id = foc_v231_home_one.8
+    hide_window = yes
+    is_triggered_only = yes
+    immediate = {
+        every_country = {
+            if = {
+                limit = { any_owned_ship = { foc_v232q_is_home_one = yes } }
+                country_event = { id = foc_v231_home_one.4 }
+            }
+            else_if = {
+                limit = { foc_v232q_home_one_recipient = yes }
+                country_event = { id = foc_v231_home_one.1 }
+                country_event = { id = foc_v231_home_one.7 }
+            }
+        }
+    }
+}
+
+# Vanilla destruction callback: THIS is the victim country, not the ship.
+country_event = {
+    id = foc_v231_home_one.9
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        exists = fromfrom
+        fromfrom = { foc_v232q_is_home_one = yes }
+    }
+    immediate = {
+        set_global_flag = foc_v232q_home_one_destroyed
+        set_global_flag = foc_v231_home_one_commissioned
+    }
+}

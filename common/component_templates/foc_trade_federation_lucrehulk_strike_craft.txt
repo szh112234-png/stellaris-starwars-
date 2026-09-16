@@ -1,0 +1,103 @@
+# V90: Lucrehulk uses exactly the same ARC-170 package as Venator; only hangar count differs.
+strike_craft_component_template = {
+    key = "FOC_TRADE_LUCREHULK_ARC170"
+    size = LARGE
+    entity = "foc_tri_size1_entity"
+    weapon_type = point_defence
+    projectile_gfx = "strike_craft_laser_3"
+    power = -50
+	potential = {  
+ NOT = { has_global_flag = foc_khan_strength_lowest }
+ 
+ from = { OR = { NOT = { foc_v137_is_story_starfighter_country = yes } foc_v236_has_cis_aircraft_identity = yes } }
+ 
+        from = { foc_v1718_allowed_country = yes }
+    }
+    resources = { category = ship_components cost = { alloys = 20 
+            sr_tibanna_swgs = 8
+        } }
+    count = 24
+    regeneration_per_day = 1
+    launch_time = 2
+    damage = { min = 83.333333333 max = 83.333333333 }
+    cooldown = 1.5
+    range = 15
+    engagement_range = 500
+    accuracy = 1.0
+    tracking = 1.0
+    health = 100
+    armor = 20
+    shield = 0
+    evasion = 0.92
+    speed = 1150
+    rotation_speed = 0.3
+    acceleration = 1
+    shield_penetration = 0.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    ship_behavior = "fighters_behavior"
+    icon = "GFX_ship_part_foc_tri"
+    icon_frame = 1
+    component_set = "VCSD_ARC170"
+    size_restriction = { foc_trade_lucrehulk foc_trade_lucrehulk_foc_lowest }
+    tags = { weapon_type_strike_craft }
+    ai_tags = { weapon_role_anti_hull }
+    ai_weight = { weight = 99999 }
+ point_defence_targets = { "strike_craft" "missile" }
+ armor_penetration = 0.0
+ shield_damage = 1.0
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+    key = "FOC_TRADE_LUCREHULK_ARC170_FOC_LOWEST"
+    hidden = yes
+    size = LARGE
+    entity = "foc_tri_size1_entity"
+    weapon_type = point_defence
+    projectile_gfx = "strike_craft_laser_3"
+    power = -50
+    resources = { category = ship_components cost = { alloys = 20 
+            sr_tibanna_swgs = 8
+        } }
+    count = 24
+    regeneration_per_day = 1
+    launch_time = 1
+    damage = { min = 3.333333333 max = 3.333333333 }
+    cooldown = 2.6
+    range = 10
+    engagement_range = 150
+    accuracy = 1.0
+    tracking = 1.0
+    health = 13.333333333
+    armor = 13.333333333
+    shield = 0
+    evasion = 0.92
+    speed = 1150
+    rotation_speed = 0.8
+    acceleration = 1
+    hull_damage = 1.0
+    shield_damage = 1.0
+    armor_damage = 1.0
+    ship_behavior = "fighters_behavior"
+    icon = "GFX_ship_part_foc_tri"
+    icon_frame = 1
+    component_set = "VCSD_ARC170"
+    size_restriction = { foc_trade_lucrehulk foc_trade_lucrehulk_foc_lowest }
+    tags = { weapon_type_strike_craft }
+    ai_tags = { weapon_role_anti_hull }
+    ai_weight = { weight = 1000000 }
+ point_defence_targets = { "strike_craft" "missile" }
+ armor_penetration = 0.0
+ shield_penetration = 0.0
+ potential = { 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { OR = { NOT = { foc_v137_is_story_starfighter_country = yes } foc_v236_has_cis_aircraft_identity = yes } }
+ 
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}

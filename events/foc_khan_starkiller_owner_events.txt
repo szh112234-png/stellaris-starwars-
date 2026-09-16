@@ -1,0 +1,217 @@
+namespace = foc_khan
+
+# Any ordinary empire possessing a completed Starkiller Base is an automatic
+# enemy of both Orders and cannot remain anyone's subject.
+country_event = {
+	id = foc_khan.1600
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_country_flag = foc_khan_first_order_country }
+		NOT = { has_country_flag = foc_khan_final_order_country }
+		NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+		foc_khan_owns_completed_starkiller = yes
+	}
+
+	immediate = {
+		set_country_flag = foc_khan_starkiller_owner_enemy
+
+		# A Starkiller owner cannot remain a subject of any country.
+		if = {
+			limit = { is_subject = yes }
+			set_subject_of = { who = none }
+			remove_country_flag = foc_khan_submitted_first_order
+			remove_country_flag = foc_khan_submitted_final_order
+			remove_country_flag = rebellion_cooldown
+		}
+
+		# Crisis hostility is the Orders' war mechanism: fleets can directly attack
+		# without using normal claims, CBs, or the standard declaration screen.
+		every_country = {
+			limit = {
+				OR = {
+					has_country_flag = foc_khan_first_order_country
+					has_country_flag = foc_khan_final_order_country
+				}
+			}
+			establish_communications_no_message = root
+			set_hostile = root
+			set_faction_hostility = {
+				target = root
+				set_hostile = yes
+				set_friendly = no
+				set_neutral = no
+			}
+			root = {
+				establish_communications_no_message = prev
+				set_hostile = prev
+				set_faction_hostility = {
+					target = prev
+					set_hostile = yes
+					set_friendly = no
+					set_neutral = no
+				}
+			}
+		}
+
+		# Record priority initialization without repeatedly replacing fleet orders. The
+		# ACOT-style berserk minister sees this empire as hostile through its normal
+		# strategic target evaluation.
+		if = {
+			limit = { NOT = { has_country_flag = foc_khan_starkiller_priority_initialized } }
+			set_country_flag = foc_khan_starkiller_priority_initialized
+			# Refresh stances and wake idle invasion transports once; combat movement stays minister-controlled.
+			country_event = { id = foc_khan_ai_repair.4 days = 1 }
+		}
+
+	}
+}
+
+# Remove only the administrative marker after the empire no longer owns a
+# completed Starkiller Base. Existing wars/hostility are not forcibly reset.
+country_event = {
+	id = foc_khan.1601
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_country_flag = foc_khan_starkiller_owner_enemy
+		NOT = { foc_khan_owns_completed_starkiller = yes }
+	}
+
+	immediate = {
+		remove_country_flag = foc_khan_starkiller_owner_enemy
+		remove_country_flag = foc_khan_starkiller_priority_initialized
+		remove_country_flag = foc_khan_starkiller_build_event_shown
+	}
+}
+
+
+# Fired by the standard on_megastructure_built/on_megastructure_upgraded hooks.
+# The political and military consequences happen immediately without changing
+# any Starkiller Base gameplay file.
+country_event = {
+	id = foc_khan.1602
+	title = foc_khan.1602.name
+	desc = foc_khan.1602.desc
+	picture = GFX_foc_event_starkiller_ultimatum
+	is_triggered_only = yes
+	force_open = yes
+
+	trigger = {
+		NOT = { has_origin = origin_fop_first_order }
+		exists = from
+		from = {
+			OR = {
+				is_megastructure_type = myk_starkiller_base_final
+				is_megastructure_type = fop_starkiller_base_final
+			}
+		}
+		NOT = { has_country_flag = foc_khan_starkiller_build_event_shown }
+		NOT = { has_country_flag = foc_khan_first_order_country }
+		NOT = { has_country_flag = foc_khan_final_order_country }
+		NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+		foc_khan_owns_completed_starkiller = yes
+	}
+
+	immediate = {
+		set_country_flag = foc_khan_starkiller_build_event_shown
+		# Reuse the monthly fallback's tested independence and two-way crisis
+		# hostility logic on the exact day construction finishes.
+		country_event = { id = foc_khan.1600 }
+	}
+
+	option = {
+		name = foc_khan.1602.a
+	}
+}
+
+
+# Ground occupation of the anchor planet seizes the completed Starkiller Base.
+country_event = {
+    id = foc_khan.1603
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        any_owned_megastructure = {
+            OR = {
+                is_megastructure_type = myk_starkiller_base_final
+                is_megastructure_type = fop_starkiller_base_final
+            }
+            # Only the First Order crisis installation uses the special capture
+            # choice. Player-built Starkiller Bases follow ordinary war ownership.
+            planet = {
+                has_planet_flag = foc_khan_starkiller_anchor
+                is_colony = yes
+                exists = controller
+                controller = { NOT = { is_same_value = root } }
+            }
+        }
+    }
+
+    immediate = {
+        every_owned_megastructure = {
+            limit = {
+                OR = {
+                    is_megastructure_type = myk_starkiller_base_final
+                    is_megastructure_type = fop_starkiller_base_final
+                }
+                planet = {
+                    has_planet_flag = foc_khan_starkiller_anchor
+                    is_colony = yes
+                    exists = controller
+                    controller = { NOT = { is_same_value = root } }
+                }
+                NOT = { has_megastructure_flag = foc_story_capture_choice_pending }
+            }
+
+            set_megastructure_flag = foc_story_capture_choice_pending
+            save_global_event_target_as = foc_story_captured_starkiller_base
+            planet = {
+                save_global_event_target_as = foc_story_captured_starkiller_anchor
+                controller = { save_global_event_target_as = foc_khan_new_starkiller_owner }
+            }
+
+            if = {
+                limit = { exists = event_target:foc_khan_new_starkiller_owner }
+                set_owner = event_target:foc_khan_new_starkiller_owner
+
+                # The fixed-design orbital defence platform is a fleet rather than
+                # part of the megastructure object, so transfer it explicitly.
+                planet = {
+                    solar_system = {
+                        every_fleet_in_system = {
+                            limit = { any_owned_ship = { has_ship_flag = foc_khan_starkiller_fixed_station } }
+                            set_owner = event_target:foc_khan_new_starkiller_owner
+                        }
+                    }
+                }
+
+                root = {
+                    remove_country_flag = foc_khan_starkiller_owner_enemy
+                    remove_country_flag = foc_khan_starkiller_priority_initialized
+                }
+
+                event_target:foc_khan_new_starkiller_owner = {
+                    if = {
+                        limit = { is_ai = no }
+                        country_event = { id = foc_story.13 }
+                    }
+                    else = {
+                        country_event = { id = foc_story.14 days = 1 }
+                    }
+                }
+            }
+        }
+    }
+}
+
+# Legacy informational event kept as a compatibility stub for serialized saves.
+country_event = {
+    id = foc_khan.1604
+    hide_window = yes
+    is_triggered_only = yes
+    immediate = { country_event = { id = foc_story.13 } }
+}

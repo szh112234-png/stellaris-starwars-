@@ -1,0 +1,147 @@
+namespace = foc_padme
+
+# =============================================================================
+# 帕德梅·纳贝里·阿米达拉
+# =============================================================================
+# 纳布危机（她把帕尔帕廷送上议长之位）
+#   → 议员与秘密婚姻（安纳金的梦魇，普雷格斯的传说，阴谋加速）
+#   → 穆斯塔法（帕德梅重伤，维达成型）
+#   → 双生子（帕德梅死亡；卢克送往塔图因，莱娅送往奥德朗）
+#
+# 全部挂 on_monthly_pulse_country，一次性国家标记控制，读档不重复。
+# 这条线是帕尔帕廷阴谋的**主要加速器**：单是纳布危机就把他从一个边缘星系的
+# 议员变成最高议长，而安纳金对失去她的恐惧，是他手里最好用的一把钥匙。
+# =============================================================================
+
+# 纳布危机之后：那位女王卸任，转任议员。
+country_event = {
+    id = foc_padme.10
+    title = foc_padme.10.name
+    desc = foc_padme.10.desc
+    picture = GFX_foc_saga_galactic_senate
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_republic_origin_republic_country
+        has_country_flag = foc_republic_origin_naboo_crisis_resolved
+        NOT = { has_country_flag = foc_saga_padme_senator_shown }
+        NOT = { has_country_flag = foc_republic_origin_arc_completed }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_padme_senator_shown
+        foc_saga_create_padme = yes
+    }
+
+    option = {
+        name = foc_padme.10.a
+        add_modifier = { modifier = foc_saga_amidala_senator days = -1 }
+    }
+}
+
+# 克隆人战争中期：秘密婚姻、梦魇，以及歌剧院包厢里的那段话。
+country_event = {
+    id = foc_padme.11
+    title = foc_padme.11.name
+    desc = foc_padme.11.desc
+    picture = GFX_foc_saga_palpatine_rise
+    show_sound = event_mystic_reveal
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_saga_padme_senator_shown
+        # V72 / 2210: secret marriage era begins with the Clone Wars.
+        has_country_flag = foc_republic_origin_clone_army_plan
+        has_global_flag = foc_republic_origin_separatist_war_active
+        NOT = { has_country_flag = foc_saga_padme_visions_shown }
+        NOT = { has_global_flag = foc_republic_origin_jedi_purged }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_padme_visions_shown
+        set_global_flag = foc_saga_anakin_visions_begun
+        # 恐惧是帕尔帕廷手里最有效的一把钥匙，而他刚刚把它插进锁孔。
+        
+    }
+
+    option = {
+        name = foc_padme.11.a
+        add_modifier = { modifier = foc_saga_anakin_visions days = -1 }
+    }
+}
+
+# 66 号命令之后：穆斯塔法。
+country_event = {
+    id = foc_padme.12
+    title = foc_padme.12.name
+    desc = foc_padme.12.desc
+    picture = GFX_foc_saga_vader_forged
+    # V232: 穆斯塔法是维达戴上面罩的那一刻，改用呼吸声替换原来的通用神秘音效。
+    show_sound = foc_v232_vader_breathing
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_saga_padme_senator_shown
+        NOT = { has_country_flag = foc_saga_padme_mustafar_shown }
+        OR = {
+            has_global_flag = foc_republic_origin_anakin_fallen
+            has_global_flag = foc_republic_origin_jedi_purged
+        }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_padme_mustafar_shown
+    }
+
+    option = {
+        name = foc_padme.12.a
+        set_country_flag = foc_v196_padme_mustafar_confirmed
+        set_timed_country_flag = { flag = foc_saga_padme_twins_wait days = 30 }
+        add_modifier = { modifier = foc_saga_mustafar_aftermath days = -1 }
+        # V231: Mustafar is now purely a story scene. It creates no country,
+        # splits no territory, decides no ownership of the Mustafar system and
+        # does not gate the birth of the Galactic Empire -- Mustafar passed to
+        # the Republic at the Confederate surrender, and the Republic has
+        # already become the Empire by the time this scene plays.
+        #
+        # What it does do is finish Anakin Skywalker. The duel ends, Palpatine
+        # recovers what is left of him, and Darth Vader is created here.
+        hidden_effect = {
+            set_global_flag = foc_v231_mustafar_resolved
+            every_country = {
+                limit = { has_country_flag = foc_republic_origin_empire_country }
+                country_event = { id = foc_republic_origin.240 days = 1 }
+            }
+        }
+    }
+}
+
+# 双生子。
+country_event = {
+    id = foc_padme.13
+    title = foc_padme.13.name
+    desc = foc_padme.13.desc
+    picture = GFX_foc_saga_holocron
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_saga_padme_mustafar_shown
+        has_country_flag = foc_v196_padme_mustafar_confirmed
+        NOT = { has_country_flag = foc_saga_padme_twins_shown }
+        NOT = { has_country_flag = foc_saga_padme_twins_wait }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_padme_twins_shown
+        set_global_flag = foc_saga_skywalker_twins_hidden
+    }
+
+    option = {
+        name = foc_padme.13.a
+        foc_saga_kill_padme = yes
+    }
+}

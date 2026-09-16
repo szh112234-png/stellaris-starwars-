@@ -1,0 +1,29 @@
+# This is a template which multiple species can use. 
+  
+sithwarrior_male_clothes_01 = {
+	default = "gfx/models/portraits/torsith/torsith_male_clothes_sithgeneral.dds"
+	
+	game_setup = {#will run with a limited country scope. species and government is set but the country does not actually exist
+		default = "gfx/models/portraits/torsith/torsith_male_clothes_sithgeneral.dds" ## STORMTROOPER OFFICER
+	}
+	
+	#species scope
+	species = { #generic portrait for a species
+		default = "gfx/models/portraits/torsith/torsith_male_clothes_sithgeneral.dds" ## STORMTROOPER OFFICER
+	}
+	
+	#pop scope
+	pop = { #for a specific pop
+	
+		default = "gfx/models/portraits/torsith/torsith_male_clothes_sithgeneral.dds" ## STORMTROOPER
+
+		random = {
+			list = {
+				"gfx/models/portraits/torsith/torsith_male_clothes_sithgeneral.dds" ## STORMTROOPER
+			}
+		}	
+	}
+	
+	
+}
+  

@@ -1,0 +1,128 @@
+namespace = foc_khan_222
+
+# One-time migration for 2.22.
+event = {
+    id = foc_khan_222.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        NOT = { has_global_flag = foc_khan_222_stability_migrated }
+        OR = {
+            any_country = { has_country_flag = foc_khan_first_order_country }
+            any_country = { has_country_flag = foc_khan_final_order_country }
+            any_country = { has_country_flag = foc_khan_rebel_alliance_country }
+        }
+    }
+
+    immediate = {
+        set_global_flag = foc_khan_222_stability_migrated
+
+        # Remove empty support fleet objects left behind after the numerical cap.
+        every_country = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = foc_khan_final_order_country
+                }
+            }
+            every_owned_fleet = {
+                limit = { num_ships < 1 }
+                destroy_fleet = {
+                    target = this
+                    destroy_template = no
+                    kill_leader = no
+                }
+            }
+        }
+
+        # Restart only the Rebel combat fleets with the new direct controller.
+        every_country = {
+            limit = {
+                has_country_flag = foc_khan_rebel_alliance_country
+                NOT = { has_country_flag = foc_story_rebel_surrendered_to_first_order }
+            }
+            if = {
+                # 3.11v-normal: keep the Rebel Alliance on the vanilla default type.
+                limit = { NOT = { is_country_type = default } }
+                set_country_type = default
+            }
+            every_owned_fleet = {
+                limit = {
+                    owner = { is_ai = yes }
+                    NOT = { has_fleet_flag = foc_republic_origin_rebellion_garrison }
+                    has_fleet_flag = foc_khan_rebel_attack_fleet
+                    any_owned_ship = { is_ship_class = shipclass_military }
+                }
+                remove_auto_move_target = yes
+                clear_orders = yes
+                clear_fleet_actions = this
+                fleet_event = { id = foc_khan_rebel.31 days = 2 random = 8 }
+            }
+        }
+
+        # Purge the risky 2.21 Supremacy target state and install one safe order.
+        every_country = {
+            limit = { has_country_flag = foc_khan_first_order_country }
+            every_owned_fleet = {
+                limit = {
+                    has_fleet_flag = foc_khan_supremacy_fleet
+                    any_owned_ship = { has_ship_flag = foc_khan_supremacy_flagship }
+                }
+                remove_auto_move_target = yes
+                clear_orders = yes
+                clear_fleet_actions = this
+                fleet_event = { id = foc_khan_supremacy_move.2 days = 2 }
+            }
+        }
+
+        # Rebuild special Xyston queues once, outside planet-destruction scope.
+        every_country = {
+            limit = { has_country_flag = foc_khan_final_order_country }
+            every_owned_fleet = {
+                limit = { any_owned_ship = { OR = { is_ship_size = foc_khan_xystonsd is_ship_size = foc_khan_xystonsd_foc_lowest } } }
+                remove_auto_move_target = yes
+                clear_orders = yes
+                clear_fleet_actions = this
+                remove_fleet_flag = foc_khan_xyston_retarget_pending_218
+                fleet_event = { id = foc_khan_xyston_ai.10 days = 3 random = 10 }
+            }
+        }
+    }
+}
+
+# Cheap monthly safety cleanup for support effects from older saves.
+event = {
+    id = foc_khan_222.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        any_country = {
+            OR = {
+                has_country_flag = foc_khan_first_order_country
+                has_country_flag = foc_khan_final_order_country
+            }
+            any_owned_fleet = { num_ships < 1 }
+        }
+    }
+
+    immediate = {
+        every_country = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = foc_khan_final_order_country
+                }
+            }
+            every_owned_fleet = {
+                limit = { num_ships < 1 }
+                destroy_fleet = {
+                    target = this
+                    destroy_template = no
+                    kill_leader = no
+                }
+            }
+        }
+    }
+}

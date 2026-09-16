@@ -1,0 +1,56 @@
+# The Jedi Temple on Coruscant. Placed by the Jedi Council event rather than
+# built by the player, and demolished by Order 66 through its destroy_trigger.
+# It is what makes the Order's field strength real: the Republic's Jedi armies
+# can only be raised on a world that hosts it.
+#
+# The Grand Army of the Republic pack ships building_jeditemple and
+# building_jedienclave, but both are gated on civic_light_side and are deleted
+# from any owner without it, so this origin cannot use them. This building is
+# namespaced to the origin so nothing in that pack is overridden.
+building_foc_republic_origin_jedi_temple = {
+    base_buildtime = 720
+    can_build = no
+    category = army
+    icon = building_foc_republic_origin_jedi_temple
+
+    building_sets = {
+        government
+        fortress
+    }
+
+    potential = {
+        exists = owner
+        owner = {
+            has_country_flag = foc_republic_origin_jedi_council_created
+            NOT = { has_country_flag = foc_republic_origin_jedi_purged }
+        }
+        NOT = { has_modifier = resort_colony }
+        NOT = { has_modifier = slave_colony }
+    }
+
+    destroy_trigger = {
+        OR = {
+            NOT = { exists = owner }
+            owner = { has_country_flag = foc_republic_origin_jedi_purged }
+        }
+    }
+
+    allow = { always = yes }
+
+    army_modifier = {
+        army_starting_experience_add = 150
+    }
+
+    planet_modifier = {
+        planet_stability_add = 10
+        planet_crime_add = -20
+        planet_amenities_add = 30
+        pop_ethic_spiritualist_attraction_mult = 0.15
+    }
+
+    resources = {
+        category = planet_buildings
+        cost = { minerals = 1500 }
+        upkeep = { energy = 5 }
+    }
+}

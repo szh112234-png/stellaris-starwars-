@@ -1,0 +1,42 @@
+objectTypes = {
+    pdxmesh = {
+        name = "ds2_death_star_ii_battlestation_frame"
+        file = "gfx/models/ships/death_star_ii/ds2_battlestation_frame.mesh"
+        scale = 2.465084
+    }
+    pdxmesh = {
+        name = "ds2_death_star_ii_battlestation_mesh"
+        file = "gfx/models/ships/death_star_ii/death_star_ii.mesh"
+        scale = 2.465084
+        animation = { id = "idle"    type = "ds2_idle_animation" }
+        animation = { id = "moving"  type = "ds2_moving_animation" }
+        animation = { id = "death"   type = "ds2_death_animation" }
+        animation = { id = "open"    type = "ds2_openfire_animation" }
+        animation = { id = "opening" type = "ds2_attacking_animation" }
+        animation = { id = "closing" type = "ds2_charging_animation" }
+
+        # Source 2048px materials restored: directional normals, detailed specular, full mip chain.
+        meshsettings = { name = "ds2_g00_m02_circle_shape" index = 0 texture_diffuse = "ds2_circle_diffuse.dds" texture_normal = "ds2_circle_normal.dds" texture_specular = "ds2_circle_specular.dds" shader = "PdxMeshShip" }
+        meshsettings = { name = "ds2_g02_m01_circle_shape" index = 0 texture_diffuse = "ds2_circle_diffuse.dds" texture_normal = "ds2_circle_normal.dds" texture_specular = "ds2_circle_specular.dds" shader = "PdxMeshShip" }
+        meshsettings = { name = "ds2_g05_m00_circle_shape" index = 0 texture_diffuse = "ds2_circle_diffuse.dds" texture_normal = "ds2_circle_normal.dds" texture_specular = "ds2_circle_specular.dds" shader = "PdxMeshShip" }
+
+        # Source FBX material 3 used DeathStarMask_Alpha as transparency. Restore it here
+        # so the unfinished shell no longer covers the construction layers behind it.
+        meshsettings = { name = "ds2_g03_m03_plane_shape" index = 0 texture_diffuse = "ds2_plane_diffuse_masked.dds" texture_normal = "ds2_plane_normal.dds" texture_specular = "ds2_plane_specular.dds" shader = "PdxMeshAlphaBlend" }
+        meshsettings = { name = "ds2_g04_m03_plane_shape" index = 0 texture_diffuse = "ds2_plane_diffuse_masked.dds" texture_normal = "ds2_plane_normal.dds" texture_specular = "ds2_plane_specular.dds" shader = "PdxMeshAlphaBlend" }
+
+        # Original greeble atlas at full resolution/contrast, with source plane relief and material detail.
+        meshsettings = { name = "ds2_g01_m00_plane_shape" index = 0 texture_diffuse = "ds2_interior_atlas_diffuse.dds" texture_normal = "ds2_interior_atlas_normal.dds" texture_specular = "ds2_interior_atlas_specular.dds" shader = "PdxMeshShip" }
+        meshsettings = { name = "ds2_g06_m00_plane_shape" index = 0 texture_diffuse = "ds2_interior_atlas_diffuse.dds" texture_normal = "ds2_interior_atlas_normal.dds" texture_specular = "ds2_interior_atlas_specular.dds" shader = "PdxMeshShip" }
+        meshsettings = { name = "ds2_g07_m00_plane_shape" index = 0 texture_diffuse = "ds2_interior_atlas_diffuse.dds" texture_normal = "ds2_interior_atlas_normal.dds" texture_specular = "ds2_interior_atlas_specular.dds" shader = "PdxMeshShip" }
+        meshsettings = { name = "ds2_g08_m00_plane_shape" index = 0 texture_diffuse = "ds2_interior_atlas_diffuse.dds" texture_normal = "ds2_interior_atlas_normal.dds" texture_specular = "ds2_interior_atlas_specular.dds" shader = "PdxMeshShip" }
+        meshsettings = { name = "ds2_g09_m00_plane_shape" index = 0 texture_diffuse = "ds2_interior_atlas_diffuse.dds" texture_normal = "ds2_interior_atlas_normal.dds" texture_specular = "ds2_interior_atlas_specular.dds" shader = "PdxMeshShip" }
+        meshsettings = { name = "ds2_g10_m00_plane_shape" index = 0 texture_diffuse = "ds2_interior_atlas_diffuse.dds" texture_normal = "ds2_interior_atlas_normal.dds" texture_specular = "ds2_interior_atlas_specular.dds" shader = "PdxMeshShip" }
+        meshsettings = { name = "ds2_g11_m00_plane_shape" index = 0 texture_diffuse = "ds2_interior_atlas_diffuse.dds" texture_normal = "ds2_interior_atlas_normal.dds" texture_specular = "ds2_interior_atlas_specular.dds" shader = "PdxMeshShip" }
+    }
+    pdxmesh = {
+        name = "ds2_empty_turret"
+        file = "gfx/models/ships/death_star_ii/ds2_empty_turret.mesh"
+        scale = 0.5
+    }
+}

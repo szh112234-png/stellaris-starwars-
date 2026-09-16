@@ -1,0 +1,792 @@
+# V17.16: advanced equipment grants are AI-only; human countries use the research tree.
+# Human Republic first-generation awards require successful Kuat expansion.
+# Fixed support designs keep their loadouts without granting their owner weapon technology.
+foc_std_weapon_grant_gen_1 = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_concussion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_concussion_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_disruptor_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_disruptor_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_flak_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ion_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionblast_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionblast_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionpulse_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionpulse_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_leech_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_leech_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_mass_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_mass_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_octuple_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_octuple_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_plasma_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_plasma_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_proton_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_proton_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_protonbeam_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_protonbeam_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+set_country_flag = foc_std_weapon_generation_1
+}
+
+foc_emp_weapon_grant_gen_2 = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_concussion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_concussion_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_concussion_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_concussion_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_disruptor_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_disruptor_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_disruptor_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_disruptor_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ion_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ion_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ion_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionblast_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionblast_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ionblast_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ionblast_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionpulse_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionpulse_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ionpulse_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ionpulse_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_leech_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_leech_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_leech_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_leech_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_mass_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_mass_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_mass_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_mass_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_octuple_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_octuple_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_octuple_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_octuple_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_plasma_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_plasma_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_plasma_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_plasma_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_proton_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_proton_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_proton_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_proton_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_protonbeam_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_protonbeam_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_protonbeam_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_protonbeam_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_quad_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_flak_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_flak_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes } set_country_flag = foc_std_weapon_generation_2 }
+}
+
+foc_reb_weapon_grant_gen_2 = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_concussion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_concussion_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_concussion_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_concussion_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_disruptor_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_disruptor_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_disruptor_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_disruptor_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ion_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ion_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ion_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionblast_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionblast_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ionblast_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ionblast_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionpulse_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionpulse_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ionpulse_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ionpulse_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_leech_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_leech_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_leech_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_leech_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_mass_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_mass_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_mass_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_mass_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_octuple_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_octuple_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_octuple_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_octuple_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_plasma_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_plasma_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_plasma_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_plasma_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_proton_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_proton_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_proton_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_proton_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_protonbeam_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_protonbeam_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_protonbeam_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_protonbeam_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_flak_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_flak_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes } set_country_flag = foc_std_weapon_generation_2 }
+}
+
+foc_std_weapon_grant_gen_2 = {
+if = { limit = { foc_v14_is_rebel_arsenal_country = yes }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_concussion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_concussion_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_concussion_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_concussion_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_disruptor_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_disruptor_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_disruptor_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_disruptor_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ion_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ion_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ion_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionblast_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionblast_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ionblast_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ionblast_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionpulse_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionpulse_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ionpulse_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ionpulse_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_leech_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_leech_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_leech_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_leech_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_mass_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_mass_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_mass_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_mass_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_octuple_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_octuple_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_octuple_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_octuple_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_plasma_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_plasma_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_plasma_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_plasma_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_proton_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_proton_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_proton_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_proton_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_protonbeam_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_protonbeam_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_protonbeam_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_protonbeam_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_flak_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_flak_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes } set_country_flag = foc_std_weapon_generation_2 }
+}
+else = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_concussion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_concussion_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_concussion_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_concussion_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_disruptor_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_disruptor_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_disruptor_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_disruptor_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ion_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ion_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ion_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionblast_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionblast_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ionblast_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ionblast_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionpulse_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionpulse_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ionpulse_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ionpulse_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_leech_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_leech_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_leech_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_leech_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_mass_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_mass_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_mass_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_mass_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_octuple_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_octuple_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_octuple_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_octuple_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_plasma_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_plasma_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_plasma_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_plasma_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_proton_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_proton_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_proton_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_proton_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_protonbeam_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_protonbeam_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_protonbeam_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_protonbeam_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_quad_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_flak_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_flak_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes } set_country_flag = foc_std_weapon_generation_2 }
+}
+}
+
+foc_emp_weapon_grant_gen_3 = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_concussion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_concussion_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_concussion_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_concussion_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_concussion_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_concussion_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_disruptor_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_disruptor_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_disruptor_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_disruptor_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_disruptor_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_disruptor_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ion_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ion_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ion_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ion_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ion_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionblast_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionblast_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ionblast_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ionblast_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ionblast_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ionblast_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionpulse_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionpulse_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ionpulse_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ionpulse_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ionpulse_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ionpulse_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_leech_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_leech_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_leech_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_leech_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_leech_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_leech_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_mass_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_mass_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_mass_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_mass_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_mass_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_mass_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_octuple_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_octuple_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_octuple_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_octuple_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_octuple_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_octuple_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_plasma_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_plasma_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_plasma_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_plasma_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_plasma_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_plasma_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_proton_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_proton_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_proton_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_proton_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_proton_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_proton_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_protonbeam_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_protonbeam_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_protonbeam_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_protonbeam_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_protonbeam_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_protonbeam_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_quad_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_quad_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_quad_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_flak_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_flak_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_flak_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes } set_country_flag = foc_std_weapon_generation_3 }
+}
+
+foc_reb_weapon_grant_gen_3 = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_concussion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_concussion_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_concussion_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_concussion_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_concussion_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_concussion_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_disruptor_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_disruptor_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_disruptor_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_disruptor_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_disruptor_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_disruptor_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ion_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ion_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ion_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ion_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ion_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionblast_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionblast_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ionblast_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ionblast_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ionblast_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ionblast_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionpulse_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionpulse_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ionpulse_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ionpulse_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ionpulse_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ionpulse_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_leech_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_leech_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_leech_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_leech_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_leech_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_leech_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_mass_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_mass_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_mass_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_mass_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_mass_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_mass_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_octuple_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_octuple_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_octuple_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_octuple_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_octuple_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_octuple_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_plasma_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_plasma_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_plasma_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_plasma_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_plasma_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_plasma_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_proton_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_proton_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_proton_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_proton_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_proton_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_proton_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_protonbeam_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_protonbeam_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_protonbeam_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_protonbeam_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_protonbeam_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_protonbeam_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_flak_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_flak_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_flak_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes } set_country_flag = foc_std_weapon_generation_3 }
+}
+
+foc_std_weapon_grant_gen_3 = {
+if = { limit = { foc_v14_is_rebel_arsenal_country = yes }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_concussion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_concussion_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_concussion_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_concussion_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_concussion_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_concussion_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_disruptor_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_disruptor_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_disruptor_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_disruptor_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_disruptor_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_disruptor_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ion_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ion_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ion_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ion_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ion_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionblast_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionblast_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ionblast_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ionblast_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ionblast_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ionblast_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionpulse_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionpulse_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ionpulse_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ionpulse_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ionpulse_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ionpulse_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_leech_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_leech_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_leech_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_leech_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_leech_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_leech_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_mass_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_mass_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_mass_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_mass_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_mass_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_mass_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_octuple_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_octuple_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_octuple_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_octuple_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_octuple_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_octuple_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_plasma_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_plasma_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_plasma_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_plasma_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_plasma_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_plasma_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_proton_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_proton_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_proton_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_proton_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_proton_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_proton_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_protonbeam_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_protonbeam_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_protonbeam_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_protonbeam_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_protonbeam_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_protonbeam_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_flak_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_flak_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_flak_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes } set_country_flag = foc_std_weapon_generation_3 }
+}
+else = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_concussion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_concussion_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_concussion_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_concussion_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_concussion_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_concussion_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_disruptor_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_disruptor_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_disruptor_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_disruptor_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_disruptor_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_disruptor_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ion_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ion_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ion_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ion_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ion_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionblast_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionblast_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ionblast_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ionblast_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ionblast_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ionblast_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionpulse_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionpulse_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ionpulse_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ionpulse_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ionpulse_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ionpulse_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_leech_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_leech_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_leech_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_leech_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_leech_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_leech_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_mass_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_mass_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_mass_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_mass_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_mass_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_mass_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_octuple_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_octuple_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_octuple_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_octuple_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_octuple_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_octuple_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_plasma_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_plasma_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_plasma_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_plasma_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_plasma_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_plasma_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_proton_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_proton_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_proton_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_proton_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_proton_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_proton_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_protonbeam_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_protonbeam_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_protonbeam_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_protonbeam_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_protonbeam_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_protonbeam_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_quad_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_quad_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_quad_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_flak_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_flak_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_flak_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes } set_country_flag = foc_std_weapon_generation_3 }
+}
+}
+
+foc_std_weapon_grant_tier_1 = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_concussion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_concussion_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_disruptor_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_disruptor_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_flak_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ion_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionblast_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionblast_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionpulse_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionpulse_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_leech_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_leech_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_mass_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_mass_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_octuple_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_octuple_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_plasma_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_plasma_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_proton_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_proton_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_protonbeam_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_protonbeam_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+set_country_flag = foc_std_weapon_generation_1
+}
+
+foc_std_weapon_grant_tier_2 = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_concussion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_concussion_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_disruptor_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_disruptor_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_flak_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ion_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionblast_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionblast_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionpulse_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionpulse_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_leech_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_leech_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_mass_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_mass_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_octuple_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_octuple_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_plasma_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_plasma_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_proton_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_proton_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_protonbeam_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_protonbeam_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+set_country_flag = foc_std_weapon_generation_1
+}
+
+foc_std_weapon_grant_tier_3 = {
+if = { limit = { foc_v14_is_rebel_arsenal_country = yes }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_concussion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_concussion_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_concussion_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_concussion_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_disruptor_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_disruptor_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_disruptor_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_disruptor_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ion_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ion_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ion_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionblast_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionblast_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ionblast_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ionblast_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionpulse_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionpulse_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ionpulse_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ionpulse_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_leech_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_leech_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_leech_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_leech_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_mass_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_mass_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_mass_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_mass_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_octuple_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_octuple_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_octuple_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_octuple_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_plasma_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_plasma_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_plasma_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_plasma_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_proton_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_proton_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_proton_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_proton_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_protonbeam_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_protonbeam_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_protonbeam_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_protonbeam_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_flak_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_flak_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes } set_country_flag = foc_std_weapon_generation_2 }
+}
+else = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_concussion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_concussion_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_concussion_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_concussion_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_disruptor_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_disruptor_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_disruptor_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_disruptor_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ion_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ion_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ion_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionblast_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionblast_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ionblast_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ionblast_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionpulse_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionpulse_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ionpulse_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ionpulse_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_leech_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_leech_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_leech_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_leech_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_mass_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_mass_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_mass_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_mass_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_octuple_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_octuple_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_octuple_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_octuple_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_plasma_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_plasma_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_plasma_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_plasma_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_proton_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_proton_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_proton_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_proton_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_protonbeam_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_protonbeam_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_protonbeam_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_protonbeam_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_quad_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_flak_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_flak_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes } set_country_flag = foc_std_weapon_generation_2 }
+}
+}
+
+foc_std_weapon_grant_tier_4 = {
+if = { limit = { foc_v14_is_rebel_arsenal_country = yes }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_concussion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_concussion_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_concussion_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_concussion_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_concussion_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_concussion_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_disruptor_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_disruptor_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_disruptor_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_disruptor_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_disruptor_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_disruptor_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ion_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ion_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ion_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ion_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ion_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionblast_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionblast_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ionblast_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ionblast_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ionblast_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ionblast_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionpulse_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionpulse_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ionpulse_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ionpulse_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ionpulse_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ionpulse_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_leech_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_leech_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_leech_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_leech_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_leech_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_leech_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_mass_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_mass_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_mass_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_mass_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_mass_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_mass_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_octuple_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_octuple_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_octuple_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_octuple_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_octuple_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_octuple_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_plasma_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_plasma_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_plasma_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_plasma_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_plasma_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_plasma_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_proton_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_proton_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_proton_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_proton_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_proton_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_proton_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_protonbeam_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_protonbeam_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_protonbeam_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_protonbeam_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_protonbeam_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_protonbeam_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_flak_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_flak_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_flak_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes } set_country_flag = foc_std_weapon_generation_3 }
+}
+else = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_concussion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_concussion_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_concussion_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_concussion_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_concussion_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_concussion_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_disruptor_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_disruptor_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_disruptor_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_disruptor_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_disruptor_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_disruptor_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ion_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ion_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ion_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ion_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ion_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionblast_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionblast_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ionblast_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ionblast_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ionblast_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ionblast_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionpulse_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionpulse_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ionpulse_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ionpulse_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ionpulse_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ionpulse_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_leech_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_leech_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_leech_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_leech_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_leech_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_leech_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_mass_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_mass_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_mass_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_mass_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_mass_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_mass_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_octuple_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_octuple_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_octuple_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_octuple_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_octuple_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_octuple_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_plasma_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_plasma_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_plasma_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_plasma_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_plasma_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_plasma_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_proton_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_proton_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_proton_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_proton_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_proton_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_proton_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_protonbeam_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_protonbeam_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_protonbeam_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_protonbeam_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_protonbeam_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_protonbeam_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_quad_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_quad_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_quad_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_flak_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_flak_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_flak_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes } set_country_flag = foc_std_weapon_generation_3 }
+}
+}
+
+foc_std_weapon_grant_tier_5 = {
+if = { limit = { foc_v14_is_rebel_arsenal_country = yes }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_concussion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_concussion_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_concussion_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_concussion_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_concussion_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_concussion_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_disruptor_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_disruptor_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_disruptor_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_disruptor_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_disruptor_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_disruptor_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ion_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ion_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ion_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ion_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ion_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionblast_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionblast_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ionblast_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ionblast_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ionblast_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ionblast_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionpulse_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionpulse_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ionpulse_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ionpulse_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_ionpulse_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_ionpulse_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_leech_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_leech_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_leech_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_leech_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_leech_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_leech_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_mass_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_mass_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_mass_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_mass_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_mass_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_mass_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_octuple_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_octuple_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_octuple_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_octuple_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_octuple_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_octuple_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_plasma_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_plasma_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_plasma_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_plasma_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_plasma_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_plasma_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_proton_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_proton_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_proton_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_proton_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_proton_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_proton_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_protonbeam_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_protonbeam_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_protonbeam_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_protonbeam_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_protonbeam_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_protonbeam_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_flak_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_flak_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_flak_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes } set_country_flag = foc_std_weapon_generation_3 }
+}
+else = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_concussion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_concussion_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_concussion_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_concussion_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_concussion_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_concussion_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_disruptor_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_disruptor_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_disruptor_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_disruptor_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_disruptor_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_disruptor_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ion_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ion_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ion_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ion_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ion_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ion_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionblast_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionblast_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ionblast_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ionblast_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ionblast_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ionblast_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_ionpulse_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_ionpulse_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ionpulse_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ionpulse_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_ionpulse_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_ionpulse_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_leech_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_leech_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_leech_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_leech_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_leech_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_leech_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_mass_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_mass_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_mass_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_mass_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_mass_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_mass_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_octuple_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_octuple_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_octuple_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_octuple_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_octuple_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_octuple_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_plasma_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_plasma_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_plasma_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_plasma_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_plasma_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_plasma_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_proton_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_proton_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_proton_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_proton_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_proton_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_proton_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_protonbeam_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_protonbeam_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_protonbeam_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_protonbeam_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_protonbeam_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_protonbeam_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_quad_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_quad_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_quad_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_flak_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_flak_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_flak_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_flak_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes } set_country_flag = foc_std_weapon_generation_3 }
+}
+}

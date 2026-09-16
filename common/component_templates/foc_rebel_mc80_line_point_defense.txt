@@ -1,0 +1,102 @@
+# V14: original point defense retained; retired ordinary aliases remain inert.
+weapon_component_template = {
+    key = "FOC_STD_PD_P_T3_R_V04"
+    hidden = yes
+    size = point_defence
+    type = point_defence
+    icon = "GFX_ship_part_defence_turbo_r_2"
+    icon_frame = 1
+    damage = {
+        min = 18
+        max = 30
+    }
+    windup = {
+        min = 1
+        max = 5
+    }
+    total_fire_time = 8
+    range = 40
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 1.0
+    shield_damage = 1.25
+    armor_damage = 1.25
+    hull_damage = 1.25
+    power = -7.5
+    component_set = "FOC_REBEL_MC80_POINT_DEFENSE_SET"
+    tags = { weapon_type_point_defense weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_point_defense }
+    point_defence_targets = { "missile" "strike_craft" }
+    size_restriction = { foc_rebel_mc80_line foc_rebel_mc80_line_foc_lowest }
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    ai_weight = {
+        weight = 0
+    }
+    projectile_gfx = "white_laser_pd"
+    entity = "invisible_turret_entity"
+    prerequisites = { "foc_tech_std_pd_2" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_STD_PD_P_T3_R_V04_LOWEST_FIXED"
+    hidden = yes
+    size = point_defence
+    type = point_defence
+    icon = "GFX_ship_part_defence_turbo_r_2"
+    icon_frame = 1
+    damage = {
+        min = 6
+        max = 12
+    }
+    windup = {
+        min = 0.5
+        max = 1.0
+    }
+    total_fire_time = 1.5
+    range = 30
+    accuracy = 0.9
+    tracking = 0.75
+    shield_penetration = 1.0
+    shield_damage = 1.0
+    armor_damage = 1.0
+    hull_damage = 1.0
+    power = -7.5
+    component_set = "FOC_REBEL_MC80_POINT_DEFENSE_SET"
+    tags = { weapon_type_point_defense weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_point_defense }
+    point_defence_targets = { "missile" "strike_craft" }
+    size_restriction = { foc_rebel_mc80_line foc_rebel_mc80_line_foc_lowest }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    ai_weight = {
+        weight = 0
+    }
+    projectile_gfx = "white_laser_pd"
+    entity = "invisible_turret_entity"
+    prerequisites = { "foc_tech_std_pd_2" }
+
+    potential = { from = { foc_v1718_allowed_country = yes } }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}

@@ -1,0 +1,100 @@
+entity = {
+	name = "resurgentbattlecruiser_entity"
+	pdxmesh = "resurgentbattlecruiser_frame_mesh"
+	
+	attach = { core = "resurgentbattlecruiser_hull_entity" }
+	
+	state = { name = "idle" state_time = 5
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_titan_ship_hum_01" } }
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_titan_ship_hum_02" } }
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_titan_ship_hum_03" } }
+		event = { time = 0 node = "Large_Engine_01" particle = "juggernaut_exhaust_idle_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Large_Engine_02" particle = "juggernaut_exhaust_idle_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Large_Engine_03" particle = "juggernaut_exhaust_idle_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_01" particle = "mammalian_01_3_35_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_02" particle = "mammalian_01_3_35_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_03" particle = "mammalian_01_3_35_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_04" particle = "mammalian_01_3_35_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_05" particle = "mammalian_01_3_35_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_06" particle = "mammalian_01_3_35_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_07" particle = "mammalian_01_3_35_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_08" particle = "mammalian_01_3_35_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+	}	
+	state = { name = "moving" state_time = 5
+		event =  { trigger_once = yes sound = { soundeffect = "moving_out_titan" } }
+		event = { time = 0 node = "Large_Engine_01" particle = "juggernaut_exhaust_moving_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Large_Engine_02" particle = "juggernaut_exhaust_moving_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Large_Engine_03" particle = "juggernaut_exhaust_moving_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_01" particle = "mammalian_01_3_35_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_02" particle = "mammalian_01_3_35_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_03" particle = "mammalian_01_3_35_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_04" particle = "mammalian_01_3_35_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_05" particle = "mammalian_01_3_35_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_06" particle = "mammalian_01_3_35_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_07" particle = "mammalian_01_3_35_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_08" particle = "mammalian_01_3_35_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+	}
+			
+	state = { name = "death"  looping = no
+		event = { time = 0.0 node = "target_locator_01" particle = "ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } keep_particle = yes trigger_once = yes }
+		event = { time = 3.0 node = "target_locator_02" particle = "ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } keep_particle = yes trigger_once = yes }
+		event = { time = 4.0 node = "target_locator_03" particle = "ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } keep_particle = yes trigger_once = yes }
+		event = { time = 6.0 node = "target_locator_04" particle = "ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } keep_particle = yes trigger_once = yes }
+		event = { time = 8.0 node = "target_locator_05" particle = "ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } keep_particle = yes trigger_once = yes }
+	}
+}
+entity = {
+	name = "resurgentbattlecruiser_hull_entity"
+	pdxmesh = "resurgentbattlecruiser_hull_mesh"
+
+	state = { name = "idle" state_time = 5
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_titan_ship_hum_01" } }
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_titan_ship_hum_02" } }
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_titan_ship_hum_03" } }
+		event = { time = 0 node = "Large_Engine_01" particle = "juggernaut_exhaust_idle_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Large_Engine_02" particle = "juggernaut_exhaust_idle_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Large_Engine_03" particle = "juggernaut_exhaust_idle_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_01" particle = "mammalian_01_3_35_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_02" particle = "mammalian_01_3_35_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_03" particle = "mammalian_01_3_35_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_04" particle = "mammalian_01_3_35_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_05" particle = "mammalian_01_3_35_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_06" particle = "mammalian_01_3_35_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_07" particle = "mammalian_01_3_35_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_08" particle = "mammalian_01_3_35_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+	}	
+	state = { name = "moving" state_time = 5
+		event =  { trigger_once = yes sound = { soundeffect = "moving_out_titan" } }
+		event = { time = 0 node = "Large_Engine_01" particle = "juggernaut_exhaust_moving_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Large_Engine_02" particle = "juggernaut_exhaust_moving_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Large_Engine_03" particle = "juggernaut_exhaust_moving_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_01" particle = "mammalian_01_3_35_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_02" particle = "mammalian_01_3_35_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_03" particle = "mammalian_01_3_35_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_04" particle = "mammalian_01_3_35_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_05" particle = "mammalian_01_3_35_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_06" particle = "mammalian_01_3_35_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_07" particle = "mammalian_01_3_35_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "Small_Engine_08" particle = "mammalian_01_3_35_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+	}
+			
+	state = { name = "death"  looping = no
+		event = { time = 0.0 node = "target_locator_01" particle = "ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } keep_particle = yes trigger_once = yes }
+		event = { time = 3.0 node = "target_locator_02" particle = "ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } keep_particle = yes trigger_once = yes }
+		event = { time = 4.0 node = "target_locator_03" particle = "ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } keep_particle = yes trigger_once = yes }
+		event = { time = 6.0 node = "target_locator_04" particle = "ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } keep_particle = yes trigger_once = yes }
+		event = { time = 8.0 node = "target_locator_05" particle = "ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } keep_particle = yes trigger_once = yes }
+	}
+}
+entity = {
+	name = "resurgentbattlecruiser_turret_entity"
+	pdxmesh = "resurgentbattlecruiser_turret_mesh"
+}
+entity = {
+	name = "resurgentbattlecruiser_turret2_entity"
+	pdxmesh = "resurgentbattlecruiser_turret2_mesh"
+}
+entity = {
+	name = "FirstOrder_TIEFighter_entity"
+	pdxmesh = "FirstOrder_TIEFighter_mesh"
+}

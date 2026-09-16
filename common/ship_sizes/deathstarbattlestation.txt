@@ -1,0 +1,189 @@
+deathstarbattlestation = {
+    # v17.18j-loadtest: filter in COUNTRY scope before generic design fitting.
+    # Same access rule as the required FOC cores; no new research or build permit.
+    potential_country = { foc_v1718_allowed_country = yes }
+    possible_country = { foc_v1718_allowed_country = yes }
+
+	formation_priority = 1
+	max_speed = 10
+	acceleration = 0.05
+	rotation_speed = 0.10
+	collision_radius = 18
+	max_hitpoints = 5000000
+	modifier = {
+		ship_armor_add = 4000000
+		ship_shield_add = 3000000
+		ship_evasion_add = -250
+	}
+	size_multiplier = 1000
+	fleet_slot_size = 1000
+	section_slots = { "core" = { locator = "core" } }
+	num_target_locators = 5
+	is_space_station = no
+	icon_frame = 1
+	base_buildtime = 3500
+	can_have_federation_design = no
+	enable_default_design = yes
+	enable_3dview_in_ship_browser = yes 
+	use_shipnames_from = juggernaut
+	default_behavior = line	
+	
+	prerequisites = { "tech_colossus" "tech_juggernaut" }
+	
+	combat_disengage_chance = 0
+	
+	class = shipclass_military
+	construction_type = starbase_shipyard
+	required_component_set = "power_core"
+	required_component_set = "ftl_component_deathstar"
+	required_component_set = "thruster_components"
+	required_component_set = "sensor_components"
+	required_component_set = "combat_computers"
+	required_component_set = "deathstar_crew"
+	required_component_set = "deathstar_snare"
+	
+	potential_construction = {
+        # LOWEST uses the bounded event colossus; this legacy 12M hull cannot bypass it.
+        NOT = { has_global_flag = foc_khan_strength_lowest }
+		# Rebel Alliance / Resistance shipyards must not expose the Death Star
+		# build card. Only the Galactic Empire that completed the Death Star project is allowed.
+		exists = owner
+		owner = {
+			# Current-faction hard deny. Republic-origin country switching can leave
+			# stale Imperial flags behind; Rebel/New Republic identity must win over
+			# those stale flags so they can never build a Death Star.
+			NOT = {
+				OR = {
+					has_country_flag = foc_sw_new_republic_country
+					has_country_flag = foc_khan_rebel_alliance_country
+					has_country_flag = foc_republic_origin_rebel_alliance_country
+					has_country_flag = foc_republic_origin_imperial_rebel_country
+					has_country_flag = foc_republic_origin_player_rebels
+					has_country_flag = foc_republic_origin_post_treaty_rebel_country
+					has_country_flag = foc_republic_origin_post_treaty_player_rebels
+					has_country_flag = foc_republic_origin_ai_new_republic_after_dqar
+					has_country_flag = foc_republic_origin_republic_country
+					has_country_flag = foc_republic_origin_player_republic
+				}
+			}
+			# 本补丁改动：死星的建造权改为**白名单**。
+			# 原实现是黑名单（只排除 foc_khan_rebel_alliance_country），任何没被
+			# 点名的国家只要够得着要塞级船坞就能造——共和国起源的帝国叛军、条约后的
+			# 新共和国都属于这一类，而黑名单永远补不完。
+			#
+			# 现在只认银河帝国这一条来路，与设定一致：
+			#   一、银河帝国，且**已经完成死星计划**（foc_republic_origin_death_star_completed
+			#       由 foc_republic_origin_events.txt 第 1715 / 3012 行在计划完成时置上）
+			#   死星属于银河帝国时代；第一秩序 / 最终秩序使用弑星者基地与西斯永恒舰队。
+			OR = {
+				AND = {
+					OR = {
+						has_country_flag = foc_republic_origin_empire_country
+						has_country_flag = foc_republic_origin_player_empire
+					}
+					has_country_flag = foc_republic_origin_death_star_completed
+				}
+			}
+		}
+		OR = {
+			is_scope_type = starbase
+			AND = {
+				is_scope_type = megastructure
+				OR = {
+					is_megastructure_type = mega_shipyard_3
+					is_megastructure_type = mega_shipyard_restored
+				}
+			}
+		}
+	}
+
+	possible_construction = {
+        # LOWEST uses the bounded event colossus; this legacy 12M hull cannot bypass it.
+        NOT = { has_global_flag = foc_khan_strength_lowest }
+		# Hard backstop for queued designs and old saves: even if a stale build
+		# card survives UI refresh, a Rebel country cannot start construction.
+		exists = owner
+		owner = {
+			# Current-faction hard deny. Republic-origin country switching can leave
+			# stale Imperial flags behind; Rebel/New Republic identity must win over
+			# those stale flags so they can never build a Death Star.
+			NOT = {
+				OR = {
+					has_country_flag = foc_sw_new_republic_country
+					has_country_flag = foc_khan_rebel_alliance_country
+					has_country_flag = foc_republic_origin_rebel_alliance_country
+					has_country_flag = foc_republic_origin_imperial_rebel_country
+					has_country_flag = foc_republic_origin_player_rebels
+					has_country_flag = foc_republic_origin_post_treaty_rebel_country
+					has_country_flag = foc_republic_origin_post_treaty_player_rebels
+					has_country_flag = foc_republic_origin_ai_new_republic_after_dqar
+					has_country_flag = foc_republic_origin_republic_country
+					has_country_flag = foc_republic_origin_player_republic
+				}
+			}
+			# 本补丁改动：死星的建造权改为**白名单**。
+			# 原实现是黑名单（只排除 foc_khan_rebel_alliance_country），任何没被
+			# 点名的国家只要够得着要塞级船坞就能造——共和国起源的帝国叛军、条约后的
+			# 新共和国都属于这一类，而黑名单永远补不完。
+			#
+			# 现在只认银河帝国这一条来路，与设定一致：
+			#   一、银河帝国，且**已经完成死星计划**（foc_republic_origin_death_star_completed
+			#       由 foc_republic_origin_events.txt 第 1715 / 3012 行在计划完成时置上）
+			#   死星属于银河帝国时代；第一秩序 / 最终秩序使用弑星者基地与西斯永恒舰队。
+			OR = {
+				AND = {
+					OR = {
+						has_country_flag = foc_republic_origin_empire_country
+						has_country_flag = foc_republic_origin_player_empire
+					}
+					has_country_flag = foc_republic_origin_death_star_completed
+				}
+			}
+		}
+		custom_tooltip = {
+			fail_text = starbase_citadel_trigger
+			OR = {
+				AND = {
+					is_scope_type = megastructure
+					OR = {
+						is_megastructure_type = mega_shipyard_3
+						is_megastructure_type = mega_shipyard_restored
+					}
+				}
+				AND = {
+					is_scope_type = starbase
+					has_starbase_size >= starbase_citadel
+				}
+			}
+		}
+			}
+	
+	ai_ship_data = {
+		fraction = {
+			base = 0
+		}
+	}
+
+	resources = {
+		category = ships
+		cost = {
+			alloys = 10000
+		}
+		produces = {
+			energy = 500
+			alloys = 500
+			food = 500
+		}
+	}
+
+	min_upgrade_cost = {
+		alloys = 5597
+	}
+
+	ai_ship_data = {
+		min = 0
+		max = 0
+	}
+	
+	available_to_everyone = no
+}

@@ -1,0 +1,441 @@
+# =============================================================================
+# 天行者线与凯洛·伦线的国家修正
+# =============================================================================
+# 全部走既有 MOD 的修正词汇表，量级参照 foc_republic_origin_jedi_modifiers.txt：
+# 命名角色影响的是士气、地面战与政治，而不是直接堆舰队数值。
+# =============================================================================
+
+# 雅雯之战。一个农场少年击毁了一座能摧毁行星的空间站，整个银河都听说了。
+foc_saga_hope_of_the_rebellion = {
+    country_unity_produces_mult = 0.15
+    country_war_exhaustion_mult = -0.20
+    ship_evasion_mult = 0.05
+    planet_stability_add = 3
+}
+
+# 贝斯滨之后收起光剑：克制换来的是纪律，不是战果。
+foc_saga_jedi_restraint = {
+    planet_stability_add = 5
+    country_war_exhaustion_mult = -0.15
+    diplo_weight_mult = 0.10
+}
+
+# 贝斯滨之后握紧光剑：愤怒确实好用，只是有期限。
+foc_saga_rebel_vengeance = {
+    
+    army_damage_mult = 0.15
+    planet_stability_add = -3
+}
+
+# 恩多。皇帝死了，维达在最后一刻回来了，绝地归来。
+foc_saga_return_of_the_jedi = {
+    country_unity_produces_mult = 0.20
+    army_damage_mult = 0.15
+    diplo_weight_mult = 0.20
+    planet_stability_add = 5
+}
+
+# 雅雯四号的新武士团。学徒不多，象征意义极大。
+foc_saga_new_jedi_order = {
+    army_damage_mult = 0.20
+    army_starting_experience_add = 200
+    planet_stability_add = 5
+    country_unity_produces_mult = 0.15
+    leaders_upkeep_mult = -0.15
+}
+
+# 神殿之火之后的卢克。老师失败了，而且他知道是自己失败的。
+foc_saga_broken_master = {
+    country_unity_produces_mult = -0.10
+    planet_stability_add = -3
+    diplo_weight_mult = -0.10
+}
+
+# 阿奇托。最后一个绝地不再出手，但传承还没有断。
+foc_saga_last_jedi = {
+    country_unity_produces_mult = 0.10
+    country_war_exhaustion_mult = -0.10
+}
+
+# 克瑞特。他一个人挡住了一整支地面部队，然后消失在两轮落日之间。
+foc_saga_spark_of_hope = {
+    country_unity_produces_mult = 0.25
+    country_war_exhaustion_mult = -0.30
+    ship_evasion_mult = 0.10
+    army_damage_mult = 0.10
+    planet_stability_add = 5
+}
+
+# 原力之灵的指点。
+foc_saga_force_ghost_guidance = {
+    all_technology_research_speed = 0.05
+    leaders_upkeep_mult = -0.20
+    army_starting_experience_add = 200
+    planet_stability_add = 3
+}
+
+# 伦骑士团。六把粗劣的武器，和不需要理由的忠诚。
+foc_saga_knights_of_ren = {
+    army_damage_mult = 0.25
+    army_defense_damage_mult = 0.15
+    pop_government_ethic_attraction = 0.15
+    planet_stability_add = -2
+}
+
+# 最高领袖凯洛·伦。他坐上了那把椅子，但没人真的确信他坐得稳。
+foc_saga_supreme_leader_kylo = {
+    
+    army_damage_mult = 0.25
+    pop_government_ethic_attraction = 0.25
+    diplo_weight_mult = 0.20
+    planet_stability_add = -3
+}
+
+# 原力连接。两个人共用一双眼睛，谁都藏不住自己。
+foc_saga_force_dyad = {
+    
+    country_war_exhaustion_mult = -0.15
+    all_technology_research_speed = 0.05
+}
+
+# 本·索罗归来。
+foc_saga_ben_solo_redeemed = {
+    army_damage_mult = 0.30
+    army_defense_damage_mult = 0.20
+    country_unity_produces_mult = 0.15
+    planet_stability_add = 5
+}
+
+# 天行者的遗产。名字被人接了过去。
+foc_saga_skywalker_legacy = {
+    country_unity_produces_mult = 0.25
+    diplo_weight_mult = 0.25
+    army_damage_mult = 0.15
+    planet_stability_add = 5
+    leaders_upkeep_mult = -0.20
+}
+
+# =============================================================================
+# 分离主义强化
+# =============================================================================
+
+# 战争机器全速运转。机器人不吃饭，不睡觉，也不会厌战。
+foc_saga_separatist_war_machine = {
+    ship_hull_mult = 0.35
+    ship_armor_mult = 0.25
+    
+    
+    army_damage_mult = 0.25
+    country_naval_cap_mult = 1.50
+    country_war_exhaustion_mult = -0.75
+    ships_upkeep_mult = -0.50
+}
+
+# 格里弗斯将军接任最高统帅。
+foc_saga_grievous_command = {
+    
+    ship_evasion_mult = 0.10
+    
+    army_damage_mult = 0.20
+}
+
+# 商业财团总动员：贸易联盟、银行业协会、技术联合会把全部私兵交了出来。
+foc_saga_separatist_full_mobilisation = {
+    ship_hull_mult = 0.25
+    ship_shield_mult = 0.25
+    
+    country_naval_cap_mult = 1.00
+    ships_upkeep_mult = -0.25
+}
+
+# =============================================================================
+# 帕德梅·阿米达拉
+# =============================================================================
+
+# 纳布议员。她在议会里的分量来自那场危机——是她的不信任案换掉了上一任议长。
+foc_saga_amidala_senator = {
+    diplo_weight_mult = 0.20
+    country_unity_produces_mult = 0.10
+    planet_stability_add = 3
+    country_base_influence_produces_add = 1
+}
+
+# 安纳金的梦魇。他开始为一件还没发生的事做准备，而有人正在旁边替他解梦。
+foc_saga_anakin_visions = {
+    army_damage_mult = 0.15
+    
+    planet_stability_add = -3
+    pop_government_ethic_attraction = 0.10
+}
+
+# 穆斯塔法之后。天选之子的预言到此为止，剩下的是装甲里的那个人。
+foc_saga_mustafar_aftermath = {
+    country_unity_produces_mult = -0.10
+    planet_stability_add = -3
+    pop_government_ethic_attraction = 0.15
+}
+
+# =============================================================================
+# 恩多之后的帝国
+# =============================================================================
+
+# 皇帝死后的继承危机。新秩序的一切合法性都系在一个人身上，而那个人没了。
+foc_saga_imperial_succession_crisis = {
+    planet_stability_add = -8
+    pop_government_ethic_attraction = -0.20
+    country_unity_produces_mult = -0.15
+    
+    country_war_exhaustion_mult = 0.25
+}
+
+# 索龙元帅。他不靠恐惧统治，他靠算清楚对手下一步要做什么。
+foc_saga_thrawn_command = {
+    
+    
+    ship_evasion_mult = 0.10
+    ship_tracking_add = 10
+    ship_accuracy_add = 10
+    planet_stability_add = 5
+    country_war_exhaustion_mult = -0.25
+    diplo_weight_mult = 0.15
+}
+
+# =============================================================================
+# 克隆人战争
+# =============================================================================
+foc_saga_cw_grand_army = {
+    army_damage_mult = 0.20
+    army_starting_experience_add = 200
+    
+    country_war_exhaustion_mult = -0.20
+}
+foc_saga_cw_attrition_doctrine = {
+    ship_hull_mult = 0.15
+    ship_armor_mult = 0.15
+    country_war_exhaustion_mult = -0.15
+    ships_upkeep_mult = 0.10
+}
+foc_saga_cw_jedi_spearhead = {
+    
+    ship_evasion_mult = 0.10
+    army_damage_mult = 0.20
+    leaders_upkeep_mult = 0.15
+}
+foc_saga_cw_droid_command_broken = {
+    
+    
+    army_damage_mult = 0.15
+}
+
+# =============================================================================
+# 义军时代
+# =============================================================================
+foc_saga_reb_open_uprising = {
+    country_unity_produces_mult = 0.20
+    army_damage_mult = 0.15
+    planet_stability_add = -3
+}
+foc_saga_reb_cell_network = {
+    country_war_exhaustion_mult = -0.25
+    planet_stability_add = 4
+    ship_evasion_mult = 0.10
+}
+foc_saga_reb_mon_cala_yards = {
+    ship_hull_mult = 0.20
+    ship_shield_mult = 0.20
+    starbase_shipyard_build_speed_mult = 0.25
+}
+foc_saga_reb_mandalorian_fleet = {
+    
+    ship_evasion_mult = 0.10
+    country_naval_cap_mult = 0.20
+}
+foc_saga_reb_mandalorian_commandos = {
+    army_damage_mult = 0.30
+    army_defense_damage_mult = 0.20
+    army_starting_experience_add = 300
+}
+foc_saga_reb_declaration = {
+    country_unity_produces_mult = 0.20
+    diplo_weight_mult = 0.20
+    planet_stability_add = 4
+    country_war_exhaustion_mult = -0.15
+}
+
+# =============================================================================
+# 索龙时代：帝国残余
+# =============================================================================
+foc_saga_rem_iron_discipline = {
+    
+    army_damage_mult = 0.15
+    planet_stability_add = 6
+    pop_happiness = -0.10
+}
+foc_saga_rem_bought_loyalty = {
+    country_naval_cap_mult = 0.25
+    planet_stability_add = 3
+    ships_upkeep_mult = 0.15
+}
+foc_saga_rem_chimaera = {
+    
+    ship_accuracy_add = 5
+    ship_tracking_add = 5
+    country_war_exhaustion_mult = -0.15
+}
+foc_saga_rem_kuat_contracts = {
+    ship_hull_mult = 0.20
+    ship_armor_mult = 0.20
+    starbase_shipyard_build_speed_mult = 0.25
+}
+foc_saga_rem_consolidation = {
+    planet_stability_add = 8
+    country_unity_produces_mult = 0.20
+    diplo_weight_mult = 0.20
+    country_war_exhaustion_mult = -0.30
+    
+}
+foc_saga_rem_reconquest = {
+    
+    
+    country_naval_cap_mult = 0.30
+    army_damage_mult = 0.20
+    planet_stability_add = -4
+}
+
+# =============================================================================
+# 银河条约之后
+# =============================================================================
+
+# 战后复员。双死星的战时加成随条约收回，换成一份可持续的和平期修正：
+# 打仗的能力降下来，建设与治理的能力提上去。
+foc_saga_postwar_demobilisation = {
+    country_naval_cap_add = 200
+    planet_jobs_produces_mult = 0.15
+    starbase_shipyard_build_speed_mult = 0.20
+    shipsize_corvette_build_speed_mult = 0.20
+    shipsize_destroyer_build_speed_mult = 0.20
+    shipsize_cruiser_build_speed_mult = 0.20
+    shipsize_battleship_build_speed_mult = 0.20
+    planet_stability_add = 5
+    country_unity_produces_mult = 0.15
+    diplo_weight_mult = 0.15
+}
+
+# =============================================================================
+# 银河内战：义军成长阶梯
+# =============================================================================
+# 设计取向：开局给得很少，靠一连串里程碑往上爬。每一档都是独立修正、自然叠加，
+# 所以玩家能直观看到自己是靠打下了什么才变强的，而不是某一个事件突然发一大包。
+#
+# 六档全部到手时的合计（不含 MOD 原有的双死星奖励）：
+#   海军上限 +1300、火力 +75%、射速 +40%、装甲/护盾/舰体各 +45%
+#   产能 +55%、船坞速度 +95%、造舰速度 +55%、厌战 −60%
+# 与帝国的 foc_republic_origin_civil_war_economy（海军 +1000、产能 +50%、
+# 船坞 +50%、维护 −50%、厌战 −50%）相比，只有全部里程碑走完才明确压过对方。
+
+# 一、星火：三颗基地世界站住脚。此时义军还很弱，这一档主要是活下去。
+foc_saga_rebel_step_1_spark = {
+    country_war_exhaustion_mult = -0.20
+    ship_evasion_mult = 0.10
+    planet_stability_add = 3
+    ships_upkeep_mult = -0.20
+}
+
+# 二、斯卡里夫：拿到帝国的工程档案。
+foc_saga_rebel_step_2_scarif = {
+    
+    
+    all_technology_research_speed = 0.15
+    ship_tracking_add = 10
+}
+
+# 三、雅雯：死星一号被摧毁，志愿者开始成建制地来。
+foc_saga_rebel_step_3_yavin = {
+    country_naval_cap_add = 200
+    
+    
+    planet_jobs_produces_mult = 0.15
+    starbase_shipyard_build_speed_mult = 0.20
+    country_war_exhaustion_mult = -0.15
+}
+
+# 四、内环起义：十几个星系同时易帜，义军第一次有了后方。
+foc_saga_rebel_step_4_uprising = {
+    country_naval_cap_add = 400
+    country_starbase_capacity_add = 10
+    ship_hull_mult = 0.15
+    ship_armor_mult = 0.15
+    ship_shield_mult = 0.15
+    planet_jobs_produces_mult = 0.20
+    shipsize_corvette_build_speed_mult = 0.25
+    shipsize_destroyer_build_speed_mult = 0.25
+    shipsize_cruiser_build_speed_mult = 0.25
+    shipsize_battleship_build_speed_mult = 0.25
+    country_unity_produces_mult = 0.20
+}
+
+# 五、夸特：银河系最大的军工设施易手。这一档才是产能的真正转折点。
+foc_saga_rebel_step_5_kuat = {
+    country_naval_cap_add = 300
+    ship_hull_mult = 0.15
+    ship_armor_mult = 0.15
+    ship_shield_mult = 0.15
+    starbase_shipyard_build_speed_mult = 0.50
+    shipsize_corvette_build_speed_mult = 0.30
+    shipsize_destroyer_build_speed_mult = 0.30
+    shipsize_cruiser_build_speed_mult = 0.30
+    shipsize_battleship_build_speed_mult = 0.30
+    ships_upkeep_mult = -0.20
+}
+
+# 六、科洛桑：首都陷落，帝国失去中枢。
+foc_saga_rebel_step_6_coruscant = {
+    country_naval_cap_add = 400
+    
+    
+    ship_hull_mult = 0.15
+    ship_armor_mult = 0.15
+    ship_shield_mult = 0.15
+    planet_jobs_produces_mult = 0.20
+    country_war_exhaustion_mult = -0.25
+    diplo_weight_mult = 0.30
+}
+
+# =============================================================================
+# 银河内战：帝国的治安成本
+# =============================================================================
+# 新秩序靠恐惧统治，而恐惧是会贬值的。义军每完成一个里程碑，帝国全境的稳定度
+# 就再掉一层；同时每一颗没有舰队驻防的帝国世界另有独立惩罚。
+# 效果上帝国被迫把舰队摊开去守地方，而不是攥成一个铁拳到处推平。
+
+# 一、义军站住脚：地方开始观望。
+foc_saga_imperial_unrest_1 = {
+    planet_stability_add = -5
+    pop_government_ethic_attraction = -0.10
+    planet_crime_add = 10
+}
+
+# 二、死星一号被摧毁：恐惧第一次被证明是可以打破的。
+foc_saga_imperial_unrest_2 = {
+    planet_stability_add = -12
+    pop_government_ethic_attraction = -0.20
+    planet_crime_add = 20
+    planet_jobs_produces_mult = -0.10
+}
+
+# 三、死星二号被摧毁：整个内环都在起义。
+foc_saga_imperial_unrest_3 = {
+    planet_stability_add = -22
+    pop_government_ethic_attraction = -0.30
+    planet_crime_add = 30
+    planet_jobs_produces_mult = -0.20
+    country_war_exhaustion_mult = 0.25
+}
+
+# 行星级：本星系没有帝国舰队驻防。
+# 这一条是「每个星系都得留兵」的直接来源——它按星球单独结算，舰队一走就回来。
+foc_saga_planet_ungarrisoned = {
+    planet_stability_add = -15
+    planet_crime_add = 25
+    planet_jobs_produces_mult = -0.15
+}

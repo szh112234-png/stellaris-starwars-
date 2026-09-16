@@ -1,0 +1,788 @@
+namespace = foc_khan_vassal
+
+# Monthly Khan-style submission controller.
+# The First/Final Order uses crisis hostility rather than a normal war, so this
+# intentionally does not use is_at_war_with. Human empires receive one automatic
+# ultimatum per phase after a grace period; they can also open diplomacy at any
+# time and submit manually. Weaker AI empires may submit automatically.
+event = {
+	id = foc_khan_vassal.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_global_flag = foc_khan_crisis_finished }
+		OR = {
+			AND = {
+				has_global_flag = foc_khan_phase_two
+				exists = event_target:foc_khan_final_order
+			}
+			AND = {
+				has_global_flag = foc_khan_phase_one
+				NOT = { has_global_flag = foc_khan_phase_two }
+				exists = event_target:foc_khan_first_order
+			}
+		}
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				has_global_flag = foc_khan_phase_two
+				exists = event_target:foc_khan_final_order
+			}
+
+			if = {
+				limit = { NOT = { has_global_flag = foc_khan_final_submission_grace_initialized } }
+				set_global_flag = foc_khan_final_submission_grace_initialized
+				every_playable_country = {
+					set_timed_country_flag = {
+						flag = foc_khan_final_submission_grace
+						days = 90
+					}
+				}
+			}
+			else = {
+				every_playable_country = {
+					limit = {
+						is_regular_empire = yes
+						is_subject = no
+						NOT = { foc_khan_starkiller_submission_blocked = yes }
+						NOT = { has_country_flag = foc_khan_rebel_member }
+						NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+						NOT = { has_country_flag = foc_khan_final_order_country }
+						NOT = { has_country_flag = foc_khan_first_order_country }
+						NOT = { has_country_flag = foc_khan_submitted_final_order }
+						NOT = { has_country_flag = foc_khan_final_submission_grace }
+						NOR = {
+							has_valid_civic = civic_fanatic_purifiers
+							has_valid_civic = civic_hive_devouring_swarm
+							has_valid_civic = civic_machine_terminator
+							is_genocidal_infernal = yes
+						}
+					}
+
+					if = {
+						limit = {
+							is_ai = no
+							NOT = { has_country_flag = foc_khan_final_submission_offered }
+						}
+						set_country_flag = foc_khan_final_submission_offered
+						country_event = { id = foc_khan_vassal.3 }
+					}
+					else_if = {
+						limit = {
+							is_ai = yes
+							OR = {
+								relative_power = {
+									who = event_target:foc_khan_final_order
+									category = fleet
+									value = inferior
+								}
+								relative_power = {
+									who = event_target:foc_khan_final_order
+									category = fleet
+									value = pathetic
+								}
+							}
+						}
+						random = {
+							chance = 10
+							country_event = { id = foc_khan_vassal.21 }
+						}
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_global_flag = foc_khan_phase_one
+				NOT = { has_global_flag = foc_khan_phase_two }
+				exists = event_target:foc_khan_first_order
+			}
+
+			if = {
+				limit = { NOT = { has_global_flag = foc_khan_first_submission_grace_initialized } }
+				set_global_flag = foc_khan_first_submission_grace_initialized
+				every_playable_country = {
+					set_timed_country_flag = {
+						flag = foc_khan_first_submission_grace
+						days = 90
+					}
+				}
+			}
+			else = {
+				every_playable_country = {
+					limit = {
+						is_regular_empire = yes
+						is_subject = no
+						NOT = { foc_khan_starkiller_submission_blocked = yes }
+						NOT = { has_country_flag = foc_khan_rebel_member }
+						NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+						NOT = { has_country_flag = foc_khan_first_order_country }
+						NOT = { has_country_flag = foc_khan_final_order_country }
+						NOT = { has_country_flag = foc_khan_submitted_first_order }
+						NOT = { has_country_flag = foc_khan_first_submission_grace }
+						NOR = {
+							has_valid_civic = civic_fanatic_purifiers
+							has_valid_civic = civic_hive_devouring_swarm
+							has_valid_civic = civic_machine_terminator
+							is_genocidal_infernal = yes
+						}
+					}
+
+					if = {
+						limit = {
+							is_ai = no
+							NOT = { has_country_flag = foc_khan_first_submission_offered }
+						}
+						set_country_flag = foc_khan_first_submission_offered
+						country_event = { id = foc_khan_vassal.2 }
+					}
+					else_if = {
+						limit = {
+							is_ai = yes
+							OR = {
+								relative_power = {
+									who = event_target:foc_khan_first_order
+									category = fleet
+									value = inferior
+								}
+								relative_power = {
+									who = event_target:foc_khan_first_order
+									category = fleet
+									value = pathetic
+								}
+							}
+						}
+						random = {
+							chance = 10
+							country_event = { id = foc_khan_vassal.20 }
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+# Automatic First Order ultimatum for a human empire.
+country_event = {
+	id = foc_khan_vassal.2
+	title = foc_khan_vassal.2.name
+	desc = foc_khan_vassal.2.desc
+	picture_event_data = {
+		portrait = snoke_male_01
+		room = "foc_khan_first_order_room"
+	}
+	is_triggered_only = yes
+	force_open = yes
+	diplomatic = yes
+
+	option = {
+		name = foc_khan_vassal.2.a
+		trigger = {
+			is_subject = no
+			NOT = { foc_khan_starkiller_submission_blocked = yes }
+			exists = event_target:foc_khan_first_order
+		}
+		hidden_effect = { country_event = { id = foc_khan_vassal.20 } }
+	}
+
+	option = {
+		name = foc_khan_vassal.2.b
+	}
+}
+
+# Automatic Final Order ultimatum for a human empire.
+country_event = {
+	id = foc_khan_vassal.3
+	title = foc_khan_vassal.3.name
+	desc = foc_khan_vassal.3.desc
+	picture_event_data = {
+		portrait = fopalpatine_male_01
+		room = "foc_khan_final_order_room"
+	}
+	is_triggered_only = yes
+	force_open = yes
+	diplomatic = yes
+
+	option = {
+		name = foc_khan_vassal.3.a
+		trigger = {
+			is_subject = no
+			NOT = { foc_khan_starkiller_submission_blocked = yes }
+			exists = event_target:foc_khan_final_order
+		}
+		hidden_effect = { country_event = { id = foc_khan_vassal.21 } }
+	}
+
+	option = {
+		name = foc_khan_vassal.3.b
+	}
+}
+
+# Gatekeeper called by on_custom_diplomacy when the player opens the Order's
+# diplomacy screen. Root/This = player country, From = Order country.
+country_event = {
+	id = foc_khan_vassal.10
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		from = {
+			OR = {
+				has_country_flag = foc_khan_first_order_country
+				has_country_flag = foc_khan_final_order_country
+			}
+		}
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				from = { has_country_flag = foc_khan_final_order_country }
+				has_global_flag = foc_khan_phase_two
+			}
+			country_event = {
+				id = foc_khan_vassal.12
+				scopes = { from = from }
+			}
+		}
+		else_if = {
+			limit = {
+				from = { has_country_flag = foc_khan_first_order_country }
+				has_global_flag = foc_khan_phase_one
+				NOT = { has_global_flag = foc_khan_phase_two }
+			}
+			country_event = {
+				id = foc_khan_vassal.11
+				scopes = { from = from }
+			}
+		}
+	}
+}
+
+# First Order custom diplomacy, modeled after the Great Khan screen.
+country_event = {
+	id = foc_khan_vassal.11
+	title = foc_khan_vassal.11.name
+	desc = {
+		trigger = { has_country_flag = foc_khan_submitted_first_order }
+		text = foc_khan_vassal.11.loyal_desc
+	}
+	desc = {
+		trigger = { NOT = { has_country_flag = foc_khan_submitted_first_order } }
+		text = foc_khan_vassal.11.desc
+	}
+	picture_event_data = {
+		portrait = snoke_male_01
+		room = "foc_khan_first_order_room"
+	}
+	is_triggered_only = yes
+	force_open = yes
+	diplomatic = yes
+
+	trigger = {
+		from = { has_country_flag = foc_khan_first_order_country }
+	}
+
+	option = {
+		name = foc_khan_vassal.11.a
+		trigger = {
+			is_regular_empire = yes
+			is_subject = no
+			NOT = { foc_khan_starkiller_submission_blocked = yes }
+			NOT = { has_country_flag = foc_khan_rebel_member }
+			NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+			has_been_declared_crisis = no
+			NOR = {
+				has_valid_civic = civic_fanatic_purifiers
+				has_valid_civic = civic_hive_devouring_swarm
+				has_valid_civic = civic_machine_terminator
+				is_genocidal_infernal = yes
+			}
+		}
+		hidden_effect = { country_event = { id = foc_khan_vassal.20 } }
+	}
+
+	option = {
+		name = foc_khan_vassal.11.b
+		trigger = {
+			has_country_flag = foc_khan_submitted_first_order
+			is_subject = yes
+		}
+		allow = {
+			custom_tooltip = {
+				fail_text = foc_khan_vassal.rebellion_cooldown
+				NOT = { has_country_flag = rebellion_cooldown }
+			}
+		}
+		hidden_effect = { country_event = { id = foc_khan_vassal.22 } }
+	}
+
+	option = {
+		name = foc_khan_vassal.close
+	}
+}
+
+# Final Order custom diplomacy, modeled after the Great Khan screen.
+country_event = {
+	id = foc_khan_vassal.12
+	title = foc_khan_vassal.12.name
+	desc = {
+		trigger = { has_country_flag = foc_khan_submitted_final_order }
+		text = foc_khan_vassal.12.loyal_desc
+	}
+	desc = {
+		trigger = { NOT = { has_country_flag = foc_khan_submitted_final_order } }
+		text = foc_khan_vassal.12.desc
+	}
+	picture_event_data = {
+		portrait = fopalpatine_male_01
+		room = "foc_khan_final_order_room"
+	}
+	is_triggered_only = yes
+	force_open = yes
+	diplomatic = yes
+
+	trigger = {
+		from = { has_country_flag = foc_khan_final_order_country }
+	}
+
+	option = {
+		name = foc_khan_vassal.12.a
+		trigger = {
+			is_regular_empire = yes
+			is_subject = no
+			NOT = { foc_khan_starkiller_submission_blocked = yes }
+			NOT = { has_country_flag = foc_khan_rebel_member }
+			NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+			has_been_declared_crisis = no
+			NOR = {
+				has_valid_civic = civic_fanatic_purifiers
+				has_valid_civic = civic_hive_devouring_swarm
+				has_valid_civic = civic_machine_terminator
+				is_genocidal_infernal = yes
+			}
+		}
+		hidden_effect = { country_event = { id = foc_khan_vassal.21 } }
+	}
+
+	option = {
+		name = foc_khan_vassal.12.b
+		trigger = {
+			has_country_flag = foc_khan_submitted_final_order
+			is_subject = yes
+		}
+		allow = {
+			custom_tooltip = {
+				fail_text = foc_khan_vassal.rebellion_cooldown
+				NOT = { has_country_flag = rebellion_cooldown }
+			}
+		}
+		hidden_effect = { country_event = { id = foc_khan_vassal.23 } }
+	}
+
+	option = {
+		name = foc_khan_vassal.close
+	}
+}
+
+# Apply First Order satrapy submission.
+country_event = {
+	id = foc_khan_vassal.20
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		is_subject = no
+		NOT = { foc_khan_starkiller_submission_blocked = yes }
+		NOT = { has_country_flag = foc_khan_rebel_member }
+		NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+		exists = event_target:foc_khan_first_order
+	}
+
+	immediate = {
+		if = {
+			limit = { is_overlord = yes }
+			every_subject = {
+				limit = { NOT = { foc_khan_starkiller_submission_blocked = yes } }
+				set_subject_of = {
+					who = event_target:foc_khan_first_order
+					preset = preset_foc_khan_satrapy
+				}
+				set_country_flag = foc_khan_submitted_first_order
+				remove_country_flag = foc_khan_rebel_invitation_offered
+				remove_country_flag = foc_khan_rebel_invitation_refused
+				set_timed_country_flag = { flag = rebellion_cooldown days = 1800 }
+				set_country_flag = foc_khan_214_rebellion_lock_migrated
+				event_target:foc_khan_first_order = {
+					set_faction_hostility = {
+						target = prev
+						set_hostile = no
+						set_neutral = no
+						set_friendly = yes
+					}
+				}
+			}
+		}
+
+		set_subject_of = {
+			who = event_target:foc_khan_first_order
+			preset = preset_foc_khan_satrapy
+		}
+		set_country_flag = foc_khan_submitted_first_order
+
+		set_country_flag = foc_khan_first_submission_offered
+		remove_country_flag = foc_khan_rebel_invitation_offered
+		remove_country_flag = foc_khan_rebel_invitation_refused
+		set_timed_country_flag = { flag = rebellion_cooldown days = 1800 }
+		set_country_flag = foc_khan_214_rebellion_lock_migrated
+		set_faction_hostility = {
+			target = event_target:foc_khan_first_order
+			set_hostile = no
+			set_neutral = no
+			set_friendly = yes
+		}
+		event_target:foc_khan_first_order = {
+			set_faction_hostility = {
+				target = root
+				set_hostile = no
+				set_neutral = no
+				set_friendly = yes
+			}
+		}
+		# Submission immediately aligns the subject against the Rebel Alliance.
+		foc_khan_submitted_country_rebel_hostility_212 = yes
+	}
+}
+
+# Apply Final Order satrapy submission.
+country_event = {
+	id = foc_khan_vassal.21
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		is_subject = no
+		NOT = { foc_khan_starkiller_submission_blocked = yes }
+		NOT = { has_country_flag = foc_khan_rebel_member }
+		NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+		exists = event_target:foc_khan_final_order
+	}
+
+	immediate = {
+		if = {
+			limit = { is_overlord = yes }
+			every_subject = {
+				limit = { NOT = { foc_khan_starkiller_submission_blocked = yes } }
+				set_subject_of = {
+					who = event_target:foc_khan_final_order
+					preset = preset_foc_khan_satrapy
+				}
+				remove_country_flag = foc_khan_submitted_first_order
+				set_country_flag = foc_khan_submitted_final_order
+				remove_country_flag = foc_khan_rebel_invitation_offered
+				remove_country_flag = foc_khan_rebel_invitation_refused
+				set_timed_country_flag = { flag = rebellion_cooldown days = 1800 }
+				set_country_flag = foc_khan_214_rebellion_lock_migrated
+				event_target:foc_khan_final_order = {
+					set_faction_hostility = {
+						target = prev
+						set_hostile = no
+						set_neutral = no
+						set_friendly = yes
+					}
+				}
+			}
+		}
+
+		set_subject_of = {
+			who = event_target:foc_khan_final_order
+			preset = preset_foc_khan_satrapy
+		}
+		remove_country_flag = foc_khan_submitted_first_order
+		set_country_flag = foc_khan_submitted_final_order
+		set_country_flag = foc_khan_final_submission_offered
+		remove_country_flag = foc_khan_rebel_invitation_offered
+		remove_country_flag = foc_khan_rebel_invitation_refused
+		set_timed_country_flag = { flag = rebellion_cooldown days = 1800 }
+		set_country_flag = foc_khan_214_rebellion_lock_migrated
+		set_faction_hostility = {
+			target = event_target:foc_khan_final_order
+			set_hostile = no
+			set_neutral = no
+			set_friendly = yes
+		}
+		event_target:foc_khan_final_order = {
+			set_faction_hostility = {
+				target = root
+				set_hostile = no
+				set_neutral = no
+				set_friendly = yes
+			}
+		}
+		# Submission immediately aligns the subject against the Rebel Alliance.
+		foc_khan_submitted_country_rebel_hostility_212 = yes
+	}
+}
+
+# Rebel against the First Order.
+country_event = {
+	id = foc_khan_vassal.22
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_country_flag = foc_khan_submitted_first_order
+		NOT = { has_country_flag = rebellion_cooldown }
+		exists = event_target:foc_khan_first_order
+	}
+
+	immediate = {
+		set_subject_of = { who = none }
+		remove_country_flag = foc_khan_submitted_first_order
+		set_faction_hostility = {
+			target = event_target:foc_khan_first_order
+			set_hostile = yes
+			set_neutral = no
+			set_friendly = no
+		}
+		event_target:foc_khan_first_order = {
+			set_faction_hostility = {
+				target = root
+				set_hostile = yes
+				set_neutral = no
+				set_friendly = no
+			}
+		}
+	}
+}
+
+# Rebel against the Final Order.
+country_event = {
+	id = foc_khan_vassal.23
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_country_flag = foc_khan_submitted_final_order
+		NOT = { has_country_flag = rebellion_cooldown }
+		exists = event_target:foc_khan_final_order
+	}
+
+	immediate = {
+		set_subject_of = { who = none }
+		remove_country_flag = foc_khan_submitted_final_order
+		set_faction_hostility = {
+			target = event_target:foc_khan_final_order
+			set_hostile = yes
+			set_neutral = no
+			set_friendly = no
+		}
+		event_target:foc_khan_final_order = {
+			set_faction_hostility = {
+				target = root
+				set_hostile = yes
+				set_neutral = no
+				set_friendly = no
+			}
+		}
+	}
+}
+
+
+# Repair old saves where the submission flag was applied but the vanilla
+# preset_satrapy rejected the First/Final Order as an invalid overlord.
+country_event = {
+	id = foc_khan_vassal.24
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		is_subject = no
+		NOT = { foc_khan_starkiller_submission_blocked = yes }
+		NOT = { has_country_flag = foc_khan_rebel_member }
+		NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+		OR = {
+			AND = {
+				has_country_flag = foc_khan_submitted_final_order
+				exists = event_target:foc_khan_final_order
+			}
+			AND = {
+				has_country_flag = foc_khan_submitted_first_order
+				exists = event_target:foc_khan_first_order
+				NOT = { has_global_flag = foc_khan_phase_two }
+			}
+		}
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				has_country_flag = foc_khan_submitted_final_order
+				exists = event_target:foc_khan_final_order
+			}
+			country_event = { id = foc_khan_vassal.21 }
+		}
+		else_if = {
+			limit = {
+				has_country_flag = foc_khan_submitted_first_order
+				exists = event_target:foc_khan_first_order
+				NOT = { has_global_flag = foc_khan_phase_two }
+			}
+			country_event = { id = foc_khan_vassal.20 }
+		}
+	}
+}
+
+
+# 2.14: force submission when every colony of an ordinary empire is occupied
+# by the currently active Order. Starkiller owners remain permanently exempt.
+country_event = {
+	id = foc_khan_vassal.25
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_global_flag = foc_khan_crisis_finished }
+		is_regular_empire = yes
+		is_subject = no
+		NOT = { foc_khan_starkiller_submission_blocked = yes }
+		NOT = { has_country_flag = foc_khan_first_order_country }
+		NOT = { has_country_flag = foc_khan_final_order_country }
+		NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+		NOT = { has_country_flag = foc_khan_rebel_member }
+		OR = {
+			AND = {
+				has_global_flag = foc_khan_phase_two
+				foc_khan_all_colonies_controlled_by_final_order = yes
+			}
+			AND = {
+				has_global_flag = foc_khan_phase_one
+				NOT = { has_global_flag = foc_khan_phase_two }
+				foc_khan_all_colonies_controlled_by_first_order = yes
+			}
+		}
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				has_global_flag = foc_khan_phase_two
+				foc_khan_all_colonies_controlled_by_final_order = yes
+			}
+			country_event = { id = foc_khan_vassal.21 }
+		}
+		else_if = {
+			limit = {
+				has_global_flag = foc_khan_phase_one
+				NOT = { has_global_flag = foc_khan_phase_two }
+				foc_khan_all_colonies_controlled_by_first_order = yes
+			}
+			country_event = { id = foc_khan_vassal.20 }
+		}
+	}
+}
+
+# Immediate check from on_planet_occupied. Monthly country pulse remains the
+# fallback for old saves and for MOD combinations that suppress the on-action.
+planet_event = {
+	id = foc_khan_vassal.26
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		is_colony = yes
+		exists = owner
+		exists = controller
+		controller = {
+			OR = {
+				has_country_flag = foc_khan_first_order_country
+				has_country_flag = foc_khan_final_order_country
+			}
+		}
+	}
+
+	immediate = {
+		owner = { country_event = { id = foc_khan_vassal.25 days = 1 } }
+	}
+}
+
+# Old-save migration: countries still inside the former one-year lock receive
+# the new five-year lock once. Subjects whose old lock already expired are not
+# relocked, because their exact original submission date is unavailable.
+country_event = {
+	id = foc_khan_vassal.27
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		is_subject = yes
+		overlord = {
+			OR = {
+				has_country_flag = foc_khan_first_order_country
+				has_country_flag = foc_khan_final_order_country
+			}
+		}
+		OR = {
+			foc_khan_starkiller_submission_blocked = yes
+			NOT = { has_country_flag = foc_khan_214_rebellion_lock_migrated }
+		}
+	}
+
+	immediate = {
+		if = {
+			limit = { foc_khan_starkiller_submission_blocked = yes }
+			set_subject_of = { who = none }
+			remove_country_flag = foc_khan_submitted_first_order
+			remove_country_flag = foc_khan_submitted_final_order
+			remove_country_flag = foc_khan_first_submission_offered
+			remove_country_flag = foc_khan_final_submission_offered
+			remove_country_flag = rebellion_cooldown
+
+			if = {
+				limit = { exists = event_target:foc_khan_first_order }
+				set_faction_hostility = {
+					target = event_target:foc_khan_first_order
+					set_hostile = yes
+					set_neutral = no
+					set_friendly = no
+				}
+				event_target:foc_khan_first_order = {
+					set_faction_hostility = {
+						target = root
+						set_hostile = yes
+						set_neutral = no
+						set_friendly = no
+					}
+				}
+			}
+			if = {
+				limit = { exists = event_target:foc_khan_final_order }
+				set_faction_hostility = {
+					target = event_target:foc_khan_final_order
+					set_hostile = yes
+					set_neutral = no
+					set_friendly = no
+				}
+				event_target:foc_khan_final_order = {
+					set_faction_hostility = {
+						target = root
+						set_hostile = yes
+						set_neutral = no
+						set_friendly = no
+					}
+				}
+			}
+		}
+		else = {
+			if = {
+				limit = { has_country_flag = rebellion_cooldown }
+				set_timed_country_flag = { flag = rebellion_cooldown days = 1800 }
+			}
+			set_country_flag = foc_khan_214_rebellion_lock_migrated
+		}
+	}
+}

@@ -1,0 +1,61 @@
+namespace = foc_v1711
+country_event = {
+    id = foc_v1711.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        NOT = { has_global_flag = has_swgs_mod }
+        OR = {
+            resource_stockpile_compare = { resource = tibanna_gas value > 0 }
+            resource_stockpile_compare = { resource = kyber_crystals value > 0 }
+        }
+    }
+    immediate = { foc_v1711_migrate_shared_resources = yes }
+}
+# No timer is cleared by a console/legacy early dispatch. Retry while the actual
+# timed flag remains; on expiry the valid Rebel country receives the leader.
+country_event = {
+    id = foc_v1711.20
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        has_global_flag = foc_v1711_leia_join_clock_started
+        has_global_flag = foc_republic_origin_empire_war_active
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        NOT = { has_global_flag = foc_v212_leia_joined_imperial_rebels }
+    }
+    immediate = {
+        if = {
+            limit = { has_global_flag = foc_v1711_wait_leia_join_10y }
+            # Exact scheduled deadline can share a tick with flag expiry.
+            country_event = { id = foc_v1711.20 days = 1 }
+        }
+        else = {
+            if = {
+                limit = {
+                    exists = event_target:foc_khan_rebel_alliance
+                    event_target:foc_khan_rebel_alliance = { foc_v1710_is_gcw_rebel = yes }
+                }
+                event_target:foc_khan_rebel_alliance = { foc_v212_leia_joins_after_alderaan = yes }
+            }
+            else = {
+                random_country = {
+                    limit = { foc_v1710_is_gcw_rebel = yes }
+                    foc_v212_leia_joins_after_alderaan = yes
+                }
+            }
+        }
+    }
+}
+event = {
+    id = foc_v1711.90
+    hide_window = yes
+    is_triggered_only = yes
+    immediate = {
+        every_country = { country_event = { id = foc_v1711.1 } }
+        every_country = {
+            limit = { foc_v1710_is_gcw_rebel = yes }
+            country_event = { id = foc_v212_story.1 }
+        }
+    }
+}

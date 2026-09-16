@@ -1,0 +1,310 @@
+# FOC V161 - Treaty-era infrastructure guarantee for the playable First Order origin
+# and Republic-origin Galactic Treaty successors. Idempotent: only missing structures are created.
+
+foc_v161_ensure_treaty_infrastructure = {
+    # Resolve the two successor countries from durable country flags.
+    random_country = {
+        limit = { has_country_flag = foc_sw_new_republic_country }
+        save_global_event_target_as = foc_sw_new_republic
+        set_country_type = default
+    }
+    random_country = {
+        limit = { has_country_flag = foc_sw_imperial_remnant_country }
+        save_global_event_target_as = foc_sw_imperial_remnant
+        set_country_type = default
+    }
+
+    # New Republic infrastructure.
+    if = {
+        limit = { exists = event_target:foc_sw_new_republic }
+
+        random_system = {
+            limit = { has_star_flag = foc_sw_kuat_home }
+            save_global_event_target_as = foc_sw_kuat_system
+            random_system_planet = {
+                limit = { has_planet_flag = foc_sw_kuat_ring_anchor }
+                save_global_event_target_as = foc_sw_kuat
+            }
+            if = {
+                limit = {
+                    exists = event_target:foc_sw_kuat
+                    NOT = { any_system_megastructure = { is_megastructure_type = orbital_ring } }
+                }
+                if = {
+                    limit = {
+                        exists = event_target:foc_sw_kuat
+                        event_target:foc_sw_kuat = {
+                            has_planet_flag = foc_sw_kuat_ring_anchor
+                            solar_system = { has_star_flag = foc_sw_kuat_home }
+                            NOT = { has_planet_flag = foc_v15_kuat_ring_reward_serviced }
+                            NOT = { exists = orbital_defence }
+                            NOT = { has_carrier_flag = ruined_orbital_ring_planet }
+                            NOT = { has_carrier_flag = megastructure }
+                            NOT = { has_carrier_flag = has_megastructure }
+                            NOT = {
+                                any_megastructure = {
+                                    OR = {
+                                        is_megastructure_type = orbital_ring
+                                        is_megastructure_type = orbital_ring_ruined
+                                        is_megastructure_type = orbital_ring_restored
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    spawn_megastructure = {
+                        type = orbital_ring
+                        owner = event_target:foc_sw_new_republic
+                        planet = event_target:foc_sw_kuat
+                        init_effect = { set_name = "Kuat Drive Yards Ring" }
+                    }
+                }
+            }
+            if = {
+                limit = { NOT = { any_system_megastructure = { is_megastructure_type = mega_shipyard_3 } } }
+                spawn_megastructure = {
+                    type = mega_shipyard_3
+                    owner = event_target:foc_sw_new_republic
+                    planet = star
+                    orbit_distance = 390
+                    orbit_angle = 110
+                    init_effect = { set_name = "Kuat Drive Yards" }
+                }
+            }
+        }
+
+        random_system = {
+            limit = { has_star_flag = foc_sw_hosnian_home }
+            random_system_planet = {
+                limit = { has_planet_flag = foc_sw_hosnian_assembly_anchor }
+                save_global_event_target_as = foc_sw_hosnian_assembly_planet
+            }
+            if = {
+                limit = {
+                    exists = event_target:foc_sw_hosnian_assembly_planet
+                    NOT = { any_system_megastructure = { is_megastructure_type = interstellar_assembly_4 } }
+                }
+                spawn_megastructure = {
+                    type = interstellar_assembly_4
+                    owner = event_target:foc_sw_new_republic
+                    planet = event_target:foc_sw_hosnian_assembly_planet
+                    init_effect = { set_name = "Galactic Senate" }
+                }
+            }
+        }
+
+        random_system = {
+            limit = { has_star_flag = foc_sw_chandrila_home }
+            random_system_planet = {
+                limit = { has_planet_flag = foc_sw_chandrila_science_anchor }
+                save_global_event_target_as = foc_sw_chandrila_science_planet
+            }
+            if = {
+                limit = {
+                    exists = event_target:foc_sw_chandrila_science_planet
+                    NOT = { any_system_megastructure = { is_megastructure_type = think_tank_4 } }
+                }
+                spawn_megastructure = {
+                    type = think_tank_4
+                    owner = event_target:foc_sw_new_republic
+                    planet = event_target:foc_sw_chandrila_science_planet
+                    init_effect = { set_name = "Chandrila Science Nexus" }
+                }
+            }
+        }
+
+        random_system = {
+            limit = { has_star_flag = foc_sw_akiva_home }
+            if = {
+                limit = { NOT = { any_system_megastructure = { is_megastructure_type = quantum_catapult_3 } } }
+                spawn_megastructure = {
+                    type = quantum_catapult_3
+                    owner = event_target:foc_sw_new_republic
+                    planet = star
+                    orbit_distance = 370
+                    orbit_angle = 300
+                    init_effect = { set_name = "Akiva Quantum Catapult" }
+                }
+            }
+        }
+    }
+
+    # Imperial Remnant infrastructure.
+    if = {
+        limit = { exists = event_target:foc_sw_imperial_remnant }
+
+        random_system = {
+            limit = { has_star_flag = foc_sw_bastion_home }
+            random_system_planet = {
+                limit = { has_planet_flag = foc_sw_bastion_command_anchor }
+                save_global_event_target_as = foc_sw_bastion_command_planet
+            }
+            random_system_planet = {
+                limit = { has_planet_flag = foc_sw_bastion_sentry_anchor }
+                save_global_event_target_as = foc_sw_bastion_sentry_planet
+            }
+            if = {
+                limit = {
+                    exists = event_target:foc_sw_bastion_command_planet
+                    NOT = { any_system_megastructure = { is_megastructure_type = strategic_coordination_center_3 } }
+                }
+                spawn_megastructure = {
+                    type = strategic_coordination_center_3
+                    owner = event_target:foc_sw_imperial_remnant
+                    planet = event_target:foc_sw_bastion_command_planet
+                    init_effect = { set_name = "Bastion Strategic Command" }
+                }
+            }
+            if = {
+                limit = {
+                    exists = event_target:foc_sw_bastion_sentry_planet
+                    NOT = { any_system_megastructure = { is_megastructure_type = spy_orb_4 } }
+                }
+                spawn_megastructure = {
+                    type = spy_orb_4
+                    owner = event_target:foc_sw_imperial_remnant
+                    planet = event_target:foc_sw_bastion_sentry_planet
+                    init_effect = { set_name = "Bastion Sentry Array" }
+                }
+            }
+        }
+
+        random_system = {
+            limit = { has_star_flag = foc_sw_bilbringi_home }
+            random_system_planet = {
+                limit = { has_planet_flag = foc_sw_bilbringi_ring_anchor }
+                save_global_event_target_as = foc_sw_bilbringi
+            }
+            if = {
+                limit = {
+                    exists = event_target:foc_sw_bilbringi
+                    NOT = { any_system_megastructure = { is_megastructure_type = orbital_ring } }
+                }
+                spawn_megastructure = {
+                    type = orbital_ring
+                    owner = event_target:foc_sw_imperial_remnant
+                    planet = event_target:foc_sw_bilbringi
+                    init_effect = { set_name = "Bilbringi Shipyards Ring" }
+                }
+            }
+            if = {
+                limit = { NOT = { any_system_megastructure = { is_megastructure_type = mega_shipyard_3 } } }
+                spawn_megastructure = {
+                    type = mega_shipyard_3
+                    owner = event_target:foc_sw_imperial_remnant
+                    planet = star
+                    orbit_distance = 390
+                    orbit_angle = 250
+                    init_effect = { set_name = "Bilbringi Imperial Shipyards" }
+                }
+            }
+        }
+
+        random_system = {
+            limit = { has_star_flag = foc_sw_jakku_home }
+            random_system_planet = {
+                limit = { has_planet_flag = foc_sw_jakku_habitat_anchor }
+                save_global_event_target_as = foc_sw_jakku
+            }
+            # V173: a completed habitat becomes a pc_habitat planet and is no
+            # longer reliably found by any_system_megastructure. The old retry
+            # therefore spawned another habitat every month. Migrate old saves
+            # to a durable one-shot star flag and never replenish this asset.
+            if = {
+                limit = {
+                    OR = {
+                        any_system_megastructure = { is_megastructure_type = habitat_central_complex }
+                        any_system_planet = { is_planet_class = pc_habitat }
+                    }
+                }
+                set_star_flag = foc_v173_jakku_habitat_initialized
+            }
+            if = {
+                limit = {
+                    exists = event_target:foc_sw_jakku
+                    NOT = { has_star_flag = foc_v173_jakku_habitat_initialized }
+                }
+                spawn_megastructure = {
+                    type = habitat_central_complex
+                    owner = event_target:foc_sw_imperial_remnant
+                    planet = event_target:foc_sw_jakku
+                    init_effect = { set_name = "Jakku Orbital Habitat" }
+                }
+                set_star_flag = foc_v173_jakku_habitat_initialized
+            }
+            if = {
+                limit = { NOT = { any_system_megastructure = { is_megastructure_type = foc_sith_wayfinder_gate } } }
+                spawn_megastructure = {
+                    type = foc_sith_wayfinder_gate
+                    owner = event_target:foc_sw_imperial_remnant
+                    planet = star
+                    orbit_distance = 230
+                    orbit_angle = 300
+                    init_effect = {
+                        set_name = "NAME_FOC_SITH_WAYFINDER_JAKKU_GATE"
+                        set_megastructure_flag = foc_sith_wayfinder_jakku_gate
+                        save_global_event_target_as = foc_sith_wayfinder_jakku_gate
+                    }
+                }
+            }
+
+            # Executor wreckage archaeology site on Jakku. Keep the normal one-shot
+            # planet flag so completed sites are never recreated.
+            random_system_planet = {
+                limit = { has_planet_flag = foc_sw_jakku }
+                if = {
+                    limit = { NOT = { has_planet_flag = foc_jakku_executor_site_created } }
+                    create_archaeological_site = foc_jakku_executor_wreckage_site
+                    set_planet_flag = foc_jakku_executor_site_created
+                }
+            }
+        }
+    }
+
+    # Mark success only when every required Treaty-era asset actually exists.
+    if = {
+        limit = {
+            exists = event_target:foc_sw_new_republic
+            exists = event_target:foc_sw_imperial_remnant
+            any_system = {
+                has_star_flag = foc_sw_kuat_home
+                any_system_megastructure = { is_megastructure_type = orbital_ring }
+                any_system_megastructure = { is_megastructure_type = mega_shipyard_3 }
+            }
+            any_system = {
+                has_star_flag = foc_sw_hosnian_home
+                any_system_megastructure = { is_megastructure_type = interstellar_assembly_4 }
+            }
+            any_system = {
+                has_star_flag = foc_sw_chandrila_home
+                any_system_megastructure = { is_megastructure_type = think_tank_4 }
+            }
+            any_system = {
+                has_star_flag = foc_sw_akiva_home
+                any_system_megastructure = { is_megastructure_type = quantum_catapult_3 }
+            }
+            any_system = {
+                has_star_flag = foc_sw_bastion_home
+                any_system_megastructure = { is_megastructure_type = strategic_coordination_center_3 }
+                any_system_megastructure = { is_megastructure_type = spy_orb_4 }
+            }
+            any_system = {
+                has_star_flag = foc_sw_bilbringi_home
+                any_system_megastructure = { is_megastructure_type = orbital_ring }
+                any_system_megastructure = { is_megastructure_type = mega_shipyard_3 }
+            }
+            any_system = {
+                has_star_flag = foc_sw_jakku_home
+                has_star_flag = foc_v173_jakku_habitat_initialized
+                any_system_megastructure = { is_megastructure_type = foc_sith_wayfinder_gate }
+                any_system_planet = {
+                    has_planet_flag = foc_sw_jakku
+                    has_planet_flag = foc_jakku_executor_site_created
+                }
+            }
+        }
+        set_country_flag = foc_v161_treaty_infrastructure_verified
+        set_global_flag = foc_v161_treaty_infrastructure_verified
+        log = "FOC_V161_INFRA: Treaty-era megastructures and Jakku Executor archaeology verified."
+    }
+}

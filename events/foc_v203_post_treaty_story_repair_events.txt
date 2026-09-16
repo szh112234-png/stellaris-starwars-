@@ -1,0 +1,50 @@
+namespace = foc_v203_story_repair
+
+# V203 one-shot convergence. New Treaty transitions are fixed at their source;
+# this pass releases games already caught between the old identity and D'Qar bugs.
+country_event = {
+    id = foc_v203_story_repair.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        has_global_flag = foc_republic_origin_galactic_treaty
+        NOT = { has_country_flag = foc_v203_post_treaty_story_repair_done }
+    }
+
+    immediate = {
+        set_country_flag = foc_v203_post_treaty_story_repair_done
+
+        if = {
+            limit = {
+                has_country_flag = foc_republic_origin_player_republic
+                has_country_flag = foc_republic_origin_republic_country
+            }
+            remove_country_flag = foc_republic_origin_player_empire
+            remove_country_flag = foc_republic_origin_player_imperial_remnant
+            remove_country_flag = foc_republic_origin_empire_country
+            remove_country_flag = foc_republic_origin_ai_empire
+            remove_country_flag = foc_republic_origin_empire_crisis
+            remove_country_flag = foc_republic_origin_became_first_order
+            remove_country_flag = foc_republic_origin_remnant_rebranded_first_order
+            remove_country_flag = fop_player_first_order
+            remove_country_flag = fop_player_final_order
+            remove_country_flag = foc_sw_imperial_remnant_country
+            set_country_flag = foc_sw_new_republic_country
+        country_event = { id = foc_v1718.10 days = 1 }
+            log = "FOC_V203_TREATY: stale player Empire/Remnant identities removed from the New Republic."
+        }
+
+        if = {
+            limit = {
+                has_global_flag = foc_khan_rebel_preparing
+                NOT = { has_global_flag = foc_khan_rebel_spawned }
+            }
+            country_event = { id = foc_khan_rebel.2 days = 1 }
+            country_event = { id = foc_khan_rebel.2 days = 4 }
+            country_event = { id = foc_khan_rebel.2 days = 12 }
+            log = "FOC_V203_LEIA: resumed a D'Qar Resistance bootstrap that had no construction retries."
+        }
+    }
+}

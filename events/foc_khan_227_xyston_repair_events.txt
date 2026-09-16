@@ -1,0 +1,54 @@
+namespace = foc_khan_227
+
+# One-shot repair for saves affected by the 2.24 pre-fire permanent target flag.
+# Intact colonies must be unblocked before the special Xystons can fire again.
+event = {
+    id = foc_khan_227.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        NOT = { has_global_flag = foc_khan_227_xyston_repaired }
+        any_country = { has_country_flag = foc_khan_final_order_country }
+    }
+
+    immediate = {
+        set_global_flag = foc_khan_227_xyston_repaired
+
+        every_system = {
+            remove_star_flag = foc_khan_xyston_system_reserved_212
+            every_system_planet = {
+                remove_planet_flag = foc_khan_xyston_target_reserved
+                if = {
+                    limit = {
+                        NOR = {
+                            is_planet_class = pc_shattered
+                            is_planet_class = pc_shattered_2
+                            is_planet_class = pc_broken
+                            is_planet_class = pc_black_hole
+                        }
+                    }
+                    # 2.24 wrote this before firing; intact worlds must not keep it.
+                    remove_planet_flag = foc_khan_xyston_destroyed_target_213
+                }
+                else = {
+                    set_planet_flag = foc_khan_xyston_destroyed_target_213
+                }
+            }
+        }
+
+        every_country = {
+            limit = { has_country_flag = foc_khan_final_order_country }
+            every_owned_fleet = {
+                limit = { any_owned_ship = { OR = { is_ship_size = foc_khan_xystonsd is_ship_size = foc_khan_xystonsd_foc_lowest } } }
+                remove_fleet_flag = foc_khan_xyston_active_single_order_225
+                remove_fleet_flag = foc_khan_xyston_cleanup_scheduled_225
+                remove_fleet_flag = foc_khan_xyston_retarget_pending_218
+                remove_auto_move_target = yes
+                clear_orders = yes
+                clear_fleet_actions = this
+                fleet_event = { id = foc_khan_xyston_ai.10 days = 2 random = 10 }
+            }
+        }
+    }
+}

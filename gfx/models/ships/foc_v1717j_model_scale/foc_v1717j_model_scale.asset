@@ -1,0 +1,69 @@
+# v17.17L: private hull entities for the rescaled hulls. The Imperial II
+# entity is shared by all four Imperial II sections (normal buildable hull
+# and Executor escort alike), which is why it is no longer named _escort_.
+# v17.17j: private hull entities for the two rescaled hulls. Each is a clone of
+# the original entity with only the pdxmesh swapped for the scaled copy, so
+# states, sounds and game_data are identical. Weapon locators come from the
+# .mesh file, which is the same file, so every turret stays where it was and
+# scales with the hull.
+entity = {
+	name = "foc_v1717j_isd2_scaled_hull_entity"
+	pdxmesh = "foc_v1717j_isd2_escort_mesh"
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_titan_ship_hum_01" } }
+	}
+	state = { name = "moving" state_time = 5 }
+}
+
+entity = {
+	name = "foc_v1717j_mc80_line_bow_entity"
+	pdxmesh = "foc_v1717j_mc80_line_bow_mesh"
+	default_state = "idle"
+	state = { name = "idle" }
+	state = { name = "moving" }
+	state = { name = "death" }
+	game_data = {
+		size = 7.5
+		shader_type = ship
+		emissive_recolor_crunch = 0.0
+	}
+}
+
+# v17.17m: frames for the normal buildable Imperial II.
+#
+# The mod's own foc_imperialsd2_entity hardcodes
+#     attach = { part1 = "foc_v17_isd2_hull_entity" }
+# which pins the full-size hull onto the ship regardless of what the bow
+# section template says. These replacements carry no attach, exactly like the
+# v17.17f frames used by the Executor escort and the MC80 line, so the section
+# template decides which hull entity is drawn - which is the whole point.
+#
+# Do not add an attach block here. Doing so would re-pin a hull and undo the fix.
+entity = {
+	name = "foc_v1717m_imperialsd2_frame_entity"
+	pdxmesh = "imperialsd_frame_mesh"
+	scale = 1.0
+	default_state = "idle"
+}
+entity = {
+	name = "empire_01_foc_v1717m_imperialsd2_frame_entity"
+	pdxmesh = "imperialsd_frame_mesh"
+	scale = 1.0
+	default_state = "idle"
+}
+# Covers the <graphical_culture>_<ship_size>_entity lookup, which Stellaris
+# tries before the unprefixed name. New names, so nothing is overridden.
+entity = {
+	name = "empire_01_foc_imperialsd2_entity"
+	pdxmesh = "imperialsd_frame_mesh"
+	scale = 1.0
+	default_state = "idle"
+}
+entity = {
+	name = "empire_01_foc_imperialsd2_foc_lowest_entity"
+	pdxmesh = "imperialsd_frame_mesh"
+	scale = 1.0
+	default_state = "idle"
+}

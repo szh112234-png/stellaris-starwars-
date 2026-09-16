@@ -1,0 +1,19 @@
+# FOC V231a - droid portrait entity, imported from the
+# "Star Wars: Starting Systems and Portrait Collection Pack" (1708335879).
+#
+# The entity is deliberately re-keyed with a foc_v231_ prefix rather than
+# reusing the pack's own portrait_droid_01_entity. If a player happens to run
+# the source pack alongside FOC, two identical entity keys would collide; a
+# private key cannot.
+#
+# pdxmesh portrait_robot_01_mesh is the vanilla Stellaris robot portrait mesh,
+# so no mesh or animation files need to be imported.
+entity = {
+	name = "foc_v231_droid_portrait_entity"
+	pdxmesh = "portrait_robot_01_mesh"
+
+	default_state = "idle"
+	state = { name = "idle" animation = "idle"  animation_blend_time = 0.25 animation_speed = 1.0 chance = 3.0 looping = no next_state = idle }
+	state = { name = "idle" animation = "idle2" animation_blend_time = 0.25 animation_speed = 1.0 chance = 1.0 looping = no next_state = idle }
+	scale = 1.0
+}

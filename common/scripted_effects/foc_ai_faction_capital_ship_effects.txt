@@ -1,0 +1,180 @@
+# =============================================================================
+# AI faction capital-ship fixed-design registration
+# =============================================================================
+
+foc_ai_capital_register_mc80_design = {
+    if = {
+        limit = {
+            is_ai = yes
+            foc_ai_capital_is_mc80_country = yes
+        }
+        if = {
+            limit = { NOT = { has_country_flag = foc_rebel_mc80_design_unlocked } }
+            set_country_flag = foc_rebel_mc80_design_unlocked
+            set_global_flag = foc_rebel_mc80_design_first_unlocked
+        }
+        if = {
+            limit = { NOT = { has_country_flag = foc_rebel_mc80_design_registered_v131 } }
+            foc_story_grant_imperial_rebel_mc80_design = yes
+        }
+    }
+}
+
+foc_ai_capital_register_venator_design = {
+    if = {
+        limit = {
+            foc_ai_capital_is_republic_venator_country = yes
+            has_technology = foc_tech_republic_venator
+            NOT = { has_country_flag = foc_republic_origin_kuat_venator_design_granted_v118e }
+        }
+        if = {
+            limit = { has_global_flag = foc_khan_strength_lowest }
+            
+
+            
+            # V14: exact faction technology prerequisites before fixed-design construction.
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+            create_ship_design = { design = NAME_FOC_REPUBLIC_VENATOR_STORY_FOC_LOWEST }
+            foc_v1716_register_design_6d47e8957c1f = yes
+        }
+        else = { 
+
+            
+            # V14: exact faction technology prerequisites before fixed-design construction.
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+            create_ship_design = { design = NAME_FOC_REPUBLIC_VENATOR_STORY }
+            foc_v1716_register_design_938c45aed7c4 = yes }
+        # v17.16: registration occurs in its exact design branch after research checks.
+        set_country_flag = foc_republic_origin_kuat_venator_design_granted_v118e
+        refresh_auto_generated_ship_designs = yes
+    }
+}
+
+foc_ai_capital_register_lucrehulk_design = {
+    if = {
+        limit = { foc_ai_capital_is_separatist_lucrehulk_country = yes }
+        if = {
+            limit = { NOT = { has_technology = tech_space_construction } }
+            give_technology = { tech = tech_space_construction message = no }
+        }
+        if = {
+            limit = { NOT = { has_technology = tech_destroyers } }
+            give_technology = { tech = tech_destroyers message = no }
+        }
+        if = {
+            limit = { NOT = { has_technology = tech_cruisers } }
+            give_technology = { tech = tech_cruisers message = no }
+        }
+        if = {
+            limit = { NOT = { has_technology = tech_battleships } }
+            give_technology = { tech = tech_battleships message = no }
+        }
+        if = {
+            limit = { NOT = { has_country_flag = foc_ai_capital_lucrehulk_design_registered_v1 } }
+            if = {
+                limit = { has_global_flag = foc_khan_strength_lowest }
+                
+
+                
+                # V14: exact faction technology prerequisites before fixed-design construction.
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+                create_ship_design = { design = NAME_FOC_TRADE_LUCREHULK_FOC_LOWEST }
+            foc_v1716_register_design_6e5132689bfa = yes
+            }
+            else = { 
+
+                
+                # V14: exact faction technology prerequisites before fixed-design construction.
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+                create_ship_design = { design = NAME_FOC_TRADE_LUCREHULK }
+            foc_v1716_register_design_438496b9959b = yes }
+            # v17.16: registration occurs in its exact design branch after research checks.
+            set_country_flag = foc_ai_capital_lucrehulk_design_registered_v1
+        }
+        refresh_auto_generated_ship_designs = yes
+    }
+
+if = { limit = { foc_v236_has_cis_aircraft_identity = yes }
+foc_v236_adopt_cis_aircraft = yes
+foc_v236_register_cis_designs = yes
+}
+}
+
+foc_ai_capital_register_imperial_design = {
+    if = {
+        limit = {
+            foc_ai_capital_is_imperial_class_country = yes
+            has_technology = foc_tech_dark_legacy_imperial
+            NOT = { has_country_flag = foc_ai_capital_imperial_design_registered_v1 }
+        }
+        if = {
+            limit = { has_global_flag = foc_khan_strength_lowest }
+            
+
+            
+            # V14: exact faction technology prerequisites before fixed-design construction.
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+            create_ship_design = { design = NAME_FOC_KHAN_IMPERIAL_SD_FOC_LOWEST }
+            foc_v1716_register_design_8aebc9f9790d = yes
+        }
+        else = { 
+
+            
+            # V14: exact faction technology prerequisites before fixed-design construction.
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+            create_ship_design = { design = NAME_FOC_KHAN_IMPERIAL_SD }
+            foc_v1716_register_design_a72963d88d63 = yes }
+        # v17.16: registration occurs in its exact design branch after research checks.
+        set_country_flag = foc_ai_capital_imperial_design_registered_v1
+        refresh_auto_generated_ship_designs = yes
+    }
+}
+
+# The scripted Fallen-Empire New Republic needs the special designs; ordinary
+# Treaty successors need the non-special _NR designs. Register both through the
+# existing guarded effects, then let country type decide which channel is shown.
+foc_ai_capital_register_new_republic_designs = {
+    if = {
+        limit = {
+            foc_ai_capital_is_new_republic_country = yes
+            NOT = { has_country_flag = foc_ai_capital_nr_designs_registered_v1 }
+        }
+        # Set the construction authorization before creating fixed designs;
+        # ship-size visibility is identity-gated, while the final build button
+        # remains locked behind this flag.
+        set_country_flag = foc_saga_new_republic_shipyard_access
+        foc_republic_origin_repair_new_republic_ship_blueprints = yes
+        if = {
+            limit = { has_global_flag = foc_republic_origin_galactic_treaty }
+            foc_saga_open_new_republic_shipyards = yes
+        }
+        set_country_flag = foc_ai_capital_nr_designs_registered_v1
+        refresh_auto_generated_ship_designs = yes
+    }
+}

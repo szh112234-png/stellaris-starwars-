@@ -1,0 +1,71 @@
+namespace = foc_v232n
+
+event = {
+    id = foc_v232n.1
+    hide_window = yes
+    is_triggered_only = yes
+    immediate = {
+        if = {
+            limit = {
+                OR = {
+                    foc_v232n_after_death_star_two = yes
+                    any_country = { has_country_flag = foc_republic_origin_death_star_two_destroyed }
+                }
+            }
+            inline_script = "foc_v232n_endor_reward_cutoff"
+        }
+        every_country = {
+            limit = { foc_v232n_is_resistance = yes }
+            country_event = { id = foc_v232n.2 }
+        }
+    
+        if = {
+            limit = { NOT = { has_global_flag = foc_v232n_factory_migration_done } }
+            every_country = {
+                limit = {
+                    exists = capital_scope
+                    OR = {
+                        foc_v137_is_story_starfighter_country = yes
+                        has_country_flag = foc_sw_scripted_fallen_empire
+                    }
+                }
+                capital_scope = { foc_v232m_ensure_vanilla_droid_factory = yes }
+            }
+            set_global_flag = foc_v232n_factory_migration_done
+        }
+    }
+}
+
+country_event = {
+    id = foc_v232n.2
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        foc_v232n_is_resistance = yes
+        NOT = { has_country_flag = foc_v232n_leadership_busy }
+    }
+    immediate = {
+        # set_leader itself raises on_ruler_set: guard against re-entry.
+        set_country_flag = foc_v232n_leadership_busy
+        inline_script = "foc_v232n_resistance_leadership"
+        remove_country_flag = foc_v232n_leadership_busy
+    }
+}
+
+# Planet/carrier event: retry only once on the same real colony, no new pops/species.
+carrier_event = {
+    id = foc_v232n.3
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { is_colony = yes exists = owner }
+    immediate = {
+        foc_v232m_ensure_vanilla_droid_factory = yes
+        if = {
+            limit = { OR = { has_building = building_robot_assembly_plant has_building = building_robot_assembly_complex } }
+            log = "FOC_V232N_FACTORY: [This.GetName] robot factory verified after deferred primary-zone initialization."
+        }
+        else = {
+            log = "FOC_V232N_FACTORY: [This.GetName] still lacks a factory after one retry; no unrelated building was deleted to force it."
+        }
+    }
+}

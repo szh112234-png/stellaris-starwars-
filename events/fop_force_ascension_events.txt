@@ -1,0 +1,935 @@
+namespace = fop_origin
+
+# Accept Palpatine's mantle without changing the player into an unplayable
+# crisis country. Exegol and the Final Order arsenal are created by this
+# player-safe branch instead of the ordinary foc_khan.62 country creation.
+country_event = {
+    id = fop_origin.53
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        foc_v17_is_player_first_order = yes
+        has_country_flag = fop_origin_chose_final_order
+        NOT = { has_country_flag = fop_player_final_order }
+    }
+    immediate = {
+        foc_v1716_inherit_existing_final_order = yes
+        remove_country_flag = fop_player_first_order
+        set_country_flag = fop_player_final_order
+        remove_country_flag = foc_saga_thrawn_in_command
+        foc_std_weapon_grant_gen_3 = yes
+        country_event = { id = foc_player_supercap.1 }
+        set_country_flag = fop_origin_crisis_active
+        set_country_flag = is_player_crisis
+        set_country_flag = fop_player_final_order_spawn_pending
+        set_country_flag = foc_sith_wayfinder_route_known
+        set_country_flag = ssp_fighter_group_empire
+        remove_country_flag = ssp_strength_balanced
+        set_country_flag = ssp_strength_sg
+        set_country_flag = ssp_strength_selected
+        foc_sync_ssp_strength_to_main_difficulty = yes
+        set_country_flag = ssp_size_original
+        set_name = "FOC_KHAN_FINAL_ORDER"
+        change_government = {
+            authority = auth_imperial
+            cooldown = no
+            remove_invalid_civics = yes
+            civics = { civic = civic_distinguished_admiralty civic = civic_nationalistic_zeal }
+        }
+        set_graphical_culture = fop_first_order_01
+        set_city_graphical_culture = first_01
+        add_seen_bypass_type = foc_sith_wayfinder
+        add_seen_bypass_type = foc_imperial_remnant_route
+        if = {
+            limit = { is_ai = yes }
+            give_technology = { tech = tech_ssp_imperial_hyperspace message = no }
+        }
+        if = {
+            limit = { is_ai = yes }
+            give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no }
+        }
+        give_technology = { tech = tech_space_construction message = no }
+        give_technology = { tech = tech_assault_armies message = no }
+        give_technology = { tech = tech_battleships message = no }
+        give_technology = { tech = tech_titans message = no }
+        give_technology = { tech = foc_tech_dark_legacy_xyston message = no }
+        if = {
+            limit = {
+                foc_v1714_xyston_standard_buildable = yes
+                NOT = { has_country_flag = foc_v1714_xyston_standard_registered }
+            }
+            if = {
+                limit = { has_global_flag = foc_khan_strength_lowest }
+                create_ship_design = { design = "NAME_FOC_V1714_PLAYER_XYSTON_ISD1_V1718E_LOWEST" }
+            }
+            else = {
+                create_ship_design = { design = "NAME_FOC_V1714_PLAYER_XYSTON_ISD1" }
+            }
+            foc_v1716_register_design_3807ea65c2ec = yes
+            set_country_flag = foc_v1714_xyston_standard_registered
+        }
+        add_resource = {
+            energy = 2000000
+            minerals = 2000000
+            alloys = 2000000
+            unity = 2000000
+        }
+        foc_khan_clear_all_strength_modifiers = yes
+        if = {
+            limit = {
+                NOT = {
+                    any_system = { has_star_flag = foc_khan_exegol_home }
+                }
+            }
+            set_spawn_system_batch = begin
+            no_scope = {
+                spawn_system = {
+                    hyperlane = no
+                    is_discovered = no
+                    min_distance >= 550
+                    max_distance <= 560
+                    min_orientation_angle = 308
+                    max_orientation_angle = 314
+                    initializer = foc_khan_exegol_system
+                }
+            }
+            set_spawn_system_batch = end
+        }
+        refresh_auto_generated_ship_designs = yes
+        set_country_flag = foc_v1717b_player_order_shipset_repaired
+        country_event = { id = fop_origin.54 days = 3 }
+    }
+}
+
+
+country_event = {
+    id = fop_origin.54
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        has_country_flag = fop_player_final_order
+        has_country_flag = fop_player_final_order_spawn_pending
+        any_system = {
+            has_star_flag = foc_khan_exegol_home
+            any_system_planet = { has_planet_flag = foc_khan_exegol_capital }
+        }
+    }
+
+    immediate = {
+        random_system = {
+            limit = { has_star_flag = foc_khan_exegol_home }
+            save_global_event_target_as = foc_khan_final_order_system
+            save_global_event_target_as = fop_player_final_order_system
+            isolate_system = yes
+            random_system_planet = {
+                limit = { has_planet_flag = foc_khan_exegol_capital }
+                save_global_event_target_as = foc_khan_exegol_capital
+            }
+        }
+        save_global_event_target_as = foc_khan_final_order
+        set_variable = { which = foc_khan_xyston_support_spawned value = 0 }
+
+        event_target:foc_khan_exegol_capital = {
+            if = {
+                limit = { NOT = { is_colony = yes } }
+                create_colony = { owner = root }
+                generate_start_deposits_and_blockers = yes
+                clear_blockers = yes
+                colony = {
+                    inline_script = "foc_v232i_safe_colony_layout"
+                    generate_start_pops = yes
+                    generate_home_planet_final_pass = yes
+                }
+            }
+            # An inherited Exegol colony keeps its population and infrastructure.
+            if = {
+                limit = { is_owned_by = root }
+                set_controller = root
+            }
+            set_capital = yes
+        }
+
+        event_target:foc_khan_final_order_system = {
+            if = {
+                limit = { NOT = { any_system_megastructure = { is_megastructure_type = foc_sith_wayfinder_gate } } }
+                spawn_megastructure = {
+                    type = foc_sith_wayfinder_gate
+                    owner = root
+                    planet = star
+                    orbit_distance = 180
+                    orbit_angle = 45
+                    init_effect = {
+                        set_name = "NAME_FOC_SITH_WAYFINDER_EXEGOL_GATE"
+                        set_megastructure_flag = foc_sith_wayfinder_exegol_gate
+                    }
+                }
+            }
+            if = {
+                limit = { NOT = { exists = starbase } }
+                create_starbase = {
+                    size = starbase_citadel
+                    owner = root
+                    effect = { set_starbase_flag = foc_khan_final_capital_starbase }
+                }
+            }
+
+            # Existing Final Order fleets were transferred in .53; never duplicate them.
+            if = {
+                limit = { root = { NOT = { has_country_flag = foc_v1716_inherited_final_order_assets } } }
+                foc_khan_spawn_final_initial_fleet_package = yes
+                foc_khan_spawn_final_invasion_fleet_212 = yes
+            }
+        }
+        set_timed_global_flag = { flag = foc_khan_final_support_monthly_cooldown_137 days = 360 }
+        set_timed_global_flag = { flag = foc_khan_final_war_support_delay_142 days = 360 }
+
+        event_target:foc_sw_jakku_system = {
+            if = {
+                limit = { NOT = { any_system_megastructure = { is_megastructure_type = foc_sith_wayfinder_gate } } }
+                spawn_megastructure = {
+                    type = foc_sith_wayfinder_gate
+                    owner = root
+                    planet = star
+                    orbit_distance = 230
+                    orbit_angle = 300
+                    init_effect = {
+                        set_name = "NAME_FOC_SITH_WAYFINDER_JAKKU_GATE"
+                        set_megastructure_flag = foc_sith_wayfinder_jakku_gate
+                    }
+                }
+            }
+        }
+
+        create_leader = {
+
+            tier = leader_tier_legendary
+            class = random_ruler
+            species = owner_main_species
+            name = "Emperor Palpatine"
+            gender = male
+            skill = 10
+            immortal = yes
+            leader_age_min = 70
+            leader_age_max = 100
+            event_leader = yes
+            skip_background_generation = yes
+            randomize_traits = no
+            effect = {
+                change_leader_portrait = fopalpatine_male_01
+                set_leader_flag = fop_player_palpatine_ruler
+                set_leader_flag = foc_saga_palpatine_exegol_clone
+            }
+        }
+        set_leader = last_created_leader
+        # V232e: the Emperor killed at Endor returns in the Sith Eternal clone body.
+        set_country_flag = foc_saga_palpatine_returned_final_order
+        set_country_flag = foc_v232e_palpatine_return_applied
+        set_global_flag = foc_saga_palpatine_returned_final_order
+        if = {
+            limit = { has_global_flag = foc_saga_palpatine_died_at_endor }
+            set_global_flag = foc_saga_palpatine_resurrected_after_endor
+        }
+
+        # V232e: announce the resurrection to every human player exactly once.
+        every_playable_country = {
+            limit = {
+                is_ai = no
+                NOT = { has_country_flag = foc_v232e_palpatine_return_story_shown }
+            }
+            country_event = { id = foc_v232e_palpatine_return.2 days = 1 }
+        }
+
+        add_seen_bypass_type = foc_sith_wayfinder
+        set_visited = event_target:foc_khan_final_order_system
+        set_visited = event_target:foc_sw_jakku_system
+        remove_country_flag = fop_player_final_order_spawn_pending
+        set_country_flag = fop_origin_player_final_order_established
+        set_global_flag = fop_origin_player_final_order_established
+        country_event = { id = fop_origin.55 days = 1 }
+    }
+}
+
+
+country_event = {
+    id = fop_origin.55
+    title = fop_origin.55.name
+    desc = fop_origin.55.desc
+    picture = GFX_foc_event_final_order_rises
+    location = event_target:foc_khan_final_order_system
+    is_triggered_only = yes
+    force_open = yes
+    option = { name = fop_origin.55.a }
+}
+
+
+# Resistance starts the ordinary independent Final Order sequence without
+# requiring a previously spawned NPC First Order. From this point the original
+# crisis events create and operate the Final Order normally.
+country_event = {
+    id = fop_origin.56
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        foc_v17_is_player_first_order = yes
+        has_country_flag = fop_origin_resisting_final_order
+        NOT = { has_global_flag = foc_khan_phase_two }
+    }
+
+    immediate = {
+        remove_global_flag = foc_khan_first_reinforcements_active
+        set_global_flag = foc_khan_phase_two_preparing
+        if = {
+            limit = { NOT = { any_system = { has_star_flag = foc_khan_exegol_home } } }
+            set_spawn_system_batch = begin
+            no_scope = {
+                spawn_system = {
+                    hyperlane = no
+                    is_discovered = no
+                    min_distance >= 550
+                    max_distance <= 560
+                    min_orientation_angle = 308
+                    max_orientation_angle = 314
+                    initializer = foc_khan_exegol_system
+                }
+            }
+            set_spawn_system_batch = end
+        }
+        country_event = { id = foc_khan.61 days = 3 }
+    }
+}
+
+
+# Resistance produces a true First Order civil war after the independent Final
+# Order has finished spawning. Protected assets (Ilum, Starkiller and Supremacy)
+# are never transferred by this script.
+country_event = {
+    id = fop_origin.57
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        foc_v17_is_player_first_order = yes
+        has_country_flag = fop_origin_resisting_final_order
+        NOT = { has_country_flag = fop_origin_civil_war_started }
+    }
+
+    immediate = {
+        foc_v1716_restore_final_order_target = yes
+
+        if = {
+            limit = { NOT = { exists = event_target:foc_khan_final_order } }
+            country_event = { id = fop_origin.57 days = 5 }
+        }
+        else = {
+            remove_global_flag = fop_origin_final_order_transition
+            set_country_flag = fop_origin_civil_war_started
+            foc_v1716_resist_final_order = yes
+
+            every_subject = {
+                random_list = {
+                    50 = {}
+                    50 = {
+                        set_subject_of = {
+                            who = event_target:foc_khan_final_order
+                            preset = preset_foc_khan_satrapy
+                        }
+                        set_country_flag = foc_khan_submitted_final_order
+                        remove_country_flag = fop_force_bound_subject
+                        remove_modifier = fop_force_bound_subject_modifier
+                        set_faction_hostility = {
+                            target = root
+                            set_hostile = yes
+                            set_neutral = no
+                            set_friendly = no
+                        }
+                        root = {
+                            set_faction_hostility = {
+                                target = prev
+                                set_hostile = yes
+                                set_neutral = no
+                                set_friendly = no
+                            }
+                        }
+                    }
+                }
+            }
+
+            every_owned_fleet = {
+                limit = {
+                    any_owned_ship = { is_ship_class = shipclass_military }
+                    NOT = { any_owned_ship = { has_ship_flag = sai_supremacy_arkship } }
+                    NOT = { any_owned_ship = { has_modifier = sai_supremacy_arkship_stats } }
+                }
+                random_list = {
+                    70 = {}
+                    30 = {
+                        set_owner = event_target:foc_khan_final_order
+                        set_fleet_stance = aggressive
+                    }
+                }
+            }
+
+            every_owned_planet = {
+                limit = {
+                    is_colony = yes
+                    NOT = { is_capital = yes }
+                    planet = {
+                        NOT = { has_planet_flag = fop_ilum_capital }
+                        NOT = { has_planet_flag = fop_starkiller_base_planet }
+                        NOT = { has_planet_flag = myk_starkiller_base_planet_flag }
+                    }
+                }
+                random_list = {
+                    75 = {}
+                    25 = {
+                        set_owner = event_target:foc_khan_final_order
+                        set_controller = event_target:foc_khan_final_order
+                    }
+                }
+            }
+
+            capital_scope = {
+                solar_system = {
+                    star = { save_event_target_as = fop_civil_war_spawn_star }
+                    while = {
+                        count = 2
+                        create_fleet = {
+                            name = "NAME_FOP_FINAL_ORDER_DEFECTORS"
+                            settings = { can_change_composition = no }
+                            effect = {
+                                set_owner = event_target:foc_khan_final_order
+                                # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+if = { limit = { NOT = { has_technology = tech_titans } } give_technology = { tech = tech_titans message = no } }
+}
+                                
+
+                                
+
+                                
+                                while = { count = 8 create_ship = { name = random design = "NAME_FOC_KHAN_RESURGENT" graphical_culture = first_01 upgradable = no } }
+                                while = { count = 2 create_ship = { name = random design = "NAME_FOC_KHAN_XYSTON_COMBAT" graphical_culture = first_01 upgradable = no } }
+                                set_location = {
+                                    target = event_target:fop_civil_war_spawn_star
+                                    distance = 80
+                                    angle = random
+                                }
+                                set_fleet_stance = aggressive
+                                set_aggro_range_measure_from = self
+                                set_aggro_range = 9999
+                            }
+                        }
+                    }
+                }
+            }
+
+            country_event = { id = fop_origin.58 days = 1 }
+        }
+    }
+}
+
+
+country_event = {
+    id = fop_origin.58
+    title = fop_origin.58.name
+    desc = fop_origin.58.desc
+    picture = GFX_foc_event_final_order_rises
+    is_triggered_only = yes
+    force_open = yes
+    option = { name = fop_origin.58.a }
+}
+
+
+# Any ordinary or Fallen Empire whose every colony has been occupied by the
+# player crisis is bound as a Force Thrall. This is the conquest mechanism used
+# by the ascension objectives.
+country_event = {
+    id = fop_origin.60
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        exists = event_target:fop_first_order_crisis_country
+        event_target:fop_first_order_crisis_country = {
+            has_country_flag = fop_origin_crisis_active
+        }
+        NOT = { is_same_value = event_target:fop_first_order_crisis_country }
+        OR = {
+            is_regular_empire = yes
+            is_country_type = fallen_empire
+            is_country_type = awakened_fallen_empire
+        }
+        is_subject = no
+        any_owned_planet = { is_colony = yes }
+        NOT = {
+            any_owned_planet = {
+                is_colony = yes
+                NOT = { is_controlled_by = event_target:fop_first_order_crisis_country }
+            }
+        }
+    }
+
+    immediate = {
+        if = {
+            limit = { is_overlord = yes }
+            every_subject = {
+                set_subject_of = {
+                    who = event_target:fop_first_order_crisis_country
+                    preset = preset_foc_khan_satrapy
+                }
+                set_country_flag = fop_force_bound_subject
+                set_timed_country_flag = { flag = rebellion_cooldown days = 3600 }
+                add_modifier = { modifier = fop_force_bound_subject_modifier days = -1 }
+                set_faction_hostility = {
+                    target = event_target:fop_first_order_crisis_country
+                    set_hostile = no
+                    set_neutral = no
+                    set_friendly = yes
+                }
+                event_target:fop_first_order_crisis_country = {
+                    set_faction_hostility = {
+                        target = prev
+                        set_hostile = no
+                        set_neutral = no
+                        set_friendly = yes
+                    }
+                }
+            }
+        }
+
+        set_subject_of = {
+            who = event_target:fop_first_order_crisis_country
+            preset = preset_foc_khan_satrapy
+        }
+        set_country_flag = fop_force_bound_subject
+        set_timed_country_flag = { flag = rebellion_cooldown days = 3600 }
+        add_modifier = { modifier = fop_force_bound_subject_modifier days = -1 }
+
+        set_faction_hostility = {
+            target = event_target:fop_first_order_crisis_country
+            set_hostile = no
+            set_neutral = no
+            set_friendly = yes
+        }
+        event_target:fop_first_order_crisis_country = {
+            set_faction_hostility = {
+                target = prev
+                set_hostile = no
+                set_neutral = no
+                set_friendly = yes
+            }
+            change_variable = { which = fop_force_dominion_points value = 100 }
+        }
+    }
+}
+
+
+# Status console inspired by Shipgirl's custom crisis screen, implemented as a
+# dependency-free event menu so the origin overhaul remains self-contained.
+country_event = {
+    id = fop_origin.65
+    title = fop_origin.65.name
+    desc = { trigger = { check_variable = { which = fop_force_dominion_level value = 1 } } text = fop_origin.65.desc.1 }
+    desc = { trigger = { check_variable = { which = fop_force_dominion_level value = 2 } } text = fop_origin.65.desc.2 }
+    desc = { trigger = { check_variable = { which = fop_force_dominion_level value = 3 } } text = fop_origin.65.desc.3 }
+    desc = { trigger = { check_variable = { which = fop_force_dominion_level value = 4 } } text = fop_origin.65.desc.4 }
+    desc = { trigger = { check_variable = { which = fop_force_dominion_level value = 5 } } text = fop_origin.65.desc.5 }
+    desc = { trigger = { check_variable = { which = fop_force_dominion_level value >= 6 } } text = fop_origin.65.desc.6 }
+    picture = GFX_evt_shrouded_planet
+    is_triggered_only = yes
+    option = { name = fop_origin.65.a }
+}
+
+
+# Stage II: the first Force Thrall.
+country_event = {
+    id = fop_origin.70
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        is_ai = no
+        OR = { has_origin = origin_fop_first_order has_country_flag = foc_republic_origin_empire_crisis }
+        has_country_flag = fop_origin_crisis_active
+        check_variable = { which = fop_force_dominion_level value = 1 }
+        check_variable = { which = fop_force_dominion_points value >= 400 }
+        vassals > 0
+    }
+    immediate = { country_event = { id = fop_origin.71 } }
+}
+
+country_event = {
+    id = fop_origin.71
+    title = fop_origin.71.name
+    desc = fop_origin.71.desc
+    picture = GFX_evt_psionics
+    is_triggered_only = yes
+    immediate = {
+        set_variable = { which = fop_force_dominion_level value = 2 }
+        add_modifier = { modifier = fop_force_chains_stage days = -1 }
+        add_modifier = { modifier = fop_phase1_crisis_rank_2 days = -1 }
+    }
+    option = { name = fop_origin.71.a }
+}
+
+
+# Stage III: three Force Thralls, or complete domination in a small galaxy.
+country_event = {
+    id = fop_origin.72
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        is_ai = no
+        OR = { has_origin = origin_fop_first_order has_country_flag = foc_republic_origin_empire_crisis }
+        has_country_flag = fop_origin_crisis_active
+        check_variable = { which = fop_force_dominion_level value = 2 }
+        check_variable = { which = fop_force_dominion_points value >= 1200 }
+        OR = {
+            has_global_flag = foc_story_hosnian_destroyed
+            has_country_flag = fop_origin_new_republic_annexed
+            NOT = { any_country = { has_country_flag = foc_sw_new_republic_country } }
+        }
+        OR = {
+            vassals > 2
+            fop_origin_controls_galaxy = yes
+        }
+    }
+    immediate = { country_event = { id = fop_origin.73 } }
+}
+
+country_event = {
+    id = fop_origin.73
+    title = fop_origin.73.name
+    desc = fop_origin.73.desc
+    picture = GFX_evt_psionics
+    is_triggered_only = yes
+    immediate = {
+        set_variable = { which = fop_force_dominion_level value = 3 }
+        add_modifier = { modifier = fop_force_dominion_stage days = -1 }
+        add_modifier = { modifier = fop_phase1_crisis_rank_3 days = -1 }
+    }
+    option = { name = fop_origin.73.a }
+}
+
+
+# Stage IV: no independent ordinary/Fallen Empire remains, and a resisted Final
+# Order has been defeated. The project to enslave the Force is then unlocked.
+country_event = {
+    id = fop_origin.74
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        is_ai = no
+        OR = { has_origin = origin_fop_first_order has_country_flag = foc_republic_origin_empire_crisis }
+        has_country_flag = fop_origin_crisis_active
+        check_variable = { which = fop_force_dominion_level value = 3 }
+        check_variable = { which = fop_force_dominion_points value >= 3000 }
+        any_system = { has_star_flag = foc_sw_coruscant_home space_owner? = { is_same_value = root } }
+        any_system = { has_star_flag = foc_sw_kuat_home space_owner? = { is_same_value = root } }
+        any_system = { has_star_flag = foc_sw_jakku_home space_owner? = { is_same_value = root } }
+    }
+    immediate = { country_event = { id = fop_origin.75 } }
+}
+
+country_event = {
+    id = fop_origin.75
+    title = fop_origin.75.name
+    desc = fop_origin.75.desc
+    picture = GFX_evt_shrouded_planet
+    is_triggered_only = yes
+    force_open = yes
+    immediate = {
+        set_variable = { which = fop_force_dominion_level value = 4 }
+        add_modifier = { modifier = fop_phase1_crisis_rank_4 days = -1 }
+        set_country_flag = fop_force_enslavement_project_unlocked
+        set_country_flag = fop_force_enslavement_project_waiting
+
+    }
+    option = { name = fop_origin.75.a }
+}
+
+
+
+# V127 - special projects do not accept trigger custom_tooltips in 4.4.6.
+# Keep rank IV at 3000 points, but reveal the Force-enslavement project only
+# when the original 5000-point condition is actually met.
+country_event = {
+    id = fop_origin.76
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        is_ai = no
+        OR = {
+            has_origin = origin_fop_first_order
+            has_country_flag = foc_republic_origin_empire_crisis
+        }
+        has_country_flag = fop_origin_crisis_active
+        has_country_flag = fop_force_enslavement_project_waiting
+        NOT = { has_country_flag = fop_force_enslaved }
+        check_variable = { which = fop_force_dominion_level value = 4 }
+        check_variable = { which = fop_force_dominion_points value >= 5000 }
+        fop_origin_controls_galaxy = yes
+        NOT = { has_special_project = FOP_ENSLAVE_FORCE_PROJECT }
+    }
+    immediate = {
+        remove_country_flag = fop_force_enslavement_project_waiting
+        capital_scope = {
+            solar_system = {
+                star = {
+                    enable_special_project = {
+                        name = FOP_ENSLAVE_FORCE_PROJECT
+                        location = this
+                        owner = root
+                    }
+                }
+            }
+        }
+    }
+}
+
+# The Force is chained; now the player tears open a route and invades the Shroud.
+country_event = {
+    id = fop_origin.80
+    title = fop_origin.80.name
+    desc = fop_origin.80.desc
+    picture = GFX_evt_shrouded_planet
+    is_triggered_only = yes
+    force_open = yes
+    trigger = {
+        has_country_flag = fop_origin_crisis_active
+        check_variable = { which = fop_force_dominion_level value = 4 }
+        check_variable = { which = fop_force_dominion_points value >= 5000 }
+    }
+    immediate = {
+        set_country_flag = fop_force_enslaved
+        set_country_flag = fop_shroud_invasion_spawn_pending
+        set_variable = { which = fop_force_dominion_level value = 5 }
+        add_modifier = { modifier = fop_force_enslaved_stage days = -1 }
+        add_modifier = { modifier = fop_phase1_crisis_rank_5 days = -1 }
+
+        capital_scope = {
+            solar_system = { save_global_event_target_as = fop_force_shroud_anchor_system }
+        }
+        if = {
+            limit = { NOT = { any_system = { has_star_flag = fop_force_shroud_realm } } }
+            set_spawn_system_batch = begin
+            event_target:fop_force_shroud_anchor_system = {
+                spawn_system = {
+                    hyperlane = no
+                    is_discovered = no
+                    min_distance = 35
+                    max_distance = 45
+                    min_orientation_angle = 300
+                    max_orientation_angle = 320
+                    initializer = fop_force_shroud_realm_system
+                }
+            }
+            set_spawn_system_batch = end
+        }
+        country_event = { id = fop_origin.81 days = 3 }
+    }
+    option = { name = fop_origin.80.a }
+}
+
+
+country_event = {
+    id = fop_origin.81
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        is_ai = no
+        OR = { has_origin = origin_fop_first_order has_country_flag = foc_republic_origin_empire_crisis }
+        has_country_flag = fop_shroud_invasion_spawn_pending
+        any_system = { has_star_flag = fop_force_shroud_realm }
+    }
+
+    immediate = {
+        random_system = {
+            limit = { has_star_flag = fop_force_shroud_realm }
+            save_global_event_target_as = fop_force_shroud_realm_system
+        }
+        event_target:fop_force_shroud_anchor_system = {
+            add_hyperlane = { from = this to = event_target:fop_force_shroud_realm_system }
+        }
+
+        if = {
+            limit = { NOT = { exists = event_target:fop_force_shroud_country } }
+            create_country = {
+                name = "NAME_FOP_WILL_OF_THE_SHROUD"
+                type = shroud_spirits
+                flag = {
+                    icon = { category = "special" file = "the_shroud.dds" }
+                    background = { category = "backgrounds" file = "00_solid.dds" }
+                    colors = { "dark_purple" "black" "null" "null" }
+                }
+            }
+            last_created_country = {
+                set_country_flag = fop_force_shroud_country
+                save_global_event_target_as = fop_force_shroud_country
+                establish_communications_no_message = root
+                add_modifier = { modifier = fop_shroud_guardian_power days = -1 }
+                set_faction_hostility = {
+                    target = root
+                    set_hostile = yes
+                    set_neutral = no
+                    set_friendly = no
+                }
+            }
+        }
+
+        set_faction_hostility = {
+            target = event_target:fop_force_shroud_country
+            set_hostile = yes
+            set_neutral = no
+            set_friendly = no
+        }
+
+        event_target:fop_force_shroud_realm_system = {
+            star = { save_event_target_as = fop_force_shroud_spawn_star }
+            while = {
+                count = 12
+                create_fleet = {
+                    name = "NAME_Corrupted_Avatar"
+                    settings = { can_change_composition = no spawn_debris = no is_boss = yes }
+                    effect = {
+                        set_owner = event_target:fop_force_shroud_country
+                        create_ship = { name = "NAME_Corrupted_Avatar" design = "NAME_Corrupted_Avatar" }
+                        set_location = {
+                            target = event_target:fop_force_shroud_spawn_star
+                            distance = 120
+                            angle = random
+                        }
+                        set_fleet_stance = aggressive
+                        set_aggro_range_measure_from = return_point
+                        set_aggro_range = 2000
+                    }
+                }
+            }
+            create_fleet = {
+                name = "NAME_FOP_SHROUD_GODHOST"
+                settings = { can_change_composition = no spawn_debris = no is_boss = yes }
+                effect = {
+                    set_owner = event_target:fop_force_shroud_country
+                    while = { count = 6 create_ship = { name = "NAME_Corrupted_Avatar" design = "NAME_Corrupted_Avatar" } }
+                    set_location = {
+                        target = event_target:fop_force_shroud_spawn_star
+                        distance = 80
+                        angle = random
+                    }
+                    set_fleet_stance = aggressive
+                    set_aggro_range_measure_from = return_point
+                    set_aggro_range = 2000
+                }
+            }
+        }
+
+        set_visited = event_target:fop_force_shroud_realm_system
+        remove_country_flag = fop_shroud_invasion_spawn_pending
+        set_country_flag = fop_shroud_invasion_active
+        country_event = { id = fop_origin.82 days = 1 }
+    }
+}
+
+
+country_event = {
+    id = fop_origin.82
+    title = fop_origin.82.name
+    desc = fop_origin.82.desc
+    picture = GFX_evt_shrouded_planet
+    location = event_target:fop_force_shroud_realm_system
+    is_triggered_only = yes
+    force_open = yes
+    option = { name = fop_origin.82.a }
+}
+
+
+# Destroying every Shroud avatar exposes the throne at the heart of the realm.
+country_event = {
+    id = fop_origin.90
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        is_ai = no
+        OR = { has_origin = origin_fop_first_order has_country_flag = foc_republic_origin_empire_crisis }
+        has_country_flag = fop_shroud_invasion_active
+        NOT = { has_country_flag = fop_shroud_conquered }
+        exists = event_target:fop_force_shroud_country
+        event_target:fop_force_shroud_country = { NOT = { any_owned_ship = { always = yes } } }
+    }
+    immediate = {
+        set_country_flag = fop_shroud_conquered
+        remove_country_flag = fop_shroud_invasion_active
+        event_target:fop_force_shroud_country = { destroy_country = yes }
+        clear_global_event_target = fop_force_shroud_country
+        event_target:fop_force_shroud_realm_system = {
+            star = {
+                enable_special_project = {
+                    name = FOP_COSMIC_ASCENSION_PROJECT
+                    location = this
+                    owner = root
+                }
+            }
+        }
+        country_event = { id = fop_origin.91 days = 1 }
+    }
+}
+
+
+country_event = {
+    id = fop_origin.91
+    title = fop_origin.91.name
+    desc = fop_origin.91.desc
+    picture = GFX_evt_shrouded_planet
+    location = event_target:fop_force_shroud_realm_system
+    is_triggered_only = yes
+    force_open = yes
+    option = { name = fop_origin.91.a }
+}
+
+
+# Final victory: the ruler becomes a new cosmic god while the player country
+# remains playable and continues to command its Force-bound galaxy.
+country_event = {
+    id = fop_origin.100
+    title = fop_origin.100.name
+    desc = fop_origin.100.desc
+    picture = GFX_evt_shrouded_planet
+    location = event_target:fop_force_shroud_realm_system
+    is_triggered_only = yes
+    force_open = yes
+    immediate = {
+        set_country_flag = fop_new_cosmic_deity
+        set_global_flag = fop_new_cosmic_deity_ascended
+        set_variable = { which = fop_force_dominion_level value = 6 }
+        add_modifier = { modifier = fop_new_cosmic_deity_modifier days = -1 }
+        add_resource = { energy = 5000000 minerals = 5000000 alloys = 5000000 unity = 5000000 }
+        every_subject = {
+            set_country_flag = fop_force_bound_subject
+            if = {
+                limit = { NOT = { has_modifier = fop_force_bound_subject_modifier } }
+                add_modifier = { modifier = fop_force_bound_subject_modifier days = -1 }
+            }
+        }
+    }
+    option = { name = fop_origin.100.a }
+}

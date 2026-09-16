@@ -1,0 +1,62 @@
+# This is a template which multiple species can use. 
+
+kotor2sith_female_clothes_01 = {
+	default = "gfx/models/portraits/kotor2sith/kotorsith_female_clothes_officer2.dds"
+	
+	game_setup = {#will run with a limited country scope. species and government is set but the country does not actually exist
+		default = "gfx/models/portraits/kotor2sith/kotorsith_female_clothes_officer2.dds"
+	}
+	
+	#species scope
+	species = { #generic portrait for a species
+		default = "gfx/models/portraits/kotor2sith/kotorsith_female_clothes_officer2.dds"
+	}
+	
+	#pop scope
+	pop = { #for a specific pop
+		default = "gfx/models/portraits/kotor2sith/kotorsith_female_clothes_officer2.dds"
+		
+		"gfx/models/portraits/kotor2sith/kotorsith_female_clothes_officer2.dds"	= { OR = { is_pop_category = worker is_enslaved = yes is_pop_category = simple_drone }  }
+		"gfx/models/portraits/kotor2sith/kotorsith_female_clothes_officer2.dds"		= { OR = { is_pop_category = specialist is_pop_category = complex_drone } }
+		"gfx/models/portraits/kotor2sith/kotorsith_female_clothes_admiral.dds" 	= { is_pop_category = ruler }
+	}
+	#leader scope
+	leader = { #scientists, generals, admirals, governor
+		"gfx/models/portraits/kotor2sith/kotorsith_female_clothes_officer2.dds" = {
+			leader_class = general
+			NOT = {
+				has_trait = leader_trait_general_psionic
+			}
+		}
+		"gfx/models/portraits/kotor2sith/kotorsith_female_clothes_general2.dds" = {
+			leader_class = general
+			has_trait = leader_trait_general_psionic
+		}
+		"gfx/models/portraits/kotor2sith/kotorsith_female_clothes_officer2.dds" = { leader_class = scientist }
+		"gfx/models/portraits/kotor2sith/kotorsith_female_clothes_admiral.dds" = { leader_class = commander }
+		"gfx/models/portraits/kotor2sith/kotorsith_female_clothes_sithassassin.dds" = { leader_class = official }
+	}
+
+	#leader scope 
+	ruler = { #for rulers
+		default = "gfx/models/portraits/kotor2sith/kotorsith_female_clothes_sithlord.dds"
+		
+		"gfx/models/portraits/kotor2sith/kotorsith_female_clothes_sithassassin.dds" = { owner = { has_generic_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/kotor2sith/kotorsith_female_clothes_admiral.dds" = { owner = { has_militarist_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/kotor2sith/kotorsith_female_clothes_sithlord.dds" = { owner = { has_spiritualist_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/kotor2sith/kotorsith_female_clothes_officer2.dds"  = { owner = { has_pacifist_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/kotor2sith/kotorsith_female_clothes_sithassassin.dds"  = { owner = { has_primitive_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/kotor2sith/kotorsith_female_clothes_officer2.dds" = { owner = { has_materialist_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/kotor2sith/kotorsith_female_clothes_sithlord.dds" = { owner = { has_authority = auth_imperial } }
+	}
+}
+
+kotor2sith_female_hair_1 = { 
+	default = "gfx/models/portraits/kotor2sith/kotorsith_female_hair_red_style_01.dds"
+	
+	ruler = {
+	default = "gfx/models/portraits/kotor2sith/kotorsith_female_hair_black_style_01.dds"
+	
+		"gfx/models/portraits/kotor2sith/kotorsith_female_hair_black_style_01.dds" = { owner = { has_government = military_dictatorship } }
+	}
+}

@@ -1,0 +1,86 @@
+namespace = foc_coruscant_lane
+
+# 3.11w: Coruscant receives its own permanent ordinary hyperlane into the main
+# galaxy. This is a SECOND gateway that exists ALONGSIDE the Jakku gateway --
+# Jakku's lane is created during cluster generation and is deliberately left
+# intact, so the two Fallen Empire clusters have two independent routes into
+# the galaxy: Jakku (Imperial Remnant side) and Coruscant (New Republic side).
+#
+# 3.11w-v4: every earlier version searched outward from Coruscant by euclidean
+# distance and never found an endpoint -- the scripted clusters are generated
+# far outside the galaxy proper, so even a 450-unit radius reached nothing and
+# the event just retried forever. The search is gone. Instead the lane is
+# anchored on the system Jakku already links to, which is flagged
+# foc_sw_jakku_gateway_neighbor during generation and is therefore guaranteed
+# to exist, to be an ordinary system and to be part of the connected web.
+# Coruscant links to one of that system's neighbours when a suitable one
+# exists (so the two gateways enter the galaxy at different points), and falls
+# back to the anchor itself otherwise.
+event = {
+    id = foc_coruscant_lane.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        # V169 external map uses a natural wormhole from Coruscant to the main
+        # galaxy. Never let this legacy repair recreate the removed hyperlane.
+        NOT = { has_global_flag = foc_swmap_simplified_image_layout }
+        NOT = { has_global_flag = foc_sw_coruscant_galaxy_lane_added_311w }
+        any_system = { has_star_flag = foc_sw_coruscant_home }
+        any_system = { has_star_flag = foc_sw_jakku_gateway_neighbor }
+    }
+
+    immediate = {
+        random_system = {
+            limit = { has_star_flag = foc_sw_coruscant_home }
+            save_event_target_as = foc_sw_coruscant_lane_anchor_311w
+        }
+        random_system = {
+            limit = { has_star_flag = foc_sw_jakku_gateway_neighbor }
+            save_event_target_as = foc_sw_coruscant_gate_anchor_311w
+        }
+
+        # Preferred: a neighbour of the proven gateway system, so the New
+        # Republic lane enters the galaxy at a different point than Jakku's.
+        event_target:foc_sw_coruscant_gate_anchor_311w = {
+            random_neighbor_system = {
+                limit = {
+                    foc_coruscant_lane_valid_target_311w = yes
+                    NOT = { has_star_flag = foc_sw_jakku_gateway_neighbor }
+                    NOT = { has_hyperlane_to = event_target:foc_sw_coruscant_lane_anchor_311w }
+                }
+                save_event_target_as = foc_sw_coruscant_lane_target_311w
+            }
+        }
+
+        # Fallback: the gateway system itself.
+        if = {
+            limit = { NOT = { exists = event_target:foc_sw_coruscant_lane_target_311w } }
+            event_target:foc_sw_coruscant_gate_anchor_311w = {
+                save_event_target_as = foc_sw_coruscant_lane_target_311w
+            }
+        }
+
+        if = {
+            limit = { exists = event_target:foc_sw_coruscant_lane_target_311w }
+            event_target:foc_sw_coruscant_lane_anchor_311w = {
+                if = {
+                    limit = {
+                        NOT = {
+                            has_hyperlane_to = event_target:foc_sw_coruscant_lane_target_311w
+                        }
+                    }
+                    add_hyperlane = {
+                        from = this
+                        to = event_target:foc_sw_coruscant_lane_target_311w
+                    }
+                }
+            }
+            set_global_flag = foc_sw_coruscant_galaxy_lane_added_311w
+            log = "FOC_3.11W: Coruscant linked to the main galaxy (second gateway alongside Jakku)."
+        }
+        else = {
+            log = "FOC_3.11W: Coruscant gateway could not resolve an endpoint this month; will retry."
+        }
+    }
+}

@@ -1,0 +1,120 @@
+namespace = foc_khan_232
+
+# One-time old-save migration. Rebuild every surviving special Xyston as an
+# independent planet-killer fleet and disable army reinforcement on dead/absorbed
+# First Order remnants.
+event = {
+    id = foc_khan_232.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        NOT = { has_global_flag = foc_khan_232_migrated }
+        OR = {
+            any_country = { has_country_flag = foc_khan_first_order_country }
+            any_country = { has_country_flag = foc_khan_final_order_country }
+        }
+    }
+
+    immediate = {
+        set_global_flag = foc_khan_232_migrated
+
+        every_country = {
+            limit = {
+                has_country_flag = foc_khan_first_order_country
+                OR = {
+                    has_country_flag = foc_khan_absorbed_by_final_order
+                    has_global_flag = foc_khan_phase_two
+                    NOT = { any_owned_planet = { is_colony = yes } }
+                }
+            }
+            set_country_flag = foc_khan_order_army_reinforcements_disabled_232
+            remove_country_flag = foc_khan_230_army_reinforcement_cooldown
+        }
+
+        every_country = {
+            limit = { has_country_flag = foc_khan_final_order_country }
+            every_owned_fleet = {
+                limit = { any_owned_ship = { OR = { is_ship_size = foc_khan_xystonsd is_ship_size = foc_khan_xystonsd_foc_lowest } } }
+                remove_fleet_flag = foc_khan_xyston_active_single_order_225
+                remove_fleet_flag = foc_khan_xyston_cleanup_scheduled_225
+                remove_fleet_flag = foc_khan_xyston_retarget_pending_218
+                remove_auto_move_target = yes
+                clear_orders = yes
+                clear_fleet_actions = this
+                foc_khan_xyston_colossus_automatic_action = yes
+            }
+        }
+    }
+}
+
+# Monthly watchdog. It only touches special one-ship Xyston fleets whose action
+# queue is absent; ordinary 17-ship combat reinforcements are never included.
+event = {
+    id = foc_khan_232.2
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { always = no }
+}
+
+
+# Restore Exegol's capital starbase after it is destroyed, but only after the
+# hostile fleet has left. The Final Order remains alive through the planet itself.
+system_event = {
+    id = foc_khan_232.3
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_star_flag = foc_khan_exegol_home
+        exists = event_target:foc_khan_final_order
+        exists = event_target:foc_khan_exegol_capital
+        event_target:foc_khan_exegol_capital = {
+            is_colony = yes
+            is_owned_by = event_target:foc_khan_final_order
+            is_controlled_by = event_target:foc_khan_final_order
+        }
+        NOT = { exists = starbase }
+    }
+
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    any_fleet_in_system = {
+                        exists = owner
+                        owner = { is_hostile = event_target:foc_khan_final_order }
+                    }
+                }
+            }
+            create_starbase = {
+                size = starbase_citadel
+                owner = event_target:foc_khan_final_order
+                effect = { set_starbase_flag = foc_khan_final_capital_starbase }
+            }
+        }
+        else = { system_event = { id = foc_khan_232.3 days = 30 } }
+    }
+}
+
+# Country-pulse starter for the delayed Exegol starbase restoration.
+country_event = {
+    id = foc_khan_232.4
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_khan_final_order_country
+        has_global_flag = foc_khan_phase_two
+        NOT = { has_global_flag = foc_khan_crisis_finished }
+        exists = event_target:foc_khan_final_order_system
+        exists = event_target:foc_khan_exegol_capital
+        event_target:foc_khan_final_order_system = { NOT = { exists = starbase } }
+    }
+
+    immediate = {
+        event_target:foc_khan_final_order_system = {
+            system_event = { id = foc_khan_232.3 days = 5 }
+        }
+    }
+}

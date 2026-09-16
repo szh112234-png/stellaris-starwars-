@@ -1,0 +1,315 @@
+namespace = foc_v153_request
+
+# V153 requested repair keeper.
+# - repairs V152/V153 saves where the Phase-I Death Star project/timer state
+#   was inconsistent; V154 uses player research projects and AI story timers;
+# - applies/removes the secret-superweapon economic burden;
+# - performs one-shot passive-uprising cleanup after Death Star I completion;
+# - upgrades major named story characters to Stellaris native legendary leader tier;
+# - uses only real mechanical Force traits (FOC Force-sensitive + vanilla Psionic).
+country_event = {
+    id = foc_v153_request.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        OR = {
+            has_country_flag = foc_republic_origin_empire_country
+            any_owned_leader = {
+                OR = {
+                    has_leader_flag = foc_saga_luke_leader
+                    has_leader_flag = foc_saga_leia_leader
+                    has_leader_flag = foc_saga_mon_mothma_leader
+                    has_leader_flag = foc_saga_kylo_leader
+                    has_leader_flag = foc_hero_kylo_ren
+                    has_leader_flag = foc_saga_thrawn_leader
+                    has_leader_flag = foc_canon_ahsoka_leader
+                    has_leader_flag = foc_canon_obiwan_returned_leader
+                    has_leader_flag = foc_canon_han_solo_leader
+                    has_leader_flag = foc_canon_yoda_returned_leader
+                    has_leader_flag = foc_canon_cal_kestis_leader
+                    has_leader_flag = foc_republic_origin_yoda_leader
+                    has_leader_flag = foc_republic_origin_windu_leader
+                    has_leader_flag = foc_republic_origin_kenobi_leader
+                    has_leader_flag = foc_republic_origin_anakin_leader
+                    has_leader_flag = foc_republic_origin_vader_leader
+                    has_leader_flag = foc_republic_origin_clone_marshal
+                    has_leader_flag = foc_republic_origin_death_star_commander
+                    has_leader_flag = foc_republic_origin_ackbar_leader
+                    has_leader_flag = foc_republic_origin_raddus_leader
+                    has_leader_flag = foc_republic_origin_lando_leader
+                    has_leader_flag = foc_saga_grievous_leader
+                    has_leader_flag = foc_khan_palpatine_ruler
+                    has_leader_flag = fop_player_palpatine_ruler
+                    has_leader_flag = foc_bo_katan_legendary_leader
+                    has_leader_flag = foc_din_djarin_legendary_leader
+                    has_leader_flag = foc_rey_legendary_leader
+                }
+            }
+        }
+    }
+
+    immediate = {
+        # ------------------------------------------------------------------
+        # Death Star I project repair / burden
+        # ------------------------------------------------------------------
+        if = {
+            limit = { has_country_flag = foc_republic_origin_empire_country }
+            save_global_event_target_as = foc_republic_origin_empire
+
+            # A V152 save can already be in the Galactic Civil War with .32
+            # consumed but no project flag. Start the same fixed 20-year plan.
+            if = {
+                limit = {
+                    has_global_flag = foc_republic_origin_empire_war_active
+                    NOT = { has_country_flag = foc_republic_origin_death_star_project_started }
+                    NOT = { has_country_flag = foc_republic_origin_death_star_one_built }
+                    exists = event_target:foc_sw_coruscant_system
+                }
+                set_country_flag = foc_republic_origin_death_star_project_started
+                foc_v235_start_death_star_early_clock = yes
+            }
+
+            if = {
+                limit = {
+                    has_country_flag = foc_republic_origin_death_star_project_started
+                    NOT = { has_country_flag = foc_republic_origin_death_star_one_built }
+                }
+                if = {
+                    limit = { NOT = { has_modifier = foc_republic_origin_secret_superweapon_construction } }
+                    add_modifier = { modifier = foc_republic_origin_secret_superweapon_construction days = -1 }
+                }
+                if = {
+                    limit = {
+                        is_ai = no
+                        NOT = { has_special_project = FOC_REPUBLIC_ORIGIN_DEATH_STAR_PROJECT }
+                        NOT = { has_special_project = FOC_V202_DEATH_STAR_PROJECT_EMERGENCY }
+                        NOT = { has_country_flag = foc_v138_death_star_one_engineering_work_complete }
+                        exists = event_target:foc_sw_coruscant_system
+                    }
+                    if = {
+                        limit = { has_country_flag = foc_v202_player_death_star_one_emergency_project }
+                        event_target:foc_sw_coruscant_system = {
+                            star = {
+                                enable_special_project = {
+                                    name = FOC_V202_DEATH_STAR_PROJECT_EMERGENCY
+                                    location = this
+                                    owner = event_target:foc_republic_origin_empire
+                                }
+                            }
+                        }
+                    }
+                    else = {
+                        event_target:foc_sw_coruscant_system = {
+                            star = {
+                                enable_special_project = {
+                                    name = FOC_REPUBLIC_ORIGIN_DEATH_STAR_PROJECT
+                                    location = this
+                                    owner = event_target:foc_republic_origin_empire
+                                }
+                            }
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        is_ai = yes
+                        NOT = { has_country_flag = foc_v138_death_star_one_fixed_timer_started }
+                    }
+                    set_country_flag = foc_v138_death_star_one_fixed_timer_started
+                    country_event = { id = foc_republic_origin.170 days = 7200 }
+                }
+                else_if = {
+                    limit = {
+                        is_ai = no
+                        has_country_flag = foc_v138_death_star_one_engineering_work_complete
+                    }
+                    # Recover a player save where the project completed but the
+                    # success event was lost before the next day tick.
+                    country_event = { id = foc_republic_origin.170 days = 1 }
+                }
+                if = {
+                    limit = {
+                        is_ai = yes
+                        has_special_project = FOC_REPUBLIC_ORIGIN_DEATH_STAR_PROJECT
+                    }
+                    abort_special_project = { type = FOC_REPUBLIC_ORIGIN_DEATH_STAR_PROJECT }
+                }
+            }
+
+            # V154 Phase-II recovery: player Empire uses a 12k engineering
+            # project (~4 years at the same baseline as Phase I), while AI uses
+            # the fixed four-year story timer. Old V153 player timers are harmless
+            # because .174 now requires player project completion.
+            if = {
+                limit = {
+                    has_country_flag = foc_republic_origin_death_star_two_project_started
+                    OR = { is_ai = no has_country_flag = foc_ds2_bothan_revealed }
+                    NOT = { has_country_flag = foc_republic_origin_death_star_two_built }
+                }
+                if = {
+                    limit = {
+                        is_ai = yes
+                        NOT = { has_country_flag = foc_v138_death_star_two_fixed_timer_started }
+                    }
+                    set_country_flag = foc_v138_death_star_two_fixed_timer_started
+                    country_event = { id = foc_republic_origin.174 }
+                }
+                else_if = {
+                    limit = {
+                        is_ai = no
+                        has_country_flag = foc_v138_death_star_two_engineering_work_complete
+                    }
+                    country_event = { id = foc_republic_origin.174 days = 1 }
+                }
+                else_if = {
+                    limit = {
+                        is_ai = no
+                        NOT = { has_special_project = FOC_REPUBLIC_ORIGIN_DEATH_STAR_II_PROJECT }
+                        NOT = { has_special_project = FOC_V202_DEATH_STAR_II_PROJECT_EMERGENCY }
+                        exists = event_target:foc_swmap_endor_system
+                    }
+                    if = {
+                        limit = { has_country_flag = foc_v202_player_death_star_two_emergency_project }
+                        event_target:foc_swmap_endor_system = {
+                            star = {
+                                enable_special_project = {
+                                    name = FOC_V202_DEATH_STAR_II_PROJECT_EMERGENCY
+                                    location = this
+                                    owner = event_target:foc_republic_origin_empire
+                                }
+                            }
+                        }
+                    }
+                    else = {
+                        event_target:foc_swmap_endor_system = {
+                            star = {
+                                enable_special_project = {
+                                    name = FOC_REPUBLIC_ORIGIN_DEATH_STAR_II_PROJECT
+                                    location = this
+                                    owner = event_target:foc_republic_origin_empire
+                                }
+                            }
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        is_ai = yes
+                        has_special_project = FOC_REPUBLIC_ORIGIN_DEATH_STAR_II_PROJECT
+                    }
+                    abort_special_project = { type = FOC_REPUBLIC_ORIGIN_DEATH_STAR_II_PROJECT }
+                }
+            }
+
+            # Old saves that already finished Death Star I must not keep either
+            # the project or the construction burden. Passive partisan states are
+            # cleared once; active Rebel-instigated uprisings can still be launched later.
+            if = {
+                limit = { has_country_flag = foc_republic_origin_death_star_one_built }
+                if = {
+                    limit = { has_modifier = foc_republic_origin_secret_superweapon_construction }
+                    remove_modifier = foc_republic_origin_secret_superweapon_construction
+                }
+                if = {
+                    limit = { has_special_project = FOC_REPUBLIC_ORIGIN_DEATH_STAR_PROJECT }
+                    abort_special_project = { type = FOC_REPUBLIC_ORIGIN_DEATH_STAR_PROJECT }
+                }
+                # V190: preserve existing partisan cells/networks/uprisings in old saves.
+                # Random progression is suppressed dynamically while a Death Star exists.
+                remove_country_flag = foc_gcw_passive_uprisings_ended
+            }
+
+            # V155: Palpatine uses the native 4.4 legendary leader tier and real psionic traits.
+            if = {
+                limit = { NOT = { has_global_flag = foc_saga_palpatine_died_at_endor } }
+                ruler = {
+                    set_leader_tier = leader_tier_legendary
+                    if = { limit = { NOT = { has_trait = leader_trait_foc_force_sensitive } } add_trait = { trait = leader_trait_foc_force_sensitive consume_selection = no } }
+                    if = { limit = { NOT = { has_trait = leader_trait_psionic } } add_trait = { trait = leader_trait_psionic consume_selection = no } }
+                }
+            }
+
+            # V155 old-save Ahsoka repair: never leave her on the Imperial roster.
+            if = {
+                limit = { any_owned_leader = { has_leader_flag = foc_canon_ahsoka_leader } }
+                every_owned_leader = {
+                    limit = { has_leader_flag = foc_canon_ahsoka_leader }
+                    kill_leader = { show_notification = no }
+                }
+                if = { limit = { exists = event_target:foc_canon_ahsoka } clear_global_event_target = foc_canon_ahsoka }
+                set_global_flag = foc_canon_ahsoka_left_order
+                if = {
+                    limit = { OR = { has_global_flag = foc_canon_ahsoka_fulcrum_returned has_country_flag = foc_canon_ahsoka_fulcrum_shown } }
+                    every_country = {
+                        limit = { OR = { has_country_flag = foc_republic_origin_imperial_rebel_country has_country_flag = foc_republic_origin_rebel_alliance_country has_country_flag = foc_khan_rebel_alliance_country } }
+                        foc_canon_create_ahsoka = yes
+                    }
+                }
+            }
+        }
+
+        # ------------------------------------------------------------------
+        # Native Stellaris legendary tier for major named Star Wars figures.
+        # ------------------------------------------------------------------
+        every_owned_leader = {
+            if = {
+                limit = {
+                    OR = {
+                    has_leader_flag = foc_saga_luke_leader
+                    has_leader_flag = foc_saga_leia_leader
+                    has_leader_flag = foc_saga_mon_mothma_leader
+                    has_leader_flag = foc_saga_kylo_leader
+                    has_leader_flag = foc_hero_kylo_ren
+                    has_leader_flag = foc_saga_thrawn_leader
+                    has_leader_flag = foc_canon_ahsoka_leader
+                    has_leader_flag = foc_canon_obiwan_returned_leader
+                    has_leader_flag = foc_canon_han_solo_leader
+                    has_leader_flag = foc_canon_yoda_returned_leader
+                    has_leader_flag = foc_canon_cal_kestis_leader
+                    has_leader_flag = foc_republic_origin_yoda_leader
+                    has_leader_flag = foc_republic_origin_windu_leader
+                    has_leader_flag = foc_republic_origin_kenobi_leader
+                    has_leader_flag = foc_republic_origin_anakin_leader
+                    has_leader_flag = foc_republic_origin_vader_leader
+                    has_leader_flag = foc_republic_origin_clone_marshal
+                    has_leader_flag = foc_republic_origin_death_star_commander
+                    has_leader_flag = foc_republic_origin_ackbar_leader
+                    has_leader_flag = foc_republic_origin_raddus_leader
+                    has_leader_flag = foc_republic_origin_lando_leader
+                    has_leader_flag = foc_saga_grievous_leader
+                    has_leader_flag = foc_khan_palpatine_ruler
+                    has_leader_flag = fop_player_palpatine_ruler
+                    has_leader_flag = foc_bo_katan_legendary_leader
+                    has_leader_flag = foc_din_djarin_legendary_leader
+                    has_leader_flag = foc_rey_legendary_leader
+                    }
+                }
+                if = { limit = { NOT = { is_leader_tier = leader_tier_legendary } } set_leader_tier = leader_tier_legendary }
+            }
+            if = {
+                limit = {
+                    OR = {
+                    has_leader_flag = foc_canon_ahsoka_leader
+                    has_leader_flag = foc_canon_cal_kestis_leader
+                    has_leader_flag = foc_canon_obiwan_returned_leader
+                    has_leader_flag = foc_canon_yoda_returned_leader
+                    has_leader_flag = foc_hero_kylo_ren
+                    has_leader_flag = foc_khan_palpatine_ruler
+                    has_leader_flag = foc_republic_origin_anakin_leader
+                    has_leader_flag = foc_republic_origin_kenobi_leader
+                    has_leader_flag = foc_republic_origin_vader_leader
+                    has_leader_flag = foc_republic_origin_windu_leader
+                    has_leader_flag = foc_republic_origin_yoda_leader
+                    has_leader_flag = foc_rey_legendary_leader
+                    has_leader_flag = foc_saga_kylo_leader
+                    has_leader_flag = foc_saga_luke_leader
+                    has_leader_flag = fop_player_palpatine_ruler
+                    }
+                }
+                if = { limit = { NOT = { has_trait = leader_trait_foc_force_sensitive } } add_trait = { trait = leader_trait_foc_force_sensitive consume_selection = no } }
+                if = { limit = { NOT = { has_trait = leader_trait_psionic } } add_trait = { trait = leader_trait_psionic consume_selection = no } }
+            }
+        }
+    }
+}

@@ -1,0 +1,98 @@
+# Empire country scope. Combat calls this on the exact loss tick; .171 is the
+# idempotent fallback for scripted deletion and saves without a combat callback.
+foc_ds2_start_second_program = {
+    set_global_flag = foc_republic_origin_death_star_one_destroyed
+    # V17: the Imperial II refit briefing follows the loss immediately instead of
+    # waiting for a pulse. Covers the player Empire and every imperial-class AI.
+    every_country = {
+        limit = {
+            OR = {
+                has_country_flag = foc_republic_origin_empire_country
+                foc_ai_capital_is_imperial_class_country = yes
+            }
+            NOT = { has_technology = foc_v17_tech_imperialsd2 }
+        }
+        country_event = { id = foc_v17_isd2.1 days = 3 }
+    }
+    every_country = {
+        limit = { OR = { has_modifier = foc_republic_origin_scarif_death_star_attack_solution has_modifier = foc_lowest_ds_scarif_attack_solution } }
+        remove_modifier = foc_republic_origin_scarif_death_star_attack_solution
+        remove_modifier = foc_lowest_ds_scarif_attack_solution
+    }
+    if = {
+        limit = {
+            has_country_flag = foc_republic_origin_empire_country
+            NOT = { has_country_flag = foc_ds2_program_started }
+            NOT = { has_country_flag = foc_republic_origin_death_star_two_built }
+        }
+        set_country_flag = foc_ds2_program_started
+        if = {
+            limit = { is_ai = yes }
+            set_timed_country_flag = { flag = foc_ds2_bothan_wait days = 1440 }
+            country_event = { id = foc_ds2_integration.9 days = 1440 }
+        }
+        else = {
+            # Player construction is available immediately after Death Star I's loss.
+            country_event = { id = foc_republic_origin.172 }
+        }
+    }
+}
+
+# Country scope. This changes no offensive modifier: the stolen second set of
+# blueprints reveals Endor, while the old Scarif attack solution stays retired.
+foc_ds2_reveal_bothan_intelligence = {
+    if = {
+        limit = { NOT = { has_country_flag = foc_ds2_bothan_revealed } }
+        set_country_flag = foc_ds2_bothan_revealed
+        remove_country_flag = foc_ds2_bothan_wait
+        every_country = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_republic_origin_player_rebels
+                    has_country_flag = foc_republic_origin_imperial_rebel_country
+                    has_country_flag = foc_republic_origin_rebel_alliance_country
+                    has_country_flag = foc_khan_rebel_alliance_country
+                }
+            }
+            set_country_flag = foc_ds2_bothan_blueprints_obtained
+            set_visited = event_target:foc_swmap_endor_system
+            event_target:foc_swmap_endor_system = {
+                set_surveyed = { surveyed = yes surveyor = prev }
+            }
+            if = {
+                limit = { is_ai = no }
+                country_event = { id = foc_ds2_integration.11 }
+            }
+        }
+        if = {
+            limit = { is_ai = no }
+            country_event = { id = foc_ds2_integration.12 }
+        }
+    }
+}
+
+# Country scope. An optional engineering project is the only supported refit;
+# the fleet remains excluded from automatic native upgrades, including AI ones.
+foc_ds2_enable_refit_project = {
+    if = {
+        limit = {
+            is_ai = no
+            has_country_flag = foc_republic_origin_empire_country
+            has_country_flag = foc_republic_origin_death_star_two_built
+            NOT = { has_country_flag = foc_ds2_refit_completed }
+            NOT = { has_country_flag = foc_ds2_refit_work_complete }
+            NOT = { has_special_project = FOC_DS2_MOBILE_REFIT_PROJECT }
+            any_owned_ship = { has_ship_flag = foc_republic_origin_death_star_two }
+            exists = event_target:foc_swmap_endor_system
+        }
+        event_target:foc_swmap_endor_system = {
+            star = {
+                enable_special_project = {
+                    name = FOC_DS2_MOBILE_REFIT_PROJECT
+                    location = this
+                    owner = prevprev
+                }
+            }
+        }
+    }
+}

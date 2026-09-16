@@ -1,0 +1,31 @@
+# This is a template which multiple species can use. 
+  
+clonetrooper_male_02_hair = {
+	default = "gfx/models/portraits/gar/gar_male_clonetrooper2_hair.dds"
+	
+	game_setup = {#will run with a limited country scope. species and government is set but the country does not actually exist
+		default = "gfx/models/portraits/gar/gar_male_clonetrooper2_hair.dds" ## STORMTROOPER OFFICER
+	}
+	
+	#species scope
+	species = { #generic portrait for a species
+		default = "gfx/models/portraits/gar/gar_male_clonetrooper2_hair.dds" ## STORMTROOPER OFFICER
+	}
+	
+	#pop scope
+	pop = { #for a specific pop
+	
+		default = "gfx/models/portraits/gar/gar_male_clonetrooper2_hair.dds" ## STORMTROOPER
+
+		random = {
+			list = {
+				"gfx/models/portraits/gar/gar_male_clonetrooper2_hair.dds" ## STORMTROOPER
+				"gfx/models/portraits/gar/no_helmet.dds"
+			}
+		}	
+		
+	}
+	
+	
+}
+  

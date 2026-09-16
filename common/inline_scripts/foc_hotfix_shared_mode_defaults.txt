@@ -1,0 +1,65 @@
+# Same-scope expansion avoids the engine scripted-effect post-init depth limit.
+    # Strategic fighter display always starts at original model scale.
+    remove_country_flag = ssp_size_2x
+    remove_country_flag = ssp_size_5x
+    remove_country_flag = ssp_size_10x
+    set_country_flag = ssp_size_original
+
+    # V137: fighter technology is no longer controlled by the start-mode preset
+    # for Star Wars story countries.  Republic / Empire-Order / Rebel identities
+    # receive only their own family.  Ordinary-origin countries are the explicit
+    # exception and retain the old "all three families" start-option behaviour.
+    if = {
+        limit = { foc_v137_is_story_starfighter_country = yes }
+        foc_v137_sync_story_starfighter_access = yes
+    }
+    else = {
+        remove_country_flag = ssp_fighter_group_empire
+        remove_country_flag = ssp_fighter_group_rebel
+        remove_country_flag = ssp_fighter_group_republic
+        set_country_flag = ssp_fighter_group_all
+        if = { limit = { is_ai = yes } give_technology = { tech = tech_ssp_imperial_hyperspace message = no } }
+        if = { limit = { is_ai = yes } give_technology = { tech = tech_ssp_rebel_hyperspace message = no } }
+        if = { limit = { is_ai = yes } give_technology = { tech = tech_ssp_republic_hyperspace message = no } }
+    }
+
+    # Default complete story chronology remains 2200.
+    remove_global_flag = foc_story_timeline_start_2250
+    remove_global_flag = foc_story_timeline_start_2300
+    remove_global_flag = foc_story_timeline_start_2400
+    set_global_flag = foc_story_timeline_start_2200
+
+    remove_global_flag = foc_story_timeline_naboo_immediate
+    remove_global_flag = foc_story_timeline_naboo_2150
+    remove_global_flag = foc_story_timeline_naboo_2250
+    remove_global_flag = foc_story_timeline_naboo_2300
+    remove_global_flag = foc_story_timeline_naboo_2400
+    set_global_flag = foc_story_timeline_naboo_2200
+
+    # V191 ordering: the setup preset is now shown only after custom-origin
+    # relocation is complete. Preserve the Republic/First Order replacement
+    # routes instead of re-enabling the ordinary NPC First Order crisis after
+    # those origins have deliberately disabled it. Ordinary origins retain the
+    # original preset behaviour.
+    if = {
+        limit = {
+            OR = {
+                has_origin = origin_fop_first_order
+                has_origin = origin_foc_republic_unification
+                has_global_flag = fop_origin_replaces_first_order_crisis
+                has_global_flag = foc_republic_origin_active
+            }
+        }
+        set_global_flag = foc_khan_crisis_disabled
+        remove_global_flag = foc_khan_crisis_spawn_scheduled
+    }
+    else = {
+        remove_global_flag = foc_khan_crisis_disabled
+    }
+
+    set_global_flag = foc_khan_three_tier_split_migrated_321
+    set_global_flag = foc_khan_strength_migrated_079
+    set_global_flag = foc_khan_five_tier_migrated_254
+
+    # Synchronise fighter combat profile to the chosen main difficulty.
+    foc_sync_ssp_strength_to_main_difficulty = yes

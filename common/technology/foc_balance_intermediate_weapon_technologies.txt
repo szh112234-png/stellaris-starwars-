@@ -1,0 +1,2957 @@
+# Each technology unlocks usable weapons; never granted by the generic arsenal effects.
+foc_tech_emp_turbo_3_bridge_1 = {
+    icon = "tech_lasers_3"
+    cost = 1950
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_turbo_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_turbo_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_turbo_3_step_1 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_turbo_3_bridge_2 = {
+    icon = "tech_lasers_3"
+    cost = 2150
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_turbo_3_bridge_1" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_turbo_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_turbo_3_step_3 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_turbo_3_bridge_3 = {
+    icon = "tech_lasers_3"
+    cost = 2350
+    area = engineering
+    tier = 5
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_turbo_3_bridge_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_turbo_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_turbo_3_step_5 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_reb_turbo_3_bridge_1 = {
+    icon = "tech_lasers_3"
+    cost = 1950
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_turbo_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_turbo_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_reb_turbo_3_step_1 }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_reb_turbo_3_bridge_2 = {
+    icon = "tech_lasers_3"
+    cost = 2150
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_turbo_3_bridge_1" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_turbo_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_reb_turbo_3_step_3 }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_reb_turbo_3_bridge_3 = {
+    icon = "tech_lasers_3"
+    cost = 2350
+    area = engineering
+    tier = 5
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_turbo_3_bridge_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_turbo_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_reb_turbo_3_step_5 }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_emp_quad_3_bridge_1 = {
+    icon = "tech_lasers_3"
+    cost = 1000
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_quad_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_quad_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_quad_3_step_1 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_quad_3_bridge_2 = {
+    icon = "tech_lasers_3"
+    cost = 1100
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_quad_3_bridge_1" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_quad_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_quad_3_step_3 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_quad_3_bridge_3 = {
+    icon = "tech_lasers_3"
+    cost = 1175
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_quad_3_bridge_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_quad_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_quad_3_bridge_4 = {
+    icon = "tech_lasers_3"
+    cost = 1275
+    area = engineering
+    tier = 5
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_quad_3_bridge_3" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_quad_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_quad_3_step_6 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_quad_3_bridge_5 = {
+    icon = "tech_lasers_3"
+    cost = 1375
+    area = engineering
+    tier = 5
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_quad_3_bridge_4" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_quad_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_quad_3_bridge_6 = {
+    icon = "tech_lasers_3"
+    cost = 1475
+    area = engineering
+    tier = 5
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_quad_3_bridge_5" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_quad_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_quad_3_step_9 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_reb_quad_3_bridge_1 = {
+    icon = "tech_lasers_3"
+    cost = 1000
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_quad_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_quad_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_reb_quad_3_step_1 }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_reb_quad_3_bridge_2 = {
+    icon = "tech_lasers_3"
+    cost = 1100
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_quad_3_bridge_1" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_quad_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_reb_quad_3_bridge_3 = {
+    icon = "tech_lasers_3"
+    cost = 1175
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_quad_3_bridge_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_quad_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_reb_quad_3_bridge_4 = {
+    icon = "tech_lasers_3"
+    cost = 1275
+    area = engineering
+    tier = 5
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_quad_3_bridge_3" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_quad_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_reb_quad_3_bridge_5 = {
+    icon = "tech_lasers_3"
+    cost = 1375
+    area = engineering
+    tier = 5
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_quad_3_bridge_4" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_quad_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_reb_quad_3_bridge_6 = {
+    icon = "tech_lasers_3"
+    cost = 1475
+    area = engineering
+    tier = 5
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_quad_3_bridge_5" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_quad_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_emp_octuple_2_bridge_1 = {
+    icon = "tech_lasers_2"
+    cost = 525
+    area = engineering
+    tier = 2
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_std_octuple_1" }
+    weight = 60
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_octuple_2 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_octuple_2_step_1 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_octuple_2_bridge_2 = {
+    icon = "tech_lasers_2"
+    cost = 575
+    area = engineering
+    tier = 2
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_octuple_2_bridge_1" }
+    weight = 60
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_octuple_2 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_octuple_2_step_3 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_octuple_2_bridge_3 = {
+    icon = "tech_lasers_2"
+    cost = 650
+    area = engineering
+    tier = 2
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_octuple_2_bridge_2" }
+    weight = 60
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_octuple_2 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_octuple_2_bridge_4 = {
+    icon = "tech_lasers_2"
+    cost = 700
+    area = engineering
+    tier = 3
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_octuple_2_bridge_3" }
+    weight = 60
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_octuple_2 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_octuple_2_step_6 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_octuple_2_bridge_5 = {
+    icon = "tech_lasers_2"
+    cost = 750
+    area = engineering
+    tier = 3
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_octuple_2_bridge_4" }
+    weight = 60
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_octuple_2 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_octuple_2_step_8 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_octuple_3_bridge_1 = {
+    icon = "tech_lasers_3"
+    cost = 1950
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_octuple_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_octuple_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_octuple_3_step_2 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_octuple_3_bridge_2 = {
+    icon = "tech_lasers_3"
+    cost = 2150
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_octuple_3_bridge_1" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_octuple_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_octuple_3_step_5 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_octuple_3_bridge_3 = {
+    icon = "tech_lasers_3"
+    cost = 2350
+    area = engineering
+    tier = 5
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_octuple_3_bridge_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_octuple_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_octuple_3_step_8 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_reb_octuple_2_bridge_1 = {
+    icon = "tech_lasers_2"
+    cost = 675
+    area = engineering
+    tier = 2
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_std_octuple_1" }
+    weight = 60
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_octuple_2 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_reb_octuple_2_step_1 }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_reb_octuple_2_bridge_2 = {
+    icon = "tech_lasers_2"
+    cost = 725
+    area = engineering
+    tier = 2
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_octuple_2_bridge_1" }
+    weight = 60
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_octuple_2 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_reb_octuple_2_bridge_3 = {
+    icon = "tech_lasers_2"
+    cost = 800
+    area = engineering
+    tier = 3
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_octuple_2_bridge_2" }
+    weight = 60
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_octuple_2 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_reb_octuple_2_step_4 }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_reb_octuple_2_bridge_4 = {
+    icon = "tech_lasers_2"
+    cost = 875
+    area = engineering
+    tier = 3
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_octuple_2_bridge_3" }
+    weight = 60
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_octuple_2 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_reb_octuple_3_bridge_1 = {
+    icon = "tech_lasers_3"
+    cost = 1950
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_octuple_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_octuple_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_reb_octuple_3_step_3 }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_reb_octuple_3_bridge_2 = {
+    icon = "tech_lasers_3"
+    cost = 2150
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_octuple_3_bridge_1" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_octuple_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_reb_octuple_3_step_6 }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_reb_octuple_3_bridge_3 = {
+    icon = "tech_lasers_3"
+    cost = 2350
+    area = engineering
+    tier = 5
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_octuple_3_bridge_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_octuple_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_reb_octuple_3_step_9 }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_emp_ion_3_bridge_1 = {
+    icon = "tech_lasers_3"
+    cost = 2725
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_ion_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_ion_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_ion_3_step_2 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_ion_3_bridge_2 = {
+    icon = "tech_lasers_3"
+    cost = 3000
+    area = engineering
+    tier = 5
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_ion_3_bridge_1" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_ion_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_ion_3_step_5 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_reb_ion_3_bridge_1 = {
+    icon = "tech_lasers_3"
+    cost = 2725
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_ion_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_ion_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_reb_ion_3_step_2 }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_reb_ion_3_bridge_2 = {
+    icon = "tech_lasers_3"
+    cost = 3000
+    area = engineering
+    tier = 5
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_ion_3_bridge_1" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_ion_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_reb_ion_3_step_5 }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_emp_concussion_3_bridge_1 = {
+    icon = "tech_lasers_3"
+    cost = 2725
+    area = engineering
+    tier = 4
+    category = { propulsion }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_concussion_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_concussion_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_concussion_3_step_2 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_concussion_3_bridge_2 = {
+    icon = "tech_lasers_3"
+    cost = 3000
+    area = engineering
+    tier = 5
+    category = { propulsion }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_concussion_3_bridge_1" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_concussion_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_concussion_3_step_5 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_reb_concussion_3_bridge_1 = {
+    icon = "tech_lasers_3"
+    cost = 2725
+    area = engineering
+    tier = 4
+    category = { propulsion }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_concussion_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_concussion_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_reb_concussion_3_step_2 }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_reb_concussion_3_bridge_2 = {
+    icon = "tech_lasers_3"
+    cost = 3000
+    area = engineering
+    tier = 5
+    category = { propulsion }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_concussion_3_bridge_1" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_concussion_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_reb_concussion_3_step_5 }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_emp_proton_3_bridge_1 = {
+    icon = "tech_lasers_3"
+    cost = 2725
+    area = engineering
+    tier = 4
+    category = { propulsion }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_proton_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_proton_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_proton_3_step_2 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_proton_3_bridge_2 = {
+    icon = "tech_lasers_3"
+    cost = 3000
+    area = engineering
+    tier = 5
+    category = { propulsion }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_proton_3_bridge_1" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_proton_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_proton_3_step_5 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_reb_proton_3_bridge_1 = {
+    icon = "tech_lasers_3"
+    cost = 2725
+    area = engineering
+    tier = 4
+    category = { propulsion }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_proton_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_proton_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_reb_proton_3_step_2 }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_reb_proton_3_bridge_2 = {
+    icon = "tech_lasers_3"
+    cost = 3000
+    area = engineering
+    tier = 5
+    category = { propulsion }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_proton_3_bridge_1" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_proton_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_reb_proton_3_step_5 }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_emp_ionpulse_3_bridge_1 = {
+    icon = "tech_lasers_3"
+    cost = 2725
+    area = engineering
+    tier = 4
+    category = { propulsion }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_ionpulse_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_ionpulse_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_ionpulse_3_step_2 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_ionpulse_3_bridge_2 = {
+    icon = "tech_lasers_3"
+    cost = 3000
+    area = engineering
+    tier = 5
+    category = { propulsion }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_ionpulse_3_bridge_1" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_ionpulse_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_ionpulse_3_step_5 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_reb_ionpulse_3_bridge_1 = {
+    icon = "tech_lasers_3"
+    cost = 2725
+    area = engineering
+    tier = 4
+    category = { propulsion }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_ionpulse_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_ionpulse_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_reb_ionpulse_3_step_2 }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_reb_ionpulse_3_bridge_2 = {
+    icon = "tech_lasers_3"
+    cost = 3000
+    area = engineering
+    tier = 5
+    category = { propulsion }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_ionpulse_3_bridge_1" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_ionpulse_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_reb_ionpulse_3_step_5 }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_emp_disruptor_3_bridge_1 = {
+    icon = "tech_lasers_3"
+    cost = 2725
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_disruptor_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_disruptor_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_disruptor_3_step_2 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_disruptor_3_bridge_2 = {
+    icon = "tech_lasers_3"
+    cost = 3000
+    area = engineering
+    tier = 5
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_disruptor_3_bridge_1" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_disruptor_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_disruptor_3_step_5 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_reb_disruptor_3_bridge_1 = {
+    icon = "tech_lasers_3"
+    cost = 2725
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_disruptor_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_disruptor_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_reb_disruptor_3_step_2 }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_reb_disruptor_3_bridge_2 = {
+    icon = "tech_lasers_3"
+    cost = 3000
+    area = engineering
+    tier = 5
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_disruptor_3_bridge_1" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_disruptor_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_reb_disruptor_3_step_5 }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_emp_mass_3_bridge_1 = {
+    icon = "tech_lasers_3"
+    cost = 2725
+    area = engineering
+    tier = 4
+    category = { propulsion }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_mass_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_mass_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_mass_3_step_2 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_mass_3_bridge_2 = {
+    icon = "tech_lasers_3"
+    cost = 3000
+    area = engineering
+    tier = 5
+    category = { propulsion }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_mass_3_bridge_1" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_mass_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_mass_3_step_5 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_reb_mass_3_bridge_1 = {
+    icon = "tech_lasers_3"
+    cost = 2725
+    area = engineering
+    tier = 4
+    category = { propulsion }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_mass_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_mass_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_reb_mass_3_step_2 }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_reb_mass_3_bridge_2 = {
+    icon = "tech_lasers_3"
+    cost = 3000
+    area = engineering
+    tier = 5
+    category = { propulsion }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_mass_3_bridge_1" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_mass_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_reb_mass_3_step_5 }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_emp_heavy_3_bridge_1 = {
+    icon = "tech_lasers_3"
+    cost = 1950
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_heavy_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_heavy_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_heavy_3_step_2 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_heavy_3_bridge_2 = {
+    icon = "tech_lasers_3"
+    cost = 2150
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_heavy_3_bridge_1" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_heavy_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_heavy_3_step_5 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_heavy_3_bridge_3 = {
+    icon = "tech_lasers_3"
+    cost = 2350
+    area = engineering
+    tier = 5
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_heavy_3_bridge_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_heavy_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_heavy_3_step_8 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_reb_heavy_3_bridge_1 = {
+    icon = "tech_lasers_3"
+    cost = 2725
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_heavy_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_heavy_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_reb_heavy_3_step_1 }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_reb_heavy_3_bridge_2 = {
+    icon = "tech_lasers_3"
+    cost = 3000
+    area = engineering
+    tier = 5
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_heavy_3_bridge_1" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_heavy_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_emp_ionblast_3_bridge_1 = {
+    icon = "tech_lasers_3"
+    cost = 1950
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_ionblast_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_ionblast_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_ionblast_3_step_2 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_ionblast_3_bridge_2 = {
+    icon = "tech_lasers_3"
+    cost = 2150
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_ionblast_3_bridge_1" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_ionblast_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_ionblast_3_step_5 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_ionblast_3_bridge_3 = {
+    icon = "tech_lasers_3"
+    cost = 2350
+    area = engineering
+    tier = 5
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_ionblast_3_bridge_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_ionblast_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_ionblast_3_step_8 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_reb_ionblast_3_bridge_1 = {
+    icon = "tech_lasers_3"
+    cost = 2725
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_ionblast_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_ionblast_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_reb_ionblast_3_step_3 }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_reb_ionblast_3_bridge_2 = {
+    icon = "tech_lasers_3"
+    cost = 3000
+    area = engineering
+    tier = 5
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_ionblast_3_bridge_1" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_ionblast_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_reb_ionblast_3_step_7 }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_emp_plasma_3_bridge_1 = {
+    icon = "tech_lasers_3"
+    cost = 1950
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_plasma_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_plasma_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_plasma_3_step_2 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_plasma_3_bridge_2 = {
+    icon = "tech_lasers_3"
+    cost = 2150
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_plasma_3_bridge_1" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_plasma_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_plasma_3_step_5 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_plasma_3_bridge_3 = {
+    icon = "tech_lasers_3"
+    cost = 2350
+    area = engineering
+    tier = 5
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_plasma_3_bridge_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_plasma_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_plasma_3_step_8 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_reb_plasma_3_bridge_1 = {
+    icon = "tech_lasers_3"
+    cost = 2725
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_plasma_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_plasma_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_reb_plasma_3_step_3 }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_reb_plasma_3_bridge_2 = {
+    icon = "tech_lasers_3"
+    cost = 3000
+    area = engineering
+    tier = 5
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_plasma_3_bridge_1" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_plasma_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_reb_plasma_3_step_7 }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_emp_leech_3_bridge_1 = {
+    icon = "tech_lasers_3"
+    cost = 1950
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_leech_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_leech_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_leech_3_step_2 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_leech_3_bridge_2 = {
+    icon = "tech_lasers_3"
+    cost = 2150
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_leech_3_bridge_1" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_leech_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_leech_3_step_5 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_leech_3_bridge_3 = {
+    icon = "tech_lasers_3"
+    cost = 2350
+    area = engineering
+    tier = 5
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_leech_3_bridge_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_leech_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_leech_3_step_8 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_reb_leech_3_bridge_1 = {
+    icon = "tech_lasers_3"
+    cost = 2725
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_leech_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_leech_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_reb_leech_3_step_3 }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_reb_leech_3_bridge_2 = {
+    icon = "tech_lasers_3"
+    cost = 3000
+    area = engineering
+    tier = 5
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_leech_3_bridge_1" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_leech_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_reb_leech_3_step_7 }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_emp_protonbeam_3_bridge_1 = {
+    icon = "tech_lasers_3"
+    cost = 1950
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_protonbeam_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_protonbeam_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_protonbeam_3_step_2 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_protonbeam_3_bridge_2 = {
+    icon = "tech_lasers_3"
+    cost = 2150
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_protonbeam_3_bridge_1" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_protonbeam_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_protonbeam_3_step_5 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_protonbeam_3_bridge_3 = {
+    icon = "tech_lasers_3"
+    cost = 2350
+    area = engineering
+    tier = 5
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_protonbeam_3_bridge_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_protonbeam_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_protonbeam_3_step_8 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_reb_protonbeam_3_bridge_1 = {
+    icon = "tech_lasers_3"
+    cost = 2725
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_protonbeam_2" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_protonbeam_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_reb_protonbeam_3_step_3 }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_reb_protonbeam_3_bridge_2 = {
+    icon = "tech_lasers_3"
+    cost = 3000
+    area = engineering
+    tier = 5
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_protonbeam_3_bridge_1" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_protonbeam_3 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_reb_protonbeam_3_step_7 }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_emp_sphat_2_bridge_1 = {
+    icon = "tech_lasers_3"
+    cost = 1200
+    area = engineering
+    tier = 2
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_std_sphat_1" "foc_tech_kyber_mining" "foc_tech_emp_heavy_3" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_sphat_2 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_emp_sphat_2_step_1 }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_sphat_2_bridge_2 = {
+    icon = "tech_lasers_3"
+    cost = 1325
+    area = engineering
+    tier = 3
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_sphat_2_bridge_1" "foc_tech_kyber_mining" "foc_tech_emp_heavy_3" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_sphat_2 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_sphat_2_bridge_3 = {
+    icon = "tech_lasers_3"
+    cost = 1450
+    area = engineering
+    tier = 3
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_sphat_2_bridge_2" "foc_tech_kyber_mining" "foc_tech_emp_heavy_3" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_sphat_2 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_sphat_2_bridge_4 = {
+    icon = "tech_lasers_3"
+    cost = 1550
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_sphat_2_bridge_3" "foc_tech_kyber_mining" "foc_tech_emp_heavy_3" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_sphat_2 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_emp_sphat_2_bridge_5 = {
+    icon = "tech_lasers_3"
+    cost = 1675
+    area = engineering
+    tier = 5
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_emp_sphat_2_bridge_4" "foc_tech_kyber_mining" "foc_tech_emp_heavy_3" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_emp_sphat_2 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_empire_arsenal = yes
+            }
+        }
+    }
+
+    potential = {
+        foc_v1717_first_order_empire_arsenal_allowed = yes
+    
+        foc_v1718_allowed_country = yes
+    }
+}
+
+foc_tech_reb_sphat_2_bridge_1 = {
+    icon = "tech_lasers_3"
+    cost = 1950
+    area = engineering
+    tier = 2
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_std_sphat_1" "foc_tech_kyber_mining" "foc_tech_reb_heavy_3" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_sphat_2 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    
+        # v17.8 FOC-only fine-step prerequisite. LOWEST retains its old path.
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_khan_component_lowest }
+            NOT = { has_technology = foc_v178_tech_reb_sphat_2_step_1 }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_reb_sphat_2_bridge_2 = {
+    icon = "tech_lasers_3"
+    cost = 2150
+    area = engineering
+    tier = 3
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_sphat_2_bridge_1" "foc_tech_kyber_mining" "foc_tech_reb_heavy_3" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_sphat_2 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}
+
+foc_tech_reb_sphat_2_bridge_3 = {
+    icon = "tech_lasers_3"
+    cost = 2350
+    area = engineering
+    tier = 4
+    category = { materials }
+    ai_update_type = military
+    prerequisites = { "foc_tech_reb_sphat_2_bridge_2" "foc_tech_kyber_mining" "foc_tech_reb_heavy_3" }
+    weight = 45
+    ai_weight = {
+        factor = 1
+    }
+    weight_modifier = {
+        modifier = { factor = 0 has_technology = foc_tech_reb_sphat_2 }
+        modifier = {
+            factor = 0
+            NOT = {
+                foc_v14_can_research_rebel_arsenal = yes
+            }
+        }
+    }
+
+    potential = { foc_v1718_allowed_country = yes }
+}

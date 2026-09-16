@@ -1,0 +1,622 @@
+# FOC-only fallback AI budgets. Disabled once original SG initializes.
+# SG native budgets are not overwritten or duplicated by ID.
+
+## Categories used in this file must have use_for_ai_budget = yes defined in economic_categories ##
+## It is possible to have multiple entries with the same category and resource ##
+
+#################
+## Expenditure ##
+#################
+foc_v1712_sr_kyber_swgs_expenditure_buffer = { # Buffer, will not be spent
+	resource = sr_kyber_swgs
+	type = expenditure
+	category = buffer
+
+	potential = {
+        NOT = { has_global_flag = has_swgs_mod }
+		always = no
+	}
+
+	weight = {
+		weight = 0.0
+	}
+}
+
+foc_v1712_sr_kyber_swgs_expenditure_ships = {
+	resource = sr_kyber_swgs
+	type = expenditure
+	category = ships
+
+	potential = {
+        NOT = { has_global_flag = has_swgs_mod }
+		always = yes
+	}
+	
+	weight = {
+		weight = 0.6
+
+		# spend more sr_kyber_swgs building ships while at war
+		modifier = {
+			factor = 2
+			OR = {
+				recently_lost_war = yes
+				is_at_war = yes
+			}
+		}
+
+		# If we want to colonize and are at peace then prio that
+		modifier = {
+			factor = 0.25
+			AND = {
+				ai_colonize_plans > 0
+				is_at_war = no
+			}
+		}
+
+		# spend less sr_kyber_swgs on ships if over capacity
+		modifier = {
+			factor = 0.5
+			used_naval_capacity_percent >= 1.0
+		}
+
+		modifier = {
+			factor = 5
+			used_naval_capacity_percent < 1.0
+			OR = {
+				any_neighbor_country = {
+					has_ascension_perk = ap_become_the_crisis
+				}
+				any_country = {
+					is_crisis_faction = yes
+				}
+			}
+		}
+	}
+}
+
+foc_v1712_sr_kyber_swgs_expenditure_ship_upgrades = {
+	resource = sr_kyber_swgs
+	type = expenditure
+	category = ship_upgrades
+
+	potential = {
+        NOT = { has_global_flag = has_swgs_mod }
+		is_at_war = no
+	}
+
+	weight = {
+		weight = 0.2
+
+		# spend more on ship upgrades if at capacity
+		modifier = {
+			factor = 4
+			used_naval_capacity_percent >= 1.0
+		}
+	}
+}
+
+foc_v1712_sr_kyber_swgs_expenditure_planets = {
+	resource = sr_kyber_swgs
+	type = expenditure
+	category = planets
+
+	potential = {
+        NOT = { has_global_flag = has_swgs_mod }
+		always = yes
+	}
+
+	weight = {
+		weight = 0.1
+	}
+
+	desired_min = {
+		base = 150
+	}
+
+	desired_max = {
+		base = 450
+	}
+}
+
+foc_v1712_sr_kyber_swgs_expenditure_starbases = {
+	resource = sr_kyber_swgs
+	type = expenditure
+	category = starbases
+
+	potential = {
+        NOT = { has_global_flag = has_swgs_mod }
+		NOT = {
+			is_country_type = fallen_empire
+		}
+	}
+
+	weight = {
+		weight = 0.3
+
+		# spend more on starbase upgrades if at fleet cap
+		modifier = {
+			factor = 4
+			used_naval_capacity_percent >= 1.0
+		}
+
+		# Reduce spending on claiming new systems if we have unclaimed planets
+		modifier = {
+			factor = 0.25
+			ai_colonize_plans > 0
+		}
+	}
+}
+
+foc_v1712_sr_kyber_swgs_expenditure_starbases_expand = {
+	resource = sr_kyber_swgs
+	type = expenditure
+	category = starbases
+
+	potential = {
+        NOT = { has_global_flag = has_swgs_mod }
+		has_ai_expansion_plan = yes
+		highest_threat < 50
+		NOT = {
+			is_country_type = fallen_empire
+			is_country_type = awakened_fallen_empire
+			ai_colonize_plans > 0
+		}
+		has_resource = { type = influence amount > 75 }
+	}
+
+	weight = {
+		weight = 0.2
+	}
+
+	desired_min = {
+		base = 150
+	}
+}
+
+foc_v1712_sr_kyber_swgs_expenditure_colonies_expand = {
+	resource = sr_kyber_swgs
+	type = expenditure
+	category = colonies
+
+	potential = {
+        NOT = { has_global_flag = has_swgs_mod }
+		is_machine_empire = no
+		is_at_war = no
+		ai_colonize_plans > 0
+		OR = {
+			AND = {
+				is_lithoid_empire = no
+				has_resource = { type = food amount > 400 }
+				has_monthly_income = {
+					resource = food
+					value > 0
+				}
+			}
+			AND = {
+				is_lithoid_empire = yes
+				has_resource = { type = minerals amount > 400 }
+				has_monthly_income = {
+					resource = minerals
+					value > 0
+				}
+			}
+		}
+	}
+
+	weight = {
+		weight = 0.5
+	}
+
+	desired_min = {
+		base = 200
+	}
+
+	desired_max = {
+		base = 250
+	}
+}
+
+foc_v1712_sr_kyber_swgs_expenditure_decisions = {
+	resource = sr_kyber_swgs
+	type = expenditure
+	category = decisions
+	potential = {
+        NOT = { has_global_flag = has_swgs_mod }
+		OR = {
+			has_technology = tech_habitat_2
+			has_technology = tech_mega_engineering
+		}
+		any_owned_planet = {
+			OR = {
+				is_planet_class = pc_habitat
+				AND = {
+					is_planet_class = pc_shattered_ring_habitable
+					num_uncleared_blockers < 1
+					root? = { has_technology = tech_mega_engineering }
+				}
+			}
+		}
+		# only consider these kinds of decisions when "wealthy"
+		has_resource = {
+			type = sr_kyber_swgs
+			amount > 5000
+		}
+	}
+	weight = {
+		weight = 0.20
+	}
+	# based on habitat / restore ring
+	desired_max = {
+		base = 2000
+		modifier = {
+			add = 1000
+			has_technology = tech_habitat_3
+		}
+		modifier = {
+			add = 8000
+			has_technology = tech_mega_engineering
+			any_owned_planet = {
+				is_planet_class = pc_shattered_ring_habitable
+				num_uncleared_blockers < 1
+			}
+		}
+	}
+}
+
+############
+## Upkeep ##
+############
+foc_v1712_sr_kyber_swgs_upkeep_buffer = {	# Buffer, will not be spent
+	resource = sr_kyber_swgs
+	type = upkeep
+	category = buffer
+
+	potential = {
+        NOT = { has_global_flag = has_swgs_mod }
+		always = yes
+	}
+
+	weight = {
+		weight = 0.3
+	}
+}
+
+foc_v1712_sr_kyber_swgs_upkeep_ships = {
+	resource = sr_kyber_swgs
+	type = upkeep
+	category = ships
+
+	potential = {
+        NOT = { has_global_flag = has_swgs_mod }
+		always = yes
+	}
+
+	weight = {
+		weight = 0.5
+	}
+}
+
+foc_v1712_sr_kyber_swgs_upkeep_planets = {
+	resource = sr_kyber_swgs
+	type = upkeep
+	category = planets
+
+	potential = {
+        NOT = { has_global_flag = has_swgs_mod }
+		always = yes
+	}
+
+	weight = {
+		weight = 0.2
+	}
+}
+
+## Categories used in this file must have use_for_ai_budget = yes defined in economic_categories ##
+## It is possible to have multiple entries with the same category and resource ##
+
+#################
+## Expenditure ##
+#################
+foc_v1712_sr_tibanna_swgs_expenditure_buffer = { # Buffer, will not be spent
+	resource = sr_tibanna_swgs
+	type = expenditure
+	category = buffer
+
+	potential = {
+        NOT = { has_global_flag = has_swgs_mod }
+		always = no
+	}
+
+	weight = {
+		weight = 0.0
+	}
+}
+
+foc_v1712_sr_tibanna_swgs_expenditure_ships = {
+	resource = sr_tibanna_swgs
+	type = expenditure
+	category = ships
+
+	potential = {
+        NOT = { has_global_flag = has_swgs_mod }
+		always = yes
+	}
+
+	weight = {
+		weight = 0.6
+
+		# spend more sr_tibanna_swgs building ships while at war
+		modifier = {
+			factor = 2
+			OR = {
+				recently_lost_war = yes
+				is_at_war = yes
+			}
+		}
+
+		# If we want to colonize and are at peace then prio that
+		modifier = {
+			factor = 0.25
+			AND = {
+				ai_colonize_plans > 0
+				is_at_war = no
+			}
+		}
+
+		# spend less sr_tibanna_swgs on ships if over capacity
+		modifier = {
+			factor = 0.5
+			used_naval_capacity_percent >= 1.0
+		}
+
+		modifier = {
+			factor = 5
+			used_naval_capacity_percent < 1.0
+			OR = {
+				any_neighbor_country = {
+					has_ascension_perk = ap_become_the_crisis
+				}
+				any_country = {
+					is_crisis_faction = yes
+				}
+			}
+		}
+	}
+}
+
+foc_v1712_sr_tibanna_swgs_expenditure_ship_upgrades = {
+	resource = sr_tibanna_swgs
+	type = expenditure
+	category = ship_upgrades
+
+	potential = {
+        NOT = { has_global_flag = has_swgs_mod }
+		is_at_war = no
+	}
+
+	weight = {
+		weight = 0.2
+
+		# spend more on ship upgrades if at capacity
+		modifier = {
+			factor = 4
+			used_naval_capacity_percent >= 1.0
+		}
+	}
+}
+
+foc_v1712_sr_tibanna_swgs_expenditure_planets = {
+	resource = sr_tibanna_swgs
+	type = expenditure
+	category = planets
+
+	potential = {
+        NOT = { has_global_flag = has_swgs_mod }
+		always = yes
+	}
+
+	weight = {
+		weight = 0.1
+	}
+
+	desired_min = {
+		base = 150
+	}
+
+	desired_max = {
+		base = 450
+	}
+}
+
+foc_v1712_sr_tibanna_swgs_expenditure_starbases = {
+	resource = sr_tibanna_swgs
+	type = expenditure
+	category = starbases
+
+	potential = {
+        NOT = { has_global_flag = has_swgs_mod }
+		NOT = {
+			is_country_type = fallen_empire
+		}
+	}
+
+	weight = {
+		weight = 0.3
+
+		# spend more on starbase upgrades if at fleet cap
+		modifier = {
+			factor = 4
+			used_naval_capacity_percent >= 1.0
+		}
+
+		# Reduce spending on claiming new systems if we have unclaimed planets
+		modifier = {
+			factor = 0.25
+			ai_colonize_plans > 0
+		}
+	}
+}
+
+foc_v1712_sr_tibanna_swgs_expenditure_starbases_expand = {
+	resource = sr_tibanna_swgs
+	type = expenditure
+	category = starbases
+
+	potential = {
+        NOT = { has_global_flag = has_swgs_mod }
+		has_ai_expansion_plan = yes
+		highest_threat < 50
+		NOT = {
+			is_country_type = fallen_empire
+			is_country_type = awakened_fallen_empire
+			ai_colonize_plans > 0
+		}
+		has_resource = { type = influence amount > 75 }
+	}
+
+	weight = {
+		weight = 0.2
+	}
+
+	desired_min = {
+		base = 150
+	}
+}
+
+foc_v1712_sr_tibanna_swgs_expenditure_colonies_expand = {
+	resource = sr_tibanna_swgs
+	type = expenditure
+	category = colonies
+
+	potential = {
+        NOT = { has_global_flag = has_swgs_mod }
+		is_machine_empire = no
+		is_at_war = no
+		ai_colonize_plans > 0
+		OR = {
+			AND = {
+				is_lithoid_empire = no
+				has_resource = { type = food amount > 400 }
+				has_monthly_income = {
+					resource = food
+					value > 0
+				}
+			}
+			AND = {
+				is_lithoid_empire = yes
+				has_resource = { type = minerals amount > 400 }
+				has_monthly_income = {
+					resource = minerals
+					value > 0
+				}
+			}
+		}
+	}
+
+	weight = {
+		weight = 0.5
+	}
+
+	desired_min = {
+		base = 200
+	}
+
+	desired_max = {
+		base = 250
+	}
+}
+
+foc_v1712_sr_tibanna_swgs_expenditure_decisions = {
+	resource = sr_tibanna_swgs
+	type = expenditure
+	category = decisions
+	potential = {
+        NOT = { has_global_flag = has_swgs_mod }
+		OR = {
+			has_technology = tech_habitat_2
+			has_technology = tech_mega_engineering
+		}
+		any_owned_planet = {
+			OR = {
+				is_planet_class = pc_habitat
+				AND = {
+					is_planet_class = pc_shattered_ring_habitable
+					num_uncleared_blockers < 1
+					root? = { has_technology = tech_mega_engineering }
+				}
+			}
+		}
+		# only consider these kinds of decisions when "wealthy"
+		has_resource = {
+			type = sr_tibanna_swgs
+			amount > 5000
+		}
+	}
+	weight = {
+		weight = 0.20
+	}
+	# based on habitat / restore ring
+	desired_max = {
+		base = 2000
+		modifier = {
+			add = 1000
+			has_technology = tech_habitat_3
+		}
+		modifier = {
+			add = 8000
+			has_technology = tech_mega_engineering
+			any_owned_planet = {
+				is_planet_class = pc_shattered_ring_habitable
+				num_uncleared_blockers < 1
+			}
+		}
+	}
+}
+
+############
+## Upkeep ##
+############
+foc_v1712_sr_tibanna_swgs_upkeep_buffer = {	# Buffer, will not be spent
+	resource = sr_tibanna_swgs
+	type = upkeep
+	category = buffer
+
+	potential = {
+        NOT = { has_global_flag = has_swgs_mod }
+		always = yes
+	}
+
+	weight = {
+		weight = 0.3
+	}
+}
+
+foc_v1712_sr_tibanna_swgs_upkeep_ships = {
+	resource = sr_tibanna_swgs
+	type = upkeep
+	category = ships
+
+	potential = {
+        NOT = { has_global_flag = has_swgs_mod }
+		always = yes
+	}
+
+	weight = {
+		weight = 0.5
+	}
+}
+
+foc_v1712_sr_tibanna_swgs_upkeep_planets = {
+	resource = sr_tibanna_swgs
+	type = upkeep
+	category = planets
+
+	potential = {
+        NOT = { has_global_flag = has_swgs_mod }
+		always = yes
+	}
+
+	weight = {
+		weight = 0.2
+	}
+}

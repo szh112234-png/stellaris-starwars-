@@ -1,0 +1,238 @@
+namespace = foc_starkiller_coords
+
+# The first crisis Starkiller strike reveals enough hyperspace telemetry for
+# ordinary empires to begin locating the hidden firing system.
+country_event = {
+    id = foc_starkiller_coords.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_regular_empire = yes
+        has_global_flag = foc_khan_crisis_started
+        OR = {
+            has_global_flag = foc_khan_starkiller_first_system_destroyed
+            # Old-save recovery when Hosnian was already erased by crisis fire.
+            has_global_flag = foc_story_hosnian_destroyed
+        }
+        NOT = { has_global_flag = foc_imperial_remnant_route_unlocked }
+        NOT = { has_country_flag = foc_starkiller_coordinates_known }
+        NOT = { has_special_project = FOC_STARKILLER_COORDINATES_PROJECT }
+        NOT = { has_country_flag = foc_khan_first_order_country }
+        NOT = { has_country_flag = foc_khan_final_order_country }
+        exists = event_target:foc_sw_jakku_system
+    }
+
+    immediate = {
+        event_target:foc_sw_jakku_system = {
+            star = {
+                save_global_event_target_as = foc_sw_jakku_star
+                enable_special_project = {
+                    name = FOC_STARKILLER_COORDINATES_PROJECT
+                    location = this
+                    owner = root
+                }
+            }
+        }
+    }
+}
+
+# The first completion unlocks the route for the entire galaxy, matching the
+# existing Sith Wayfinder route. Other active copies of the project are closed.
+country_event = {
+    id = foc_starkiller_coords.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    immediate = {
+        set_global_flag = foc_imperial_remnant_route_unlocked
+        every_playable_country = {
+            add_seen_bypass_type = foc_imperial_remnant_route
+            set_country_flag = foc_starkiller_coordinates_known
+            if = {
+                limit = { has_special_project = FOC_STARKILLER_COORDINATES_PROJECT }
+                abort_special_project = { type = FOC_STARKILLER_COORDINATES_PROJECT }
+            }
+            if = {
+                limit = { exists = event_target:foc_sw_jakku_system }
+                set_visited = event_target:foc_sw_jakku_system
+            }
+            if = {
+                limit = { exists = event_target:foc_khan_first_order_system }
+                set_visited = event_target:foc_khan_first_order_system
+            }
+            country_event = { id = foc_starkiller_coords.3 days = 1 }
+        }
+    }
+}
+
+country_event = {
+    id = foc_starkiller_coords.3
+    title = foc_starkiller_coords.3.name
+    desc = foc_starkiller_coords.3.desc
+    picture = GFX_foc_event_starkiller_base_popup
+    location = event_target:foc_sw_jakku_system
+    is_triggered_only = yes
+    option = { name = foc_starkiller_coords.3.a }
+}
+
+# Countries created after a previous completion also learn and display the
+# globally unlocked route. The bypass permission itself is global.
+country_event = {
+    id = foc_starkiller_coords.4
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_imperial_remnant_route_unlocked
+        NOT = { has_country_flag = foc_starkiller_coordinates_known }
+    }
+
+    immediate = {
+        add_seen_bypass_type = foc_imperial_remnant_route
+        set_country_flag = foc_starkiller_coordinates_known
+        if = {
+            limit = { exists = event_target:foc_sw_jakku_system }
+            set_visited = event_target:foc_sw_jakku_system
+        }
+        if = {
+            limit = { exists = event_target:foc_khan_first_order_system }
+            set_visited = event_target:foc_khan_first_order_system
+        }
+    }
+}
+
+# Crisis First Order knows the route from birth and owns both endpoints. This
+# monthly keeper also repairs either gate after a save migration or mod conflict.
+country_event = {
+    id = foc_starkiller_coords.5
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        OR = {
+            AND = {
+                has_country_flag = foc_khan_first_order_country
+                NOT = { has_country_flag = foc_khan_absorbed_by_final_order }
+            }
+            has_country_flag = foc_khan_final_order_country
+            has_country_flag = fop_player_first_order
+            has_country_flag = fop_player_final_order
+        }
+        exists = event_target:foc_khan_first_order_system
+        exists = event_target:foc_sw_jakku_system
+    }
+
+    immediate = {
+        add_seen_bypass_type = foc_imperial_remnant_route
+        set_country_flag = foc_starkiller_coordinates_known
+        set_visited = event_target:foc_khan_first_order_system
+        set_visited = event_target:foc_sw_jakku_system
+
+        event_target:foc_sw_jakku_system = {
+            star = { save_global_event_target_as = foc_sw_jakku_star }
+        }
+
+        event_target:foc_khan_first_order_system = {
+            every_system_planet = { set_surveyed = { surveyed = yes surveyor = root } }
+            if = {
+                limit = {
+                    NOT = { any_system_megastructure = { is_megastructure_type = foc_imperial_remnant_gate } }
+                }
+                spawn_megastructure = {
+                    type = foc_imperial_remnant_gate
+                    owner = root
+                    planet = star
+                    orbit_distance = 205
+                    orbit_angle = 75
+                    init_effect = {
+                        set_name = "NAME_FOC_IMPERIAL_REMNANT_GATE"
+                        set_megastructure_flag = foc_imperial_remnant_ilum_gate
+                        save_global_event_target_as = foc_imperial_remnant_ilum_gate
+                    }
+                }
+            }
+        }
+        event_target:foc_sw_jakku_system = {
+            every_system_planet = { set_surveyed = { surveyed = yes surveyor = root } }
+            if = {
+                limit = {
+                    NOT = { any_system_megastructure = { is_megastructure_type = foc_imperial_remnant_gate } }
+                }
+                spawn_megastructure = {
+                    type = foc_imperial_remnant_gate
+                    owner = root
+                    planet = star
+                    orbit_distance = 205
+                    orbit_angle = 120
+                    init_effect = {
+                        set_name = "NAME_FOC_IMPERIAL_REMNANT_GATE"
+                        set_megastructure_flag = foc_imperial_remnant_jakku_gate
+                        save_global_event_target_as = foc_imperial_remnant_jakku_gate
+                    }
+                }
+            }
+        }
+
+        event_target:foc_khan_first_order_system = {
+            every_system_megastructure = {
+                limit = { is_megastructure_type = foc_imperial_remnant_gate }
+                set_name = "NAME_FOC_IMPERIAL_REMNANT_GATE"
+            }
+        }
+        event_target:foc_sw_jakku_system = {
+            every_system_megastructure = {
+                limit = { is_megastructure_type = foc_imperial_remnant_gate }
+                set_name = "NAME_FOC_IMPERIAL_REMNANT_GATE"
+            }
+        }
+        set_global_flag = foc_khan_ilum_jakku_gate_pair_ready_311r
+
+        # Let normal pathfinding try the exclusive gateway first. If a mobile
+        # crisis fleet remains trapped at Ilum for a full monthly pass, use the
+        # same safe exit fallback already used by the Final Order route keeper.
+        every_owned_fleet = {
+            limit = {
+                exists = solar_system
+                solar_system = { has_star_flag = foc_khan_ilum_home }
+                OR = {
+                    has_fleet_flag = foc_khan_first_order_attack_fleet
+                    has_fleet_flag = foc_khan_first_order_invasion_force
+                    has_fleet_flag = foc_khan_acot_native_transport_233
+                }
+                NOR = {
+                    has_fleet_flag = foc_khan_first_order_guard_fleet
+                    has_fleet_flag = foc_khan_first_order_engineering_fleet
+                }
+            }
+            if = {
+                limit = { has_fleet_flag = foc_imperial_remnant_exit_attempted }
+                remove_auto_move_target = yes
+                clear_orders = yes
+                clear_fleet_actions = this
+                set_location = {
+                    target = event_target:foc_sw_jakku_star
+                    distance = 35
+                    angle = random
+                }
+                remove_fleet_flag = foc_imperial_remnant_exit_attempted
+                set_fleet_stance = aggressive
+                set_aggro_range_measure_from = self
+                set_aggro_range = 9999
+            }
+            else = {
+                set_fleet_flag = foc_imperial_remnant_exit_attempted
+                remove_auto_move_target = yes
+                clear_orders = yes
+                clear_fleet_actions = this
+                set_fleet_stance = aggressive
+                set_aggro_range_measure_from = self
+                set_aggro_range = 500
+                auto_move_to_planet = {
+                    target = event_target:foc_sw_jakku_star
+                    clear_auto_move_on_arrival = yes
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,103 @@
+@sai_supremacy_construction_time = 1800
+
+# Direct construction using the vanilla Military Arkship construction presentation.
+# The Supremacy model itself is shown while under construction; there is no visible
+# construction platform/base. Completion creates a real Tier I Supremacy Arkship
+# through the same create-fleet/create-ship flow used by the vanilla Arkship.
+# There is intentionally no empire-wide quantity limit.
+sai_supremacy_arkship_construction_site = {
+	entity = "sai_supremacy_core_entity"
+	construction_entity = "sai_supremacy_core_entity"
+	portrait = "GFX_megastructure_construction_background"
+	place_entity_on_planet_plane = no
+	build_type = inside_gravity_well
+	show_in_outliner = no
+	use_planet_resource = no
+	construction_blocks_and_blocked_by = none
+	build_time = @sai_supremacy_construction_time
+
+	resources = {
+		category = megastructures_arkships
+		cost = {
+			alloys = 10000
+			influence = 250
+		}
+	}
+
+	potential = {
+        has_technology = tech_arkship_construction
+        has_technology = tech_military_arkship
+
+		is_ai = no
+		has_country_flag = foc_dark_order_legacy_access
+		has_technology = tech_juggernaut
+		has_technology = foc_tech_dark_legacy_supremacy
+		from = {
+			is_ship_class = shipclass_constructor
+		}
+	}
+
+	possible = {
+		fromfrom = {
+			is_ship_class = shipclass_constructor
+		}
+		custom_tooltip = {
+			fail_text = "requires_inside_border"
+			is_inside_border = from
+		}
+	}
+
+	build_menu_potential = {
+		is_ship_class = shipclass_constructor
+	}
+
+	on_build_complete = {
+		create_fleet = {
+			name = "NAME_SAI_SUPREMACY_ARKSHIP"
+			effect = {
+				set_owner = from
+				if = { limit = { has_global_flag = foc_khan_strength_lowest } create_ship = {
+                    fleet_cache_recalc = yes
+
+					name = "NAME_SAI_SUPREMACY_ARKSHIP"
+					design = "NAME_SAI_SUPREMACY_ARKSHIP_TIER_1_SHELL_FOC_LOWEST"
+					graphical_culture = military_arkship
+					effect = {
+                        set_ship_flag = foc_v1718i_arkship_new_spawn
+
+						# LOWEST: do not attach the normal-strength modifier.
+						set_ship_flag = sai_supremacy_arkship
+						set_ship_flag = sai_supremacy_event_spawned_only
+					
+                        ship_event = { id = sai_supremacy_arkship.21 days = 1 }
+                    }
+				} }
+                else = { create_ship = {
+                    fleet_cache_recalc = yes
+
+					name = "NAME_SAI_SUPREMACY_ARKSHIP"
+					design = "NAME_SAI_SUPREMACY_ARKSHIP_TIER_1"
+					graphical_culture = military_arkship
+					effect = {
+                        set_ship_flag = foc_v1718i_arkship_new_spawn
+
+						add_modifier = { modifier = sai_supremacy_arkship_stats days = -1 }
+						set_ship_flag = sai_supremacy_arkship
+						set_ship_flag = sai_supremacy_event_spawned_only
+					
+                        ship_event = { id = sai_supremacy_arkship.21 days = 1 }
+                    }
+				} }
+				set_location = fromfrom
+			}
+		}
+		remove_megastructure = fromfrom
+		from = {
+			# Native initialization and guarded post-processing are dispatched on the new ship.
+			# Native initialization and guarded post-processing are dispatched on the new ship.
+			# Native initialization and guarded post-processing are dispatched on the new ship.
+		}
+	}
+
+	ai_weight = { factor = 0 }
+}

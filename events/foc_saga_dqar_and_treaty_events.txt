@@ -1,0 +1,88 @@
+namespace = foc_saga_dqar
+
+# =============================================================================
+# 迪卡持有确认 + 银河条约后收回双死星战时加成
+# =============================================================================
+
+# --- 迪卡：确认义军真正持有过 -------------------------------------------------
+# foc_khan_rebel.41（迪卡陷落）原本只判断「控制者不是义军同盟」。在共和国起源里，
+# foc_khan_rebel_spawned 置上之后、claim_for_rebels 把迪卡交给义军之前有一段窗口，
+# 那段时间控制者还是共和国或帝国，条件照样成立——迪卡战役就被提前弹了出来。
+#
+# 这一条负责置上「义军确实持有过迪卡」的全局旗标，foc_khan_rebel.41 现在以它为前置。
+event = {
+    id = foc_saga_dqar.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        NOT = { has_global_flag = foc_saga_dqar_held_by_rebels }
+        exists = event_target:foc_khan_rebel_alliance
+        any_system = {
+            has_star_flag = foc_khan_rebel_dqar_home
+            any_system_planet = {
+                has_planet_flag = foc_khan_rebel_dqar
+                exists = controller
+                controller = { is_same_value = event_target:foc_khan_rebel_alliance }
+            }
+        }
+    }
+
+    immediate = {
+        set_global_flag = foc_saga_dqar_held_by_rebels
+        log = "FOC_SAGA_DQAR: rebels confirmed in control of D'Qar; the Battle of D'Qar can now fire."
+    }
+}
+
+# --- 银河条约：收回双死星战时加成 ---------------------------------------------
+# 摧毁死星一号 / 二号给的是**战时**加成，量级极大（双死星那份是海军上限 +1500、
+# 火力 +50%、船坞速度 +75%、厌战 −75%）。它们本来是用来支撑义军打完内战的，
+# 银河条约签订之后战争已经结束，再留着就没有道理，也让新共和国在和平期严重超模。
+#
+# 条约生效后一次性移除三份加成，并给一份和平重建修正作为过渡。
+country_event = {
+    id = foc_saga_dqar.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_republic_origin_galactic_treaty
+        NOT = { has_country_flag = foc_saga_war_bonuses_retired }
+        OR = {
+            has_modifier = foc_republic_origin_rebel_death_star_one_victory
+            has_modifier = foc_republic_origin_rebel_death_star_two_victory
+            has_modifier = foc_republic_origin_rebel_double_death_star_victory
+        }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_war_bonuses_retired
+        remove_modifier = foc_republic_origin_rebel_death_star_one_victory
+        remove_modifier = foc_republic_origin_rebel_death_star_two_victory
+        remove_modifier = foc_republic_origin_rebel_double_death_star_victory
+        remove_modifier = foc_saga_inner_rim_wartime_logistics
+        add_modifier = { modifier = foc_saga_postwar_demobilisation days = -1 }
+        log = "FOC_SAGA_TREATY: Death Star war bonuses retired at the Concordance."
+        if = {
+            limit = { is_ai = no }
+            country_event = { id = foc_saga_dqar.3 days = 1 }
+        }
+    }
+}
+
+country_event = {
+    id = foc_saga_dqar.3
+    title = foc_saga_dqar.3.name
+    desc = foc_saga_dqar.3.desc
+    picture = GFX_foc_saga_rebel_fleet
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        NOT = { has_country_flag = foc_saga_demob_notice_shown }
+    }
+
+    immediate = { set_country_flag = foc_saga_demob_notice_shown }
+
+    option = { name = foc_saga_dqar.3.a }
+}

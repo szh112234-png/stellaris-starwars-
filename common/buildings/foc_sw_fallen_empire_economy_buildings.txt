@@ -1,0 +1,331 @@
+# FOC 3.07 - direct-output infrastructure for the New Republic and Imperial Remnant.
+# Production is conditional on the scripted Fallen Empire flag, so conquered
+# buildings do not give ordinary empires the full ancient-economy output.
+#
+# FOC V28: foc_sw_fe_infrastructure_heir marks the story successors that keep
+# the ancient economy running - the First Order and its Final Order form, which
+# inherit these worlds by script rather than by ordinary conquest. Upkeep is now
+# gated by the same condition: a country that receives no output from a captured
+# ancient building no longer pays its running cost either. Without this, losing
+# the scripted Fallen Empire flag stopped all production while leaving every
+# upkeep line active, which drained the successor's stockpiles to zero.
+
+building_foc_sw_fe_civil_nexus = {
+    base_buildtime = 480
+    can_build = no
+    can_demolish = yes
+    planet_limit = 1
+    icon = building_fe_administration_2
+    category = government
+    building_sets = { government urban fallen_empire }
+
+    potential = { always = yes }
+    destroy_trigger = { always = no }
+
+    triggered_planet_modifier = {
+        potential = {
+            exists = owner
+            owner = {
+                OR = {
+                    has_country_flag = foc_sw_scripted_fallen_empire
+                    has_country_flag = foc_sw_fe_infrastructure_heir
+                }
+            }
+        }
+        modifier = {
+            planet_housing_add = 500
+            planet_amenities_add = 500
+            planet_stability_add = 20
+            planet_crime_add = -100
+            planet_jobs_produces_mult = 0.50
+        }
+    }
+
+    resources = {
+        category = planet_buildings
+        produces = {
+            trigger = {
+                exists = owner
+                owner = {
+                    OR = {
+                        has_country_flag = foc_sw_scripted_fallen_empire
+                        has_country_flag = foc_sw_fe_infrastructure_heir
+                    }
+                }
+            }
+            unity = 250
+        }
+    }
+}
+
+building_foc_sw_fe_power_core = {
+    base_buildtime = 480
+    can_build = no
+    can_demolish = yes
+    icon = building_class_4_singularity
+    category = resource
+
+    building_sets = { fallen_empire }
+    potential = { always = yes }
+    destroy_trigger = { always = no }
+
+    resources = {
+        category = planet_buildings
+        produces = {
+            trigger = {
+                exists = owner
+                owner = {
+                    OR = {
+                        has_country_flag = foc_sw_scripted_fallen_empire
+                        has_country_flag = foc_sw_fe_infrastructure_heir
+                    }
+                }
+            }
+            energy = 1200
+        }
+    }
+}
+
+building_foc_sw_fe_matter_fabricator = {
+    base_buildtime = 480
+    can_build = no
+    can_demolish = yes
+    icon = building_dimensional_fabricator
+    category = manufacturing
+
+    building_sets = { fallen_empire }
+    potential = { always = yes }
+    destroy_trigger = { always = no }
+
+    resources = {
+        category = planet_buildings
+        produces = {
+            trigger = {
+                exists = owner
+                owner = {
+                    OR = {
+                        has_country_flag = foc_sw_scripted_fallen_empire
+                        has_country_flag = foc_sw_fe_infrastructure_heir
+                    }
+                }
+            }
+            minerals = 600
+            volatile_motes = 5
+            exotic_gases = 5
+            rare_crystals = 5
+            sr_zro = 2
+            sr_dark_matter = 2
+            sr_living_metal = 2
+            nanites = 2
+        }
+        upkeep = {
+            trigger = {
+                exists = owner
+                owner = {
+                    OR = {
+                        has_country_flag = foc_sw_scripted_fallen_empire
+                        has_country_flag = foc_sw_fe_infrastructure_heir
+                    }
+                }
+            }
+            energy = 100
+        }
+    }
+}
+
+building_foc_sw_fe_ship_foundry = {
+    base_buildtime = 480
+    can_build = no
+    can_demolish = yes
+    icon = building_nano_forge
+    category = manufacturing
+
+    building_sets = { fallen_empire }
+    potential = { always = yes }
+    destroy_trigger = { always = no }
+
+    resources = {
+        category = planet_buildings
+        produces = {
+            trigger = {
+                exists = owner
+                owner = {
+                    OR = {
+                        has_country_flag = foc_sw_scripted_fallen_empire
+                        has_country_flag = foc_sw_fe_infrastructure_heir
+                    }
+                }
+            }
+            alloys = 400
+            consumer_goods = 200
+        }
+        produces = {
+            trigger = {
+                exists = owner
+                owner = { has_country_flag = foc_sw_new_republic_country }
+            }
+            consumer_goods = 200
+        }
+        produces = {
+            trigger = {
+                exists = owner
+                owner = { has_country_flag = foc_sw_imperial_remnant_country }
+            }
+            alloys = 300
+        }
+        upkeep = {
+            trigger = {
+                exists = owner
+                owner = {
+                    OR = {
+                        has_country_flag = foc_sw_scripted_fallen_empire
+                        has_country_flag = foc_sw_fe_infrastructure_heir
+                    }
+                }
+            }
+            energy = 100
+            minerals = 200
+        }
+    }
+}
+
+building_foc_sw_fe_nourishment_vault = {
+    base_buildtime = 480
+    can_build = no
+    can_demolish = yes
+    icon = building_nourishment_center
+    category = resource
+
+    building_sets = { fallen_empire }
+    potential = { always = yes }
+    destroy_trigger = { always = no }
+
+    resources = {
+        category = planet_buildings
+        produces = {
+            trigger = {
+                exists = owner
+                owner = {
+                    OR = {
+                        has_country_flag = foc_sw_scripted_fallen_empire
+                        has_country_flag = foc_sw_fe_infrastructure_heir
+                    }
+                }
+            }
+            food = 400
+        }
+        upkeep = {
+            trigger = {
+                exists = owner
+                owner = {
+                    OR = {
+                        has_country_flag = foc_sw_scripted_fallen_empire
+                        has_country_flag = foc_sw_fe_infrastructure_heir
+                    }
+                }
+            }
+            energy = 30
+        }
+    }
+}
+
+building_foc_sw_fe_archive = {
+    base_buildtime = 480
+    can_build = no
+    can_demolish = yes
+    icon = building_fe_lab_2
+    category = research
+
+    building_sets = { fallen_empire }
+    potential = { always = yes }
+    destroy_trigger = { always = no }
+
+    resources = {
+        category = planet_buildings
+        produces = {
+            trigger = {
+                exists = owner
+                owner = {
+                    OR = {
+                        has_country_flag = foc_sw_scripted_fallen_empire
+                        has_country_flag = foc_sw_fe_infrastructure_heir
+                    }
+                }
+            }
+            physics_research = 250
+            society_research = 250
+            engineering_research = 250
+        }
+        upkeep = {
+            trigger = {
+                exists = owner
+                owner = {
+                    OR = {
+                        has_country_flag = foc_sw_scripted_fallen_empire
+                        has_country_flag = foc_sw_fe_infrastructure_heir
+                    }
+                }
+            }
+            energy = 100
+        }
+    }
+}
+
+
+# V141: compact scripted support complex. It replaces the second foundry plus
+# nourishment vault and archive in the scripted FE colony template, preserving
+# their direct output while fitting within the six reliably available building
+# slots seen on small story colonies. The old buildings remain defined for save
+# compatibility but are no longer required by the setup effect.
+building_foc_sw_fe_support_complex = {
+    base_buildtime = 480
+    can_build = no
+    can_demolish = yes
+    icon = building_fe_lab_2
+    category = manufacturing
+    building_sets = { fallen_empire }
+    potential = { always = yes }
+    destroy_trigger = { always = no }
+
+    resources = {
+        category = planet_buildings
+        produces = {
+            trigger = {
+                exists = owner
+                owner = {
+                    OR = {
+                        has_country_flag = foc_sw_scripted_fallen_empire
+                        has_country_flag = foc_sw_fe_infrastructure_heir
+                    }
+                }
+            }
+            alloys = 400
+            consumer_goods = 200
+            food = 400
+            physics_research = 250
+            society_research = 250
+            engineering_research = 250
+        }
+        produces = {
+            trigger = { exists = owner owner = { has_country_flag = foc_sw_new_republic_country } }
+            consumer_goods = 200
+        }
+        produces = {
+            trigger = { exists = owner owner = { has_country_flag = foc_sw_imperial_remnant_country } }
+            alloys = 300
+        }
+        upkeep = {
+            trigger = {
+                exists = owner
+                owner = {
+                    OR = {
+                        has_country_flag = foc_sw_scripted_fallen_empire
+                        has_country_flag = foc_sw_fe_infrastructure_heir
+                    }
+                }
+            }
+            energy = 230
+            minerals = 200
+        }
+    }
+}

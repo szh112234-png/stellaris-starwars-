@@ -1,0 +1,207 @@
+# This is a template which multiple species can use. 
+  
+naga_male_hair_01 = {
+	default = "gfx/models/portraits/oldsithempire/x_male_hair_unnamedwarlord_01.dds"	## UNNAMED WARLORD HAIR - RAVEN
+	
+	game_setup = {#will run with a limited country scope. species and government is set but the country does not actually exist
+		default = "gfx/models/portraits/oldsithempire/x_male_hair_ludokresh_04.dds"	## LUDO KRESH W/ SADOW - RAVEN
+	}
+	
+	#species scope
+	species = { #generic portrait for a species
+		default = "gfx/models/portraits/oldsithempire/x_male_hair_ludokresh_04.dds"	## LUDO KRESH W/ SADOW - RAVEN
+	}
+	
+
+
+	#pop scope
+	pop = { #for a specific pop
+	
+		default = "gfx/models/portraits/oldsithempire/x_male_hair_palpatinesith_02.dds"
+
+		random = {
+			list = {	
+				"gfx/models/portraits/oldsithempire/x_male_hair_burns_01.dds"	## SMASHING BURNS - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_male_hair_burns_04.dds"	## SMASHING BURNS - CRIMSON
+
+				"gfx/models/portraits/oldsithempire/x_male_hair_foretail_01.dds"	## SMASHING FORELOCK - RAVEN
+				"gfx/models/portraits/oldsithempire/x_male_hair_foretail_04.dds"	## SMASHING FORELOCK - BURGUNDY		
+				"gfx/models/portraits/oldsithempire/x_male_hair_foretail_02.dds"	## SMASHING FORELOCK - CRIMSON
+
+				"gfx/models/portraits/oldsithempire/x_male_hair_foretailfork_01.dds"	## SMASHING FORELOCK FORK - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_male_hair_foretailfork_04.dds"	## SMASHING FORELOCK FORK - BURGUNDY					
+				"gfx/models/portraits/oldsithempire/x_male_hair_foretailfork_02.dds"	## SMASHING FORELOCK FORK - CRIMSON					
+				
+				"gfx/models/portraits/oldsithempire/x_male_hair_palpatinesith_01.dds"	## PALPY FORELOCK - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_male_hair_palpatinesith_02.dds"	## PALPY FORELOCK - BURGUNDY			
+
+				"gfx/models/portraits/oldsithempire/x_male_hair_sadowbeard_01.dds"	## SADOW - RAVEN	
+
+				"gfx/models/portraits/oldsithempire/x_male_hair_squarebeard_01.dds"	## SQUARE BEARD - RAVEN
+
+				"gfx/models/portraits/oldsithempire/x_male_hair_cropped_01.dds"	## CREW CUT - RAVEN		
+				"gfx/models/portraits/oldsithempire/x_male_hair_cropped_02.dds"	## CREW CUT - CRIMSON	
+
+				"gfx/models/portraits/oldsithempire/x_male_hair_warlord_01.dds"	## WARLORD - RAVEN
+				"gfx/models/portraits/oldsithempire/x_male_hair_warlord_02.dds"	## WARLORD - BURGUNDY
+				"gfx/models/portraits/oldsithempire/naga_sadow_helmet_01.dds" ## NAGA SADOW HELMET
+				"gfx/models/portraits/oldsithempire/naga_sadow_helmet_02.dds"
+				"gfx/models/portraits/oldsithempire/ajunta_pall_mask.dds" ## AJUNTA PALL MASK
+			}
+		}	
+	}
+	
+		
+	
+	
+	#leader scope
+	leader = { #scientists, generals, admirals, governor
+	
+		random = {
+			trigger = { leader_class = general }
+			list = {
+				"gfx/models/portraits/oldsithempire/x_male_hair_squarebeard_01.dds"	## SQUARE BEARD - RAVEN
+
+				"gfx/models/portraits/oldsithempire/x_male_hair_cropped_01.dds"	## CREW CUT - RAVEN		
+				"gfx/models/portraits/oldsithempire/x_male_hair_cropped_02.dds"	## CREW CUT - CRIMSON	
+				
+				"gfx/models/portraits/oldsithempire/x_male_hair_sithsoldier_01.dds"	## SOLDIER CAP W/ SQ BEARD - RAVEN
+
+				"gfx/models/portraits/oldsithempire/x_male_hair_warlord_01.dds"	## WARLORD - RAVEN
+				"gfx/models/portraits/oldsithempire/x_male_hair_warlord_02.dds"	## WARLORD - BURGUNDY
+				"gfx/models/portraits/oldsithempire/naga_sadow_helmet_01.dds" ## NAGA SADOW
+				"gfx/models/portraits/oldsithempire/naga_sadow_helmet_02.dds"
+				"gfx/models/portraits/oldsithempire/ajunta_pall_mask.dds"
+				
+			}
+		}		
+		
+		random = {
+			trigger = { leader_class = admiral }
+			list = {
+				"gfx/models/portraits/oldsithempire/x_male_hair_sadowbeard_01.dds"	## SADOW - RAVEN	
+				
+				"gfx/models/portraits/oldsithempire/x_male_hair_squarebeard_01.dds"	## SQUARE BEARD - RAVEN
+
+				"gfx/models/portraits/oldsithempire/x_male_hair_cropped_01.dds"	## CREW CUT - RAVEN		
+				"gfx/models/portraits/oldsithempire/x_male_hair_cropped_02.dds"	## CREW CUT - CRIMSON	
+
+				"gfx/models/portraits/oldsithempire/x_male_hair_foretailfork_01.dds"	## SMASHING FORELOCK FORK - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_male_hair_foretailfork_04.dds"	## SMASHING FORELOCK FORK - BURGUNDY					
+				"gfx/models/portraits/oldsithempire/x_male_hair_foretailfork_02.dds"	## SMASHING FORELOCK FORK - CRIMSON					
+				"gfx/models/portraits/oldsithempire/naga_sadow_helmet_01.dds"
+				"gfx/models/portraits/oldsithempire/naga_sadow_helmet_02.dds"
+				"gfx/models/portraits/oldsithempire/ajunta_pall_mask.dds"
+			}
+		}	
+		
+		random = {
+			trigger = { leader_class = scientist }
+			list = {
+				"gfx/models/portraits/oldsithempire/x_male_hair_palpatinesith_01.dds"	## PALPY FORELOCK - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_male_hair_palpatinesith_02.dds"	## PALPY FORELOCK - BURGUNDY	
+
+				"gfx/models/portraits/oldsithempire/x_male_hair_burns_01.dds"	## SMASHING BURNS - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_male_hair_burns_04.dds"	## SMASHING BURNS - CRIMSON
+
+				"gfx/models/portraits/oldsithempire/x_male_hair_foretail_01.dds"	## SMASHING FORELOCK - RAVEN
+				"gfx/models/portraits/oldsithempire/x_male_hair_foretail_04.dds"	## SMASHING FORELOCK - BURGUNDY		
+				"gfx/models/portraits/oldsithempire/x_male_hair_foretail_02.dds"	## SMASHING FORELOCK - CRIMSON				
+			}
+		}		
+		
+		random = {
+			trigger = { leader_class = governor }
+			list = {
+				"gfx/models/portraits/oldsithempire/x_male_hair_sadowbeard_01.dds"	## SADOW - RAVEN	
+				
+				"gfx/models/portraits/oldsithempire/x_male_hair_squarebeard_01.dds"	## SQUARE BEARD - RAVEN
+				
+				"gfx/models/portraits/oldsithempire/x_male_hair_ludokresh_01.dds"	## LUDO KRESH W/ SQUARE BEARD - RAVEN
+				"gfx/models/portraits/oldsithempire/x_male_hair_ludokresh_02.dds"	## LUDO KRESH - RAVEN		
+				"gfx/models/portraits/oldsithempire/x_male_hair_ludokresh_03.dds"	## LUDO KRESH W/ SADOW - RAVEN
+
+
+				"gfx/models/portraits/oldsithempire/x_male_hair_warlord_01.dds"	## WARLORD - RAVEN
+				"gfx/models/portraits/oldsithempire/x_male_hair_warlord_02.dds"	## WARLORD - BURGUNDY						
+				"gfx/models/portraits/oldsithempire/naga_sadow_helmet_01.dds"
+				"gfx/models/portraits/oldsithempire/naga_sadow_helmet_02.dds"
+				"gfx/models/portraits/oldsithempire/ajunta_pall_mask.dds"
+			}
+		}
+	}
+  
+	#leader scope 
+	ruler = { #for rulers
+		#default = "gfx/models/portraits/human/human_male_hair_brown_style_01_and_beard_dark_style_01.dds"
+
+		random = {
+			trigger = {
+				owner = { has_militarist_government = yes }
+			}	
+			
+			list = {
+
+			
+				"gfx/models/portraits/oldsithempire/x_male_hair_ludokresh_01.dds"	## LUDO KRESH W/ SQUARE BEARD - RAVEN
+				"gfx/models/portraits/oldsithempire/x_male_hair_ludokresh_02.dds"	## LUDO KRESH - RAVEN		
+				"gfx/models/portraits/oldsithempire/x_male_hair_ludokresh_03.dds"	## LUDO KRESH W/ SADOW - RAVEN
+
+
+				"gfx/models/portraits/oldsithempire/x_male_hair_warlord_01.dds"	## WARLORD - RAVEN
+				"gfx/models/portraits/oldsithempire/x_male_hair_warlord_02.dds"	## WARLORD - BURGUNDY	
+				"gfx/models/portraits/oldsithempire/naga_sadow_helmet_01.dds"
+				"gfx/models/portraits/oldsithempire/naga_sadow_helmet_02.dds"
+				"gfx/models/portraits/oldsithempire/ajunta_pall_mask.dds"
+			}
+		}		
+		
+		random = {
+			trigger = {
+				owner = { has_spiritualist_government = yes }
+			}
+			
+			list = {
+
+				"gfx/models/portraits/oldsithempire/x_male_hair_ludokresh_01.dds"	## LUDO KRESH W/ SQUARE BEARD - RAVEN
+				"gfx/models/portraits/oldsithempire/x_male_hair_ludokresh_02.dds"	## LUDO KRESH - RAVEN		
+				"gfx/models/portraits/oldsithempire/x_male_hair_ludokresh_03.dds"	## LUDO KRESH W/ SADOW - RAVEN	
+
+
+				"gfx/models/portraits/oldsithempire/x_male_hair_warlord_01.dds"	## WARLORD - RAVEN
+				"gfx/models/portraits/oldsithempire/x_male_hair_warlord_02.dds"	## WARLORD - BURGUNDY
+				"gfx/models/portraits/oldsithempire/naga_sadow_helmet_01.dds"
+				"gfx/models/portraits/oldsithempire/naga_sadow_helmet_02.dds"
+				"gfx/models/portraits/oldsithempire/ajunta_pall_mask.dds"
+			}
+		}		
+		
+		random = {
+			trigger = {
+				owner = {
+					OR = {
+						has_government = gov_stagnant_ascendancy
+						has_primitive_government = yes
+						has_materialist_government = yes
+						has_pacifist_government = yes
+					}
+				}
+			}
+			
+			list = {
+
+				"gfx/models/portraits/oldsithempire/x_male_hair_ludokresh_01.dds"	## LUDO KRESH W/ SQUARE BEARD - RAVEN
+				"gfx/models/portraits/oldsithempire/x_male_hair_ludokresh_02.dds"	## LUDO KRESH - RAVEN		
+				"gfx/models/portraits/oldsithempire/x_male_hair_ludokresh_03.dds"	## LUDO KRESH W/ SADOW - RAVEN	
+				"gfx/models/portraits/oldsithempire/naga_sadow_helmet_01.dds"
+				"gfx/models/portraits/oldsithempire/naga_sadow_helmet_02.dds"
+				"gfx/models/portraits/oldsithempire/ajunta_pall_mask.dds"
+				"gfx/models/portraits/oldsithempire/marka_ragnos_helmet_01.dds"
+				"gfx/models/portraits/oldsithempire/marka_ragnos_helmet_gold_01.dds"
+				"gfx/models/portraits/oldsithempire/freedon_nadd_helmet.dds"
+				"gfx/models/portraits/oldsithempire/andeddu_helmet_01.dds"
+			}
+		}
+	}
+}
+  

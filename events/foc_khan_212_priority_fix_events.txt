@@ -1,0 +1,78 @@
+namespace = foc_khan_212
+
+# One-shot migration for saves created with 2.09-2.11.
+# Rebuild the eight special Xyston queues with the system-first controller and
+# immediately provide a Final Order invasion corps when none survived.
+event = {
+    id = foc_khan_212.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_khan_phase_two
+        exists = event_target:foc_khan_final_order
+        exists = event_target:foc_khan_exegol_capital
+        NOT = { has_global_flag = foc_khan_212_priority_fixes_migrated }
+    }
+
+    immediate = {
+        set_global_flag = foc_khan_212_priority_fixes_migrated
+
+        # Remove reservations and serialized queues from older versions.
+        every_system = {
+            remove_star_flag = foc_khan_xyston_system_reserved_212
+            every_system_planet = {
+                remove_planet_flag = foc_khan_xyston_target_reserved
+            }
+        }
+
+        event_target:foc_khan_final_order = {
+            every_owned_fleet = {
+                limit = { has_fleet_flag = foc_khan_xyston_planet_killer_fleet }
+                remove_auto_move_target = yes
+                clear_orders = yes
+                clear_fleet_actions = this
+                fleet_event = { id = foc_khan_xyston_ai.10 days = 1 random = 8 }
+            }
+        }
+
+        if = {
+            limit = {
+                event_target:foc_khan_final_order = {
+                    count_owned_ship = {
+                        count < 18
+                        limit = { is_ship_class = shipclass_transport }
+                    }
+                }
+            }
+            event_target:foc_khan_exegol_capital = {
+                foc_khan_spawn_final_invasion_fleet_212 = yes
+            }
+        }
+    }
+}
+
+
+# Monthly fallback for old saves and for Rebel countries created after submission.
+country_event = {
+	id = foc_khan_212.2
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			has_country_flag = foc_khan_submitted_first_order
+			has_country_flag = foc_khan_submitted_final_order
+		}
+		any_country = {
+			OR = {
+				has_country_flag = foc_khan_rebel_alliance_country
+				has_country_flag = foc_khan_rebel_member
+			}
+		}
+	}
+
+	immediate = {
+		foc_khan_submitted_country_rebel_hostility_212 = yes
+	}
+}

@@ -1,0 +1,78 @@
+"FOC Galactic Republic" = {
+    key = "FOC_REPUBLIC_ORIGIN_PRESET"
+
+    # Keep the schema identical to the working First Order preset. The origin
+    # replaces this staging government with its event-locked Republic civics
+    # as soon as the Star Wars region has finished spawning.
+    ship_prefix = {
+        key = "R.N.S."
+    }
+    species = {
+        class = "HUM"
+        portrait = "gar"
+        species_name = { key = "FOC_REPUBLIC_ORIGIN_PRESET_SPECIES" }
+        species_plural = { key = "FOC_REPUBLIC_ORIGIN_PRESET_SPECIES_PLURAL" }
+        species_adjective = { key = "FOC_REPUBLIC_ORIGIN_PRESET_SPECIES_ADJ" }
+        species_bio = "FOC_REPUBLIC_ORIGIN_PRESET_SPECIES_BIO"
+        name_list = "gar"
+        gender = not_set
+        trait = "trait_organic"
+        trait = "trait_communal"
+        trait = "trait_traditional"
+        trait = "trait_wasteful"
+    }
+
+    name = { key = "FOC_REPUBLIC_ORIGIN_GALACTIC_REPUBLIC" }
+    adjective = { key = "FOC_REPUBLIC_ORIGIN_REPUBLIC_ADJ" }
+    authority = "auth_democratic"
+    government = "gov_representative_democracy"
+    is_nomadic = no
+    advisor_voice_type = "l_the_diplomat"
+
+    planet_name = {
+        key = "Coruscant"
+    }
+    planet_class = "pc_continental"
+    system_name = {
+        key = "Coruscant"
+    }
+    initializer = "foc_republic_origin_staging_system"
+
+    graphical_culture = "republic_01"
+    city_graphical_culture = "mammalian_01"
+    empire_flag = {
+        icon = { category = "GAR" file = "gar2.dds" }
+        background = { category = "backgrounds" file = "circle.dds" }
+        colors = { "red" "dark_grey" "null" "null" }
+    }
+
+    ruler = {
+        gender = male
+        name = { full_names = { key = "FOC_REPUBLIC_ORIGIN_CHANCELLOR_NAME" } }
+        portrait = "Chancellor_Palpatine_01"
+        texture = 0
+        attachment = 0
+        clothes = 0
+        ruler_title = "RT_FOC_REPUBLIC_ORIGIN_CHANCELLOR"
+        ruler_title_female = "RT_FOC_REPUBLIC_ORIGIN_CHANCELLOR"
+        leader_class = "official"
+        trait = "trait_ruler_eye_for_talent"
+    }
+
+    spawn_as_fallen = no
+    ignore_portrait_duplication = yes
+    room = "gar_4_room"
+    spawn_enabled = yes
+
+    ethic = "ethic_egalitarian"
+    ethic = "ethic_xenophile"
+    ethic = "ethic_militarist"
+    civics = {
+        # These two designer-valid civics allow the preset to survive empire
+        # setup validation. Event foc_republic_origin.1 immediately replaces
+        # them with Galactic Senate and Republic Defense Fleet.
+        "civic_parliamentary_system"
+        "civic_diplomatic_corps"
+    }
+    origin = "origin_foc_republic_unification"
+}

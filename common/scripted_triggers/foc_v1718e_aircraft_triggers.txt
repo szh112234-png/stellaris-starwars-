@@ -1,0 +1,11 @@
+# Country scope: retained Republic origin plus an actual Imperial successor.
+foc_v1718e_imperial_aviation_earned = {
+    foc_v1718_allowed_country = yes
+    foc_v1717c_imperial_strategic_aircraft_allowed = yes
+    OR = {
+        AND = { has_origin = origin_foc_republic_unification
+    foc_v137_has_imperial_starfighter_identity = yes
+    NOT = { foc_v137_has_rebel_starfighter_identity = yes } }
+        AND = { has_origin = origin_fop_first_order foc_v1717_starkiller_completed_for_arsenal = yes }
+    }
+}

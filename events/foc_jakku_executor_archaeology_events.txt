@@ -1,0 +1,75 @@
+namespace = foc_jakku_executor_site
+
+# Stage I: map the wreck field below Jakku's shifting dunes.
+fleet_event = {
+    id = foc_jakku_executor_site.1
+    title = foc_jakku_executor_site.1.name
+    desc = foc_jakku_executor_site.1.desc
+    picture = GFX_foc_event_jakku_executor_excavation
+    show_sound = event_mystic_reveal
+    archaeology = yes
+    is_triggered_only = yes
+
+    immediate = { from? = { set_site_progress_locked = yes } }
+    after = { from? = { set_site_progress_locked = no } }
+
+    option = { name = foc_jakku_executor_site.1.a }
+}
+
+# Stage II: identify the buried Executor-class structural remains.
+fleet_event = {
+    id = foc_jakku_executor_site.2
+    title = foc_jakku_executor_site.2.name
+    desc = foc_jakku_executor_site.2.desc
+    picture = GFX_foc_event_jakku_executor_excavation
+    show_sound = event_mystic_reveal
+    archaeology = yes
+    is_triggered_only = yes
+
+    immediate = { from? = { set_site_progress_locked = yes } }
+    after = { from? = { set_site_progress_locked = no } }
+
+    option = { name = foc_jakku_executor_site.2.a }
+}
+
+# Stage III: recover the armored command archive.
+fleet_event = {
+    id = foc_jakku_executor_site.3
+    title = foc_jakku_executor_site.3.name
+    desc = foc_jakku_executor_site.3.desc
+    picture = GFX_foc_event_jakku_executor_excavation
+    show_sound = event_mystic_reveal
+    archaeology = yes
+    is_triggered_only = yes
+
+    immediate = { from? = { set_site_progress_locked = yes } }
+    after = { from? = { set_site_progress_locked = no } }
+
+    option = { name = foc_jakku_executor_site.3.a }
+}
+
+# Stage IV: award the complete fixed Executor-class construction design.
+fleet_event = {
+    id = foc_jakku_executor_site.4
+    title = foc_jakku_executor_site.4.name
+    desc = foc_jakku_executor_site.4.desc
+    picture = GFX_foc_event_jakku_executor_excavation
+    show_sound = event_mystic_reveal
+    archaeology = yes
+    is_triggered_only = yes
+
+    immediate = { from? = { set_site_progress_locked = yes } }
+    after = { from? = { set_site_progress_locked = no } }
+
+    option = {
+        name = foc_jakku_executor_site.4.a
+        custom_tooltip = foc_jakku_executor_site.4.a.tooltip
+        hidden_effect = {
+            owner = {
+                foc_story_grant_jakku_executor_blueprint = yes
+                set_country_flag = foc_sith_wayfinder_clue_found
+                country_event = { id = foc_wayfinder.1 days = 1 }
+            }
+        }
+    }
+}

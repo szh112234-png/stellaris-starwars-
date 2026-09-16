@@ -1,0 +1,115 @@
+namespace = fop_ambition
+
+# Five-stage player-crisis ambition screen modeled on Shipgirl's custom crisis
+# window. The first page shows the live objective; the second lists the rewards.
+country_event = {
+    id = fop_ambition.1
+    title = fop_ambition.1.name
+    desc = { trigger = { check_variable = { which = fop_force_dominion_level value = 1 } } text = fop_origin.65.desc.1 }
+    desc = { trigger = { check_variable = { which = fop_force_dominion_level value = 2 } } text = fop_origin.65.desc.2 }
+    desc = { trigger = { check_variable = { which = fop_force_dominion_level value = 3 } } text = fop_origin.65.desc.3 }
+    desc = { trigger = { check_variable = { which = fop_force_dominion_level value = 4 } } text = fop_origin.65.desc.4 }
+    desc = { trigger = { check_variable = { which = fop_force_dominion_level value = 5 } } text = fop_origin.65.desc.5 }
+    desc = { trigger = { check_variable = { which = fop_force_dominion_level value >= 6 } } text = fop_origin.65.desc.6 }
+    is_triggered_only = yes
+    diplomatic = yes
+    diplomatic_title = "fop_ambition_window_title"
+    custom_gui = "fop_ambition_window"
+
+    trigger = {
+        is_ai = no
+        OR = { has_origin = origin_fop_first_order has_country_flag = foc_republic_origin_empire_crisis }
+        has_country_flag = fop_origin_crisis_active
+    }
+
+    option = {
+        custom_gui = "fop_ambition_option"
+        name = fop_ambition_show_rewards
+        hidden_effect = { country_event = { id = fop_ambition.2 } }
+    }
+    option = {
+        custom_gui = "fop_ambition_hiding_button"
+        name = ""
+        default_hide_option = yes
+    }
+}
+
+country_event = {
+    id = fop_ambition.2
+    title = fop_ambition.1.name
+    desc = fop_ambition.2.desc
+    is_triggered_only = yes
+    diplomatic = yes
+    diplomatic_title = "fop_ambition_window_title"
+    custom_gui = "fop_ambition_window"
+
+    trigger = {
+        is_ai = no
+        OR = { has_origin = origin_fop_first_order has_country_flag = foc_republic_origin_empire_crisis }
+        has_country_flag = fop_origin_crisis_active
+    }
+
+    option = {
+        custom_gui = "fop_ambition_option"
+        name = fop_ambition_show_objectives
+        hidden_effect = { country_event = { id = fop_ambition.1 } }
+    }
+    option = {
+        custom_gui = "fop_ambition_hiding_button"
+        name = ""
+        default_hide_option = yes
+    }
+}
+
+# Ambition scoring follows Shipgirl's crisis-point pattern. These points are
+# displayed by the custom window while narrative objectives gate each rank.
+country_event = {
+    id = fop_ambition.10
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        has_country_flag = fop_origin_crisis_active
+        exists = from
+        NOT = { from = { is_same_value = root } }
+    }
+    immediate = {
+        change_variable = { which = fop_force_dominion_points value = 1 }
+    }
+}
+
+carrier_event = {
+    id = fop_ambition.11
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        is_colony = yes
+        from? = { has_country_flag = fop_origin_crisis_active }
+    }
+    immediate = {
+        from? = { change_variable = { which = fop_force_dominion_points value = 25 } }
+    }
+}
+
+country_event = {
+    id = fop_ambition.12
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        exists = from
+        from? = { has_country_flag = fop_origin_crisis_active }
+    }
+    immediate = {
+        from? = { change_variable = { which = fop_force_dominion_points value = 100 } }
+    }
+}
+
+
+# FOC Phase I: strategic base destruction is an explicit ambition objective.
+# This = destroyed starbase; From = destroying fleet.
+starbase_event = {
+    id = fop_ambition.13
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { exists = from from = { exists = owner owner = { has_country_flag = fop_origin_crisis_active } } }
+    immediate = { from.owner = { change_variable = { which = fop_force_dominion_points value = 10 } } }
+}

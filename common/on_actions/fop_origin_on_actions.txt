@@ -1,0 +1,28 @@
+# V191: do not dispatch a visible settings window or relocate the playable
+# First Order directly from on_game_start_country.  The shared Star Wars map
+# bootstrap calls both only after the regional countries, capital targets and
+# scripted systems are fully initialized, preventing government-view UI from
+# retaining references to the temporary home while it is being removed.
+
+# V182: monthly compatibility/setup/repair fallbacks removed; only live story controllers remain.
+on_monthly_pulse_country = {
+    events = {
+        # Shared chronology and public-emergence progression.
+        fop_origin.205
+        fop_origin.207
+        foc_v160_player_fo.1
+
+        # Live player-crisis war and Starkiller/Exegol story progression.
+        fop_origin.40
+        fop_origin.45
+        fop_origin.60
+        fop_origin.70
+        fop_origin.72
+        fop_origin.74
+        fop_origin.76
+        fop_origin.81
+        fop_origin.90
+        # Combat/component balancing is invoked directly on setup, spawn and
+        # difficulty changes; its former monthly repair pass is disabled.
+    }
+}

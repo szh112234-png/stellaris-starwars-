@@ -1,0 +1,123 @@
+# =============================================================================
+# 银河内战：义军成长阶梯 / 帝国治安成本
+# =============================================================================
+
+# 国家作用域（义军）。逐档发放，每档只发一次。
+foc_saga_rebel_step = {
+    if = {
+        limit = { NOT = { has_modifier = $STEP$ } }
+        add_modifier = { modifier = $STEP$ days = -1 }
+    }
+}
+
+# 国家作用域（帝国）。三档不良治安互斥，只保留最高的一档。
+foc_saga_imperial_unrest_set = {
+    remove_modifier = foc_saga_imperial_unrest_1
+    remove_modifier = foc_saga_imperial_unrest_2
+    remove_modifier = foc_saga_imperial_unrest_3
+    add_modifier = { modifier = $TIER$ days = -1 }
+}
+
+# 国家作用域（帝国）。逐星球结算驻防状态。
+#
+# 判定标准：本星系内存在一支属于本国、战力超过 2000 的舰队。用战力而不是「有没有
+# 舰队」，是为了让一艘落单的护卫舰不算数——真的得留一支能打的部队才行。
+#
+# 舰队开走，惩罚下个月就回来；开回去，惩罚立刻消失。帝国因此不能把所有兵力攥成
+# 一个铁拳到处推平，必须分兵守地方。
+foc_saga_imperial_garrison_check = {
+    save_event_target_as = foc_saga_unrest_empire
+
+    # V105: non-Imperial owners are cleaned by foc_balance.4 on the country pulse.
+    # Do not use the removed every_planet effect from country scope here.
+
+    # V64 Tarkin Doctrine: once fear of the Death Star becomes the enforcement
+    # mechanism, planets no longer require a local 2000-power fleet merely to avoid
+    # the planet-level stability penalty. Remove the old debuff and do not reapply it.
+    if = {
+        limit = {
+            has_country_flag = foc_republic_origin_tarkin_doctrine
+            has_country_flag = foc_v109_jedha_fear_order_established
+            NOT = { has_country_flag = foc_republic_origin_death_star_two_destroyed }
+        }
+        every_owned_planet = {
+            limit = { is_colony = yes }
+            remove_modifier = foc_saga_planet_ungarrisoned
+        }
+    }
+    else = {
+        every_owned_planet = {
+            limit = { is_colony = yes }
+
+            # V215: this is a Galactic Empire occupation penalty, not a permanent
+            # property of a legally Imperial planet. If Rebels, the New Republic,
+            # the Resistance, CIS, Imperial Remnant, First/Final Order or any other
+            # country actually controls the colony, remove the debuff immediately
+            # on the next balance pulse even if legal ownership has not yet changed.
+            if = {
+                limit = {
+                    exists = controller
+                    controller = { is_same_value = event_target:foc_saga_unrest_empire }
+                }
+                if = {
+                    limit = {
+                        solar_system = {
+                            any_fleet_in_system = {
+                                exists = owner
+                                owner = { is_same_value = event_target:foc_saga_unrest_empire }
+                                fleet_power > 2000
+                            }
+                        }
+                    }
+                    remove_modifier = foc_saga_planet_ungarrisoned
+                }
+                else = {
+                    if = {
+                        limit = { NOT = { has_modifier = foc_saga_planet_ungarrisoned } }
+                        add_modifier = { modifier = foc_saga_planet_ungarrisoned days = -1 }
+                    }
+                }
+            }
+            else = {
+                remove_modifier = foc_saga_planet_ungarrisoned
+            }
+        }
+    }
+}
+
+# 国家作用域（帝国）。内战结束后把治安成本一次性清干净。
+foc_saga_imperial_unrest_clear = {
+    remove_modifier = foc_saga_imperial_unrest_1
+    remove_modifier = foc_saga_imperial_unrest_2
+    remove_modifier = foc_saga_imperial_unrest_3
+    every_owned_planet = {
+        remove_modifier = foc_saga_planet_ungarrisoned
+    }
+}
+
+# =============================================================================
+# 共和国 -> 银河帝国：舰船图形文化转换
+# =============================================================================
+# 关键规则：graphical_culture 是国家级船模选择。它决定之后新建/重建的设计
+# 使用哪一整套 shipset。已经存在的舰船实体不会因为事件直接“换皮”，因此这里
+# 不再对 every_owned_ship 错误调用 set_graphical_culture。共和国路线在称帝时本来
+# 就会清除旧军事舰队；转换完成后生成/建造的新船统一使用 empire_01。
+foc_republic_origin_apply_complete_empire_shipset = {
+    remove_country_flag = republic_ships_addon_edict_enabled
+    set_country_flag = empire_ships_addon_edict_enabled
+    set_graphical_culture = empire_01
+    if = {
+        limit = { NOT = { has_technology = tech_sws_empire_01_addon_sections } }
+        give_technology = { tech = tech_sws_empire_01_addon_sections message = no }
+    }
+    refresh_auto_generated_ship_designs = yes
+    set_country_flag = foc_republic_origin_empire_all_ship_models_v55
+}
+
+# Generic country shipset refresh retained for Rebel/CIS conversion paths.
+# It intentionally changes the COUNTRY only; old ship entities are not claimed
+# to be rebuilt in place.
+foc_saga_reculture_existing_ships = {
+    set_graphical_culture = $CULTURE$
+    refresh_auto_generated_ship_designs = yes
+}

@@ -1,0 +1,76 @@
+# Megastructure scope, called only by final-stage completion hooks.
+foc_v1717_record_completed_starkiller = {
+    if = {
+        limit = { exists = owner }
+        owner = { set_country_flag = foc_v1717_starkiller_was_completed }
+    }
+    if = {
+        limit = {
+            OR = {
+                AND = {
+                    if = {
+                        limit = { exists = planet }
+                        planet = { has_planet_flag = foc_khan_starkiller_anchor }
+                    }
+                    else = { always = no }
+                }
+                AND = {
+                    if = {
+                        limit = { exists = owner }
+                        owner = {
+                            OR = {
+                                has_country_flag = foc_khan_first_order_country
+                                has_country_flag = fop_player_first_order
+                                has_country_flag = fop_origin_crisis_active
+                                has_origin = origin_fop_first_order
+                            }
+                        }
+                    }
+                    else = { always = no }
+                }
+            }
+        }
+        set_global_flag = foc_v1717_starkiller_was_completed
+        if = {
+            limit = { exists = owner }
+            owner = { save_global_event_target_as = foc_v1717_starkiller_monitored_owner }
+        }
+    }
+}
+
+# Scope-independent. Record physical completion before later loss checks.
+foc_v1717_refresh_starkiller_history = {
+    if = {
+        limit = { foc_v1717_starkiller_still_exists = yes }
+        set_global_flag = foc_v1717_starkiller_was_completed
+        if = {
+            limit = { exists = event_target:foc_khan_crisis_starkiller_base }
+            event_target:foc_khan_crisis_starkiller_base = {
+                if = {
+                    limit = { exists = owner }
+                    owner = { save_global_event_target_as = foc_v1717_starkiller_monitored_owner }
+                }
+            }
+        }
+        # Recover an old false notification while a physical base still survives.
+        if = {
+            limit = { has_global_flag = foc_khan_starkiller_destroyed }
+            remove_global_flag = foc_khan_starkiller_destroyed
+            remove_global_flag = foc_story_starkiller_destroyed_shown
+            remove_global_flag = foc_khan_order_dominated_galaxy_at_starkiller_fall
+            log = "FOC_V1717_STARKILLER: repaired a destruction flag while a completed base still exists."
+        }
+    }
+    else_if = {
+        # Explicit debug recovery only; do not erase genuine old-save defeat records.
+        limit = {
+            has_global_flag = foc_v1717_final_order_debug_requested
+            NOT = { foc_v1717_starkiller_was_completed = yes }
+            has_global_flag = foc_khan_starkiller_destroyed
+        }
+        remove_global_flag = foc_khan_starkiller_destroyed
+        remove_global_flag = foc_story_starkiller_destroyed_shown
+        remove_global_flag = foc_khan_order_dominated_galaxy_at_starkiller_fall
+        log = "FOC_V1717_STARKILLER: removed a debug-only loss flag with no completed-base history."
+    }
+}

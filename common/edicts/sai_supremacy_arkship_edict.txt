@@ -1,0 +1,19 @@
+sai_supremacy_arkship_command = {
+	length = 0
+	icon = "GFX_sai_supremacy_dualturbolasers"
+	potential = {
+		is_ai = no
+		has_country_flag = foc_dark_order_legacy_access
+		has_technology = foc_tech_dark_legacy_supremacy
+	}
+	allow = {
+		exists = capital_scope
+		NOT = { has_country_flag = sai_supremacy_arkship_pending }
+	}
+	effect = {
+		hidden_effect = {
+			country_event = { id = sai_supremacy_arkship.19 }
+		}
+	}
+	ai_weight = { weight = 0 }
+}

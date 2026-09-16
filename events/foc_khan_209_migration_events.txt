@@ -1,0 +1,27 @@
+namespace = foc_khan_209
+
+# Reinstall the special-Xyston controller once in existing saves so the new
+# target reservation logic replaces the 2.08 queue already stored in the save.
+event = {
+	id = foc_khan_209.1
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = {
+		NOT = { has_global_flag = foc_khan_209_unique_xyston_targets_done }
+		NOT = { has_global_flag = foc_khan_crisis_finished }
+		has_global_flag = foc_khan_phase_two
+		exists = event_target:foc_khan_final_order
+	}
+	immediate = {
+		set_global_flag = foc_khan_209_unique_xyston_targets_done
+		event_target:foc_khan_final_order = {
+			every_owned_fleet = {
+				limit = { any_owned_ship = { OR = { is_ship_size = foc_khan_xystonsd is_ship_size = foc_khan_xystonsd_foc_lowest } } }
+				remove_auto_move_target = yes
+				clear_orders = yes
+				clear_fleet_actions = this
+				fleet_event = { id = foc_khan_xyston_ai.10 days = 1 random = 8 }
+			}
+		}
+	}
+}

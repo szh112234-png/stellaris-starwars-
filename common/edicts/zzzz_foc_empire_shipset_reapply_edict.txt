@@ -1,0 +1,19 @@
+# FOC Republic-origin compatibility helper.
+# The original 2829069669 edict remains unchanged in empire_ships_addon_edicts.txt.
+foc_republic_origin_reapply_empire_shipset = {
+    length = -1
+    icon = "GFX_edict_type_policy"
+    resources = {
+        category = campaigns
+        cost = { influence = 0 }
+    }
+    effect = {
+        foc_republic_origin_apply_complete_empire_shipset = yes
+        country_event = { id = foc_empire_shipset_fix.1 days = 1 }
+    }
+    potential = {
+        is_ai = no
+        has_country_flag = foc_republic_origin_empire_country
+    }
+    allow = { is_ai = no }
+}

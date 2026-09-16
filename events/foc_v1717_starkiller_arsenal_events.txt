@@ -1,0 +1,16 @@
+namespace = foc_v1717_arsenal
+
+# Recover a genuinely completed older save without granting any technology.
+# Completion remains earned if the base is subsequently lost or destroyed.
+country_event = {
+    id = foc_v1717_arsenal.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        has_origin = origin_fop_first_order
+        NOT = { has_country_flag = foc_v1717_starkiller_arsenal_unlocked }
+        foc_v1717_starkiller_completed_for_arsenal = yes
+    }
+    immediate = { set_country_flag = foc_v1717_starkiller_arsenal_unlocked
+        country_event = { id = foc_v1718.10 days = 1 } }
+}

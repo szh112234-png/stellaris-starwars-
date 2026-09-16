@@ -1,0 +1,416 @@
+namespace = foc_v213_inheritance
+
+# New Republic scope: prepare the internal D'Qar movement without creating a state.
+country_event = {
+    id = foc_v213_inheritance.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v235b_dqar_settlement_allowed = yes
+        has_country_flag = foc_sw_new_republic_country
+        has_global_flag = foc_republic_origin_galactic_treaty
+        NOT = { has_country_flag = foc_v213_new_republic_inheritance_complete }
+    }
+
+    immediate = {
+        foc_v223_add_new_republic_legends = yes
+        foc_v213_prepare_resistance_movement = yes
+        if = {
+            limit = {
+                OR = {
+                    NOT = { exists = event_target:foc_khan_rebel_dqar_system }
+                    NOT = { exists = event_target:foc_khan_rebel_capital }
+                }
+                NOT = { has_country_flag = foc_v213_dqar_prepare_retry_active }
+            }
+            set_timed_country_flag = { flag = foc_v213_dqar_prepare_retry_active days = 5 }
+            country_event = { id = foc_v213_inheritance.1 days = 4 }
+        }
+    }
+}
+
+# New Republic scope: execute same-country succession after defeat/Hosnian.
+country_event = {
+    id = foc_v213_inheritance.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v235b_dqar_settlement_allowed = yes
+        has_country_flag = foc_sw_new_republic_country
+        NOT = { has_country_flag = foc_v213_new_republic_inheritance_complete }
+        # V212 compatibility: when the human player already controls the old
+        # post-Treaty Resistance object, that object must survive and absorb the
+        # AI New Republic. Do not let the AI Republic convert first and create a
+        # second Resistance in the same monthly pulse.
+        NOT = {
+            any_country = {
+                is_ai = no
+                OR = {
+                    has_country_flag = foc_khan_first_order_resistance_country
+                    has_country_flag = foc_republic_origin_post_treaty_player_rebels
+                    AND = {
+                        has_country_flag = foc_khan_rebel_alliance_country
+                        NOT = { has_country_flag = foc_republic_origin_imperial_rebel_country }
+                        NOT = { has_country_flag = foc_republic_origin_rebel_alliance_country }
+                    }
+                }
+            }
+        }
+        OR = {
+            has_country_flag = foc_v213_hosnian_impact_transition_pending
+            has_global_flag = foc_story_hosnian_destroyed
+            AND = {
+                has_global_flag = foc_khan_crisis_started
+                NOT = {
+                    any_owned_planet = {
+                        is_colony = yes
+                        controller = { is_same_value = root }
+                    }
+                }
+            }
+        }
+    }
+
+    immediate = {
+        if = {
+            limit = { NOT = { exists = event_target:foc_khan_first_order } }
+            random_country = {
+                limit = {
+                    OR = {
+                        has_country_flag = foc_khan_first_order_country
+                        AND = {
+                            has_country_flag = foc_republic_origin_empire_crisis
+                            has_country_flag = fop_origin_crisis_active
+                        }
+                        has_country_flag = fop_player_first_order
+                    }
+                }
+                save_global_event_target_as = foc_khan_first_order
+            }
+        }
+        if = {
+            limit = { exists = event_target:foc_khan_first_order }
+            foc_v213_convert_new_republic_to_resistance = yes
+        }
+        if = {
+            limit = {
+                NOT = { has_country_flag = foc_v213_new_republic_inheritance_complete }
+                NOT = { has_country_flag = foc_v213_inheritance_retry_active }
+            }
+            set_timed_country_flag = { flag = foc_v213_inheritance_retry_active days = 4 }
+            country_event = { id = foc_v213_inheritance.2 days = 3 }
+        }
+    }
+}
+
+# Monthly New Republic controller: absorbs obsolete AI Resistance states, keeps
+# D'Qar prepared and dispatches the transition after the actual collapse.
+country_event = {
+    id = foc_v213_inheritance.3
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_sw_new_republic_country
+        has_global_flag = foc_republic_origin_galactic_treaty
+        NOT = { has_country_flag = foc_v213_new_republic_inheritance_complete }
+    }
+
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    any_country = {
+                        is_ai = no
+                        OR = {
+                            has_country_flag = foc_khan_first_order_resistance_country
+                            has_country_flag = foc_republic_origin_post_treaty_player_rebels
+                            AND = {
+                                has_country_flag = foc_khan_rebel_alliance_country
+                                NOT = { has_country_flag = foc_republic_origin_imperial_rebel_country }
+                                NOT = { has_country_flag = foc_republic_origin_rebel_alliance_country }
+                            }
+                        }
+                    }
+                }
+                any_country = {
+                    NOT = { is_same_value = root }
+                    OR = {
+                        has_country_flag = foc_khan_first_order_resistance_country
+                        has_country_flag = foc_republic_origin_post_treaty_rebel_country
+                        has_country_flag = foc_republic_origin_post_treaty_player_rebels
+                        AND = {
+                            has_country_flag = foc_khan_rebel_alliance_country
+                            NOT = { has_country_flag = foc_republic_origin_imperial_rebel_country }
+                            NOT = { has_country_flag = foc_republic_origin_rebel_alliance_country }
+                        }
+                    }
+                }
+            }
+            foc_v213_absorb_standalone_resistance_into_new_republic = yes
+        }
+        if = {
+            limit = {
+                OR = {
+                    has_global_flag = foc_v158_leia_resistance_foundation_due
+                    has_global_flag = foc_v109_bloodline_resistance_authorized
+                    has_global_flag = foc_v185_leia_resistance_authorized
+                    has_global_flag = foc_khan_phase_one
+                }
+            }
+            foc_v213_prepare_resistance_movement = yes
+        }
+        # Later story events can still create a historical leader. Reconcile
+        # the living New Republic every month so duplicate copies never persist.
+        foc_v213_dedupe_named_rebel_leaders = yes
+        if = {
+            limit = {
+                # Give the old human Resistance migration event priority over an
+                # AI New Republic conversion in the same monthly pulse.
+                NOT = {
+                    any_country = {
+                        is_ai = no
+                        OR = {
+                            has_country_flag = foc_khan_first_order_resistance_country
+                            has_country_flag = foc_republic_origin_post_treaty_player_rebels
+                            AND = {
+                                has_country_flag = foc_khan_rebel_alliance_country
+                                NOT = { has_country_flag = foc_republic_origin_imperial_rebel_country }
+                                NOT = { has_country_flag = foc_republic_origin_rebel_alliance_country }
+                            }
+                        }
+                    }
+                }
+                OR = {
+                    has_global_flag = foc_story_hosnian_destroyed
+                    AND = {
+                        has_global_flag = foc_khan_crisis_started
+                        NOT = {
+                            any_owned_planet = {
+                                is_colony = yes
+                                controller = { is_same_value = root }
+                            }
+                        }
+                    }
+                }
+            }
+            country_event = { id = foc_v213_inheritance.2 }
+        }
+    }
+}
+
+# Human V212 save migration: keep the player's Resistance object and merge the
+# AI New Republic into it instead of destroying/switching the player country.
+country_event = {
+    id = foc_v213_inheritance.4
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        has_global_flag = foc_republic_origin_galactic_treaty
+        OR = {
+            has_country_flag = foc_khan_first_order_resistance_country
+            has_country_flag = foc_republic_origin_post_treaty_player_rebels
+            AND = {
+                has_country_flag = foc_khan_rebel_alliance_country
+                NOT = { has_country_flag = foc_republic_origin_imperial_rebel_country }
+                NOT = { has_country_flag = foc_republic_origin_rebel_alliance_country }
+            }
+        }
+        any_country = { has_country_flag = foc_sw_new_republic_country }
+        NOT = { has_global_flag = foc_v213_old_save_country_merge_complete }
+    }
+
+    immediate = { foc_v213_absorb_new_republic_into_existing_player_resistance = yes }
+}
+
+# Resistance controller: initialize genuinely missing high-command members once,
+# continuously remove duplicate local copies, and repair old V212 D'Qar/Hosnian
+# state without ever creating another country.
+country_event = {
+    id = foc_v213_inheritance.5
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_republic_origin_galactic_treaty
+        OR = {
+            has_country_flag = foc_khan_first_order_resistance_country
+            has_country_flag = foc_republic_origin_post_treaty_rebel_country
+            has_country_flag = foc_republic_origin_post_treaty_player_rebels
+            AND = {
+                has_country_flag = foc_khan_rebel_alliance_country
+                NOT = { has_country_flag = foc_republic_origin_imperial_rebel_country }
+                NOT = { has_country_flag = foc_republic_origin_rebel_alliance_country }
+            }
+        }
+    }
+
+    immediate = {
+        # If a malformed/legacy save already contains several post-Treaty
+        # Resistance states but no New Republic, select one canonical survivor.
+        # A human player always wins; otherwise the existing global target wins.
+        if = {
+            limit = { NOT = { exists = event_target:foc_khan_rebel_alliance } }
+            save_global_event_target_as = foc_khan_rebel_alliance
+        }
+        if = {
+            limit = {
+                OR = {
+                    is_ai = no
+                    AND = {
+                        exists = event_target:foc_khan_rebel_alliance
+                        event_target:foc_khan_rebel_alliance = { is_same_value = root }
+                    }
+                }
+            }
+            foc_v213_absorb_other_ai_resistance_into_current_resistance = yes
+        }
+
+        # In V212 saves the original player country may already be the Resistance
+        # while D'Qar's asynchronous target creation was missed. Retry monthly.
+        if = {
+            limit = {
+                has_country_flag = foc_v213_player_resistance_inherited_new_republic
+                OR = {
+                    NOT = { exists = event_target:foc_khan_rebel_dqar_system }
+                    NOT = { exists = event_target:foc_khan_rebel_capital }
+                }
+            }
+            foc_v213_secure_dqar_for_current_resistance = yes
+        }
+
+        if = {
+            limit = {
+                has_country_flag = foc_v213_player_resistance_inherited_new_republic
+                has_global_flag = foc_story_hosnian_destroyed
+                NOT = { has_country_flag = foc_v213_new_republic_inheritance_complete }
+            }
+            if = {
+                limit = { NOT = { exists = event_target:foc_khan_first_order } }
+                random_country = {
+                    limit = {
+                        OR = {
+                            has_country_flag = foc_khan_first_order_country
+                            has_country_flag = fop_player_first_order
+                            AND = {
+                                has_country_flag = foc_republic_origin_empire_crisis
+                                has_country_flag = fop_origin_crisis_active
+                            }
+                        }
+                    }
+                    save_global_event_target_as = foc_khan_first_order
+                }
+            }
+            foc_v213_finalize_existing_resistance_after_hosnian = yes
+        }
+
+        if = {
+            limit = { NOT = { has_country_flag = foc_v213_resistance_high_command_reconciled } }
+            foc_v213_ensure_resistance_high_command = yes
+        }
+        else = {
+            foc_v213_dedupe_named_rebel_leaders = yes
+        }
+    }
+}
+
+# No-scope arbitration for V212 saves that contain both countries. Human player
+# continuity wins; otherwise the New Republic remains the survivor.
+event = {
+    id = foc_v213_inheritance.10
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_republic_origin_galactic_treaty
+        OR = {
+            NOT = { has_global_flag = foc_v213_old_save_country_merge_complete }
+            has_global_flag = foc_v214_new_republic_resistance_split_done
+            any_country = { has_country_flag = foc_v214_split_new_republic_country }
+        }
+        any_country = { has_country_flag = foc_sw_new_republic_country }
+        any_country = {
+            OR = {
+                has_country_flag = foc_khan_first_order_resistance_country
+                has_country_flag = foc_republic_origin_post_treaty_rebel_country
+                has_country_flag = foc_republic_origin_post_treaty_player_rebels
+                AND = {
+                    has_country_flag = foc_khan_rebel_alliance_country
+                    NOT = { has_country_flag = foc_republic_origin_imperial_rebel_country }
+                    NOT = { has_country_flag = foc_republic_origin_rebel_alliance_country }
+                }
+            }
+        }
+    }
+
+    immediate = {
+        # V219: V214-V218 marked the split as already merged. Clear that stale
+        # guard before dispatching the original V213 player-continuity repair.
+        if = {
+            limit = {
+                OR = {
+                    has_global_flag = foc_v214_new_republic_resistance_split_done
+                    any_country = { has_country_flag = foc_v214_split_new_republic_country }
+                }
+            }
+            remove_global_flag = foc_v213_old_save_country_merge_complete
+            remove_global_flag = foc_v214_new_republic_resistance_split_done
+        }
+        if = {
+            limit = {
+                any_country = {
+                    is_ai = no
+                    OR = {
+                        has_country_flag = foc_khan_first_order_resistance_country
+                        has_country_flag = foc_republic_origin_post_treaty_player_rebels
+                        AND = {
+                            has_country_flag = foc_khan_rebel_alliance_country
+                            NOT = { has_country_flag = foc_republic_origin_imperial_rebel_country }
+                            NOT = { has_country_flag = foc_republic_origin_rebel_alliance_country }
+                        }
+                    }
+                }
+            }
+            random_country = {
+                limit = {
+                    is_ai = no
+                    OR = {
+                        has_country_flag = foc_khan_first_order_resistance_country
+                        has_country_flag = foc_republic_origin_post_treaty_player_rebels
+                        AND = {
+                            has_country_flag = foc_khan_rebel_alliance_country
+                            NOT = { has_country_flag = foc_republic_origin_imperial_rebel_country }
+                            NOT = { has_country_flag = foc_republic_origin_rebel_alliance_country }
+                        }
+                    }
+                }
+                country_event = { id = foc_v213_inheritance.4 }
+            }
+        }
+        else = {
+            random_country = {
+                limit = { has_country_flag = foc_sw_new_republic_country }
+                country_event = { id = foc_v213_inheritance.3 }
+            }
+        }
+    }
+}
+
+
+# V218/V219 - D'Qar spawn bridge. Event boundaries are initialized independently,
+# avoiding the scripted-effect post-init recursion ceiling while retaining the
+# original V213 same-country succession model.
+country_event = {
+    id = foc_v213_inheritance.12
+    hide_window = yes
+    is_triggered_only = yes
+
+    immediate = {
+        foc_v178_spawn_dqar_at_map_position = yes
+        foc_v178_connect_dqar_map_routes = yes
+    }
+}

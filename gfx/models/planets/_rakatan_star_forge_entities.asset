@@ -1,0 +1,89 @@
+entity = { 
+	name = "processor_outbursts_entity"
+	pdxmesh = "pulsar_outbursts_mesh"
+	
+	default_state = "idle"
+	state = { name = "idle" state_time = 5
+		event = { time = 0.0 node = "polar_effect_1" particle = "pulsar_star_outburst_effect"  keep_particle = no trigger_once = yes  sound = { soundeffect = "pulsar_star_idle_hum" } }
+	}
+	
+	scale = 25.0
+	
+	game_data = {
+		uv_animation_speed   = -0.1
+		uv_animation_direction  = { 0.4 0.4 }
+		bloom_factor = 0.5
+	}	
+}
+
+entity = { 
+	name = "processor_outbursts2_entity"
+	pdxmesh = "pulsar_outbursts_mesh"
+	
+	default_state = "idle"
+	state = { name = "idle" state_time = 5
+		event = { time = 0.0 node = "polar_effect_1" particle = "pulsar_star_outburst_effect"  keep_particle = no trigger_once = yes  sound = { soundeffect = "pulsar_star_idle_hum" } }
+	}
+	
+	scale = 5.0
+	
+	game_data = {
+		uv_animation_speed   = -0.1
+		uv_animation_direction  = { 0.4 0.4 }
+		bloom_factor = 0.5
+	}	
+}
+
+entity = {
+	name = "rakatan_star_forge_entity"
+	pdxmesh = "rakatan_star_forge_mesh"
+	
+	locator = { name = "fwroot"	position = { 0 -50 0 } }
+	
+	attach = { "fwroot" = "processor_outbursts_entity" }
+	
+	
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } 
+		start_event = { trigger_once = yes sound = { soundeffect = "habitat_pc_amb_03" } }
+	}
+	
+	cull_radius = 500
+}
+
+
+entity = {
+	name = "sun_forge_entity"
+	pdxmesh = "sun_forge_mesh"
+	
+	
+	attach = { "fwroot" = "processor_outbursts2_entity" }
+	
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } 
+		start_event = { trigger_once = yes sound = { soundeffect = "habitat_pc_amb_03" } }
+	}
+	
+	cull_radius = 500
+}
+
+entity = {
+	name = "rakatan_foundry_entity"
+	pdxmesh = "rakatan_foundry_mesh"
+	
+	meshsettings = {
+		name = "HullShape"
+		index = 0
+		texture_diffuse = "sw_Empire_01_outpost_diffuse.dds"
+		texture_normal = "sw_Empire_01_outpost_normal.dds"
+		texture_specular = "sw_Empire_01_outpost_specular.dds"
+		shader = "PdxMeshShip"
+	}
+	
+	
+	
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } 
+		start_event = { trigger_once = yes sound = { soundeffect = "habitat_pc_amb_03" } }
+	}
+	
+	cull_radius = 500
+}
+

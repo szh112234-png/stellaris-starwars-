@@ -1,0 +1,139 @@
+# v17.18b. Country scope unless the definition explicitly says ship/planet.
+foc_v1718_allowed_country = {
+    OR = {
+        is_ai = no
+        has_origin = origin_foc_republic_unification
+        has_origin = origin_fop_first_order
+        has_origin = origin_foc_hutt_criminal_empire
+        has_origin = origin_foc_mandalore_state
+        has_country_flag = foc_republic_origin_republic_country
+        has_country_flag = foc_republic_origin_player_republic
+        has_country_flag = foc_v197_hutt_era_ai_republic
+        has_country_flag = foc_republic_origin_separatist_country
+        has_country_flag = foc_republic_origin_empire_country
+        has_country_flag = foc_republic_origin_empire_crisis
+        has_country_flag = foc_sw_imperial_remnant_country
+        has_country_flag = foc_republic_origin_player_empire
+        has_country_flag = foc_republic_origin_player_imperial_remnant
+        has_country_flag = foc_republic_origin_imperial_rebel_country
+        has_country_flag = foc_republic_origin_rebel_alliance_country
+        has_country_flag = foc_republic_origin_post_treaty_rebel_country
+        has_country_flag = foc_republic_origin_post_treaty_player_rebels
+        has_country_flag = foc_republic_origin_player_rebels
+        has_country_flag = foc_khan_rebel_alliance_country
+        has_country_flag = foc_khan_first_order_resistance_country
+        has_country_flag = foc_sw_new_republic_country
+        has_country_flag = foc_republic_origin_ai_new_republic_after_dqar
+        has_country_flag = foc_republic_origin_post_treaty_new_republic
+        has_country_flag = foc_khan_first_order_country
+        has_country_flag = foc_khan_final_order_country
+        has_country_flag = foc_republic_origin_became_first_order
+        has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+        has_country_flag = fop_player_first_order
+        has_country_flag = fop_player_final_order
+        has_country_flag = foc_mandalore_independent_country
+        has_country_flag = foc_v196_hutt_criminal_empire_country
+        is_country_type = foc_khan_crisis_country
+        is_country_type = foc_final_order_crisis_country
+        is_country_type = foc_khan_rebel_country
+    }
+}
+foc_v1718_republic_before_succession = {
+    OR = { has_origin = origin_foc_republic_unification has_country_flag = foc_republic_origin_republic_country has_country_flag = foc_v197_hutt_era_ai_republic }
+    NOT = { foc_v14_is_imperial_arsenal_country = yes }
+    NOT = { foc_v14_is_rebel_arsenal_country = yes }
+}
+foc_v1718_story_country = {
+    OR = {
+        foc_v1718_republic_before_succession = yes
+        foc_v14_is_imperial_arsenal_country = yes
+        foc_v14_is_rebel_arsenal_country = yes
+        has_origin = origin_fop_first_order
+    }
+}
+foc_v1718_base_ready = {
+    foc_v1718_allowed_country = yes
+    OR = {
+        foc_v15_kuat_expansion_really_completed = yes
+        NOT = { foc_v1718_republic_before_succession = yes }
+    }
+}
+foc_v1718_emp_branch = {
+    foc_v1718_allowed_country = yes
+    NOT = { foc_v14_is_rebel_arsenal_country = yes }
+    NOT = { foc_v1718_republic_before_succession = yes }
+}
+foc_v1718_reb_branch = {
+    foc_v1718_allowed_country = yes
+    foc_v14_is_rebel_arsenal_country = yes
+}
+# v17.18b: the origin starts with the Resurgent permit, NOT with all hull
+# research. Reuse the existing complete prerequisite check shared by both
+# normal and LOWEST Resurgent hulls: permit + battleships + plasma_3.
+foc_v1718_first_order_resurgent_ready = {
+    has_origin = origin_fop_first_order
+    foc_v17_resurgent_durasteel_eligible = yes
+}
+foc_v1718_emp_stage2_ready = {
+    foc_v1718_emp_branch = yes
+    OR = {
+        NOT = { has_origin = origin_fop_first_order }
+        foc_v1717_starkiller_completed_for_arsenal = yes
+        # Backfill the preceding generation when the Resurgent unlocks first.
+        foc_v1718_first_order_resurgent_ready = yes
+    }
+}
+foc_v1718_emp_stage3_ready = {
+    foc_v1718_emp_stage2_ready = yes
+    OR = {
+        # Origin route: Resurgent research, independent of Starkiller/crisis.
+        foc_v1718_first_order_resurgent_ready = yes
+        # Non-origin routes retain their original Plan / NPC Order milestones.
+        AND = {
+            NOT = { has_origin = origin_fop_first_order }
+            OR = {
+                has_country_flag = foc_republic_origin_first_order_plan_completed
+                has_country_flag = foc_khan_first_order_country
+                has_country_flag = foc_khan_final_order_country
+                NOT = { foc_v1718_story_country = yes }
+            }
+        }
+    }
+}
+foc_v1718_reb_stage3_ready = {
+    foc_v1718_reb_branch = yes
+    OR = { has_technology = tech_foc_rebel_nebula_blueprint has_country_flag = foc_saga_rebel_nebula_design_added }
+}
+foc_v1718_beskar_research_ready = {
+    foc_v1718_allowed_country = yes
+    OR = {
+        # First Order ORIGIN must become an actual crisis. Its retained origin
+        # excludes both non-origin branches below, so a Plan flag cannot bypass this.
+        AND = { has_origin = origin_fop_first_order has_country_flag = fop_origin_crisis_active }
+        AND = {
+            NOT = { has_origin = origin_fop_first_order }
+            foc_v14_is_imperial_arsenal_country = yes
+            OR = { has_country_flag = foc_republic_origin_first_order_plan_completed has_country_flag = foc_khan_first_order_country has_country_flag = foc_khan_final_order_country }
+        }
+        AND = {
+            NOT = { has_origin = origin_fop_first_order }
+            foc_v14_is_rebel_arsenal_country = yes
+            OR = { has_global_flag = foc_khan_phase_one has_global_flag = foc_khan_phase_two has_global_flag = fop_origin_player_crisis_exists }
+        }
+    }
+}
+# Ship scope. Every Death Star hull remains outside the shared propulsion line.
+foc_v1718_non_death_star_ship = {
+    NOR = {
+        is_ship_size = deathstarbattlestation
+        is_ship_size = colossus
+        is_ship_size = ssp_remote_strike_carrier
+        is_ship_size = foc_tri_remote_strike_carrier
+        is_ship_size = foc_bwing_remote_strike_carrier
+    }
+}
+foc_v1718_editable_hull = { OR = { is_ship_size = foc_imperialsd2 is_ship_size = foc_imperialsd2_foc_lowest is_ship_size = foc_khan_eclipse is_ship_size = foc_khan_eclipse_foc_lowest is_ship_size = foc_khan_eclipse_ii is_ship_size = foc_khan_eclipse_ii_foc_lowest is_ship_size = foc_khan_mandator is_ship_size = foc_khan_mandator_foc_lowest is_ship_size = foc_khan_xystonsd is_ship_size = foc_khan_xystonsd_combat is_ship_size = foc_khan_xystonsd_combat_foc_lowest is_ship_size = foc_khan_xystonsd_foc_lowest is_ship_size = foc_player_eclipse is_ship_size = foc_player_eclipse_foc_lowest is_ship_size = foc_player_mandator is_ship_size = foc_player_mandator_foc_lowest is_ship_size = foc_rebel_mc158 is_ship_size = foc_rebel_mc158_foc_lowest is_ship_size = foc_rebel_mc80_line is_ship_size = foc_rebel_mc80_line_foc_lowest is_ship_size = foc_rebel_nebula is_ship_size = foc_rebel_nebula_foc_lowest is_ship_size = foc_sw_lusankya is_ship_size = foc_sw_lusankya_foc_lowest is_ship_size = foc_trade_lucrehulk is_ship_size = foc_trade_lucrehulk_foc_lowest is_ship_size = foc_v15_rebel_mc80 is_ship_size = foc_v15_rebel_mc80_foc_lowest is_ship_size = imperialsd is_ship_size = imperialsd_foc_lowest is_ship_size = resurgentbattlecruiser is_ship_size = resurgentbattlecruiser_foc_lowest is_ship_size = venatorclass is_ship_size = venatorclass_foc_lowest is_ship_size = xystonsd } }
+# Planet scope. Nuked/desert Mandalore is still a valid mining world.
+foc_v1718_source_planet_alive = {
+    NOR = { is_planet_class = pc_shattered is_planet_class = pc_broken is_planet_class = pc_shielded }
+}

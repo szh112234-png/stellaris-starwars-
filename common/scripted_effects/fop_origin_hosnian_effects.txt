@@ -1,0 +1,34 @@
+# Origin-only extension of the confirmed player Starkiller impact callback.
+# V213 leaves the New Republic intact until the shared inheritance event turns
+# that same country into the Resistance. No assets are pre-transferred here.
+fop_origin_handle_hosnian_manual_strike = {
+    if = {
+        limit = {
+            has_star_flag = foc_sw_hosnian_home
+            OR = {
+                has_star_flag = star_cracked
+                star = { is_planet_class = pc_black_hole }
+            }
+            exists = event_target:myk_starkiller_base_owner
+            event_target:myk_starkiller_base_owner = {
+                is_ai = no
+                OR = {
+                    has_origin = origin_fop_first_order
+                    has_country_flag = fop_player_first_order
+                    has_country_flag = foc_republic_origin_empire_crisis
+                    has_country_flag = foc_republic_origin_became_first_order
+                    has_country_flag = foc_republic_origin_first_order_plan_completed
+                }
+            }
+        }
+
+        if = {
+            limit = { NOT = { has_global_flag = foc_story_hosnian_destroyed } }
+            foc_story_notify_hosnian_destroyed = yes
+        }
+
+        event_target:myk_starkiller_base_owner = {
+            country_event = { id = fop_origin.23 days = 2 }
+        }
+    }
+}

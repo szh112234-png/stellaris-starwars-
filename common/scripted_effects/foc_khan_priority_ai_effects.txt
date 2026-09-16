@@ -1,0 +1,73 @@
+# Scope: Order military fleet. Gives absolute priority to the system containing
+# an enemy completed Starkiller Base, then to that owner's colonies and fleets.
+foc_khan_starkiller_priority_military_action = {
+    # 2.37 compatibility: ACOT berserk military minister owns strategic movement.
+    remove_auto_move_target = yes
+    clear_orders = yes
+    clear_fleet_actions = this
+}
+
+# Scope: Order transport fleet. Invades a colony in the Starkiller Base system
+# first, then the nearest colony of the Starkiller owner.
+foc_khan_starkiller_priority_army_action = {
+	optimize_memory
+	save_event_target_as = foc_khan_priority_army_fleet
+
+	closest_system = {
+		max_steps = 200
+		limit = {
+			any_system_megastructure = {
+				is_megastructure_type = myk_starkiller_base_final
+				exists = owner
+				owner = { has_country_flag = foc_khan_starkiller_owner_enemy }
+			}
+			any_system_planet = {
+				is_colony = yes
+				exists = controller
+				controller = { has_country_flag = foc_khan_starkiller_owner_enemy }
+			}
+		}
+		save_event_target_as = foc_khan_priority_army_system
+	}
+
+	if = {
+		limit = { NOT = { exists = event_target:foc_khan_priority_army_system } }
+		closest_system = {
+			max_steps = 200
+			limit = {
+				any_system_planet = {
+					is_colony = yes
+					exists = controller
+					controller = { has_country_flag = foc_khan_starkiller_owner_enemy }
+				}
+			}
+			save_event_target_as = foc_khan_priority_army_system
+		}
+	}
+
+	if = {
+		limit = { exists = event_target:foc_khan_priority_army_system }
+		event_target:foc_khan_priority_army_system = {
+			random_system_planet = {
+				limit = {
+					is_colony = yes
+					exists = controller
+					controller = { has_country_flag = foc_khan_starkiller_owner_enemy }
+				}
+				event_target:foc_khan_priority_army_fleet = {
+					remove_auto_move_target = yes
+					clear_orders = yes
+					clear_fleet_actions = this
+					set_fleet_stance = aggressive
+					auto_move_to_planet = {
+						target = prev
+						clear_auto_move_on_arrival = yes
+					}
+				}
+			}
+		}
+	}
+	else = {
+		foc_khan_army_fleet_action = yes
+	}
+}

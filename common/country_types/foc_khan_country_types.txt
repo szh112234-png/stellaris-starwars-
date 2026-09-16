@@ -1,0 +1,168 @@
+# Dedicated First/Final Order crisis country type.
+# 2.44 keeps the hostile crisis diplomacy/AI identity without registering as
+# a vanilla end-game crisis, so the galaxy-setup crisis multiplier is not applied. FOC-local persistent queues control attack, bombardment
+# and invasion, preventing military ministers from overwriting orbit orders.
+foc_khan_crisis_country = {
+	counts_for_victory = no
+	attack_unarmed_orbital_stations = yes
+	scaled_difficulty_bonuses = 0.0
+	end_game_crisis = no
+	destroys_starbases = yes
+	can_own_empty_planets = yes
+	needs_survey = no
+	has_complete_sensor = yes
+	can_planets_be_attacked = yes
+	has_capital = no
+	playable = no
+	government = no
+	enforces_borders = no
+	minimalist_contacts_list_profile = yes
+	custom_starbase = starbase_ai
+	observable = yes
+	uses_origins = no
+	orbital_bombardment = yes
+	ignore_ftl_inhibitors = yes
+	can_use_invalid_technology = yes
+	show_in_contacts_list = yes
+	can_have_their_comms_shared = no
+	relations = yes
+	custom_diplomacy = yes
+
+	# Critical for this MOD: on_monthly_pulse_country does not run for a country
+	# type unless pulse events are enabled. The 0.76 bombardment stance event was
+	# therefore never reaching the First Order or Final Order.
+	has_pulse_events = yes
+
+	# 2.20: ACOT-style crisis controller. Let the engine military minister handle
+	# normal combat fleets instead of installing persistent scripted queues.
+	ai = {
+		enabled = yes
+		construction = yes
+		government = no
+		modules = {
+			berserk_military_minister_module
+		}
+	}
+
+	faction = {
+		hostile = yes
+		needs_border_access = no
+		generate_borders = yes
+		needs_colony = no
+		auto_delete = no
+	}
+
+	modules = {
+		standard_event_module = {}
+		standard_leader_module = {}
+		all_technology_module = {}
+		exclusive_diplomacy_module = {
+			contact_rule = always
+		}
+	}
+}
+
+# 2.08 save-compatibility alias for countries created by 2.07. This intentionally
+# uses the same stable berserk controller as foc_khan_crisis_country; the one-shot
+# migration then converts the country back to the main type.
+foc_final_order_crisis_country = {
+	counts_for_victory = no
+	attack_unarmed_orbital_stations = yes
+	scaled_difficulty_bonuses = 0.0
+	end_game_crisis = no
+	destroys_starbases = yes
+	can_own_empty_planets = yes
+	needs_survey = no
+	has_complete_sensor = yes
+	can_planets_be_attacked = yes
+	has_capital = yes
+	playable = no
+	government = no
+	enforces_borders = no
+	minimalist_contacts_list_profile = yes
+	custom_starbase = starbase_ai
+	observable = yes
+	uses_origins = no
+	orbital_bombardment = yes
+	ignore_ftl_inhibitors = yes
+	can_use_invalid_technology = yes
+	show_in_contacts_list = yes
+	can_have_their_comms_shared = no
+	relations = yes
+	custom_diplomacy = yes
+	has_pulse_events = yes
+
+	# Save-compatible alias uses the same ACOT-style military minister.
+	ai = {
+		enabled = yes
+		construction = yes
+		government = no
+		modules = {
+			berserk_military_minister_module
+		}
+	}
+
+	faction = {
+		hostile = yes
+		needs_border_access = no
+		generate_borders = yes
+		needs_colony = no
+		auto_delete = no
+	}
+
+	modules = {
+		standard_event_module = {}
+		standard_leader_module = {}
+		all_technology_module = {}
+		exclusive_diplomacy_module = { contact_rule = always }
+	}
+}
+
+# 2.22 dedicated Rebel event country. It does not need a formal diplomatic war
+# to enter Order territory, while scripted hostility remains limited to the two
+# Order countries. Strategic movement is handled by foc_khan_rebel.30/.31.
+foc_khan_rebel_country = {
+    counts_for_victory = no
+    attack_unarmed_orbital_stations = yes
+    can_own_empty_planets = yes
+    needs_survey = no
+    has_complete_sensor = yes
+    can_planets_be_attacked = yes
+    has_capital = yes
+    playable = no
+    government = no
+    enforces_borders = no
+    observable = yes
+    uses_origins = no
+    orbital_bombardment = yes
+    ignore_ftl_inhibitors = yes
+    can_use_invalid_technology = yes
+    show_in_contacts_list = yes
+    relations = yes
+    diplomatic_wars = no
+    has_pulse_events = yes
+
+    faction = {
+        neutral = no
+        hostile = no
+        needs_border_access = no
+        generate_borders = yes
+        needs_colony = yes
+        auto_delete = no
+        hostile_when_attacked = yes
+    }
+
+    # Direct event orders control strategic movement; disabling the normal
+    # minister prevents it from cancelling those orders.
+    ai = { enabled = no }
+
+    modules = {
+        standard_event_module = {}
+        standard_economy_module = {}
+        standard_leader_module = {}
+        standard_species_rights_module = {}
+        all_technology_module = {}
+        exclusive_diplomacy_module = { contact_rule = always }
+    }
+}
+

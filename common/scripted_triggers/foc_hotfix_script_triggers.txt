@@ -1,0 +1,16 @@
+# Same country eligibility as the event-only Venator technology.
+foc_hotfix_can_receive_venator = {
+        OR = {
+            has_origin = origin_foc_republic_unification
+            has_country_flag = foc_republic_origin_republic_country
+        }
+        NOT = { has_country_flag = foc_sw_new_republic_country }
+        NOT = { has_country_flag = foc_republic_origin_empire_country }
+        NOT = { has_country_flag = foc_republic_origin_imperial_rebel_country }
+        NOT = { has_country_flag = foc_republic_origin_rebel_alliance_country }
+        NOT = { has_country_flag = foc_khan_first_order_country }
+        NOT = { has_country_flag = foc_khan_final_order_country }
+        NOT = { has_country_flag = fop_player_first_order }
+        NOT = { has_country_flag = fop_player_final_order }
+        NOT = { has_country_flag = foc_republic_origin_jedi_purged }
+    }

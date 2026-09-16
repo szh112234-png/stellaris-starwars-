@@ -1,0 +1,87 @@
+venatorclass = {
+    formation_priority = 40
+    max_speed = 300
+    acceleration = 0.35
+    rotation_speed = 0.2
+    collision_radius = 4
+    max_hitpoints = 74977.5
+    modifier = {
+        ship_armor_add = 60885.0
+        ship_shield_add = 45643.1
+        ship_evasion_add = 80
+        ship_shield_regen_add_static = 100
+        ship_armor_regen_add_static = 100
+        ship_hull_regen_add_static = 100
+    }
+    size_multiplier = 40
+    fleet_slot_size = 4
+    combat_size_multiplier = 80
+    section_slots = {
+        core = { locator = "part1" }
+    }
+    num_target_locators = 4
+    is_space_station = no
+    map_counter_icon = ship_counter_16
+    icon = ship_size_military_8
+    use_shipnames_from = destroyer
+    base_buildtime = 300
+    can_have_federation_design = no
+    enable_default_design = yes
+    enable_3dview_in_ship_browser = yes
+    default_behavior = line
+    potential_country = {
+        NOT = { has_global_flag = foc_khan_strength_lowest }
+        OR = {
+            foc_ai_capital_is_republic_venator_country = yes
+            any_owned_fleet = {
+                any_owned_ship = { is_ship_size = venatorclass }
+            }
+        }
+    }
+    possible_country = {
+        NOT = { has_global_flag = foc_khan_strength_lowest }
+        OR = {
+            foc_ai_capital_is_republic_venator_country = yes
+            any_owned_fleet = {
+                any_owned_ship = { is_ship_size = venatorclass }
+            }
+        }
+    }
+    prerequisites = { "tech_destroyers" "foc_tech_republic_venator" }
+    combat_disengage_chance = 1.25
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    possible_construction = {
+        NOT = { has_global_flag = foc_khan_strength_lowest }
+        exists = owner
+        owner = {
+            foc_ai_capital_is_republic_venator_country = yes
+            NOT = { has_country_flag = foc_phase1_venator_retired }
+        }
+    }
+    required_component_set = "power_core"
+    required_component_set = "ftl_components"
+    required_component_set = "thruster_components"
+    required_component_set = "sensor_components"
+    required_component_set = "combat_computers"
+    required_component_set = "venatorclass_crew"
+    resources = {
+        category = ships
+        cost = { alloys = 400 }
+        upkeep = { energy = 5 }
+    }
+    min_upgrade_cost = { alloys = 8 }
+    ai_ship_data = {
+        fraction = {
+            base = 0
+            modifier = {
+                add = 120
+                foc_ai_capital_is_republic_venator_country = yes
+                has_technology = foc_tech_republic_venator
+                NOT = { has_country_flag = foc_phase1_venator_retired }
+            }
+        }
+    }
+    available_to_everyone = no
+    is_designable = yes
+}

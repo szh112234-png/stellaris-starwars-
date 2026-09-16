@@ -1,0 +1,29 @@
+namespace = foc_v1718i_arkship
+
+# Country-scope maintenance; the source's .16 maintains the fixed tier-III tracker.
+country_event = {
+    id = foc_v1718i_arkship.10
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { any_owned_ship = { foc_v1718h_is_supremacy_ship = yes } }
+    immediate = {
+        country_event = { id = sai_supremacy_arkship.16 }
+        country_event = { id = foc_sai_supremacy_arkship.16 }
+        every_owned_ship = {
+            limit = { foc_v1718h_is_supremacy_ship = yes }
+            foc_v1718h_sync_supremacy_build_mode = yes
+        }
+    }
+}
+
+# For direct custom I -> II -> III upgrades: leave the same ship/colony intact.
+ship_event = {
+    id = foc_v1718i_arkship.11
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { foc_v1718h_is_supremacy_ship = yes }
+    immediate = {
+        foc_v1718h_sync_supremacy_build_mode = yes
+        owner = { country_event = { id = foc_v1718i_arkship.10 days = 1 } }
+    }
+}

@@ -1,0 +1,95 @@
+namespace = foc_v1718h_arkship
+
+# Global load hook: reconcile existing construction mode, then read-only diagnosis.
+event = {
+    id = foc_v1718h_arkship.0
+    hide_window = yes
+    is_triggered_only = yes
+    immediate = {
+        every_country = {
+            limit = { is_ai = no any_owned_ship = { foc_v1718h_is_supremacy_ship = yes } }
+            country_event = { id = foc_v1718h_arkship.10 days = 1 }
+        }
+    }
+}
+
+# Console: event foc_v1718h_arkship.1 . Strictly read-only diagnostic.
+country_event = {
+    id = foc_v1718h_arkship.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { is_ai = no }
+    immediate = {
+        log = "FOC_V1718H_ARK_AUDIT_BEGIN: country=[This.GetName]; no fleet/colony rebuilding."
+        every_owned_ship = {
+            limit = { foc_v1718h_is_supremacy_ship = yes }
+            ship_event = { id = foc_v1718h_arkship.2 }
+        }
+        log = "FOC_V1718H_ARK_AUDIT_END."
+    }
+}
+
+# Read-only ship/fleet/starbase checks: does not claim to test UI buttons.
+ship_event = {
+    id = foc_v1718h_arkship.2
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { foc_v1718h_is_supremacy_ship = yes owner = { is_ai = no } }
+    immediate = {
+        log = "FOC_V1718H_ARK_SHIP: [This.GetName]."
+        if = { limit = { is_arkship_ship = yes } log = "FOC_V1718H_SHIP_RECOGNIZED=yes" }
+        else = { log = "FOC_V1718H_SHIP_RECOGNIZED=no" }
+        if = { limit = { is_ship_class = shipclass_starbase } log = "FOC_V1718H_SHIP_STARBASE_CLASS=yes" }
+        else = { log = "FOC_V1718H_SHIP_STARBASE_CLASS=no" }
+        if = {
+            limit = { exists = fleet }
+            fleet = {
+                if = { limit = { is_ship_class = shipclass_starbase } log = "FOC_V1718H_FLEET_STARBASE_CACHE=yes" }
+                else = { log = "FOC_V1718H_FLEET_STARBASE_CACHE=no" }
+                if = { limit = { is_arkship_fleet = yes } log = "FOC_V1718H_FLEET_MEMBERSHIP_ARK=yes" }
+                else = { log = "FOC_V1718H_FLEET_MEMBERSHIP_ARK=no" }
+                if = { limit = { is_mobile = yes } log = "FOC_V1718H_FLEET_MOBILE=yes" }
+                else = { log = "FOC_V1718H_FLEET_MOBILE=no" }
+            }
+        }
+        else = { log = "FOC_V1718H_FLEET_MISSING" }
+        if = {
+            limit = { exists = starbase }
+            starbase = {
+                if = { limit = { is_arkship_starbase = yes } log = "FOC_V1718H_STARBASE_RECOGNIZED=yes" }
+                else = { log = "FOC_V1718H_STARBASE_RECOGNIZED=no" }
+                if = {
+                    limit = { OR = { has_starbase_module = sai_supremacy_arkship_engineering_bay has_starbase_module = arkship_engineering_bay } }
+                    log = "FOC_V1718H_ENGINEERING_BAY=yes"
+                }
+                else = { log = "FOC_V1718H_ENGINEERING_BAY=no" }
+                if = {
+                    limit = { OR = { has_starbase_module = sai_supremacy_arkship_beastport has_starbase_module = arkship_beastport } }
+                    log = "FOC_V1718H_BEASTPORT=yes"
+                }
+                else = { log = "FOC_V1718H_BEASTPORT=no" }
+                if = {
+                    limit = { OR = { has_starbase_module = sai_supremacy_arkship_docking_bay has_starbase_module = arkship_docking_bay } }
+                    log = "FOC_V1718H_DOCKING_BAY=yes"
+                }
+                else = { log = "FOC_V1718H_DOCKING_BAY=no" }
+            }
+        }
+        else = { log = "FOC_V1718H_STARBASE_OBJECT_MISSING: no automatic rebuild attempted." }
+    }
+}
+
+# Safe old-save correction: do not insert missing modules or reset player loadouts.
+country_event = {
+    id = foc_v1718h_arkship.10
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { is_ai = no }
+    immediate = {
+        every_owned_ship = {
+            limit = { foc_v1718h_is_supremacy_ship = yes }
+            foc_v1718h_sync_supremacy_build_mode = yes
+        }
+        country_event = { id = foc_v1718h_arkship.1 days = 1 }
+    }
+}

@@ -1,0 +1,38 @@
+namespace = foc_khan_226
+
+# 2.46 compatibility only. The 2.26 monthly direct target selector is retired
+# because it cleared the persistent 2.29-2.31 transport action queue.
+event = {
+    id = foc_khan_226.1
+    hide_window = yes
+    is_triggered_only = yes
+}
+
+# Old saves may already have this fleet event queued. Redirect it to the restored
+# queue_actions/find_closest_system/orbit_planet controller instead of clearing it.
+fleet_event = {
+    id = foc_khan_226.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        exists = this
+        owner = {
+            OR = {
+                has_country_flag = foc_khan_first_order_country
+                has_country_flag = foc_khan_final_order_country
+            }
+        }
+        any_owned_ship = { is_ship_class = shipclass_transport }
+    }
+
+    immediate = { foc_khan_229_transport_fleet_action = yes }
+}
+
+# Retained as an empty serialized-event compatibility ID. 2.46 has a new,
+# transport-only migration and no longer touches Rebel or Supremacy orders here.
+event = {
+    id = foc_khan_226.3
+    hide_window = yes
+    is_triggered_only = yes
+}

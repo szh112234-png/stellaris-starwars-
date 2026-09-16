@@ -1,0 +1,98 @@
+foc_rebel_mc80_line = {
+    graphical_culture = { "rebel_01" }
+    formation_priority = 5
+    max_speed = 150
+    acceleration = 0.25
+    rotation_speed = 0.1
+    collision_radius = 8
+    max_hitpoints = 98580
+    modifier = {
+        ship_evasion_add = 60
+        ship_armor_add = 101260
+        ship_shield_add = 123900
+        ship_shield_regen_add_static = 300
+        ship_armor_regen_add_static = 300
+        ship_hull_regen_add_static = 300
+    }
+    ship_modifier = {
+        ship_weapon_range_mult = 0.25
+    }
+    size_multiplier = 44
+    fleet_slot_size = 8
+    section_slots = {
+        bow = {
+            locator = "part1"
+        }
+        mid = {
+            locator = "part2"
+        }
+        stern = {
+            locator = "part3"
+        }
+    }
+    num_target_locators = 5
+    is_space_station = no
+    map_counter_icon = ship_counter_32
+    icon = ship_size_military_8
+    use_shipnames_from = cruiser
+    base_buildtime = 180
+    can_have_federation_design = no
+    enable_default_design = yes
+    enable_3dview_in_ship_browser = yes
+    entity = foc_v1717f_mc80_line_frame_entity
+    default_behavior = line
+    potential_country = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        foc_ai_capital_can_build_mc80 = yes
+    }
+    possible_country = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        foc_ai_capital_can_build_mc80 = yes
+    }
+    prerequisites = { "tech_destroyers" }
+    combat_disengage_chance = 0.10
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    possible_construction = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        exists = owner
+        owner = {
+            foc_ai_capital_can_build_mc80 = yes
+        }
+    }
+    required_component_set = "power_core"
+    required_component_set = "ftl_components"
+    required_component_set = "thruster_components"
+    required_component_set = "sensor_components"
+    required_component_set = "combat_computers"
+    resources = {
+        category = ships
+        cost = {
+            alloys = 700
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 66
+    }
+    ai_ship_data = {
+        fraction = {
+            base = 0
+            modifier = {
+                add = 120
+                foc_ai_capital_can_build_mc80 = yes
+            }
+        }
+    }
+    available_to_everyone = no
+    hull_scale = 2.0
+
+    is_designable = yes
+
+
+}

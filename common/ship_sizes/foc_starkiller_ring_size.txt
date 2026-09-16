@@ -1,0 +1,121 @@
+# Starkiller Base defensive ring - custom starbase hull.
+#
+# WHY THIS EXISTS: the ring around the planet had to be made invisible. A ring's
+# geometry comes from its core section, and vanilla ties each core section to exactly
+# one ship_size (ORBITAL_RING_TIER_3_STARBASE_SECTION declares only
+# ship_size = orbital_ring_tier_3). Overriding that section would have made EVERY
+# empire's tier 3 ring invisible, so the base gets its own hull instead, with its own
+# invisible core section (FOC_STARKILLER_RING_CORE).
+#
+# WHY VANILLA MODULES CANNOT LEAK ONTO IT (and crash the game):
+# Vanilla gates its modules with the scripted triggers is_normal_starbase
+# (has_starbase_size >= starbase_outpost) and is_orbital_ring
+# (has_starbase_size >= orbital_ring_tier_1). Those ">=" comparisons do NOT match
+# unrelated custom hulls - confirmed by Gigastructural Engineering, whose
+# giga_starbase_modules.txt has to OR in every custom hull by hand
+# ("has_starbase_size >= acot_precusor_starbase" etc.) precisely because they are not
+# picked up automatically. So no vanilla section is ever attached to this hull, and
+# the "section has no slot information" crash cannot occur.
+#
+# NOTE the deliberate split below: the is_orbital_ring FIELD (vanilla comments it as
+# "Identifies this ship size as an orbital ring for UI tooltip selection") is kept so
+# the planet view still offers the ring UI, while the identically named scripted
+# TRIGGER still returns no - which is what keeps vanilla modules out. Field and
+# trigger are separate mechanisms; that is what makes this work.
+
+foc_starkiller_ring = {
+    # v17.18j-loadtest: filter in COUNTRY scope before generic design fitting.
+    # Same access rule as the required FOC cores; no new research or build permit.
+    potential_country = { foc_v1718_allowed_country = yes }
+    possible_country = { foc_v1718_allowed_country = yes }
+
+	max_speed = 0.0
+	acceleration = 0.0
+	rotation_speed = 0.0
+
+	modifier = {
+		starbase_defense_platform_capacity_add = 6
+		starbase_module_capacity_add = 6
+		starbase_building_capacity_add = 2
+	}
+
+	ship_modifier = {
+		ship_evasion_mult = -1
+		ship_armor_add = @starhold_armor
+		
+		ship_weapon_range_mult = 2.0
+	}
+
+	max_hitpoints = @starhold_hp
+	base_buildtime = 1080
+
+	resources = {
+		category = starbases
+		cost = {
+			alloys = 0
+		}
+		upkeep = {
+			energy = 4
+		}
+	}
+
+	combat_size_multiplier = 80
+	size_multiplier = 80
+	fleet_slot_size = 2
+
+	# 3D art: nothing is drawn. invisible_turret_entity is the vanilla no-op entity the
+	# mod already uses for its hidden Arkship module sections
+	# (zzz_sai_supremacy_hidden_module_sections.txt), so it is known to work here.
+	# All slots share the "root" locator, same as that file does - the entity has no
+	# part1/part2 attach points, and asking for ones it does not have spams error.log.
+	entity = "invisible_turret_entity"
+	graphical_culture = no
+	section_slots = {
+		"core" = { locator = "root" }
+		"1" = { locator = "root" }
+		"2" = { locator = "root" }
+		"3" = { locator = "root" }
+		"4" = { locator = "root" }
+		"5" = { locator = "root" }
+		"6" = { locator = "root" }
+	}
+
+	# Never buildable from the shipyard or the megastructure list. It only ever comes
+	# into existence through the Starkiller Base megastructure completing.
+	potential_construction = { always = no }
+	possible_construction = { always = no }
+
+	is_designable = no
+	num_target_locators = 0
+	is_space_station = no
+	is_orbital_ring = yes
+	can_have_federation_design = no
+	is_civilian = no
+	components_add_to_cost = no
+	can_disable = yes
+	flip_control_on_disable = yes
+
+	enable_default_design = yes
+	class = shipclass_starbase
+
+	# power_core and combat_computers are satisfied by FOC_STARKILLER_RING_REACTOR and
+	# FOC_STARKILLER_RING_COMPUTER in common/component_templates/foc_starkiller_ring_components.txt.
+	# Every VANILLA reactor and computer is gated behind ship_uses_starbase_components,
+	# a hardcoded whitelist of ship sizes that this custom hull is not on - so without
+	# those two components the design is invalid and the ring comes out broken.
+	required_component_set = "power_core"
+	required_component_set = "sensor_components"
+	required_component_set = "combat_computers"
+
+	# @starhold_hp / @starhold_armor above live in common/scripted_variables and are
+	# global, so they resolve here. These two do NOT: vanilla declares
+	# @build_block_orbital_ring and @orbital_ring_formation_priority at the top of
+	# common/ship_sizes/00_orbital_rings.txt, and those are file-scoped, so referencing
+	# them from this file would fail to resolve. Vanilla's values inlined instead.
+	build_block_radius = 20
+	formation_priority = 1
+	icon_frame = 9
+	scales_with_planet = yes
+
+	available_to_everyone = yes
+}

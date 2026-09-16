@@ -1,0 +1,108 @@
+namespace = foc_v230_robot
+
+# Stellaris 4.4 on_pop_assembly scopes:
+# ROOT/THIS = colony, FROM = country, FROMFROM = newly assembled pop group.
+#
+# V231n keeps all faction droid species. It no longer creates a zero-sized
+# replacement group and transfers local_pop_amount (the V231l path that could
+# report transfer_pop_amount = 0). Instead, only an assembled mechanical group
+# that is NOT already an allowed faction species is converted to the appropriate
+# existing droid species. Existing Protocol/Astromech/B1/K-2SO groups are left
+# untouched, so their populations do not oscillate between species.
+carrier_event = {
+    id = foc_v230_robot.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        fromfrom = { species = { has_trait = trait_mechanical } }
+        from = {
+            OR = {
+                has_country_flag = foc_republic_origin_republic_country
+                has_country_flag = foc_sw_new_republic_country
+                has_country_flag = foc_republic_origin_imperial_rebel_country
+                has_country_flag = foc_republic_origin_rebel_alliance_country
+                has_country_flag = foc_khan_rebel_alliance_country
+                has_country_flag = foc_khan_first_order_resistance_country
+                has_country_flag = foc_republic_origin_post_treaty_rebel_country
+                has_country_flag = foc_republic_origin_separatist_country
+                has_country_flag = foc_republic_origin_empire_country
+                has_country_flag = foc_sw_imperial_remnant_country
+                has_country_flag = foc_khan_first_order_country
+                has_country_flag = fop_player_first_order
+                has_country_flag = foc_republic_origin_became_first_order
+                has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+            }
+        }
+    }
+
+    immediate = {
+        fromfrom = { save_event_target_as = foc_v230_assembled_robot_pop_group }
+
+        # Republic / Imperial Rebels / Rebel Alliance / Resistance / New Republic.
+        if = {
+            limit = {
+                exists = event_target:foc_v223_protocol_droid_species
+                exists = event_target:foc_v223_astromech_droid_species
+                from = {
+                    OR = {
+                        has_country_flag = foc_republic_origin_republic_country
+                        has_country_flag = foc_sw_new_republic_country
+                        has_country_flag = foc_republic_origin_imperial_rebel_country
+                        has_country_flag = foc_republic_origin_rebel_alliance_country
+                        has_country_flag = foc_khan_rebel_alliance_country
+                        has_country_flag = foc_khan_first_order_resistance_country
+                        has_country_flag = foc_republic_origin_post_treaty_rebel_country
+                    }
+                }
+                event_target:foc_v230_assembled_robot_pop_group = {
+                    NOR = {
+                        is_exact_same_species = event_target:foc_v223_protocol_droid_species
+                        is_exact_same_species = event_target:foc_v223_astromech_droid_species
+                    }
+                }
+            }
+            random_list = {
+                1 = { event_target:foc_v230_assembled_robot_pop_group = { change_species = event_target:foc_v223_protocol_droid_species } }
+                2 = { event_target:foc_v230_assembled_robot_pop_group = { change_species = event_target:foc_v223_astromech_droid_species } }
+            }
+        }
+
+        # Confederacy: fixed B1 species.
+        else_if = {
+            limit = {
+                exists = event_target:foc_v231_battle_droid_species
+                from = { has_country_flag = foc_republic_origin_separatist_country }
+                event_target:foc_v230_assembled_robot_pop_group = {
+                    NOT = { is_exact_same_species = event_target:foc_v231_battle_droid_species }
+                }
+            }
+            event_target:foc_v230_assembled_robot_pop_group = {
+                change_species = event_target:foc_v231_battle_droid_species
+            }
+        }
+
+        # Galactic Empire / Imperial Remnant / First Order: K-2SO Security Droid.
+        else_if = {
+            limit = {
+                exists = event_target:foc_v223_security_droid_species
+                from = {
+                    OR = {
+                        has_country_flag = foc_republic_origin_empire_country
+                        has_country_flag = foc_sw_imperial_remnant_country
+                        has_country_flag = foc_khan_first_order_country
+                        has_country_flag = fop_player_first_order
+                        has_country_flag = foc_republic_origin_became_first_order
+                        has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+                    }
+                }
+                event_target:foc_v230_assembled_robot_pop_group = {
+                    NOT = { is_exact_same_species = event_target:foc_v223_security_droid_species }
+                }
+            }
+            event_target:foc_v230_assembled_robot_pop_group = {
+                change_species = event_target:foc_v223_security_droid_species
+            }
+        }
+    }
+}

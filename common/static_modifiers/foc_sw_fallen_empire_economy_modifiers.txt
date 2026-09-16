@@ -1,0 +1,80 @@
+# FOC 3.07 - sustainable economy for the two scripted Fallen Empires.
+# The structure follows the same principle used by SHIPGIRL: permanent upkeep
+# relief plus guaranteed country income, so their economy does not collapse when
+# maintaining many capital ships and citadels.
+
+foc_sw_fallen_empire_economy_core = {
+    # FOC 3.13b: the two scripted Fallen Empires fight to destruction.
+    # The first modifier disables per-ship combat disengagement.  Stellaris has
+    # no country-modifier boolean for emergency FTL, so its minimum activation
+    # delay is moved far beyond any possible battle duration instead.
+    ship_disengage_chance_mult = -9999
+    ship_emergency_ftl_min_days_add = 1000000
+
+    country_resource_max_add = 5000000
+
+    country_base_energy_produces_add = 3000
+    country_base_minerals_produces_add = 2000
+    country_base_food_produces_add = 1000
+    country_base_consumer_goods_produces_add = 750
+    country_base_alloys_produces_add = 1500
+    country_base_unity_produces_add = 500
+    country_base_influence_produces_add = 5
+
+    country_base_volatile_motes_produces_add = 10
+    country_base_exotic_gases_produces_add = 10
+    country_base_rare_crystals_produces_add = 10
+    country_base_sr_zro_produces_add = 5
+    country_base_sr_dark_matter_produces_add = 5
+    country_base_sr_living_metal_produces_add = 5
+    country_base_nanites_produces_add = 5
+
+    ships_upkeep_mult = -0.75
+    starbases_upkeep_mult = -0.75
+    starbase_shipyard_build_cost_mult = -0.35
+    starbase_shipyard_build_speed_mult = 0.75
+    planet_jobs_produces_mult = 0.50
+}
+
+foc_sw_new_republic_economy_focus = {
+    country_base_food_produces_add = 1000
+    country_base_consumer_goods_produces_add = 1000
+    country_base_unity_produces_add = 750
+    country_base_alloys_produces_add = 750
+    all_technology_research_speed = 0.50
+}
+
+foc_sw_imperial_remnant_economy_focus = {
+    country_base_minerals_produces_add = 1500
+    country_base_alloys_produces_add = 2000
+    country_base_energy_produces_add = 1000
+    starbase_shipyard_build_cost_mult = -0.15
+    starbase_shipyard_build_speed_mult = 0.50
+    armies_upkeep_mult = -0.50
+}
+
+# Added on top of the dormant economy after the Galactic Community forms.
+foc_sw_awakened_fallen_empire_war_economy = {
+    country_base_energy_produces_add = 3000
+    country_base_minerals_produces_add = 2000
+    country_base_food_produces_add = 1000
+    country_base_consumer_goods_produces_add = 1000
+    country_base_alloys_produces_add = 3000
+    country_base_unity_produces_add = 750
+
+    ships_upkeep_mult = -0.15
+    starbases_upkeep_mult = -0.15
+    starbase_shipyard_build_cost_mult = -0.25
+    starbase_shipyard_build_speed_mult = 1.00
+}
+
+# FOC V28: replacement package for a story successor that stops being a
+# scripted Fallen Empire but keeps its worlds, its ancient infrastructure and
+# its inherited navy - i.e. the First Order and its Final Order form. Without
+# the storage line, dropping foc_sw_fallen_empire_economy_core would clamp
+# every stockpile down to ordinary caps in the same tick.
+foc_sw_fe_infrastructure_heir_core = {
+    country_resource_max_add = 5000000
+    ships_upkeep_mult = -0.75
+    starbases_upkeep_mult = -0.75
+}

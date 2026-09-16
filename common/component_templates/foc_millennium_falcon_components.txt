@@ -1,0 +1,152 @@
+# V14: original point defense retained; retired ordinary aliases remain inert.
+weapon_component_template = {
+    key = "FOC_STD_QUAD_S_T3_R_V01"
+    size = small
+    type = instant
+    entity = "invisible_turret_entity"
+    projectile_gfx = "infrared_laser_s"
+    icon = "GFX_ship_part_quad_turbo_r_2"
+    icon_frame = 1
+    component_set = "FOC_MILLENNIUM_FALCON_QUAD_LASER"
+    tags = { weapon_type_energy weapon_role_anti_hull S_slot }
+    ai_tags = { weapon_role_anti_hull }
+    power = -25
+    damage = {
+        min = 1320
+        max = 2040
+    }
+    windup = {
+        min = 0.25
+        max = 0.75
+    }
+    total_fire_time = 2
+    range = 90
+    accuracy = 0.95
+    tracking = 0.90
+    armor_damage = 1.10
+    shield_damage = 1.10
+    hull_damage = 1.20
+    size_restriction = { foc_millennium_falcon foc_millennium_falcon_foc_lowest }
+    prerequisites = { "foc_tech_sw_quad_turbolaser_2" }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+utility_component_template = {
+    key = "FOC_MILLENNIUM_FALCON_REACTOR"
+    size = large
+    icon = "GFX_ship_part_zero_point_power"
+    icon_frame = 1
+    power = 16000
+    component_set = "power_core"
+    size_restriction = { foc_millennium_falcon foc_millennium_falcon_foc_lowest }
+    potential = { always = no }
+    resources = {
+        category = ship_components
+        cost = { sr_coaxium_foc = 10 }
+        upkeep = { }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "FOC_MILLENNIUM_FALCON_HYPERDRIVE"
+    size = small
+    icon = "GFX_ship_part_jump_drive_1"
+    icon_frame = 1
+    power = -100
+    ftl = yes
+    jumpdrive = yes
+    component_set = "ftl_components"
+    class_restriction = { shipclass_military }
+    size_restriction = { foc_millennium_falcon foc_millennium_falcon_foc_lowest }
+    ship_modifier = { ship_windup_mult = -0.80 ship_ftl_jumpdrive_range_mult = 0.50 ship_jumpdrive_cooldown_mult = -0.50 }
+    potential = { always = no }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 50 sr_coaxium_foc = 10 }
+        upkeep = { }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "FOC_MILLENNIUM_FALCON_THRUSTER"
+    size = small
+    icon = "GFX_ship_part_thruster_4"
+    icon_frame = 1
+    power = -150
+    component_set = "thruster_components"
+    size_restriction = { foc_millennium_falcon foc_millennium_falcon_foc_lowest }
+    modifier = { ship_evasion_add = 5 ship_base_speed_mult = 0.30 }
+    potential = { always = no }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 10 sr_coaxium_foc = 10 }
+        upkeep = { }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "FOC_MILLENNIUM_FALCON_SENSOR"
+    size = small
+    icon = "GFX_ship_part_sensor_4"
+    icon_frame = 1
+    power = -50
+    component_set = "sensor_components"
+    size_restriction = { foc_millennium_falcon foc_millennium_falcon_foc_lowest }
+    modifier = { ship_sensor_range_add = 5 ship_hyperlane_range_add = 5 }
+    potential = { always = no }
+    resources = {
+        category = ship_components
+        cost = { }
+        upkeep = { }
+    }
+    ai_weight = { weight = 0 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "FOC_MILLENNIUM_FALCON_COMPUTER"
+    size = small
+    icon = "GFX_ship_part_computer_swarm_sapient"
+    icon_frame = 1
+    power = -100
+    component_set = "combat_computers"
+    class_restriction = { shipclass_military }
+    size_restriction = { foc_millennium_falcon foc_millennium_falcon_foc_lowest }
+    ship_behavior = "swarm"
+    ship_modifier = { ship_tracking_add = 20 ship_evasion_add = 5 }
+    potential = { always = no }
+    resources = {
+        category = ship_components
+        cost = { }
+        upkeep = { }
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}

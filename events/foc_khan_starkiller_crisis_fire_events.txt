@@ -1,0 +1,172 @@
+namespace = myk_starkiller_dyson
+
+system_event = {
+    id = myk_starkiller_dyson.8200
+    hide_window = yes
+    is_triggered_only = yes
+
+    immediate = {
+        log = "FOC_KHAN_STARKILLER_AI V16: crisis-only 180-day star shot started."
+
+        set_star_flag = myk_starkiller_crisis_shot_pending
+        save_global_event_target_as = myk_starkiller_crisis_target_system
+        star = { save_global_event_target_as = myk_starkiller_crisis_target_star }
+
+        if = {
+            limit = { exists = from }
+            from = {
+                save_global_event_target_as = myk_starkiller_crisis_base_megastructure
+                owner = { save_global_event_target_as = myk_starkiller_crisis_base_owner }
+                solar_system = {
+                    save_global_event_target_as = myk_starkiller_crisis_base_system
+                    random_system_planet = {
+                        limit = {
+                            is_star = no
+                            OR = {
+                                has_planet_flag = myk_starkiller_base_planet_flag
+                                has_planet_flag = foc_khan_starkiller_anchor
+                            }
+                        }
+                        save_global_event_target_as = myk_starkiller_crisis_base_planet
+                    }
+
+                    spawn_megastructure = {
+                        type = myk_starkiller_fire_origin_marker
+                        planet = star
+                        owner = event_target:myk_starkiller_crisis_base_megastructure.owner
+                        init_effect = { save_global_event_target_as = myk_starkiller_crisis_fire_origin_location }
+                    }
+                    spawn_megastructure = {
+                        type = myk_starkiller_beacon_origin_marker
+                        planet = star
+                        owner = event_target:myk_starkiller_crisis_base_megastructure.owner
+                        init_effect = { save_global_event_target_as = myk_starkiller_crisis_beacon_origin_location }
+                    }
+                }
+            }
+        }
+
+        if = {
+            limit = { exists = event_target:myk_starkiller_crisis_base_planet }
+            event_target:myk_starkiller_crisis_base_planet = {
+                set_planet_entity = {
+                    entity = "myk_starkillerbase_firing_planet_entity"
+                    picture = pc_arctic
+                }
+            }
+        }
+
+        if = {
+            limit = { exists = event_target:myk_starkiller_crisis_base_megastructure }
+            spawn_megastructure = {
+                type = myk_starkiller_fire_target_marker
+                planet = star
+                owner = event_target:myk_starkiller_crisis_base_megastructure.owner
+                init_effect = { save_global_event_target_as = myk_starkiller_crisis_fire_target_location }
+            }
+            spawn_megastructure = {
+                type = myk_starkiller_beacon_target_marker
+                planet = star
+                owner = event_target:myk_starkiller_crisis_base_megastructure.owner
+                init_effect = { save_global_event_target_as = myk_starkiller_crisis_beacon_target_location }
+            }
+        }
+    }
+}
+
+system_event = {
+    id = myk_starkiller_dyson.8201
+    hide_window = yes
+    is_triggered_only = yes
+
+    immediate = {
+        log = "FOC_KHAN_STARKILLER_AI V16: crisis-only star shot impact callback."
+
+        # Multiple delayed callbacks can exist in old saves. Only the first one
+        # carrying the pending flag may apply destruction to this target system.
+        if = {
+            limit = {
+                has_star_flag = myk_starkiller_crisis_shot_pending
+                NOT = { has_star_flag = star_cracked }
+                star = { NOT = { is_planet_class = pc_black_hole } }
+            }
+            remove_star_flag = myk_starkiller_crisis_shot_pending
+            myk_starkiller_destroy_entire_system = yes
+            myk_starkiller_remove_destroyed_system_megastructures_after_beam = yes
+        }
+        else_if = {
+            limit = { has_star_flag = myk_starkiller_crisis_shot_pending }
+            remove_star_flag = myk_starkiller_crisis_shot_pending
+            log = "FOC_KHAN_STARKILLER_AI V17: stale impact on an already destroyed system ignored."
+        }
+        else = {
+            log = "FOC_KHAN_STARKILLER_AI V16: duplicate impact ignored."
+        }
+
+        every_system_megastructure = {
+            limit = {
+                OR = {
+                    is_megastructure_type = myk_starkiller_fire_target_marker
+                    is_megastructure_type = myk_starkiller_beacon_target_marker
+                }
+            }
+            remove_megastructure = this
+        }
+
+        if = {
+            limit = { exists = event_target:myk_starkiller_crisis_base_system }
+            event_target:myk_starkiller_crisis_base_system = {
+                every_system_megastructure = {
+                    limit = {
+                        OR = {
+                            is_megastructure_type = myk_starkiller_sun_drain
+                            is_megastructure_type = myk_starkiller_fire_origin_marker
+                            is_megastructure_type = myk_starkiller_beacon_origin_marker
+                        }
+                    }
+                    remove_megastructure = this
+                }
+            }
+        }
+
+        if = {
+            limit = { exists = event_target:myk_starkiller_crisis_base_planet }
+            event_target:myk_starkiller_crisis_base_planet = {
+                set_planet_entity = {
+                    entity = "myk_starkillerbase_planet_entity"
+                    picture = pc_arctic
+                }
+            }
+        }
+
+        if = {
+            limit = { exists = event_target:myk_starkiller_crisis_base_owner }
+            event_target:myk_starkiller_crisis_base_owner = {
+                country_event = { id = myk_starkiller_dyson.8202 }
+            }
+        }
+
+        if = { limit = { exists = event_target:myk_starkiller_crisis_target_system } clear_global_event_target = myk_starkiller_crisis_target_system }
+        if = { limit = { exists = event_target:myk_starkiller_crisis_target_star } clear_global_event_target = myk_starkiller_crisis_target_star }
+        if = { limit = { exists = event_target:myk_starkiller_crisis_base_megastructure } clear_global_event_target = myk_starkiller_crisis_base_megastructure }
+        if = { limit = { exists = event_target:myk_starkiller_crisis_base_owner } clear_global_event_target = myk_starkiller_crisis_base_owner }
+        if = { limit = { exists = event_target:myk_starkiller_crisis_base_system } clear_global_event_target = myk_starkiller_crisis_base_system }
+        if = { limit = { exists = event_target:myk_starkiller_crisis_base_planet } clear_global_event_target = myk_starkiller_crisis_base_planet }
+        if = { limit = { exists = event_target:myk_starkiller_crisis_fire_origin_location } clear_global_event_target = myk_starkiller_crisis_fire_origin_location }
+        if = { limit = { exists = event_target:myk_starkiller_crisis_beacon_origin_location } clear_global_event_target = myk_starkiller_crisis_beacon_origin_location }
+        if = { limit = { exists = event_target:myk_starkiller_crisis_fire_target_location } clear_global_event_target = myk_starkiller_crisis_fire_target_location }
+        if = { limit = { exists = event_target:myk_starkiller_crisis_beacon_target_location } clear_global_event_target = myk_starkiller_crisis_beacon_target_location }
+    }
+}
+
+
+# Crisis-only system-destruction window. Reuses the Hosnian-system destruction art.
+country_event = {
+    id = myk_starkiller_dyson.8202
+    title = myk_starkiller.315.title
+    desc = myk_starkiller.315.desc
+    picture = GFX_foc_story_hosnian_destroyed
+    show_sound = myk_starkillerbase_fire
+    is_triggered_only = yes
+    option = { name = OK }
+}

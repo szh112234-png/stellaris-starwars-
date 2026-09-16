@@ -1,0 +1,11 @@
+# Any scope. Expanded inline to avoid increasing scripted-effect recursion depth.
+set_global_flag = foc_v232n_conquest_rewards_closed
+every_country = {
+    limit = {
+        OR = {
+            is_variable_set = foc_v232i_pending_conquest_rewards
+            has_country_flag = foc_v232i_conquest_offer_active
+        }
+    }
+    inline_script = "foc_v232n_close_conquest_queue"
+}

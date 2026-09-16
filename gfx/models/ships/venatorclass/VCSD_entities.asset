@@ -1,0 +1,60 @@
+entity = {
+	name = "venatorclass_entity"
+	pdxmesh = "venatorclass_frame_mesh"
+		
+	default_state = "idle"
+
+	attach = { part1 = "venatorclass_hull_entity" }
+}
+
+entity = {
+	name = "venatorclass_hull_entity"
+	pdxmesh = "venatorclass_hull_mesh"	
+	
+	state = { name = "idle" state_time = 5
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_titan_ship_hum_01" } }
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_titan_ship_hum_02" } }
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_titan_ship_hum_03" } }
+		event = { time = 0 node = "enginelarge01" particle = "mammalian_01_3_35_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "enginelarge02" particle = "mammalian_01_3_35_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "enginelarge03" particle = "mammalian_01_3_35_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "enginelarge04" particle = "mammalian_01_3_35_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "enginesmall01" particle = "mammalian_01_0_65_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "enginesmall02" particle = "mammalian_01_0_65_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "enginesmall03" particle = "mammalian_01_0_65_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "enginesmall04" particle = "mammalian_01_0_65_exhaust_idle_particle" trigger_once = yes keep_particle = yes }
+	}
+	state = { name = "moving" state_time = 5
+		event =  { trigger_once = yes sound = { soundeffect = "moving_out_titan" } }
+		event = { time = 0 node = "enginelarge01" particle = "mammalian_01_3_35_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "enginelarge02" particle = "mammalian_01_3_35_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "enginelarge03" particle = "mammalian_01_3_35_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "enginelarge04" particle = "mammalian_01_3_35_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "enginesmall01" particle = "mammalian_01_0_65_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "enginesmall02" particle = "mammalian_01_0_65_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "enginesmall03" particle = "mammalian_01_0_65_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "enginesmall04" particle = "mammalian_01_0_65_ship_exhaust_moving_particle" trigger_once = yes keep_particle = yes }
+	}
+	state = { name = "death"  looping = no
+	event = { time = 0.0 node = "target_locator_01" particle = "ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } keep_particle = yes trigger_once = yes }
+	event = { time = 3.0 node = "target_locator_02" particle = "ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } keep_particle = yes trigger_once = yes }
+	event = { time = 4.0 node = "target_locator_03" particle = "ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } keep_particle = yes trigger_once = yes }
+	event = { time = 6.0 node = "target_locator_04" particle = "ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } keep_particle = yes trigger_once = yes }
+	event = { time = 8.0 node = "target_locator_05" particle = "ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } keep_particle = yes trigger_once = yes }
+	}
+}
+
+entity = {
+	name = "venatorclass_invi_entity"
+	pdxmesh = "venatorclass_turret_invi_mesh"
+}
+
+entity = {
+	name = "venatorclass_turret_entity"
+	pdxmesh = "venatorclass_turret_mesh"
+}
+
+entity = {
+	name = "venatorclass_arc170_entity"
+	pdxmesh = "venatorclass_arc170_mesh"
+}

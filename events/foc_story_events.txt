@@ -1,0 +1,864 @@
+namespace = foc_story
+
+# Hosnian was destroyed by a path that did not directly call the Starkiller
+# scripted effect, or the save was loaded after destruction.
+event = {
+    id = foc_story.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_sw_fallen_empires_ready
+        NOT = { has_global_flag = foc_story_hosnian_destroyed }
+        OR = {
+            AND = {
+                exists = event_target:foc_sw_hosnian_system
+                event_target:foc_sw_hosnian_system = {
+                    OR = {
+                        has_star_flag = star_cracked
+                        star = { is_planet_class = pc_black_hole }
+                    }
+                }
+            }
+            any_system = {
+                has_star_flag = foc_sw_hosnian_home
+                OR = {
+                    has_star_flag = star_cracked
+                    star = { is_planet_class = pc_black_hole }
+                }
+            }
+        }
+    }
+
+    immediate = {
+        if = {
+            limit = { NOT = { exists = event_target:foc_sw_hosnian_system } }
+            random_system = {
+                limit = {
+                    has_star_flag = foc_sw_hosnian_home
+                    OR = {
+                        has_star_flag = star_cracked
+                        star = { is_planet_class = pc_black_hole }
+                    }
+                }
+                save_global_event_target_as = foc_sw_hosnian_system
+            }
+        }
+        foc_story_notify_hosnian_destroyed = yes
+    }
+}
+
+# Save/load fallback for Starkiller Base's destruction notification.
+event = {
+    id = foc_story.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_khan_starkiller_destroyed
+        NOT = { has_global_flag = foc_story_starkiller_destroyed_shown }
+    }
+
+    immediate = { foc_story_notify_starkiller_destroyed = yes }
+}
+
+# Save/load fallback for the Supremacy's true destruction notification.
+event = {
+    id = foc_story.3
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        NOT = { has_global_flag = foc_story_supremacy_destroyed_shown }
+        OR = {
+            has_global_flag = foc_khan_supremacy_destroyed_in_combat
+            AND = {
+                OR = {
+                    has_global_flag = foc_khan_phase_one
+                    has_global_flag = foc_khan_phase_two_preparing
+                    has_global_flag = foc_khan_phase_two
+                }
+                NOT = {
+                    any_country = {
+                        has_country_flag = foc_khan_first_order_country
+                        any_owned_ship = { has_ship_flag = foc_khan_supremacy_flagship }
+                    }
+                }
+            }
+        }
+    }
+
+    immediate = {
+        set_global_flag = foc_khan_supremacy_destroyed_in_combat
+        foc_story_notify_supremacy_destroyed = yes
+    }
+}
+
+# Save/load fallback for completed Final Order crises.
+event = {
+    id = foc_story.4
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_khan_crisis_finished
+        NOT = { has_global_flag = foc_story_final_order_destroyed_shown }
+    }
+
+    immediate = { foc_story_notify_final_order_destroyed = yes }
+}
+
+# Direct handler for destruction paths that bypass the Arkship disabled state.
+ship_event = {
+    id = foc_story.5
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_ship_flag = foc_khan_supremacy_flagship
+        NOT = { has_global_flag = foc_story_supremacy_destroyed_shown }
+        owner = {
+            NOT = { any_owned_ship = { has_ship_flag = foc_khan_supremacy_flagship } }
+        }
+    }
+
+    immediate = {
+        set_global_flag = foc_khan_supremacy_destroyed_in_combat
+        foc_story_notify_supremacy_destroyed = yes
+    }
+}
+
+# Chapter I: destruction of Hosnian and the fall of the New Republic.
+country_event = {
+    id = foc_story.10
+    title = foc_story.10.name
+    desc = foc_story.10.desc
+    picture = GFX_foc_story_hosnian_destroyed
+    location = event_target:foc_sw_hosnian_system
+    is_triggered_only = yes
+    force_open = yes
+    option = { name = foc_story.10.a }
+}
+
+# Chapter II-A: Starkiller Base is destroyed and Han Solo dies.
+country_event = {
+    id = foc_story.11
+    title = foc_story.11.name
+    desc = foc_story.11.desc
+    picture = GFX_foc_story_starkiller_destroyed
+    is_triggered_only = yes
+    force_open = yes
+    option = { name = foc_story.11.a }
+}
+
+# Chapter III: the destruction of the Supremacy.
+country_event = {
+    id = foc_story.12
+    title = foc_story.12.name
+    desc = foc_story.12.desc
+    picture = GFX_foc_story_supremacy_destroyed
+    is_triggered_only = yes
+    force_open = yes
+    option = { name = foc_story.12.a }
+}
+
+# Chapter II-B: a player has captured a completed Starkiller Base.
+country_event = {
+    id = foc_story.13
+    title = foc_story.13.name
+    desc = foc_story.13.desc
+    picture = GFX_foc_story_starkiller_destroyed
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        is_ai = no
+        exists = event_target:foc_story_captured_starkiller_base
+        exists = event_target:foc_story_captured_starkiller_anchor
+        event_target:foc_story_captured_starkiller_anchor = {
+            has_planet_flag = foc_khan_starkiller_anchor
+        }
+        event_target:foc_story_captured_starkiller_base = { owner = { is_same_value = root } }
+    }
+
+    option = {
+        name = foc_story.13.a
+        custom_tooltip = foc_story.13.a.tooltip
+        hidden_effect = {
+            add_resource = { unity = 25000 }
+
+            # Destroy the separately spawned fixed-design defence station first.
+            event_target:foc_story_captured_starkiller_anchor = {
+                solar_system = {
+                    every_fleet_in_system = {
+                        limit = { any_owned_ship = { has_ship_flag = foc_khan_starkiller_fixed_station } }
+                        destroy_fleet = { target = this destroy_template = yes kill_leader = yes }
+                    }
+                }
+            }
+
+            if = {
+                limit = { exists = event_target:foc_story_captured_starkiller_base }
+                event_target:foc_story_captured_starkiller_base = { remove_megastructure = this }
+            }
+
+            # Use the same planet-destruction effect as the gun itself, so the
+            # crisis objective and all old-save destruction detectors agree.
+            event_target:foc_story_captured_starkiller_anchor = {
+                set_planet_flag = foc_story_starkiller_destroyed_by_captor
+                myk_starkiller_destroy_single_planet = yes
+            }
+
+            if = {
+                limit = {
+                    event_target:foc_story_captured_starkiller_anchor = {
+                        has_planet_flag = foc_khan_starkiller_anchor
+                    }
+                }
+                set_global_flag = foc_khan_starkiller_destroyed
+                remove_global_flag = foc_khan_first_reinforcements_active
+            }
+            foc_story_notify_starkiller_destroyed = yes
+            country_event = { id = foc_story.15 days = 1 }
+        }
+    }
+
+    option = {
+        name = foc_story.13.b
+        custom_tooltip = foc_story.13.b.tooltip
+        hidden_effect = {
+            set_country_flag = foc_story_starkiller_captured_and_retained
+            set_country_flag = foc_khan_starkiller_owner_enemy
+            if = {
+                limit = { exists = event_target:foc_story_captured_starkiller_base }
+                event_target:foc_story_captured_starkiller_base = {
+                    remove_megastructure_flag = foc_story_capture_choice_pending
+                    set_megastructure_flag = foc_story_capture_choice_resolved
+                }
+            }
+            # Re-run the tested owner initialization after the choice, preserving
+            # the firing action, fixed station and crisis hostility rules.
+            country_event = { id = foc_khan.1600 days = 1 }
+            country_event = { id = foc_story.15 days = 1 }
+        }
+    }
+}
+
+# AI captors automatically destroy the superweapon so the crisis cannot stall.
+country_event = {
+    id = foc_story.14
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = yes
+        exists = event_target:foc_story_captured_starkiller_base
+        exists = event_target:foc_story_captured_starkiller_anchor
+        event_target:foc_story_captured_starkiller_anchor = {
+            has_planet_flag = foc_khan_starkiller_anchor
+        }
+    }
+
+    immediate = {
+        event_target:foc_story_captured_starkiller_anchor = {
+            solar_system = {
+                every_fleet_in_system = {
+                    limit = { any_owned_ship = { has_ship_flag = foc_khan_starkiller_fixed_station } }
+                    destroy_fleet = { target = this destroy_template = yes kill_leader = yes }
+                }
+            }
+        }
+        event_target:foc_story_captured_starkiller_base = { remove_megastructure = this }
+        event_target:foc_story_captured_starkiller_anchor = {
+            set_planet_flag = foc_story_starkiller_destroyed_by_captor
+            myk_starkiller_destroy_single_planet = yes
+        }
+        if = {
+            limit = {
+                event_target:foc_story_captured_starkiller_anchor = {
+                    has_planet_flag = foc_khan_starkiller_anchor
+                }
+            }
+            set_global_flag = foc_khan_starkiller_destroyed
+            remove_global_flag = foc_khan_first_reinforcements_active
+        }
+        foc_story_notify_starkiller_destroyed = yes
+        country_event = { id = foc_story.15 days = 1 }
+    }
+}
+
+# Clear global capture targets only after the player's selected option has run.
+country_event = {
+    id = foc_story.15
+    hide_window = yes
+    is_triggered_only = yes
+    immediate = {
+        clear_global_event_target = foc_story_captured_starkiller_base
+        clear_global_event_target = foc_story_captured_starkiller_anchor
+        clear_global_event_target = foc_khan_new_starkiller_owner
+    }
+}
+
+# Chapter IV: the actual victor chooses the galaxy's future.
+country_event = {
+    id = foc_story.20
+    title = foc_story.20.name
+    desc = foc_story.20.desc
+    picture = GFX_foc_story_final_choice
+    is_triggered_only = yes
+    force_open = yes
+
+    option = {
+        name = foc_story.20.a
+        custom_tooltip = foc_story.20.a.tooltip
+        custom_tooltip = foc_dark_order_legacy_reward_tt
+        hidden_effect = {
+            set_country_flag = foc_story_chose_darkness
+            set_global_flag = foc_story_dark_ending
+            save_global_event_target_as = foc_story_dark_emperor
+
+            # Only the player recorded by foc_khan.90 as the actual conqueror of
+            # Exegol may inherit these assets. The old-save notification fallback
+            # deliberately cannot manufacture this victory flag.
+            if = {
+                limit = { has_country_flag = foc_story_defeated_final_order }
+                foc_grant_dark_order_legacy_access = yes
+            }
+
+            # Remove any previous office-holder, then establish the victor as the
+            # permanent Galactic Emperor. The Community exists in the normal FOC
+            # flow; add_to_galactic_community_no_message repairs unusual debug saves.
+            every_country = {
+                limit = {
+                    OR = { is_galactic_custodian = yes is_galactic_emperor = yes }
+                    NOT = { is_same_value = root }
+                }
+                if = { limit = { is_galactic_emperor = yes } set_galactic_emperor = no }
+                if = { limit = { is_galactic_custodian = yes } set_galactic_custodian = no }
+            }
+            add_to_galactic_community_no_message = yes
+            set_galactic_custodian = yes
+            set_custodian_term_days = -1
+            set_galactic_emperor = yes
+            add_imperial_authority = 100
+            add_modifier = { modifier = foc_story_dark_emperor days = -1 }
+
+            # Every independent regular empire must submit or face total war.
+            every_playable_country = {
+                limit = {
+                    is_regular_empire = yes
+                    is_subject = no
+                    NOT = { is_same_value = root }
+                }
+                country_event = { id = foc_story.21 }
+            }
+        }
+    }
+
+    option = {
+        name = foc_story.20.b
+        custom_tooltip = foc_story.20.b.tooltip
+        hidden_effect = {
+            set_country_flag = foc_story_chose_light
+            set_global_flag = foc_story_light_ending
+
+            every_country = {
+                limit = {
+                    OR = { is_galactic_custodian = yes is_galactic_emperor = yes }
+                    NOT = { is_same_value = root }
+                }
+                if = { limit = { is_galactic_emperor = yes } set_galactic_emperor = no }
+                if = { limit = { is_galactic_custodian = yes } set_galactic_custodian = no }
+            }
+            if = { limit = { is_galactic_emperor = yes } set_galactic_emperor = no }
+            add_to_galactic_community_no_message = yes
+            set_galactic_custodian = yes
+            set_custodian_term_days = -1
+            add_modifier = { modifier = foc_story_light_custodian days = -1 }
+
+            # The light-side ending grants two complete Rebel/New Republic
+            # blueprints. Their exclusive SG-derived components stay hidden and
+            # the hulls stay non-designable, so only the sealed ships are usable.
+            foc_story_grant_light_side_ship_blueprints = yes
+        }
+    }
+}
+
+# Ultimatum issued by the new Galactic Emperor.
+country_event = {
+    id = foc_story.21
+    title = foc_story.21.name
+    desc = foc_story.21.desc
+    picture = GFX_foc_story_final_choice
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        exists = event_target:foc_story_dark_emperor
+        NOT = { is_same_value = event_target:foc_story_dark_emperor }
+        is_regular_empire = yes
+        is_subject = no
+    }
+
+    option = {
+        name = foc_story.21.a
+        custom_tooltip = foc_story.21.a.tooltip
+        ai_chance = { base = 70 }
+        hidden_effect = {
+            if = {
+                limit = { is_overlord = yes }
+                every_subject = {
+                    set_subject_of = {
+                        who = event_target:foc_story_dark_emperor
+                        preset = preset_foc_khan_satrapy
+                    }
+                    set_country_flag = foc_story_joined_new_empire
+                }
+            }
+            set_subject_of = {
+                who = event_target:foc_story_dark_emperor
+                preset = preset_foc_khan_satrapy
+            }
+            add_to_galactic_community_no_message = yes
+            set_country_flag = foc_story_joined_new_empire
+            remove_country_flag = foc_story_refused_new_empire
+            set_faction_hostility = {
+                target = event_target:foc_story_dark_emperor
+                set_hostile = no
+                set_neutral = no
+                set_friendly = yes
+            }
+            event_target:foc_story_dark_emperor = {
+                set_faction_hostility = {
+                    target = root
+                    set_hostile = no
+                    set_neutral = no
+                    set_friendly = yes
+                }
+            }
+        }
+    }
+
+    option = {
+        name = foc_story.21.b
+        custom_tooltip = foc_story.21.b.tooltip
+        ai_chance = { base = 30 }
+        hidden_effect = {
+            remove_from_galactic_community = yes
+            set_country_flag = foc_story_refused_new_empire
+            event_target:foc_story_dark_emperor = { country_event = { id = foc_story.22 days = 1 } }
+        }
+    }
+}
+
+# Declare total war on every empire that refused the imperial ultimatum.
+country_event = {
+    id = foc_story.22
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_story_chose_darkness
+        exists = event_target:foc_story_dark_emperor
+        is_same_value = event_target:foc_story_dark_emperor
+    }
+
+    immediate = {
+        every_playable_country = {
+            limit = {
+                has_country_flag = foc_story_refused_new_empire
+                is_regular_empire = yes
+                is_subject = no
+                NOT = { is_same_value = root }
+                root = { NOT = { is_at_war_with = prev } }
+            }
+            establish_communications_no_message = root
+            root = { establish_communications_no_message = prev }
+            set_faction_hostility = {
+                target = root
+                set_hostile = yes
+                set_neutral = no
+                set_friendly = no
+            }
+            root = {
+                set_faction_hostility = {
+                    target = prev
+                    set_hostile = yes
+                    set_neutral = no
+                    set_friendly = no
+                }
+                declare_war = {
+                    target = prev
+                    attacker_war_goal = wg_colossus
+                }
+            }
+        }
+    }
+}
+
+# Other human players receive a non-interactive news window after the victor has
+# already made the final decision.
+country_event = {
+    id = foc_story.23
+    title = foc_story.23.name
+    desc = foc_story.23.desc
+    picture = GFX_foc_story_final_choice
+    is_triggered_only = yes
+    force_open = yes
+    option = { name = foc_story.23.a }
+}
+
+# Chapter V handler: Crait has fallen to an Order country. Skywalker's death and
+# the player choice occur here, but the Rebel country survives in hiding so it
+# can establish the final Ajan Kloss base after Phase II begins.
+planet_event = {
+    id = foc_story.30
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_khan_rebel_spawned
+        # V84: like D'Qar, Crait becomes a story battle only after the First Order
+        # has arrived and the Resistance has genuinely held the system first.
+        OR = {
+            has_global_flag = foc_khan_phase_one
+            has_global_flag = fop_origin_player_crisis_exists
+        }
+        has_global_flag = foc_saga_crait_held_by_rebels
+        NOT = { has_global_flag = foc_story_rebel_capital_decision_resolved }
+        NOT = { has_global_flag = foc_story_rebel_capital_event_pending }
+        has_planet_flag = foc_khan_rebel_crait
+        exists = event_target:foc_khan_rebel_alliance
+        event_target:foc_khan_rebel_alliance = {
+            has_country_flag = foc_khan_rebel_alliance_country
+        }
+        # V85: like D'Qar, Crait is not lost until the Resistance has lost
+        # the whole system starbase. Colony occupation alone cannot fire the battle.
+        solar_system = {
+            NOT = { space_owner? = { OR = { has_country_flag = foc_khan_rebel_alliance_country has_country_flag = foc_khan_first_order_resistance_country } } }
+        }
+    }
+
+    immediate = {
+        save_global_event_target_as = foc_story_rebel_fallen_capital
+        # On the destruction path there is no controller; attribute the fall to
+        # the First Order (the Crait era) or, failing that, the Final Order.
+        if = {
+            limit = { solar_system = { exists = space_owner } }
+            solar_system = { space_owner = { save_global_event_target_as = foc_story_rebel_conqueror } }
+        }
+        else_if = {
+            limit = { exists = event_target:foc_khan_first_order }
+            event_target:foc_khan_first_order = {
+                save_global_event_target_as = foc_story_rebel_conqueror
+            }
+        }
+        else_if = {
+            limit = { exists = event_target:foc_khan_final_order }
+            event_target:foc_khan_final_order = {
+                save_global_event_target_as = foc_story_rebel_conqueror
+            }
+        }
+        set_global_flag = foc_story_rebel_capital_event_pending
+        set_global_flag = foc_story_rebel_capital_decision_resolved
+        set_global_flag = foc_story_rebel_capital_fallen
+        set_global_flag = foc_khan_rebel_crait_lost_311v
+        set_global_flag = foc_canon_crait_last_stand
+        set_global_flag = foc_canon_crait_battle_completed
+        if = {
+            limit = { NOT = { has_global_flag = foc_canon_fo_first_battle_recorded } }
+            set_global_flag = foc_canon_fo_first_battle_crait
+        }
+        every_playable_country = {
+            limit = { is_ai = no OR = { has_origin = origin_foc_republic_unification has_origin = origin_fop_first_order } }
+            foc_canon_mark_first_order_war_first_battle = yes
+        }
+        remove_global_flag = foc_story_rebel_capital_event_pending
+
+        # V84 merged Crait outcome: Luke's final stand and the Resistance escape
+        # are resolved here, so no second Crait/Luke popup is needed later.
+        every_country = {
+            limit = { any_owned_leader = { has_leader_flag = foc_saga_luke_leader } }
+            foc_saga_luke_become_one_with_the_force = yes
+            set_country_flag = foc_saga_luke_crait_shown
+        }
+        set_global_flag = foc_saga_luke_died
+        every_country = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_khan_rebel_alliance_country
+                    has_country_flag = foc_khan_first_order_resistance_country
+                }
+            }
+            add_modifier = { modifier = foc_saga_spark_of_hope days = -1 }
+        }
+
+        # The surviving Resistance remains hidden until Ajan Kloss appears.
+        # The Final Order strike fleet therefore waits for, then retargets to,
+        # the last base instead of returning to Exegol after Crait alone falls.
+
+        # The decision belongs to each human-controlled regular empire. The
+        # country receiving foc_story.31 is the ROOT that becomes a subject.
+        every_playable_country = {
+            limit = {
+                is_ai = no
+                is_regular_empire = yes
+                OR = {
+                    has_origin = origin_foc_republic_unification
+                    has_origin = origin_fop_first_order
+                }
+                NOT = { has_country_flag = foc_khan_first_order_country }
+                NOT = { has_country_flag = foc_khan_final_order_country }
+                NOT = { has_country_flag = fop_player_first_order }
+                NOT = { has_country_flag = fop_player_final_order }
+            }
+            country_event = { id = foc_story.31 }
+        }
+
+        # A human controlling either Order receives the non-interactive news
+        # version because it cannot surrender to itself.
+        every_playable_country = {
+            limit = {
+                is_ai = no
+                OR = {
+                    has_origin = origin_foc_republic_unification
+                    has_origin = origin_fop_first_order
+                }
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = foc_khan_final_order_country
+                    has_country_flag = fop_player_first_order
+                    has_country_flag = fop_player_final_order
+                }
+            }
+            country_event = { id = foc_story.33 }
+        }
+    }
+}
+
+# Human player choice: submit the PLAYER EMPIRE to the First Order or remain independent.
+country_event = {
+    id = foc_story.31
+    title = foc_story.31.name
+    desc = foc_story.31.desc
+    picture = GFX_foc_story_skywalker_death
+    location = event_target:foc_story_rebel_fallen_capital
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        is_ai = no
+        is_regular_empire = yes
+        OR = {
+            has_origin = origin_foc_republic_unification
+            has_origin = origin_fop_first_order
+        }
+        NOT = { has_country_flag = foc_khan_first_order_country }
+        NOT = { has_country_flag = foc_khan_final_order_country }
+        NOT = { has_country_flag = fop_player_first_order }
+        NOT = { has_country_flag = fop_player_final_order }
+        NOT = { has_country_flag = foc_story_skywalker_choice_resolved }
+    }
+
+    option = {
+        name = foc_story.31.a
+        trigger = { exists = event_target:foc_khan_first_order }
+        allow = {
+            custom_tooltip = {
+                fail_text = foc_story.31.a.starkiller_blocked
+                NOT = { foc_khan_starkiller_submission_blocked = yes }
+            }
+        }
+        custom_tooltip = foc_story.31.a.tooltip
+        hidden_effect = {
+            set_country_flag = foc_story_skywalker_choice_resolved
+            set_country_flag = foc_story_player_surrendered_to_first_order
+            remove_country_flag = foc_story_player_continues_fight
+
+            # If the player is an overlord, its existing subjects follow it into
+            # the First Order sphere instead of blocking the subject conversion.
+            if = {
+                limit = { is_overlord = yes }
+                every_subject = {
+                    limit = { NOT = { foc_khan_starkiller_submission_blocked = yes } }
+                    set_subject_of = {
+                        who = event_target:foc_khan_first_order
+                        preset = preset_foc_khan_satrapy
+                    }
+                    set_country_flag = foc_khan_submitted_first_order
+                    remove_country_flag = foc_khan_submitted_final_order
+                    remove_country_flag = foc_khan_rebel_member
+                    remove_country_flag = foc_khan_rebel_invitation_offered
+                    remove_country_flag = foc_khan_rebel_invitation_refused
+                    set_timed_country_flag = { flag = rebellion_cooldown days = 1800 }
+                    set_country_flag = foc_khan_214_rebellion_lock_migrated
+                }
+            }
+
+            # Break any previous subject relation, then make the PLAYER COUNTRY
+            # (root) a First Order satrapy.
+            if = {
+                limit = { is_subject = yes }
+                set_subject_of = { who = none }
+            }
+            set_subject_of = {
+                who = event_target:foc_khan_first_order
+                preset = preset_foc_khan_satrapy
+            }
+
+            set_country_flag = foc_khan_submitted_first_order
+            remove_country_flag = foc_khan_submitted_final_order
+            remove_country_flag = foc_khan_rebel_member
+            remove_country_flag = foc_khan_rebel_invitation_offered
+            remove_country_flag = foc_khan_rebel_invitation_refused
+            set_timed_country_flag = { flag = rebellion_cooldown days = 1800 }
+            set_country_flag = foc_khan_214_rebellion_lock_migrated
+
+            set_faction_hostility = {
+                target = event_target:foc_khan_first_order
+                set_hostile = no
+                set_neutral = no
+                set_friendly = yes
+            }
+            event_target:foc_khan_first_order = {
+                set_faction_hostility = {
+                    target = root
+                    set_hostile = no
+                    set_neutral = no
+                    set_friendly = yes
+                }
+            }
+        }
+    }
+
+    option = {
+        name = foc_story.31.b
+        custom_tooltip = foc_story.31.b.tooltip
+        hidden_effect = {
+            set_country_flag = foc_story_skywalker_choice_resolved
+            set_country_flag = foc_story_player_continues_fight
+            remove_country_flag = foc_story_player_surrendered_to_first_order
+        }
+    }
+}
+
+# News-only outcome for a human-controlled First/Final Order.
+country_event = {
+    id = foc_story.33
+    title = foc_story.33.name
+    desc = foc_story.33.desc
+    picture = GFX_foc_story_skywalker_death
+    location = event_target:foc_story_rebel_fallen_capital
+    is_triggered_only = yes
+    force_open = yes
+    trigger = {
+        is_ai = no
+        OR = {
+            has_origin = origin_foc_republic_unification
+            has_origin = origin_fop_first_order
+        }
+        OR = {
+            has_country_flag = foc_khan_first_order_country
+            has_country_flag = foc_khan_final_order_country
+            has_country_flag = fop_player_first_order
+            has_country_flag = fop_player_final_order
+        }
+        has_global_flag = foc_khan_rebel_crait_lost_311v
+    }
+    option = { name = foc_story.33.a }
+}
+
+# Monthly compatibility fallback for saves loaded after Crait was already
+# occupied, or installations where another MOD suppresses the occupation hook.
+event = {
+    id = foc_story.32
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_khan_rebel_spawned
+        OR = {
+            has_global_flag = foc_khan_phase_one
+            has_global_flag = fop_origin_player_crisis_exists
+        }
+        has_global_flag = foc_saga_crait_held_by_rebels
+        NOT = { has_global_flag = foc_story_rebel_capital_decision_resolved }
+        NOT = { has_global_flag = foc_story_rebel_capital_event_pending }
+        exists = event_target:foc_khan_rebel_alliance
+        event_target:foc_khan_rebel_alliance = {
+            has_country_flag = foc_khan_rebel_alliance_country
+        }
+        any_system = {
+            has_star_flag = foc_khan_rebel_crait_home
+            NOT = { space_owner? = { OR = { has_country_flag = foc_khan_rebel_alliance_country has_country_flag = foc_khan_first_order_resistance_country } } }
+            any_system_planet = { has_planet_flag = foc_khan_rebel_crait }
+        }
+    }
+
+    immediate = {
+        random_system = {
+            limit = { has_star_flag = foc_khan_rebel_crait_home }
+            save_global_event_target_as = foc_khan_rebel_crait_system
+            random_system_planet = {
+                limit = { has_planet_flag = foc_khan_rebel_crait }
+                save_global_event_target_as = foc_khan_rebel_crait
+                planet_event = { id = foc_story.30 }
+            }
+        }
+    }
+}
+
+
+
+# V84 old-save migration: Crait created before V84 did not record that the
+# Resistance had actually held it. Record that fact while it is still theirs.
+event = {
+    id = foc_story.34
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_khan_rebel_crait_spawned_311v
+        NOT = { has_global_flag = foc_saga_crait_held_by_rebels }
+        NOT = { has_global_flag = foc_khan_rebel_crait_lost_311v }
+        exists = event_target:foc_khan_rebel_alliance
+        any_system = {
+            has_star_flag = foc_khan_rebel_crait_home
+            any_system_planet = {
+                has_planet_flag = foc_khan_rebel_crait
+                exists = owner
+                owner = { is_same_value = event_target:foc_khan_rebel_alliance }
+            }
+        }
+    }
+
+    immediate = { set_global_flag = foc_saga_crait_held_by_rebels }
+}
+
+# FOC 3.11n: restore the two light-side blueprints in saves where the final
+# choice was already made before this reward was added.
+# 3.11w-fix: this was a country_event registered on the scopeless
+# on_monthly_pulse, which the engine rejects ("attempted to execute an event on
+# an unsupported scope"). It is now a scopeless event that iterates countries.
+event = {
+    id = foc_story.40
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        any_country = {
+            has_country_flag = foc_story_chose_light
+            NOT = { has_country_flag = foc_story_light_side_ship_blueprints_granted }
+        }
+    }
+
+    immediate = {
+        every_country = {
+            limit = {
+                has_country_flag = foc_story_chose_light
+                NOT = { has_country_flag = foc_story_light_side_ship_blueprints_granted }
+            }
+            foc_story_grant_light_side_ship_blueprints = yes
+        }
+    }
+}

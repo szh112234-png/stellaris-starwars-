@@ -1,0 +1,37 @@
+# V232n: no country scope switch is assumed by the global Endor test.
+foc_v232n_after_death_star_two = {
+    OR = {
+        has_global_flag = foc_v232n_conquest_rewards_closed
+        has_global_flag = foc_republic_origin_death_star_two_destroyed
+        has_global_flag = foc_republic_origin_both_death_stars_destroyed
+        has_global_flag = foc_saga_final_redemption_resolved
+    }
+}
+
+# Country scope. Explicit sequel identities take precedence over stale Rebel flags.
+foc_v232n_is_resistance = {
+    OR = {
+        has_country_flag = foc_khan_first_order_resistance_country
+        has_country_flag = foc_republic_origin_post_treaty_rebel_country
+        has_country_flag = foc_republic_origin_post_treaty_player_rebels
+        AND = {
+            has_country_flag = foc_khan_rebel_alliance_country
+            NOR = {
+                has_country_flag = foc_republic_origin_imperial_rebel_country
+                has_country_flag = foc_republic_origin_rebel_alliance_country
+                has_country_flag = foc_sw_new_republic_country
+            }
+        }
+    }
+}
+
+# Country scope. All entitlement, popup and payout paths share this predicate.
+foc_v232n_rebel_conquest_rewards_active = {
+    has_country_flag = foc_republic_origin_imperial_rebel_country
+    exists = event_target:foc_khan_rebel_alliance
+    is_same_value = event_target:foc_khan_rebel_alliance
+    foc_v232n_is_resistance = no
+    foc_v232n_after_death_star_two = no
+    NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+    NOT = { has_country_flag = foc_republic_origin_arc_completed }
+}

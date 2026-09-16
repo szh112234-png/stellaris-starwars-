@@ -1,0 +1,53 @@
+# This is a template which multiple species can use. 
+
+tor_mando_female_clothes_01 = {
+	default = "gfx/models/portraits/tor_mando/mando_hunter_female_01.dds"
+	
+	game_setup = {#will run with a limited country scope. species and government is set but the country does not actually exist
+		default = "gfx/models/portraits/tor_mando/mando_hunter_female_01.dds"
+	}
+	
+	#species scope
+	species = { #generic portrait for a species
+		default = "gfx/models/portraits/tor_mando/mando_hunter_female_01.dds"
+	}
+	
+	#pop scope
+	pop = { #for a specific pop
+		default = "gfx/models/portraits/tor_mando/mando_hunter_female_01.dds"
+		
+		"gfx/models/portraits/tor_mando/mando_female_generic_02.dds" 	= { OR = { is_pop_category = worker is_enslaved = yes is_pop_category = simple_drone }  }
+		"gfx/models/portraits/tor_mando/mando_female_generic_01.dds" 	= { OR = { is_pop_category = specialist is_pop_category = complex_drone } }
+		"gfx/models/portraits/tor_mando/custom_mando_female_torso_01.dds" 	= { is_pop_category = ruler }
+	}
+	#leader scope
+	leader = { #scientists, generals, admirals, governor
+		"gfx/models/portraits/tor_mando/mando_female_generic_01.dds" = { leader_class = scientist }
+		"gfx/models/portraits/tor_mando/blue_white_female_torso_01.dds" = { leader_class = general }
+		"gfx/models/portraits/tor_mando/custom_mando_female_torso_02.dds" = { leader_class = commander }
+		"gfx/models/portraits/tor_mando/custom_mando_female_torso_01.dds" = { leader_class = official }
+	}
+
+	#leader scope 
+	ruler = { #for rulers
+		default = "gfx/models/portraits/tor_mando/mando_female_shae_torso_01.dds"
+
+		"gfx/models/portraits/tor_mando/mando_female_shae_torso_01.dds" = { owner = { has_generic_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/tor_mando/mando_female_mandalore_avenger_01.dds" = { owner = { has_militarist_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/tor_mando/custom_mando_female_torso_01.dds" = { owner = { has_spiritualist_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/tor_mando/custom_mando_female_torso_02.dds" = { owner = { has_pacifist_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/tor_mando/mando_female_generic_02.dds" = { owner = { has_primitive_government = yes  NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/tor_mando/mando_female_generic_01.dds" = { owner = { has_materialist_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/tor_mando/mando_female_mandalore_torso_01.dds" = { owner = { has_authority = auth_imperial } }
+	}
+}
+
+human_female_hair_1 = { 
+	default = "gfx/models/portraits/human/human_female_hair_red_style_01.dds"
+	
+	ruler = {
+	default = "gfx/models/portraits/human/human_female_hair_black_style_01.dds"
+	
+		"gfx/models/portraits/human/human_female_hair_black_style_01.dds" = { owner = { has_militarist_government = yes } }
+	}
+}

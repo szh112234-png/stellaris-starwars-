@@ -1,0 +1,62 @@
+namespace = foc_v232_era
+
+# =============================================================================
+# V232 - 老存档修复：清掉上一个时代残留的国家精神
+# =============================================================================
+# 新开的档基本用不到这个事件：六个转换点已经在转换当场就清干净了。
+# 这里负责修复 V231 及以前开的档——那些档里，义军的成长阶梯、双死星战果、
+# 条约期的和平红利很可能还挂在一个早就换了身份的国家上。
+#
+# V232a：改成**按阶段**各判定一次，而不是每个国家只跑一次。
+# 首轮实测发现帝国刚成立那个月，修复事件会为帝国和义军各跑一次；如果只用一个
+# 总旗标，同一个国家后来变成新共和国 / 第一秩序 / 抵抗组织时修复通道就永久
+# 关闭了。转换点本身有清理，所以不会立刻出问题，但对中途升级 MOD 的老档少了
+# 一层兜底。
+#
+# 触发条件是「当前身份对应的阶段旗标还没写」，所以每个国家在每个阶段最多
+# 触发一次，之后完全静默，不会产生月度日志刷屏。
+# 还在共和国 / 分离主义阶段的国家不会被碰。
+# =============================================================================
+
+country_event = {
+    id = foc_v232_era.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        OR = {
+            AND = {
+                has_country_flag = foc_khan_first_order_resistance_country
+                NOT = { has_country_flag = foc_v232_repaired_as_resistance }
+            }
+            AND = {
+                OR = {
+                    has_country_flag = foc_republic_origin_became_first_order
+                    has_country_flag = fop_player_first_order
+                }
+                NOT = { has_country_flag = foc_v232_repaired_as_first_order }
+            }
+            AND = {
+                has_country_flag = foc_sw_new_republic_country
+                NOT = { has_country_flag = foc_v232_repaired_as_new_republic }
+            }
+            AND = {
+                has_country_flag = foc_sw_imperial_remnant_country
+                NOT = { has_country_flag = foc_v232_repaired_as_remnant }
+            }
+            AND = {
+                OR = {
+                    has_country_flag = foc_republic_origin_empire_country
+                    has_country_flag = foc_khan_rebel_alliance_country
+                    has_country_flag = foc_republic_origin_imperial_rebel_country
+                }
+                NOT = { has_country_flag = foc_v232_repaired_as_civil_war_power }
+            }
+        }
+    }
+
+    immediate = {
+        foc_v232_repair_era_spirits_for_current_stage = yes
+        log = "FOC_V232_ERA: stale previous-era country spirits cleared for one country at its current stage."
+    }
+}

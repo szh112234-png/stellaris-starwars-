@@ -1,0 +1,46 @@
+# Eligible "ordinary empires" are the same non-genocidal regular empires
+# that can submit to the First/Final Order. The Rebel Alliance appears only
+# after every such surviving empire is a direct Order subject.
+foc_khan_all_ordinary_empires_subjugated = {
+	any_playable_country = {
+		is_regular_empire = yes
+		has_been_declared_crisis = no
+		NOR = {
+			has_country_flag = foc_khan_first_order_country
+			has_country_flag = foc_khan_final_order_country
+			has_country_flag = foc_khan_rebel_alliance_country
+			has_valid_civic = civic_fanatic_purifiers
+			has_valid_civic = civic_hive_devouring_swarm
+			has_valid_civic = civic_machine_terminator
+			is_genocidal_infernal = yes
+		}
+	}
+
+	NOT = {
+		any_playable_country = {
+			is_regular_empire = yes
+			has_been_declared_crisis = no
+			NOR = {
+				has_country_flag = foc_khan_first_order_country
+				has_country_flag = foc_khan_final_order_country
+				has_country_flag = foc_khan_rebel_alliance_country
+				has_valid_civic = civic_fanatic_purifiers
+				has_valid_civic = civic_hive_devouring_swarm
+				has_valid_civic = civic_machine_terminator
+				is_genocidal_infernal = yes
+			}
+			OR = {
+				is_subject = no
+				AND = {
+					is_subject = yes
+					overlord = {
+						NOR = {
+							has_country_flag = foc_khan_first_order_country
+							has_country_flag = foc_khan_final_order_country
+						}
+					}
+				}
+			}
+		}
+	}
+}

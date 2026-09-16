@@ -1,0 +1,191 @@
+# Event-only Tier-III Rebel axial system. The module has a unique key, section
+# and size potential and therefore cannot appear on vanilla Arkships or either
+# Supremacy family.
+
+# Raddus-specific invisible copies of the two functional modules installed by
+# the edict Supremacy initialization path.  They preserve the mobile shipyard
+# and docking effects without attaching vanilla Arkship meshes to Home One.
+foc_rebel_home_arkship_engineering_bay = {
+	icon = "GFX_arkship_engineering_bay"
+	section = "FOC_REBEL_HOME_ARKSHIP_HIDDEN_EMPTY_MODULE"
+	construction_days = 1
+	starbase_type = arkship
+	category = sm_naval_support_cat
+
+	potential = {
+		has_starbase_size = foc_rebel_home_arkship_tier_3
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = { alloys = 0 }
+		upkeep = { energy = @arkship_upkeep_energy_2 }
+	}
+	station_modifier = { megastructure_build_speed_mult = 0.15 }
+	planet_modifier = { planet_building_capacity_add = 1 }
+	on_finished = { set_ship_construction_type = starbase_shipyard }
+	ai_weight = { weight = 0 }
+}
+
+foc_rebel_home_arkship_docking_bay = {
+	icon = "GFX_arkship_docking_bay"
+	section = "FOC_REBEL_HOME_ARKSHIP_HIDDEN_EMPTY_MODULE"
+	construction_days = 1
+	starbase_type = arkship
+	category = sm_utility_cat
+
+	potential = {
+		has_starbase_size = foc_rebel_home_arkship_tier_3
+	}
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = { alloys = 0 }
+		upkeep = {
+			energy = @arkship_upkeep_energy_1
+			trade = @arkship_upkeep_trade_4
+		}
+	}
+	country_modifier = { country_naval_cap_add = 5 }
+	station_modifier = { ship_starbase_stockpile_collection_rate_mult = 0.10 }
+	ai_weight = { weight = 0 }
+}
+
+foc_rebel_home_arkship_strike_command_module = {
+	icon = "GFX_arkship_system_scanner"
+	section = "FOC_REBEL_HOME_ARKSHIP_STRIKE_COMMAND_SECTION"
+	construction_days = 1
+	starbase_type = arkship
+	category = sm_spinal_cat
+
+	potential = {
+		has_starbase_size = foc_rebel_home_arkship_tier_3
+		# 本补丁修复：原来只认 foc_khan_rebel_alliance_country。
+		# 义军打赢、通过银河条约改组为新共和国之后，这个旗标就没有了
+		# （截图里那艘船已经叫 R.N.S. 拉杜斯号，停在科洛桑），于是这个轴向
+		# 模块的 potential 立刻不成立，模块被摘掉——拉杜斯号的功能就是这么没的。
+		#
+		# 尺寸 key foc_rebel_home_arkship_tier_3 本身就是拉杜斯号独占的
+		# （ship_size 文件顶部的注释明确说它与 military_arkship_* 和两个至尊号
+		# 家族完全隔离），所以只靠尺寸判定已经足够防止其它舰船装上它。
+		# 这里把所有者判定放宽到共和国一侧全体。
+		owner? = {
+			OR = {
+				has_country_flag = foc_khan_rebel_alliance_country
+				has_country_flag = foc_republic_origin_rebel_alliance_country
+				has_country_flag = foc_republic_origin_imperial_rebel_country
+				has_country_flag = foc_republic_origin_post_treaty_rebel_country
+				has_country_flag = foc_khan_first_order_resistance_country
+				has_country_flag = foc_republic_origin_republic_country
+				has_country_flag = foc_sw_new_republic_country
+				has_country_flag = foc_republic_origin_player_republic
+			}
+		}
+	}
+
+	fits_on_slots = { spinal_mount_1 }
+	replaceable = { always = no }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = { alloys = 0 }
+		upkeep = { energy = 20 }
+	}
+
+	station_modifier = {
+		show_only_custom_tooltip = no
+		ship_sensor_range_add = 10
+		ship_hyperlane_range_add = 10
+	}
+
+	custom_tooltip_with_modifiers = foc_rebel_home_arkship_strike_command_module_tt
+	ai_weight = { weight = 0 }
+}
+
+# V38 full Arkship utility suite. These event-only clones intentionally use the
+# same invisible section as the working engineering/docking bays. They have no
+# technology gate, so a freshly commissioned or old-save Raddus always receives
+# a complete functional Tier-III Arkship core instead of a half-initialized UI.
+foc_rebel_home_arkship_habitation_module = {
+    icon = "GFX_arkship_habitation_module"
+    section = "FOC_REBEL_HOME_ARKSHIP_HIDDEN_EMPTY_MODULE"
+    construction_days = 1
+    starbase_type = arkship
+    category = sm_utility_cat
+    potential = { has_starbase_size = foc_rebel_home_arkship_tier_3 }
+    cannot_fit_on_slots = { spinal_mount_1 }
+    resources = {
+        category = starbase_arkship_upgrades
+        cost = { alloys = 0 }
+        upkeep = { energy = @arkship_upkeep_energy_2 exotic_gases = @arkship_upkeep_strategic_1 }
+    }
+    planet_modifier = {
+        planet_max_districts_add = 1
+        pop_environment_tolerance = 0.05
+    }
+    ai_weight = { weight = 0 }
+}
+
+foc_rebel_home_arkship_sensor_array = {
+    icon = "GFX_arkship_sensor_array"
+    section = "FOC_REBEL_HOME_ARKSHIP_HIDDEN_EMPTY_MODULE"
+    construction_days = 1
+    starbase_type = arkship
+    category = sm_utility_cat
+    potential = { has_starbase_size = foc_rebel_home_arkship_tier_3 }
+    cannot_fit_on_slots = { spinal_mount_1 }
+    resources = {
+        category = starbase_arkship_upgrades
+        cost = { alloys = 0 }
+        upkeep = { energy = @arkship_upkeep_energy_2 }
+    }
+    station_modifier = {
+        ship_sensor_range_add = 1
+        ship_hyperlane_range_add = 1
+        science_ship_survey_speed = 0.15
+    }
+    custom_tooltip_with_modifiers = sm_arkship_sensor_array_tt
+    ai_weight = { weight = 0 }
+}
+
+foc_rebel_home_arkship_mining_array = {
+    icon = "GFX_arkship_mining_array"
+    section = "FOC_REBEL_HOME_ARKSHIP_HIDDEN_EMPTY_MODULE"
+    construction_days = 1
+    starbase_type = arkship
+    category = sm_utility_cat
+    potential = { has_starbase_size = foc_rebel_home_arkship_tier_3 }
+    cannot_fit_on_slots = { spinal_mount_1 }
+    resources = {
+        category = starbase_arkship_upgrades
+        cost = { alloys = 0 }
+        upkeep = { energy = @arkship_upkeep_energy_2 }
+    }
+    station_modifier = {
+        show_only_custom_tooltip = no
+        arkship_harvest_resources_produces_mult = 0.05
+    }
+    custom_tooltip_with_modifiers = sm_arkship_mining_array_tt
+    ai_weight = { weight = 0 }
+}
+
+foc_rebel_home_arkship_archive = {
+    icon = "GFX_arkship_grand_archive"
+    section = "FOC_REBEL_HOME_ARKSHIP_HIDDEN_EMPTY_MODULE"
+    construction_days = 1
+    starbase_type = arkship
+    category = sm_utility_cat
+    potential = { has_starbase_size = foc_rebel_home_arkship_tier_3 }
+    cannot_fit_on_slots = { spinal_mount_1 }
+    resources = {
+        category = starbase_arkship_upgrades
+        cost = { alloys = 0 }
+        upkeep = { energy = @arkship_upkeep_energy_2 }
+    }
+    planet_modifier = {
+        planet_jobs_produces_mult = 0.05
+    }
+    ai_weight = { weight = 0 }
+}

@@ -1,0 +1,3473 @@
+namespace = foc_fallen_war
+
+# New-game setup. Like SHIPGIRL, the global event country runs the complete
+# hidden initialization chain in the same game-start tick. Both scripted Fallen
+# Empires and their clusters therefore already exist when the galaxy becomes playable.
+country_event = {
+    id = foc_fallen_war.1
+    hide_window = yes
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    trigger = {
+        is_country_type = global_event
+        NOT = { has_global_flag = foc_sw_fallen_empires_created }
+        NOT = { has_global_flag = foc_sw_fallen_empires_initializing }
+    }
+
+    immediate = {
+        set_global_flag = foc_sw_fallen_empires_initializing
+        log = "FOC_SWMAP: generating the image-based Star Wars region; Coruscant is the sole main-galaxy entrance."
+        country_event = { id = foc_swmap.1 }
+    }
+}
+
+country_event = {
+    id = foc_fallen_war.41
+    hide_window = yes
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    immediate = {
+        set_spawn_system_batch = begin
+        no_scope = {
+            spawn_system = {
+                hyperlane = no
+                min_distance >= 235
+                max_distance <= 245
+                min_orientation_angle = 50
+                max_orientation_angle = 55
+                initializer = "foc_sw_akiva_system"
+            }
+
+            # New Republic capital. 310 degrees follows the same radial direction as
+            # the Akiva anchor; the increased distance moves Hosnian farther outward.
+            event_target:foc_sw_akiva_system? = {
+                spawn_system = {
+                    hyperlane = no
+                    min_distance >= 32
+                    max_distance <= 40
+                    min_orientation_angle = 307
+                    max_orientation_angle = 313
+                    initializer = "foc_sw_hosnian_system"
+                }
+                # FOC 3.11k: Jakku is farther along the rim and is the sole gateway and
+                # bridge shared by the two Fallen Empire clusters.
+                spawn_system = {
+                    hyperlane = no
+                    min_distance >= 60
+                    max_distance <= 70
+                    min_orientation_angle = 37
+                    max_orientation_angle = 43
+                    initializer = "foc_sw_jakku_system"
+                }
+            }
+
+            # Compact New Republic fan: six systems including New Republic Yavin.
+            event_target:foc_sw_hosnian_system? = {
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 280 max_orientation_angle = 286 initializer = "foc_sw_coruscant_system" }
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 307 max_orientation_angle = 313 initializer = "foc_sw_kuat_system" }
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 334 max_orientation_angle = 340 initializer = "foc_sw_chandrila_system" }
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 253 max_orientation_angle = 259 initializer = "foc_sw_yavin_system" }
+                random_system = { limit = { has_star_flag = foc_sw_akiva_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_coruscant_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_kuat_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_chandrila_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_yavin_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+            }
+
+            # Jakku alone receives the normal-galaxy lane. Bastion continues farther
+            # along the rim away from the New Republic cluster, so every route into
+            # either Fallen Empire and every route between them passes through Jakku.
+            event_target:foc_sw_jakku_system? = {
+                random_system = {
+                    limit = { has_star_flag = foc_sw_akiva_home }
+                    if = {
+                        limit = { NOT = { has_hyperlane_to = PREV } }
+                        add_hyperlane = { from = this to = PREV }
+                    }
+                }
+                random_neighbor_system_euclidean = {
+                    limit = {
+                        NOR = {
+                            has_star_flag = foc_sw_new_republic_cluster
+                            has_star_flag = foc_sw_imperial_remnant_cluster
+                        }
+                        NOT = { has_hyperlane_to = PREV }
+                        any_neighbor_system_euclidean = { has_hyperlane_to = PREV }
+                    }
+                    set_star_flag = foc_sw_jakku_gateway_neighbor
+                    add_hyperlane = { from = this to = PREV }
+                }
+                spawn_system = {
+                    hyperlane = no
+                    min_distance >= 60
+                    max_distance <= 70
+                    min_orientation_angle = 37
+                    max_orientation_angle = 43
+                    initializer = "foc_sw_bastion_system"
+                }
+            }
+
+            # Compact Imperial fan: exactly five systems including Jakku/Bastion.
+            event_target:foc_sw_bastion_system? = {
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 280 max_orientation_angle = 286 initializer = "foc_sw_bilbringi_system" }
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 307 max_orientation_angle = 313 initializer = "foc_sw_yaga_minor_system" }
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 334 max_orientation_angle = 340 initializer = "foc_sw_rendili_system" }
+                random_system = { limit = { has_star_flag = foc_sw_jakku_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_bilbringi_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_yaga_minor_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_rendili_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+            }
+        }
+        set_spawn_system_batch = end
+        set_global_flag = foc_sw_layout_311d_compact_rim
+        set_global_flag = foc_sw_layout_311a_jakku_border
+        set_global_flag = foc_sw_layout_311k_jakku_only_gateway
+        country_event = { id = foc_fallen_war.2 }
+    }
+}
+
+country_event = {
+    id = foc_fallen_war.42
+    hide_window = yes
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    immediate = {
+        set_spawn_system_batch = begin
+        no_scope = {
+            spawn_system = {
+                hyperlane = no
+                min_distance >= 355
+                max_distance <= 365
+                min_orientation_angle = 50
+                max_orientation_angle = 55
+                initializer = "foc_sw_akiva_system"
+            }
+
+            # New Republic capital. 310 degrees follows the same radial direction as
+            # the Akiva anchor; the increased distance moves Hosnian farther outward.
+            event_target:foc_sw_akiva_system? = {
+                spawn_system = {
+                    hyperlane = no
+                    min_distance >= 32
+                    max_distance <= 40
+                    min_orientation_angle = 307
+                    max_orientation_angle = 313
+                    initializer = "foc_sw_hosnian_system"
+                }
+                # FOC 3.11k: Jakku is farther along the rim and is the sole gateway and
+                # bridge shared by the two Fallen Empire clusters.
+                spawn_system = {
+                    hyperlane = no
+                    min_distance >= 60
+                    max_distance <= 70
+                    min_orientation_angle = 37
+                    max_orientation_angle = 43
+                    initializer = "foc_sw_jakku_system"
+                }
+            }
+
+            # Compact New Republic fan: six systems including New Republic Yavin.
+            event_target:foc_sw_hosnian_system? = {
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 280 max_orientation_angle = 286 initializer = "foc_sw_coruscant_system" }
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 307 max_orientation_angle = 313 initializer = "foc_sw_kuat_system" }
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 334 max_orientation_angle = 340 initializer = "foc_sw_chandrila_system" }
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 253 max_orientation_angle = 259 initializer = "foc_sw_yavin_system" }
+                random_system = { limit = { has_star_flag = foc_sw_akiva_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_coruscant_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_kuat_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_chandrila_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_yavin_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+            }
+
+            # Jakku alone receives the normal-galaxy lane. Bastion continues farther
+            # along the rim away from the New Republic cluster, so every route into
+            # either Fallen Empire and every route between them passes through Jakku.
+            event_target:foc_sw_jakku_system? = {
+                random_system = {
+                    limit = { has_star_flag = foc_sw_akiva_home }
+                    if = {
+                        limit = { NOT = { has_hyperlane_to = PREV } }
+                        add_hyperlane = { from = this to = PREV }
+                    }
+                }
+                random_neighbor_system_euclidean = {
+                    limit = {
+                        NOR = {
+                            has_star_flag = foc_sw_new_republic_cluster
+                            has_star_flag = foc_sw_imperial_remnant_cluster
+                        }
+                        NOT = { has_hyperlane_to = PREV }
+                        any_neighbor_system_euclidean = { has_hyperlane_to = PREV }
+                    }
+                    set_star_flag = foc_sw_jakku_gateway_neighbor
+                    add_hyperlane = { from = this to = PREV }
+                }
+                spawn_system = {
+                    hyperlane = no
+                    min_distance >= 60
+                    max_distance <= 70
+                    min_orientation_angle = 37
+                    max_orientation_angle = 43
+                    initializer = "foc_sw_bastion_system"
+                }
+            }
+
+            # Compact Imperial fan: exactly five systems including Jakku/Bastion.
+            event_target:foc_sw_bastion_system? = {
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 280 max_orientation_angle = 286 initializer = "foc_sw_bilbringi_system" }
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 307 max_orientation_angle = 313 initializer = "foc_sw_yaga_minor_system" }
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 334 max_orientation_angle = 340 initializer = "foc_sw_rendili_system" }
+                random_system = { limit = { has_star_flag = foc_sw_jakku_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_bilbringi_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_yaga_minor_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_rendili_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+            }
+        }
+        set_spawn_system_batch = end
+        set_global_flag = foc_sw_layout_311d_compact_rim
+        set_global_flag = foc_sw_layout_311a_jakku_border
+        set_global_flag = foc_sw_layout_311k_jakku_only_gateway
+        country_event = { id = foc_fallen_war.2 }
+    }
+}
+
+country_event = {
+    id = foc_fallen_war.43
+    hide_window = yes
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    immediate = {
+        set_spawn_system_batch = begin
+        no_scope = {
+            spawn_system = {
+                hyperlane = no
+                min_distance >= 420
+                max_distance <= 430
+                min_orientation_angle = 50
+                max_orientation_angle = 55
+                initializer = "foc_sw_akiva_system"
+            }
+
+            # New Republic capital. 310 degrees follows the same radial direction as
+            # the Akiva anchor; the increased distance moves Hosnian farther outward.
+            event_target:foc_sw_akiva_system? = {
+                spawn_system = {
+                    hyperlane = no
+                    min_distance >= 32
+                    max_distance <= 40
+                    min_orientation_angle = 307
+                    max_orientation_angle = 313
+                    initializer = "foc_sw_hosnian_system"
+                }
+                # FOC 3.11k: Jakku is farther along the rim and is the sole gateway and
+                # bridge shared by the two Fallen Empire clusters.
+                spawn_system = {
+                    hyperlane = no
+                    min_distance >= 60
+                    max_distance <= 70
+                    min_orientation_angle = 37
+                    max_orientation_angle = 43
+                    initializer = "foc_sw_jakku_system"
+                }
+            }
+
+            # Compact New Republic fan: six systems including New Republic Yavin.
+            event_target:foc_sw_hosnian_system? = {
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 280 max_orientation_angle = 286 initializer = "foc_sw_coruscant_system" }
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 307 max_orientation_angle = 313 initializer = "foc_sw_kuat_system" }
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 334 max_orientation_angle = 340 initializer = "foc_sw_chandrila_system" }
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 253 max_orientation_angle = 259 initializer = "foc_sw_yavin_system" }
+                random_system = { limit = { has_star_flag = foc_sw_akiva_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_coruscant_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_kuat_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_chandrila_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_yavin_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+            }
+
+            # Jakku alone receives the normal-galaxy lane. Bastion continues farther
+            # along the rim away from the New Republic cluster, so every route into
+            # either Fallen Empire and every route between them passes through Jakku.
+            event_target:foc_sw_jakku_system? = {
+                random_system = {
+                    limit = { has_star_flag = foc_sw_akiva_home }
+                    if = {
+                        limit = { NOT = { has_hyperlane_to = PREV } }
+                        add_hyperlane = { from = this to = PREV }
+                    }
+                }
+                random_neighbor_system_euclidean = {
+                    limit = {
+                        NOR = {
+                            has_star_flag = foc_sw_new_republic_cluster
+                            has_star_flag = foc_sw_imperial_remnant_cluster
+                        }
+                        NOT = { has_hyperlane_to = PREV }
+                        any_neighbor_system_euclidean = { has_hyperlane_to = PREV }
+                    }
+                    set_star_flag = foc_sw_jakku_gateway_neighbor
+                    add_hyperlane = { from = this to = PREV }
+                }
+                spawn_system = {
+                    hyperlane = no
+                    min_distance >= 60
+                    max_distance <= 70
+                    min_orientation_angle = 37
+                    max_orientation_angle = 43
+                    initializer = "foc_sw_bastion_system"
+                }
+            }
+
+            # Compact Imperial fan: exactly five systems including Jakku/Bastion.
+            event_target:foc_sw_bastion_system? = {
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 280 max_orientation_angle = 286 initializer = "foc_sw_bilbringi_system" }
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 307 max_orientation_angle = 313 initializer = "foc_sw_yaga_minor_system" }
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 334 max_orientation_angle = 340 initializer = "foc_sw_rendili_system" }
+                random_system = { limit = { has_star_flag = foc_sw_jakku_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_bilbringi_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_yaga_minor_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_rendili_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+            }
+        }
+        set_spawn_system_batch = end
+        set_global_flag = foc_sw_layout_311d_compact_rim
+        set_global_flag = foc_sw_layout_311a_jakku_border
+        set_global_flag = foc_sw_layout_311k_jakku_only_gateway
+        country_event = { id = foc_fallen_war.2 }
+    }
+}
+
+country_event = {
+    id = foc_fallen_war.44
+    hide_window = yes
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    immediate = {
+        set_spawn_system_batch = begin
+        no_scope = {
+            spawn_system = {
+                hyperlane = no
+                min_distance >= 475
+                max_distance <= 485
+                min_orientation_angle = 50
+                max_orientation_angle = 55
+                initializer = "foc_sw_akiva_system"
+            }
+
+            # New Republic capital. 310 degrees follows the same radial direction as
+            # the Akiva anchor; the increased distance moves Hosnian farther outward.
+            event_target:foc_sw_akiva_system? = {
+                spawn_system = {
+                    hyperlane = no
+                    min_distance >= 32
+                    max_distance <= 40
+                    min_orientation_angle = 307
+                    max_orientation_angle = 313
+                    initializer = "foc_sw_hosnian_system"
+                }
+                # FOC 3.11k: Jakku is farther along the rim and is the sole gateway and
+                # bridge shared by the two Fallen Empire clusters.
+                spawn_system = {
+                    hyperlane = no
+                    min_distance >= 60
+                    max_distance <= 70
+                    min_orientation_angle = 37
+                    max_orientation_angle = 43
+                    initializer = "foc_sw_jakku_system"
+                }
+            }
+
+            # Compact New Republic fan: six systems including New Republic Yavin.
+            event_target:foc_sw_hosnian_system? = {
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 280 max_orientation_angle = 286 initializer = "foc_sw_coruscant_system" }
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 307 max_orientation_angle = 313 initializer = "foc_sw_kuat_system" }
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 334 max_orientation_angle = 340 initializer = "foc_sw_chandrila_system" }
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 253 max_orientation_angle = 259 initializer = "foc_sw_yavin_system" }
+                random_system = { limit = { has_star_flag = foc_sw_akiva_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_coruscant_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_kuat_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_chandrila_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_yavin_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+            }
+
+            # Jakku alone receives the normal-galaxy lane. Bastion continues farther
+            # along the rim away from the New Republic cluster, so every route into
+            # either Fallen Empire and every route between them passes through Jakku.
+            event_target:foc_sw_jakku_system? = {
+                random_system = {
+                    limit = { has_star_flag = foc_sw_akiva_home }
+                    if = {
+                        limit = { NOT = { has_hyperlane_to = PREV } }
+                        add_hyperlane = { from = this to = PREV }
+                    }
+                }
+                random_neighbor_system_euclidean = {
+                    limit = {
+                        NOR = {
+                            has_star_flag = foc_sw_new_republic_cluster
+                            has_star_flag = foc_sw_imperial_remnant_cluster
+                        }
+                        NOT = { has_hyperlane_to = PREV }
+                        any_neighbor_system_euclidean = { has_hyperlane_to = PREV }
+                    }
+                    set_star_flag = foc_sw_jakku_gateway_neighbor
+                    add_hyperlane = { from = this to = PREV }
+                }
+                spawn_system = {
+                    hyperlane = no
+                    min_distance >= 60
+                    max_distance <= 70
+                    min_orientation_angle = 37
+                    max_orientation_angle = 43
+                    initializer = "foc_sw_bastion_system"
+                }
+            }
+
+            # Compact Imperial fan: exactly five systems including Jakku/Bastion.
+            event_target:foc_sw_bastion_system? = {
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 280 max_orientation_angle = 286 initializer = "foc_sw_bilbringi_system" }
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 307 max_orientation_angle = 313 initializer = "foc_sw_yaga_minor_system" }
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 334 max_orientation_angle = 340 initializer = "foc_sw_rendili_system" }
+                random_system = { limit = { has_star_flag = foc_sw_jakku_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_bilbringi_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_yaga_minor_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_rendili_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+            }
+        }
+        set_spawn_system_batch = end
+        set_global_flag = foc_sw_layout_311d_compact_rim
+        set_global_flag = foc_sw_layout_311a_jakku_border
+        set_global_flag = foc_sw_layout_311k_jakku_only_gateway
+        country_event = { id = foc_fallen_war.2 }
+    }
+}
+
+country_event = {
+    id = foc_fallen_war.45
+    hide_window = yes
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    immediate = {
+        set_spawn_system_batch = begin
+        no_scope = {
+            spawn_system = {
+                hyperlane = no
+                min_distance >= 505
+                max_distance <= 515
+                min_orientation_angle = 50
+                max_orientation_angle = 55
+                initializer = "foc_sw_akiva_system"
+            }
+
+            # New Republic capital. 310 degrees follows the same radial direction as
+            # the Akiva anchor; the increased distance moves Hosnian farther outward.
+            event_target:foc_sw_akiva_system? = {
+                spawn_system = {
+                    hyperlane = no
+                    min_distance >= 32
+                    max_distance <= 40
+                    min_orientation_angle = 307
+                    max_orientation_angle = 313
+                    initializer = "foc_sw_hosnian_system"
+                }
+                # FOC 3.11k: Jakku is farther along the rim and is the sole gateway and
+                # bridge shared by the two Fallen Empire clusters.
+                spawn_system = {
+                    hyperlane = no
+                    min_distance >= 60
+                    max_distance <= 70
+                    min_orientation_angle = 37
+                    max_orientation_angle = 43
+                    initializer = "foc_sw_jakku_system"
+                }
+            }
+
+            # Compact New Republic fan: six systems including New Republic Yavin.
+            event_target:foc_sw_hosnian_system? = {
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 280 max_orientation_angle = 286 initializer = "foc_sw_coruscant_system" }
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 307 max_orientation_angle = 313 initializer = "foc_sw_kuat_system" }
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 334 max_orientation_angle = 340 initializer = "foc_sw_chandrila_system" }
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 253 max_orientation_angle = 259 initializer = "foc_sw_yavin_system" }
+                random_system = { limit = { has_star_flag = foc_sw_akiva_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_coruscant_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_kuat_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_chandrila_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_yavin_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+            }
+
+            # Jakku alone receives the normal-galaxy lane. Bastion continues farther
+            # along the rim away from the New Republic cluster, so every route into
+            # either Fallen Empire and every route between them passes through Jakku.
+            event_target:foc_sw_jakku_system? = {
+                random_system = {
+                    limit = { has_star_flag = foc_sw_akiva_home }
+                    if = {
+                        limit = { NOT = { has_hyperlane_to = PREV } }
+                        add_hyperlane = { from = this to = PREV }
+                    }
+                }
+                random_neighbor_system_euclidean = {
+                    limit = {
+                        NOR = {
+                            has_star_flag = foc_sw_new_republic_cluster
+                            has_star_flag = foc_sw_imperial_remnant_cluster
+                        }
+                        NOT = { has_hyperlane_to = PREV }
+                        any_neighbor_system_euclidean = { has_hyperlane_to = PREV }
+                    }
+                    set_star_flag = foc_sw_jakku_gateway_neighbor
+                    add_hyperlane = { from = this to = PREV }
+                }
+                spawn_system = {
+                    hyperlane = no
+                    min_distance >= 60
+                    max_distance <= 70
+                    min_orientation_angle = 37
+                    max_orientation_angle = 43
+                    initializer = "foc_sw_bastion_system"
+                }
+            }
+
+            # Compact Imperial fan: exactly five systems including Jakku/Bastion.
+            event_target:foc_sw_bastion_system? = {
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 280 max_orientation_angle = 286 initializer = "foc_sw_bilbringi_system" }
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 307 max_orientation_angle = 313 initializer = "foc_sw_yaga_minor_system" }
+                spawn_system = { hyperlane = no min_distance >= 20 max_distance <= 30 min_orientation_angle = 334 max_orientation_angle = 340 initializer = "foc_sw_rendili_system" }
+                random_system = { limit = { has_star_flag = foc_sw_jakku_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_bilbringi_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_yaga_minor_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+                random_system = { limit = { has_star_flag = foc_sw_rendili_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+            }
+        }
+        set_spawn_system_batch = end
+        set_global_flag = foc_sw_layout_311d_compact_rim
+        set_global_flag = foc_sw_layout_311a_jakku_border
+        set_global_flag = foc_sw_layout_311k_jakku_only_gateway
+        country_event = { id = foc_fallen_war.2 }
+    }
+}
+
+# Continue the same game-start initialization tick after the batch has completed.
+country_event = {
+    id = foc_fallen_war.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    immediate = {
+        # The completed spawn batch exposes its initializer targets immediately,
+        # matching the startup flow used by SHIPGIRL.
+        country_event = { id = foc_fallen_war.3 }
+    }
+}
+
+# Locate all ten systems and the special planets needed by later events. A
+# Republic-origin and playable-Hutt starts take the pre-Imperial branch here.
+# A Republic player claims the region directly; a Hutt player keeps the three
+# canonical Hutt systems while a separate AI Galactic Republic is created for
+# the Republic-era saga. Ordinary starts continue into the New Republic /
+# Imperial Remnant creation chain unchanged.
+country_event = {
+    id = foc_fallen_war.3
+    hide_window = yes
+    is_triggered_only = yes
+
+    immediate = {
+        random_system = {
+            limit = { has_star_flag = foc_sw_hosnian_home }
+            save_global_event_target_as = foc_sw_hosnian_system
+            random_system_planet = { limit = { has_planet_flag = foc_sw_hosnian_prime } save_global_event_target_as = foc_sw_hosnian_prime }
+            random_system_planet = { limit = { has_planet_flag = foc_sw_hosnian_assembly_anchor } save_global_event_target_as = foc_sw_hosnian_assembly_planet }
+        }
+        random_system = { limit = { has_star_flag = foc_sw_coruscant_home } save_global_event_target_as = foc_sw_coruscant_system }
+        random_system = {
+            limit = { has_star_flag = foc_sw_kuat_home }
+            save_global_event_target_as = foc_sw_kuat_system
+            random_system_planet = { limit = { has_planet_flag = foc_sw_kuat_ring_anchor } save_global_event_target_as = foc_sw_kuat }
+        }
+        random_system = {
+            limit = { has_star_flag = foc_sw_chandrila_home }
+            save_global_event_target_as = foc_sw_chandrila_system
+            random_system_planet = { limit = { has_planet_flag = foc_sw_chandrila_science_anchor } save_global_event_target_as = foc_sw_chandrila_science_planet }
+        }
+        random_system = { limit = { has_star_flag = foc_sw_akiva_home } save_global_event_target_as = foc_sw_akiva_system }
+        random_system = {
+            limit = { has_star_flag = foc_sw_yavin_home }
+            save_global_event_target_as = foc_sw_yavin_system
+            random_system_planet = {
+                limit = { has_planet_flag = foc_sw_yavin_iv }
+                save_global_event_target_as = foc_sw_yavin_iv
+            }
+        }
+
+        random_system = {
+            limit = { has_star_flag = foc_sw_bastion_home }
+            save_global_event_target_as = foc_sw_bastion_system
+            random_system_planet = { limit = { has_planet_flag = foc_sw_bastion } save_global_event_target_as = foc_sw_bastion }
+            random_system_planet = { limit = { has_planet_flag = foc_sw_bastion_command_anchor } save_global_event_target_as = foc_sw_bastion_command_planet }
+            random_system_planet = { limit = { has_planet_flag = foc_sw_bastion_sentry_anchor } save_global_event_target_as = foc_sw_bastion_sentry_planet }
+        }
+        random_system = {
+            limit = { has_star_flag = foc_sw_bilbringi_home }
+            save_global_event_target_as = foc_sw_bilbringi_system
+            random_system_planet = { limit = { has_planet_flag = foc_sw_bilbringi_ring_anchor } save_global_event_target_as = foc_sw_bilbringi }
+        }
+        random_system = { limit = { has_star_flag = foc_sw_yaga_minor_home } save_global_event_target_as = foc_sw_yaga_minor_system }
+        random_system = { limit = { has_star_flag = foc_sw_rendili_home } save_global_event_target_as = foc_sw_rendili_system }
+        random_system = {
+            limit = { has_star_flag = foc_sw_jakku_home }
+            save_global_event_target_as = foc_sw_jakku_system
+            star = { save_global_event_target_as = foc_sw_jakku_star }
+            random_system_planet = { limit = { has_planet_flag = foc_sw_jakku } save_global_event_target_as = foc_sw_jakku }
+        }
+
+        # Republic-era setup never waits for all Fallen-Empire-only anchors. It
+        # also remains on this branch after initialization, preventing the
+        # target collector from creating the two future Fallen Empires merely
+        # because the early Republic dispatch has already completed.
+        if = {
+            limit = {
+                any_playable_country = {
+                    is_ai = no
+                    OR = {
+                        has_origin = origin_foc_republic_unification
+                        has_origin = origin_foc_hutt_criminal_empire
+                    }
+                }
+            }
+            set_global_flag = foc_republic_origin_bootstrap
+            set_global_flag = foc_republic_origin_no_jakku_executor_site
+            # Lock vanilla Galactic Community formation before the origin's
+            # country event runs, so startup event ordering cannot leak an
+            # early galcom proposal into the pre-Treaty Republic storyline.
+            set_global_flag = foc_republic_origin_active
+            # In mixed multiplayer, reserve Hutt Space before the human
+            # Republic claims the surrounding canonical region.
+            every_playable_country = {
+                limit = {
+                    is_ai = no
+                    has_origin = origin_foc_hutt_criminal_empire
+                    NOT = { has_global_flag = foc_v196_hutt_criminal_empire_initialized }
+                }
+                country_event = { id = foc_v196_hutt.1 }
+            }
+            if = {
+                limit = {
+                    any_playable_country = {
+                        is_ai = no
+                        has_origin = origin_foc_republic_unification
+                    }
+                }
+                every_playable_country = {
+                    limit = {
+                        is_ai = no
+                        has_origin = origin_foc_republic_unification
+                        NOT = { has_country_flag = foc_republic_origin_initialized }
+                    }
+                    country_event = { id = foc_republic_origin.1 }
+                }
+            }
+            else = {
+                # A Hutt-only player start must not turn the player country into
+                # the Republic. Establish Hutt Space first, then create the AI
+                # Republic around Coruscant in a dedicated idempotent event.
+                random_playable_country = {
+                    limit = {
+                        is_ai = no
+                        has_origin = origin_foc_hutt_criminal_empire
+                    }
+                    country_event = { id = foc_v196_hutt.2 }
+                }
+            }
+        }
+        else_if = {
+            limit = {
+                exists = event_target:foc_sw_hosnian_system
+                exists = event_target:foc_sw_coruscant_system
+                exists = event_target:foc_sw_kuat_system
+                exists = event_target:foc_sw_chandrila_system
+                exists = event_target:foc_sw_akiva_system
+                exists = event_target:foc_sw_yavin_system
+                exists = event_target:foc_sw_yavin_iv
+                exists = event_target:foc_sw_bastion_system
+                exists = event_target:foc_sw_bilbringi_system
+                exists = event_target:foc_sw_yaga_minor_system
+                exists = event_target:foc_sw_rendili_system
+                exists = event_target:foc_sw_jakku_system
+                exists = event_target:foc_sw_hosnian_prime
+                exists = event_target:foc_sw_hosnian_assembly_planet
+                exists = event_target:foc_sw_kuat
+                exists = event_target:foc_sw_chandrila_science_planet
+                exists = event_target:foc_sw_bastion
+                exists = event_target:foc_sw_bastion_command_planet
+                exists = event_target:foc_sw_bastion_sentry_planet
+                exists = event_target:foc_sw_bilbringi
+                exists = event_target:foc_sw_jakku
+            }
+            country_event = { id = foc_fallen_war.4 }
+        }
+        else = { country_event = { id = foc_fallen_war.3 days = 1 } }
+    }
+}
+
+# Create the New Republic Fallen Empire and claim its six-system cluster,
+# including Yavin IV and its Massassi temples.
+country_event = {
+    id = foc_fallen_war.4
+    hide_window = yes
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    immediate = {
+        event_target:foc_sw_hosnian_prime = {
+            create_species = {
+                name = "FOC_SW_NEW_REPUBLIC_SPECIES"
+                plural = "FOC_SW_NEW_REPUBLIC_SPECIES_PLURAL"
+                class = HUM
+                portrait = rebels
+                namelist = rebels
+                homeworld = this
+                traits = { trait = trait_intelligent trait = trait_charismatic trait = trait_quick_learners }
+                effect = { save_global_event_target_as = foc_sw_new_republic_species }
+            }
+        }
+
+        create_country = {
+            name = "FOC_SW_NEW_REPUBLIC"
+            type = fallen_empire
+            auto_delete = no
+            ignore_initial_colony_error = yes
+            species = event_target:foc_sw_new_republic_species
+            authority = auth_democratic
+            origin = origin_default
+            # Do not use a vanilla Fallen-Empire fanatic ethic here. Vanilla
+            # registers its own xenophile FE warships from that ethic alone;
+            # those hulls only accept fallen_empire_* graphical cultures and
+            # therefore spawn as missing models for rebel_01 at Kuat's yards.
+            # Three moderate ethics preserve the New Republic's identity while
+            # leaving its build list to the FOC Rebel special designs below.
+            ethos = { ethic = ethic_xenophile ethic = ethic_pacifist ethic = ethic_egalitarian }
+            civics = { civic = civic_diplomatic_corps civic = civic_parliamentary_system }
+            flag = {
+                icon = { category = "rebels" file = "rebel1.dds" }
+                background = { category = "backgrounds" file = "00_solid.dds" }
+                colors = { "blue" "white" "null" "null" }
+            }
+            name_list = "rebels"
+            effect = {
+                set_country_flag = foc_sw_new_republic_country
+        country_event = { id = foc_v1718.10 days = 1 }
+                set_country_flag = foc_sw_scripted_fallen_empire
+                # Replacement allowance for foc_fallen_war.54, initialised here so
+                # its trigger never reads an undefined variable.
+                set_variable = { which = foc_sw_fleet_replacements value = 0 }
+                set_graphical_culture = rebel_01
+                set_city_graphical_culture = mammalian_01
+                save_global_event_target_as = foc_sw_new_republic
+                # V186: the playable First Order origin can initialize before this
+                # successor country is created. Convert it here, before colonies are
+                # generated, instead of relying on an earlier event-target lookup.
+                if = {
+                    limit = {
+                        OR = {
+                            has_global_flag = fop_origin_treaty_epoch
+                            any_country = { is_ai = no has_origin = origin_fop_first_order }
+                        }
+                    }
+                    set_country_type = default
+                }
+                add_modifier = { modifier = foc_sw_fallen_empire_economy_core days = -1 }
+                add_modifier = { modifier = foc_sw_new_republic_economy_focus days = -1 }
+                add_resource = {
+                    energy = 1000000
+                    minerals = 1000000
+                    food = 500000
+                    alloys = 1000000
+                    consumer_goods = 500000
+                    unity = 1000000
+                    influence = 1000
+                    volatile_motes = 50000
+                    exotic_gases = 50000
+                    rare_crystals = 50000
+                    sr_zro = 25000
+                    sr_dark_matter = 25000
+                    sr_living_metal = 25000
+                    nanites = 25000
+                }
+                set_country_flag = foc_sw_economy_307_initialized
+                give_technology = { tech = tech_space_construction message = no }
+                give_technology = { tech = tech_battleships message = no }
+                give_technology = { tech = tech_titans message = no }
+                give_technology = { tech = tech_jump_drive_1 message = no }
+                # V232m: this technology's potential requires the matching fighter-family permit.
+                set_country_flag = ssp_fighter_group_rebel
+                if = { limit = { is_ai = yes } give_technology = { tech = tech_ssp_rebel_hyperspace message = no } }
+                    give_technology = { tech = tech_fe_forge_2 message = no }
+                    give_technology = { tech = tech_fe_singularity_2 message = no }
+                    give_technology = { tech = tech_fe_lab_2 message = no }
+                    give_technology = { tech = tech_fe_fabricator_2 message = no }
+                    give_technology = { tech = tech_fe_entertainment_2 message = no }
+                    give_technology = { tech = tech_fe_administration_2 message = no }
+                    give_technology = { tech = tech_fe_clinic_2 message = no }
+                    give_technology = { tech = tech_fe_security_2 message = no }
+                    give_technology = { tech = tech_fe_nourishment_2 message = no }
+                    give_technology = { tech = tech_fe_dome_2 message = no }
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_sw_new_republic_cluster }
+            foc_sw_claim_new_republic_system = yes
+            every_system_planet = { limit = { has_planet_flag = foc_sw_nr_colony } foc_sw_prepare_new_republic_colony = yes }
+
+        }
+
+        event_target:foc_sw_hosnian_prime = {
+            set_capital = yes
+            # V231m: the New Republic capital opens with the vanilla Robot Assembly Plant and a
+            # Republic-family droid workforce, never the Imperial K-2SO line or
+            # the Confederate B1 line.
+            foc_v231_seed_republic_droid_pops = yes
+            while = { count = 24 create_army = { owner = event_target:foc_sw_new_republic species = event_target:foc_sw_new_republic_species type = defense_army } }
+        }
+        event_target:foc_sw_hosnian_system = { starbase = { set_starbase_flag = foc_sw_new_republic_capital_starbase } }
+        event_target:foc_sw_hosnian_system = {
+            foc_sw_spawn_new_republic_constructor = yes
+            foc_sw_spawn_new_republic_constructor = yes
+        }
+        event_target:foc_sw_hosnian_system = {
+            foc_sw_spawn_new_republic_colossi = yes
+            foc_sw_spawn_new_republic_viscount_fleets = yes
+        }
+
+
+        # FOC 3.11d: valid vanilla hosts. Non-star megastructures use
+        # uncolonisable, non-moon planets; the catapult uses Akiva's neutron star.
+        event_target:foc_sw_kuat_system = {
+            if = {
+                limit = {
+                    exists = event_target:foc_sw_kuat
+                    event_target:foc_sw_kuat = {
+                        has_planet_flag = foc_sw_kuat_ring_anchor
+                        solar_system = { has_star_flag = foc_sw_kuat_home }
+                        NOT = { has_planet_flag = foc_v15_kuat_ring_reward_serviced }
+                        NOT = { exists = orbital_defence }
+                        NOT = { has_carrier_flag = ruined_orbital_ring_planet }
+                        NOT = { has_carrier_flag = megastructure }
+                        NOT = { has_carrier_flag = has_megastructure }
+                        NOT = {
+                            any_megastructure = {
+                                OR = {
+                                    is_megastructure_type = orbital_ring
+                                    is_megastructure_type = orbital_ring_ruined
+                                    is_megastructure_type = orbital_ring_restored
+                                }
+                            }
+                        }
+                    }
+                }
+                spawn_megastructure = {
+                    type = orbital_ring
+                    owner = event_target:foc_sw_new_republic
+                    planet = event_target:foc_sw_kuat
+                    init_effect = { set_name = "Kuat Drive Yards Ring" }
+                }
+            }
+            spawn_megastructure = {
+                type = mega_shipyard_3
+                owner = event_target:foc_sw_new_republic
+                planet = star
+                orbit_distance = 390
+                orbit_angle = 110
+                init_effect = { set_name = "Kuat Drive Yards" }
+            }
+        }
+        event_target:foc_sw_hosnian_system = {
+            spawn_megastructure = {
+                type = interstellar_assembly_4
+                owner = event_target:foc_sw_new_republic
+                planet = event_target:foc_sw_hosnian_assembly_planet
+                init_effect = { set_name = "Galactic Senate" }
+            }
+        }
+        event_target:foc_sw_chandrila_system = {
+            spawn_megastructure = {
+                type = think_tank_4
+                owner = event_target:foc_sw_new_republic
+                planet = event_target:foc_sw_chandrila_science_planet
+                init_effect = { set_name = "Chandrila Science Nexus" }
+            }
+        }
+        event_target:foc_sw_akiva_system = {
+            spawn_megastructure = {
+                type = quantum_catapult_3
+                owner = event_target:foc_sw_new_republic
+                planet = star
+                init_effect = { set_name = "Akiva Quantum Catapult" }
+            }
+        }
+
+        event_target:foc_sw_new_republic = {
+            country_event = { id = foc_v109_story.5 days = 1 }
+        }
+        country_event = { id = foc_fallen_war.5 }
+    }
+}
+
+# Create the Imperial Remnant Fallen Empire and claim its five-system cluster.
+country_event = {
+    id = foc_fallen_war.5
+    hide_window = yes
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    immediate = {
+        event_target:foc_sw_bastion = {
+            create_species = {
+                name = "FOC_SW_IMPERIAL_REMNANT_SPECIES"
+                plural = "FOC_SW_IMPERIAL_REMNANT_SPECIES_PLURAL"
+                class = HUM
+                portrait = first
+                namelist = first
+                homeworld = this
+                traits = { trait = trait_imperial trait = trait_conformists trait = trait_quick_learners }
+                effect = { save_global_event_target_as = foc_sw_imperial_remnant_species }
+            }
+        }
+
+        create_country = {
+            name = "FOC_SW_IMPERIAL_REMNANT"
+            type = fallen_empire
+            auto_delete = no
+            ignore_initial_colony_error = yes
+            species = event_target:foc_sw_imperial_remnant_species
+            authority = auth_imperial
+            origin = origin_default
+            # Moderate ethics preserve the Imperial identity without matching
+            # vanilla is_fallen_empire_xenophobe, whose dedicated FE hulls are
+            # not part of the supplied empire_01 ship family.
+            ethos = { ethic = ethic_xenophobe ethic = ethic_militarist ethic = ethic_authoritarian }
+            civics = { civic = civic_distinguished_admiralty civic = civic_nationalistic_zeal }
+            flag = {
+                icon = { category = "first" file = "ftor4.dds" }
+                background = { category = "backgrounds" file = "00_solid.dds" }
+                colors = { "black" "red" "null" "null" }
+            }
+            name_list = "first"
+            effect = {
+                set_country_flag = foc_sw_imperial_remnant_country
+                set_country_flag = foc_sw_scripted_fallen_empire
+                # Replacement allowance for foc_fallen_war.54, initialised here so
+                # its trigger never reads an undefined variable.
+                set_variable = { which = foc_sw_fleet_replacements value = 0 }
+                # Match the Galactic Empire's complete ship family; keep the
+                # existing First Order city graphics independently.
+                set_graphical_culture = empire_01
+                set_city_graphical_culture = first_01
+                save_global_event_target_as = foc_sw_imperial_remnant
+                # V186: same creation-order guard as the New Republic. The First
+                # Order origin's Treaty successors must be ordinary countries before
+                # their scripted colonies invoke vanilla start-building effects.
+                if = {
+                    limit = {
+                        OR = {
+                            has_global_flag = fop_origin_treaty_epoch
+                            any_country = { is_ai = no has_origin = origin_fop_first_order }
+                        }
+                    }
+                    set_country_type = default
+                }
+                add_modifier = { modifier = foc_sw_fallen_empire_economy_core days = -1 }
+                add_modifier = { modifier = foc_sw_imperial_remnant_economy_focus days = -1 }
+                add_resource = {
+                    energy = 1000000
+                    minerals = 1000000
+                    food = 500000
+                    alloys = 1000000
+                    consumer_goods = 500000
+                    unity = 1000000
+                    influence = 1000
+                    volatile_motes = 50000
+                    exotic_gases = 50000
+                    rare_crystals = 50000
+                    sr_zro = 25000
+                    sr_dark_matter = 25000
+                    sr_living_metal = 25000
+                    nanites = 25000
+                }
+                set_country_flag = foc_sw_economy_307_initialized
+                give_technology = { tech = tech_space_construction message = no }
+                give_technology = { tech = tech_destroyers message = no }
+                give_technology = { tech = tech_cruisers message = no }
+                give_technology = { tech = tech_battleships message = no }
+                give_technology = { tech = tech_titans message = no }
+                give_technology = { tech = tech_jump_drive_1 message = no }
+                # V232m: this technology's potential requires the matching fighter-family permit.
+                set_country_flag = ssp_fighter_group_empire
+                if = { limit = { is_ai = yes } give_technology = { tech = tech_ssp_imperial_hyperspace message = no } }
+                give_technology = { tech = tech_foc_jakku_executor_blueprint message = no }
+                refresh_auto_generated_ship_designs = yes
+                if = {
+                    limit = { has_global_flag = foc_khan_strength_lowest }
+                    
+
+                    
+                    # V14: exact faction technology prerequisites before fixed-design construction.
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_octuple_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_octuple_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_octuple_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_octuple_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_sphat_2 message = no } } }
+                    
+                    # V15 full-armor prerequisite: foc_v15_defense_dad7bc68c916.
+                    if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+                    create_ship_design = { design = NAME_FOC_SW_LUSANKYA_FOC_LOWEST }
+            foc_v1716_register_design_98f62a80ce11 = yes
+                }
+                else = { 
+
+                    
+                    # V14: exact faction technology prerequisites before fixed-design construction.
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_octuple_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_octuple_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_octuple_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_octuple_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_sphat_2 message = no } } }
+                    
+                    # V15 full-armor prerequisite: foc_v15_defense_d062edf452ea.
+                    if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+                    create_ship_design = { design = NAME_FOC_SW_LUSANKYA }
+            foc_v1716_register_design_f59c6f1b6fcc = yes }
+                # v17.16: registration occurs in its exact design branch after research checks.
+                    give_technology = { tech = tech_fe_forge_2 message = no }
+                    give_technology = { tech = tech_fe_singularity_2 message = no }
+                    give_technology = { tech = tech_fe_lab_2 message = no }
+                    give_technology = { tech = tech_fe_fabricator_2 message = no }
+                    give_technology = { tech = tech_fe_entertainment_2 message = no }
+                    give_technology = { tech = tech_fe_administration_2 message = no }
+                    give_technology = { tech = tech_fe_clinic_2 message = no }
+                    give_technology = { tech = tech_fe_security_2 message = no }
+                    give_technology = { tech = tech_fe_nourishment_2 message = no }
+                    give_technology = { tech = tech_fe_dome_2 message = no }
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_sw_imperial_remnant_cluster }
+            foc_sw_claim_imperial_remnant_system = yes
+            every_system_planet = { limit = { has_planet_flag = foc_sw_ir_colony } foc_sw_prepare_imperial_remnant_colony = yes }
+
+        }
+
+        event_target:foc_sw_bastion = {
+            set_capital = yes
+            # V231m: the Imperial Remnant capital opens with the vanilla Robot Assembly Plant and
+            # the Security Droid (K-2SO family) population.
+            foc_v231_seed_imperial_droid_pops = yes
+            while = { count = 28 create_army = { owner = event_target:foc_sw_imperial_remnant species = event_target:foc_sw_imperial_remnant_species type = defense_army } }
+        }
+        event_target:foc_sw_bastion_system = { starbase = { set_starbase_flag = foc_sw_imperial_remnant_capital_starbase } }
+        event_target:foc_sw_bastion_system = {
+            foc_sw_spawn_imperial_remnant_constructor = yes
+            foc_sw_spawn_imperial_remnant_constructor = yes
+        }
+        event_target:foc_sw_bastion_system = {
+            foc_sw_spawn_imperial_remnant_colossi = yes
+            foc_sw_spawn_imperial_remnant_executor_fleets = yes
+        }
+
+
+        # FOC 3.11d: Bastion's two large structures use two different
+        # non-colonisable planets instead of being attached to the star.
+        event_target:foc_sw_bastion_system = {
+            spawn_megastructure = {
+                type = strategic_coordination_center_3
+                owner = event_target:foc_sw_imperial_remnant
+                planet = event_target:foc_sw_bastion_command_planet
+                init_effect = { set_name = "Bastion Strategic Command" }
+            }
+            spawn_megastructure = {
+                type = spy_orb_4
+                owner = event_target:foc_sw_imperial_remnant
+                planet = event_target:foc_sw_bastion_sentry_planet
+                init_effect = { set_name = "Bastion Sentry Array" }
+            }
+        }
+        event_target:foc_sw_bilbringi_system = {
+            spawn_megastructure = {
+                type = orbital_ring
+                owner = event_target:foc_sw_imperial_remnant
+                planet = event_target:foc_sw_bilbringi
+                init_effect = { set_name = "Bilbringi Shipyards Ring" }
+            }
+            spawn_megastructure = {
+                type = mega_shipyard_3
+                owner = event_target:foc_sw_imperial_remnant
+                planet = star
+                orbit_distance = 390
+                orbit_angle = 250
+                init_effect = { set_name = "Bilbringi Imperial Shipyards" }
+            }
+            set_star_flag = foc_sw_bilbringi_mega_shipyard_311y_initialized
+        }
+        event_target:foc_sw_jakku_system = {
+            if = {
+                limit = { NOT = { has_star_flag = foc_v173_jakku_habitat_initialized } }
+                spawn_megastructure = {
+                    type = habitat_central_complex
+                    owner = event_target:foc_sw_imperial_remnant
+                    planet = event_target:foc_sw_jakku
+                    init_effect = { set_name = "Jakku Orbital Habitat" }
+                }
+                set_star_flag = foc_v173_jakku_habitat_initialized
+            }
+            spawn_megastructure = {
+                type = foc_sith_wayfinder_gate
+                owner = event_target:foc_sw_imperial_remnant
+                planet = star
+                orbit_distance = 230
+                orbit_angle = 300
+                init_effect = {
+                    set_name = "NAME_FOC_SITH_WAYFINDER_JAKKU_GATE"
+                    set_megastructure_flag = foc_sith_wayfinder_jakku_gate
+                    save_global_event_target_as = foc_sith_wayfinder_jakku_gate
+                }
+            }
+        }
+        event_target:foc_sw_yaga_minor_system = {
+            starbase = { set_starbase_flag = foc_sw_yaga_deep_space_citadel }
+        }
+
+
+        event_target:foc_sw_new_republic = { establish_communications_no_message = event_target:foc_sw_imperial_remnant }
+        event_target:foc_sw_imperial_remnant = { establish_communications_no_message = event_target:foc_sw_new_republic }
+        set_global_flag = foc_sw_fallen_empires_created
+        remove_global_flag = foc_sw_fallen_empires_initializing
+        set_global_flag = foc_sw_fallen_empires_ready
+        # V181: all principal-route systems that already satisfy vanilla physical
+        # requirements receive the vanilla Hyper Relay now; the monthly keeper
+        # catches any system whose starbase is established later.
+        foc_v181_seed_main_route_hyper_relays = yes
+        # New games already use the completed opposite-rim lane layout.
+        set_global_flag = foc_sw_cluster_hyperlanes_repaired_310f
+        set_global_flag = foc_sw_opposite_rim_layout_311
+        set_global_flag = foc_sw_megastructure_hosts_repaired_311d
+        log = "FOC_3.11D: both compact outward-rim scripted Fallen Empires are ready at the Jakku border."
+
+        # Add Jakku's archaeology site in the same game-start tick. Event 61 is
+        # also kept on the monthly pulse as an old-save repair path.
+        country_event = { id = foc_fallen_war.64 }
+        country_event = { id = foc_fallen_war.65 }
+        country_event = { id = foc_fallen_war.61 }
+        country_event = { id = foc_fallen_war.7 days = 1 }
+        every_playable_country = {
+            establish_communications_no_message = event_target:foc_sw_new_republic
+            establish_communications_no_message = event_target:foc_sw_imperial_remnant
+            # Kuat-style origin relocation is completed during hidden galaxy
+            # setup, after Jakku exists but before the player enters the map.
+            if = {
+                limit = {
+                    is_ai = no
+                    has_origin = origin_fop_first_order
+                }
+                country_event = { id = fop_origin.1 }
+                country_event = { id = fop_origin.3 }
+            }
+            # Republic-origin conversion must run only after both regional
+            # countries and all 27 tagged systems have finished spawning.
+            if = {
+                limit = {
+                    is_ai = no
+                    has_origin = origin_foc_republic_unification
+                }
+                country_event = { id = foc_republic_origin.1 }
+            }
+            country_event = { id = foc_fallen_war.6 days = 1 }
+        }
+    }
+}
+
+country_event = {
+    id = foc_fallen_war.6
+    title = foc_fallen_war.6.name
+    desc = foc_fallen_war.6.desc
+    picture = GFX_foc_story_jakku_aftermath
+    is_triggered_only = yes
+    option = { name = foc_fallen_war.6.a }
+}
+
+# Complete the Kuat Drive Yards as a fully vanilla orbital ring.
+# The ring itself is the vanilla orbital_ring megastructure; this delayed pass only
+# upgrades its vanilla starbase object and installs vanilla orbital-ring shipyards.
+country_event = {
+    id = foc_fallen_war.7
+    hide_window = yes
+    is_triggered_only = yes
+
+    immediate = {
+        if = {
+            limit = { exists = event_target:foc_sw_new_republic }
+            event_target:foc_sw_new_republic = { foc_sw_configure_kuat_drive_yards_ring = yes }
+        }
+        if = {
+            limit = { exists = event_target:foc_sw_imperial_remnant }
+            event_target:foc_sw_imperial_remnant = { foc_sw_configure_bilbringi_shipyard_ring = yes }
+        }
+    }
+}
+
+# V112: Galactic-Treaty route clock. The New Republic is already present when
+# this begins; twenty-four years later foc_khan.1 starts the War in Heaven.
+country_event = {
+    id = foc_fallen_war.70
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_sw_new_republic_country
+        has_global_flag = foc_republic_origin_galactic_treaty
+        NOT = { has_global_flag = foc_sw_war_in_heaven_started }
+        NOT = { has_global_flag = foc_v112_treaty_wih_clock_started }
+    }
+
+    immediate = {
+        set_global_flag = foc_v112_treaty_wih_clock_started
+        set_timed_global_flag = { flag = foc_v112_treaty_wih_24y_delay days = 8640 }
+        log = "FOC_V112_WIH: Galactic Treaty clock started; War in Heaven due in 24 years."
+    }
+}
+
+# V112: if the Treaty War in Heaven is still active five years after it began,
+# the First Order crisis is allowed to erupt as an additional trigger. Existing
+# defeat and armistice triggers are intentionally left unchanged.
+country_event = {
+    id = foc_fallen_war.71
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_sw_new_republic_country
+        OR = {
+            has_global_flag = foc_republic_origin_galactic_treaty
+            has_global_flag = fop_origin_treaty_epoch
+        }
+        has_global_flag = foc_sw_war_in_heaven_started
+        has_global_flag = foc_v112_treaty_wih_five_year_watch
+        NOT = { has_global_flag = foc_v112_treaty_wih_five_year_grace }
+        exists = event_target:foc_sw_imperial_remnant
+        is_at_war_with = event_target:foc_sw_imperial_remnant
+        NOT = { has_global_flag = foc_khan_crisis_started }
+        NOT = { has_global_flag = foc_khan_crisis_spawn_scheduled }
+        NOT = { has_global_flag = foc_khan_crisis_disabled }
+        NOT = {
+            any_playable_country = {
+                is_ai = no
+                OR = {
+                    has_origin = origin_fop_first_order
+                    has_country_flag = foc_republic_origin_player_empire
+                    has_country_flag = foc_republic_origin_player_imperial_remnant
+                    has_country_flag = foc_republic_origin_empire_crisis
+                    has_country_flag = fop_player_first_order
+                    has_country_flag = foc_republic_origin_became_first_order
+                    has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+                }
+            }
+        }
+    }
+
+    immediate = {
+        set_global_flag = foc_v112_treaty_wih_longwar_escalated
+        set_global_flag = foc_sw_first_order_absorb_imperial_remnant_pending
+        set_timed_global_flag = { flag = foc_khan_crisis_spawn_scheduled days = 10 }
+        country_event = { id = foc_khan.2 days = 1 }
+        log = "FOC_V112_WIH: Treaty war exceeded five years; First Order crisis scheduled without removing legacy triggers."
+    }
+}
+
+# V206 old-save fail-safe only. The normal path now starts the First Order in the
+# same execution tick in which the Imperial Remnant loses its final controlled
+# colony. This global monthly detector exists solely to recover saves that were
+# already stranded before V206; it performs the same direct start without adding
+# another 30-day or 60-day succession delay.
+event = {
+    id = foc_fallen_war.72
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_sw_war_in_heaven_started
+        OR = {
+            has_global_flag = foc_republic_origin_galactic_treaty
+            has_global_flag = fop_origin_treaty_epoch
+        }
+        NOT = { has_global_flag = foc_khan_crisis_started }
+        NOT = {
+            any_playable_country = {
+                is_ai = no
+                OR = {
+                    has_origin = origin_fop_first_order
+                    has_country_flag = foc_republic_origin_player_empire
+                    has_country_flag = foc_republic_origin_player_imperial_remnant
+                    has_country_flag = foc_republic_origin_empire_crisis
+                    has_country_flag = fop_player_first_order
+                    has_country_flag = foc_republic_origin_became_first_order
+                    has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+                }
+            }
+        }
+        OR = {
+            AND = {
+                exists = event_target:foc_sw_imperial_remnant
+                event_target:foc_sw_imperial_remnant = {
+                    has_country_flag = foc_sw_imperial_remnant_country
+                    NOT = {
+                        any_owned_planet = {
+                            is_colony = yes
+                            is_controlled_by = event_target:foc_sw_imperial_remnant
+                        }
+                    }
+                }
+            }
+            any_country = {
+                has_country_flag = foc_sw_imperial_remnant_country
+                NOT = {
+                    any_owned_planet = {
+                        is_colony = yes
+                        controller = { has_country_flag = foc_sw_imperial_remnant_country }
+                    }
+                }
+            }
+            AND = {
+                has_global_flag = foc_sw_imperial_remnant_defeated
+                NOT = {
+                    any_country = {
+                        has_country_flag = foc_sw_imperial_remnant_country
+                        any_owned_planet = { is_colony = yes }
+                    }
+                }
+            }
+        }
+    }
+
+    immediate = {
+        if = {
+            limit = { NOT = { exists = event_target:foc_sw_imperial_remnant } }
+            random_country = {
+                limit = {
+                    has_country_flag = foc_sw_imperial_remnant_country
+                    NOT = {
+                        any_owned_planet = {
+                            is_colony = yes
+                            controller = { has_country_flag = foc_sw_imperial_remnant_country }
+                        }
+                    }
+                }
+                save_global_event_target_as = foc_sw_imperial_remnant
+            }
+        }
+
+        remove_global_flag = foc_v205_remnant_zero_colony_crisis_relayed
+        if = {
+            limit = { NOT = { has_global_flag = foc_sw_imperial_remnant_defeated } }
+            set_global_flag = foc_sw_imperial_remnant_defeated
+            every_playable_country = { country_event = { id = foc_fallen_war.21 days = 1 } }
+        }
+
+        # A stale disable/scheduled latch from the broken delayed path must not
+        # block the canonical direct succession.
+        remove_global_flag = foc_khan_crisis_disabled
+        remove_global_flag = foc_khan_crisis_spawn_scheduled
+
+        if = {
+            limit = {
+                exists = event_target:foc_sw_new_republic
+                event_target:foc_sw_new_republic = { any_owned_planet = { is_colony = yes } }
+            }
+            event_target:foc_sw_new_republic = { country_event = { id = foc_khan.2 } }
+        }
+        else = {
+            random_country = {
+                limit = {
+                    is_country_type = default
+                    any_owned_planet = { is_colony = yes }
+                    NOT = { has_country_flag = foc_sw_imperial_remnant_country }
+                }
+                country_event = { id = foc_khan.2 }
+            }
+        }
+        log = "FOC_V206_REMNANT: recovered a stranded zero-controlled-colony Remnant and started the First Order directly."
+    }
+}
+
+# Same-tick bridge for the normal gameplay path. Planet occupation and direct
+# conquest callbacks run before the defeated country can be cleaned up, so the
+# canonical country detector can start the crisis immediately.
+planet_event = {
+    id = foc_fallen_war.73
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_sw_war_in_heaven_started
+        has_global_flag = foc_sw_fallen_empires_ready
+        NOT = { has_global_flag = foc_khan_crisis_started }
+    }
+
+    immediate = {
+        every_country = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_sw_new_republic_country
+                    has_country_flag = foc_sw_imperial_remnant_country
+                }
+            }
+            country_event = { id = foc_fallen_war.20 }
+        }
+    }
+}
+
+# Some direct-transfer war types fire the colony carrier callback instead of the
+# ordinary planet callback. Run the identical same-tick country check there.
+carrier_event = {
+    id = foc_fallen_war.74
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_sw_war_in_heaven_started
+        has_global_flag = foc_sw_fallen_empires_ready
+        NOT = { has_global_flag = foc_khan_crisis_started }
+    }
+
+    immediate = {
+        every_country = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_sw_new_republic_country
+                    has_country_flag = foc_sw_imperial_remnant_country
+                }
+            }
+            country_event = { id = foc_fallen_war.20 }
+        }
+    }
+}
+
+# Timed controller: awaken both scripted successors and start their War in Heaven.
+country_event = {
+    id = foc_fallen_war.10
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_sw_new_republic_country
+        exists = event_target:foc_sw_imperial_remnant
+        NOT = { has_global_flag = foc_sw_war_in_heaven_started }
+    }
+
+    immediate = {
+        remove_global_flag = foc_sw_war_in_heaven_scheduled
+        set_global_flag = foc_sw_war_in_heaven_started
+        if = {
+            limit = {
+                OR = {
+                    has_global_flag = foc_republic_origin_galactic_treaty
+                    has_global_flag = fop_origin_treaty_epoch
+                }
+            }
+            set_global_flag = foc_v112_treaty_wih_five_year_watch
+            set_timed_global_flag = { flag = foc_v112_treaty_wih_five_year_grace days = 1800 }
+        }
+
+        # Galactic-Treaty successors remain ordinary countries for both human
+        # and AI control. In non-origin games the original AI country still uses
+        # the awakened Fallen-Empire type.
+        if = {
+            limit = { OR = { has_global_flag = foc_republic_origin_galactic_treaty has_global_flag = fop_origin_treaty_epoch } }
+            set_country_type = default
+        }
+        else_if = {
+            limit = { is_ai = yes }
+            set_country_type = awakened_fallen_empire
+        }
+        set_country_flag = foc_sw_new_republic_awakened
+        add_modifier = { modifier = foc_sw_awakened_fallen_empire_war_economy days = -1 }
+        add_resource = { energy = 250000 minerals = 250000 alloys = 500000 consumer_goods = 150000 food = 150000 }
+        event_target:foc_sw_imperial_remnant = {
+            if = {
+                limit = { OR = { has_global_flag = foc_republic_origin_galactic_treaty has_global_flag = fop_origin_treaty_epoch } }
+                set_country_type = default
+            }
+            else_if = {
+                limit = { is_ai = yes }
+                set_country_type = awakened_fallen_empire
+            }
+            set_country_flag = foc_sw_imperial_remnant_awakened
+            add_modifier = { modifier = foc_sw_awakened_fallen_empire_war_economy days = -1 }
+            add_resource = { energy = 250000 minerals = 250000 alloys = 500000 consumer_goods = 150000 food = 150000 }
+        }
+
+        establish_communications_no_message = event_target:foc_sw_imperial_remnant
+        event_target:foc_sw_imperial_remnant = { establish_communications_no_message = root }
+
+        set_faction_hostility = {
+            target = event_target:foc_sw_imperial_remnant
+            set_neutral = no
+            set_friendly = no
+            set_hostile = yes
+        }
+        event_target:foc_sw_imperial_remnant = {
+            set_faction_hostility = {
+                target = root
+                set_neutral = no
+                set_friendly = no
+                set_hostile = yes
+            }
+        }
+
+        declare_war = {
+            target = event_target:foc_sw_imperial_remnant
+            attacker_war_goal = wg_war_in_heaven
+        }
+
+        # V142: both recurring reinforcement streams stay dormant for the first
+        # full year of the War in Heaven, measured from the actual declaration.
+        set_timed_country_flag = { flag = foc_fallen_war_support_first_year_142 days = 360 }
+        event_target:foc_sw_imperial_remnant = {
+            set_timed_country_flag = { flag = foc_fallen_war_support_first_year_142 days = 360 }
+        }
+
+        every_owned_fleet = {
+            limit = { any_owned_ship = { is_ship_class = shipclass_military } }
+            set_fleet_stance = aggressive
+            set_aggro_range_measure_from = self
+            set_aggro_range = 9999
+        }
+        event_target:foc_sw_imperial_remnant = {
+            every_owned_fleet = {
+                limit = { any_owned_ship = { is_ship_class = shipclass_military } }
+                set_fleet_stance = aggressive
+                set_aggro_range_measure_from = self
+                set_aggro_range = 9999
+            }
+        }
+
+        every_playable_country = { country_event = { id = foc_fallen_war.11 days = 1 } }
+    }
+}
+
+country_event = {
+    id = foc_fallen_war.11
+    title = foc_fallen_war.11.name
+    desc = foc_fallen_war.11.desc
+    picture = GFX_foc_event_war_in_heaven
+    is_triggered_only = yes
+    option = { name = foc_fallen_war.11.a }
+}
+
+# Trigger First Order when either scripted successor loses every colony it still
+# controls. Occupied colonies no longer keep a defeated Remnant alive merely
+# because the peace system has not transferred legal ownership yet.
+# If the Imperial Remnant falls first, the original succession path is used.
+# If the New Republic falls first, the surviving Imperial Remnant is marked for
+# immediate absorption as soon as the First Order country finishes spawning.
+country_event = {
+    id = foc_fallen_war.20
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        OR = {
+            has_country_flag = foc_sw_new_republic_country
+            has_country_flag = foc_sw_imperial_remnant_country
+        }
+        # Preserve the ordinary-origin pre-war extinction fallback while the
+        # Treaty route can also react immediately during its War in Heaven.
+        OR = {
+            has_global_flag = foc_sw_war_in_heaven_started
+            foc_story_timeline_start_due = yes
+        }
+        has_global_flag = foc_sw_fallen_empires_ready
+        NOT = { has_global_flag = foc_khan_crisis_started }
+        NOT = { has_global_flag = foc_khan_crisis_spawn_scheduled }
+        NOT = { has_global_flag = foc_khan_crisis_disabled }
+        NOT = {
+            any_playable_country = {
+                is_ai = no
+                OR = {
+                    has_origin = origin_fop_first_order
+                    has_country_flag = foc_republic_origin_player_empire
+                    has_country_flag = foc_republic_origin_player_imperial_remnant
+                    has_country_flag = foc_republic_origin_empire_crisis
+                    has_country_flag = fop_player_first_order
+                    has_country_flag = foc_republic_origin_became_first_order
+                    has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+                }
+            }
+        }
+        OR = {
+            # The defeated successor itself performs this check. This covers both
+            # zero legal colonies and colonies whose wartime controller is now
+            # the enemy while ownership still awaits peace resolution.
+            AND = {
+                has_country_flag = foc_sw_imperial_remnant_country
+                NOT = {
+                    any_owned_planet = {
+                        is_colony = yes
+                        controller = { is_same_value = root }
+                    }
+                }
+            }
+            AND = {
+                has_country_flag = foc_sw_new_republic_country
+                NOT = {
+                    any_owned_planet = {
+                        is_colony = yes
+                        controller = { is_same_value = root }
+                    }
+                }
+            }
+            # If an engine cleanup removed the defeated country despite its
+            # auto_delete=no setting, the surviving successor still closes it.
+            NOT = { any_country = { has_country_flag = foc_sw_imperial_remnant_country any_owned_planet = { is_colony = yes } } }
+            NOT = { any_country = { has_country_flag = foc_sw_new_republic_country any_owned_planet = { is_colony = yes } } }
+            AND = {
+                exists = event_target:foc_sw_hosnian_system
+                event_target:foc_sw_hosnian_system = { OR = { has_star_flag = star_cracked star = { is_planet_class = pc_black_hole } } }
+            }
+        }
+    }
+
+    immediate = {
+        if = {
+            limit = {
+                OR = {
+                    AND = {
+                        has_country_flag = foc_sw_imperial_remnant_country
+                        NOT = {
+                            any_owned_planet = {
+                                is_colony = yes
+                                controller = { is_same_value = root }
+                            }
+                        }
+                    }
+                    NOT = { any_country = { has_country_flag = foc_sw_imperial_remnant_country any_owned_planet = { is_colony = yes } } }
+                }
+            }
+            set_global_flag = foc_sw_imperial_remnant_defeated
+            every_playable_country = { country_event = { id = foc_fallen_war.21 days = 1 } }
+        }
+        else = {
+            set_global_flag = foc_sw_new_republic_defeated_before_first_order
+            set_global_flag = foc_sw_first_order_absorb_imperial_remnant_pending
+            every_playable_country = { country_event = { id = foc_fallen_war.22 days = 1 } }
+        }
+
+        # V206 canonical succession: defeat starts the crisis in this same event
+        # tick. foc_khan.2 immediately sets foc_khan_crisis_started before any
+        # defeated-country cleanup can invalidate the current scope.
+        remove_global_flag = foc_khan_crisis_spawn_scheduled
+        country_event = { id = foc_khan.2 }
+        log = "FOC_V206_REMNANT: successor defeated; First Order crisis started directly in the defeat tick."
+    }
+}
+
+country_event = {
+    id = foc_fallen_war.21
+    title = foc_fallen_war.21.name
+    desc = foc_fallen_war.21.desc
+    picture = GFX_foc_event_starkiller_base_popup
+    is_triggered_only = yes
+    option = { name = foc_fallen_war.21.a }
+}
+
+# Alternate warning when the New Republic is destroyed before Phase I begins.
+country_event = {
+    id = foc_fallen_war.22
+    title = foc_fallen_war.22.name
+    desc = foc_fallen_war.22.desc
+    picture = GFX_foc_event_new_republic_fall
+    is_triggered_only = yes
+    option = { name = foc_fallen_war.22.a }
+}
+
+# First Order annexation of the Galactic Imperial Remnant.  First Order
+# existence itself is now sufficient: the old pending flag made an ordinary
+# Phase-I spawn silently skip annexation.
+country_event = {
+    id = foc_fallen_war.23
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_khan_first_order_country
+        NOT = { has_global_flag = foc_sw_imperial_remnant_absorbed_by_first_order }
+		OR = {
+			AND = {
+				exists = event_target:foc_sw_imperial_remnant
+				event_target:foc_sw_imperial_remnant = {
+					has_country_flag = foc_sw_imperial_remnant_country
+					NOT = { is_same_value = root }
+				}
+			}
+			any_country = {
+				has_country_flag = foc_sw_imperial_remnant_country
+				NOT = { is_same_value = root }
+			}
+		}
+    }
+
+    immediate = {
+		# Rebind the owner target for old saves before transferring any asset.
+		save_global_event_target_as = foc_khan_first_order
+        remove_global_flag = foc_sw_first_order_absorb_imperial_remnant_pending
+
+        if = {
+            limit = { exists = event_target:foc_sw_imperial_remnant }
+			event_target:foc_sw_imperial_remnant = {
+				if = {
+					limit = {
+						OR = {
+							NOT = { has_country_flag = foc_sw_imperial_remnant_country }
+							is_same_value = root
+						}
+					}
+					if = { limit = { exists = event_target:foc_sw_imperial_remnant } clear_global_event_target = foc_sw_imperial_remnant }
+				}
+			}
+		}
+
+		if = {
+			limit = { NOT = { exists = event_target:foc_sw_imperial_remnant } }
+            random_country = {
+				limit = {
+					has_country_flag = foc_sw_imperial_remnant_country
+					NOT = { is_same_value = root }
+				}
+                save_global_event_target_as = foc_sw_imperial_remnant
+            }
+        }
+
+        if = {
+            limit = { exists = event_target:foc_sw_imperial_remnant }
+            event_target:foc_sw_imperial_remnant = {
+                every_owned_fleet = {
+                    if = {
+                        limit = {
+                            any_owned_ship = { is_ship_class = shipclass_military }
+                            NOT = { has_fleet_flag = foc_sw_imperial_remnant_defense_platform }
+                        }
+                        remove_fleet_flag = foc_sw_imperial_remnant_isd_fleet
+                        remove_fleet_flag = foc_sw_imperial_executor_fleet
+                        set_fleet_flag = foc_khan_first_order_attack_fleet
+                        set_fleet_stance = aggressive
+                        set_aggro_range_measure_from = self
+                        set_aggro_range = 9999
+                    }
+                    set_owner = event_target:foc_khan_first_order
+                }
+                every_owned_starbase = { set_owner = event_target:foc_khan_first_order }
+                every_owned_planet = { set_owner = event_target:foc_khan_first_order }
+                set_country_flag = foc_sw_absorbed_by_first_order
+                destroy_country = yes
+            }
+
+            set_global_flag = foc_sw_imperial_remnant_defeated
+            set_global_flag = foc_sw_imperial_remnant_absorbed_by_first_order
+            if = { limit = { exists = event_target:foc_sw_imperial_remnant } clear_global_event_target = foc_sw_imperial_remnant }
+            foc_sw_configure_bilbringi_shipyard_ring = yes
+        }
+    }
+}
+
+# After crisis Starkiller Base erases Hosnian, transfer every surviving New
+# Republic system and colony to the First Order. Republic fleets are not added
+# to the crisis arsenal; they disappear with the dissolved Republic government.
+country_event = {
+    id = foc_fallen_war.24
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        # The ordinary NPC First Order, plus the playable First Order reached
+        # through the Republic origin, which never receives the NPC crisis flag.
+        OR = {
+            has_country_flag = foc_khan_first_order_country
+            AND = {
+                has_country_flag = foc_republic_origin_empire_crisis
+                has_country_flag = fop_origin_crisis_active
+            }
+        }
+        has_global_flag = foc_story_hosnian_destroyed
+        NOT = { has_global_flag = foc_sw_new_republic_absorbed_by_first_order }
+        # A human Treaty New Republic must first inherit as the separate D'Qar
+        # Resistance. Never let this cleanup event strip the last colonies from
+        # a player country while that inheritance is still pending.
+        NOT = {
+            AND = {
+                has_global_flag = foc_republic_origin_galactic_treaty
+                any_country = {
+                    is_ai = no
+                    has_country_flag = foc_republic_origin_player_republic
+                    has_country_flag = foc_sw_new_republic_country
+                }
+            }
+        }
+        # V101: do not require a surviving cluster ownership snapshot here.
+        # Hosnian's destruction plus a valid First Order is enough to run the
+        # idempotent cleanup; the immediate block reacquires any surviving NR.
+        # Only an AI New Republic can reach this collapse path. On the player
+        # Treaty route the original country already inherited as the Resistance,
+        # and the separately created AI Republic is the state that loses Hosnian.
+    }
+
+    immediate = {
+        save_global_event_target_as = foc_khan_first_order
+        if = {
+            limit = { NOT = { exists = event_target:foc_sw_new_republic } }
+            random_country = {
+                limit = { has_country_flag = foc_sw_new_republic_country }
+                save_global_event_target_as = foc_sw_new_republic
+            }
+        }
+
+        # By this point every human Treaty successor has already inherited as
+        # the separate D'Qar Resistance. Only the AI New Republic remains here.
+        if = {
+            limit = {
+                exists = event_target:foc_sw_new_republic
+                event_target:foc_sw_new_republic = { is_ai = yes }
+            }
+            event_target:foc_sw_new_republic = {
+                every_owned_starbase = { set_owner = event_target:foc_khan_first_order }
+                every_owned_planet = { set_owner = event_target:foc_khan_first_order }
+                set_country_flag = foc_sw_absorbed_by_first_order
+                destroy_country = yes
+            }
+            set_global_flag = foc_sw_new_republic_defeated
+            if = { limit = { exists = event_target:foc_sw_new_republic } clear_global_event_target = foc_sw_new_republic }
+        }
+
+        # 3.11q and older destroyed the Republic country immediately, which could
+        # leave its surviving cluster unclaimed. Recover only unowned systems or
+        # bases still belonging to the Republic; never steal a third party's gains.
+        every_system = {
+            limit = {
+                has_star_flag = foc_sw_new_republic_cluster
+                NOT = { has_star_flag = star_cracked }
+            }
+            if = {
+                limit = {
+                    exists = starbase
+                    starbase.owner = { has_country_flag = foc_sw_new_republic_country }
+                }
+                starbase = { set_owner = event_target:foc_khan_first_order }
+            }
+            else_if = {
+                limit = {
+                    NOT = { exists = starbase }
+                    NOT = {
+                        any_system_planet = {
+                            is_colony = yes
+                            owner = { NOT = { is_same_value = event_target:foc_khan_first_order } }
+                        }
+                    }
+                }
+                create_starbase = {
+                    size = starbase_outpost
+                    owner = event_target:foc_khan_first_order
+                }
+            }
+            every_system_planet = {
+                limit = {
+                    is_colony = yes
+                    owner = { has_country_flag = foc_sw_new_republic_country }
+                }
+                set_owner = event_target:foc_khan_first_order
+            }
+        }
+        set_global_flag = foc_sw_new_republic_absorbed_by_first_order
+
+        # The player Resistance is a different country and merely receives the
+        # fall-of-Hosnian report; no ownership or player-control effect touches it.
+        random_country = {
+            limit = {
+                is_ai = no
+                has_country_flag = foc_republic_origin_post_treaty_player_rebels
+            }
+            country_event = { id = foc_republic_origin.192 days = 1 }
+        }
+    }
+}
+
+# V101/V212: New Republic-side fallback. If Hosnian has already been destroyed
+# but the First Order-side cleanup was missed, the separate AI New Republic
+# dissolves after its surviving territory is handed to the First Order.
+country_event = {
+    id = foc_fallen_war.25
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = yes
+        has_country_flag = foc_sw_new_republic_country
+        has_global_flag = foc_story_hosnian_destroyed
+        NOT = { has_global_flag = foc_sw_new_republic_absorbed_by_first_order }
+        OR = {
+            exists = event_target:foc_khan_first_order
+            any_country = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    AND = {
+                        has_country_flag = foc_republic_origin_empire_crisis
+                        has_country_flag = fop_origin_crisis_active
+                    }
+                }
+            }
+        }
+    }
+
+    immediate = {
+        if = {
+            limit = { NOT = { exists = event_target:foc_khan_first_order } }
+            random_country = {
+                limit = {
+                    OR = {
+                        has_country_flag = foc_khan_first_order_country
+                        AND = {
+                            has_country_flag = foc_republic_origin_empire_crisis
+                            has_country_flag = fop_origin_crisis_active
+                        }
+                    }
+                }
+                save_global_event_target_as = foc_khan_first_order
+            }
+        }
+
+        if = {
+            limit = { exists = event_target:foc_khan_first_order }
+            every_owned_fleet = { destroy_fleet = this }
+            every_owned_starbase = { set_owner = event_target:foc_khan_first_order }
+            every_owned_planet = { set_owner = event_target:foc_khan_first_order }
+            set_country_flag = foc_sw_absorbed_by_first_order
+            set_global_flag = foc_sw_new_republic_defeated
+            set_global_flag = foc_sw_new_republic_absorbed_by_first_order
+            if = { limit = { exists = event_target:foc_sw_new_republic } clear_global_event_target = foc_sw_new_republic }
+            destroy_country = yes
+        }
+    }
+}
+
+# War-only fixed-design reinforcements for the original non-origin Fallen
+# Empires. Each monthly pulse adds exactly one new group while both awakened
+# powers are fighting each other. This is a scheduled reinforcement, not a
+# loss-triggered reset: no surviving fleet is deleted or rebuilt. Republic-
+# origin Galactic-Treaty successors are ordinary countries and never enter it.
+country_event = {
+    id = foc_fallen_war.30
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        has_country_flag = foc_sw_new_republic_awakened
+        exists = event_target:foc_sw_imperial_remnant
+        exists = event_target:foc_sw_hosnian_system
+        event_target:foc_sw_hosnian_system = {
+            exists = space_owner
+            space_owner = { is_same_value = root }
+            NOT = {
+                any_system_planet = {
+                    is_colony = yes
+                    NOT = { owner = { is_same_value = root } }
+                }
+            }
+        }
+        is_at_war_with = event_target:foc_sw_imperial_remnant
+        NOT = { has_country_flag = foc_fallen_war_support_first_year_142 }
+    }
+
+    immediate = { event_target:foc_sw_hosnian_system = { foc_sw_spawn_new_republic_nebula_fleet = yes } }
+}
+
+country_event = {
+    id = foc_fallen_war.31
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        has_country_flag = foc_sw_imperial_remnant_awakened
+        exists = event_target:foc_sw_new_republic
+        exists = event_target:foc_sw_bastion_system
+        event_target:foc_sw_bastion_system = {
+            exists = space_owner
+            space_owner = { is_same_value = root }
+            NOT = {
+                any_system_planet = {
+                    is_colony = yes
+                    NOT = { owner = { is_same_value = root } }
+                }
+            }
+        }
+        is_at_war_with = event_target:foc_sw_new_republic
+        NOT = { has_country_flag = foc_fallen_war_support_first_year_142 }
+    }
+
+    immediate = { event_target:foc_sw_bastion_system = { foc_sw_spawn_imperial_remnant_isd_fleet = yes } }
+}
+
+# Reacquire persistent event targets after loading. The old infrastructure repair
+# is a one-time migration, never a monthly command competing with normal AI.
+event = {
+    id = foc_fallen_war.40
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = { has_global_flag = foc_sw_fallen_empires_created }
+
+    immediate = {
+        # These aliases are also used by the earlier Empire/Rebellion story.
+        # Replace a stale alias only when a real successor government exists;
+        # never clear a shared alias still needed by the pre-Treaty helpers.
+        if = {
+            limit = {
+                exists = event_target:foc_sw_new_republic
+                event_target:foc_sw_new_republic = { NOT = { has_country_flag = foc_sw_new_republic_country } }
+            }
+            random_country = { limit = { has_country_flag = foc_sw_new_republic_country } save_global_event_target_as = foc_sw_new_republic }
+        }
+        if = {
+            limit = {
+                exists = event_target:foc_sw_imperial_remnant
+                event_target:foc_sw_imperial_remnant = { NOT = { has_country_flag = foc_sw_imperial_remnant_country } }
+            }
+            random_country = { limit = { has_country_flag = foc_sw_imperial_remnant_country } save_global_event_target_as = foc_sw_imperial_remnant }
+        }
+        if = {
+            limit = { NOT = { exists = event_target:foc_sw_new_republic } }
+            random_country = { limit = { has_country_flag = foc_sw_new_republic_country } save_global_event_target_as = foc_sw_new_republic }
+        }
+        if = {
+            limit = { NOT = { exists = event_target:foc_sw_imperial_remnant } }
+            random_country = { limit = { has_country_flag = foc_sw_imperial_remnant_country } save_global_event_target_as = foc_sw_imperial_remnant }
+        }
+
+        if = {
+            limit = { NOT = { exists = event_target:foc_sw_hosnian_system } }
+            random_system = {
+                limit = { has_star_flag = foc_sw_hosnian_home }
+                save_global_event_target_as = foc_sw_hosnian_system
+                random_system_planet = { limit = { has_planet_flag = foc_sw_hosnian_prime } save_global_event_target_as = foc_sw_hosnian_prime }
+            }
+        }
+        else_if = {
+            limit = { NOT = { exists = event_target:foc_sw_hosnian_prime } }
+            event_target:foc_sw_hosnian_system = { random_system_planet = { limit = { has_planet_flag = foc_sw_hosnian_prime } save_global_event_target_as = foc_sw_hosnian_prime } }
+        }
+        if = {
+            limit = { NOT = { exists = event_target:foc_sw_bastion_system } }
+            random_system = {
+                limit = { has_star_flag = foc_sw_bastion_home }
+                save_global_event_target_as = foc_sw_bastion_system
+                random_system_planet = { limit = { has_planet_flag = foc_sw_bastion } save_global_event_target_as = foc_sw_bastion }
+            }
+        }
+        else_if = {
+            limit = { NOT = { exists = event_target:foc_sw_bastion } }
+            event_target:foc_sw_bastion_system = { random_system_planet = { limit = { has_planet_flag = foc_sw_bastion } save_global_event_target_as = foc_sw_bastion } }
+        }
+        if = {
+            limit = { NOT = { exists = event_target:foc_sw_kuat_system } }
+            random_system = {
+                limit = { has_star_flag = foc_sw_kuat_home }
+                save_global_event_target_as = foc_sw_kuat_system
+                random_system_planet = { limit = { has_planet_flag = foc_sw_kuat_ring_anchor } save_global_event_target_as = foc_sw_kuat }
+            }
+        }
+        else_if = {
+            limit = { NOT = { exists = event_target:foc_sw_kuat } }
+            event_target:foc_sw_kuat_system = { random_system_planet = { limit = { has_planet_flag = foc_sw_kuat_ring_anchor } save_global_event_target_as = foc_sw_kuat } }
+        }
+        if = {
+            limit = { NOT = { exists = event_target:foc_sw_bilbringi_system } }
+            random_system = {
+                limit = { has_star_flag = foc_sw_bilbringi_home }
+                save_global_event_target_as = foc_sw_bilbringi_system
+                random_system_planet = { limit = { has_planet_flag = foc_sw_bilbringi_ring_anchor } save_global_event_target_as = foc_sw_bilbringi }
+            }
+        }
+        else_if = {
+            limit = { NOT = { exists = event_target:foc_sw_bilbringi } }
+            event_target:foc_sw_bilbringi_system = { random_system_planet = { limit = { has_planet_flag = foc_sw_bilbringi_ring_anchor } save_global_event_target_as = foc_sw_bilbringi } }
+        }
+        if = {
+            limit = { NOT = { exists = event_target:foc_sw_jakku_system } }
+            random_system = {
+                limit = { has_star_flag = foc_sw_jakku_home }
+                save_global_event_target_as = foc_sw_jakku_system
+                star = { save_global_event_target_as = foc_sw_jakku_star }
+                random_system_planet = { limit = { has_planet_flag = foc_sw_jakku } save_global_event_target_as = foc_sw_jakku }
+            }
+        }
+        else_if = {
+            limit = { NOT = { exists = event_target:foc_sw_jakku } }
+            event_target:foc_sw_jakku_system = { random_system_planet = { limit = { has_planet_flag = foc_sw_jakku } save_global_event_target_as = foc_sw_jakku } }
+        }
+        if = {
+            limit = {
+                exists = event_target:foc_sw_jakku_system
+                NOT = { exists = event_target:foc_sw_jakku_star }
+            }
+            event_target:foc_sw_jakku_system = {
+                star = { save_global_event_target_as = foc_sw_jakku_star }
+            }
+        }
+
+        if = {
+            limit = { NOT = { exists = event_target:foc_sith_wayfinder_jakku_gate } }
+            random_megastructure = {
+                limit = { has_megastructure_flag = foc_sith_wayfinder_jakku_gate }
+                save_global_event_target_as = foc_sith_wayfinder_jakku_gate
+            }
+        }
+        if = {
+            limit = { NOT = { exists = event_target:foc_sith_wayfinder_exegol_gate } }
+            random_megastructure = {
+                limit = { has_megastructure_flag = foc_sith_wayfinder_exegol_gate }
+                save_global_event_target_as = foc_sith_wayfinder_exegol_gate
+            }
+        }
+
+        if = {
+            limit = {
+                exists = event_target:foc_sw_new_republic
+                event_target:foc_sw_new_republic = {
+                    has_country_flag = foc_sw_new_republic_country
+                    NOT = { has_country_flag = foc_starbase_cycle_nr_migration_done }
+                }
+            }
+            event_target:foc_sw_new_republic = {
+                set_country_flag = foc_starbase_cycle_nr_migration_done
+                every_owned_planet = {
+                    limit = {
+                        is_colony = yes
+                        NOT = {
+                            OR = {
+                                has_building = building_foc_sw_fe_civil_nexus
+                                OR = { has_building = building_robot_assembly_plant has_building = building_robot_assembly_complex }
+                            }
+                        }
+                    }
+                    foc_sw_apply_fallen_empire_buildings = yes
+                }
+                every_owned_fleet = {
+                    limit = { has_fleet_flag = foc_sw_new_republic_defense_platform }
+                    destroy_fleet = this
+                }
+                # Keep existing base levels. The old all-country citadel pass
+                # caused an AI downgrade/forced-upgrade loop and touched Arkships.
+                if = {
+                    limit = {
+                        count_owned_ship = { count < 2 limit = { is_ship_class = shipclass_constructor } }
+                        exists = event_target:foc_sw_hosnian_system
+                        event_target:foc_sw_hosnian_system = { exists = space_owner space_owner = { is_same_value = event_target:foc_sw_new_republic } }
+                    }
+                    event_target:foc_sw_hosnian_system = { foc_sw_spawn_new_republic_constructor = yes }
+                }
+                if = {
+                    limit = {
+                        NOT = { has_country_flag = foc_sw_new_republic_colossi_granted }
+                        exists = event_target:foc_sw_hosnian_system
+                        event_target:foc_sw_hosnian_system = { exists = space_owner space_owner = { is_same_value = event_target:foc_sw_new_republic } }
+                    }
+                    event_target:foc_sw_hosnian_system = { foc_sw_spawn_new_republic_colossi = yes }
+                }
+                foc_sw_configure_kuat_drive_yards_ring = yes
+            }
+        }
+        if = {
+            limit = {
+                exists = event_target:foc_sw_imperial_remnant
+                event_target:foc_sw_imperial_remnant = {
+                    has_country_flag = foc_sw_imperial_remnant_country
+                    NOT = { has_country_flag = foc_starbase_cycle_ir_migration_done }
+                }
+            }
+            event_target:foc_sw_imperial_remnant = {
+                set_country_flag = foc_starbase_cycle_ir_migration_done
+                every_owned_planet = {
+                    limit = {
+                        is_colony = yes
+                        NOT = {
+                            OR = {
+                                has_building = building_foc_sw_fe_civil_nexus
+                                OR = { has_building = building_robot_assembly_plant has_building = building_robot_assembly_complex }
+                            }
+                        }
+                    }
+                    foc_sw_apply_fallen_empire_buildings = yes
+                }
+                every_owned_fleet = {
+                    limit = { has_fleet_flag = foc_sw_imperial_remnant_defense_platform }
+                    destroy_fleet = this
+                }
+                # The independent founding events still establish their bases.
+                # Migration must not override subsequent AI or player decisions.
+                if = {
+                    limit = {
+                        count_owned_ship = { count < 2 limit = { is_ship_class = shipclass_constructor } }
+                        exists = event_target:foc_sw_bastion_system
+                        event_target:foc_sw_bastion_system = { exists = space_owner space_owner = { is_same_value = event_target:foc_sw_imperial_remnant } }
+                    }
+                    event_target:foc_sw_bastion_system = { foc_sw_spawn_imperial_remnant_constructor = yes }
+                }
+                if = {
+                    limit = {
+                        NOT = { has_country_flag = foc_sw_imperial_remnant_colossi_granted }
+                        exists = event_target:foc_sw_bastion_system
+                        event_target:foc_sw_bastion_system = { exists = space_owner space_owner = { is_same_value = event_target:foc_sw_imperial_remnant } }
+                    }
+                    event_target:foc_sw_bastion_system = { foc_sw_spawn_imperial_remnant_colossi = yes }
+                }
+                foc_sw_configure_bilbringi_shipyard_ring = yes
+            }
+        }
+
+        # Wayfinder projects are now granted by the clue-gated monthly event.
+    }
+}
+
+
+# FOC 3.07 old-save migration: install the sustainable economy and rebuild the
+# original scripted colonies with direct-output ancient infrastructure.
+country_event = {
+    id = foc_fallen_war.50
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_sw_scripted_fallen_empire
+        NOT = { has_country_flag = foc_sw_economy_307_initialized }
+    }
+
+    immediate = {
+        add_modifier = { modifier = foc_sw_fallen_empire_economy_core days = -1 }
+
+        if = {
+            limit = { has_country_flag = foc_sw_new_republic_country }
+            add_modifier = { modifier = foc_sw_new_republic_economy_focus days = -1 }
+        }
+        else_if = {
+            limit = { has_country_flag = foc_sw_imperial_remnant_country }
+            add_modifier = { modifier = foc_sw_imperial_remnant_economy_focus days = -1 }
+        }
+
+        if = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_sw_new_republic_awakened
+                    has_country_flag = foc_sw_imperial_remnant_awakened
+                }
+            }
+            add_modifier = { modifier = foc_sw_awakened_fallen_empire_war_economy days = -1 }
+        }
+
+        add_resource = {
+            energy = 500000
+            minerals = 500000
+            food = 250000
+            alloys = 500000
+            consumer_goods = 250000
+            unity = 250000
+            influence = 500
+            volatile_motes = 25000
+            exotic_gases = 25000
+            rare_crystals = 25000
+            sr_zro = 10000
+            sr_dark_matter = 10000
+            sr_living_metal = 10000
+            nanites = 10000
+        }
+
+        every_owned_planet = {
+            limit = {
+                is_colony = yes
+                OR = {
+                    has_carrier_flag = foc_sw_nr_colony
+                    has_carrier_flag = foc_sw_ir_colony
+                }
+            }
+            foc_sw_apply_fallen_empire_buildings = yes
+        }
+
+        set_country_flag = foc_sw_economy_307_initialized
+    }
+}
+
+# Monthly safeguard. Type changes during awakening and save/load order must not
+# strip the permanent economic core or the direct-output colony suite.
+country_event = {
+    id = foc_fallen_war.51
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_sw_scripted_fallen_empire
+    }
+
+    immediate = {
+        if = {
+            limit = { NOT = { has_modifier = foc_sw_fallen_empire_economy_core } }
+            add_modifier = { modifier = foc_sw_fallen_empire_economy_core days = -1 }
+        }
+
+        if = {
+            limit = {
+                has_country_flag = foc_sw_new_republic_country
+                NOT = { has_modifier = foc_sw_new_republic_economy_focus }
+            }
+            add_modifier = { modifier = foc_sw_new_republic_economy_focus days = -1 }
+        }
+        else_if = {
+            limit = {
+                has_country_flag = foc_sw_imperial_remnant_country
+                NOT = { has_modifier = foc_sw_imperial_remnant_economy_focus }
+            }
+            add_modifier = { modifier = foc_sw_imperial_remnant_economy_focus days = -1 }
+        }
+
+        if = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_sw_new_republic_awakened
+                    has_country_flag = foc_sw_imperial_remnant_awakened
+                }
+                NOT = { has_modifier = foc_sw_awakened_fallen_empire_war_economy }
+            }
+            add_modifier = { modifier = foc_sw_awakened_fallen_empire_war_economy days = -1 }
+        }
+
+        every_owned_planet = {
+            limit = {
+                is_colony = yes
+                OR = {
+                    has_carrier_flag = foc_sw_nr_colony
+                    has_carrier_flag = foc_sw_ir_colony
+                }
+                NOT = {
+                    OR = {
+                        has_building = building_foc_sw_fe_civil_nexus
+                        OR = { has_building = building_robot_assembly_plant has_building = building_robot_assembly_complex }
+                    }
+                }
+            }
+            foc_sw_apply_fallen_empire_buildings = yes
+        }
+    }
+}
+
+# FOC 3.10f: flag-based SHIPGIRL-style repair for existing 3.10e saves.
+country_event = {
+    id = foc_fallen_war.53
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_country_type = global_event
+        NOT = { has_global_flag = foc_sw_cluster_hyperlanes_repaired_310f }
+        any_system = { has_star_flag = foc_sw_hosnian_home }
+        any_system = { has_star_flag = foc_sw_coruscant_home }
+        any_system = { has_star_flag = foc_sw_kuat_home }
+        any_system = { has_star_flag = foc_sw_chandrila_home }
+        any_system = { has_star_flag = foc_sw_akiva_home }
+        any_system = { has_star_flag = foc_sw_jakku_home }
+        any_system = { has_star_flag = foc_sw_bastion_home }
+        any_system = { has_star_flag = foc_sw_bilbringi_home }
+        any_system = { has_star_flag = foc_sw_yaga_minor_home }
+        any_system = { has_star_flag = foc_sw_rendili_home }
+    }
+
+    immediate = {
+        random_system = {
+            limit = { has_star_flag = foc_sw_hosnian_home }
+            random_system = { limit = { has_star_flag = foc_sw_coruscant_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+            random_system = { limit = { has_star_flag = foc_sw_kuat_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+            random_system = { limit = { has_star_flag = foc_sw_chandrila_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+            random_system = { limit = { has_star_flag = foc_sw_akiva_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+        }
+        random_system = {
+            limit = { has_star_flag = foc_sw_jakku_home }
+            random_system = { limit = { has_star_flag = foc_sw_bastion_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+        }
+        random_system = {
+            limit = { has_star_flag = foc_sw_bastion_home }
+            random_system = { limit = { has_star_flag = foc_sw_bilbringi_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+        }
+        random_system = {
+            limit = { has_star_flag = foc_sw_bilbringi_home }
+            random_system = { limit = { has_star_flag = foc_sw_yaga_minor_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+        }
+        random_system = {
+            limit = { has_star_flag = foc_sw_yaga_minor_home }
+            random_system = { limit = { has_star_flag = foc_sw_rendili_home } if = { limit = { NOT = { has_hyperlane_to = PREV } } add_hyperlane = { from = this to = PREV } } }
+        }
+        set_global_flag = foc_sw_cluster_hyperlanes_repaired_310f
+        log = "FOC_3.11: internal Fallen Empire hyperlanes created/repaired without a cross-galaxy bridge."
+    }
+}
+
+# FOC 3.11b: rebuild ten combined fleets with ten escorts in every fleet.
+country_event = {
+    id = foc_fallen_war.54
+    hide_window = yes
+    is_triggered_only = yes
+
+    # This event used to destroy and respawn all eight of a Fallen Empire's
+    # line fleets every single month. Its trigger tested
+    # foc_sw_combined_fleets_311b_granted but the immediate never set it, so the
+    # one-time 3.11b grant it was written to be never stopped running: the
+    # ancient navies teleported home and returned to full strength on every
+    # monthly pulse, and grinding one down was impossible by construction.
+    #
+    # It now does two separate jobs. It performs the original grant exactly
+    # once, which still repairs old saves, and after that it replaces losses
+    # only when an empire is down to fewer than three line fleets, from an
+    # allowance of six for the whole game. The ancient powers stay dangerous
+    # and can still be beaten permanently.
+    trigger = {
+        # The Galactic Treaty applies its full eight-fleet packages once in the
+        # origin event. It must never use either this six-use replacement pool
+        # or the unlimited .30/.31 loops above.
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        has_country_flag = foc_sw_scripted_fallen_empire
+        has_global_flag = foc_sw_fallen_empires_ready
+        OR = {
+            has_country_flag = foc_sw_new_republic_country
+            has_country_flag = foc_sw_imperial_remnant_country
+        }
+        OR = {
+            NOT = { has_country_flag = foc_sw_combined_fleets_311b_granted }
+            AND = {
+                check_variable = {
+                    which = foc_sw_fleet_replacements
+                    value < 6
+                }
+                any_owned_planet = { is_colony = yes }
+                count_owned_fleet = {
+                    limit = {
+                        OR = {
+                            has_fleet_flag = foc_sw_new_republic_viscount_fleet
+                            has_fleet_flag = foc_sw_imperial_executor_fleet
+                        }
+                    }
+                    count < 3
+                }
+            }
+        }
+    }
+
+    immediate = {
+        if = {
+            # First pass, or a save from before the packages were granted.
+            limit = { NOT = { has_country_flag = foc_sw_combined_fleets_311b_granted } }
+            set_country_flag = foc_sw_combined_fleets_311b_granted
+            set_variable = { which = foc_sw_fleet_replacements value = 0 }
+            if = {
+                limit = {
+                    has_country_flag = foc_sw_new_republic_country
+                    exists = event_target:foc_sw_hosnian_system
+                    NOT = {
+                        any_owned_fleet = { has_fleet_flag = foc_sw_new_republic_viscount_fleet }
+                    }
+                }
+                every_owned_fleet = {
+                    limit = { has_fleet_flag = foc_sw_new_republic_nebula_fleet }
+                    destroy_fleet = this
+                }
+                event_target:foc_sw_hosnian_system = {
+                    foc_sw_spawn_new_republic_viscount_fleets = yes
+                }
+            }
+            if = {
+                limit = {
+                    has_country_flag = foc_sw_imperial_remnant_country
+                    exists = event_target:foc_sw_bastion_system
+                    NOT = {
+                        any_owned_fleet = { has_fleet_flag = foc_sw_imperial_executor_fleet }
+                    }
+                }
+                every_owned_fleet = {
+                    limit = { has_fleet_flag = foc_sw_imperial_remnant_isd_fleet }
+                    destroy_fleet = this
+                }
+                event_target:foc_sw_bastion_system = {
+                    foc_sw_spawn_imperial_remnant_executor_fleets = yes
+                }
+            }
+        }
+        else = {
+            # Bounded replacement: one fleet, raised at the capital.
+            change_variable = {
+                which = foc_sw_fleet_replacements
+                value = 1
+            }
+            if = {
+                limit = {
+                    has_country_flag = foc_sw_new_republic_country
+                    exists = event_target:foc_sw_hosnian_system
+                }
+                event_target:foc_sw_hosnian_system = {
+                    foc_sw_spawn_new_republic_replacement_fleet = yes
+                }
+            }
+            else_if = {
+                limit = {
+                    has_country_flag = foc_sw_imperial_remnant_country
+                    exists = event_target:foc_sw_bastion_system
+                }
+                event_target:foc_sw_bastion_system = {
+                    foc_sw_spawn_imperial_remnant_replacement_fleet = yes
+                }
+            }
+        }
+    }
+}
+
+# Repair the Akiva-Jakku border only for layouts generated by 3.11a or later.
+country_event = {
+    id = foc_fallen_war.55
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_country_type = global_event
+        has_global_flag = foc_sw_layout_311a_jakku_border
+        NOT = { has_global_flag = foc_sw_jakku_border_lane_verified_311a }
+        any_system = { has_star_flag = foc_sw_akiva_home }
+        any_system = { has_star_flag = foc_sw_jakku_home }
+    }
+
+    immediate = {
+        random_system = {
+            limit = { has_star_flag = foc_sw_jakku_home }
+            random_system = {
+                limit = { has_star_flag = foc_sw_akiva_home }
+                if = {
+                    limit = { NOT = { has_hyperlane_to = PREV } }
+                    add_hyperlane = { from = this to = PREV }
+                }
+            }
+        }
+        set_global_flag = foc_sw_jakku_border_lane_verified_311a
+        log = "FOC_3.11A: verified the New Republic / Imperial Remnant border lane at Jakku."
+    }
+}
+
+# FOC 3.11c: repair megastructures missing from 3.11/3.11a/3.11b saves.
+country_event = {
+    id = foc_fallen_war.56
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_country_type = global_event
+        has_global_flag = foc_sw_fallen_empires_ready
+        NOT = { has_global_flag = foc_sw_megastructures_repaired_311c }
+        any_system = { has_star_flag = foc_sw_kuat_home }
+        any_system = { has_star_flag = foc_sw_hosnian_home }
+        any_system = { has_star_flag = foc_sw_chandrila_home }
+        any_system = { has_star_flag = foc_sw_akiva_home }
+        any_system = { has_star_flag = foc_sw_bastion_home }
+        any_system = { has_star_flag = foc_sw_bilbringi_home }
+        any_system = { has_star_flag = foc_sw_jakku_home }
+    }
+
+    immediate = {
+        random_country = {
+            limit = { has_country_flag = foc_sw_new_republic_country }
+            save_global_event_target_as = foc_sw_new_republic
+        }
+        random_country = {
+            limit = { has_country_flag = foc_sw_imperial_remnant_country }
+            save_global_event_target_as = foc_sw_imperial_remnant
+        }
+
+        random_system = {
+            limit = { has_star_flag = foc_sw_kuat_home }
+            save_global_event_target_as = foc_sw_kuat_system
+            random_system_planet = {
+                limit = { has_planet_flag = foc_sw_kuat_ring_anchor }
+                save_global_event_target_as = foc_sw_kuat
+            }
+        }
+        random_system = {
+            limit = { has_star_flag = foc_sw_hosnian_home }
+            save_global_event_target_as = foc_sw_hosnian_system
+        }
+        random_system = {
+            limit = { has_star_flag = foc_sw_chandrila_home }
+            save_global_event_target_as = foc_sw_chandrila_system
+            random_system_planet = {
+                limit = { has_planet_flag = foc_sw_chandrila_science_anchor }
+                save_global_event_target_as = foc_sw_chandrila_moon
+            }
+        }
+        random_system = {
+            limit = { has_star_flag = foc_sw_akiva_home }
+            save_global_event_target_as = foc_sw_akiva_system
+        }
+        random_system = {
+            limit = { has_star_flag = foc_sw_bastion_home }
+            save_global_event_target_as = foc_sw_bastion_system
+        }
+        random_system = {
+            limit = { has_star_flag = foc_sw_bilbringi_home }
+            save_global_event_target_as = foc_sw_bilbringi_system
+            random_system_planet = {
+                limit = { has_planet_flag = foc_sw_bilbringi_ring_anchor }
+                save_global_event_target_as = foc_sw_bilbringi
+            }
+        }
+        random_system = {
+            limit = { has_star_flag = foc_sw_jakku_home }
+            save_global_event_target_as = foc_sw_jakku_system
+            random_system_planet = {
+                limit = { has_planet_flag = foc_sw_jakku_habitat_anchor }
+                save_global_event_target_as = foc_sw_jakku
+            }
+        }
+
+        if = {
+            limit = { exists = event_target:foc_sw_new_republic }
+            event_target:foc_sw_kuat_system = {
+                if = {
+                    limit = { NOT = { any_system_megastructure = { is_megastructure_type = orbital_ring } } }
+                    if = {
+                        limit = {
+                            exists = event_target:foc_sw_kuat
+                            event_target:foc_sw_kuat = {
+                                has_planet_flag = foc_sw_kuat_ring_anchor
+                                solar_system = { has_star_flag = foc_sw_kuat_home }
+                                NOT = { has_planet_flag = foc_v15_kuat_ring_reward_serviced }
+                                NOT = { exists = orbital_defence }
+                                NOT = { has_carrier_flag = ruined_orbital_ring_planet }
+                                NOT = { has_carrier_flag = megastructure }
+                                NOT = { has_carrier_flag = has_megastructure }
+                                NOT = {
+                                    any_megastructure = {
+                                        OR = {
+                                            is_megastructure_type = orbital_ring
+                                            is_megastructure_type = orbital_ring_ruined
+                                            is_megastructure_type = orbital_ring_restored
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        spawn_megastructure = {
+                            type = orbital_ring
+                            owner = event_target:foc_sw_new_republic
+                            planet = event_target:foc_sw_kuat
+                            init_effect = { set_name = "Kuat Drive Yards Ring" }
+                        }
+                    }
+                }
+                if = {
+                    limit = { NOT = { any_system_megastructure = { is_megastructure_type = mega_shipyard_3 } } }
+                    spawn_megastructure = {
+                        type = mega_shipyard_3
+                        owner = event_target:foc_sw_new_republic
+                        planet = star
+                        orbit_distance = 390
+                        orbit_angle = 110
+                        init_effect = { set_name = "Kuat Drive Yards" }
+                    }
+                }
+            }
+            event_target:foc_sw_hosnian_system = {
+                if = {
+                    limit = { NOT = { any_system_megastructure = { is_megastructure_type = interstellar_assembly_4 } } }
+                    spawn_megastructure = {
+                        type = interstellar_assembly_4
+                        owner = event_target:foc_sw_new_republic
+                        planet = star
+                        orbit_distance = 350
+                        orbit_angle = 210
+                        init_effect = { set_name = "Galactic Senate" }
+                    }
+                }
+            }
+            event_target:foc_sw_chandrila_system = {
+                if = {
+                    limit = { NOT = { any_system_megastructure = { is_megastructure_type = think_tank_4 } } }
+                    spawn_megastructure = {
+                        type = think_tank_4
+                        owner = event_target:foc_sw_new_republic
+                        planet = event_target:foc_sw_chandrila_moon
+                        orbit_distance = 24
+                        orbit_angle = 80
+                        init_effect = { set_name = "Chandrila Science Nexus" }
+                    }
+                }
+            }
+            event_target:foc_sw_akiva_system = {
+                if = {
+                    limit = { NOT = { any_system_megastructure = { is_megastructure_type = quantum_catapult_3 } } }
+                    spawn_megastructure = {
+                        type = quantum_catapult_3
+                        owner = event_target:foc_sw_new_republic
+                        planet = star
+                        orbit_distance = 370
+                        orbit_angle = 300
+                        init_effect = { set_name = "Akiva Quantum Catapult" }
+                    }
+                }
+            }
+        }
+
+        if = {
+            limit = { exists = event_target:foc_sw_imperial_remnant }
+            event_target:foc_sw_bastion_system = {
+                if = {
+                    limit = { NOT = { any_system_megastructure = { is_megastructure_type = strategic_coordination_center_3 } } }
+                    spawn_megastructure = {
+                        type = strategic_coordination_center_3
+                        owner = event_target:foc_sw_imperial_remnant
+                        planet = star
+                        orbit_distance = 340
+                        orbit_angle = 60
+                        init_effect = { set_name = "Bastion Strategic Command" }
+                    }
+                }
+                if = {
+                    limit = { NOT = { any_system_megastructure = { is_megastructure_type = spy_orb_4 } } }
+                    spawn_megastructure = {
+                        type = spy_orb_4
+                        owner = event_target:foc_sw_imperial_remnant
+                        planet = star
+                        orbit_distance = 410
+                        orbit_angle = 220
+                        init_effect = { set_name = "Bastion Sentry Array" }
+                    }
+                }
+            }
+            event_target:foc_sw_bilbringi_system = {
+                if = {
+                    limit = { NOT = { any_system_megastructure = { is_megastructure_type = orbital_ring } } }
+                    spawn_megastructure = {
+                        type = orbital_ring
+                        owner = event_target:foc_sw_imperial_remnant
+                        planet = event_target:foc_sw_bilbringi
+                        init_effect = { set_name = "Bilbringi Shipyards Ring" }
+                    }
+                }
+            }
+            event_target:foc_sw_jakku_system = {
+                if = {
+                    limit = {
+                        OR = {
+                            any_system_megastructure = { is_megastructure_type = habitat_central_complex }
+                            any_system_planet = { is_planet_class = pc_habitat }
+                        }
+                    }
+                    set_star_flag = foc_v173_jakku_habitat_initialized
+                }
+                if = {
+                    limit = { NOT = { has_star_flag = foc_v173_jakku_habitat_initialized } }
+                    spawn_megastructure = {
+                        type = habitat_central_complex
+                        owner = event_target:foc_sw_imperial_remnant
+                        planet = event_target:foc_sw_jakku
+                        init_effect = { set_name = "Jakku Orbital Habitat" }
+                    }
+                    set_star_flag = foc_v173_jakku_habitat_initialized
+                }
+                if = {
+                    limit = { NOT = { any_system_megastructure = { is_megastructure_type = foc_sith_wayfinder_gate } } }
+                    spawn_megastructure = {
+                        type = foc_sith_wayfinder_gate
+                        owner = event_target:foc_sw_imperial_remnant
+                        planet = star
+                        orbit_distance = 230
+                        orbit_angle = 300
+                        init_effect = {
+                            set_name = "NAME_FOC_SITH_WAYFINDER_JAKKU_GATE"
+                            set_megastructure_flag = foc_sith_wayfinder_jakku_gate
+                            save_global_event_target_as = foc_sith_wayfinder_jakku_gate
+                        }
+                    }
+                }
+            }
+        }
+
+        set_global_flag = foc_sw_megastructures_repaired_311c
+        log = "FOC_3.11C: checked and restored all scripted Fallen Empire megastructures."
+    }
+}
+
+# FOC 3.11d: relocate large megastructures from invalid star/moon hosts.
+country_event = {
+    id = foc_fallen_war.57
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_country_type = global_event
+        has_global_flag = foc_sw_fallen_empires_ready
+        NOT = { has_global_flag = foc_sw_megastructure_hosts_repaired_311d }
+        any_system = { has_star_flag = foc_sw_hosnian_home }
+        any_system = { has_star_flag = foc_sw_chandrila_home }
+        any_system = { has_star_flag = foc_sw_bastion_home }
+    }
+
+    immediate = {
+        random_country = { limit = { has_country_flag = foc_sw_new_republic_country } save_global_event_target_as = foc_sw_new_republic }
+        random_country = { limit = { has_country_flag = foc_sw_imperial_remnant_country } save_global_event_target_as = foc_sw_imperial_remnant }
+
+        random_system = {
+            limit = { has_star_flag = foc_sw_hosnian_home }
+            save_global_event_target_as = foc_sw_hosnian_system
+            random_system_planet = {
+                limit = { is_planet_class = pc_barren is_moon = no }
+                save_global_event_target_as = foc_sw_hosnian_assembly_planet
+            }
+        }
+        random_system = {
+            limit = { has_star_flag = foc_sw_chandrila_home }
+            save_global_event_target_as = foc_sw_chandrila_system
+            random_system_planet = {
+                limit = { is_planet_class = pc_barren is_moon = no }
+                save_global_event_target_as = foc_sw_chandrila_science_planet
+            }
+        }
+        random_system = {
+            limit = { has_star_flag = foc_sw_bastion_home }
+            save_global_event_target_as = foc_sw_bastion_system
+            random_system_planet = {
+                limit = { is_planet_class = pc_barren is_moon = no }
+                save_global_event_target_as = foc_sw_bastion_command_planet
+            }
+            random_system_planet = {
+                limit = { is_planet_class = pc_molten is_moon = no }
+                save_global_event_target_as = foc_sw_bastion_sentry_planet
+            }
+        }
+
+        if = {
+            limit = {
+                exists = event_target:foc_sw_new_republic
+                exists = event_target:foc_sw_hosnian_assembly_planet
+                exists = event_target:foc_sw_chandrila_science_planet
+            }
+            event_target:foc_sw_hosnian_system = {
+                every_system_megastructure = { limit = { is_megastructure_type = interstellar_assembly_4 } remove_megastructure = this }
+                spawn_megastructure = {
+                    type = interstellar_assembly_4
+                    owner = event_target:foc_sw_new_republic
+                    planet = event_target:foc_sw_hosnian_assembly_planet
+                    init_effect = { set_name = "Galactic Senate" }
+                }
+            }
+            event_target:foc_sw_chandrila_system = {
+                every_system_megastructure = { limit = { is_megastructure_type = think_tank_4 } remove_megastructure = this }
+                spawn_megastructure = {
+                    type = think_tank_4
+                    owner = event_target:foc_sw_new_republic
+                    planet = event_target:foc_sw_chandrila_science_planet
+                    init_effect = { set_name = "Chandrila Science Nexus" }
+                }
+            }
+        }
+
+        if = {
+            limit = {
+                exists = event_target:foc_sw_imperial_remnant
+                exists = event_target:foc_sw_bastion_command_planet
+                exists = event_target:foc_sw_bastion_sentry_planet
+            }
+            event_target:foc_sw_bastion_system = {
+                every_system_megastructure = { limit = { is_megastructure_type = strategic_coordination_center_3 } remove_megastructure = this }
+                every_system_megastructure = { limit = { is_megastructure_type = spy_orb_4 } remove_megastructure = this }
+                spawn_megastructure = {
+                    type = strategic_coordination_center_3
+                    owner = event_target:foc_sw_imperial_remnant
+                    planet = event_target:foc_sw_bastion_command_planet
+                    init_effect = { set_name = "Bastion Strategic Command" }
+                }
+                spawn_megastructure = {
+                    type = spy_orb_4
+                    owner = event_target:foc_sw_imperial_remnant
+                    planet = event_target:foc_sw_bastion_sentry_planet
+                    init_effect = { set_name = "Bastion Sentry Array" }
+                }
+            }
+        }
+
+        set_global_flag = foc_sw_megastructure_hosts_repaired_311d
+        log = "FOC_3.11D: relocated scripted Fallen Empire megastructures to valid planet hosts."
+    }
+}
+
+# FOC 3.11d: replace old custom Executor fleets with SG's untouched Lusankya design.
+country_event = {
+    id = foc_fallen_war.58
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        # The original 3.11d event never sets its own completion flag and would
+        # therefore delete and recreate all eight Executor fleets every month.
+        # Preserve non-origin behavior as requested, but never run this broken
+        # migration for a Republic-origin Galactic-Treaty successor.
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        has_country_flag = foc_sw_imperial_remnant_country
+        has_global_flag = foc_sw_fallen_empires_ready
+        NOT = { has_country_flag = foc_sw_lusankya_fleets_311d_granted }
+        any_system = { has_star_flag = foc_sw_bastion_home }
+    }
+
+    immediate = {
+        every_owned_fleet = {
+            limit = { has_fleet_flag = foc_sw_imperial_executor_fleet }
+            destroy_fleet = this
+        }
+        if = {
+            limit = { NOT = { exists = event_target:foc_sw_bastion_system } }
+            random_system = { limit = { has_star_flag = foc_sw_bastion_home } save_global_event_target_as = foc_sw_bastion_system }
+        }
+        event_target:foc_sw_bastion_system = { foc_sw_spawn_imperial_remnant_executor_fleets = yes }
+    }
+}
+
+# FOC 3.11e: one-shot repair for saves whose Executor fleets spawned without a
+# flagship because the SG Lusankya design was unavailable at the time.
+country_event = {
+    id = foc_fallen_war.59
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_sw_imperial_remnant_country
+        has_global_flag = foc_sw_fallen_empires_ready
+        NOT = { has_country_flag = foc_sw_lusankya_fleets_311e_verified }
+        any_system = { has_star_flag = foc_sw_bastion_home }
+    }
+
+    immediate = {
+        set_country_flag = foc_sw_lusankya_fleets_311e_verified
+        if = {
+            limit = {
+                any_owned_fleet = {
+                    has_fleet_flag = foc_sw_imperial_executor_fleet
+                    num_ships < 11
+                }
+            }
+            log = "FOC_3.11E: found Executor fleets missing their flagship; rebuilding all ten fleets."
+            every_owned_fleet = {
+                limit = { has_fleet_flag = foc_sw_imperial_executor_fleet }
+                destroy_fleet = this
+            }
+            if = {
+                limit = { NOT = { exists = event_target:foc_sw_bastion_system } }
+                random_system = { limit = { has_star_flag = foc_sw_bastion_home } save_global_event_target_as = foc_sw_bastion_system }
+            }
+            event_target:foc_sw_bastion_system = { foc_sw_spawn_imperial_remnant_executor_fleets = yes }
+        }
+    }
+}
+
+# FOC 3.11m: add the Jakku Star Destroyer Graveyard to old saves and repair the
+# display name of an already-created Jakku wayfinder gate.
+country_event = {
+    id = foc_fallen_war.60
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_country_type = global_event
+        NOT = { has_global_flag = foc_sw_jakku_graveyard_and_gate_names_311m }
+        # This wreckage belongs to the post-Imperial timeline and must not be
+        # retroactively placed on pre-Imperial Republic-origin Jakku.
+        NOT = { has_global_flag = foc_republic_origin_no_jakku_executor_site }
+        any_system = { has_star_flag = foc_sw_jakku_home }
+    }
+
+    immediate = {
+        random_system = {
+            limit = { has_star_flag = foc_sw_jakku_home }
+            random_system_planet = {
+                limit = { has_planet_flag = foc_sw_jakku }
+                if = {
+                    limit = { NOT = { has_deposit = d_foc_sw_jakku_star_destroyer_graveyard } }
+                    add_deposit = d_foc_sw_jakku_star_destroyer_graveyard
+                }
+            }
+            every_system_megastructure = {
+                limit = { is_megastructure_type = foc_sith_wayfinder_gate }
+                set_name = "NAME_FOC_SITH_WAYFINDER_JAKKU_GATE"
+            }
+        }
+        set_global_flag = foc_sw_jakku_graveyard_and_gate_names_311m
+        log = "FOC_3.11M: added Jakku's Star Destroyer Graveyard and repaired the Jakku wayfinder gate name."
+    }
+}
+
+# FOC 3.11n: establish the Executor wreckage dig site on Jakku. The planet flag
+# prevents the site from being recreated after completion; the global flag makes
+# the migration a one-shot operation for both new games and old saves.
+country_event = {
+    id = foc_fallen_war.61
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_country_type = global_event
+        NOT = { has_global_flag = foc_sw_jakku_executor_site_311n }
+        NOT = { has_global_flag = foc_republic_origin_no_jakku_executor_site }
+        any_system = {
+            has_star_flag = foc_sw_jakku_home
+            any_system_planet = { has_planet_flag = foc_sw_jakku }
+        }
+    }
+
+    immediate = {
+        random_system = {
+            limit = { has_star_flag = foc_sw_jakku_home }
+            random_system_planet = {
+                limit = { has_planet_flag = foc_sw_jakku }
+                if = {
+                    limit = {
+                        NOT = { has_planet_flag = foc_jakku_executor_site_created }
+                    }
+                    create_archaeological_site = foc_jakku_executor_wreckage_site
+                    set_planet_flag = foc_jakku_executor_site_created
+                }
+            }
+        }
+        set_global_flag = foc_sw_jakku_executor_site_311n
+        log = "FOC_3.11N: established the Executor wreckage archaeology site on Jakku."
+    }
+}
+
+# FOC 3.10e: recover saves created while the Fallen Empire event namespace failed to load.
+# Runs only on the global event country and only when neither countries nor cluster exist.
+country_event = {
+    id = foc_fallen_war.52
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_country_type = global_event
+        NOT = { has_global_flag = foc_republic_origin_bootstrap }
+        NOT = { has_global_flag = foc_sw_fallen_empires_ready }
+        NOT = { any_country = { has_country_flag = foc_sw_new_republic_country } }
+        NOT = { any_country = { has_country_flag = foc_sw_imperial_remnant_country } }
+        NOT = { any_system = { has_star_flag = foc_sw_hosnian_home } }
+        NOT = { any_system = { has_star_flag = foc_sw_bastion_home } }
+    }
+
+    immediate = {
+        remove_global_flag = foc_sw_fallen_empires_created
+        remove_global_flag = foc_sw_fallen_empires_initializing
+        log = "FOC_3.10E: recovering a save with no scripted Fallen Empires; restarting generation."
+        country_event = { id = foc_fallen_war.1 }
+    }
+}
+
+# FOC 3.11r: once this instance of the scripted War in Heaven reaches peace, it
+# is not forcibly restarted. If both Fallen Empires still have colonies, begin
+# the First Order crisis and mark the
+# Imperial Remnant for absorption as soon as the First Order finishes spawning.
+# The monthly on-action is a save/load fallback for missed on_war_ended calls.
+country_event = {
+    id = foc_fallen_war.62
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        OR = {
+            foc_story_timeline_start_due = yes
+            has_global_flag = fop_origin_treaty_epoch
+        }
+        has_country_flag = foc_sw_new_republic_country
+        has_global_flag = foc_sw_war_in_heaven_started
+        any_owned_planet = { is_colony = yes }
+        exists = event_target:foc_sw_imperial_remnant
+        event_target:foc_sw_imperial_remnant = {
+            has_country_flag = foc_sw_imperial_remnant_country
+            any_owned_planet = { is_colony = yes }
+        }
+        NOT = { is_at_war_with = event_target:foc_sw_imperial_remnant }
+        NOT = { has_global_flag = foc_khan_crisis_started }
+        NOT = { has_global_flag = foc_khan_crisis_spawn_scheduled }
+        NOT = { has_global_flag = foc_khan_crisis_disabled }
+        NOT = {
+            any_playable_country = {
+                is_ai = no
+                OR = {
+                    has_origin = origin_fop_first_order
+                    has_country_flag = foc_republic_origin_player_empire
+                    has_country_flag = foc_republic_origin_player_imperial_remnant
+                    has_country_flag = foc_republic_origin_empire_crisis
+                    has_country_flag = fop_player_first_order
+                    has_country_flag = foc_republic_origin_became_first_order
+                    has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+                }
+            }
+        }
+    }
+
+    immediate = {
+        remove_global_flag = foc_v112_treaty_wih_five_year_watch
+        remove_global_flag = foc_v112_treaty_wih_five_year_grace
+        set_global_flag = foc_sw_war_in_heaven_ended_in_armistice
+        set_global_flag = foc_sw_first_order_absorb_imperial_remnant_pending
+        set_timed_global_flag = { flag = foc_khan_crisis_spawn_scheduled days = 10 }
+        country_event = { id = foc_khan.2 days = 1 }
+        log = "FOC_3.11R: the War in Heaven ended; First Order succession and Imperial Remnant absorption were scheduled."
+    }
+}
+
+# The engine supplies Root = loser and From = main winner when a war ends.
+# Reacquire stable global targets, then invoke the peaceful succession handler
+# one day later after the finished war object leaves the engine cleanup phase.
+country_event = {
+    id = foc_fallen_war.63
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_sw_war_in_heaven_started
+        # 3.11w-fix: this event can arrive without a FROM country (engine
+        # cleanup or rescheduled calls); guard before switching scope.
+        exists = from
+        any_owned_planet = { is_colony = yes }
+        from = { any_owned_planet = { is_colony = yes } }
+        OR = {
+            AND = {
+                has_country_flag = foc_sw_new_republic_country
+                from = { has_country_flag = foc_sw_imperial_remnant_country }
+            }
+            AND = {
+                has_country_flag = foc_sw_imperial_remnant_country
+                from = { has_country_flag = foc_sw_new_republic_country }
+            }
+        }
+    }
+
+    immediate = {
+        if = {
+            limit = { has_country_flag = foc_sw_new_republic_country }
+            save_global_event_target_as = foc_sw_new_republic
+            from = { save_global_event_target_as = foc_sw_imperial_remnant }
+            country_event = { id = foc_fallen_war.62 days = 1 }
+        }
+        else = {
+            save_global_event_target_as = foc_sw_imperial_remnant
+            from = {
+                save_global_event_target_as = foc_sw_new_republic
+                country_event = { id = foc_fallen_war.62 days = 1 }
+            }
+        }
+    }
+}
+
+# FOC 3.11r topology/name migration. Coruscant receives an independent lane to
+# the ordinary galaxy, while the Imperial Remnant cluster itself still exits
+# only through Jakku. The same pass renames Jakku's special gate in old saves.
+country_event = {
+    id = foc_fallen_war.64
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_country_type = global_event
+        has_global_flag = foc_sw_fallen_empires_ready
+        OR = {
+            NOT = { has_global_flag = foc_sw_coruscant_galaxy_lane_verified_311r }
+            NOT = { has_global_flag = foc_sw_jakku_unknown_regions_gate_name_311r }
+        }
+    }
+
+    immediate = {
+        if = {
+            limit = { NOT = { exists = event_target:foc_sw_coruscant_system } }
+            random_system = {
+                limit = { has_star_flag = foc_sw_coruscant_home }
+                save_global_event_target_as = foc_sw_coruscant_system
+            }
+        }
+        if = {
+            limit = { NOT = { exists = event_target:foc_sw_jakku_system } }
+            random_system = {
+                limit = { has_star_flag = foc_sw_jakku_home }
+                save_global_event_target_as = foc_sw_jakku_system
+            }
+        }
+
+        if = {
+            limit = {
+                NOT = { has_global_flag = foc_sw_coruscant_galaxy_lane_verified_311r }
+                exists = event_target:foc_sw_coruscant_system
+            }
+
+            if = {
+                limit = {
+                    any_system = {
+                        NOR = {
+                            has_star_flag = foc_sw_new_republic_cluster
+                            has_star_flag = foc_sw_imperial_remnant_cluster
+                        }
+                        has_hyperlane_to = event_target:foc_sw_coruscant_system
+                    }
+                }
+                random_system = {
+                    limit = {
+                        NOR = {
+                            has_star_flag = foc_sw_new_republic_cluster
+                            has_star_flag = foc_sw_imperial_remnant_cluster
+                        }
+                        has_hyperlane_to = event_target:foc_sw_coruscant_system
+                    }
+                    set_star_flag = foc_sw_coruscant_gateway_neighbor
+                }
+            }
+            else = {
+                event_target:foc_sw_coruscant_system = {
+                    random_neighbor_system_euclidean = {
+                        limit = {
+                            NOR = {
+                                has_star_flag = foc_sw_new_republic_cluster
+                                has_star_flag = foc_sw_imperial_remnant_cluster
+                            }
+                            NOT = { has_hyperlane_to = PREV }
+                            any_neighbor_system_euclidean = { has_hyperlane_to = PREV }
+                        }
+                        set_star_flag = foc_sw_coruscant_gateway_neighbor
+                        add_hyperlane = { from = this to = PREV }
+                    }
+                }
+            }
+
+            if = {
+                limit = {
+                    any_system = {
+                        has_star_flag = foc_sw_coruscant_gateway_neighbor
+                        has_hyperlane_to = event_target:foc_sw_coruscant_system
+                    }
+                }
+                set_global_flag = foc_sw_coruscant_galaxy_lane_verified_311r
+                log = "FOC_3.11R: Coruscant now has an independent hyperlane connection to the ordinary galaxy."
+            }
+        }
+
+        if = {
+            limit = {
+                NOT = { has_global_flag = foc_sw_jakku_unknown_regions_gate_name_311r }
+                exists = event_target:foc_sw_jakku_system
+                event_target:foc_sw_jakku_system = {
+                    any_system_megastructure = { is_megastructure_type = foc_sith_wayfinder_gate }
+                }
+            }
+            event_target:foc_sw_jakku_system = {
+                every_system_megastructure = {
+                    limit = { is_megastructure_type = foc_sith_wayfinder_gate }
+                    set_name = "NAME_FOC_SITH_WAYFINDER_JAKKU_GATE"
+                }
+            }
+            set_global_flag = foc_sw_jakku_unknown_regions_gate_name_311r
+            log = "FOC_3.11R: renamed Jakku's special gate to the Unknown Regions Gateway."
+        }
+    }
+}
+
+
+# FOC 3.11v old-save migration for New Republic Yavin. New games already spawn
+# and claim this sixth system during the normal Fallen Empire batch.
+country_event = {
+    id = foc_fallen_war.65
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_country_type = global_event
+        has_global_flag = foc_sw_fallen_empires_ready
+        NOT = { has_global_flag = foc_sw_yavin_new_republic_ready_311v }
+    }
+
+    immediate = {
+        if = {
+            limit = { NOT = { exists = event_target:foc_sw_new_republic } }
+            random_country = {
+                limit = { has_country_flag = foc_sw_new_republic_country }
+                save_global_event_target_as = foc_sw_new_republic
+            }
+        }
+        if = {
+            limit = { NOT = { exists = event_target:foc_sw_hosnian_system } }
+            random_system = {
+                limit = { has_star_flag = foc_sw_hosnian_home }
+                save_global_event_target_as = foc_sw_hosnian_system
+            }
+        }
+        if = {
+            limit = { NOT = { exists = event_target:foc_sw_yavin_system } }
+            random_system = {
+                limit = { has_star_flag = foc_sw_yavin_home }
+                save_global_event_target_as = foc_sw_yavin_system
+                random_system_planet = {
+                    limit = { has_planet_flag = foc_sw_yavin_iv }
+                    save_global_event_target_as = foc_sw_yavin_iv
+                }
+            }
+        }
+
+        if = {
+            limit = {
+                NOT = { exists = event_target:foc_sw_yavin_system }
+                NOT = { has_global_flag = foc_sw_yavin_spawn_preparing_311v }
+                NOT = {
+                    any_system = {
+                        has_star_flag = foc_khan_rebel_home
+                        NOT = { has_star_flag = foc_khan_rebel_dqar_home }
+                    }
+                }
+                exists = event_target:foc_sw_hosnian_system
+            }
+            set_global_flag = foc_sw_yavin_spawn_preparing_311v
+            event_target:foc_sw_hosnian_system = {
+                spawn_system = {
+                    hyperlane = yes
+                    is_discovered = no
+                    min_distance = 20
+                    max_distance = 30
+                    initializer = foc_sw_yavin_system
+                }
+            }
+        }
+
+        if = {
+            limit = {
+                exists = event_target:foc_sw_yavin_system
+                exists = event_target:foc_sw_new_republic
+            }
+            event_target:foc_sw_yavin_system = {
+                foc_sw_claim_new_republic_system = yes
+                if = {
+                    limit = { NOT = { exists = event_target:foc_sw_yavin_iv } }
+                    random_system_planet = {
+                        limit = { has_planet_flag = foc_sw_yavin_iv }
+                        save_global_event_target_as = foc_sw_yavin_iv
+                    }
+                }
+            }
+            if = {
+                limit = { exists = event_target:foc_sw_yavin_iv }
+                event_target:foc_sw_yavin_iv = {
+                    if = {
+                        limit = { NOT = { is_colony = yes } }
+                        foc_sw_prepare_new_republic_colony = yes
+                    }
+                    else = { set_owner = event_target:foc_sw_new_republic }
+                }
+            }
+            remove_global_flag = foc_sw_yavin_spawn_preparing_311v
+            set_global_flag = foc_sw_yavin_new_republic_ready_311v
+            log = "FOC_3.11V: New Republic Yavin is present and owned by the New Republic."
+        }
+    }
+}
+
+# FOC 3.13c: integrate the Immobilizer 418 and migrate old flagship designs.
+# The keeper only touches the two locked Imperial line-fleet types; engineering,
+# orbital-defense and Death Star fleets remain unchanged.
+country_event = {
+    id = foc_fallen_war.66
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_sw_fallen_empires_ready
+        OR = {
+            AND = {
+                has_country_flag = foc_sw_new_republic_country
+                NOT = { has_country_flag = foc_sw_interdiction_flagships_313c_migrated }
+            }
+            AND = {
+                has_country_flag = foc_sw_imperial_remnant_country
+                OR = {
+                    NOT = { has_country_flag = foc_sw_interdiction_flagships_313c_migrated }
+                    any_owned_fleet = {
+                        OR = {
+                            has_fleet_flag = foc_sw_imperial_executor_fleet
+                            has_fleet_flag = foc_sw_imperial_remnant_isd_fleet
+                        }
+                        NOT = { any_owned_ship = { OR = { is_ship_size = foc_immobilizer418 is_ship_size = foc_immobilizer418_foc_lowest } } }
+                    }
+                }
+            }
+        }
+    }
+
+    immediate = {
+        if = {
+            limit = {
+                has_country_flag = foc_sw_new_republic_country
+                NOT = { has_country_flag = foc_sw_interdiction_flagships_313c_migrated }
+            }
+            every_owned_ship = {
+                limit = { OR = { is_ship_size = foc_rebel_mc158 is_ship_size = foc_rebel_mc158_foc_lowest } }
+                
+                # V15 full-armor prerequisite: foc_v15_defense_4d961bb8fba5.
+                owner = {
+                    if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+                }
+                set_ship_design = { design = NAME_FOC_REBEL_MC158 }
+            }
+            set_country_flag = foc_sw_interdiction_flagships_313c_migrated
+        }
+
+        if = {
+            limit = { has_country_flag = foc_sw_imperial_remnant_country }
+            if = {
+                limit = { NOT = { has_country_flag = foc_sw_interdiction_flagships_313c_migrated } }
+                every_owned_ship = {
+                    limit = { OR = { is_ship_size = foc_sw_lusankya is_ship_size = foc_sw_lusankya_foc_lowest } }
+                    
+                    # V15 full-armor prerequisite: foc_v15_defense_1012457d2ac3.
+                    owner = {
+                        if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+                    }
+                    set_ship_design = { design = NAME_FOC_SW_LUSANKYA }
+                }
+                set_country_flag = foc_sw_interdiction_flagships_313c_migrated
+            }
+            every_owned_fleet = {
+                limit = {
+                    OR = {
+                        has_fleet_flag = foc_sw_imperial_executor_fleet
+                        has_fleet_flag = foc_sw_imperial_remnant_isd_fleet
+                    }
+                    NOT = { any_owned_ship = { OR = { is_ship_size = foc_immobilizer418 is_ship_size = foc_immobilizer418_foc_lowest } } }
+                }
+                foc_sw_ensure_imperial_immobilizer418 = yes
+            }
+        }
+    }
+}

@@ -1,0 +1,52 @@
+# V232n: targeted override from the user-provided 4.4 vanilla source.
+# A generated alien species elsewhere must not seed nascent pops on human D'Qar.
+# Legitimate nascent starts retain the original 200-pop split and species rights.
+make_nascent_starting_pops = {
+	if = { # Setting 200 pops to be presapient if you have the trait
+		limit = {
+			exists = owner
+			any_owned_pop_group = { has_trait = trait_nascent_stage is_sapient = yes }
+			NOT = { owner = { has_country_flag = generated_starting_nascent_stage_pops } }
+		}
+		weighted_random_owned_pop_group = {
+			limit = {
+				has_trait = trait_nascent_stage
+				is_sapient = yes
+			}
+			species = {
+				save_event_target_as = nascent_stage_source_species
+			}
+			save_event_target_as = nascent_stage_source_pop_group
+			modify_species = {
+				species = species
+				add_trait = trait_presapient_stage
+				inherit_parent_rights = yes
+				sapient = no
+				change_scoped_species = no
+				effect = {
+					save_event_target_as = nascent_stage_species@event_target:nascent_stage_source_species
+				}
+			}
+		}
+        if = {
+            limit = {
+                exists = event_target:nascent_stage_source_pop_group
+                exists = event_target:nascent_stage_source_species
+                exists = event_target:nascent_stage_species@event_target:nascent_stage_source_species
+            }
+            create_pop_group = {
+                pop_group = event_target:nascent_stage_source_pop_group
+                species = event_target:nascent_stage_species@event_target:nascent_stage_source_species
+                size = 0
+                effect = {
+                    transfer_pop_amount = {
+                        source = event_target:nascent_stage_source_pop_group
+                        target = this
+                        amount = 200
+                    }
+                }
+            }
+            owner = { set_country_flag = generated_starting_nascent_stage_pops }
+        }
+    }
+}

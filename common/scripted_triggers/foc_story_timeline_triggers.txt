@@ -1,0 +1,101 @@
+# V95 unified Star Wars story-start gate.
+# 2200 is default. 2250 / 2300 / 2400 correspond to 50 / 100 / 200 years
+# after the standard Stellaris 2200 start. Legacy V93/V94 Naboo flags are
+# accepted so existing saves continue without migration.
+
+foc_story_timeline_start_due = {
+    OR = {
+        has_global_flag = foc_story_timeline_start_2200
+        AND = {
+            has_global_flag = foc_story_timeline_start_2250
+            years_passed >= 50
+        }
+        AND = {
+            has_global_flag = foc_story_timeline_start_2300
+            years_passed >= 100
+        }
+        AND = {
+            has_global_flag = foc_story_timeline_start_2400
+            years_passed >= 200
+        }
+
+        # V94 compatibility.
+        has_global_flag = foc_story_timeline_naboo_2200
+        has_global_flag = foc_story_timeline_naboo_immediate
+        has_global_flag = foc_story_timeline_naboo_2150
+        AND = {
+            has_global_flag = foc_story_timeline_naboo_2250
+            years_passed >= 50
+        }
+        AND = {
+            has_global_flag = foc_story_timeline_naboo_2300
+            years_passed >= 100
+        }
+        AND = {
+            has_global_flag = foc_story_timeline_naboo_2400
+            years_passed >= 200
+        }
+
+        # Old saves with no chronology selection keep the historical 2200
+        # behavior, but never release while the new-game settings window is open.
+        AND = {
+            NOR = {
+                has_global_flag = foc_story_timeline_start_2200
+                has_global_flag = foc_story_timeline_start_2250
+                has_global_flag = foc_story_timeline_start_2300
+                has_global_flag = foc_story_timeline_start_2400
+                has_global_flag = foc_story_timeline_naboo_immediate
+                has_global_flag = foc_story_timeline_naboo_2150
+                has_global_flag = foc_story_timeline_naboo_2200
+                has_global_flag = foc_story_timeline_naboo_2250
+                has_global_flag = foc_story_timeline_naboo_2300
+                has_global_flag = foc_story_timeline_naboo_2400
+            }
+            NOT = {
+                any_country = {
+                    is_ai = no
+                    has_country_flag = foc_khan_start_settings_active_322
+                }
+            }
+        }
+    }
+}
+
+
+# V112: normal origins and the playable First Order origin enter the scripted
+# War in Heaven sixty years after the selected story-start point. The existing
+# 2200/2250/2300/2400 controller therefore delays the war by the same 0/50/100/200 years.
+foc_story_war_in_heaven_due = {
+    OR = {
+        AND = { has_global_flag = foc_story_timeline_start_2200 years_passed >= 60 }
+        AND = { has_global_flag = foc_story_timeline_start_2250 years_passed >= 110 }
+        AND = { has_global_flag = foc_story_timeline_start_2300 years_passed >= 160 }
+        AND = { has_global_flag = foc_story_timeline_start_2400 years_passed >= 260 }
+
+        # Legacy chronology flags.
+        AND = { has_global_flag = foc_story_timeline_naboo_2200 years_passed >= 60 }
+        AND = { has_global_flag = foc_story_timeline_naboo_immediate years_passed >= 60 }
+        AND = { has_global_flag = foc_story_timeline_naboo_2150 years_passed >= 60 }
+        AND = { has_global_flag = foc_story_timeline_naboo_2250 years_passed >= 110 }
+        AND = { has_global_flag = foc_story_timeline_naboo_2300 years_passed >= 160 }
+        AND = { has_global_flag = foc_story_timeline_naboo_2400 years_passed >= 260 }
+
+        # Old saves with no selector keep 2200 as the effective story start.
+        AND = {
+            years_passed >= 60
+            NOR = {
+                has_global_flag = foc_story_timeline_start_2200
+                has_global_flag = foc_story_timeline_start_2250
+                has_global_flag = foc_story_timeline_start_2300
+                has_global_flag = foc_story_timeline_start_2400
+                has_global_flag = foc_story_timeline_naboo_immediate
+                has_global_flag = foc_story_timeline_naboo_2150
+                has_global_flag = foc_story_timeline_naboo_2200
+                has_global_flag = foc_story_timeline_naboo_2250
+                has_global_flag = foc_story_timeline_naboo_2300
+                has_global_flag = foc_story_timeline_naboo_2400
+            }
+            NOT = { any_country = { is_ai = no has_country_flag = foc_khan_start_settings_active_322 } }
+        }
+    }
+}

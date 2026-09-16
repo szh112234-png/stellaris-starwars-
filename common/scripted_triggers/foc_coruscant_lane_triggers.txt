@@ -1,0 +1,19 @@
+# 3.11w: a valid ordinary main-galaxy endpoint for Coruscant's new hyperlane.
+# Scope: system.
+foc_coruscant_lane_valid_target_311w = {
+    # Must already be part of the connected hyperlane web.
+    any_neighbor_system = { always = yes }
+    # Not the Jakku gateway hub: the lane must land on a regular galaxy system.
+    NOT = { has_star_flag = foc_sw_jakku_home }
+    # Never one of the scripted Fallen Empire cluster systems.
+    NOT = { has_star_flag = foc_sw_new_republic_cluster }
+    NOT = { has_star_flag = foc_sw_imperial_remnant_cluster }
+    # Never the deliberately isolated crisis homes.
+    NOT = { has_star_flag = foc_khan_ilum_home }
+    NOT = { has_star_flag = foc_khan_exegol_home }
+    # Never the staged Rebel base systems.
+    NOT = { has_star_flag = foc_khan_rebel_home }
+    NOT = { has_star_flag = foc_khan_rebel_dqar_home }
+    NOT = { has_star_flag = foc_khan_rebel_crait_home }
+    NOT = { has_star_flag = foc_khan_rebel_ajan_kloss_home }
+}

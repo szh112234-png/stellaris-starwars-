@@ -1,0 +1,393 @@
+namespace = foc_v212_story
+
+# =============================================================================
+# Galactic-Civil-War character controller
+# =============================================================================
+# New games receive their clocks synchronously from the war-start effect.  This
+# monthly pass also repairs old saves and executes the event-driven milestones.
+country_event = {
+    id = foc_v212_story.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_republic_origin_empire_war_active
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        OR = {
+            has_country_flag = foc_republic_origin_imperial_rebel_country
+            has_country_flag = foc_republic_origin_rebel_alliance_country
+            AND = {
+                has_country_flag = foc_khan_rebel_alliance_country
+                NOT = { has_country_flag = foc_khan_first_order_resistance_country }
+                NOT = { has_country_flag = foc_republic_origin_post_treaty_rebel_country }
+            }
+        }
+    }
+
+    immediate = {
+        foc_v212_create_imperial_rebel_high_command = yes
+
+        if = {
+            limit = { NOT = { has_global_flag = foc_v212_gcw_character_clock_started } }
+            foc_v212_start_gcw_character_clock = yes
+        }
+
+        # Old-save fallback when the original clock-owning Rebel country was
+        # absorbed or deleted before V212 could preserve its country flags.
+        if = {
+            limit = {
+                has_global_flag = foc_v212_gcw_character_clock_started
+                NOT = { any_country = { has_country_flag = foc_v212_gcw_character_clock_owner } }
+            }
+            set_country_flag = foc_v212_gcw_character_clock_owner
+            set_timed_country_flag = { flag = foc_v212_wait_luke_training_19y days = 6840 }
+            country_event = { id = foc_v212_story.11 days = 6840 }
+        }
+
+        # v17.10: rescue follows the Scarif thirty-day gate, not the old ten-year clock.
+        if = {
+            limit = {
+                has_country_flag = foc_v212_gcw_character_clock_owner
+                foc_v1710_scarif_month_elapsed = yes
+                NOT = { has_global_flag = foc_v1710_leia_rescue_completed }
+                NOT = { has_global_flag = foc_v212_obiwan_force_ghost }
+            }
+            foc_v212_obiwan_rescues_leia = yes
+        }
+
+        # +19 years OR completed Death Star I, whichever comes first.
+        if = {
+            limit = {
+                NOT = { has_global_flag = foc_v212_luke_joined_imperial_rebels }
+                OR = {
+                    AND = {
+                        has_country_flag = foc_v212_gcw_character_clock_owner
+                        NOT = { has_country_flag = foc_v212_wait_luke_training_19y }
+                    }
+                    AND = {
+                        exists = event_target:foc_republic_origin_empire
+                        event_target:foc_republic_origin_empire = {
+                            has_country_flag = foc_republic_origin_death_star_one_built
+                        }
+                    }
+                    any_country = {
+                        has_country_flag = foc_republic_origin_empire_country
+                        has_country_flag = foc_republic_origin_death_star_one_built
+                    }
+                }
+            }
+            foc_v212_obiwan_trains_luke = yes
+        }
+
+        # v17.11: independent +10-year recruitment; never grants rescue rewards.
+        # On old saves without a recoverable deadline, start one new conservative clock.
+        foc_v1711_start_leia_join_clock = yes
+        if = {
+            limit = {
+                foc_v1711_leia_join_time_ready = yes
+                NOT = { has_global_flag = foc_v212_leia_joined_imperial_rebels }
+            }
+            foc_v212_leia_joins_after_alderaan = yes
+        }
+
+        # Character exits are also repaired from their authoritative global
+        # battle states, so old saves converge without recreating dead leaders.
+        if = {
+            limit = {
+                has_global_flag = foc_republic_origin_death_star_one_destroyed
+                NOT = { has_global_flag = foc_v212_tarkin_died_with_death_star_one }
+            }
+            foc_v212_resolve_death_star_one_character_fates = yes
+        }
+        if = {
+            limit = {
+                OR = {
+                    has_global_flag = foc_republic_origin_scarif_weakness_obtained
+                    has_global_flag = foc_canon_scarif_battle_completed
+                }
+                NOT = { has_global_flag = foc_v212_raddus_died_at_scarif }
+            }
+            foc_v212_kill_raddus_at_scarif = yes
+        }
+        if = {
+            limit = {
+                has_global_flag = foc_v212_kylo_attacked_raddus
+                NOT = { has_global_flag = foc_v212_ackbar_died_on_raddus }
+            }
+            foc_v212_kill_ackbar_on_raddus = yes
+        }
+    }
+}
+
+# Exact +10-year dispatch. The timed country flag and monthly controller remain
+# as old-save / deleted-country fallbacks, but new games resolve on this day.
+country_event = {
+    id = foc_v212_story.10
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { foc_v1711_leia_join_time_ready = yes }
+    immediate = { country_event = { id = foc_v1711.20 } }
+}
+
+# Exact +19-year dispatch. Death Star I completion may already have recruited
+# Luke; in that case this delayed event safely does nothing.
+country_event = {
+    id = foc_v212_story.11
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_v212_gcw_character_clock_owner
+        has_global_flag = foc_republic_origin_empire_war_active
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        NOT = { has_global_flag = foc_v212_luke_joined_imperial_rebels }
+    }
+
+    immediate = { foc_v212_obiwan_trains_luke = yes }
+}
+
+# Empire-side old-save fallback for a Death Star I already lost before V212.
+country_event = {
+    id = foc_v212_story.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_republic_origin_empire_country
+        has_global_flag = foc_republic_origin_death_star_one_destroyed
+        NOT = { has_global_flag = foc_v212_tarkin_died_with_death_star_one }
+    }
+
+    immediate = { foc_v212_resolve_death_star_one_character_fates = yes }
+}
+
+# Luke's recruitment announcement. Mechanical creation has already completed on
+# the canonical Rebel country before this news window is dispatched.
+country_event = {
+    id = foc_v212_story.3
+    title = foc_v212_story.3.name
+    desc = foc_v212_story.3.desc
+    picture = GFX_foc_saga_jedi_training
+    location = event_target:foc_swmap_tatooine_system
+    is_triggered_only = yes
+    option = { name = foc_v212_story.3.a }
+}
+
+# Leia's recruitment announcement at the ten-year civil-war milestone.
+country_event = {
+    id = foc_v212_story.4
+    title = foc_v212_story.4.name
+    desc = foc_v212_story.4.desc
+    picture = GFX_foc_saga_leia
+    is_triggered_only = yes
+    option = { name = foc_v212_story.4.a }
+}
+
+# Direct ship-destruction hook. Tarkin exits on the game tick that
+# Death Star I is destroyed; Obi-Wan belongs to the earlier rescue. The existing
+# monthly Death Star controller still owns all phase/reward mechanics.
+ship_event = {
+    id = foc_v212_story.30
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_ship_flag = foc_republic_origin_death_star_one
+        NOT = { has_global_flag = foc_v212_tarkin_died_with_death_star_one }
+    }
+
+    immediate = { foc_v212_resolve_death_star_one_character_fates = yes }
+}
+
+# =============================================================================
+# Raddus / First Order first-encounter detector
+# =============================================================================
+# Direct fleet entry hook. ROOT = entering fleet; FROM = entered system.
+fleet_event = {
+    id = foc_v212_story.20
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        NOT = { has_global_flag = foc_v212_kylo_attacked_raddus }
+        from = {
+            any_fleet_in_system = {
+                controller = { has_country_flag = foc_khan_first_order_country }
+            }
+            any_fleet_in_system = {
+                any_owned_ship = {
+                    is_disabled = no
+                    OR = {
+                        has_ship_flag = foc_khan_rebel_home_arkship
+                        is_ship_size = foc_rebel_home_arkship_tier_3
+                        is_ship_size = foc_rebel_home_arkship_tier_3_foc_lowest
+                    }
+                }
+                controller = { NOT = { has_country_flag = foc_khan_first_order_country } }
+            }
+        }
+    }
+
+    immediate = {
+        from = { save_global_event_target_as = foc_v212_raddus_encounter_system }
+        from = {
+            random_fleet_in_system = {
+                limit = { controller = { has_country_flag = foc_khan_first_order_country } }
+                controller = { country_event = { id = foc_v212_story.22 } }
+            }
+        }
+    }
+}
+
+# Monthly fallback for teleports/spawns that do not execute the fleet-entry hook.
+country_event = {
+    id = foc_v212_story.21
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_khan_first_order_country
+        NOT = { has_global_flag = foc_v212_kylo_attacked_raddus }
+        any_system = {
+            any_fleet_in_system = {
+                controller = { has_country_flag = foc_khan_first_order_country }
+            }
+            any_fleet_in_system = {
+                any_owned_ship = {
+                    is_disabled = no
+                    OR = {
+                        has_ship_flag = foc_khan_rebel_home_arkship
+                        is_ship_size = foc_rebel_home_arkship_tier_3
+                        is_ship_size = foc_rebel_home_arkship_tier_3_foc_lowest
+                    }
+                }
+                controller = { is_hostile = root }
+            }
+        }
+    }
+
+    immediate = {
+        random_system = {
+            limit = {
+                any_fleet_in_system = {
+                    controller = { has_country_flag = foc_khan_first_order_country }
+                }
+                any_fleet_in_system = {
+                    any_owned_ship = {
+                        is_disabled = no
+                        OR = {
+                            has_ship_flag = foc_khan_rebel_home_arkship
+                            is_ship_size = foc_rebel_home_arkship_tier_3
+                            is_ship_size = foc_rebel_home_arkship_tier_3_foc_lowest
+                        }
+                    }
+                    controller = { is_hostile = root }
+                }
+            }
+            save_global_event_target_as = foc_v212_raddus_encounter_system
+        }
+        country_event = { id = foc_v212_story.22 }
+    }
+}
+
+# First Order country scope. Resolve the bridge strike only after verifying that
+# a hostile Raddus and a First Order fleet actually share the saved system.
+country_event = {
+    id = foc_v212_story.22
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_khan_first_order_country
+        NOT = { has_global_flag = foc_v212_kylo_attacked_raddus }
+        exists = event_target:foc_v212_raddus_encounter_system
+        event_target:foc_v212_raddus_encounter_system = {
+            any_fleet_in_system = {
+                controller = { has_country_flag = foc_khan_first_order_country }
+            }
+            any_fleet_in_system = {
+                any_owned_ship = {
+                    is_disabled = no
+                    OR = {
+                        has_ship_flag = foc_khan_rebel_home_arkship
+                        is_ship_size = foc_rebel_home_arkship_tier_3
+                        is_ship_size = foc_rebel_home_arkship_tier_3_foc_lowest
+                    }
+                }
+                controller = { is_hostile = root }
+            }
+        }
+    }
+
+    immediate = {
+        if = {
+            limit = { exists = event_target:foc_v212_raddus_encounter_ship }
+            clear_global_event_target = foc_v212_raddus_encounter_ship
+        }
+        if = {
+            limit = { exists = event_target:foc_v212_raddus_encounter_owner }
+            clear_global_event_target = foc_v212_raddus_encounter_owner
+        }
+
+        event_target:foc_v212_raddus_encounter_system = {
+            random_fleet_in_system = {
+                limit = {
+                    any_owned_ship = {
+                        is_disabled = no
+                        OR = {
+                            has_ship_flag = foc_khan_rebel_home_arkship
+                            is_ship_size = foc_rebel_home_arkship_tier_3
+                            is_ship_size = foc_rebel_home_arkship_tier_3_foc_lowest
+                        }
+                    }
+                    controller = { is_hostile = root }
+                }
+                controller = { save_global_event_target_as = foc_v212_raddus_encounter_owner }
+                random_owned_ship = {
+                    limit = {
+                        is_disabled = no
+                        OR = {
+                            has_ship_flag = foc_khan_rebel_home_arkship
+                            is_ship_size = foc_rebel_home_arkship_tier_3
+                            is_ship_size = foc_rebel_home_arkship_tier_3_foc_lowest
+                        }
+                    }
+                    save_global_event_target_as = foc_v212_raddus_encounter_ship
+                }
+            }
+        }
+
+        if = {
+            limit = {
+                exists = event_target:foc_v212_raddus_encounter_ship
+                exists = event_target:foc_v212_raddus_encounter_owner
+            }
+            set_global_flag = foc_v212_kylo_attacked_raddus
+            foc_saga_ensure_kylo = yes
+            event_target:foc_v212_raddus_encounter_ship = {
+                set_ship_flag = foc_v212_kylo_bridge_strike_survivor
+            }
+            foc_v212_kill_ackbar_on_raddus = yes
+            every_playable_country = {
+                limit = { is_ai = no }
+                country_event = { id = foc_v212_story.23 }
+            }
+            log = "FOC_V212_CHARACTERS: Raddus met a First Order fleet; Kylo Ren struck the bridge and killed Admiral Ackbar."
+        }
+
+        if = { limit = { exists = event_target:foc_v212_raddus_encounter_ship } clear_global_event_target = foc_v212_raddus_encounter_ship }
+        if = { limit = { exists = event_target:foc_v212_raddus_encounter_owner } clear_global_event_target = foc_v212_raddus_encounter_owner }
+        if = { limit = { exists = event_target:foc_v212_raddus_encounter_system } clear_global_event_target = foc_v212_raddus_encounter_system }
+    }
+}
+
+# Galaxy-wide news window after the bridge strike has already been resolved.
+country_event = {
+    id = foc_v212_story.23
+    title = foc_v212_story.23.name
+    desc = foc_v212_story.23.desc
+    picture = GFX_foc_saga_rebel_fleet
+    show_sound = event_ship_bridge
+    is_triggered_only = yes
+    option = { name = foc_v212_story.23.a }
+}

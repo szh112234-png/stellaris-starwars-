@@ -1,0 +1,347 @@
+# V14: original point defense retained; retired ordinary aliases remain inert.
+weapon_component_template = {
+    key = "FOC_STD_TURBO_L_T4_G_V07"
+    size = large
+    type = instant
+    icon = "GFX_ship_part_turbo_laser_g_4"
+    icon_frame = 1
+    damage = {
+        min = 3000
+        max = 3000
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 220
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 1.0
+    armor_penetration = 1.0
+    power = -140
+    component_set = "SAI_SUPREMACY_TURBOLASER"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 12
+        }
+        upkeep = { }
+    }
+    size_restriction = { sai_supremacy_arkship_tier_1 sai_supremacy_arkship_tier_2 sai_supremacy_arkship_tier_3 sai_supremacy_arkship_tier_3_foc_lowest }
+    prerequisites = { "foc_tech_sw_turbolaser_4" }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_STD_TURBO_M_T4_G_V04"
+    size = medium
+    type = instant
+    icon = "GFX_ship_part_turbo_laser_g_4"
+    icon_frame = 1
+    damage = {
+        min = 1200
+        max = 1800
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 150
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 0.75
+    armor_penetration = 0.75
+    power = -30
+    component_set = "SAI_SUPREMACY_TURBOLASER"
+    projectile_gfx = "infrared_laser_m"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 6
+        }
+        upkeep = { }
+    }
+    size_restriction = { sai_supremacy_arkship_tier_1 sai_supremacy_arkship_tier_2 sai_supremacy_arkship_tier_3 sai_supremacy_arkship_tier_3_foc_lowest }
+    prerequisites = { "foc_tech_sw_turbolaser_4" }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_STD_TURBO_S_T4_G_V03"
+    size = small
+    type = instant
+    icon = "GFX_ship_part_turbo_laser_g_4"
+    icon_frame = 1
+    damage = {
+        min = 600
+        max = 600
+    }
+    windup = {
+        min = 1
+        max = 19
+    }
+    total_fire_time = 30
+    range = 120
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 0.5
+    armor_penetration = 0.5
+    power = -5
+    component_set = "SAI_SUPREMACY_TURBOLASER"
+    projectile_gfx = "infrared_laser_s"
+    tags = { weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_anti_armor weapon_role_anti_shield }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 3
+        }
+        upkeep = { }
+    }
+    size_restriction = { sai_supremacy_arkship_tier_1 sai_supremacy_arkship_tier_2 sai_supremacy_arkship_tier_3 sai_supremacy_arkship_tier_3_foc_lowest }
+    prerequisites = { "foc_tech_sw_turbolaser_4" }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_STD_PD_P_T4_G_V06"
+    hidden = yes
+    size = point_defence
+    type = point_defence
+    icon = "GFX_ship_part_defence_turbo_g_3"
+    icon_frame = 1
+    damage = {
+        min = 18
+        max = 30
+    }
+    windup = {
+        min = 1
+        max = 5
+    }
+    total_fire_time = 8
+    range = 40
+    accuracy = 1.0
+    tracking = 1.0
+    shield_penetration = 1.0
+    shield_damage = 1.25
+    armor_damage = 1.25
+    hull_damage = 1.25
+    power = -7.5
+    component_set = "SAI_SUPREMACY_POINT_DEFENCE_TURBOLASER"
+    point_defence_targets = { "missile" "strike_craft" }
+    tags = { weapon_type_point_defense weapon_type_energy weapon_type_kinetic }
+    ai_tags = { weapon_role_point_defense }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 3
+        }
+        upkeep = { }
+    }
+    size_restriction = { sai_supremacy_arkship_tier_1 sai_supremacy_arkship_tier_2 sai_supremacy_arkship_tier_3 sai_supremacy_arkship_tier_3_foc_lowest }
+    ai_weight = {
+        weight = 0
+    }
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    projectile_gfx = "white_laser_pd"
+    prerequisites = { "foc_tech_std_pd_3" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+utility_component_template = {
+    key = "SAI_SUPREMACY_LARGE_DURASTEEL_ARMOR"
+    size = large
+    component_set = "SAI_SUPREMACY_DURASTEEL_ARMOR"
+    icon = "GFX_ship_part_armor_5"
+    icon_frame = 1
+    power = -350
+    modifier = {
+        ship_hull_add = 3600
+        ship_hull_regen_add_static = 43.875
+        ship_shield_add = 3600
+        ship_armor_add = 3600
+        ship_shield_regen_add_static = 43.875
+        ship_armor_regen_add_static = 43.875
+    }
+    ship_modifier = {
+        ship_damage_reduction_add = 0.0125
+        ship_armor_hardening_add = 0.09
+        ship_shield_hardening_add = 0.09
+    }
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    size_restriction = { sai_supremacy_arkship_tier_1 sai_supremacy_arkship_tier_2 sai_supremacy_arkship_tier_3 sai_supremacy_arkship_tier_3_foc_lowest }
+    ai_weight = {
+        weight = 0
+    }
+    potential = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+        }
+    }
+}
+utility_component_template = {
+    key = "SAI_SUPREMACY_DEFLECTOR_ARRAY"
+    size = aux
+    icon = "GFX_ship_part_sai_supremacy_deflector_shield_array"
+    icon_frame = 1
+    power = -40
+    modifier = {
+        ship_accuracy_add = 10
+        ship_hull_regen_add_static = 43.875
+        ship_shield_regen_add_static = 43.875
+        ship_armor_regen_add_static = 43.875
+    }
+    component_set = "SAI_SUPREMACY_DEFLECTOR_ARRAY"
+    resources = {
+        category = ship_components
+        cost = { }
+        upkeep = { }
+    }
+    size_restriction = { sai_supremacy_arkship_tier_1 sai_supremacy_arkship_tier_2 sai_supremacy_arkship_tier_3 sai_supremacy_arkship_tier_3_foc_lowest }
+    ai_weight = {
+        weight = 0
+    }
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+        }
+    }
+}
+utility_component_template = {
+    key = "SAI_SUPREMACY_SG_REACTOR_FIRE_CONTROL"
+    size = small
+    icon = "GFX_foc_v1718c_supremacy_ship_part_reactor_1"
+    icon_frame = 1
+    power = 55000
+    modifier = { ship_evasion_mult = -0.10 ship_weapon_range_mult = 0.30 }
+    component_set = "power_core"
+    resources = {
+        category = ship_components
+        cost = { sr_coaxium_foc = 10 }
+        upkeep = { }
+    }
+    size_restriction = { sai_supremacy_arkship_tier_3 sai_supremacy_arkship_tier_3_foc_lowest }
+    ai_weight = { weight = 0 }
+    potential = { always = no }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "SAI_SUPREMACY_SG_WARP_DRIVE"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_warp_drive"
+    icon_frame = 1
+    power = -100
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.75 ship_jumpdrive_cooldown_mult = -0.75 ship_ftl_jumpdrive_range_mult = 1.0 }
+    component_set = "ftl_components"
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 50 sr_coaxium_foc = 10 }
+        upkeep = { }
+    }
+    size_restriction = { sai_supremacy_arkship_tier_3 sai_supremacy_arkship_tier_3_foc_lowest }
+    ai_weight = { weight = 0 }
+    potential = { always = no }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "SAI_SUPREMACY_SG_THRUSTER"
+    size = small
+    icon = "GFX_foc_v1718c_supremacy_ship_part_thruster_1"
+    icon_frame = 1
+    power = -150
+    modifier = { ship_evasion_add = 25 ship_speed_mult = 0.25 }
+    component_set = "thruster_components"
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 10 sr_coaxium_foc = 10 }
+        upkeep = { }
+    }
+    size_restriction = { sai_supremacy_arkship_tier_3 sai_supremacy_arkship_tier_3_foc_lowest }
+    ai_weight = { weight = 0 }
+    potential = { always = no }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "SAI_SUPREMACY_SG_SENSOR"
+    size = medium
+    icon = "GFX_foc_v1718c_ship_part_swgs_sensor"
+    icon_frame = 1
+    power = -150
+    sensor_range = 12
+    hyperlane_range = 18
+    ship_modifier = { ship_tracking_add = 10 }
+    component_set = "sensor_components"
+    resources = {
+        category = ship_components
+        cost = { }
+        upkeep = { }
+    }
+    size_restriction = { sai_supremacy_arkship_tier_3 sai_supremacy_arkship_tier_3_foc_lowest }
+    ai_weight = { weight = 0 }
+    potential = { always = no }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}

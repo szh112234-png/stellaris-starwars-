@@ -1,0 +1,64 @@
+
+#DEACTIVATED KUAT RING 
+entity = {
+	name = "deactivated_kuat_ring_01_entity"
+	pdxmesh = "kuat_ring_mesh"
+	
+	meshsettings = {
+        name = "Kuat Ring"
+        index = 0
+		texture_diffuse = "W_RING_MESH.DDS"
+        texture_normal = "nonormal.dds"
+        texture_specular = "nospec.dds"
+        shader = "PdxMeshTerra"
+	}
+	
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } 
+		start_event = { trigger_once = yes sound = { soundeffect = "habitat_pc_amb_03" } }
+	}
+}
+
+#ROTATING KUAT RING
+
+entity = {
+	name = "kuat_ring_01_entity"
+	pdxmesh = "planet_non_clouded_mesh"
+	
+	scale = 0.02
+	
+	attach = { planet = "kuat_ring_rotating_01_entity" }
+	
+
+	default_state = "idle"
+	playback_rate = -1.0 
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } }
+	
+	
+}
+
+entity = {
+	name = "kuat_ring_rotating_01_entity"
+	pdxmesh = "kuat_ring_mesh"
+	
+	scale = 50
+	
+	meshsettings = {
+        name = "Kuat Ring"
+        index = 0
+		texture_diffuse = "W_RING_MESH.DDS"
+        texture_normal = "nonormal.dds"
+        texture_specular = "nospec.dds"
+        shader = "PdxMeshTerra"
+	}
+	
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } 
+		start_event = { trigger_once = yes sound = { soundeffect = "habitat_pc_amb_03" } }
+	}
+	state = { name = "construction"
+		start_event = { trigger_once = yes sound = { soundeffect = "ringworld_construction_ambient" } }
+	}
+}
+
+

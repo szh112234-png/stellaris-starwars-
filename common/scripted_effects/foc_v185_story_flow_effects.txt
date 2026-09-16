@@ -1,0 +1,31 @@
+# FOC V185 - one-shot story-state hygiene for Leia's D'Qar Resistance.
+# V235b: callers include a monthly retry, so flag reset MUST be first-foundation-only.
+foc_v185_prepare_leia_resistance_trigger = {
+    if = {
+        limit = {
+            foc_v235b_dqar_bootstrap_allowed = yes
+            has_global_flag = foc_khan_rebel_spawned
+            NOT = {
+                any_system = {
+                    has_star_flag = foc_khan_rebel_dqar_home
+                    any_system_planet = {
+                        has_planet_flag = foc_khan_rebel_dqar
+                        is_colony = yes
+                        exists = owner
+                        owner = { has_country_flag = foc_khan_first_order_resistance_country }
+                    }
+                }
+            }
+        }
+        remove_global_flag = foc_khan_rebel_spawned
+        remove_global_flag = foc_khan_rebel_preparing
+        remove_global_flag = foc_khan_rebel_birth_announced
+        if = { limit = { exists = event_target:foc_khan_rebel_alliance } clear_global_event_target = foc_khan_rebel_alliance }
+        if = { limit = { exists = event_target:foc_khan_rebel_system } clear_global_event_target = foc_khan_rebel_system }
+        if = { limit = { exists = event_target:foc_khan_rebel_capital } clear_global_event_target = foc_khan_rebel_capital }
+        log = "FOC_V185_LEIA: incomplete FIRST foundation reset; no established Resistance or destroyed base was reset."
+    }
+
+    set_global_flag = foc_v185_leia_resistance_authorized
+    set_global_flag = foc_v109_bloodline_resistance_authorized
+}

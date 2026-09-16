@@ -1,0 +1,90 @@
+animation = {
+	name = "foc_eclipse_ii_idle_animation"
+	file = "foc_eclipse_ii_idle.anim"
+}
+animation = {
+	name = "foc_eclipse_ii_clossing_animation"
+	file = "foc_eclipse_ii_clossing.anim"
+}
+animation = {
+	name = "foc_eclipse_ii_locator_idle_animation"
+	file = "foc_eclipse_ii_locator_idle.anim"
+}
+animation = {
+	name = "foc_eclipse_ii_locator_clossing_animation"
+	file = "foc_eclipse_ii_locator_clossing.anim"
+}
+
+entity = {
+	name = "foc_eclipse_ii_entity"
+	pdxmesh = "foc_eclipse_ii_mesh"
+	scale = 1.0
+	
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" 
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_titan_ship_hum_01" } }
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_titan_ship_hum_02" } }
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_titan_ship_hum_03" } }
+	}
+	state = { name = "moving" animation = "idle" state_time = 5
+		event =  { trigger_once = yes sound = { soundeffect = "moving_out_titan" } }
+	}
+	state = { name = "death" animation = "clossing" looping = no state_time = 1
+		event = { time = 14 node = "explode_locator_1" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+		event = { time = 8 node = "explode_locator_2" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+		event = { time = 6 node = "explode_locator_3" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+		event = { time = 16 node = "explode_locator_3" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+		event = { time = 16.5 node = "explode_locator_9" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+		event = { time = 4 node = "explode_locator_4" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+		event = { time = 5 node = "explode_locator_4" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+		event = { time = 2 node = "explode_locator_5" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+		event = { time = 16 node = "explode_locator_5" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+		event = { time = 17 node = "explode_locator_5" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+		event = { time = 17 node = "explode_locator_3" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+		event = { time = 14 node = "explode_locator_15" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+		event = { time = 6 node = "explode_locator_11" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+		event = { time = 11 node = "explode_locator_10" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+		event = { time = 9 node = "explode_locator_12" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+		event = { time = 2 node = "explode_locator_13" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+		event = { time = 5 node = "explode_locator_14" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+		event = { time = 17 node = "explode_locator_6" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+		event = { time = 17 node = "explode_locator_2" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+		event = { time = 17 node = "explode_locator_4" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+		event = { time = 18 node = "explode_locator_3" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+		event = { time = 15 node = "explode_locator_6" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+		event = { time = 12 node = "explode_locator_7" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+		event = { time = 10 node = "explode_locator_8" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+		event = { time = 13 node = "explode_locator_9" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+		event = { time = 8 node = "explode_locator_15" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+		event = { time = 6 node = "explode_locator_11" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+		event = { time = 15 node = "explode_locator_10" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+		event = { time = 12 node = "explode_locator_12" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+		event = { time = 2 node = "explode_locator_13" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+		event = { time = 5 node = "explode_locator_14" particle = "ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+	}
+
+	game_data = {
+		size = 30
+	}
+}
+
+entity = {
+	name = "foc_eclipse_ii_locator_entity"
+	pdxmesh = "foc_eclipse_ii_locator_mesh"
+	scale = 1.0
+	
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" 
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_titan_ship_hum_01" } }
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_titan_ship_hum_02" } }
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_titan_ship_hum_03" } }
+	}
+	state = { name = "moving" animation = "idle" state_time = 5
+		event =  { trigger_once = yes sound = { soundeffect = "moving_out_titan" } }
+	}
+	state = { name = "death" animation = "clossing" looping = no state_time = 5 }
+
+	game_data = {
+		size = 30
+	}
+}

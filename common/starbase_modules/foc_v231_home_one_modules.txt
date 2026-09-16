@@ -1,0 +1,182 @@
+# FOC V231 - Home One Arkship module suite.
+#
+# Structurally these mirror the Raddus foc_rebel_home_arkship_* modules, which
+# is what "max-tier Arkship, Raddus's axial layout" means in practice: six
+# functional module positions plus one non-replaceable axial mount. Every key
+# is private to foc_v231_home_one_arkship, so nothing here can attach to
+# Raddus, a vanilla Arkship or either Supremacy.
+#
+# None of these modules adds hull, armor or shield. The Raddus defensive
+# starbase buildings (foc_rebel_home_arkship_armor / _shield) are deliberately
+# NOT cloned, because Home One's defensive panel must stay equal to a normal
+# MC80 rather than an Arkship.
+
+foc_v231_home_one_engineering_bay = {
+	icon = "GFX_arkship_engineering_bay"
+	section = "FOC_V231_HOME_ONE_HIDDEN_EMPTY_MODULE"
+	construction_days = 1
+	starbase_type = arkship
+	category = sm_naval_support_cat
+
+	potential = { has_starbase_size = foc_v231_home_one_arkship }
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = { alloys = 0 }
+		upkeep = { energy = @arkship_upkeep_energy_2 }
+	}
+	station_modifier = { megastructure_build_speed_mult = 0.15 }
+	planet_modifier = { planet_building_capacity_add = 1 }
+	on_finished = { set_ship_construction_type = starbase_shipyard }
+	ai_weight = { weight = 0 }
+}
+
+foc_v231_home_one_docking_bay = {
+	icon = "GFX_arkship_docking_bay"
+	section = "FOC_V231_HOME_ONE_HIDDEN_EMPTY_MODULE"
+	construction_days = 1
+	starbase_type = arkship
+	category = sm_utility_cat
+
+	potential = { has_starbase_size = foc_v231_home_one_arkship }
+
+	cannot_fit_on_slots = { spinal_mount_1 }
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = { alloys = 0 }
+		upkeep = {
+			energy = @arkship_upkeep_energy_1
+			trade = @arkship_upkeep_trade_4
+		}
+	}
+	country_modifier = { country_naval_cap_add = 5 }
+	station_modifier = { ship_starbase_stockpile_collection_rate_mult = 0.10 }
+	ai_weight = { weight = 0 }
+}
+
+foc_v231_home_one_habitation_module = {
+	icon = "GFX_arkship_habitation_module"
+	section = "FOC_V231_HOME_ONE_HIDDEN_EMPTY_MODULE"
+	construction_days = 1
+	starbase_type = arkship
+	category = sm_utility_cat
+	potential = { has_starbase_size = foc_v231_home_one_arkship }
+	cannot_fit_on_slots = { spinal_mount_1 }
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = { alloys = 0 }
+		upkeep = { energy = @arkship_upkeep_energy_2 exotic_gases = @arkship_upkeep_strategic_1 }
+	}
+	planet_modifier = {
+		planet_max_districts_add = 1
+		pop_environment_tolerance = 0.05
+	}
+	ai_weight = { weight = 0 }
+}
+
+foc_v231_home_one_sensor_array = {
+	icon = "GFX_arkship_sensor_array"
+	section = "FOC_V231_HOME_ONE_HIDDEN_EMPTY_MODULE"
+	construction_days = 1
+	starbase_type = arkship
+	category = sm_utility_cat
+	potential = { has_starbase_size = foc_v231_home_one_arkship }
+	cannot_fit_on_slots = { spinal_mount_1 }
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = { alloys = 0 }
+		upkeep = { energy = @arkship_upkeep_energy_2 }
+	}
+	station_modifier = {
+		ship_sensor_range_add = 1
+		ship_hyperlane_range_add = 1
+		science_ship_survey_speed = 0.15
+	}
+	custom_tooltip_with_modifiers = sm_arkship_sensor_array_tt
+	ai_weight = { weight = 0 }
+}
+
+foc_v231_home_one_mining_array = {
+	icon = "GFX_arkship_mining_array"
+	section = "FOC_V231_HOME_ONE_HIDDEN_EMPTY_MODULE"
+	construction_days = 1
+	starbase_type = arkship
+	category = sm_utility_cat
+	potential = { has_starbase_size = foc_v231_home_one_arkship }
+	cannot_fit_on_slots = { spinal_mount_1 }
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = { alloys = 0 }
+		upkeep = { energy = @arkship_upkeep_energy_2 }
+	}
+	station_modifier = {
+		show_only_custom_tooltip = no
+		arkship_harvest_resources_produces_mult = 0.05
+	}
+	custom_tooltip_with_modifiers = sm_arkship_mining_array_tt
+	ai_weight = { weight = 0 }
+}
+
+foc_v231_home_one_archive = {
+	icon = "GFX_arkship_grand_archive"
+	section = "FOC_V231_HOME_ONE_HIDDEN_EMPTY_MODULE"
+	construction_days = 1
+	starbase_type = arkship
+	category = sm_utility_cat
+	potential = { has_starbase_size = foc_v231_home_one_arkship }
+	cannot_fit_on_slots = { spinal_mount_1 }
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = { alloys = 0 }
+		upkeep = { energy = @arkship_upkeep_energy_2 }
+	}
+	planet_modifier = { planet_jobs_produces_mult = 0.05 }
+	ai_weight = { weight = 0 }
+}
+
+# The axial mount. Ownership is deliberately checked across the whole
+# Republic/Rebel side, so the module is not stripped when the Rebellion is
+# reorganised into the New Republic by the Galactic Treaty -- the exact failure
+# that once removed Raddus's own axial module.
+foc_v231_home_one_strike_command_module = {
+	icon = "GFX_arkship_system_scanner"
+	section = "FOC_V231_HOME_ONE_STRIKE_COMMAND_SECTION"
+	construction_days = 1
+	starbase_type = arkship
+	category = sm_spinal_cat
+
+	potential = {
+		has_starbase_size = foc_v231_home_one_arkship
+		owner? = {
+			OR = {
+				has_country_flag = foc_khan_rebel_alliance_country
+				has_country_flag = foc_republic_origin_rebel_alliance_country
+				has_country_flag = foc_republic_origin_imperial_rebel_country
+				has_country_flag = foc_republic_origin_post_treaty_rebel_country
+				has_country_flag = foc_khan_first_order_resistance_country
+				has_country_flag = foc_republic_origin_republic_country
+				has_country_flag = foc_sw_new_republic_country
+				has_country_flag = foc_republic_origin_player_republic
+			}
+		}
+	}
+
+	fits_on_slots = { spinal_mount_1 }
+	replaceable = { always = no }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = { alloys = 0 }
+		upkeep = { energy = 20 }
+	}
+
+	station_modifier = {
+		show_only_custom_tooltip = no
+		ship_sensor_range_add = 10
+		ship_hyperlane_range_add = 10
+	}
+
+	custom_tooltip_with_modifiers = foc_v231_home_one_strike_command_module_tt
+	ai_weight = { weight = 0 }
+}

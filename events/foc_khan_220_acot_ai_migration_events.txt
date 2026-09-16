@@ -1,0 +1,90 @@
+namespace = foc_khan_220
+
+# One-time migration from the retired SG/Kuat persistent queue system to the
+# stable ACOT pattern: an enabled crisis country AI with the berserk military
+# minister. Special Xyston planet-killers keep their dedicated destroy-planet
+# controller because the generic military minister cannot operate that weapon.
+event = {
+    id = foc_khan_220.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        NOT = { has_global_flag = foc_khan_220_acot_ai_migrated }
+        OR = {
+            has_global_flag = foc_khan_phase_one
+            has_global_flag = foc_khan_phase_two
+            any_country = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = foc_khan_final_order_country
+                }
+            }
+        }
+    }
+
+    immediate = {
+        set_global_flag = foc_khan_220_acot_ai_migrated
+
+        every_system = {
+            remove_star_flag = foc_khan_sgk_system_reserved
+            remove_star_flag = foc_khan_sgk_final_system_reserved_219
+            every_system_planet = {
+                remove_planet_flag = foc_khan_sgk_invasion_target
+            }
+        }
+
+        every_country = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = foc_khan_final_order_country
+                }
+            }
+
+            if = {
+                limit = { NOT = { is_country_type = foc_khan_crisis_country } }
+                set_country_type = foc_khan_crisis_country
+            }
+
+            every_owned_fleet = {
+                limit = {
+                    NOR = {
+                        has_fleet_flag = foc_khan_xyston_planet_killer_fleet
+                        has_fleet_flag = foc_khan_first_order_engineering_fleet
+                        has_fleet_flag = foc_khan_final_order_engineering_fleet
+                    }
+                    OR = {
+                        any_owned_ship = { is_ship_class = shipclass_military }
+                        any_owned_ship = { is_ship_class = shipclass_transport }
+                        has_fleet_flag = foc_khan_supremacy_fleet
+                    }
+                }
+                remove_fleet_flag = foc_khan_sgk_scripted_attack_fleet
+                remove_fleet_flag = foc_khan_sgk_scripted_transport_fleet
+                remove_fleet_flag = foc_khan_sgk_bombarding_planet
+                remove_auto_move_target = yes
+                clear_orders = yes
+                clear_fleet_actions = this
+                set_fleet_stance = aggressive
+                set_aggro_range_measure_from = self
+                set_aggro_range = 500
+            }
+        }
+
+        # The Rebel Alliance is already a normal empire. Remove only the old
+        # scripted attack orders so its standard military AI can take over.
+        every_country = {
+            limit = { has_country_flag = foc_khan_rebel_alliance_country }
+            every_owned_fleet = {
+                limit = { any_owned_ship = { is_ship_class = shipclass_military } }
+                remove_auto_move_target = yes
+                clear_orders = yes
+                clear_fleet_actions = this
+                set_fleet_stance = aggressive
+                set_aggro_range_measure_from = self
+                set_aggro_range = 500
+            }
+        }
+    }
+}

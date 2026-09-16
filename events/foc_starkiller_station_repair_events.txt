@@ -1,0 +1,97 @@
+namespace = foc_starkiller_station
+
+# Arms the crisis Starkiller defensive ring and repairs old saves where the custom
+# starbase was created before its auto-design or module sections were initialized.
+country_event = {
+    id = foc_starkiller_station.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_khan_first_order_country
+        any_owned_starbase = {
+            has_starbase_size = foc_starkiller_ring
+        }
+    }
+
+    immediate = {
+        set_country_flag = foc_khan_starkiller_owner_enemy
+
+        # The scripted crisis country starts with only a small technology set. Grant
+        # the standard end-game starbase components once so the ordinary citadel in
+        # the Starkiller system is not generated with an empty automatic design.
+        if = {
+            limit = { NOT = { has_country_flag = foc_starkiller_station_261_techs } }
+            if = { limit = { is_ai = yes } give_technology = { tech = tech_lasers_5 message = no } }
+            if = { limit = { is_ai = yes } give_technology = { tech = tech_mass_drivers_5 message = no } }
+            if = { limit = { is_ai = yes } give_technology = { tech = tech_missiles_5 message = no } }
+            if = { limit = { is_ai = yes } give_technology = { tech = tech_strike_craft_3 message = no } }
+            give_technology = { tech = tech_ship_armor_5 message = no }
+            give_technology = { tech = tech_shields_5 message = no }
+            give_technology = { tech = tech_sensors_4 message = no }
+            give_technology = { tech = tech_combat_computers_3 message = no }
+            give_technology = { tech = tech_zero_point_power message = no }
+            give_technology = { tech = tech_battleships message = no }
+            if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } }
+            if = { limit = { is_ai = yes } give_technology = { tech = tech_ssp_imperial_hyperspace message = no } }
+            set_country_flag = ssp_fighter_group_empire
+            set_country_flag = ssp_strength_sg
+            foc_sync_ssp_strength_to_main_difficulty = yes
+            set_country_flag = ssp_size_original
+            set_country_flag = foc_starkiller_station_261_techs
+        }
+
+        # Refresh the normal capital citadel as well; this covers the station at the
+        # system centre, while the second loop below handles the planetary defense ring.
+        every_owned_starbase = {
+            limit = {
+                has_starbase_flag = foc_khan_first_capital_starbase
+                NOT = { has_starbase_flag = foc_starkiller_capital_261_refreshed }
+            }
+            set_starbase_size = starbase_citadel
+            set_starbase_flag = foc_starkiller_capital_261_refreshed
+        }
+
+        every_owned_starbase = {
+            limit = { has_starbase_size = foc_starkiller_ring }
+
+            planet = {
+                set_planet_flag = myk_starkiller_base_planet_flag
+                set_planet_flag = foc_khan_starkiller_anchor
+                if = {
+                    limit = { NOT = { has_modifier = foc_starkiller_base_world } }
+                    add_modifier = { modifier = foc_starkiller_base_world days = -1 }
+                }
+            }
+
+            # Re-applying the custom size once forces the starbase to rebuild its
+            # auto-generated core design with the dedicated reactor, sensor, computer,
+            # weapons and defensive utilities supplied by 2.61.
+            if = {
+                limit = { NOT = { has_starbase_flag = foc_starkiller_station_265_refreshed } }
+                set_starbase_size = foc_starkiller_ring
+                set_starbase_flag = foc_starkiller_station_265_refreshed
+            }
+
+            # FOC 2.65: weapons are mounted directly on the core.
+            # All six module slots remain occupied by structural defense modules.
+            if = {
+                limit = { NOT = { has_starbase_flag = foc_starkiller_station_265_loadout } }
+                set_starbase_module = { slot = 1 module = foc_starkiller_crisis_integrated_defense }
+                set_starbase_module = { slot = 2 module = foc_starkiller_crisis_integrated_defense }
+                set_starbase_module = { slot = 3 module = foc_starkiller_crisis_integrated_defense }
+                set_starbase_module = { slot = 4 module = foc_starkiller_crisis_integrated_defense }
+                set_starbase_module = { slot = 5 module = foc_starkiller_crisis_integrated_defense }
+                set_starbase_module = { slot = 6 module = foc_starkiller_crisis_integrated_defense }
+                set_ship_construction_type = none
+                set_starbase_flag = foc_starkiller_station_265_loadout
+            }
+
+            if = {
+                limit = { NOT = { has_starbase_flag = foc_starkiller_station_265_logged } }
+                set_starbase_flag = foc_starkiller_station_265_logged
+                log = "FOC_2.67_STARKILLER_LAYOUT_ACTIVE: native SSP/SWGS components only; no custom ring weapons or armor."
+            }
+        }
+    }
+}

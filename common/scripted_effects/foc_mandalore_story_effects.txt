@@ -1,0 +1,1057 @@
+
+# V180 - Concord Dawn is politically tied to Mandalore.  Mirror the current
+# owner of the Mandalore system so every story transition (independence,
+# Imperial occupation, Treaty handover, restoration) carries Concord Dawn too.
+foc_mandalore_sync_concord_dawn_owner = {
+    if = {
+        limit = {
+            exists = event_target:foc_swmap_mandalore_system
+            event_target:foc_swmap_mandalore_system = { exists = starbase }
+            any_system = { has_star_flag = foc_v175_concord_dawn_home }
+        }
+        event_target:foc_swmap_mandalore_system = {
+            starbase = { owner = { save_global_event_target_as = foc_mandalore_concord_dawn_owner } }
+        }
+        random_system = {
+            limit = { has_star_flag = foc_v175_concord_dawn_home }
+            if = {
+                limit = { exists = starbase }
+                starbase = { set_owner = event_target:foc_mandalore_concord_dawn_owner }
+            }
+            else = {
+                create_starbase = { size = starbase_outpost owner = event_target:foc_mandalore_concord_dawn_owner }
+            }
+            every_system_planet = {
+                limit = { is_colony = yes }
+                set_owner = event_target:foc_mandalore_concord_dawn_owner
+                set_controller = event_target:foc_mandalore_concord_dawn_owner
+                every_planet_army = { set_owner = event_target:foc_mandalore_concord_dawn_owner }
+            }
+            every_system_megastructure = { set_owner = event_target:foc_mandalore_concord_dawn_owner }
+            every_system_planet = {
+                set_surveyed = { surveyed = yes surveyor = event_target:foc_mandalore_concord_dawn_owner }
+            }
+            event_target:foc_mandalore_concord_dawn_owner = { set_visited = prev }
+        }
+        clear_global_event_target = foc_mandalore_concord_dawn_owner
+    }
+}
+
+# V119 - Independent Mandalore political story chain.
+
+foc_mandalore_ensure_system_target = {
+    if = {
+        limit = { NOT = { exists = event_target:foc_swmap_mandalore_system } }
+        random_system = {
+            limit = { has_star_flag = foc_swmap_mandalore_home }
+            save_global_event_target_as = foc_swmap_mandalore_system
+        }
+    }
+}
+
+foc_mandalore_ensure_species = {
+    if = {
+        limit = {
+            exists = event_target:foc_swmap_mandalore_system
+            NOT = { exists = event_target:foc_mandalore_species }
+        }
+        event_target:foc_swmap_mandalore_system = {
+            random_system_planet = {
+                limit = { has_planet_flag = foc_swmap_mandalore }
+                create_species = {
+                    name = FOC_MANDALORIAN_SPECIES
+                    plural = FOC_MANDALORIAN_SPECIES_PLURAL
+                    adjective = FOC_MANDALORIAN_SPECIES_ADJ
+                    class = HUM
+                    portrait = foc_mandalorian_species_01
+                    namelist = rebels
+                    homeworld = this
+                    traits = {
+                        trait = trait_strong
+                        trait = trait_enduring
+                        trait = trait_communal
+                    }
+                }
+                last_created_species = {
+                    set_species_flag = foc_mandalorian_species
+                    save_global_event_target_as = foc_mandalore_species
+                }
+            }
+        }
+    }
+}
+
+# V122 - Mandalore must actually be a Mandalorian-majority state, not merely
+# a country whose nominal primary species happens to be Mandalorian.
+foc_mandalore_enforce_primary_population = {
+
+    if = {
+        limit = {
+            exists = event_target:foc_swmap_mandalore_system
+            exists = event_target:foc_mandalore_species
+        }
+
+        event_target:foc_swmap_mandalore_system = {
+            every_system_planet = {
+                limit = {
+                    has_planet_flag = foc_swmap_mandalore
+                    is_colony = yes
+                    owner = { has_country_flag = foc_mandalore_independent_country }
+                    NOT = { has_planet_flag = foc_mandalore_primary_population_seeded }
+                }
+
+                # Old-save / already-colonised safeguard:
+                # retain outsiders, but make Mandalorians the unmistakable
+                # demographic core of their own homeworld.
+                while = {
+                    count = 12
+                    create_pop_group = {
+                        size = 100
+                        species = event_target:foc_mandalore_species
+                    }
+                }
+
+                set_planet_flag = foc_mandalore_primary_population_seeded
+            }
+        }
+    }
+}
+
+# V207: recover an existing independent Mandalore before creating a replacement.
+# This prevents duplicate countries when an old save lost only the global target.
+foc_mandalore_create_country = {
+
+    if = {
+        limit = { exists = event_target:foc_mandalore_country }
+        if = {
+            limit = {
+                event_target:foc_mandalore_country = {
+                    NOT = { has_country_flag = foc_mandalore_independent_country }
+                }
+            }
+            clear_global_event_target = foc_mandalore_country
+        }
+    }
+    if = {
+        limit = { NOT = { exists = event_target:foc_mandalore_country } }
+        random_country = {
+            limit = { has_country_flag = foc_mandalore_independent_country }
+            save_global_event_target_as = foc_mandalore_country
+        }
+    }
+
+    if = {
+        limit = {
+            exists = event_target:foc_mandalore_species
+            NOT = { exists = event_target:foc_mandalore_country }
+        }
+        create_country = {
+                name = "FOC_MANDALORE"
+                type = default
+                auto_delete = no
+                ignore_initial_colony_error = yes
+                # V129: direct founder-species binding. `root` here referred to the
+                # Republic/player event root, which is why the diplomacy screen
+                # displayed "Republic Citizens" instead of Mandalorians.
+                species = event_target:foc_mandalore_species
+                authority = auth_oligarchic
+                origin = origin_foc_mandalore_state
+                ethos = {
+                    ethic = ethic_pacifist
+                    ethic = ethic_egalitarian
+                    ethic = ethic_xenophile
+                }
+                civics = {
+                    civic = civic_diplomatic_corps
+                    civic = civic_meritocracy
+                }
+                flag = {
+                    icon = { category = "neocrusader" file = "foc_mandalore.dds" }
+                    background = { category = "backgrounds" file = "00_solid.dds" }
+                    colors = { "dark_blue" "white" "null" "null" }
+                }
+                name_list = "rebels"
+                effect = {
+                    set_country_flag = foc_mandalore_independent_country
+                    set_country_flag = foc_mandalore_satine_government
+                    set_graphical_culture = republic_01
+                    set_city_graphical_culture = mammalian_01
+                    save_global_event_target_as = foc_mandalore_country
+                    add_resource = {
+                        energy = 12000
+                        minerals = 12000
+                        food = 6000
+                        consumer_goods = 6000
+                        alloys = 8000
+                        unity = 5000
+                        influence = 300
+                    }
+                    give_technology = { tech = tech_space_construction message = no }
+                    give_technology = { tech = tech_corvettes message = no }
+                    ruler = {
+                        set_name = "FOC_SATINE_KRYZE"
+                        change_leader_portrait = foc_mandalorian_species_01
+                    }
+                }
+            }
+    }
+
+    if = {
+        limit = {
+            exists = event_target:foc_mandalore_country
+            exists = event_target:foc_swmap_mandalore_system
+        }
+        event_target:foc_swmap_mandalore_system = {
+            if = {
+                limit = { exists = starbase }
+                starbase = { set_owner = event_target:foc_mandalore_country }
+            }
+            else = {
+                create_starbase = {
+                    size = starbase_starport
+                    owner = event_target:foc_mandalore_country
+                }
+            }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_swmap_mandalore }
+                if = {
+                    limit = { is_colony = no }
+                    create_colony = { owner = event_target:foc_mandalore_country }
+                    generate_start_deposits_and_blockers = yes
+                    clear_blockers = yes
+                    colony = {
+                        inline_script = "foc_v232i_safe_colony_layout"
+                    }
+
+                    # New games: Mandalore begins with a real Mandalorian
+                    # population instead of generic owner/default start pops.
+                    while = {
+                        count = 12
+                        create_pop_group = {
+                            size = 100
+                            species = event_target:foc_mandalore_species
+                        }
+                    }
+                    set_planet_flag = foc_mandalore_primary_population_seeded
+                }
+                else = {
+                    set_owner = event_target:foc_mandalore_country
+                    set_controller = event_target:foc_mandalore_country
+                    every_planet_army = { set_owner = event_target:foc_mandalore_country }
+                }
+                set_planet_flag = foc_mandalore_independent_homeworld
+                set_capital = yes
+            }
+            every_system_megastructure = { set_owner = event_target:foc_mandalore_country }
+            every_system_planet = {
+                set_surveyed = {
+                    surveyed = yes
+                    surveyor = event_target:foc_mandalore_country
+                }
+            }
+            event_target:foc_mandalore_country = { set_visited = prev }
+        }
+        event_target:foc_mandalore_country = {
+            if = {
+                limit = { NOT = { has_modifier = foc_mandalore_neutral_state } }
+                add_modifier = { modifier = foc_mandalore_neutral_state days = -1 }
+            }
+        }
+
+        foc_mandalore_enforce_primary_population = yes
+    }
+}
+
+foc_mandalore_set_satine_state = {
+    if = {
+        limit = { exists = event_target:foc_mandalore_country }
+        event_target:foc_mandalore_country = {
+            set_name = "FOC_MANDALORE"
+            remove_country_flag = foc_mandalore_maul_regime
+            remove_country_flag = foc_mandalore_bo_katan_government
+            set_country_flag = foc_mandalore_satine_government
+
+            # V128: recalculate after the story flag is present, so the interface
+            # resolves to gov_foc_mandalore_new_mandalorians rather than a generic government.
+            change_government = {
+                authority = auth_oligarchic
+                cooldown = no
+                remove_invalid_civics = yes
+                civics = {
+                    civic = civic_diplomatic_corps
+                    civic = civic_meritocracy
+                }
+            }
+
+            ruler = {
+                set_name = "FOC_SATINE_KRYZE"
+                change_leader_portrait = foc_mandalorian_species_01
+            }
+        }
+        foc_mandalore_enforce_primary_population = yes
+    }
+}
+
+foc_mandalore_maul_takeover = {
+    if = {
+        limit = { exists = event_target:foc_mandalore_country }
+        event_target:foc_mandalore_country = {
+            set_name = "FOC_MANDALORE_SHADOW_COLLECTIVE"
+            remove_country_flag = foc_mandalore_satine_government
+            remove_country_flag = foc_mandalore_bo_katan_government
+            set_country_flag = foc_mandalore_maul_regime
+
+            country_remove_ethic = ethic_fanatic_xenophile
+            country_remove_ethic = ethic_fanatic_pacifist
+            country_remove_ethic = ethic_fanatic_egalitarian
+            country_remove_ethic = ethic_fanatic_xenophobe
+            country_remove_ethic = ethic_fanatic_militarist
+            country_remove_ethic = ethic_fanatic_authoritarian
+            country_remove_ethic = ethic_fanatic_materialist
+            country_remove_ethic = ethic_fanatic_spiritualist
+            country_remove_ethic = ethic_xenophile
+            country_remove_ethic = ethic_pacifist
+            country_remove_ethic = ethic_egalitarian
+            country_remove_ethic = ethic_xenophobe
+            country_remove_ethic = ethic_militarist
+            country_remove_ethic = ethic_authoritarian
+            country_remove_ethic = ethic_materialist
+            country_remove_ethic = ethic_spiritualist
+            country_add_ethic = ethic_authoritarian
+            country_add_ethic = ethic_militarist
+            # Keep the Maul regime within Stellaris' legal ethic-point budget.
+            # Force allegiance is represented by leaders/events rather than a
+            # fourth government ethic point.
+
+            change_government = {
+                authority = auth_dictatorial
+                cooldown = no
+                remove_invalid_civics = yes
+                civics = {
+                    civic = civic_warrior_culture
+                    civic = civic_nationalistic_zeal
+                }
+            }
+
+            ruler = {
+                set_name = "FOC_MAUL_NAME"
+                change_leader_portrait = foc_mandalorian_species_01
+                set_leader_tier = leader_tier_legendary
+                if = { limit = { NOT = { has_trait = leader_trait_foc_force_sensitive } } add_trait = { trait = leader_trait_foc_force_sensitive consume_selection = no } }
+                if = { limit = { NOT = { has_trait = leader_trait_psionic } } add_trait = { trait = leader_trait_psionic consume_selection = no } }
+            }
+            remove_modifier = foc_mandalore_neutral_state
+            add_modifier = { modifier = foc_mandalore_shadow_collective_state days = -1 }
+
+            # V130: Maul's seizure of Mandalore places the Darksaber in the
+            # Mandalorian state's relic inventory. If it was stolen earlier,
+            # do not create a duplicate.
+            if = {
+                limit = {
+                    NOT = { has_relic = r_foc_darksaber }
+                    NOT = { any_country = { has_relic = r_foc_darksaber } }
+                }
+                add_relic = r_foc_darksaber
+            }
+        }
+        set_global_flag = foc_mandalore_maul_takeover_applied
+    }
+}
+
+foc_mandalore_bo_katan_restoration = {
+    if = {
+        limit = { exists = event_target:foc_mandalore_country }
+        event_target:foc_mandalore_country = {
+            set_name = "FOC_MANDALORE"
+            remove_country_flag = foc_mandalore_satine_government
+            remove_country_flag = foc_mandalore_maul_regime
+            set_country_flag = foc_mandalore_bo_katan_government
+
+            country_remove_ethic = ethic_fanatic_xenophile
+            country_remove_ethic = ethic_fanatic_pacifist
+            country_remove_ethic = ethic_fanatic_egalitarian
+            country_remove_ethic = ethic_fanatic_xenophobe
+            country_remove_ethic = ethic_fanatic_militarist
+            country_remove_ethic = ethic_fanatic_authoritarian
+            country_remove_ethic = ethic_fanatic_materialist
+            country_remove_ethic = ethic_fanatic_spiritualist
+            country_remove_ethic = ethic_xenophile
+            country_remove_ethic = ethic_pacifist
+            country_remove_ethic = ethic_egalitarian
+            country_remove_ethic = ethic_xenophobe
+            country_remove_ethic = ethic_militarist
+            country_remove_ethic = ethic_authoritarian
+            country_remove_ethic = ethic_materialist
+            country_remove_ethic = ethic_spiritualist
+            country_add_ethic = ethic_militarist
+            country_add_ethic = ethic_egalitarian
+            country_add_ethic = ethic_xenophile
+
+            change_government = {
+                authority = auth_oligarchic
+                cooldown = no
+                remove_invalid_civics = yes
+                civics = {
+                    civic = civic_warrior_culture
+                    civic = civic_citizen_service
+                }
+            }
+
+            ruler = {
+                set_name = "FOC_BO_KATAN_KRYZE"
+                change_leader_portrait = foc_bo_katan_legendary_01
+            }
+            remove_modifier = foc_mandalore_shadow_collective_state
+            remove_modifier = foc_mandalore_neutral_state
+            if = {
+                limit = { NOT = { has_modifier = foc_mandalore_clan_coalition } }
+                add_modifier = { modifier = foc_mandalore_clan_coalition days = -1 }
+            }
+        }
+
+        foc_mandalore_enforce_primary_population = yes
+        set_global_flag = foc_mandalore_bo_katan_restored
+    }
+}
+
+foc_mandalore_annex_by_empire = {
+    if = {
+        limit = {
+            exists = event_target:foc_swmap_mandalore_system
+            any_country = { has_country_flag = foc_republic_origin_empire_country }
+        }
+        random_country = {
+            limit = { has_country_flag = foc_republic_origin_empire_country }
+            save_global_event_target_as = foc_mandalore_annexing_empire
+        }
+        event_target:foc_swmap_mandalore_system = {
+            if = {
+                limit = { exists = starbase }
+                starbase = { set_owner = event_target:foc_mandalore_annexing_empire }
+            }
+            else = {
+                create_starbase = {
+                    size = starbase_starport
+                    owner = event_target:foc_mandalore_annexing_empire
+                }
+            }
+            every_system_planet = {
+                limit = { is_colony = yes }
+                set_owner = event_target:foc_mandalore_annexing_empire
+                set_controller = event_target:foc_mandalore_annexing_empire
+                every_planet_army = { set_owner = event_target:foc_mandalore_annexing_empire }
+            }
+            every_system_megastructure = { set_owner = event_target:foc_mandalore_annexing_empire }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_swmap_mandalore }
+                if = {
+                    limit = { NOT = { has_modifier = foc_mandalore_imperial_occupation } }
+                    add_modifier = { modifier = foc_mandalore_imperial_occupation days = -1 }
+                }
+            }
+        }
+        if = {
+            limit = { exists = event_target:foc_mandalore_country }
+            if = {
+                limit = {
+                    event_target:foc_mandalore_country = {
+                        has_relic = r_foc_darksaber
+                    }
+                }
+                event_target:foc_mandalore_country = {
+                    remove_relic = r_foc_darksaber
+                }
+                event_target:foc_mandalore_annexing_empire = {
+                    if = {
+                        limit = { NOT = { has_relic = r_foc_darksaber } }
+                        add_relic = r_foc_darksaber
+                    }
+                }
+            }
+            event_target:foc_mandalore_country = {
+                every_owned_fleet = { destroy_fleet = this }
+                destroy_country = yes
+            }
+            clear_global_event_target = foc_mandalore_country
+        }
+        set_global_flag = foc_mandalore_annexed_by_empire
+        set_global_flag = foc_mandalore_maul_escaped_imperial_custody
+        foc_mandalore_sync_concord_dawn_owner = yes
+        clear_global_event_target = foc_mandalore_annexing_empire
+    }
+}
+
+foc_mandalore_establish_gideon_base = {
+    if = {
+        limit = { exists = event_target:foc_swmap_mandalore_system }
+        event_target:foc_swmap_mandalore_system = {
+            every_system_planet = {
+                limit = { has_planet_flag = foc_swmap_mandalore }
+                if = {
+                    limit = { NOT = { has_modifier = foc_mandalore_gideon_secret_clone_base } }
+                    add_modifier = { modifier = foc_mandalore_gideon_secret_clone_base days = -1 }
+                }
+                set_planet_flag = foc_mandalore_gideon_clone_base
+            }
+        }
+        set_global_flag = foc_mandalore_gideon_base_active
+    }
+}
+
+foc_mandalore_restore_independent = {
+    # V207: make the restoration self-contained and do not mark it completed
+    # unless the independent country was actually recreated.
+    foc_mandalore_ensure_system_target = yes
+    foc_mandalore_ensure_species = yes
+    foc_mandalore_create_country = yes
+
+    if = {
+        limit = {
+            exists = event_target:foc_mandalore_country
+            exists = event_target:foc_swmap_mandalore_system
+        }
+
+        foc_mandalore_bo_katan_restoration = yes
+
+        event_target:foc_swmap_mandalore_system = {
+            every_system_planet = {
+                limit = { has_planet_flag = foc_swmap_mandalore }
+                remove_modifier = foc_mandalore_imperial_occupation
+                remove_modifier = foc_mandalore_gideon_secret_clone_base
+                remove_planet_flag = foc_mandalore_gideon_clone_base
+                set_planet_flag = foc_canon_mandalore_reclaimed
+
+                if = {
+                    limit = {
+                        is_colony = yes
+                        NOT = { has_planet_flag = foc_mandalore_returning_clans_seeded }
+                    }
+                    while = {
+                        count = 4
+                        create_pop_group = {
+                            size = 100
+                            species = event_target:foc_mandalore_species
+                        }
+                    }
+                    set_planet_flag = foc_mandalore_returning_clans_seeded
+                }
+            }
+        }
+
+        foc_mandalore_enforce_primary_population = yes
+
+        event_target:foc_mandalore_country = {
+            set_country_flag = foc_mandalore_post_treaty_independent
+            if = {
+                limit = { NOT = { has_modifier = foc_mandalore_restored_sovereignty } }
+                add_modifier = { modifier = foc_mandalore_restored_sovereignty days = -1 }
+            }
+        }
+
+        remove_global_flag = foc_mandalore_gideon_base_active
+        set_global_flag = foc_mandalore_restored_independent
+        foc_mandalore_sync_concord_dawn_owner = yes
+        log = "FOC_MANDALORE_V207: independent Mandalore restoration completed successfully."
+    }
+    else = {
+        log = "FOC_MANDALORE_V207: restoration deferred because the Mandalore country/system target is still missing."
+    }
+}
+
+# =============================================================================
+# V120 Treaty branches and legendary Mandalorian commanders
+# =============================================================================
+
+foc_mandalore_capture_treaty_control = {
+    # V207: record actual military control as well as legal starbase ownership.
+    # This matters when the Treaty is signed while Mandalore is occupied but the
+    # war has not yet transferred the system title.
+    foc_mandalore_ensure_system_target = yes
+    remove_global_flag = foc_mandalore_treaty_rebel_control
+    remove_global_flag = foc_mandalore_treaty_empire_control
+
+    if = {
+        limit = {
+            exists = event_target:foc_swmap_mandalore_system
+            event_target:foc_swmap_mandalore_system = {
+                OR = {
+                    space_owner? = {
+                        OR = {
+                            has_country_flag = foc_republic_origin_imperial_rebel_country
+                            has_country_flag = foc_republic_origin_rebel_alliance_country
+                            has_country_flag = foc_khan_rebel_alliance_country
+                            has_country_flag = foc_republic_origin_player_rebels
+                            has_country_flag = foc_republic_origin_post_treaty_rebel_country
+                            has_country_flag = foc_khan_first_order_resistance_country
+                            has_country_flag = foc_sw_new_republic_country
+                        }
+                    }
+                    any_system_planet = {
+                        has_planet_flag = foc_swmap_mandalore
+                        is_colony = yes
+                        OR = {
+                            owner = {
+                                OR = {
+                                    has_country_flag = foc_republic_origin_imperial_rebel_country
+                                    has_country_flag = foc_republic_origin_rebel_alliance_country
+                                    has_country_flag = foc_khan_rebel_alliance_country
+                                    has_country_flag = foc_republic_origin_player_rebels
+                                    has_country_flag = foc_republic_origin_post_treaty_rebel_country
+                                    has_country_flag = foc_khan_first_order_resistance_country
+                                    has_country_flag = foc_sw_new_republic_country
+                                }
+                            }
+                            controller = {
+                                OR = {
+                                    has_country_flag = foc_republic_origin_imperial_rebel_country
+                                    has_country_flag = foc_republic_origin_rebel_alliance_country
+                                    has_country_flag = foc_khan_rebel_alliance_country
+                                    has_country_flag = foc_republic_origin_player_rebels
+                                    has_country_flag = foc_republic_origin_post_treaty_rebel_country
+                                    has_country_flag = foc_khan_first_order_resistance_country
+                                    has_country_flag = foc_sw_new_republic_country
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        set_global_flag = foc_mandalore_treaty_rebel_control
+        log = "FOC_MANDALORE_V207: Treaty snapshot recorded Rebel control of Mandalore."
+    }
+    else_if = {
+        limit = {
+            exists = event_target:foc_swmap_mandalore_system
+            event_target:foc_swmap_mandalore_system = {
+                OR = {
+                    space_owner? = {
+                        OR = {
+                            has_country_flag = foc_republic_origin_empire_country
+                            has_country_flag = foc_republic_origin_player_empire
+                            has_country_flag = foc_sw_imperial_remnant_country
+                            has_country_flag = foc_republic_origin_player_imperial_remnant
+                            has_country_flag = foc_khan_first_order_country
+                            has_country_flag = fop_player_first_order
+                            has_country_flag = foc_republic_origin_became_first_order
+                            has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+                            has_country_flag = foc_khan_final_order_country
+                            has_country_flag = fop_player_final_order
+                        }
+                    }
+                    any_system_planet = {
+                        has_planet_flag = foc_swmap_mandalore
+                        is_colony = yes
+                        OR = {
+                            owner = {
+                                OR = {
+                                    has_country_flag = foc_republic_origin_empire_country
+                                    has_country_flag = foc_republic_origin_player_empire
+                                    has_country_flag = foc_sw_imperial_remnant_country
+                                    has_country_flag = foc_republic_origin_player_imperial_remnant
+                                    has_country_flag = foc_khan_first_order_country
+                                    has_country_flag = fop_player_first_order
+                                    has_country_flag = foc_republic_origin_became_first_order
+                                    has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+                                    has_country_flag = foc_khan_final_order_country
+                                    has_country_flag = fop_player_final_order
+                                }
+                            }
+                            controller = {
+                                OR = {
+                                    has_country_flag = foc_republic_origin_empire_country
+                                    has_country_flag = foc_republic_origin_player_empire
+                                    has_country_flag = foc_sw_imperial_remnant_country
+                                    has_country_flag = foc_republic_origin_player_imperial_remnant
+                                    has_country_flag = foc_khan_first_order_country
+                                    has_country_flag = fop_player_first_order
+                                    has_country_flag = foc_republic_origin_became_first_order
+                                    has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+                                    has_country_flag = foc_khan_final_order_country
+                                    has_country_flag = fop_player_final_order
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        set_global_flag = foc_mandalore_treaty_empire_control
+        log = "FOC_MANDALORE_V207: Treaty snapshot recorded Imperial control of Mandalore."
+    }
+    else_if = {
+        # If an old save left Mandalore independent after Order 66, canonical
+        # history and the exact Treaty territory table both place it with the
+        # Imperial Remnant.  This fallback prevents both branch flags remaining
+        # unset forever.
+        limit = {
+            has_global_flag = foc_republic_origin_jedi_purged
+            any_country = {
+                OR = {
+                    has_country_flag = foc_republic_origin_empire_country
+                    has_country_flag = foc_republic_origin_player_empire
+                    has_country_flag = foc_sw_imperial_remnant_country
+                    has_country_flag = foc_republic_origin_player_imperial_remnant
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = fop_player_first_order
+                    has_country_flag = foc_republic_origin_became_first_order
+                    has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+                    has_country_flag = foc_khan_final_order_country
+                    has_country_flag = fop_player_final_order
+                }
+            }
+        }
+        set_global_flag = foc_mandalore_treaty_empire_control
+        log = "FOC_MANDALORE_V207: Treaty control was unresolved; applied the canonical Imperial fallback."
+    }
+}
+foc_mandalore_find_new_republic = {
+    if = {
+        limit = { exists = event_target:foc_sw_new_republic }
+        if = {
+            limit = {
+                event_target:foc_sw_new_republic = {
+                    NOR = {
+                        has_country_flag = foc_sw_new_republic_country
+                        has_country_flag = foc_republic_origin_player_republic
+                        has_country_flag = foc_republic_origin_republic_country
+                    }
+                }
+            }
+            clear_global_event_target = foc_sw_new_republic
+        }
+    }
+    if = {
+        limit = { NOT = { exists = event_target:foc_sw_new_republic } }
+        random_country = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_sw_new_republic_country
+                    has_country_flag = foc_republic_origin_player_republic
+                    has_country_flag = foc_republic_origin_republic_country
+                }
+            }
+            save_global_event_target_as = foc_sw_new_republic
+        }
+    }
+}
+
+foc_mandalore_find_imperial_remnant = {
+    if = {
+        limit = { exists = event_target:foc_sw_imperial_remnant }
+        if = {
+            limit = {
+                event_target:foc_sw_imperial_remnant = {
+                    NOR = {
+                        has_country_flag = foc_sw_imperial_remnant_country
+                        has_country_flag = foc_republic_origin_player_imperial_remnant
+                    }
+                }
+            }
+            clear_global_event_target = foc_sw_imperial_remnant
+        }
+    }
+    if = {
+        limit = { NOT = { exists = event_target:foc_sw_imperial_remnant } }
+        random_country = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_sw_imperial_remnant_country
+                    has_country_flag = foc_republic_origin_player_imperial_remnant
+                }
+            }
+            save_global_event_target_as = foc_sw_imperial_remnant
+        }
+    }
+}
+
+foc_mandalore_grant_legendary_commanders = {
+    if = {
+        limit = { NOT = { any_owned_leader = { has_leader_flag = foc_bo_katan_legendary_leader } } }
+        create_leader = {
+            tier = leader_tier_legendary
+            class = commander
+            species = event_target:foc_mandalore_species
+            name = "FOC_BO_KATAN_KRYZE"
+            gender = female
+            skill = 10
+            event_leader = yes
+            skip_background_generation = yes
+            randomize_traits = no
+            traits = { 0 = subclass_commander_general }
+            effect = {
+                change_leader_portrait = foc_bo_katan_legendary_01
+                add_trait = { trait = leader_trait_foc_bo_katan_legendary consume_selection = no }
+                set_leader_flag = foc_bo_katan_legendary_leader
+                save_global_event_target_as = foc_bo_katan_legendary
+            }
+        }
+    }
+    if = {
+        limit = { NOT = { any_owned_leader = { has_leader_flag = foc_din_djarin_legendary_leader } } }
+        create_leader = {
+            tier = leader_tier_legendary
+            class = commander
+            species = event_target:foc_mandalore_species
+            name = "FOC_DIN_DJARIN"
+            gender = male
+            skill = 10
+            event_leader = yes
+            skip_background_generation = yes
+            randomize_traits = no
+            traits = { 0 = subclass_commander_general }
+            effect = {
+                change_leader_portrait = foc_din_djarin_legendary_01
+                add_trait = { trait = leader_trait_foc_din_djarin_legendary consume_selection = no }
+                set_leader_flag = foc_din_djarin_legendary_leader
+                save_global_event_target_as = foc_din_djarin_legendary
+            }
+        }
+    }
+    # Existing-save repair: if the legendary leaders already existed before
+    # V124, force the correct Mandalorian portraits again.
+    every_owned_leader = {
+        limit = { has_leader_flag = foc_bo_katan_legendary_leader }
+        change_leader_portrait = foc_bo_katan_legendary_01
+    }
+    every_owned_leader = {
+        limit = { has_leader_flag = foc_din_djarin_legendary_leader }
+        change_leader_portrait = foc_din_djarin_legendary_01
+    }
+
+    set_country_flag = foc_mandalore_legendary_commanders_present
+}
+
+foc_mandalore_transfer_to_new_republic = {
+    foc_mandalore_find_new_republic = yes
+    if = {
+        limit = {
+            exists = event_target:foc_swmap_mandalore_system
+            exists = event_target:foc_sw_new_republic
+        }
+
+        event_target:foc_swmap_mandalore_system = {
+            if = {
+                limit = { exists = starbase }
+                starbase = { set_owner = event_target:foc_sw_new_republic }
+            }
+            else = {
+                create_starbase = {
+                    size = starbase_starport
+                    owner = event_target:foc_sw_new_republic
+                }
+            }
+            every_system_planet = {
+                limit = { is_colony = yes }
+                set_owner = event_target:foc_sw_new_republic
+                set_controller = event_target:foc_sw_new_republic
+                every_planet_army = { set_owner = event_target:foc_sw_new_republic }
+            }
+            every_system_megastructure = { set_owner = event_target:foc_sw_new_republic }
+            every_system_planet = {
+                set_surveyed = {
+                    surveyed = yes
+                    surveyor = event_target:foc_sw_new_republic
+                }
+            }
+            event_target:foc_sw_new_republic = { set_visited = prev }
+        }
+
+        # Old-save cleanup: a missed Imperial annexation can leave the nominal
+        # independent Mandalore country alive.  Fold its remaining assets into
+        # the New Republic instead of leaving a zero-colony ghost country.
+        if = {
+            limit = {
+                exists = event_target:foc_mandalore_country
+                event_target:foc_mandalore_country = {
+                    NOT = { is_same_value = event_target:foc_sw_new_republic }
+                }
+            }
+            if = {
+                limit = { event_target:foc_mandalore_country = { has_relic = r_foc_darksaber } }
+                event_target:foc_mandalore_country = { remove_relic = r_foc_darksaber }
+                event_target:foc_sw_new_republic = {
+                    if = {
+                        limit = { NOT = { has_relic = r_foc_darksaber } }
+                        add_relic = r_foc_darksaber
+                    }
+                }
+            }
+            event_target:foc_mandalore_country = {
+                every_owned_fleet = { set_owner = event_target:foc_sw_new_republic }
+                destroy_country = yes
+            }
+            clear_global_event_target = foc_mandalore_country
+        }
+
+        event_target:foc_sw_new_republic = {
+            foc_mandalore_grant_legendary_commanders = yes
+        }
+        set_global_flag = foc_mandalore_annexed_into_new_republic
+        set_global_flag = foc_mandalore_new_republic_commanders_granted
+        foc_mandalore_sync_concord_dawn_owner = yes
+    }
+}
+
+
+
+# V207 - exact six-year clock for new games, plus bounded old-save recovery.
+# When the existing Treaty timeline proves that at least ten years have already
+# elapsed, the six-year restoration is overdue and may fire immediately.  If
+# only the +4y milestone has elapsed, wait two more years rather than restarting
+# a full six-year clock.
+foc_mandalore_start_or_repair_six_year_clock = {
+    if = {
+        limit = { NOT = { has_global_flag = foc_mandalore_six_year_clock_started } }
+        set_global_flag = foc_mandalore_six_year_clock_started
+
+        if = {
+            limit = {
+                has_global_flag = foc_v158_treaty_sequel_timeline_started
+                NOT = { has_global_flag = foc_v158_treaty_ben_10y_delay }
+            }
+            remove_global_flag = foc_mandalore_wait_restoration_six_years
+            log = "FOC_MANDALORE_V207: old Treaty save is at least ten years old; six-year restoration is immediately due."
+        }
+        else_if = {
+            limit = {
+                has_global_flag = foc_v158_treaty_sequel_timeline_started
+                NOT = { has_global_flag = foc_v158_treaty_luke_4y_delay }
+            }
+            set_timed_global_flag = {
+                flag = foc_mandalore_wait_restoration_six_years
+                days = 720
+            }
+            log = "FOC_MANDALORE_V207: old Treaty save passed year four; installed a bounded two-year restoration wait."
+        }
+        else = {
+            set_timed_global_flag = {
+                flag = foc_mandalore_wait_restoration_six_years
+                days = 2160
+            }
+            log = "FOC_MANDALORE_V207: exact six-year post-Treaty restoration clock started."
+        }
+    }
+}
+
+foc_mandalore_keep_with_imperial_remnant = {
+    foc_mandalore_find_imperial_remnant = yes
+    if = {
+        limit = {
+            exists = event_target:foc_swmap_mandalore_system
+            exists = event_target:foc_sw_imperial_remnant
+        }
+
+        event_target:foc_swmap_mandalore_system = {
+            if = {
+                limit = { exists = starbase }
+                starbase = { set_owner = event_target:foc_sw_imperial_remnant }
+            }
+            else = {
+                create_starbase = {
+                    size = starbase_starport
+                    owner = event_target:foc_sw_imperial_remnant
+                }
+            }
+            every_system_planet = {
+                limit = { is_colony = yes }
+                set_owner = event_target:foc_sw_imperial_remnant
+                set_controller = event_target:foc_sw_imperial_remnant
+                every_planet_army = { set_owner = event_target:foc_sw_imperial_remnant }
+            }
+            every_system_megastructure = { set_owner = event_target:foc_sw_imperial_remnant }
+            every_system_planet = {
+                set_surveyed = {
+                    surveyed = yes
+                    surveyor = event_target:foc_sw_imperial_remnant
+                }
+            }
+            event_target:foc_sw_imperial_remnant = { set_visited = prev }
+        }
+
+        # Old-save cleanup for a Mandalore country that incorrectly survived
+        # Order 66.  Imperial assets, including the Darksaber, pass to the Remnant.
+        if = {
+            limit = {
+                exists = event_target:foc_mandalore_country
+                event_target:foc_mandalore_country = {
+                    NOT = { is_same_value = event_target:foc_sw_imperial_remnant }
+                }
+            }
+            if = {
+                limit = { event_target:foc_mandalore_country = { has_relic = r_foc_darksaber } }
+                event_target:foc_mandalore_country = { remove_relic = r_foc_darksaber }
+                event_target:foc_sw_imperial_remnant = {
+                    if = {
+                        limit = { NOT = { has_relic = r_foc_darksaber } }
+                        add_relic = r_foc_darksaber
+                    }
+                }
+            }
+            event_target:foc_mandalore_country = {
+                every_owned_fleet = { set_owner = event_target:foc_sw_imperial_remnant }
+                destroy_country = yes
+            }
+            clear_global_event_target = foc_mandalore_country
+        }
+
+        foc_mandalore_start_or_repair_six_year_clock = yes
+        set_global_flag = foc_mandalore_post_treaty_imperial_occupation
+
+        if = {
+            limit = {
+                has_global_flag = foc_canon_mandalore_glassed
+                NOT = { has_global_flag = foc_mandalore_gideon_base_destroyed }
+            }
+            foc_mandalore_establish_gideon_base = yes
+        }
+
+        foc_mandalore_sync_concord_dawn_owner = yes
+    }
+}
+
+foc_mandalore_find_leia_rebels = {
+    if = {
+        limit = { exists = event_target:foc_mandalore_leia_rebels }
+        if = {
+            limit = {
+                event_target:foc_mandalore_leia_rebels = {
+                    NOR = {
+                        has_country_flag = foc_republic_origin_post_treaty_rebel_country
+                        has_country_flag = foc_khan_first_order_resistance_country
+                    }
+                }
+            }
+            clear_global_event_target = foc_mandalore_leia_rebels
+        }
+    }
+    if = {
+        limit = { NOT = { exists = event_target:foc_mandalore_leia_rebels } }
+        random_country = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_republic_origin_post_treaty_rebel_country
+                    has_country_flag = foc_khan_first_order_resistance_country
+                }
+            }
+            save_global_event_target_as = foc_mandalore_leia_rebels
+        }
+    }
+}
+
+foc_mandalore_commanders_join_leia = {
+    foc_mandalore_find_leia_rebels = yes
+    if = {
+        limit = { exists = event_target:foc_mandalore_leia_rebels NOT = { has_global_flag = foc_mandalore_commanders_joined_leia } }
+        event_target:foc_mandalore_leia_rebels = { foc_mandalore_grant_legendary_commanders = yes }
+        every_country = {
+            limit = { has_country_flag = foc_sw_new_republic_country NOT = { is_same_value = event_target:foc_mandalore_leia_rebels } }
+            every_owned_leader = {
+                limit = { OR = { has_leader_flag = foc_bo_katan_legendary_leader has_leader_flag = foc_din_djarin_legendary_leader } }
+                kill_leader = { show_notification = no }
+            }
+        }
+        set_global_flag = foc_mandalore_commanders_joined_leia
+    }
+}
+

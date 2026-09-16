@@ -1,0 +1,450 @@
+# V113 system scope: four Lucrehulk-class ships per detachment. Eight detachments
+# at the Clone Wars outbreak produce 32 hulls total. This is deliberately only a
+# modest increase over V112's 25: the Republic cannot mass-produce Venators until
+# the ~8-year Kuat expansion, begun after the Naboo Crisis, has finished.
+foc_trade_federation_spawn_lucrehulk_detachment = {
+    create_fleet = {
+        name = "FOC_TRADE_FEDERATION_LUCREHULK_FLEET"
+        settings = {
+            can_upgrade = no
+            can_disband = yes
+            can_change_composition = no
+            spawn_debris = yes
+            ai_ignore_strength = yes
+        }
+        effect = {
+            set_owner = event_target:foc_republic_origin_separatists
+            # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+}
+            
+
+            
+
+            
+            if = {
+                limit = { has_global_flag = foc_khan_strength_lowest }
+                while = { count = 4 create_ship = { name = random design = "NAME_FOC_TRADE_LUCREHULK_FOC_LOWEST" graphical_culture = cis_01 upgradable = no fleet_cache_recalc = yes } }
+            }
+            else = {
+                while = { count = 4 if = { limit = { has_global_flag = foc_khan_strength_madness }
+create_ship = { name = random design = "NAME_FOC_V236_CIS_LUCREHULK_ENHANCED" graphical_culture = cis_01 upgradable = no fleet_cache_recalc = yes }
+} else = {
+create_ship = { name = random design = "NAME_FOC_TRADE_LUCREHULK" graphical_culture = cis_01 upgradable = no fleet_cache_recalc = yes }
+} }
+            }
+            set_location = { target = prev distance = 55 angle = random }
+            set_aggro_range_measure_from = self
+            set_aggro_range = 9999
+            set_fleet_flag = foc_republic_origin_separatist_fleet
+            set_fleet_flag = foc_trade_federation_lucrehulk_fleet
+            every_owned_ship = {
+                set_ship_flag = foc_trade_federation_lucrehulk
+                if = {
+                    limit = { has_global_flag = foc_khan_strength_madness NOT = { has_modifier = foc_acot_sync_venator_lucrehulk } }
+                    add_modifier = { modifier = foc_acot_sync_venator_lucrehulk days = -1 }
+                }
+            }
+        }
+    }
+}
+
+# Country scope: place one 5-ship detachment at a random CIS-held system.
+foc_trade_federation_disperse_lucrehulk_detachment = {
+    random_system = {
+        limit = {
+            exists = starbase
+            starbase = { owner = { has_country_flag = foc_republic_origin_separatist_country } }
+        }
+        foc_trade_federation_spawn_lucrehulk_detachment = yes
+    }
+}
+
+
+
+# V205 system scope: opening garrison for each CIS-controlled star system.
+# Exactly one dedicated fleet of 25 Lucrehulks is created per system. The star
+# flag makes the pass resumable/idempotent and prevents duplicate fleets.
+foc_trade_federation_spawn_opening_system_25_lucrehulks = {
+    if = {
+        limit = { NOT = { has_star_flag = foc_v205_cis_opening_25_lucrehulks_spawned } }
+        set_star_flag = foc_v205_cis_opening_25_lucrehulks_spawned
+        create_fleet = {
+            name = "FOC_TRADE_FEDERATION_SYSTEM_LUCREHULK_FLEET"
+            settings = {
+                can_upgrade = no
+                can_disband = yes
+                can_change_composition = no
+                spawn_debris = yes
+                ai_ignore_strength = yes
+            }
+            effect = {
+                set_owner = event_target:foc_republic_origin_separatists
+                # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+}
+                
+
+                
+
+                
+                if = {
+                    limit = { has_global_flag = foc_khan_strength_lowest }
+                    while = { count = 25 create_ship = { name = random design = "NAME_FOC_TRADE_LUCREHULK_FOC_LOWEST" graphical_culture = cis_01 upgradable = no fleet_cache_recalc = yes } }
+                }
+                else = {
+                    while = { count = 25 if = { limit = { has_global_flag = foc_khan_strength_madness }
+create_ship = { name = random design = "NAME_FOC_V236_CIS_LUCREHULK_ENHANCED" graphical_culture = cis_01 upgradable = no fleet_cache_recalc = yes }
+} else = {
+create_ship = { name = random design = "NAME_FOC_TRADE_LUCREHULK" graphical_culture = cis_01 upgradable = no fleet_cache_recalc = yes }
+} }
+                }
+                set_location = { target = prev distance = 35 angle = random }
+                # V232: this scripted Lucrehulk fleet does not support an explicit
+                # aggressive stance in 4.4; aggro-range controls below are sufficient.
+                set_aggro_range_measure_from = self
+                set_aggro_range = 9999
+                set_formation_scale = 3
+                set_fleet_flag = foc_republic_origin_separatist_fleet
+                set_fleet_flag = foc_trade_federation_lucrehulk_fleet
+                set_fleet_flag = foc_v205_cis_opening_system_lucrehulk_fleet
+                every_owned_ship = {
+                    set_ship_flag = foc_trade_federation_lucrehulk
+                    if = {
+                        limit = { has_global_flag = foc_khan_strength_madness NOT = { has_modifier = foc_acot_sync_venator_lucrehulk } }
+                        add_modifier = { modifier = foc_acot_sync_venator_lucrehulk days = -1 }
+                    }
+                }
+            }
+        }
+    }
+}
+
+# V205 country scope: perform the opening deployment across every star system
+# whose current space owner is the Separatist country. This replaces the old
+# 32-hull distribution across a handful of task forces on new wars.
+foc_trade_federation_spawn_25_lucrehulks_in_every_controlled_system = {
+    if = {
+        limit = { NOT = { has_country_flag = foc_v205_cis_opening_system_fleets_done } }
+        every_system = {
+            limit = {
+                exists = space_owner
+                space_owner = { is_same_value = root }
+            }
+            foc_trade_federation_spawn_opening_system_25_lucrehulks = yes
+        }
+        set_country_flag = foc_v205_cis_opening_system_fleets_done
+        # Retire the older opening-contingent compatibility flags so no legacy
+        # repair pass adds the previous 32 Lucrehulks on top of the V205 package.
+        set_country_flag = foc_trade_federation_lucrehulks_distributed_v133
+        set_country_flag = foc_trade_federation_lucrehulks_spawned
+    }
+}
+
+# V133 fleet scope: put the opening Trade Federation Lucrehulks directly into
+# the existing Separatist task forces instead of creating eight standalone fleets.
+# The four original line fleets receive 2 each; the six saga heavy fleets and two
+# saga raider fleets receive one additional hull each: 4*2 + 8*3 = exactly 32.
+foc_trade_federation_add_initial_lucrehulks_to_fleet = {
+    if = {
+        limit = { NOT = { has_fleet_flag = foc_trade_federation_initial_lucrehulks_assigned } }
+        if = {
+            limit = { has_global_flag = foc_khan_strength_lowest }
+            while = {
+                count = 2
+                
+
+                
+
+                
+                # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+}
+                create_ship = {
+                    name = random
+                    design = "NAME_FOC_TRADE_LUCREHULK_FOC_LOWEST"
+                    graphical_culture = cis_01
+                    upgradable = no
+                    fleet_cache_recalc = yes
+                    effect = {
+                        set_ship_flag = foc_trade_federation_lucrehulk
+
+                    }
+                }
+            }
+            if = {
+                limit = { OR = { has_fleet_flag = foc_saga_separatist_heavy_fleet has_fleet_flag = foc_saga_separatist_raider_fleet } }
+                
+
+                
+
+                
+                # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+}
+                create_ship = {
+                    name = random
+                    design = "NAME_FOC_TRADE_LUCREHULK_FOC_LOWEST"
+                    graphical_culture = cis_01
+                    upgradable = no
+                    fleet_cache_recalc = yes
+                    effect = {
+                        set_ship_flag = foc_trade_federation_lucrehulk
+
+                    }
+                }
+            }
+        }
+        else = {
+            while = {
+                count = 2
+                if = { limit = { has_global_flag = foc_khan_strength_madness }
+
+
+
+# V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+}
+create_ship = {
+                    name = random
+                    design = "NAME_FOC_V236_CIS_LUCREHULK_ENHANCED"
+                    graphical_culture = cis_01
+                    upgradable = no
+                    fleet_cache_recalc = yes
+                    effect = {
+                        set_ship_flag = foc_trade_federation_lucrehulk
+                        if = {
+                            limit = { has_global_flag = foc_khan_strength_madness NOT = { has_modifier = foc_acot_sync_venator_lucrehulk } }
+                            add_modifier = { modifier = foc_acot_sync_venator_lucrehulk days = -1 }
+                        }
+                    }
+                }
+} else = {
+
+
+
+# V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+}
+create_ship = {
+                    name = random
+                    design = "NAME_FOC_TRADE_LUCREHULK"
+                    graphical_culture = cis_01
+                    upgradable = no
+                    fleet_cache_recalc = yes
+                    effect = {
+                        set_ship_flag = foc_trade_federation_lucrehulk
+                        if = {
+                            limit = { has_global_flag = foc_khan_strength_madness NOT = { has_modifier = foc_acot_sync_venator_lucrehulk } }
+                            add_modifier = { modifier = foc_acot_sync_venator_lucrehulk days = -1 }
+                        }
+                    }
+                }
+}
+            }
+            if = {
+                limit = { OR = { has_fleet_flag = foc_saga_separatist_heavy_fleet has_fleet_flag = foc_saga_separatist_raider_fleet } }
+                if = { limit = { has_global_flag = foc_khan_strength_madness }
+
+
+
+# V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+}
+create_ship = {
+                    name = random
+                    design = "NAME_FOC_V236_CIS_LUCREHULK_ENHANCED"
+                    graphical_culture = cis_01
+                    upgradable = no
+                    fleet_cache_recalc = yes
+                    effect = {
+                        set_ship_flag = foc_trade_federation_lucrehulk
+                        if = {
+                            limit = { has_global_flag = foc_khan_strength_madness NOT = { has_modifier = foc_acot_sync_venator_lucrehulk } }
+                            add_modifier = { modifier = foc_acot_sync_venator_lucrehulk days = -1 }
+                        }
+                    }
+                }
+} else = {
+
+
+
+# V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+}
+create_ship = {
+                    name = random
+                    design = "NAME_FOC_TRADE_LUCREHULK"
+                    graphical_culture = cis_01
+                    upgradable = no
+                    fleet_cache_recalc = yes
+                    effect = {
+                        set_ship_flag = foc_trade_federation_lucrehulk
+                        if = {
+                            limit = { has_global_flag = foc_khan_strength_madness NOT = { has_modifier = foc_acot_sync_venator_lucrehulk } }
+                            add_modifier = { modifier = foc_acot_sync_venator_lucrehulk days = -1 }
+                        }
+                    }
+                }
+}
+            }
+        }
+        set_fleet_flag = foc_trade_federation_initial_lucrehulks_assigned
+        set_fleet_flag = foc_trade_federation_lucrehulk_fleet
+    }
+}
+
+# Country scope. Called once after all twelve opening CIS fleets exist.
+foc_trade_federation_distribute_32_lucrehulks_to_initial_fleets = {
+    if = {
+        limit = { NOT = { has_country_flag = foc_trade_federation_lucrehulks_distributed_v133 } }
+        every_owned_fleet = {
+            limit = { has_fleet_flag = foc_republic_origin_separatist_fleet }
+            foc_trade_federation_add_initial_lucrehulks_to_fleet = yes
+        }
+        set_country_flag = foc_trade_federation_lucrehulks_distributed_v133
+        # Retain the legacy flag so old compatibility checks still see the opening contingent as spawned.
+        set_country_flag = foc_trade_federation_lucrehulks_spawned
+    }
+}
+
+# Country scope: one-time Trade Federation contingent, total exactly 32 hulls.
+foc_trade_federation_spawn_32_lucrehulks = {
+    if = {
+        limit = { NOT = { has_country_flag = foc_trade_federation_lucrehulks_spawned } }
+        set_country_flag = foc_trade_federation_lucrehulks_spawned
+        while = {
+            count = 8
+            foc_trade_federation_disperse_lucrehulk_detachment = yes
+        }
+    }
+}
+
+# Legacy compatibility ID retained for old events/saves. It now dispatches the
+# V113 32-hull contingent rather than the obsolete 25-hull package.
+foc_trade_federation_spawn_25_lucrehulks = {
+    foc_trade_federation_spawn_32_lucrehulks = yes
+}
+# V118e system scope: 180-day CIS reinforcement fleet, exactly 25 Lucrehulks.
+# Effect name is retained for save/patch compatibility; one fleet avoids 25 separate fleet objects.
+foc_trade_federation_spawn_monthly_25_lucrehulks = {
+    if = {
+        limit = { NOT = { has_global_flag = foc_v211_ai_support_cis_disabled } }
+        create_fleet = {
+            name = "FOC_TRADE_FEDERATION_LUCREHULK_FLEET"
+            settings = {
+                can_upgrade = no
+                can_disband = yes
+                can_change_composition = no
+                spawn_debris = yes
+                ai_ignore_strength = yes
+            }
+            effect = {
+                set_owner = event_target:foc_republic_origin_separatists
+                foc_v211_create_scaled_cis_25_lucrehulks = yes
+                set_location = { target = prev distance = 55 angle = random }
+                set_aggro_range_measure_from = self
+                set_aggro_range = 9999
+                set_fleet_flag = foc_republic_origin_separatist_fleet
+                set_fleet_flag = foc_trade_federation_lucrehulk_fleet
+                set_fleet_flag = foc_trade_federation_monthly_reinforcement
+                every_owned_ship = {
+                    set_ship_flag = foc_trade_federation_lucrehulk
+                    if = {
+                        limit = { has_global_flag = foc_khan_strength_madness NOT = { has_modifier = foc_acot_sync_venator_lucrehulk } }
+                        add_modifier = { modifier = foc_acot_sync_venator_lucrehulk days = -1 }
+                    }
+                }
+            }
+        }
+    }
+}
+
+# V137 system scope: dedicated Coruscant invasion force, exactly 25 Lucrehulks.
+# This is a story battle fleet, not an annual-support wave.
+foc_trade_federation_spawn_coruscant_25_lucrehulks = {
+    create_fleet = {
+        name = "FOC_TRADE_FEDERATION_CORUSCANT_INVASION"
+        settings = {
+            can_upgrade = no
+            can_disband = no
+            can_change_composition = no
+            spawn_debris = yes
+            ai_ignore_strength = yes
+        }
+        effect = {
+            set_owner = event_target:foc_republic_origin_separatists
+            # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+}
+            
+
+            
+
+            
+            if = {
+                limit = { has_global_flag = foc_khan_strength_lowest }
+                while = { count = 25 create_ship = { name = random design = "NAME_FOC_TRADE_LUCREHULK_FOC_LOWEST" graphical_culture = cis_01 upgradable = no fleet_cache_recalc = yes } }
+            }
+            else = {
+                while = { count = 25 if = { limit = { has_global_flag = foc_khan_strength_madness }
+create_ship = { name = random design = "NAME_FOC_V236_CIS_LUCREHULK_ENHANCED" graphical_culture = cis_01 upgradable = no fleet_cache_recalc = yes }
+} else = {
+create_ship = { name = random design = "NAME_FOC_TRADE_LUCREHULK" graphical_culture = cis_01 upgradable = no fleet_cache_recalc = yes }
+} }
+            }
+            set_location = { target = prev distance = 30 angle = random }
+            set_aggro_range_measure_from = self
+            set_aggro_range = 9999
+            set_formation_scale = 3
+            set_fleet_flag = foc_republic_origin_separatist_fleet
+            set_fleet_flag = foc_trade_federation_lucrehulk_fleet
+            set_fleet_flag = foc_saga_cw_coruscant_strike_fleet
+            every_owned_ship = {
+                set_ship_flag = foc_trade_federation_lucrehulk
+                if = {
+                    limit = { has_global_flag = foc_khan_strength_madness NOT = { has_modifier = foc_acot_sync_venator_lucrehulk } }
+                    add_modifier = { modifier = foc_acot_sync_venator_lucrehulk days = -1 }
+                }
+            }
+        }
+    }
+}
+
+# V144 country scope: every recurring Separatist support fleet appears at
+# Geonosis. The controller already stops the support chain when Geonosis is lost,
+# so there is deliberately no capital/random-system fallback here.
+foc_trade_federation_monthly_25_lucrehulks = {
+    random_system = {
+        limit = {
+            has_star_flag = foc_swmap_geonosis_home
+            space_owner? = { is_same_value = root }
+            NOT = {
+                any_system_planet = {
+                    is_colony = yes
+                    NOT = { owner = { is_same_value = root } }
+                }
+            }
+        }
+        foc_trade_federation_spawn_monthly_25_lucrehulks = yes
+    }
+}
+

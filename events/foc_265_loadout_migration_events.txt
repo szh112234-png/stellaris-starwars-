@@ -1,0 +1,27 @@
+namespace = foc_265_migration
+
+
+country_event = {
+    id = foc_265_migration.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        has_country_flag = foc_khan_first_order_country
+        NOT = { has_country_flag = foc_v141_265_migration_complete }
+    }
+    immediate = {
+        set_country_flag = foc_v141_265_migration_complete
+        every_owned_starbase = {
+            limit = { has_starbase_size = foc_starkiller_ring NOT = { has_starbase_flag = foc_starkiller_265_forced } }
+            set_starbase_size = foc_starkiller_ring
+            set_starbase_module = { slot = 1 module = foc_starkiller_crisis_integrated_defense }
+            set_starbase_module = { slot = 2 module = foc_starkiller_crisis_integrated_defense }
+            set_starbase_module = { slot = 3 module = foc_starkiller_crisis_integrated_defense }
+            set_starbase_module = { slot = 4 module = foc_starkiller_crisis_integrated_defense }
+            set_starbase_module = { slot = 5 module = foc_starkiller_crisis_integrated_defense }
+            set_starbase_module = { slot = 6 module = foc_starkiller_crisis_integrated_defense }
+            set_starbase_flag = foc_starkiller_265_forced
+        }
+        log = "FOC_2.65_ACTIVE: Starkiller 4H4X24P, Resurgent 6H44L, Starhawk removed, all crisis design slots filled."
+    }
+}

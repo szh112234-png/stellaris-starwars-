@@ -1,0 +1,260 @@
+# =============================================================================
+# 分离主义强化：舰队、补充与升级
+# =============================================================================
+# 不覆盖 foc_republic_origin_effects.txt 里的任何东西。原有的
+# foc_republic_origin_spawn_separatist_line_fleet 继续负责开战时那四支舰队，
+# 本文件只在其之上追加更重的编制、战争中期的增援，以及阵亡补充。
+# =============================================================================
+
+# 系统作用域。分离主义重型远征舰队：比原始编制多约四成吨位。
+foc_saga_spawn_separatist_heavy_fleet = {
+    create_fleet = {
+        name = "FOC_REPUBLIC_ORIGIN_SEPARATIST_LINE_FLEET"
+        settings = {
+            can_upgrade = yes
+            can_disband = yes
+            can_change_composition = no
+            spawn_debris = yes
+            ai_ignore_strength = yes
+        }
+        effect = {
+            set_owner = event_target:foc_republic_origin_separatists
+            while = { count = 5 foc_v236_create_cis_battleship = yes }
+            while = { count = 10 foc_v236_create_cis_cruiser = yes }
+            while = { count = 14 foc_v236_create_cis_destroyer = yes }
+            while = { count = 24 foc_v236_create_cis_corvette = yes }
+            set_location = { target = prev distance = 50 angle = random }
+            set_fleet_stance = aggressive
+            set_aggro_range_measure_from = self
+            set_aggro_range = 9999
+            set_fleet_flag = foc_republic_origin_separatist_fleet
+            set_fleet_flag = foc_saga_separatist_heavy_fleet
+        }
+    }
+}
+
+# 系统作用域。前线突击群：小、快、烦人，专门骚扰共和国的补给线。
+foc_saga_spawn_separatist_raider_fleet = {
+    create_fleet = {
+        name = "FOC_SAGA_SEPARATIST_RAID_FLEET"
+        settings = {
+            can_upgrade = yes
+            can_disband = yes
+            can_change_composition = no
+            spawn_debris = yes
+            ai_ignore_strength = yes
+        }
+        effect = {
+            set_owner = event_target:foc_republic_origin_separatists
+            while = { count = 2 foc_v236_create_cis_cruiser = yes }
+            while = { count = 8 foc_v236_create_cis_destroyer = yes }
+            while = { count = 16 foc_v236_create_cis_corvette = yes }
+            set_location = { target = prev distance = 45 angle = random }
+            set_fleet_stance = aggressive
+            set_aggro_range_measure_from = self
+            set_aggro_range = 9999
+            set_fleet_flag = foc_republic_origin_separatist_fleet
+            set_fleet_flag = foc_saga_separatist_raider_fleet
+        }
+    }
+}
+
+# 国家作用域（分离主义）。把增援分散到邦联疆域各处，而不是全部堆在阿基瓦，
+# 这样共和国不能靠一次决战解决问题，必须真的打完外环。
+foc_saga_separatist_disperse_reinforcements = {
+    random_system = {
+        limit = {
+            has_star_flag = foc_sw_imperial_remnant_cluster
+            exists = starbase
+            starbase = { owner = { has_country_flag = foc_republic_origin_separatist_country } }
+        }
+        foc_saga_spawn_separatist_heavy_fleet = yes
+    }
+}
+
+foc_saga_separatist_disperse_raiders = {
+    random_system = {
+        limit = {
+            has_star_flag = foc_sw_imperial_remnant_cluster
+            exists = starbase
+            starbase = { owner = { has_country_flag = foc_republic_origin_separatist_country } }
+        }
+        foc_saga_spawn_separatist_raider_fleet = yes
+    }
+}
+
+# 国家作用域（分离主义）。开战阶段的完整战争机器：在阿基瓦集结主力，
+# 同时在外环各地铺开第二梯队与突击群。
+foc_saga_separatist_initial_buildup = {
+    add_modifier = { modifier = foc_saga_separatist_war_machine days = -1 }
+    add_resource = {
+        energy = 500000
+        minerals = 500000
+        alloys = 500000
+        food = 200000
+        consumer_goods = 200000
+        unity = 250000
+    }
+    if = {
+        limit = { foc_v209_cis_reinforcements_allowed = yes }
+        if = {
+            limit = { exists = event_target:foc_sw_akiva_system }
+            event_target:foc_sw_akiva_system = {
+                foc_saga_spawn_separatist_heavy_fleet = yes
+                foc_saga_spawn_separatist_heavy_fleet = yes
+                foc_saga_spawn_separatist_heavy_fleet = yes
+            }
+        }
+        while = {
+            count = 3
+            foc_saga_separatist_disperse_reinforcements = yes
+        }
+        while = {
+            count = 2
+            foc_saga_separatist_disperse_raiders = yes
+        }
+        # V205: every star system controlled by the Separatists at the outbreak of
+        # the Clone Wars receives its own dedicated 25-Lucrehulk fleet.
+        foc_trade_federation_spawn_25_lucrehulks_in_every_controlled_system = yes
+    }
+}
+
+# 国家作用域（分离主义）。战争中期的两次升级。
+foc_saga_separatist_grievous_command = {
+    # V232o: a delayed callback must not recreate the General after his death.
+    if = {
+        limit = { NOT = { has_global_flag = foc_saga_grievous_dead } }
+        add_modifier = { modifier = foc_saga_grievous_command days = -1 }
+        create_leader = {
+            tier = leader_tier_legendary
+            class = commander
+            species = owner_main_species
+            name = "FOC_SAGA_GRIEVOUS_NAME"
+            gender = male
+            skill = 9
+            event_leader = yes
+            skip_background_generation = yes
+            randomize_traits = no
+            traits = {
+                0 = subclass_commander_general
+            }
+            effect = {
+                change_leader_portrait = foc_saga_grievous_01
+                set_leader_flag = foc_saga_grievous_leader
+            }
+        }
+        # Grievous still becomes commander and grants the command modifier, but
+        # the associated fleet package is disabled at the stage-II cutoff.
+        if = {
+            limit = { foc_v209_cis_reinforcements_allowed = yes }
+            if = {
+                limit = { exists = event_target:foc_sw_akiva_system }
+                event_target:foc_sw_akiva_system = {
+                    foc_saga_spawn_separatist_heavy_fleet = yes
+                }
+            }
+            while = {
+                count = 2
+                foc_saga_separatist_disperse_reinforcements = yes
+            }
+            while = {
+                count = 2
+                foc_saga_separatist_disperse_raiders = yes
+            }
+        }
+    }
+}
+
+foc_saga_separatist_mobilise_combines = {
+    add_modifier = { modifier = foc_saga_separatist_full_mobilisation days = -1 }
+    # The full-mobilisation modifier remains, but no additional ships are added
+    # once Palpatine has reached the end of stage II.
+    if = {
+        limit = { foc_v209_cis_reinforcements_allowed = yes }
+        while = {
+            count = 4
+            foc_saga_separatist_disperse_reinforcements = yes
+        }
+        while = {
+            count = 3
+            foc_saga_separatist_disperse_raiders = yes
+        }
+    }
+}
+
+# V136: removed the 90-day casualty replacement effect.
+
+# -----------------------------------------------------------------------------
+# 乌塔帕：格里弗斯将军之死
+# -----------------------------------------------------------------------------
+# 国家作用域（共和国方调用，作用于邦联）。原本 foc_saga_separatist_grievous_command
+# 那个指挥加成会一直留到邦联投降为止，与乌塔帕的结局对不上。
+foc_saga_kill_grievous = {
+    every_country = {
+        limit = { has_country_flag = foc_republic_origin_separatist_country }
+        remove_modifier = foc_saga_grievous_command
+        remove_country_flag = foc_saga_grievous_cis_ruler
+        every_owned_leader = {
+            limit = { has_leader_flag = foc_saga_grievous_leader }
+            set_immortal = no
+            kill_leader = { show_notification = no }
+        }
+    }
+}
+
+# V86: After Dooku dies over Coruscant, Grievous becomes the actual CIS ruler.
+# Country scope: Confederacy of Independent Systems.
+foc_saga_grievous_becomes_cis_ruler = {
+    if = {
+        limit = { NOT = { has_global_flag = foc_saga_grievous_dead } }
+        if = {
+            limit = { NOT = { any_owned_leader = { has_leader_flag = foc_saga_grievous_leader } } }
+            create_leader = {
+                tier = leader_tier_legendary
+                class = commander
+                species = owner_main_species
+                name = "FOC_SAGA_GRIEVOUS_NAME"
+                gender = male
+                skill = 9
+                event_leader = yes
+                skip_background_generation = yes
+                randomize_traits = no
+                effect = {
+                    change_leader_portrait = foc_saga_grievous_01
+                    set_leader_flag = foc_saga_grievous_leader
+                }
+            }
+        }
+        if = {
+            limit = { any_owned_leader = { has_leader_flag = foc_saga_grievous_leader } }
+            random_owned_leader = {
+                limit = { has_leader_flag = foc_saga_grievous_leader }
+                set_leader_flag = foc_saga_grievous_cis_ruler_leader
+                save_event_target_as = foc_v232r_grievous_ruler
+            }
+            set_leader = event_target:foc_v232r_grievous_ruler
+            set_country_flag = foc_saga_cis_grievous_done
+            set_country_flag = foc_saga_grievous_cis_ruler
+            if = {
+                limit = { NOT = { has_modifier = foc_saga_grievous_command } }
+                add_modifier = { modifier = foc_saga_grievous_command days = -1 }
+            }
+        }
+    }
+}
+
+# V90: Out-of-order fallback.  If Utapau already killed Grievous before Coruscant,
+# Dooku still dies at Coruscant but no named character is resurrected.  Killing the
+# current ruler lets the CIS government generate/elect its normal random successor.
+foc_saga_random_cis_successor_after_coruscant = {
+    set_country_flag = foc_saga_cis_random_successor_after_coruscant
+    remove_country_flag = foc_saga_grievous_cis_ruler
+    remove_modifier = foc_saga_grievous_command
+    if = {
+        limit = { exists = ruler }
+        ruler = {
+            set_immortal = no
+            kill_leader = { show_notification = no }
+        }
+    }
+}

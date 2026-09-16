@@ -1,0 +1,396 @@
+# FOC mode artillery bows. Each variant replaces four L batteries with two X batteries.
+# The original sections are retained for LOWEST mode and existing custom save designs.
+# Hull entities, surviving locators, utility slots, PD and hangars are unchanged.
+
+# ISD_BOW: four equipped large batteries consolidated into two X batteries.
+ship_section_template = {
+    ship_size = imperialsd
+	key = "FOC_V17_4_ISD_BOW_X"
+	fits_on_slot = bow
+	entity = "imperialsd_bow_entity"
+	icon = "GFX_ship_part_core_bow"
+	
+	component_slot = {
+		name = "LARGE_GUN_01"
+		template = "imperialsd_large_turret"
+		locatorname = "weapon_01"
+	}	
+	component_slot = {
+		name = "LARGE_GUN_02"
+		template = "imperialsd_large_turret"
+		locatorname = "weapon_02"
+	}
+	component_slot = {
+		name = "LARGE_GUN_03"
+		template = "imperialsd_large_turret"
+		locatorname = "weapon_03"
+	}
+	component_slot = {
+		name = "LARGE_GUN_04"
+		template = "imperialsd_large_turret"
+		locatorname = "weapon_04"
+	}
+	component_slot = {
+		name = "LARGE_GUN_05"
+		template = "imperialsd_large_turret"
+		locatorname = "weapon_05"
+	}
+	component_slot = {
+		name = "LARGE_GUN_06"
+		template = "imperialsd_large_turret"
+		locatorname = "weapon_06"
+	}
+	component_slot = {
+		name = "LARGE_GUN_07"
+		template = "imperialsd_large_turret"
+		locatorname = "weapon_07"
+	}
+	component_slot = {
+		name = "LARGE_GUN_08"
+		template = "imperialsd_large_turret"
+		locatorname = "weapon_08"
+	}	
+	component_slot = {
+		name = "LARGE_GUN_09"
+		template = "imperialsd_large_turret"
+		locatorname = "weapon_017"
+	}
+	component_slot = {
+		name = "LARGE_GUN_10"
+		template = "imperialsd_large_turret"
+		locatorname = "weapon_018"
+	}
+	component_slot = {
+		name = "LARGE_GUN_11"
+		template = "imperialsd_large_turret"
+		locatorname = "weapon_019"
+	}
+	component_slot = {
+		name = "LARGE_GUN_12"
+		template = "imperialsd_large_turret"
+		locatorname = "weapon_020"
+	}	
+	component_slot = {
+		name = "SMALL_GUN_01"
+		template = "imperialsd_point_defence_turret"
+		locatorname = "weapon_018"
+	}
+	component_slot = {
+		name = "SMALL_GUN_02"
+		template = "imperialsd_point_defence_turret"
+		locatorname = "weapon_019"
+	}
+	component_slot = {
+		name = "SMALL_GUN_03"
+		template = "imperialsd_point_defence_turret"
+		locatorname = "weapon_020"
+	}	
+
+	component_slot = {
+		name = "EXTRA_LARGE_01"
+		template = "foc_v17_4_imperial_extra_large_turret"
+		locatorname = "weapon_01"
+	}
+	component_slot = {
+		name = "EXTRA_LARGE_02"
+		template = "foc_v17_4_imperial_extra_large_turret"
+		locatorname = "weapon_02"
+	}
+	
+	
+	
+	large_utility_slots = 5
+	aux_utility_slots = 0
+	
+	resources = {
+		category = ship_sections
+		cost = {
+		}
+	}
+}
+
+
+# FOC_ISD2_BOW: four equipped large batteries consolidated into two X batteries.
+ship_section_template = {
+    ship_size = foc_imperialsd2
+	key = "FOC_V17_4_ISD2_BOW_X"
+	fits_on_slot = bow
+	entity = "foc_v1717j_isd2_scaled_hull_entity"
+	icon = "GFX_ship_part_core_bow"
+	
+	component_slot = {
+		name = "LARGE_GUN_01"
+		template = "imperialsd_large_turret"
+		locatorname = "large_gun_01"
+	}	
+	component_slot = {
+		name = "LARGE_GUN_02"
+		template = "imperialsd_large_turret"
+		locatorname = "large_gun_02"
+	}
+	component_slot = {
+		name = "LARGE_GUN_03"
+		template = "imperialsd_large_turret"
+		locatorname = "large_gun_03"
+	}
+	component_slot = {
+		name = "LARGE_GUN_04"
+		template = "imperialsd_large_turret"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_05"
+		template = "imperialsd_large_turret"
+		locatorname = "large_gun_02"
+	}
+	component_slot = {
+		name = "LARGE_GUN_06"
+		template = "imperialsd_large_turret"
+		locatorname = "large_gun_03"
+	}
+	component_slot = {
+		name = "LARGE_GUN_07"
+		template = "imperialsd_large_turret"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_08"
+		template = "imperialsd_large_turret"
+		locatorname = "large_gun_02"
+	}	
+	component_slot = {
+		name = "LARGE_GUN_09"
+		template = "imperialsd_large_turret"
+		locatorname = "large_gun_03"
+	}
+	component_slot = {
+		name = "LARGE_GUN_10"
+		template = "imperialsd_large_turret"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_11"
+		template = "imperialsd_large_turret"
+		locatorname = "large_gun_02"
+	}
+	component_slot = {
+		name = "LARGE_GUN_12"
+		template = "imperialsd_large_turret"
+		locatorname = "large_gun_03"
+	}	
+	component_slot = {
+		name = "SMALL_GUN_01"
+		template = "imperialsd_point_defence_turret"
+		locatorname = "small_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_02"
+		template = "imperialsd_point_defence_turret"
+		locatorname = "small_gun_02"
+	}
+	component_slot = {
+		name = "SMALL_GUN_03"
+		template = "imperialsd_point_defence_turret"
+		locatorname = "small_gun_03"
+	}	
+
+	component_slot = {
+		name = "EXTRA_LARGE_01"
+		template = "foc_v17_4_imperial_extra_large_turret"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "EXTRA_LARGE_02"
+		template = "foc_v17_4_imperial_extra_large_turret"
+		locatorname = "large_gun_02"
+	}
+	
+	
+	
+	large_utility_slots = 5
+	aux_utility_slots = 0
+	
+	resources = {
+		category = ship_sections
+		cost = {
+		}
+	}
+}
+
+
+# FOC_V118ISD_BOW: four equipped large batteries consolidated into two X batteries.
+ship_section_template = {
+    ship_size = foc_v118_imperialsd_bastion
+	key = "FOC_V17_4_BASTION_ISD2_BOW_X"
+	fits_on_slot = bow
+	entity = "foc_v1717j_isd2_scaled_hull_entity"
+	icon = "GFX_ship_part_core_bow"
+	
+	component_slot = {
+		name = "LARGE_GUN_01"
+		template = "imperialsd_large_turret"
+		locatorname = "large_gun_01"
+	}	
+	component_slot = {
+		name = "LARGE_GUN_02"
+		template = "imperialsd_large_turret"
+		locatorname = "large_gun_02"
+	}
+	component_slot = {
+		name = "LARGE_GUN_03"
+		template = "imperialsd_large_turret"
+		locatorname = "large_gun_03"
+	}
+	component_slot = {
+		name = "LARGE_GUN_04"
+		template = "imperialsd_large_turret"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_05"
+		template = "imperialsd_large_turret"
+		locatorname = "large_gun_02"
+	}
+	component_slot = {
+		name = "LARGE_GUN_06"
+		template = "imperialsd_large_turret"
+		locatorname = "large_gun_03"
+	}
+	component_slot = {
+		name = "LARGE_GUN_07"
+		template = "imperialsd_large_turret"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_08"
+		template = "imperialsd_large_turret"
+		locatorname = "large_gun_02"
+	}	
+	component_slot = {
+		name = "LARGE_GUN_09"
+		template = "imperialsd_large_turret"
+		locatorname = "large_gun_03"
+	}
+	component_slot = {
+		name = "LARGE_GUN_10"
+		template = "imperialsd_large_turret"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "LARGE_GUN_11"
+		template = "imperialsd_large_turret"
+		locatorname = "large_gun_02"
+	}
+	component_slot = {
+		name = "LARGE_GUN_12"
+		template = "imperialsd_large_turret"
+		locatorname = "large_gun_03"
+	}	
+	component_slot = {
+		name = "SMALL_GUN_01"
+		template = "imperialsd_point_defence_turret"
+		locatorname = "small_gun_01"
+	}
+	component_slot = {
+		name = "SMALL_GUN_02"
+		template = "imperialsd_point_defence_turret"
+		locatorname = "small_gun_02"
+	}
+	component_slot = {
+		name = "SMALL_GUN_03"
+		template = "imperialsd_point_defence_turret"
+		locatorname = "small_gun_03"
+	}	
+
+	component_slot = {
+		name = "EXTRA_LARGE_01"
+		template = "foc_v17_4_imperial_extra_large_turret"
+		locatorname = "large_gun_01"
+	}
+	component_slot = {
+		name = "EXTRA_LARGE_02"
+		template = "foc_v17_4_imperial_extra_large_turret"
+		locatorname = "large_gun_02"
+	}
+	
+	
+	
+	large_utility_slots = 5
+	aux_utility_slots = 0
+	
+	resources = {
+		category = ship_sections
+		cost = {
+		}
+	}
+}
+
+
+# FOC_REBEL_MC80_LINE_BOW: four equipped large batteries consolidated into two X batteries.
+ship_section_template = {
+    ship_size = foc_rebel_mc80_line
+    key = "FOC_V17_4_MC80_LINE_BOW_X"
+    fits_on_slot = bow
+    entity = "foc_v1717j_mc80_line_bow_entity"
+    icon = "GFX_ship_part_core_bow"
+    ai_weight = { factor = 0 }
+    component_slot = { name = "EXTRA_LARGE_01" template = "foc_v17_4_mc80_extra_large_turret" locatorname = "large_gun_01" }
+    component_slot = { name = "EXTRA_LARGE_02" template = "foc_v17_4_mc80_extra_large_turret" locatorname = "large_gun_02" }
+    
+    
+    component_slot = { name = "MEDIUM_GUN_01" template = "medium_turret" locatorname = "medium_gun_01" }
+    component_slot = { name = "MEDIUM_GUN_02" template = "medium_turret" locatorname = "medium_gun_02" }
+    component_slot = { name = "MEDIUM_GUN_03" template = "medium_turret" locatorname = "medium_gun_03" }
+    component_slot = { name = "SMALL_GUN_01" template = "small_turret" locatorname = "small_gun_01" }
+    component_slot = { name = "SMALL_GUN_02" template = "small_turret" locatorname = "small_gun_02" }
+    component_slot = { name = "POINT_DEFENCE_01" template = "foc_rebel_mc80_point_defence_turret" locatorname = "small_gun_03" }
+    component_slot = { name = "POINT_DEFENCE_02" template = "foc_rebel_mc80_point_defence_turret" locatorname = "small_gun_04" }
+    component_slot = { name = "STRIKE_CRAFT_01" template = "large_strike_craft" locatorname = "strike_craft_locator_01" }
+
+    large_utility_slots = 5
+    aux_utility_slots = 0
+    resources = { category = ship_sections cost = { } }
+}
+
+
+# FOC_REBEL_MC80_BOW: four equipped large batteries consolidated into two X batteries.
+ship_section_template = {
+    ship_size = foc_v15_rebel_mc80
+    key = "FOC_V17_4_MC80_BOW_X"
+    fits_on_slot = bow
+    entity = "battleship_bow_L2_entity"
+    icon = "GFX_ship_part_core_bow"
+    ai_weight = {
+        factor = 0
+    }
+    component_slot = {
+        name = "LARGE_GUN_01"
+        template = "large_turret"
+        locatorname = "large_gun_01"
+    }
+    component_slot = {
+        name = "LARGE_GUN_02"
+        template = "large_turret"
+        locatorname = "large_gun_02"
+    }
+    component_slot = {
+        name = "EXTRA_LARGE_01"
+        template = "foc_v17_4_mc80_extra_large_turret"
+        locatorname = "large_gun_01"
+    }
+    component_slot = {
+        name = "EXTRA_LARGE_02"
+        template = "foc_v17_4_mc80_extra_large_turret"
+        locatorname = "large_gun_02"
+    }
+    
+    
+    large_utility_slots = 3
+    prerequisites = { foc_tech_rebel_ship_sections }
+    resources = {
+        category = ship_sections
+        cost = {
+            alloys = 700
+        }
+    }
+}

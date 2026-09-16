@@ -1,0 +1,37 @@
+# FOC V225: robot species only. V223 biological species additions were removed.
+
+foc_v223_ensure_droid_species = {
+    if = {
+        limit = { NOT = { exists = event_target:foc_v223_protocol_droid_species } }
+        create_species = {
+            name = foc_v223_protocol_droid_name plural = foc_v223_protocol_droid_plural adjective = foc_v223_protocol_droid_adjective
+            class = "ROBOT" namelist = "MACHINE1" portrait = "foc_v223_c3po" homeworld = this
+            # V231b: administrative/protocol pattern takes the imported
+            # trait_robot_tacticaldroid (1708335879).
+            traits = { trait = "trait_mechanical" trait = "trait_robot_tacticaldroid" }
+        }
+        last_created_species = { set_species_flag = foc_v223_protocol_droid_species save_global_event_target_as = foc_v223_protocol_droid_species }
+    }
+    if = {
+        limit = { NOT = { exists = event_target:foc_v223_astromech_droid_species } }
+        create_species = {
+            name = foc_v223_astromech_droid_name plural = foc_v223_astromech_droid_plural adjective = foc_v223_astromech_droid_adjective
+            class = "ROBOT" namelist = "MACHINE1" portrait = "foc_v230_astromech_droid" homeworld = this
+            # V231b: astromech technical pattern takes the imported
+            # trait_robot_tacticaldroid (1708335879).
+            traits = { trait = "trait_mechanical" trait = "trait_robot_tacticaldroid" }
+        }
+        last_created_species = { set_species_flag = foc_v223_astromech_droid_species save_global_event_target_as = foc_v223_astromech_droid_species }
+    }
+    if = {
+        limit = { NOT = { exists = event_target:foc_v223_security_droid_species } }
+        create_species = {
+            name = foc_v223_security_droid_name plural = foc_v223_security_droid_plural adjective = foc_v223_security_droid_adjective
+            class = "ROBOT" namelist = "MACHINE1" portrait = "foc_v223_k2so" homeworld = this
+            # V231b: security/combat pattern takes the imported
+            # trait_robot_battledroid (1708335879).
+            traits = { trait = "trait_mechanical" trait = "trait_robot_battledroid" }
+        }
+        last_created_species = { set_species_flag = foc_v223_security_droid_species save_global_event_target_as = foc_v223_security_droid_species }
+    }
+}

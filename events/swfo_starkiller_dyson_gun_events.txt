@@ -1,0 +1,2236 @@
+namespace = myk_starkiller_dyson
+
+# Player and crisis shared targeting start.
+# THIS = selected target system; FROM = firing Starkiller megastructure.
+# Player target-system selection. The native scripted action is only a one-day
+# selector shell. The real 180-day charge is scheduled only after the player
+# confirms a star or planet target, so time spent in the event cannot consume it.
+system_event = {
+    id = myk_starkiller_dyson.8001
+    hide_window = yes
+    is_triggered_only = yes
+
+    # 1.89: Duplicate-start guard. If the base is already busy or a shot is
+    # already scheduled, ignore a second selector start so the saved global
+    # event targets cannot be clobbered mid-sequence.
+    trigger = {
+        OR = {
+            NOT = { exists = from }
+            from = {
+                NOR = {
+                    has_megastructure_flag = myk_starkiller_player_busy
+                    has_megastructure_flag = myk_starkiller_player_shot_scheduled
+                }
+            }
+        }
+    }
+
+    immediate = {
+        log = "SWFO_STARKILLER_DYSON V17: target system selected; opening celestial target menu."
+
+        save_global_event_target_as = myk_starkiller_target_system
+        star = { save_global_event_target_as = myk_starkiller_selected_target_star }
+
+        every_system_planet = {
+            limit = { has_planet_flag = myk_starkiller_selected_target_planet }
+            remove_planet_flag = myk_starkiller_selected_target_planet
+        }
+        every_system_planet = {
+            limit = { has_planet_flag = myk_starkiller_target_list_reserved }
+            remove_planet_flag = myk_starkiller_target_list_reserved
+        }
+        if = { limit = { exists = event_target:myk_starkiller_selected_target_planet } clear_global_event_target = myk_starkiller_selected_target_planet }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_01 } clear_global_event_target = myk_starkiller_planet_target_01 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_02 } clear_global_event_target = myk_starkiller_planet_target_02 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_03 } clear_global_event_target = myk_starkiller_planet_target_03 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_04 } clear_global_event_target = myk_starkiller_planet_target_04 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_05 } clear_global_event_target = myk_starkiller_planet_target_05 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_06 } clear_global_event_target = myk_starkiller_planet_target_06 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_07 } clear_global_event_target = myk_starkiller_planet_target_07 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_08 } clear_global_event_target = myk_starkiller_planet_target_08 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_09 } clear_global_event_target = myk_starkiller_planet_target_09 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_10 } clear_global_event_target = myk_starkiller_planet_target_10 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_11 } clear_global_event_target = myk_starkiller_planet_target_11 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_12 } clear_global_event_target = myk_starkiller_planet_target_12 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_13 } clear_global_event_target = myk_starkiller_planet_target_13 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_14 } clear_global_event_target = myk_starkiller_planet_target_14 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_15 } clear_global_event_target = myk_starkiller_planet_target_15 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_16 } clear_global_event_target = myk_starkiller_planet_target_16 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_17 } clear_global_event_target = myk_starkiller_planet_target_17 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_18 } clear_global_event_target = myk_starkiller_planet_target_18 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_19 } clear_global_event_target = myk_starkiller_planet_target_19 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_20 } clear_global_event_target = myk_starkiller_planet_target_20 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_21 } clear_global_event_target = myk_starkiller_planet_target_21 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_22 } clear_global_event_target = myk_starkiller_planet_target_22 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_23 } clear_global_event_target = myk_starkiller_planet_target_23 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_24 } clear_global_event_target = myk_starkiller_planet_target_24 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_25 } clear_global_event_target = myk_starkiller_planet_target_25 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_26 } clear_global_event_target = myk_starkiller_planet_target_26 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_27 } clear_global_event_target = myk_starkiller_planet_target_27 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_28 } clear_global_event_target = myk_starkiller_planet_target_28 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_29 } clear_global_event_target = myk_starkiller_planet_target_29 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_30 } clear_global_event_target = myk_starkiller_planet_target_30 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_31 } clear_global_event_target = myk_starkiller_planet_target_31 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_32 } clear_global_event_target = myk_starkiller_planet_target_32 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_33 } clear_global_event_target = myk_starkiller_planet_target_33 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_34 } clear_global_event_target = myk_starkiller_planet_target_34 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_35 } clear_global_event_target = myk_starkiller_planet_target_35 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_36 } clear_global_event_target = myk_starkiller_planet_target_36 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_37 } clear_global_event_target = myk_starkiller_planet_target_37 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_38 } clear_global_event_target = myk_starkiller_planet_target_38 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_39 } clear_global_event_target = myk_starkiller_planet_target_39 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_40 } clear_global_event_target = myk_starkiller_planet_target_40 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_41 } clear_global_event_target = myk_starkiller_planet_target_41 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_42 } clear_global_event_target = myk_starkiller_planet_target_42 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_43 } clear_global_event_target = myk_starkiller_planet_target_43 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_44 } clear_global_event_target = myk_starkiller_planet_target_44 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_45 } clear_global_event_target = myk_starkiller_planet_target_45 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_46 } clear_global_event_target = myk_starkiller_planet_target_46 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_47 } clear_global_event_target = myk_starkiller_planet_target_47 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_48 } clear_global_event_target = myk_starkiller_planet_target_48 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_49 } clear_global_event_target = myk_starkiller_planet_target_49 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_50 } clear_global_event_target = myk_starkiller_planet_target_50 }
+
+        # Save every non-star celestial body into up to 50 independent slots.
+        # Temporary reservation flags prevent duplicate entries and are removed
+        # before the target event opens.
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_01
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_02
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_03
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_04
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_05
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_06
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_07
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_08
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_09
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_10
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_11
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_12
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_13
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_14
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_15
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_16
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_17
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_18
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_19
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_20
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_21
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_22
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_23
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_24
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_25
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_26
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_27
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_28
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_29
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_30
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_31
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_32
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_33
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_34
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_35
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_36
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_37
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_38
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_39
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_40
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_41
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_42
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_43
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_44
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_45
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_46
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_47
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_48
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_49
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        random_system_planet = {
+            limit = {
+                is_star = no
+                NOT = { has_planet_flag = myk_starkiller_target_list_reserved }
+            }
+            save_global_event_target_as = myk_starkiller_planet_target_50
+            set_planet_flag = myk_starkiller_target_list_reserved
+        }
+        every_system_planet = {
+            limit = { has_planet_flag = myk_starkiller_target_list_reserved }
+            remove_planet_flag = myk_starkiller_target_list_reserved
+        }
+
+        if = {
+            limit = { exists = from }
+            from = {
+                save_global_event_target_as = myk_starkiller_base_megastructure
+                remove_megastructure_flag = myk_starkiller_player_shot_cancelled
+                # 1.89: myk_starkiller_player_busy is NO LONGER set here.
+                # Setting it during on_started made the action's own `possible`
+                # check fail while the one-day selector shell was still running,
+                # so the shell never completed and the native 180-day cooldown
+                # bar never appeared. The engine already blocks re-use while the
+                # action is in progress and while its cooldown is ticking; the
+                # busy flag is now set only at impact (event 8000) to cover the
+                # post-impact recharge window.
+                owner = { save_global_event_target_as = myk_starkiller_base_owner }
+                solar_system = {
+                    save_global_event_target_as = myk_starkiller_base_system
+                    random_system_planet = {
+                        limit = {
+                            is_star = no
+                            OR = {
+                                has_planet_flag = myk_starkiller_base_planet_flag
+                                has_planet_flag = foc_khan_starkiller_anchor
+                            }
+                        }
+                        save_global_event_target_as = myk_starkiller_base_planet
+                    }
+                }
+            }
+        }
+
+        if = {
+            limit = { exists = event_target:myk_starkiller_base_owner }
+            event_target:myk_starkiller_base_owner = {
+                remove_country_flag = myk_starkiller_target_mode_star
+                remove_country_flag = myk_starkiller_target_mode_planet
+                remove_country_flag = myk_starkiller_target_mode_all_planets
+                if = {
+                    limit = { is_ai = yes }
+                    set_country_flag = myk_starkiller_target_mode_star
+                    country_event = { id = myk_starkiller_dyson.8101 }
+                }
+                else = {
+                    # Human players first choose the strike mode. The planet list
+                    # is opened only after selecting the single-planet branch.
+                    country_event = { id = myk_starkiller_dyson.8090 }
+                }
+            }
+        }
+
+    }
+}
+
+# Human player first-level strike-mode menu.
+# No firing timer begins until one of the three destructive options is confirmed.
+country_event = {
+    id = myk_starkiller_dyson.8090
+    title = myk_starkiller_dyson.8090.title
+    desc = myk_starkiller_dyson.8090.desc
+    picture = GFX_foc_event_starkiller_base_popup
+    is_triggered_only = yes
+    auto_opens = yes
+    force_open = yes
+
+    # Destroy the star and the entire target system.
+    option = {
+        name = myk_starkiller_target_star_option
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_planet
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_star
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    # Destroy all ordinary colonizable/habitable planets in the target system.
+    # This uses the existing safe all-planets branch and leaves the star intact.
+    option = {
+        name = myk_starkiller_target_all_habitable_option
+        trigger = {
+            exists = event_target:myk_starkiller_target_system
+            event_target:myk_starkiller_target_system = {
+                any_system_planet = {
+                    myk_starkiller_is_habitable_target = yes
+                }
+            }
+        }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_planet
+            set_country_flag = myk_starkiller_target_mode_all_planets
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    # Open the second-level paginated celestial-body selector.
+    option = {
+        name = myk_starkiller_target_single_planet_menu
+        trigger = { exists = event_target:myk_starkiller_planet_target_01 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_planet
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            country_event = { id = myk_starkiller_dyson.8100 }
+        }
+    }
+
+    option = {
+        name = CANCEL
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_planet
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            if = {
+                limit = { exists = event_target:myk_starkiller_base_megastructure }
+                event_target:myk_starkiller_base_megastructure = {
+                    remove_megastructure_flag = myk_starkiller_player_busy
+                    remove_megastructure_flag = myk_starkiller_player_shot_cancelled
+                }
+            }
+            if = {
+                limit = { exists = event_target:myk_starkiller_target_system }
+                event_target:myk_starkiller_target_system = {
+                    system_event = { id = myk_starkiller_dyson.8003 days = 0 }
+                }
+            }
+        }
+    }
+}
+
+# Human player second-level single-celestial-body menu.
+country_event = {
+    id = myk_starkiller_dyson.8100
+    title = myk_starkiller_dyson.8102.title
+    desc = myk_starkiller_dyson.8102.desc
+    picture = GFX_foc_event_starkiller_base_popup
+    is_triggered_only = yes
+    auto_opens = yes
+    force_open = yes
+
+    option = {
+        name = myk_starkiller_back_to_main_menu
+        hidden_effect = {
+            country_event = { id = myk_starkiller_dyson.8090 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_01
+        trigger = { exists = event_target:myk_starkiller_planet_target_01 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_01 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_02
+        trigger = { exists = event_target:myk_starkiller_planet_target_02 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_02 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_03
+        trigger = { exists = event_target:myk_starkiller_planet_target_03 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_03 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_04
+        trigger = { exists = event_target:myk_starkiller_planet_target_04 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_04 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_05
+        trigger = { exists = event_target:myk_starkiller_planet_target_05 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_05 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_06
+        trigger = { exists = event_target:myk_starkiller_planet_target_06 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_06 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_07
+        trigger = { exists = event_target:myk_starkiller_planet_target_07 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_07 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_08
+        trigger = { exists = event_target:myk_starkiller_planet_target_08 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_08 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_next_target_page
+        trigger = { exists = event_target:myk_starkiller_planet_target_09 }
+        hidden_effect = { country_event = { id = myk_starkiller_dyson.8110 } }
+    }
+
+    option = {
+        name = CANCEL
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_planet
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            if = {
+                limit = { exists = event_target:myk_starkiller_base_megastructure }
+                event_target:myk_starkiller_base_megastructure = {
+                    remove_megastructure_flag = myk_starkiller_player_busy
+                    remove_megastructure_flag = myk_starkiller_player_shot_cancelled
+                }
+            }
+            if = {
+                limit = { exists = event_target:myk_starkiller_target_system }
+                event_target:myk_starkiller_target_system = {
+                    system_event = { id = myk_starkiller_dyson.8003 days = 0 }
+                }
+            }
+        }
+    }
+}
+
+# Human player celestial-target menu page.
+country_event = {
+    id = myk_starkiller_dyson.8110
+    title = myk_starkiller_dyson.8102.title
+    desc = myk_starkiller_dyson.8102.desc
+    picture = GFX_foc_event_starkiller_base_popup
+    is_triggered_only = yes
+    auto_opens = yes
+    force_open = yes
+
+    option = {
+        name = myk_starkiller_target_planet_option_09
+        trigger = { exists = event_target:myk_starkiller_planet_target_09 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_09 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_10
+        trigger = { exists = event_target:myk_starkiller_planet_target_10 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_10 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_11
+        trigger = { exists = event_target:myk_starkiller_planet_target_11 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_11 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_12
+        trigger = { exists = event_target:myk_starkiller_planet_target_12 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_12 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_13
+        trigger = { exists = event_target:myk_starkiller_planet_target_13 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_13 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_14
+        trigger = { exists = event_target:myk_starkiller_planet_target_14 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_14 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_15
+        trigger = { exists = event_target:myk_starkiller_planet_target_15 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_15 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_16
+        trigger = { exists = event_target:myk_starkiller_planet_target_16 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_16 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_previous_target_page
+        hidden_effect = { country_event = { id = myk_starkiller_dyson.8100 } }
+    }
+
+    option = {
+        name = myk_starkiller_next_target_page
+        trigger = { exists = event_target:myk_starkiller_planet_target_17 }
+        hidden_effect = { country_event = { id = myk_starkiller_dyson.8120 } }
+    }
+
+    option = {
+        name = CANCEL
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_planet
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            if = {
+                limit = { exists = event_target:myk_starkiller_base_megastructure }
+                event_target:myk_starkiller_base_megastructure = {
+                    remove_megastructure_flag = myk_starkiller_player_busy
+                    remove_megastructure_flag = myk_starkiller_player_shot_cancelled
+                }
+            }
+            if = {
+                limit = { exists = event_target:myk_starkiller_target_system }
+                event_target:myk_starkiller_target_system = {
+                    system_event = { id = myk_starkiller_dyson.8003 days = 0 }
+                }
+            }
+        }
+    }
+}
+
+# Human player celestial-target menu page.
+country_event = {
+    id = myk_starkiller_dyson.8120
+    title = myk_starkiller_dyson.8102.title
+    desc = myk_starkiller_dyson.8102.desc
+    picture = GFX_foc_event_starkiller_base_popup
+    is_triggered_only = yes
+    auto_opens = yes
+    force_open = yes
+
+    option = {
+        name = myk_starkiller_target_planet_option_17
+        trigger = { exists = event_target:myk_starkiller_planet_target_17 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_17 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_18
+        trigger = { exists = event_target:myk_starkiller_planet_target_18 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_18 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_19
+        trigger = { exists = event_target:myk_starkiller_planet_target_19 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_19 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_20
+        trigger = { exists = event_target:myk_starkiller_planet_target_20 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_20 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_21
+        trigger = { exists = event_target:myk_starkiller_planet_target_21 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_21 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_22
+        trigger = { exists = event_target:myk_starkiller_planet_target_22 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_22 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_23
+        trigger = { exists = event_target:myk_starkiller_planet_target_23 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_23 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_24
+        trigger = { exists = event_target:myk_starkiller_planet_target_24 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_24 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_previous_target_page
+        hidden_effect = { country_event = { id = myk_starkiller_dyson.8110 } }
+    }
+
+    option = {
+        name = myk_starkiller_next_target_page
+        trigger = { exists = event_target:myk_starkiller_planet_target_25 }
+        hidden_effect = { country_event = { id = myk_starkiller_dyson.8130 } }
+    }
+
+    option = {
+        name = CANCEL
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_planet
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            if = {
+                limit = { exists = event_target:myk_starkiller_base_megastructure }
+                event_target:myk_starkiller_base_megastructure = {
+                    remove_megastructure_flag = myk_starkiller_player_busy
+                    remove_megastructure_flag = myk_starkiller_player_shot_cancelled
+                }
+            }
+            if = {
+                limit = { exists = event_target:myk_starkiller_target_system }
+                event_target:myk_starkiller_target_system = {
+                    system_event = { id = myk_starkiller_dyson.8003 days = 0 }
+                }
+            }
+        }
+    }
+}
+
+# Human player celestial-target menu page.
+country_event = {
+    id = myk_starkiller_dyson.8130
+    title = myk_starkiller_dyson.8102.title
+    desc = myk_starkiller_dyson.8102.desc
+    picture = GFX_foc_event_starkiller_base_popup
+    is_triggered_only = yes
+    auto_opens = yes
+    force_open = yes
+
+    option = {
+        name = myk_starkiller_target_planet_option_25
+        trigger = { exists = event_target:myk_starkiller_planet_target_25 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_25 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_26
+        trigger = { exists = event_target:myk_starkiller_planet_target_26 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_26 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_27
+        trigger = { exists = event_target:myk_starkiller_planet_target_27 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_27 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_28
+        trigger = { exists = event_target:myk_starkiller_planet_target_28 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_28 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_29
+        trigger = { exists = event_target:myk_starkiller_planet_target_29 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_29 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_30
+        trigger = { exists = event_target:myk_starkiller_planet_target_30 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_30 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_31
+        trigger = { exists = event_target:myk_starkiller_planet_target_31 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_31 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_32
+        trigger = { exists = event_target:myk_starkiller_planet_target_32 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_32 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_previous_target_page
+        hidden_effect = { country_event = { id = myk_starkiller_dyson.8120 } }
+    }
+
+    option = {
+        name = myk_starkiller_next_target_page
+        trigger = { exists = event_target:myk_starkiller_planet_target_33 }
+        hidden_effect = { country_event = { id = myk_starkiller_dyson.8140 } }
+    }
+
+    option = {
+        name = CANCEL
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_planet
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            if = {
+                limit = { exists = event_target:myk_starkiller_base_megastructure }
+                event_target:myk_starkiller_base_megastructure = {
+                    remove_megastructure_flag = myk_starkiller_player_busy
+                    remove_megastructure_flag = myk_starkiller_player_shot_cancelled
+                }
+            }
+            if = {
+                limit = { exists = event_target:myk_starkiller_target_system }
+                event_target:myk_starkiller_target_system = {
+                    system_event = { id = myk_starkiller_dyson.8003 days = 0 }
+                }
+            }
+        }
+    }
+}
+
+# Human player celestial-target menu page.
+country_event = {
+    id = myk_starkiller_dyson.8140
+    title = myk_starkiller_dyson.8102.title
+    desc = myk_starkiller_dyson.8102.desc
+    picture = GFX_foc_event_starkiller_base_popup
+    is_triggered_only = yes
+    auto_opens = yes
+    force_open = yes
+
+    option = {
+        name = myk_starkiller_target_planet_option_33
+        trigger = { exists = event_target:myk_starkiller_planet_target_33 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_33 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_34
+        trigger = { exists = event_target:myk_starkiller_planet_target_34 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_34 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_35
+        trigger = { exists = event_target:myk_starkiller_planet_target_35 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_35 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_36
+        trigger = { exists = event_target:myk_starkiller_planet_target_36 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_36 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_37
+        trigger = { exists = event_target:myk_starkiller_planet_target_37 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_37 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_38
+        trigger = { exists = event_target:myk_starkiller_planet_target_38 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_38 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_39
+        trigger = { exists = event_target:myk_starkiller_planet_target_39 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_39 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_40
+        trigger = { exists = event_target:myk_starkiller_planet_target_40 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_40 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_previous_target_page
+        hidden_effect = { country_event = { id = myk_starkiller_dyson.8130 } }
+    }
+
+    option = {
+        name = myk_starkiller_next_target_page
+        trigger = { exists = event_target:myk_starkiller_planet_target_41 }
+        hidden_effect = { country_event = { id = myk_starkiller_dyson.8150 } }
+    }
+
+    option = {
+        name = CANCEL
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_planet
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            if = {
+                limit = { exists = event_target:myk_starkiller_base_megastructure }
+                event_target:myk_starkiller_base_megastructure = {
+                    remove_megastructure_flag = myk_starkiller_player_busy
+                    remove_megastructure_flag = myk_starkiller_player_shot_cancelled
+                }
+            }
+            if = {
+                limit = { exists = event_target:myk_starkiller_target_system }
+                event_target:myk_starkiller_target_system = {
+                    system_event = { id = myk_starkiller_dyson.8003 days = 0 }
+                }
+            }
+        }
+    }
+}
+
+# Human player celestial-target menu page.
+country_event = {
+    id = myk_starkiller_dyson.8150
+    title = myk_starkiller_dyson.8102.title
+    desc = myk_starkiller_dyson.8102.desc
+    picture = GFX_foc_event_starkiller_base_popup
+    is_triggered_only = yes
+    auto_opens = yes
+    force_open = yes
+
+    option = {
+        name = myk_starkiller_target_planet_option_41
+        trigger = { exists = event_target:myk_starkiller_planet_target_41 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_41 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_42
+        trigger = { exists = event_target:myk_starkiller_planet_target_42 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_42 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_43
+        trigger = { exists = event_target:myk_starkiller_planet_target_43 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_43 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_44
+        trigger = { exists = event_target:myk_starkiller_planet_target_44 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_44 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_45
+        trigger = { exists = event_target:myk_starkiller_planet_target_45 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_45 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_46
+        trigger = { exists = event_target:myk_starkiller_planet_target_46 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_46 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_47
+        trigger = { exists = event_target:myk_starkiller_planet_target_47 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_47 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_48
+        trigger = { exists = event_target:myk_starkiller_planet_target_48 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_48 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_previous_target_page
+        hidden_effect = { country_event = { id = myk_starkiller_dyson.8140 } }
+    }
+
+    option = {
+        name = myk_starkiller_next_target_page
+        trigger = { exists = event_target:myk_starkiller_planet_target_49 }
+        hidden_effect = { country_event = { id = myk_starkiller_dyson.8160 } }
+    }
+
+    option = {
+        name = CANCEL
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_planet
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            if = {
+                limit = { exists = event_target:myk_starkiller_base_megastructure }
+                event_target:myk_starkiller_base_megastructure = {
+                    remove_megastructure_flag = myk_starkiller_player_busy
+                    remove_megastructure_flag = myk_starkiller_player_shot_cancelled
+                }
+            }
+            if = {
+                limit = { exists = event_target:myk_starkiller_target_system }
+                event_target:myk_starkiller_target_system = {
+                    system_event = { id = myk_starkiller_dyson.8003 days = 0 }
+                }
+            }
+        }
+    }
+}
+
+# Human player celestial-target menu page.
+country_event = {
+    id = myk_starkiller_dyson.8160
+    title = myk_starkiller_dyson.8102.title
+    desc = myk_starkiller_dyson.8102.desc
+    picture = GFX_foc_event_starkiller_base_popup
+    is_triggered_only = yes
+    auto_opens = yes
+    force_open = yes
+
+    option = {
+        name = myk_starkiller_target_planet_option_49
+        trigger = { exists = event_target:myk_starkiller_planet_target_49 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_49 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_target_planet_option_50
+        trigger = { exists = event_target:myk_starkiller_planet_target_50 }
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            set_country_flag = myk_starkiller_target_mode_planet
+            event_target:myk_starkiller_planet_target_50 = {
+                set_planet_flag = myk_starkiller_selected_target_planet
+                save_global_event_target_as = myk_starkiller_selected_target_planet
+            }
+            country_event = { id = myk_starkiller_dyson.8101 }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_previous_target_page
+        hidden_effect = { country_event = { id = myk_starkiller_dyson.8150 } }
+    }
+
+    option = {
+        name = CANCEL
+        hidden_effect = {
+            remove_country_flag = myk_starkiller_target_mode_star
+            remove_country_flag = myk_starkiller_target_mode_planet
+            remove_country_flag = myk_starkiller_target_mode_all_planets
+            if = {
+                limit = { exists = event_target:myk_starkiller_base_megastructure }
+                event_target:myk_starkiller_base_megastructure = {
+                    remove_megastructure_flag = myk_starkiller_player_busy
+                    remove_megastructure_flag = myk_starkiller_player_shot_cancelled
+                }
+            }
+            if = {
+                limit = { exists = event_target:myk_starkiller_target_system }
+                event_target:myk_starkiller_target_system = {
+                    system_event = { id = myk_starkiller_dyson.8003 days = 0 }
+                }
+            }
+        }
+    }
+}
+
+# Start charge only after a target celestial body has been chosen.
+# Start the real 180-day charge only after a celestial target has been confirmed.
+country_event = {
+    id = myk_starkiller_dyson.8101
+    hide_window = yes
+    is_triggered_only = yes
+
+    immediate = {
+        # 2.12: firing at another regular empire is an immediate act of war.
+        # Kuat uses the vanilla colossus war goal for the same Starkiller reaction.
+        if = {
+            limit = {
+                exists = event_target:myk_starkiller_base_owner
+                exists = event_target:myk_starkiller_target_system
+                event_target:myk_starkiller_target_system = { exists = space_owner }
+            }
+            event_target:myk_starkiller_target_system = {
+                space_owner = { save_global_event_target_as = myk_starkiller_player_target_country }
+            }
+            if = {
+                limit = {
+                    exists = event_target:myk_starkiller_player_target_country
+                    event_target:myk_starkiller_player_target_country = { is_regular_empire = yes }
+                    event_target:myk_starkiller_base_owner = {
+                        NOT = { is_same_value = event_target:myk_starkiller_player_target_country }
+                        NOT = { is_at_war_with = event_target:myk_starkiller_player_target_country }
+                    }
+                }
+                event_target:myk_starkiller_base_owner = {
+                    declare_war = {
+                        target = event_target:myk_starkiller_player_target_country
+                        attacker_war_goal = wg_colossus
+                    }
+                    set_faction_hostility = {
+                        target = event_target:myk_starkiller_player_target_country
+                        set_hostile = yes
+                        set_neutral = no
+                        set_friendly = no
+                    }
+                }
+                event_target:myk_starkiller_player_target_country = {
+                    set_faction_hostility = {
+                        target = event_target:myk_starkiller_base_owner
+                        set_hostile = yes
+                        set_neutral = no
+                        set_friendly = no
+                    }
+                }
+            }
+        }
+
+        # Idempotent scheduling guard: one target confirmation can create only
+        # one visual event and one impact event, even if the menu callback fires twice.
+        if = {
+            limit = {
+                exists = event_target:myk_starkiller_target_system
+                exists = event_target:myk_starkiller_base_megastructure
+                event_target:myk_starkiller_base_megastructure = {
+                    NOT = { has_megastructure_flag = myk_starkiller_player_shot_scheduled }
+                }
+            }
+            event_target:myk_starkiller_base_megastructure = {
+                set_megastructure_flag = myk_starkiller_player_shot_scheduled
+            }
+            event_target:myk_starkiller_target_system = {
+                # Display the existing Starkiller beam throughout the full
+                # 180-day firing sequence. Duplicate impact scheduling is still
+                # blocked by myk_starkiller_player_shot_scheduled on the base.
+                system_event = {
+                    id = myk_starkiller_dyson.8002
+                    days = 0
+                    scopes = { from = event_target:myk_starkiller_base_megastructure }
+                }
+                system_event = {
+                    id = myk_starkiller_dyson.8000
+                    days = 180
+                    scopes = { from = event_target:myk_starkiller_base_megastructure }
+                }
+
+                if = {
+                    limit = {
+                        space_owner? = {
+                            NOT = { is_same_value = event_target:myk_starkiller_base_owner }
+                        }
+                    }
+                    space_owner = {
+                        create_message = {
+                            type = MESSAGE_DYSON_TARGETED
+                            localization = MESSAGE_DYSON_TARGETED_DESC
+                            days = 180
+                            target = event_target:myk_starkiller_target_system
+                            variable = {
+                                type = name
+                                localization = SYSTEM
+                                scope = event_target:myk_starkiller_target_system
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+# Spawn and preserve the automatically generated beam carrier megastructures.
+# These temporary origin/target markers are required by the light-beam entities and
+# must not be removed until the delayed cleanup event after impact.
+# Place the target impact marker on the selected star
+# or selected ordinary habitable planet.
+system_event = {
+    id = myk_starkiller_dyson.8002
+    hide_window = yes
+    is_triggered_only = yes
+
+    immediate = {
+        log = "SWFO_STARKILLER_DYSON V20: full-duration one-shot beam visual begins."
+
+        # V185: firing itself is the declaration of war. Do not wait for the
+        # 180-day impact callback. Keep the legacy first_real_impact flag name
+        # only for save compatibility; from this version it means first real shot.
+        if = {
+            limit = { exists = event_target:myk_starkiller_base_owner }
+            event_target:myk_starkiller_base_owner = {
+                if = {
+                    limit = {
+                        is_ai = no
+                        OR = {
+                            has_origin = origin_fop_first_order
+                            has_country_flag = fop_player_first_order
+                            has_country_flag = foc_republic_origin_became_first_order
+                            has_country_flag = foc_republic_origin_first_order_plan_completed
+                        }
+                        NOT = { has_country_flag = fop_origin_starkiller_first_real_impact }
+                    }
+                    if = {
+                        limit = {
+                            NOT = { has_origin = origin_fop_first_order }
+                            has_country_flag = foc_republic_origin_first_order_plan_completed
+                            NOT = { has_country_flag = foc_republic_origin_became_first_order }
+                        }
+                        foc_v160_promote_player_remnant_to_first_order = yes
+                    }
+                    if = {
+                        limit = {
+                            has_origin = origin_fop_first_order
+                            NOT = { has_country_flag = fop_origin_public_emergence }
+                        }
+                        set_country_flag = fop_origin_public_emergence
+                        set_country_flag = foc_v160_player_fo_five_year_stage_done
+                    }
+                    set_country_flag = fop_origin_starkiller_first_real_impact
+                    log = "FOC_V185_PLAYER_CRISIS: Starkiller beam fired; crisis activation and galaxy-wide total war begin now, before impact."
+                    country_event = { id = fop_origin.20 }
+                }
+            }
+        }
+
+        if = {
+            limit = { exists = event_target:myk_starkiller_base_planet }
+            event_target:myk_starkiller_base_planet = {
+                set_planet_entity = {
+                    entity = "myk_starkillerbase_firing_planet_entity"
+                    picture = pc_arctic
+                }
+            }
+        }
+
+        if = {
+            limit = { exists = event_target:myk_starkiller_base_system }
+            event_target:myk_starkiller_base_system = {
+                spawn_megastructure = {
+                    type = myk_starkiller_fire_origin_marker
+                    planet = star
+                    owner = event_target:myk_starkiller_base_megastructure.owner
+                    init_effect = { save_global_event_target_as = myk_starkiller_fire_origin_location }
+                }
+                spawn_megastructure = {
+                    type = myk_starkiller_beacon_origin_marker
+                    planet = star
+                    owner = event_target:myk_starkiller_base_megastructure.owner
+                    init_effect = { save_global_event_target_as = myk_starkiller_beacon_origin_location }
+                }
+            }
+        }
+
+        if = {
+            limit = {
+                exists = event_target:myk_starkiller_base_owner
+                event_target:myk_starkiller_base_owner = { has_country_flag = myk_starkiller_target_mode_all_planets }
+            }
+            # Preserve the original 1.45 target visuals, but anchor them in
+            # fixed-orientation ambient objects. With no face-object setting,
+            # every eligible planet receives a parallel beam from the same side.
+            every_system_planet = {
+                limit = {
+                    myk_starkiller_is_habitable_target = yes
+                }
+                create_ambient_object = {
+                    type = "myk_starkiller_parallel_target_beam_object"
+                    location = this
+                    use_3d_location = yes
+                }
+            }
+        }
+        else_if = {
+            limit = {
+                exists = event_target:myk_starkiller_base_owner
+                event_target:myk_starkiller_base_owner = { has_country_flag = myk_starkiller_target_mode_planet }
+                exists = event_target:myk_starkiller_selected_target_planet
+            }
+            event_target:myk_starkiller_selected_target_planet = {
+                create_ambient_object = {
+                    type = "myk_starkiller_parallel_target_beam_object"
+                    location = this
+                    use_3d_location = yes
+                }
+            }
+        }
+        else = {
+            spawn_megastructure = {
+                type = myk_starkiller_fire_target_marker
+                planet = star
+                owner = event_target:myk_starkiller_base_megastructure.owner
+                init_effect = { save_global_event_target_as = myk_starkiller_fire_target_location }
+            }
+            spawn_megastructure = {
+                type = myk_starkiller_beacon_target_marker
+                planet = star
+                owner = event_target:myk_starkiller_base_megastructure.owner
+                init_effect = { save_global_event_target_as = myk_starkiller_beacon_target_location }
+            }
+        }
+    }
+}
+
+# Resolve the shot. Every fleet in the target system is destroyed in both modes.
+# Star mode destroys the system and collapses the star into a black hole.
+# Planet mode destroys only the selected ordinary habitable planet.
+# Resolve the confirmed player shot after exactly 180 days.
+system_event = {
+    id = myk_starkiller_dyson.8000
+    hide_window = yes
+    is_triggered_only = yes
+
+    immediate = {
+        log = "SWFO_STARKILLER_DYSON V18: confirmed target impacted after 180 days."
+        save_global_event_target_as = myk_starkiller_target_system
+
+        # Mark the post-impact cooldown before applying destruction. This is
+        # deliberately stored on the player base so destruction of a crisis
+        # capital cannot make the player chain look stale and unlock early.
+        if = {
+            limit = { exists = event_target:myk_starkiller_base_megastructure }
+            event_target:myk_starkiller_base_megastructure = {
+                set_megastructure_flag = myk_starkiller_player_cooldown_active
+                # 1.89: busy is set here (at impact) instead of at selector
+                # start, so it can no longer cancel the running action shell or
+                # mask the native cooldown bar. Event 8005 removes it 180 days
+                # after impact, exactly as before.
+                set_megastructure_flag = myk_starkiller_player_busy
+            }
+        }
+
+        if = {
+            limit = {
+                exists = event_target:myk_starkiller_base_owner
+                event_target:myk_starkiller_base_owner = { has_country_flag = myk_starkiller_target_mode_all_planets }
+            }
+            myk_starkiller_destroy_habitable_planets_in_system = yes
+        }
+        else_if = {
+            limit = {
+                exists = event_target:myk_starkiller_base_owner
+                event_target:myk_starkiller_base_owner = { has_country_flag = myk_starkiller_target_mode_planet }
+                exists = event_target:myk_starkiller_selected_target_planet
+            }
+            myk_starkiller_destroy_all_fleets_in_system = yes
+            event_target:myk_starkiller_selected_target_planet = {
+                myk_starkiller_destroy_single_planet = yes
+                remove_planet_flag = myk_starkiller_selected_target_planet
+            }
+        }
+        else = {
+            myk_starkiller_destroy_entire_system = yes
+        }
+
+        # Origin-only post-impact hook. It does nothing for every non-First-
+        # Order-origin player and is not used by the NPC First Order crisis.
+        fop_origin_handle_hosnian_manual_strike = yes
+
+        # V185 fallback for saves/alternate firing paths that somehow skipped the
+        # beam-start callback above. Normal player shots already activated the crisis
+        # at firing time; this impact block is now recovery-only.
+        if = {
+            limit = { exists = event_target:myk_starkiller_base_owner }
+            event_target:myk_starkiller_base_owner = {
+                if = {
+                    limit = {
+                        is_ai = no
+                        OR = {
+                            has_origin = origin_fop_first_order
+                            has_country_flag = fop_player_first_order
+                            has_country_flag = foc_republic_origin_became_first_order
+                            has_country_flag = foc_republic_origin_first_order_plan_completed
+                        }
+                        NOT = { has_country_flag = fop_origin_starkiller_first_real_impact }
+                    }
+                    if = {
+                        limit = {
+                            NOT = { has_origin = origin_fop_first_order }
+                            has_country_flag = foc_republic_origin_first_order_plan_completed
+                            NOT = { has_country_flag = foc_republic_origin_became_first_order }
+                        }
+                        foc_v160_promote_player_remnant_to_first_order = yes
+                    }
+                    if = {
+                        limit = {
+                            has_origin = origin_fop_first_order
+                            NOT = { has_country_flag = fop_origin_public_emergence }
+                        }
+                        set_country_flag = fop_origin_public_emergence
+                        set_country_flag = foc_v160_player_fo_five_year_stage_done
+                    }
+                    set_country_flag = fop_origin_starkiller_first_real_impact
+                    log = "FOC_V185_PLAYER_CRISIS_FALLBACK: impact reached without prior firing activation; crisis and galaxy-wide war are being recovered now."
+                    country_event = { id = fop_origin.20 }
+                }
+            }
+        }
+
+        # Start the 180-day cooldown only after impact.
+        system_event = {
+            id = myk_starkiller_dyson.8005
+            days = 180
+            scopes = { from = event_target:myk_starkiller_base_megastructure }
+        }
+
+        system_event = { id = myk_starkiller_dyson.8003 days = 0 }
+
+        if = {
+            limit = { exists = event_target:myk_starkiller_base_owner }
+            event_target:myk_starkiller_base_owner = {
+                country_event = { id = myk_starkiller.315 }
+            }
+        }
+    }
+}
+
+# Exact-duration cleanup: carriers spawn after target confirmation and are removed when the 180-day action completes.
+system_event = {
+    id = myk_starkiller_dyson.8003
+    hide_window = yes
+    is_triggered_only = yes
+
+    immediate = {
+        log = "SWFO_STARKILLER_DYSON V11: delayed marker and target cleanup."
+
+        if = { limit = { exists = event_target:myk_starkiller_fire_origin_location } remove_megastructure = event_target:myk_starkiller_fire_origin_location }
+        if = { limit = { exists = event_target:myk_starkiller_beacon_origin_location } remove_megastructure = event_target:myk_starkiller_beacon_origin_location }
+        if = { limit = { exists = event_target:myk_starkiller_fire_target_location } remove_megastructure = event_target:myk_starkiller_fire_target_location }
+        if = { limit = { exists = event_target:myk_starkiller_beacon_target_location } remove_megastructure = event_target:myk_starkiller_beacon_target_location }
+
+        if = {
+            limit = { exists = event_target:myk_starkiller_base_system }
+            event_target:myk_starkiller_base_system = {
+                every_system_megastructure = {
+                    limit = {
+                        OR = {
+                            is_megastructure_type = myk_starkiller_sun_drain
+                            is_megastructure_type = myk_starkiller_fire_origin_marker
+                            is_megastructure_type = myk_starkiller_beacon_origin_marker
+                        }
+                    }
+                    remove_megastructure = this
+                }
+            }
+        }
+
+        if = {
+            limit = { exists = event_target:myk_starkiller_target_system }
+            event_target:myk_starkiller_target_system = {
+                every_system_ambient_object = {
+                    limit = {
+                        is_ambient_object_type = myk_starkiller_parallel_target_beam_object
+                    }
+                    destroy_ambient_object = this
+                }
+
+                # The visual has now completed, so ordinary destroyed-system
+                # megastructures can be removed safely.
+                myk_starkiller_remove_destroyed_system_megastructures_after_beam = yes
+
+                every_system_megastructure = {
+                    limit = {
+                        OR = {
+                            is_megastructure_type = myk_starkiller_fire_target_marker
+                            is_megastructure_type = myk_starkiller_beacon_target_marker
+                        }
+                    }
+                    remove_megastructure = this
+                }
+                every_system_planet = {
+                    limit = { has_planet_flag = myk_starkiller_selected_target_planet }
+                    remove_planet_flag = myk_starkiller_selected_target_planet
+                }
+            }
+        }
+
+        if = {
+            limit = { exists = event_target:myk_starkiller_base_planet }
+            event_target:myk_starkiller_base_planet = {
+                set_planet_entity = {
+                    entity = "myk_starkillerbase_planet_entity"
+                    picture = pc_arctic
+                }
+            }
+        }
+
+        if = {
+            limit = { exists = event_target:myk_starkiller_base_owner }
+            event_target:myk_starkiller_base_owner = {
+                remove_country_flag = myk_starkiller_target_mode_star
+                remove_country_flag = myk_starkiller_target_mode_planet
+                remove_country_flag = myk_starkiller_target_mode_all_planets
+            }
+        }
+
+        if = { limit = { exists = event_target:myk_starkiller_base_owner } clear_global_event_target = myk_starkiller_base_owner }
+        if = { limit = { exists = event_target:myk_starkiller_base_megastructure } clear_global_event_target = myk_starkiller_base_megastructure }
+        if = { limit = { exists = event_target:myk_starkiller_base_system } clear_global_event_target = myk_starkiller_base_system }
+        if = { limit = { exists = event_target:myk_starkiller_base_planet } clear_global_event_target = myk_starkiller_base_planet }
+        if = { limit = { exists = event_target:myk_starkiller_target_system } clear_global_event_target = myk_starkiller_target_system }
+        if = { limit = { exists = event_target:myk_starkiller_player_target_country } clear_global_event_target = myk_starkiller_player_target_country }
+        if = { limit = { exists = event_target:myk_starkiller_selected_target_star } clear_global_event_target = myk_starkiller_selected_target_star }
+        if = { limit = { exists = event_target:myk_starkiller_selected_target_planet } clear_global_event_target = myk_starkiller_selected_target_planet }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_01 } clear_global_event_target = myk_starkiller_planet_target_01 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_02 } clear_global_event_target = myk_starkiller_planet_target_02 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_03 } clear_global_event_target = myk_starkiller_planet_target_03 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_04 } clear_global_event_target = myk_starkiller_planet_target_04 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_05 } clear_global_event_target = myk_starkiller_planet_target_05 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_06 } clear_global_event_target = myk_starkiller_planet_target_06 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_07 } clear_global_event_target = myk_starkiller_planet_target_07 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_08 } clear_global_event_target = myk_starkiller_planet_target_08 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_09 } clear_global_event_target = myk_starkiller_planet_target_09 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_10 } clear_global_event_target = myk_starkiller_planet_target_10 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_11 } clear_global_event_target = myk_starkiller_planet_target_11 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_12 } clear_global_event_target = myk_starkiller_planet_target_12 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_13 } clear_global_event_target = myk_starkiller_planet_target_13 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_14 } clear_global_event_target = myk_starkiller_planet_target_14 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_15 } clear_global_event_target = myk_starkiller_planet_target_15 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_16 } clear_global_event_target = myk_starkiller_planet_target_16 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_17 } clear_global_event_target = myk_starkiller_planet_target_17 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_18 } clear_global_event_target = myk_starkiller_planet_target_18 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_19 } clear_global_event_target = myk_starkiller_planet_target_19 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_20 } clear_global_event_target = myk_starkiller_planet_target_20 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_21 } clear_global_event_target = myk_starkiller_planet_target_21 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_22 } clear_global_event_target = myk_starkiller_planet_target_22 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_23 } clear_global_event_target = myk_starkiller_planet_target_23 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_24 } clear_global_event_target = myk_starkiller_planet_target_24 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_25 } clear_global_event_target = myk_starkiller_planet_target_25 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_26 } clear_global_event_target = myk_starkiller_planet_target_26 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_27 } clear_global_event_target = myk_starkiller_planet_target_27 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_28 } clear_global_event_target = myk_starkiller_planet_target_28 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_29 } clear_global_event_target = myk_starkiller_planet_target_29 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_30 } clear_global_event_target = myk_starkiller_planet_target_30 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_31 } clear_global_event_target = myk_starkiller_planet_target_31 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_32 } clear_global_event_target = myk_starkiller_planet_target_32 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_33 } clear_global_event_target = myk_starkiller_planet_target_33 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_34 } clear_global_event_target = myk_starkiller_planet_target_34 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_35 } clear_global_event_target = myk_starkiller_planet_target_35 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_36 } clear_global_event_target = myk_starkiller_planet_target_36 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_37 } clear_global_event_target = myk_starkiller_planet_target_37 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_38 } clear_global_event_target = myk_starkiller_planet_target_38 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_39 } clear_global_event_target = myk_starkiller_planet_target_39 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_40 } clear_global_event_target = myk_starkiller_planet_target_40 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_41 } clear_global_event_target = myk_starkiller_planet_target_41 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_42 } clear_global_event_target = myk_starkiller_planet_target_42 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_43 } clear_global_event_target = myk_starkiller_planet_target_43 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_44 } clear_global_event_target = myk_starkiller_planet_target_44 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_45 } clear_global_event_target = myk_starkiller_planet_target_45 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_46 } clear_global_event_target = myk_starkiller_planet_target_46 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_47 } clear_global_event_target = myk_starkiller_planet_target_47 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_48 } clear_global_event_target = myk_starkiller_planet_target_48 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_49 } clear_global_event_target = myk_starkiller_planet_target_49 }
+        if = { limit = { exists = event_target:myk_starkiller_planet_target_50 } clear_global_event_target = myk_starkiller_planet_target_50 }
+        if = { limit = { exists = event_target:myk_starkiller_sun_drain_location } clear_global_event_target = myk_starkiller_sun_drain_location }
+        if = { limit = { exists = event_target:myk_starkiller_fire_origin_location } clear_global_event_target = myk_starkiller_fire_origin_location }
+        if = { limit = { exists = event_target:myk_starkiller_beacon_origin_location } clear_global_event_target = myk_starkiller_beacon_origin_location }
+        if = { limit = { exists = event_target:myk_starkiller_fire_target_location } clear_global_event_target = myk_starkiller_fire_target_location }
+        if = { limit = { exists = event_target:myk_starkiller_beacon_target_location } clear_global_event_target = myk_starkiller_beacon_target_location }
+    }
+}
+
+# End of the 180-day post-impact cooldown.
+system_event = {
+    id = myk_starkiller_dyson.8005
+    hide_window = yes
+    is_triggered_only = yes
+
+    immediate = {
+        if = {
+            limit = { exists = from }
+            from = {
+                remove_megastructure_flag = myk_starkiller_player_busy
+                remove_megastructure_flag = myk_starkiller_player_shot_cancelled
+                remove_megastructure_flag = myk_starkiller_player_shot_scheduled
+                remove_megastructure_flag = myk_starkiller_player_cooldown_active
+            }
+        }
+    }
+}
+
+# Native one-day selector completion. This event deliberately performs no strike.
+system_event = {
+    id = myk_starkiller_dyson.8006
+    hide_window = yes
+    is_triggered_only = yes
+
+    immediate = {
+        log = "SWFO_STARKILLER_DYSON V18: selector shell completed; waiting for confirmed target chain."
+    }
+}
+
+# Monthly old-save repair for the 1.76/1.77 crisis-capital state collision.
+# If the shared target scope was erased by the old crisis cleanup while a player
+# base kept its busy/scheduled flags, remove only those stale flags. A legitimate
+# post-impact cooldown is protected by myk_starkiller_player_cooldown_active.
+event = {
+    id = myk_starkiller_dyson.8007
+    hide_window = yes
+    is_triggered_only = yes
+
+    immediate = {
+        if = {
+            limit = { NOT = { exists = event_target:myk_starkiller_target_system } }
+            every_country = {
+                every_owned_megastructure = {
+                    limit = {
+                        OR = {
+                            has_megastructure_flag = myk_starkiller_player_busy
+                            has_megastructure_flag = myk_starkiller_player_shot_scheduled
+                        }
+                        NOT = { has_megastructure_flag = myk_starkiller_player_cooldown_active }
+                    }
+                    remove_megastructure_flag = myk_starkiller_player_busy
+                    remove_megastructure_flag = myk_starkiller_player_shot_cancelled
+                    remove_megastructure_flag = myk_starkiller_player_shot_scheduled
+                }
+            }
+        }
+    }
+}

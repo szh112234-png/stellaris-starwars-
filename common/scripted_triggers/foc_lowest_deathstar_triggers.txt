@@ -1,0 +1,30 @@
+# Story identity remains flag based; component checks accept both strength modes.
+foc_lowest_ds_is_integrated_two = {
+    OR = {
+        has_component = FOC_DEATH_STAR_II_CORE_COMPONENT
+        has_component = FOC_LOWEST_DS_II_UNFINISHED_FOC_DEATH_STAR_II_CORE_COMPONENT
+        has_component = FOC_LOWEST_DS_II_FOC_DEATH_STAR_II_CORE_COMPONENT
+    }
+}
+foc_lowest_ds_is_mobile_two = {
+    OR = {
+        has_ship_flag = foc_ds2_mobile_completed
+        has_component = DEATH_STAR_JUMPDRIVE
+        has_component = FOC_LOWEST_DS_II_DEATH_STAR_JUMPDRIVE
+    }
+}
+foc_lowest_ds_is_story_ship = {
+    OR = {
+        has_ship_flag = foc_republic_origin_death_star_one
+        has_ship_flag = foc_republic_origin_death_star_two
+    }
+}
+
+# Generic legacy battlestations are deliberately not given any story identity.
+foc_lowest_ds_is_managed_ship = {
+    OR = {
+        foc_lowest_ds_is_story_ship = yes
+        is_ship_size = deathstarbattlestation
+        has_ship_flag = foc_lowest_ds_generic_origin
+    }
+}

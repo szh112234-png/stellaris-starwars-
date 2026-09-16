@@ -1,0 +1,340 @@
+namespace = foc_kylo
+
+# =============================================================================
+# 凯洛·伦剧情线
+# =============================================================================
+# 堕落（神殿之火）→ 伦骑士团 → 弑星者基地弑父 → 至尊号自立为最高领袖
+#   → 面具重铸与埃克索尔的召唤 → 原力连接 → 本·索罗归来 → 牺牲
+#
+# 机制性的两个节点（英雄发放、埃克索尔牺牲）仍由既有的 foc_hero_rewards.2 与
+# foc_hero_rewards.3 负责，本文件只负责叙事，不重复发放奖励，也不重复杀人。
+# 头像统一走 foc_saga_apply_kylo_portrait，见 foc_saga_character_effects.txt。
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# 堕落
+# -----------------------------------------------------------------------------
+
+# 本·索罗在神殿毁灭时仍仅为剧情人物；只有第一秩序真正成立后，此事件才允许在玩家第一秩序上显示。
+country_event = {
+    id = foc_kylo.10
+    title = foc_kylo.10.name
+    desc = foc_kylo.10.desc
+    picture = GFX_foc_saga_dark_jedi
+    show_sound = event_mystic_reveal
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        is_regular_empire = yes
+        # Ben cannot become Kylo before the canonical public First Order era.
+        OR = {
+            has_global_flag = foc_khan_phase_one
+            has_country_flag = fop_origin_public_emergence
+        }
+        NOT = { has_global_flag = foc_khan_phase_two }
+        NOT = { has_country_flag = foc_saga_kylo_fall_shown }
+        OR = {
+            has_country_flag = foc_khan_first_order_country
+            has_country_flag = fop_player_first_order
+            has_country_flag = foc_republic_origin_became_first_order
+            has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+        }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_kylo_fall_shown
+        set_global_flag = foc_saga_ben_solo_fallen
+        if = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = foc_republic_origin_became_first_order
+                    has_country_flag = fop_player_first_order
+                    has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+                }
+            }
+            foc_saga_ensure_kylo = yes
+        }
+        set_timed_country_flag = { flag = foc_saga_kylo_knights_wait days = 720 }
+    }
+
+    option = {
+        name = foc_kylo.10.a
+    }
+}
+
+# 伦骑士团。
+country_event = {
+    id = foc_kylo.11
+    title = foc_kylo.11.name
+    desc = foc_kylo.11.desc
+    picture = GFX_foc_saga_dark_inquisitor
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        has_country_flag = foc_saga_kylo_fall_shown
+        NOT = { has_country_flag = fop_origin_story_timeline_locked }
+        NOT = { has_country_flag = foc_saga_kylo_knights_shown }
+        NOT = { has_country_flag = foc_saga_kylo_knights_wait }
+        NOT = { has_global_flag = foc_saga_ben_solo_returned }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_kylo_knights_shown
+        if = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = foc_republic_origin_became_first_order
+                    has_country_flag = fop_player_first_order
+                    has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+                }
+            }
+            foc_saga_ensure_kylo = yes
+        }
+    }
+
+    option = {
+        name = foc_kylo.11.a
+        if = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = foc_republic_origin_became_first_order
+                    has_country_flag = fop_player_first_order
+                    has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+                }
+            }
+            add_modifier = { modifier = foc_saga_knights_of_ren days = -1 }
+        }
+    }
+}
+
+# -----------------------------------------------------------------------------
+# 弑星者基地：弑父
+# -----------------------------------------------------------------------------
+# 与 foc_story.11（基地毁灭与汉·索罗之死）互补：那一个讲基地，这一个讲那座桥。
+country_event = {
+    id = foc_kylo.12
+    title = foc_kylo.12.name
+    desc = foc_kylo.12.desc
+    picture = GFX_foc_story_starkiller_destroyed
+    show_sound = event_mystic_reveal
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        is_regular_empire = yes
+        has_country_flag = foc_saga_kylo_fall_shown
+        NOT = { has_country_flag = foc_saga_kylo_patricide_shown }
+        OR = {
+            has_global_flag = foc_khan_starkiller_destroyed
+            has_global_flag = foc_story_starkiller_destroyed_shown
+        }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_kylo_patricide_shown
+        set_global_flag = foc_saga_han_solo_dead
+        every_country = {
+            every_owned_leader = {
+                limit = { has_leader_flag = foc_canon_han_solo_leader }
+                kill_leader = { show_notification = no }
+            }
+        }
+        clear_global_event_target = foc_canon_han_solo
+        if = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = foc_republic_origin_became_first_order
+                    has_country_flag = fop_player_first_order
+                    has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+                }
+            }
+            foc_saga_ensure_kylo = yes
+            foc_saga_kylo_advance = yes
+        }
+    }
+
+    option = {
+        name = foc_kylo.12.a
+    }
+}
+
+# -----------------------------------------------------------------------------
+# 至尊号：斯诺克之死，凯洛·伦自立
+# -----------------------------------------------------------------------------
+country_event = {
+    id = foc_kylo.13
+    title = foc_kylo.13.name
+    desc = foc_kylo.13.desc
+    picture = GFX_foc_event_new_master
+    show_sound = event_mystic_reveal
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        is_regular_empire = yes
+        has_country_flag = foc_saga_kylo_patricide_shown
+        NOT = { has_country_flag = foc_saga_kylo_supreme_shown }
+        OR = {
+            has_global_flag = foc_khan_supremacy_destroyed_in_combat
+            has_global_flag = foc_story_supremacy_destroyed_shown
+            has_global_flag = foc_khan_phase_two_preparing
+            has_global_flag = foc_khan_phase_two
+        }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_kylo_supreme_shown
+        set_global_flag = foc_saga_snoke_dead
+        if = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = foc_republic_origin_became_first_order
+                    has_country_flag = fop_player_first_order
+                    has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+                }
+            }
+            foc_saga_ensure_kylo = yes
+            foc_saga_kylo_becomes_supreme_leader = yes
+        }
+        set_timed_country_flag = { flag = foc_saga_kylo_mask_wait days = 600 }
+    }
+
+    option = {
+        name = foc_kylo.13.a
+        if = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = foc_republic_origin_became_first_order
+                    has_country_flag = fop_player_first_order
+                    has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+                }
+            }
+            add_modifier = { modifier = foc_saga_supreme_leader_kylo days = -1 }
+        }
+    }
+}
+
+# -----------------------------------------------------------------------------
+# 面具重铸与埃克索尔的召唤
+# -----------------------------------------------------------------------------
+country_event = {
+    id = foc_kylo.14
+    title = foc_kylo.14.name
+    desc = foc_kylo.14.desc
+    picture = GFX_foc_saga_sith_temple
+    show_sound = event_radio_chatter
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        has_country_flag = foc_saga_kylo_supreme_shown
+        NOT = { has_country_flag = foc_saga_kylo_mask_shown }
+        NOT = { has_country_flag = foc_saga_kylo_mask_wait }
+        NOT = { has_global_flag = foc_saga_ben_solo_returned }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_kylo_mask_shown
+        set_timed_country_flag = { flag = foc_saga_kylo_dyad_wait days = 540 }
+    }
+
+    option = {
+        name = foc_kylo.14.a
+    }
+}
+
+# 原力连接：银河两端的两个人共用一双眼睛。
+country_event = {
+    id = foc_kylo.15
+    title = foc_kylo.15.name
+    desc = foc_kylo.15.desc
+    picture = GFX_foc_story_final_choice
+    show_sound = event_mystic_reveal
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        has_country_flag = foc_saga_kylo_mask_shown
+        NOT = { has_country_flag = foc_saga_kylo_dyad_shown }
+        NOT = { has_country_flag = foc_saga_kylo_dyad_wait }
+        NOT = { has_global_flag = foc_saga_ben_solo_returned }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_kylo_dyad_shown
+        set_global_flag = foc_saga_force_dyad_formed
+    }
+
+    option = {
+        name = foc_kylo.15.a
+        add_modifier = { modifier = foc_saga_force_dyad days = -1 }
+    }
+}
+
+# -----------------------------------------------------------------------------
+# 归来与牺牲
+# -----------------------------------------------------------------------------
+# foc_hero_rewards.2 负责把本·索罗作为英雄指挥官交到玩家手上；这一条只补叙事，
+# 并把角色的称呼与头像切回本·索罗。
+country_event = {
+    id = foc_kylo.16
+    title = foc_kylo.16.name
+    desc = foc_kylo.16.desc
+    picture = GFX_foc_event_leia_death_ben_return
+    show_sound = event_mystic_reveal
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        NOT = { has_country_flag = foc_saga_kylo_return_shown }
+        OR = {
+            has_country_flag = foc_reward_kylo_ren_granted
+            has_global_flag = foc_saga_ben_solo_returned
+        }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_kylo_return_shown
+        foc_saga_ensure_kylo = yes
+        foc_saga_kylo_returns_as_ben_solo = yes
+    }
+
+    option = {
+        name = foc_kylo.16.a
+        add_modifier = { modifier = foc_saga_ben_solo_redeemed days = -1 }
+    }
+}
+
+# 埃克索尔的最后一幕。foc_hero_rewards.3 已经处理了机制层面的死亡判定。
+country_event = {
+    id = foc_kylo.17
+    title = foc_kylo.17.name
+    desc = foc_kylo.17.desc
+    picture = GFX_foc_event_ben_solo_death
+    show_sound = event_mystic_reveal
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        has_global_flag = foc_story_ben_solo_death_completed
+        NOT = { has_country_flag = foc_saga_kylo_sacrifice_shown }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_kylo_sacrifice_shown
+        remove_modifier = foc_saga_force_dyad
+    }
+
+    option = {
+        name = foc_kylo.17.a
+        add_modifier = { modifier = foc_saga_skywalker_legacy days = -1 }
+    }
+}

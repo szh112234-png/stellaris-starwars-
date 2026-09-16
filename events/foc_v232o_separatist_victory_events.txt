@@ -1,0 +1,73 @@
+namespace = foc_v232o_cis
+
+# Real leader death callback. No on_leader_fired hook and no absent-leader inference.
+# Existing story flags are still authoritative for saves from before V232o.
+country_event = {
+    id = foc_v232o_cis.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        has_global_flag = foc_republic_origin_separatist_war_active
+        exists = from
+        from = {
+            NOT = { has_leader_flag = foc_v232o_grievous_identity_cleanup }
+            OR = {
+                has_leader_flag = foc_v232o_dooku_leader
+                has_leader_flag = foc_saga_grievous_leader
+            }
+        }
+    }
+    immediate = {
+        if = {
+            limit = { from = { has_leader_flag = foc_v232o_dooku_leader } }
+            set_global_flag = foc_saga_dooku_dead
+            log = "FOC_V232O_CIS: the tracked Dooku leader died; death recorded."
+        }
+        if = {
+            limit = { from = { has_leader_flag = foc_saga_grievous_leader } }
+            set_global_flag = foc_saga_grievous_dead
+            every_country = {
+                limit = { has_country_flag = foc_republic_origin_separatist_country }
+                remove_modifier = foc_saga_grievous_command
+                remove_country_flag = foc_saga_grievous_cis_ruler
+            }
+            log = "FOC_V232O_CIS: the tracked Grievous leader died; death recorded."
+        }
+        # Never end a war or destroy a country inside the death callback itself.
+        if = {
+            limit = { foc_v232o_cis_both_commanders_dead = yes }
+            every_country = {
+                limit = {
+                    foc_v197_republic_story_actor = yes
+                    has_country_flag = foc_republic_origin_republic_country
+                    NOT = { has_country_flag = foc_republic_origin_separatist_war_won }
+                    NOT = { has_country_flag = foc_republic_origin_separatist_surrender_staging_142 }
+                    NOT = { has_country_flag = foc_v232o_separatist_surrender_offer_pending }
+                }
+                country_event = { id = foc_republic_origin.19 days = 1 }
+            }
+        }
+    }
+}
+
+# Global fallback for active old saves and callbacks missed during a version change.
+event = {
+    id = foc_v232o_cis.2
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        has_global_flag = foc_republic_origin_separatist_war_active
+    }
+    immediate = {
+        every_country = {
+            limit = {
+                foc_v197_republic_story_actor = yes
+                has_country_flag = foc_republic_origin_republic_country
+                NOT = { has_country_flag = foc_republic_origin_separatist_war_won }
+                NOT = { has_country_flag = foc_republic_origin_separatist_surrender_staging_142 }
+                NOT = { has_country_flag = foc_v232o_separatist_surrender_offer_pending }
+            }
+            country_event = { id = foc_republic_origin.19 days = 1 }
+        }
+    }
+}

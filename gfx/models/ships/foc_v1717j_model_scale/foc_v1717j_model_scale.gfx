@@ -1,0 +1,29 @@
+# v17.17j: private scaled copies of two meshes that are already in the mod.
+# Same .mesh files as the originals, only `scale` differs. Nothing here
+# replaces or overrides an existing pdxmesh - both names are new.
+#
+# empire_ISD_II_mesh is at scale 1.0 and is shared with the Empire Ships
+# addon's own battleship entity, and foc_rebel_mc80_line_bow_mesh at 0.25 is
+# shared with Home One, so neither original can be rescaled in place.
+objectTypes = {
+	# Every Imperial II variant. Original mesh is 94.12 long at scale 1.0;
+	# a normal FOC Imperial-class ISD is 45.31. 0.48 lands it at 45.18.
+	# The original empire_ISD_II_mesh block carries no meshsettings, so neither does this one.
+	pdxmesh = {
+		name = "foc_v1717j_isd2_escort_mesh"
+		file = "gfx/models/ships/empire/empire_ISD_II_battleship_mid.mesh"
+		scale = 0.48
+	}
+
+	# MC80 line. Original mesh is 68.05 long and was pinned to scale 0.25,
+	# giving 17.01 on screen. v17.17j used 0.88 to match the standard MC80 at
+	# 59.89; v17.17L retargets it to an Imperial I instead: 0.67 -> 45.60.
+	pdxmesh = {
+		name = "foc_v1717j_mc80_line_bow_mesh"
+		file = "gfx/models/ships/foc_rebel_mc80_line/rebel_MC80_battleship_bow.mesh"
+		scale = 0.67
+		meshsettings = {
+			shader = "PdxMeshShip"
+		}
+	}
+}

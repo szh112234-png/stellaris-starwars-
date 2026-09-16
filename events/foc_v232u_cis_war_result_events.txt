@@ -1,0 +1,57 @@
+namespace = foc_v232u_cis
+
+# Positive war result. Other wars sharing the same generic FOC war goal are
+# excluded by the exact winner/loser faction identities and story phase.
+country_event = {
+    id = foc_v232u_cis.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        foc_v232u_can_receive_cis_result = yes
+        exists = from
+        from = { has_country_flag = foc_republic_origin_separatist_country }
+        exists = fromfrom
+        fromfrom = {
+            using_war_goal = {
+                type = wg_foc_republic_civil_war
+                owner = root
+            }
+        }
+    }
+    immediate = {
+        log = "FOC_V232U_CIS: engine on_war_won confirmed the Republic defeated the CIS in the Clone Wars."
+        foc_v232u_record_cis_military_victory = yes
+    }
+}
+
+# Total-war annihilation: the engine reports an actually destroyed CIS country
+# and the Republic as its destroyer. Require the real, matching war as well.
+# The is_at_war_with check follows vanilla action.61's Payback kill attribution.
+# No lost planet, empty country search, or missing event target implies victory.
+country_event = {
+    id = foc_v232u_cis.2
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        has_country_flag = foc_republic_origin_separatist_country
+        has_global_flag = foc_republic_origin_separatist_war_active
+        exists = from
+        from = {
+            foc_v232u_can_receive_cis_result = yes
+            is_at_war_with = root
+            any_war = {
+                using_war_goal = {
+                    type = wg_foc_republic_civil_war
+                    owner = from
+                }
+                any_war_participant = { is_same_value = root }
+            }
+        }
+    }
+    immediate = {
+        from = {
+            log = "FOC_V232U_CIS: engine on_country_destroyed confirmed the Republic destroyed the CIS during their actual total war."
+            foc_v232u_record_cis_military_victory = yes
+        }
+    }
+}

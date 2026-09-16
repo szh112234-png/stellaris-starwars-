@@ -1,0 +1,747 @@
+#Fel Empire
+
+portraits = {
+	fel_female_01 = {	entity = "portrait_human_female_01_entity"	clothes_selector = "fel_female_clothes_01" 	attachment_selector = "fel_female_01_hair"			greeting_sound = "human_female_greetings_03"
+		character_textures = { "gfx/models/portraits/human/human_female_body_01.dds" }
+	}
+	fel_female_02 = {	entity = "portrait_human_female_02_entity"	clothes_selector = "fel_female_clothes_01" 	attachment_selector = "fel_female_01_hair"			greeting_sound = "human_female_greetings_04" 
+		character_textures = { "gfx/models/portraits/human/human_female_body_02.dds" }
+	}
+	fel_female_03 = {	entity = "portrait_human_female_03_entity"	clothes_selector = "fel_female_clothes_01" 	attachment_selector = "fel_female_01_hair"			greeting_sound = "human_female_greetings_05" 
+		character_textures = { "gfx/models/portraits/human/human_female_body_03.dds" }
+	}	
+	fel_female_04 = {	entity = "portrait_human_female_04_entity"	clothes_selector = "fel_female_clothes_01" 	attachment_selector = "fel_female_01_hair"			greeting_sound = "human_female_greetings_01" 
+		character_textures = { "gfx/models/portraits/human/human_female_body_04.dds" }
+	}
+	fel_female_05 = {	entity = "portrait_human_female_05_entity"	clothes_selector = "fel_female_clothes_01" 	attachment_selector = "fel_female_01_hair"			greeting_sound = "human_female_greetings_02" 
+		character_textures = { "gfx/models/portraits/human/human_female_body_05.dds" }
+	}
+	fel_male_01 = {	entity = "portrait_human_male_01_entity"		clothes_selector = "fel_male_clothes_01" 	attachment_selector = "fel_male_01_hair"			greeting_sound = "human_male_greetings_03" 
+		character_textures = { "gfx/models/portraits/human/human_male_body_01.dds" }
+	}	
+	fel_male_02 = {	entity = "portrait_human_male_02_entity"		clothes_selector = "fel_male_clothes_01" 	attachment_selector = "fel_male_01_hair"			greeting_sound = "human_male_greetings_04" 
+		character_textures = { "gfx/models/portraits/human/human_male_body_02.dds" }
+	}
+	fel_male_03 = {	entity = "portrait_human_male_03_entity"		clothes_selector = "fel_male_clothes_01" 	attachment_selector = "fel_male_01_hair"			greeting_sound = "human_male_greetings_05"  
+		character_textures = { "gfx/models/portraits/human/human_male_body_03.dds" }
+	}		
+	fel_male_04 = {	entity = "portrait_human_male_04_entity"		clothes_selector = "fel_male_clothes_01" 	attachment_selector = "fel_male_01_hair"			greeting_sound = "human_male_greetings_01"  
+		character_textures = { "gfx/models/portraits/human/human_male_body_04.dds" }
+	}
+	fel_male_05 = {	entity = "portrait_human_male_05_entity"		clothes_selector = "fel_male_clothes_01" 	attachment_selector = "fel_male_01_hair"			greeting_sound = "human_male_greetings_02"  
+		character_textures = { "gfx/models/portraits/human/human_male_body_05.dds" }
+	}
+	
+	#FEL OFFICERS
+	felofficer_male_01 = { entity = "portrait_human_male_01_entity" clothes_selector = "felofficer_male_clothes_01"	attachment_selector = "felofficer_male_01_hair"	greeting_sound = "human_male_greetings_01"
+		character_textures = {
+			"gfx/models/portraits/human/human_male_body_01.dds"
+		}
+	}
+	felofficer_male_02 = { entity = "portrait_human_male_02_entity" clothes_selector = "felofficer_male_clothes_01"	attachment_selector = "felofficer_male_01_hair"	greeting_sound = "human_male_greetings_02"
+		character_textures = { "gfx/models/portraits/human/human_male_body_02.dds" }
+	}
+	felofficer_male_03 = { entity = "portrait_human_male_03_entity" clothes_selector = "felofficer_male_clothes_01"	attachment_selector = "felofficer_male_01_hair"	greeting_sound = "human_male_greetings_03"
+		character_textures = { "gfx/models/portraits/human/human_male_body_03.dds" }
+	}
+	
+	felofficer_female_01 = { entity = "portrait_human_female_01_entity" clothes_selector = "felofficer_female_clothes_01"	attachment_selector = "felofficer_female_01_hair"	greeting_sound = "human_female_greetings_01"
+		character_textures = { "gfx/models/portraits/human/human_female_body_01.dds" }
+	}
+	felofficer_female_02 = { entity = "portrait_human_female_02_entity" clothes_selector = "felofficer_female_clothes_01"	attachment_selector = "felofficer_female_01_hair"	greeting_sound = "human_female_greetings_02"
+		character_textures = { "gfx/models/portraits/human/human_female_body_02.dds" }
+	}
+	felofficer_female_03 = { entity = "portrait_human_female_03_entity" clothes_selector = "felofficer_female_clothes_01"	attachment_selector = "felofficer_female_01_hair"	greeting_sound = "human_female_greetings_03"
+		character_textures = { "gfx/models/portraits/human/human_female_body_03.dds" }
+	}
+	
+	#STORMTROOPER POPS
+	
+	felstormtrooper_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "felstormtrooper_male_clothes_01"	attachment_selector = "felstormtrooper_male_01_hair"		greeting_sound = "human_male_greetings_02"
+		character_textures = { "gfx/models/portraits/fel/stormtrooper_male_body_03.dds" }		
+	}
+		
+	felstormtrooper_female_01 = { entity = "portrait_human_female_01_entity"	clothes_selector = "felstormtrooper_female_clothes_01"	attachment_selector = "felstormtrooper_female_01_hair"		greeting_sound = "human_female_greetings_02"
+		character_textures = { "gfx/models/portraits/fel/stormtrooper_female_body_03.dds" } 
+	}	
+	
+	felstormtroopercaptain_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "felstormtroopercaptain_male_clothes_01"	attachment_selector = "felstormtroopercaptain_male_01_hair"		greeting_sound = "human_male_greetings_02"
+		character_textures = { "gfx/models/portraits/fel/stormtrooper_male_body_03.dds" }		
+	}
+	
+	felstormtroopercaptain_female_01 = { entity = "portrait_human_female_01_entity"	clothes_selector = "felstormtroopercaptain_female_clothes_01"	attachment_selector = "felstormtroopercaptain_female_01_hair"		greeting_sound = "human_female_greetings_02"
+		character_textures = { "gfx/models/portraits/fel/stormtrooper_female_body_03.dds" } 
+	}	
+	
+	#STORMTROOPER SCOUTS
+	
+	felscout_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "felscout_male_clothes_01"	attachment_selector = "felscout_male_01_hair"		greeting_sound = "human_male_greetings_02"
+		character_textures = { "gfx/models/portraits/fel/stormtrooper_male_body_03.dds" } 
+	}
+	
+	felscoutcaptain_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "felscoutcaptain_male_clothes_01"	attachment_selector = "felscoutcaptain_male_01_hair"		greeting_sound = "human_male_greetings_02"
+		character_textures = { "gfx/models/portraits/fel/stormtrooper_male_body_03.dds" } 
+	}
+	
+	#OTHER STORMTROOPER VARIANTS
+	
+	tankdriver_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "tankdriver_male_clothes_01"	attachment_selector = "tankdriver_male_01_hair"		greeting_sound = "human_male_greetings_02"
+		character_textures = { "gfx/models/portraits/fel/stormtrooper_male_body_03.dds" } 
+	}
+	
+	juggernaut_driver_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "juggernaut_driver_male_clothes_01"	attachment_selector = "juggernaut_driver_male_01_hair"		greeting_sound = "human_male_greetings_02"
+		character_textures = { "gfx/models/portraits/fel/stormtrooper_male_body_03.dds" } 
+	}
+	
+	cadet_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "cadet_male_clothes_01"	attachment_selector = "cadet_male_01_hair"		greeting_sound = "human_male_greetings_02"
+		character_textures = { "gfx/models/portraits/fel/stormtrooper_male_body_03.dds" } 
+	}
+		
+	felshoretrooper_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "felshoretrooper_male_clothes_01"	attachment_selector = "felshoretrooper_male_01_hair"	greeting_sound = "human_male_greetings_02"
+		character_textures = {	"gfx/models/portraits/fel/stormtrooper_male_body_03.dds" }
+	}
+	
+	felyellowshoretrooper_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "felyellowshoretrooper_male_clothes_01"	attachment_selector = "felyellowshoretrooper_male_01_hair"	greeting_sound = "human_male_greetings_02"
+		character_textures = {	"gfx/models/portraits/fel/stormtrooper_male_body_03.dds" }
+	}
+	
+	mudtrooper_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "mudtrooper_male_clothes_01"	attachment_selector = "mudtrooper_male_01_hair"	greeting_sound = "human_male_greetings_02"
+		character_textures = {	"gfx/models/portraits/fel/stormtrooper_male_body_03.dds" }
+	}
+	
+	felcommando_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "felcommando_male_clothes_01"	attachment_selector = "felcommando_male_01_hair"	greeting_sound = "human_male_greetings_02"
+		character_textures = {	"gfx/models/portraits/fel/stormtrooper_male_body_03.dds" }
+	}
+	
+	felneotrooper_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "neotrooper_male_clothes_01"	attachment_selector = "neotrooper_male_01_hair"	greeting_sound = "human_male_greetings_02"
+		character_textures = {	"gfx/models/portraits/fel/stormtrooper_male_body_03.dds" }
+	}
+	
+	felrecontrooper_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "felrecontrooper_male_clothes_01"	attachment_selector = "felrecontrooper_male_01_hair"	greeting_sound = "human_male_greetings_01"
+		character_textures = { "gfx/models/portraits/fel/stormtrooper_male_body_03.dds" }
+	}
+	
+	
+	#FELSHOCKTROOPERS
+	
+	felshocktroopercap_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "felshocktroopercap_male_clothes_01"	attachment_selector = "felshocktroopercap_male_01_hair"	greeting_sound = "human_male_greetings_02"
+		character_textures = {	"gfx/models/portraits/fel/stormtrooper_male_body_03.dds" }
+	}
+	
+	felshocktrooper_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "felshocktrooper_male_clothes_01"	attachment_selector = "felshocktrooper_male_01_hair"	 greeting_sound = "human_male_greetings_02"
+		character_textures = {	"gfx/models/portraits/fel/stormtrooper_male_body_03.dds" }
+	}
+		
+	#DARKTROOPER
+	
+	feldarktrooper_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "feldarktrooper_male_clothes_01"	attachment_selector = "feldarktrooper_male_01_hair"	greeting_sound = "human_male_greetings_02"
+		character_textures = {	"gfx/models/portraits/fel/stormtrooper_male_body_03.dds" }
+	}
+	
+	#DEATHTROOPERS
+	
+	deathtrooper_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "deathtrooper_male_clothes_01"	attachment_selector = "deathtrooper_male_01_hair"		greeting_sound = "human_male_greetings_02"
+		character_textures = { "gfx/models/portraits/fel/stormtrooper_male_body_03.dds" }
+	}
+		
+	#CHISS
+	felchiss_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "fel_male_clothes_01"	attachment_selector = "felchiss_male_01_hair"		greeting_sound = "human_male_greetings_02"
+		character_textures = { "gfx/models/portraits/fel/thrawn_male_body_01.dds" } 
+	}
+		
+	#KEL DOR
+	felkeldor_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "fel_male_clothes_01"		attachment_selector = "keldor_male_01_head"	greeting_sound = "humanoid_male_greetings_01"
+		character_textures = {	"gfx/models/portraits/fel/fel_keldor_male_body_01.dds" }
+	}
+}
+portrait_groups = {
+	fel = {
+		default = felstormtrooper_male_01
+		game_setup = { #will run with a limited country scope. species and government is set but the country does not actually exist
+			add = {
+				trigger = {
+					ruler = {
+						OR = {
+							gender = male
+							gender = indeterminable
+						}
+					}
+				}
+				portraits = {
+					fel_male_01
+					fel_male_02
+					fel_male_03
+					fel_male_04
+					fel_male_05
+					felofficer_male_01
+					felofficer_male_02
+					felofficer_male_03
+					felchiss_male_01
+					tankdriver_male_01
+					juggernaut_driver_male_01
+					cadet_male_01
+					felscout_male_01
+					felscoutcaptain_male_01
+					felstormtrooper_male_01
+					felstormtroopercaptain_male_01
+					feldarktrooper_male_01
+					felshocktrooper_male_01
+					felshocktroopercap_male_01
+					felrecontrooper_male_01
+					felkeldor_male_01
+					felshoretrooper_male_01
+				}
+			}
+			add = {
+				trigger = {
+					ruler = {
+						OR = {
+							gender = female
+							gender = indeterminable
+						}
+					}
+				}
+				portraits = {
+					fel_female_01
+					fel_female_02
+					fel_female_03
+					fel_female_04
+					fel_female_05
+					felofficer_female_01
+					felofficer_female_02
+					felofficer_female_03
+					felstormtrooper_female_01
+					felstormtroopercaptain_female_01
+				}
+			}
+			#set = {
+			#	trigger = { ... }
+			#	portraits = { ... }
+			#	#using "set =" instead of "add" will first clear any portraits already added
+			#}
+		}		
+		
+		#species scope
+		species = { #generic portrait for a species
+			add = {
+				portraits = {
+					felstormtrooper_male_01
+				}
+			}
+		}		
+		
+		#pop scope
+		pop_group = { #for a specific pop
+			add = {
+				trigger = {
+					OR = {
+						is_pop_category = worker 
+						is_pop_category = simple_drone 
+						is_enslaved = yes 
+					}
+				}
+				portraits = {
+					fel_female_01
+					fel_female_02
+					fel_female_03
+					fel_female_04
+					fel_female_05
+					fel_male_01
+					fel_male_02
+					fel_male_03
+					fel_male_04
+					fel_male_05
+					felchiss_male_01
+					felstormtrooper_male_01
+					felstormtrooper_female_01
+					juggernaut_driver_male_01
+					tankdriver_male_01
+					cadet_male_01
+					scout_male_01
+					felscoutcaptain_male_01
+					felshocktrooper_male_01
+					felshocktroopercap_male_01
+					felrecontrooper_male_01
+					felkeldor_male_01
+					felstormtroopercaptain_male_01
+					felstormtroopercaptain_female_01
+					felshoretrooper_male_01
+				}
+			}
+			add = {
+				trigger = {
+					OR = {
+						is_pop_category = specialist 
+						is_pop_category = complex_drone 
+					}
+				}
+				portraits = {
+					fel_female_01
+					fel_female_02
+					fel_female_03
+					fel_female_04
+					fel_female_05
+					felofficer_female_01
+					felofficer_female_02
+					felofficer_female_03
+					fel_male_01
+					fel_male_02
+					fel_male_03
+					fel_male_04
+					fel_male_05
+					felofficer_male_01
+					felofficer_male_02
+					felofficer_male_03
+					felchiss_male_01
+					felkeldor_male_01
+				}
+			}
+			add = {
+				trigger = {
+					is_pop_category = ruler
+				}
+				portraits = {
+					felofficer_female_01
+					felofficer_female_02
+					felofficer_female_03
+					felofficer_male_01
+					felofficer_male_02
+					felofficer_male_03
+					felchiss_male_01
+					felkeldor_male_01
+				}
+			}
+		}
+		
+		#leader scope
+		leader = { #scientists, generals, admirals, governor
+			add = {
+				trigger = {
+					OR = {
+						gender = female
+						gender = indeterminable
+					}
+					#NOR = {
+					#	has_trait = leader_trait_imperial_knight
+					#	has_trait = leader_trait_psionic
+					#}
+					leader_class = scientist
+				}
+				portraits = {
+					fel_female_01
+					fel_female_02
+					fel_female_03
+					fel_female_04
+					fel_female_05
+				}
+			}
+			#add = {
+			#	trigger = {
+			#		OR = {
+			#			gender = female
+			#			gender = indeterminable
+			#		}
+			#		OR = {
+			#			has_trait = leader_trait_jedi
+			#			has_trait = leader_trait_psionic
+			#		}
+			#		leader_class = scientist
+			#	}
+			#	portraits = {
+			#		fel_female_01
+			#		fel_female_02
+			#		fel_female_03
+			#		fel_female_04
+			#		fel_female_05
+			#	}
+			#}
+			add = {
+				trigger = {
+					OR = {
+						gender = male
+						gender = indeterminable
+					}
+					#NOR = {
+					#	has_trait = leader_trait_imperial_knight
+					#	has_trait = leader_trait_psionic
+					#}
+					leader_class = scientist
+				}
+				portraits = {
+					fel_male_01
+					fel_male_02
+					fel_male_03
+					fel_male_04
+					fel_male_05
+					felkeldor_male_01
+				}
+			}
+			#add = {
+			#	trigger = {
+			#		OR = {
+			#			gender = male
+			#			gender = indeterminable
+			#		}
+			#		OR = {
+			#			has_trait = leader_trait_imperial_knight
+			#			has_trait = leader_trait_psionic
+			#		}
+			#		leader_class = scientist
+			#	}
+			#	portraits = {
+			#		fel_male_01
+			#		fel_male_02
+			#		fel_male_03
+			#		fel_male_04
+			#		fel_male_05
+			#		felkeldor_male_01
+			#	}
+			#}
+			#GENERAL
+			add = {
+				trigger = {
+					OR = {
+						gender = female
+						gender = indeterminable
+					}
+					NOR = {
+						has_trait = leader_trait_imperial_knight
+						has_trait = leader_trait_psionic
+					}
+					leader_class = commander
+					has_trait = subclass_commander_general 
+				}
+				portraits = {
+					fel_female_01
+					fel_female_02
+					fel_female_03
+					fel_female_04
+					fel_female_05
+					felstormtroopercaptain_female_01
+				}
+			}
+			add = {
+				trigger = {
+					OR = {
+						gender = female
+						gender = indeterminable
+					}
+					OR = {
+						has_trait = leader_trait_imperial_knight
+						has_trait = leader_trait_psionic
+					}
+					leader_class = commander
+				}
+				portraits = {
+					fel_female_01
+					fel_female_02
+					fel_female_03
+					fel_female_04
+					fel_female_05
+				}
+			}
+			add = {
+				trigger = {
+					OR = {
+						gender = male
+						gender = indeterminable
+					}
+					NOR = {
+						has_trait = leader_trait_imperial_knight
+						has_trait = leader_trait_psionic
+					}
+					leader_class = commander 
+					has_trait = subclass_commander_general 
+				}
+				portraits = {
+					fel_male_01
+					fel_male_02
+					fel_male_03
+					fel_male_04
+					fel_male_05
+					felchiss_male_01
+					felstormtroopercaptain_male_01
+					feldarktrooper_male_01
+					felshocktroopercap_male_01
+					felrecontrooper_male_01
+					felkeldor_male_01
+					felscoutcaptain_male_01
+					felshoretrooper_male_01
+				}
+			}
+			add = {
+				trigger = {
+					OR = {
+						gender = male
+						gender = indeterminable
+					}
+					OR = {
+						has_trait = leader_trait_imperial_knight
+						has_trait = leader_trait_psionic
+					}
+					leader_class = commander
+				}
+				portraits = {
+					fel_male_01
+					fel_male_02
+					fel_male_03
+					fel_male_04
+					fel_male_05
+					felchiss_male_01
+				}
+			}
+			#ADMIRALS
+			add = {
+				trigger = {
+					OR = {
+						gender = female
+						gender = indeterminable
+					}
+					NOR = {
+						has_trait = leader_trait_imperial_knight
+						has_trait = leader_trait_psionic
+					}
+					leader_class = commander 
+					NOT = { has_trait = subclass_commander_general }
+				}
+				portraits = {
+					fel_female_01
+					fel_female_02
+					fel_female_03
+					fel_female_04
+					fel_female_05
+				}
+			}
+			add = {
+				trigger = {
+					OR = {
+						gender = female
+						gender = indeterminable
+					}
+					OR = {
+						has_trait = leader_trait_imperial_knight
+						has_trait = leader_trait_psionic
+					}
+					leader_class = commander 
+					NOT = { has_trait = subclass_commander_general }
+				}
+				portraits = {
+					fel_female_01
+					fel_female_02
+					fel_female_03
+					fel_female_04
+					fel_female_05
+				}
+			}
+			add = {
+				trigger = {
+					OR = {
+						gender = male
+						gender = indeterminable
+					}
+					NOR = {
+						has_trait = leader_trait_imperial_knight
+						has_trait = leader_trait_psionic
+					}
+					leader_class = commander
+					NOT = { has_trait = subclass_commander_general }
+				}
+				portraits = {
+					fel_male_01
+					fel_male_02
+					fel_male_03
+					fel_male_04
+					fel_male_05
+					felchiss_male_01
+					felkeldor_male_01
+				}
+			}
+			add = {
+				trigger = {
+					OR = {
+						gender = male
+						gender = indeterminable
+					}
+					OR = {
+						has_trait = leader_trait_imperial_knight
+						has_trait = leader_trait_psionic
+					}
+					leader_class = commander 
+					NOT = { has_trait = subclass_commander_general }
+				}
+				portraits = {
+					fel_male_01
+					fel_male_02
+					fel_male_03
+					fel_male_04
+					fel_male_05
+					felchiss_male_01
+					felkeldor_male_01
+				}
+			}
+			#GOVERNORS
+			add = {
+				trigger = {
+					OR = {
+						gender = female
+						gender = indeterminable
+					}
+					#NOR = {
+					#	has_trait = leader_trait_imperial_knight
+					#	has_trait = leader_trait_psionic
+					#}
+					leader_class = official
+				}
+				portraits = {
+					fel_female_01
+					fel_female_02
+					fel_female_03
+					fel_female_04
+					fel_female_05
+				}
+			}
+			#add = {
+			#	trigger = {
+			#		OR = {
+			#			gender = female
+			#			gender = indeterminable
+			#		}
+			#		OR = {
+			#			has_trait = leader_trait_imperial_knight
+			#			has_trait = leader_trait_psionic
+			#		}
+			#		leader_class = official
+			#	}
+			#	portraits = {
+			#		fel_female_01
+			#		fel_female_02
+			#		fel_female_03
+			#		fel_female_04
+			#		fel_female_05
+			#	}
+			#}
+			add = {
+				trigger = {
+					OR = {
+						gender = male
+						gender = indeterminable
+					}
+					#NOR = {
+					#	has_trait = leader_trait_imperial_knight
+					#	has_trait = leader_trait_psionic
+					#}
+					leader_class = official
+				}
+				portraits = {
+					fel_male_01
+					fel_male_02
+					fel_male_03
+					fel_male_04
+					fel_male_05
+					felchiss_male_01
+					felkeldor_male_01
+				}
+			}
+			#add = {
+			#	trigger = {
+			#		OR = {
+			#			gender = male
+			#			gender = indeterminable
+			#		}
+			#		OR = {
+			#			has_trait = leader_trait_imperial_knight
+			#			has_trait = leader_trait_psionic
+			#		}
+			#		leader_class = official
+			#	}
+			#	portraits = {
+			#		fel_male_01
+			#		fel_male_02
+			#		fel_male_03
+			#		fel_male_04
+			#		fel_male_05
+			#		felchiss_male_01
+			#		felkeldor_male_01
+			#	}
+			#}
+		}
+		ruler = {
+			add = {
+				trigger = {
+					OR = {
+						gender = female
+						gender = indeterminable
+					}
+					#NOR = {
+					#	has_trait = leader_trait_imperial_knight
+					#	has_trait = leader_trait_psionic
+					#}
+				}
+				portraits = {
+					fel_female_01
+					fel_female_02
+					fel_female_03
+					fel_female_04
+					fel_female_05
+				}
+			}
+			#add = {
+			#	trigger = {
+			#		OR = {
+			#			gender = female
+			#			gender = indeterminable
+			#		}
+			#		OR = {
+			#			has_trait = leader_trait_imperial_knight
+			#			has_trait = leader_trait_psionic
+			#		}
+			#	}
+			#	portraits = {
+			#		fel_female_01
+			#		fel_female_02
+			#		fel_female_03
+			#		fel_female_04
+			#		fel_female_05
+			#	}
+			#}
+			add = {
+				trigger = {
+					OR = {
+						gender = male
+						gender = indeterminable
+					}
+					#NOR = {
+					#	has_trait = leader_trait_imperial_knight
+					#	has_trait = leader_trait_psionic
+					#}
+				}
+				portraits = {
+					fel_male_01
+					fel_male_02
+					fel_male_03
+					fel_male_04
+					fel_male_05
+				}
+			}
+			#add = {
+			#	trigger = {
+			#		OR = {
+			#			gender = male
+			#			gender = indeterminable
+			#		}
+			#		OR = {
+			#			has_trait = leader_trait_imperial_knight
+			#			has_trait = leader_trait_psionic
+			#		}
+			#	}
+			#	portraits = {
+			#		fel_male_01
+			#		fel_male_02
+			#		fel_male_03
+			#		fel_male_04
+			#		fel_male_05
+			#	}
+			#}
+		}
+	}		
+}	

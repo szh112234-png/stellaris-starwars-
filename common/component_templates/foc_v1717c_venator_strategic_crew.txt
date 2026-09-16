@@ -1,0 +1,40 @@
+utility_component_template = {
+	key = "FOC_V1717C_VENATOR_STRATEGIC_CREW"
+	potential = { from = { foc_v1717c_republic_strategic_aircraft_allowed = yes } NOT = { has_global_flag = foc_khan_strength_lowest } }
+	size = aux
+	icon = "GFX_VCSD_CREW"
+	icon_frame = 1
+	power = 0
+	resources = { category = ship_components cost = { } }
+	component_set = "venatorclass_crew"
+	size_restriction = { venatorclass }
+	ai_weight = { weight = 100000 }
+
+    prerequisites = { tech_ssp_republic_hyperspace }
+    scripted_action = { ssp_republic_strike }
+}
+
+utility_component_template = {
+    size = aux
+    icon = GFX_VCSD_CREW
+    icon_frame = 1
+    power = 0
+    resources = {
+        category = ship_components
+        cost = {
+
+        }
+    }
+    ship_modifier = {
+        ship_experience_gain_mult = 0.25
+    }
+    component_set = venatorclass_crew
+    key = "FOC_V1717C_VENATOR_STRATEGIC_CREW_LOWEST"
+    
+    potential = { from = { foc_v1717c_republic_strategic_aircraft_allowed = yes } has_global_flag = foc_khan_strength_lowest }
+    ai_weight = { weight = 100000 }
+    size_restriction = { venatorclass_foc_lowest }
+
+    prerequisites = { tech_ssp_republic_hyperspace }
+    scripted_action = { ssp_republic_strike }
+}

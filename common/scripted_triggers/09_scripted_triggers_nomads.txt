@@ -1,0 +1,1225 @@
+############################
+# Nomads Scripted Triggers #
+############################
+
+can_colonize_planet_trigger = {
+	custom_tooltip = {
+		fail_text = "COLONIZATION_IMPOSSIBLE_UNDER_INVESTIGATION"
+		NOT = { has_carrier_flag = planet_under_investigation }
+	}
+
+	custom_tooltip = {
+		fail_text = "COLONIZATION_IMPOSSIBLE_DYSON_SPHERE"
+		if = {
+			limit = {
+				is_artificial = no	# Colonizing habitats is fine
+			}
+			system_has_dyson_sphere = no
+		}
+	}
+
+	custom_tooltip = {
+		fail_text = "COLONIZATION_IMPOSSIBLE_DYSON_SPHERE_CONSTRUCTION"
+		if = {
+			limit = {
+				system_has_dyson_sphere = no
+				is_artificial = no	# Colonizing habitats is fine
+			}
+			NOT = {
+				solar_system = {
+					has_star_flag = dyson_sphere_construction
+				}
+			}
+		}
+	}
+
+	custom_tooltip = {
+		fail_text = "COLONIZATION_IMPOSSIBLE_COSMOGENESIS_EXODUS"
+		$SCOPE$? = {
+			NOT = { owner = { has_event_chain = cosmogenesis_planet_pickup_chain } }
+		}
+	}
+
+	custom_tooltip = {
+		fail_text = "COLONIZATION_IMPOSSIBLE_CRIMSON_CRAWLERS"
+
+		if = {
+			limit = {
+				has_modifier = crimson_crawlers
+			}
+			$SCOPE$? = {
+				cares_for_crimson_crawlers = yes
+			}
+		}
+	}
+
+	custom_tooltip = {
+		fail_text = "COLONIZATION_IMPOSSIBLE_DEFENDED_PLANET"
+		NOT = { has_carrier_flag = planet_defended_forbid_colonization }
+	}
+
+	custom_tooltip = {
+		fail_text = "COLONIZATION_IMPOSSIBLE_SMEEGIBB_PLANET"
+		NOT = { has_carrier_flag = cannot_colonize_smeegibb_shelter }
+	}
+
+	custom_tooltip = {
+		fail_text = "COLONIZATION_IMPOSSIBLE_EMBARKING"
+		$SCOPE$? = {
+			NOT = {
+				owner = { has_country_flag = already_embarking }
+			}
+		}
+	}
+}
+
+has_nomads_dlc = {
+	optimize_memory
+	host_has_dlc = "Nomads"
+}
+
+is_deep_sleep_country = {
+	OR = {
+		has_valid_civic = civic_deep_sleep
+		has_valid_civic = civic_corporate_deep_sleep
+		has_valid_civic = civic_hive_deep_sleep
+		has_valid_civic = civic_machine_deep_sleep
+	}
+}
+
+is_waystation_starbase = {
+	has_starbase_size >= starbase_waystation_1
+}
+
+is_waystation_ship = {
+	OR = {
+		is_ship_size = starbase_waystation_1
+		is_ship_size = starbase_waystation_2
+		is_ship_size = starbase_waystation_3
+	}
+}
+
+# Fleet scope. A nomad's mobile vessels (arkships, military, logistic ships) that the Expulsion war goal forces out of the
+# expeller's territory. Excludes deposit-bound stations, which belong to the system and must revert to its rightful owner.
+is_expellable_nomad_fleet = {
+	NOR = {
+		is_ship_class = shipclass_mining_station
+		is_ship_class = shipclass_research_station
+		is_ship_class = shipclass_observation_station
+	}
+}
+
+benefits_from_waystation_network = {
+	OR = {
+		is_same_value = $NOMAD$ 							# this country IS the Wayline owner.
+		has_waystation_pact = $NOMAD$						# Wayline owner and this country have a wayline pact.
+		is_in_federation_with = $NOMAD$						# Wayline owner and this country are in a federation together.
+		is_overlord_to = $NOMAD$							# This country is the overlord of the wayline owner.
+		AND = {
+			is_subject = yes
+			OR = {
+				$NOMAD$ = {
+					is_overlord_to = $SYSTEM_OWNER$			# Wayline owner is the overlord of this country.
+				}
+				AND = {
+					exists = $NOMAD$.overlord
+					$NOMAD$.overlord = {
+						is_overlord_to = $SYSTEM_OWNER$		# This country and the wayline owner share an overlord.
+					}
+				}
+			}
+		}
+		AND = {												# Either this country or the wayline owner are the Galactic Emperor
+			is_galactic_community_member = yes				# and the other is in the Galactic Imperium
+			$NOMAD$ = {
+				is_galactic_community_member = yes
+			}
+			OR = {
+				is_galactic_emperor = yes
+				$NOMAD$ = {
+					is_galactic_emperor = yes
+				}
+			}
+		}
+	}
+}
+
+is_arkship_fleet = {
+	NOT = {
+		# Note - this version will short-circuit on the first non-arkship ship.
+		# This is faster than the original version on non-arkship fleets.
+		any_owned_ship = {
+			is_arkship_ship = no
+		}
+	}
+}
+
+# FOC V13: is_arkship_ship is defined once in zzzzzz_foc_supremacy_arkship_trigger_override.txt.
+
+# FOC V13: is_arkship_starbase is defined once in zzzzzz_foc_supremacy_arkship_trigger_override.txt.
+
+is_civilian_arkship = {
+	OR = {
+		is_ship_size = civilian_arkship_tier_1
+		is_ship_size = civilian_arkship_tier_2
+		is_ship_size = civilian_arkship_tier_3
+	}
+}
+
+is_science_arkship = {
+	OR = {
+		is_ship_size = science_arkship_tier_1
+		is_ship_size = science_arkship_tier_2
+		is_ship_size = science_arkship_tier_3
+	}
+}
+
+# FOC V13: is_military_arkship is defined once in zzzzzz_foc_supremacy_arkship_trigger_override.txt.
+
+# Country scope.
+prefers_civilian_arkship = {
+	OR = {
+		# Scripted Triggers
+		is_caravan_masters_empire = yes
+		is_deep_sleep_country = yes
+		is_scavenger = yes
+		is_relentless_industrialist_empire = yes
+		# Machine
+		has_valid_civic = civic_machine_astromining_drones
+	}
+}
+
+prefers_science_arkship = {
+	OR = {
+		# Scripted Triggers
+		is_hyperspace_specialty_empire = yes
+		is_dimensional_worship_empire = yes
+		is_dark_consortium_empire = yes
+		is_astrometeorologist_empire = yes
+		is_galactic_curators_empire = yes
+		is_star_seeker_empire = yes
+		# Standard
+		has_valid_civic = civic_technocracy
+		has_valid_civic = civic_individual_machine_predictive_analysis
+		# Hive
+		has_valid_civic = civic_hive_subspace_ephapse
+		has_valid_civic = civic_hive_natural_neural_network
+		# Machine
+		has_valid_civic = civic_machine_predictive_analysis
+	}
+}
+
+prefers_military_arkship = {
+	OR = {
+		# Scripted Triggers
+		is_unfriendly = yes # Includes Genocidal civics & Barbaric Despoilers
+		is_crusader_empire = yes
+		is_flight_schools_empire = yes
+		is_hired_guns_empire = yes
+		# Standard
+		has_valid_civic = civic_nationalistic_zeal
+		has_valid_civic = civic_warrior_culture
+		has_valid_civic = civic_distinguished_admiralty
+		has_valid_civic = civic_void_reavers
+		# Corporate
+		has_valid_civic = civic_naval_contractors
+		has_valid_civic = civic_private_military_companies
+		# Hive
+		has_valid_civic = civic_hive_strength_of_legions
+		# Machine
+		has_valid_civic = civic_machine_warbots
+	}
+}
+
+is_civilian_arkship_starbase = {
+	OR = {
+		has_starbase_size = civilian_arkship_tier_1
+		has_starbase_size = civilian_arkship_tier_2
+		has_starbase_size = civilian_arkship_tier_3
+	}
+}
+
+is_science_arkship_starbase = {
+	OR = {
+		has_starbase_size = science_arkship_tier_1
+		has_starbase_size = science_arkship_tier_2
+		has_starbase_size = science_arkship_tier_3
+	}
+}
+
+# FOC V13: is_military_arkship_starbase is defined once in zzzzzz_foc_supremacy_arkship_trigger_override.txt.
+
+is_capital_arkship_starbase = {
+	is_arkship_starbase = yes
+	colony? = {
+		is_capital = yes
+	}
+}
+
+# FOC V13: is_arkship_tier_1 is defined once in zzzzzz_foc_supremacy_arkship_trigger_override.txt.
+
+# FOC V13: is_arkship_tier_2 is defined once in zzzzzz_foc_supremacy_arkship_trigger_override.txt.
+
+# FOC V13: is_arkship_tier_3 is defined once in zzzzzz_foc_supremacy_arkship_trigger_override.txt.
+
+is_cruise_crew = {
+	has_citizenship_type = {
+		type = citizenship_cruise_crew
+		country = from
+	}
+}
+
+is_cruise_passenger = {
+	has_citizenship_type = {
+		type = citizenship_cruise_passenger
+		country = from
+	}
+}
+
+is_founding_cruise_crew = {
+	has_species_flag = cruise_founding_crew
+}
+
+is_founding_cruise_passenger = {
+	has_species_flag = cruise_founding_passenger
+}
+
+system_has_station_resource = {
+	exists = solar_system
+	solar_system = {
+		any_system_planet = {
+			is_colonizable = no
+			has_resource = {
+				type = $RESOURCE$
+				amount > 0
+			}
+		}
+	}
+}
+
+can_issue_contracts_trigger = {
+	is_nomadic = no
+	OR = {
+		is_country_type = default
+		is_enclave_country = yes
+	}
+	is_homicidal = no
+	NOT = { has_country_flag = declared_crisis }
+	any_relation = {
+		can_accept_contracts_trigger = yes
+		has_communications = prev
+	}
+	NOT = { any_agreement = { has_term_value = { term = subject_diplomacy value = subject_can_not_do_diplomacy } } }
+}
+
+can_accept_contracts_trigger = {
+	is_nomadic = yes
+	#Forever Cruise
+	NOR = {
+		has_country_flag = forever_cruise_planetfall
+		has_country_flag = forever_cruise_mutiny
+	}
+	#Subjects
+	NOT = { any_agreement = { has_term_value = { term = subject_diplomacy value = subject_can_not_do_diplomacy } } }
+	#Inwards Perfection
+	NOT = { has_valid_civic = civic_inwards_perfection }
+	#Genocidals
+	is_homicidal = no #Would be better to make bespoke triggers that check if the issuer is your species/vassal/a fellow machine, but this will do for now
+}
+
+can_build_defensive_waystation_module = { #scope = starbase
+	owner = {
+		OR = {
+			has_valid_civic = civic_void_reavers
+			has_country_flag = sacred_path_embrace_chaos
+		}
+	}
+}
+
+can_build_pirate_waystation_module = { #scope = starbase
+	owner = {
+		has_valid_civic = civic_void_reavers
+	}
+}
+
+can_build_hostile_waystation_module = { #scope = starbase
+	owner = {
+		OR = {
+			has_valid_civic = civic_void_reavers
+			has_country_flag = sacred_path_embrace_chaos
+		}
+	}
+}
+
+is_caravan_masters_empire = {
+	OR = {
+		has_valid_civic = civic_caravan_masters
+		has_valid_civic = civic_caravan_masters_corporate
+	}
+}
+
+is_hired_guns_empire = {
+	OR = {
+		has_valid_civic = civic_hired_guns
+		has_valid_civic = civic_corporate_hired_guns
+	}
+}
+
+is_flight_schools_empire = {
+	OR = {
+		has_valid_civic = civic_flight_schools
+		has_valid_civic = civic_corporate_flight_schools
+	}
+}
+
+will_champions_forge_visit = {
+	NOR = {
+		is_country_type = fallen_empire
+		is_country_type = awakened_fallen_empire
+		is_country_type = dormant_marauders
+		is_country_type = awakened_marauders
+		is_crisis_faction = yes
+		is_homicidal = yes
+		is_level_4_player_crisis = yes
+	}
+}
+
+# Planet scope, from is the arkship.
+# Used for arkship_harvest_resources scripted action.
+has_harvestable_resources_trigger = {
+	OR = {
+		is_planet_class = pc_ice_asteroid
+		is_planet_class = pc_egg_cracked
+		is_planet_class = pc_asteroid
+		is_planet_class = pc_barren
+		is_planet_class = pc_barren_cold
+		is_planet_class = pc_broken
+		is_planet_class = pc_shattered
+		is_planet_class = pc_shattered_2
+		is_planet_class = pc_junk
+		is_planet_class = pc_gas_giant
+		is_planet_class = pc_toxic
+		is_planet_class = pc_rare_crystal_asteroid
+		is_planet_class = pc_crystal_asteroid
+		is_planet_class = pc_frozen
+		is_planet_class = pc_molten
+		is_planet_class = pc_gray_goo
+		is_planet_class = pc_shrouded
+	}
+}
+
+is_harvestable_planet = {
+	has_harvestable_resources_trigger = yes
+	NOT = { has_modifier = harvested_resources_mining }
+	has_anomaly = no
+}
+
+is_valid_harvest_target = {
+	# Scope: planet
+	# Checks that a planet is a valid target for resource harvesting actions.
+	is_star = no
+	custom_tooltip = {
+		fail_text = arkship_target_habitable_world_fail_tt
+		habitable_planet = no
+	}
+	custom_tooltip = {
+		fail_text = arkship_target_artificial_world_fail_tt
+		is_artificial = no
+	}
+	custom_tooltip = {
+		fail_text = arkship_target_ring_world_fail_tt
+		is_ringworld = no
+	}
+	custom_tooltip = {
+		fail_text = arkship_target_astral_scar_fail_tt
+		NOT = {
+			is_planet_class = pc_astral_scar
+		}
+	}
+	custom_tooltip = {
+		fail_text = arkship_target_harvestable_resources_fail_tt
+		has_harvestable_resources_trigger = yes
+	}
+}
+
+is_target_of_harvest_contract = {
+	# Scope: planet
+	# $COUNTRY$ - the country to check harvest contract POIs for
+	OR = {
+		is_point_of_interest = {
+			id = harvest_poi@this
+			event_chain = contract_harvest_minerals_chain
+			owner = $COUNTRY$
+		}
+		is_point_of_interest = {
+			id = harvest_poi@this
+			event_chain = contract_harvest_energy_chain
+			owner = $COUNTRY$
+		}
+		is_point_of_interest = {
+			id = harvest_poi@this
+			event_chain = contract_harvest_consumer_goods_chain
+			owner = $COUNTRY$
+		}
+		is_point_of_interest = {
+			id = harvest_poi@this
+			event_chain = contract_harvest_alloys_chain
+			owner = $COUNTRY$
+		}
+		is_point_of_interest = {
+			id = harvest_poi@this
+			event_chain = contract_harvest_volatile_motes_chain
+			owner = $COUNTRY$
+		}
+		is_point_of_interest = {
+			id = harvest_poi@this
+			event_chain = contract_harvest_exotic_gases_chain
+			owner = $COUNTRY$
+		}
+		is_point_of_interest = {
+			id = harvest_poi@this
+			event_chain = contract_harvest_rare_crystals_chain
+			owner = $COUNTRY$
+		}
+		is_point_of_interest = {
+			id = harvest_poi@this
+			event_chain = contract_harvest_sr_living_metal_chain
+			owner = $COUNTRY$
+		}
+		is_point_of_interest = {
+			id = harvest_poi@this
+			event_chain = contract_harvest_nanites_chain
+			owner = $COUNTRY$
+		}
+	}
+}
+
+exempt_from_harvest_resources_opinion_reduction_trigger = {
+	solar_system = {
+		has_star_flag = harvest_contract_system@this
+	}
+}
+
+# These are the conditions that need to be met for a potential Sacred Site.
+# It doesn't mean that these planets will be a Sacred Site, but they could.
+is_sacred_site_planet = {
+	has_anomaly = no
+	is_star = no
+	has_owner = no
+	is_fe_cluster = no
+	is_marauder_cluster = no
+	is_astral_scar = no
+	is_artificial = no
+	is_ringworld = no
+	solar_system = {
+		NOR = {
+			exists = space_owner
+			has_star_flag = empire_cluster
+			has_star_flag = guardians
+			has_star_flag = hostile_system
+			has_star_flag = sealed_system
+			any_neighbor_system = {
+				OR = {
+					exists = space_owner
+					has_star_flag = empire_cluster
+					is_fe_cluster = yes
+					is_marauder_cluster = yes
+				}
+			}
+		}
+	}
+}
+
+has_neighboring_waystation = {
+	solar_system? = {
+		any_neighbor_system = {
+			any_fleet_in_system = {
+				is_waystation_ship = yes
+				owner? = {
+					is_same_value = root.owner
+				}
+			}
+		}
+	}
+}
+
+is_sacred_site_waystation = {
+	solar_system? = {
+		any_system_planet = {
+			OR = {
+				has_carrier_flag = sacred_emergence_planet@root.owner
+				has_carrier_flag = sacred_eye_planet@root.owner
+				has_carrier_flag = sacred_monastery_planet@root.owner
+				has_carrier_flag = sacred_cradle_planet@root.owner
+				has_carrier_flag = sacred_intelligence_planet@root.owner
+				has_carrier_flag = sacred_breathvault_planet@root.owner
+				has_carrier_flag = sacred_chasm_planet@root.owner
+				has_carrier_flag = sacred_mirror_planet@root.owner
+			}
+		}
+	}
+}
+
+can_ignore_trust_requirements_for_subjects = { # Made into a trigger to make it easier to add additional sources of this in the future
+	has_country_flag = heir_of_the_khan_khan
+}
+
+contract_system_is_own_or_neutral = {
+	fromfrom = {
+		OR = {
+			AND = {
+				exists = owner
+				owner = {
+					is_same_value = root
+				}
+			}
+			NOT = {
+				exists = owner
+			}
+		}
+	}
+}
+
+contract_system_is_own = {
+	fromfrom = {
+		exists = owner
+		owner = {
+			is_same_value = root
+		}
+	}
+}
+
+contract_system_is_owned_by_other_empire = {
+	fromfrom = {
+		exists = owner
+		owner = {
+			is_country_type = default
+			NOT = {
+				is_same_value = root
+			}
+		}
+	}
+}
+
+contract_system_is_own_waystation = {
+	fromfrom = {
+		any_starbase_in_system = {
+			is_waystation_starbase = yes
+			owner? = {
+				is_same_value = root
+			}
+		}
+	}
+}
+
+contract_requires_operator_technology = {
+	any_relation = {
+		is_nomadic = yes
+		has_communications = prev
+		has_technology = $TECH$
+	}
+}
+
+# Scope: country (the contract operator or a candidate operator).
+# $SYSTEM$ = the contract target system: from in possible_operator, fromfrom in abort_trigger.
+# Humans always count as reachable - accepting a contract out of reach is the player's own call.
+# The AI checks that one of its arkships can plot a hyperlane route to the target system
+# (route not discovered, closed borders and a locked system all count as unreachable).
+# can_access_system runs full pathfinding, so keep this the last condition in any block.
+contract_target_system_reachable = {
+	OR = {
+		is_ai = no
+		any_owned_fleet = {
+			is_arkship_fleet = yes
+			can_access_system = $SYSTEM$
+		}
+	}
+}
+
+has_deep_scan_capability = {
+	any_owned_fleet = {
+		OR = {
+			is_ship_size = science_arkship_tier_2
+			is_ship_size = science_arkship_tier_3
+			starbase? = {
+				is_arkship_starbase = yes
+				OR = {
+					OR = { has_starbase_module = arkship_sensor_array has_starbase_module = sai_supremacy_arkship_sensor_array }
+					has_starbase_module = arkship_system_scanner
+				}
+			}
+		}
+	}
+}
+
+contract_gas_giant_can_be_ignited = {
+	# Check the gas giant
+	is_planet_class = pc_gas_giant
+	is_moon = no
+	has_anomaly = no
+	NOT = {
+		# Check that there's no space-faring colony on a moon
+		any_moon = {
+			exists = space_owner
+			exists = colony
+			exists = colony.owner
+			colony.owner = {
+				is_primitive = no
+			}
+		}
+	}
+	# Check the issuer
+	if = {
+		limit = {
+			# This scripted trigger is called from different contexts, so we check where the issuer scope is
+			prevprevprev? = {
+				is_country_type = default
+				is_nomadic = no
+			}
+			NOT = {
+				has_carrier_flag = stellar_ignition_planet@prevprevprev
+			}
+			OR = {
+				# If there's a pre-ftl colony on a moon, check that the issuer doesn't care about pre-FTLs
+				prevprevprev = {
+					has_policy_flag = interference_aggressive
+				}
+				NOT = {
+					any_moon = {
+						exists = colony
+						colony.owner = {
+							is_primitive = yes
+						}
+					}
+				}
+			}
+		}
+	}
+	else = {
+		# If the issuer scope is not prevprevprev, it's root
+		NOT = {
+			has_carrier_flag = stellar_ignition_planet@root
+		}
+		OR = {
+			# If there's a pre-ftl colony on a moon, check that the issuer doesn't care about pre-FTLs
+			root = {
+				has_policy_flag = interference_aggressive
+			}
+			NOT = {
+				any_moon = {
+					exists = colony
+					colony.owner = {
+						is_primitive = yes
+					}
+				}
+			}
+		}
+	}
+}
+
+# Country scope trigger
+# NOTE: Any time you update this trigger, update the can_nomad_settle game rule as well
+nomad_can_settle_trigger = {
+	has_nomads_dlc = yes
+	OR = {
+		AND = {
+			OR = {
+				has_tradition = tr_adaptability_finish
+				has_tradition = tr_versatility_finish
+			}
+			NOR = {
+				has_origin = origin_sacred_path
+				has_origin = origin_heirs_of_the_khan
+				has_origin = origin_forever_cruise
+			}
+		}
+		AND = {
+			has_origin = origin_forever_cruise
+			has_country_flag = forever_cruise_planetfall
+		}
+	}
+}
+
+can_embark_trigger = {
+	has_nomads_dlc = yes
+	is_nomadic = no
+	OR = {
+		has_tradition = tr_adaptability_finish
+		has_tradition = tr_versatility_finish
+		has_country_flag = doomsday_embark_unlocked
+	}
+	can_embark_no_tradition_check_trigger = yes
+}
+
+can_embark_no_tradition_check_trigger = {
+	has_nomads_dlc = yes
+	is_nomadic = no
+	is_wilderness_empire = no
+	is_homicidal = no
+	NOR = {
+		has_ascension_perk = ap_cosmogenesis
+		has_origin = origin_legendary_leader
+		has_origin = origin_legendary_leader_death
+		has_origin = origin_legendary_leader_imperial
+		has_origin = origin_legendary_leader_dictatorial
+		has_origin = origin_endbringers
+		has_origin = origin_shroud_forged
+		has_origin = origin_fear_of_the_dark
+		has_origin = origin_toxic_knights
+		has_origin = origin_tree_of_life
+		has_origin = origin_fruitful
+		any_situation = {
+			OR = {
+				is_situation_type = situation_red_giant_expansion #After these situation ends it's fine to embark
+				is_situation_type = situation_cosmic_dawn
+			}
+		}
+	}
+}
+
+# Used in Colony Designations, FROM - country scope, this/root - planet scope
+can_be_nomadic_capital_trigger = {
+	FROM? = {
+		is_nomadic = yes
+	}
+	NOT = { #Nomads can settle a new capital in an unoccupied space
+		exists = owner_or_space_owner
+	}
+}
+
+has_contract_scripted_action = { #check if an arkship already has an extra ship action from contracts
+	has_fleet_flag = transporting_prisoners
+}
+
+#This = country. Whether the country has borders that it could close or open
+has_borders_trigger = {
+	is_nomadic = no
+}
+
+# System Scope. Used in Pest Control Contract
+can_pest_control_system = {
+	any_ship_in_system = {
+		owner? = {
+			OR = {
+				is_tiyanki_country_type = yes
+				is_amoeba_country_type = yes
+				is_crystal_country_type = yes
+				is_voidworms_country_type = yes
+				is_cutholoids_country_type = yes
+				is_drone_country_type = yes
+			}
+		}
+	}
+}
+
+# Country Scope. Used in Pest Control Contract
+is_space_critter_country = {
+	OR = {
+		is_tiyanki_country_type = yes
+		is_amoeba_country_type = yes
+		is_crystal_country_type = yes
+		is_voidworms_country_type = yes
+		is_cutholoids_country_type = yes
+		is_drone_country_type = yes
+	}
+}
+
+# Checks if the passengers are bored with the cruise
+# this = country
+cruise_passenger_angry = {
+	any_situation = {
+		is_situation_type = situation_passenger_satisfaction
+		check_variable_arithmetic = {
+			which = passenger_satisfaction_index
+			value < 0
+		}
+	}
+}
+
+# Checks if the crew is stressed from the cruise
+# this = country
+cruise_crew_angry = {
+	any_situation = {
+		is_situation_type = situation_passenger_satisfaction
+		check_variable_arithmetic = {
+			which = passenger_satisfaction_index
+			value > 0
+		}
+	}
+}
+
+# Checks if the Forever Cruise player has picked a side approach
+# (favoring passengers or crew) rather than the balanced approach.
+# Used to generate more contracts for the favored side.
+# this = country
+cruise_favoring_side_approach = {
+	any_situation = {
+		is_situation_type = situation_passenger_satisfaction
+		OR = {
+			current_situation_approach = situation_passenger_satisfaction_passenger
+			current_situation_approach = situation_passenger_satisfaction_crew
+		}
+	}
+}
+
+# Check if Nomadic Paragons are available for hire
+
+can_hire_nomadic_paragon_1 = {
+    NOR = {
+		has_global_flag = hired_nomadic_paragon_1
+		has_country_flag = first_pop_purged
+	}
+    is_homicidal = no
+}
+
+can_hire_nomadic_paragon_2 = {
+    NOT = { has_global_flag = hired_nomadic_paragon_2 }
+    is_militarist = no
+}
+
+can_hire_nomadic_paragon_3 = {
+    NOT = { has_global_flag = hired_nomadic_paragon_3 }
+}
+
+can_hire_nomadic_paragon_4 = {
+    NOT = { has_global_flag = hired_nomadic_paragon_4 }
+}
+
+can_hire_nomadic_paragon_5 = {
+    NOT = { has_global_flag = hired_nomadic_paragon_5 }
+    is_pacifist = no
+}
+
+can_hire_nomadic_paragon_6 = {
+    NOT = { has_global_flag = hired_nomadic_paragon_6 }
+}
+
+# Returns true if the country has access to at least one surveyed, unowned, uninhabitable
+# precursor planet. Non-nomads check within-border systems; Nomads check systems adjacent
+# to their deployed waystations (own system + neighbors).
+# Usage: has_accessible_precursor_system = { PRECURSOR_FLAG = precursor_1 }
+has_accessible_precursor_system = {
+	OR = {
+		AND = {
+			is_nomadic = no
+			any_system_within_border = {
+				has_star_flag = $PRECURSOR_FLAG$
+				any_system_planet = {
+					uninhabitable_regular_planet = yes
+					NOT = { has_carrier_flag = precursor_world }
+					has_owner = no
+					has_anomaly = no
+					is_surveyed = {
+						who = root
+						status = yes
+					}
+				}
+			}
+		}
+		AND = {
+			is_nomadic = yes
+			any_owned_nonprimary_starbase = {
+				is_waystation_starbase = yes
+				solar_system = {
+					OR = {
+						AND = {
+							has_star_flag = $PRECURSOR_FLAG$
+							any_system_planet = {
+								uninhabitable_regular_planet = yes
+								NOT = { has_carrier_flag = precursor_world }
+								has_owner = no
+								has_anomaly = no
+								is_surveyed = {
+									who = root
+									status = yes
+								}
+							}
+						}
+						any_neighbor_system = {
+							has_star_flag = $PRECURSOR_FLAG$
+							any_system_planet = {
+								uninhabitable_regular_planet = yes
+								NOT = { has_carrier_flag = precursor_world }
+								has_owner = no
+								has_anomaly = no
+								is_surveyed = {
+									who = root
+									status = yes
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+is_star_seeker_empire = {
+	OR = {
+		has_valid_civic = civic_star_seekers
+		has_valid_civic = civic_hive_star_seekers
+		has_valid_civic = civic_machine_star_seekers
+		has_valid_civic = civic_corporate_star_seekers
+	}
+}
+
+technician_is_fuel_chemist_trigger = {
+	colony = {
+		has_zone = {
+			zone = zone_ark_engine_bypass
+		}
+	}
+}
+
+technician_is_shield_tuner_trigger = {
+	colony = {
+		has_zone = {
+			zone = zone_ark_shield_overloader
+		}
+	}
+}
+
+metallurgist_is_void_forge_trigger = {
+	colony = {
+		has_zone = {
+			zone = zone_ark_military_eco
+		}
+	}
+}
+
+soldier_is_shipwright_trigger = {
+	colony = {
+		has_zone = {
+			zone = zone_ark_shipwright
+		}
+	}
+}
+
+soldier_is_missile_crew_trigger = {
+	colony = {
+		has_zone = {
+			zone = zone_ark_missile_silos
+		}
+	}
+}
+
+soldier_is_ammunition_loader_trigger = {
+	colony = {
+		has_zone = {
+			zone = zone_ark_ammunition_lines
+		}
+	}
+}
+
+soldier_is_laser_gunner_trigger = {
+	colony = {
+		has_zone = {
+			zone = zone_ark_laser_capacitors
+		}
+	}
+}
+
+soldier_is_flight_deck_crew_trigger = {
+	colony = {
+		has_zone = {
+			zone = zone_ark_flight_decks
+		}
+	}
+}
+
+is_megastructure_incompatible_with_nomads = {
+	OR = {
+		is_megastructure_type = deep_space_citadel_0
+		is_megastructure_type = dyson_swarm_1
+		is_megastructure_type = dyson_swarm_2
+		is_megastructure_type = dyson_swarm_3
+		is_megastructure_type = dyson_sphere_0
+		is_megastructure_type = dyson_sphere_1
+		is_megastructure_type = dyson_sphere_2
+		is_megastructure_type = dyson_sphere_3
+		is_megastructure_type = dyson_sphere_4
+		is_megastructure_type = dyson_sphere_5
+		is_megastructure_type = dyson_sphere_disco
+		is_megastructure_type = dyson_sphere_restored
+		is_megastructure_type = dyson_sphere_disco_restored
+		is_megastructure_type = interstellar_assembly_0
+		is_megastructure_type = interstellar_assembly_1
+		is_megastructure_type = interstellar_assembly_2
+		is_megastructure_type = interstellar_assembly_3
+		is_megastructure_type = interstellar_assembly_4
+		is_megastructure_type = interstellar_assembly_restored
+		is_megastructure_type = habitat_central_complex
+		is_megastructure_type = mega_art_installation_0
+		is_megastructure_type = mega_art_installation_1
+		is_megastructure_type = mega_art_installation_2
+		is_megastructure_type = mega_art_installation_3
+		is_megastructure_type = mega_art_installation_4
+		is_megastructure_type = mega_art_installation_restored
+		is_megastructure_type = mega_art_installation_restored_2
+		is_megastructure_type = mega_shipyard_0
+		is_megastructure_type = mega_shipyard_1
+		is_megastructure_type = mega_shipyard_2
+		is_megastructure_type = mega_shipyard_3
+		is_megastructure_type = mega_shipyard_restored
+		is_megastructure_type = ring_world_1
+		is_megastructure_type = ring_world_2_intermediate
+		is_megastructure_type = ring_world_3_intermediate
+		is_megastructure_type = quantum_catapult_0
+		is_megastructure_type = quantum_catapult_1
+		is_megastructure_type = quantum_catapult_2
+		is_megastructure_type = quantum_catapult_3
+		is_megastructure_type = quantum_catapult_restored
+		is_megastructure_type = quantum_catapult_restored_slingshot
+		is_megastructure_type = quantum_catapult_improved_slingshot
+		is_megastructure_type = think_tank_0
+		is_megastructure_type = think_tank_1
+		is_megastructure_type = think_tank_2
+		is_megastructure_type = think_tank_3
+		is_megastructure_type = think_tank_4
+		is_megastructure_type = think_tank_restored
+		is_megastructure_type = spy_orb_0
+		is_megastructure_type = spy_orb_1
+		is_megastructure_type = spy_orb_2
+		is_megastructure_type = spy_orb_3
+		is_megastructure_type = spy_orb_4
+		is_megastructure_type = spy_orb_restored
+		is_megastructure_type = strategic_coordination_center_0
+		is_megastructure_type = strategic_coordination_center_1
+		is_megastructure_type = strategic_coordination_center_2
+		is_megastructure_type = strategic_coordination_center_3
+		is_megastructure_type = strategic_coordination_center_restored
+	}
+}
+
+# Scope: planet. True if the planet has a planetary shield generator (or its wilderness variant).
+has_planetary_shield_building = {
+	OR = {
+		has_building = building_planetary_shield_generator
+		has_building = building_ozone_thickener
+	}
+}
+
+# Scope: planet. Root: the prospective nomad migrant country.
+# Used by nomads.7000 / nomads.7005 to filter valid migration destinations.
+can_receive_nomad_migration = {
+	exists = owner
+	NOR = {
+		is_owned_by = root
+		has_carrier_flag = migration_happened_planet
+	}
+	owner = {
+		is_country_type = default
+		has_policy_flag = refugees_allowed
+		has_communications = root
+		is_homicidal = no
+		NOT = { is_at_war_with = root }
+	}
+}
+
+# Country scope — true if this country's crisis sphere system is within their borders or a waystation system
+owns_crisis_sphere_system = {
+	OR = {
+		any_system_within_border = {
+			has_star_flag = crisis_sphere_system@root.owner
+			any_system_megastructure = { has_megastructure_flag = crisis_sphere }
+		}
+		any_owned_nonprimary_starbase = {
+			has_starbase_size >= starbase_waystation_2
+			solar_system = {
+				has_star_flag = crisis_sphere_system@root.owner
+				any_system_megastructure = { has_megastructure_flag = crisis_sphere }
+			}
+		}
+	}
+}
+
+is_hospitality_servitor_empire = {
+	has_valid_civic = civic_machine_servitor
+	has_origin = origin_forever_cruise
+	NOT = { has_country_flag = forever_cruise_over }
+}
+
+# Arkship starbase weapon module presence triggers
+# These are in starbase scope
+arkship_starbase_has_explosive_weapon_module = {
+	OR = {
+		OR = { has_starbase_module = arkship_missile_battery has_starbase_module = sai_supremacy_arkship_missile_battery }
+		OR = { has_starbase_module = arkship_swamer_missile_battery has_starbase_module = sai_supremacy_arkship_swamer_missile_battery }
+		OR = { has_starbase_module = arkship_scourge_missile_battery has_starbase_module = sai_supremacy_arkship_scourge_missile_battery }
+		OR = { has_starbase_module = arkship_archaeo_missile_battery has_starbase_module = sai_supremacy_arkship_archaeo_missile_battery }
+	}
+}
+
+arkship_starbase_has_kinetic_weapon_module = {
+	OR = {
+		OR = { has_starbase_module = arkship_mass_driver_battery has_starbase_module = sai_supremacy_arkship_mass_driver_battery }
+		OR = { has_starbase_module = arkship_kinetic_artillery_battery has_starbase_module = sai_supremacy_arkship_kinetic_artillery_battery }
+		OR = { has_starbase_module = arkship_mass_accelerator has_starbase_module = sai_supremacy_arkship_mass_accelerator }
+		OR = { has_starbase_module = arkship_archaeo_mass_driver_battery has_starbase_module = sai_supremacy_arkship_archaeo_mass_driver_battery }
+		OR = { has_starbase_module = arkship_archaeo_mass_accelerator has_starbase_module = sai_supremacy_arkship_archaeo_mass_accelerator }
+		OR = { has_starbase_module = arkship_lm_accelerator has_starbase_module = sai_supremacy_arkship_lm_accelerator }
+	}
+}
+
+arkship_starbase_has_energy_weapon_module = {
+	OR = {
+		OR = { has_starbase_module = arkship_laser_battery has_starbase_module = sai_supremacy_arkship_laser_battery }
+		OR = { has_starbase_module = arkship_lance_battery has_starbase_module = sai_supremacy_arkship_lance_battery }
+		OR = { has_starbase_module = arkship_arc_emitter_battery has_starbase_module = sai_supremacy_arkship_arc_emitter_battery }
+		OR = { has_starbase_module = arkship_particle_launcher has_starbase_module = sai_supremacy_arkship_particle_launcher }
+		OR = { has_starbase_module = arkship_psionic_torpedo has_starbase_module = sai_supremacy_arkship_psionic_torpedo }
+		OR = { has_starbase_module = arkship_psionic_lightning_battery has_starbase_module = sai_supremacy_arkship_psionic_lightning_battery }
+		OR = { has_starbase_module = arkship_archaeo_laser_battery has_starbase_module = sai_supremacy_arkship_archaeo_laser_battery }
+	}
+}
+
+arkship_starbase_has_strike_craft_module = {
+	OR = {
+		OR = { has_starbase_module = arkship_hangar_bay has_starbase_module = sai_supremacy_arkship_hangar_bay }
+		OR = { has_starbase_module = arkship_archaeo_hangar_bay has_starbase_module = sai_supremacy_arkship_archaeo_hangar_bay }
+		OR = { has_starbase_module = arkship_psionic_hangar_bay has_starbase_module = sai_supremacy_arkship_psionic_hangar_bay }
+		OR = { has_starbase_module = arkship_amoeba_hangar_bay has_starbase_module = sai_supremacy_arkship_amoeba_hangar_bay }
+		OR = { has_starbase_module = arkship_swarm_hangar_bay has_starbase_module = sai_supremacy_arkship_swarm_hangar_bay }
+	}
+}
+
+arkship_starbase_has_shipwright_module = {
+	OR = {
+		OR = { has_starbase_module = arkship_engineering_bay has_starbase_module = sai_supremacy_arkship_engineering_bay }
+		OR = { has_starbase_module = arkship_beastport has_starbase_module = sai_supremacy_arkship_beastport }
+		has_starbase_module = arkship_capital_shipyard
+	}
+}
+
+nomad_can_afford_enclave_cost = {
+	OR = {
+		is_nomadic = no
+		custom_tooltip = {
+			fail_text = nomad_insufficient_operational_reserves
+			any_situation = {
+				is_situation_type = situation_nomad_economy
+				situation_progress >= $COST$
+			}
+		}
+	}
+}
+
+# Scope: megastructure. True for all build levels of the Dyson Gun, including a restored one.
+is_dyson_gun = {
+	OR = {
+		is_megastructure_type = dyson_gun_0
+		is_megastructure_type = dyson_gun_1
+		is_megastructure_type = dyson_gun_2
+		is_megastructure_type = dyson_gun_3
+		is_megastructure_type = dyson_gun_0_restored
+	}
+}
+
+# Restore missing vanilla 4.4.6 definition.
+nomad_in_reserve_crisis = {
+	OR = {
+		current_stage = situation_nomad_economy_stage_critical
+		current_stage = situation_nomad_economy_stage_1_struggle
+	}
+}

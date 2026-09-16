@@ -1,0 +1,135 @@
+# FOC - Rebel active system uprising operation
+# Player-facing operation: run only from the Galactic Empire spy network, then pick the exact Imperial system in event UI.
+# V231g: no secondary country target. `target = country` opened an extra country picker and exposed every known country.
+operation_foc_gcw_instigate_system_uprising = {
+    target = none
+    categories = { op_cat_subterfuge }
+    picture = GFX_foc_canon_v75_42
+    desc = operation_foc_gcw_instigate_system_uprising_desc
+
+    # Number of stage blocks defined below. Without this the engine reports
+    # "does not have the expected number of stages" and the operation is unusable.
+    stages = 4
+
+    # V231d: intel-network requirement lowered from 40 to 10. A single paid
+    # intelligence investment (foc_gcw.31 option A grants +10 network level)
+    # is now enough to launch the operation, instead of needing several years
+    # of accumulated network growth first.
+    spy_power_cost = 10
+
+    resources = {
+        category = operations
+        cost = {
+            influence = 180
+        }
+        upkeep = {
+            energy = 12
+        }
+    }
+
+    # V232q: visible throughout the Civil War. Completion/cancellation destroys
+    # the real operation and releases its transient reservation; no one-use flag.
+    # Lack of an eligible unguarded colony disables launch without hiding it.
+    potential = {
+        owner = {
+            is_ai = no
+            OR = {
+                has_country_flag = foc_republic_origin_imperial_rebel_country
+                has_country_flag = foc_republic_origin_rebel_alliance_country
+                has_country_flag = foc_khan_rebel_alliance_country
+            }
+        }
+        target = {
+            has_country_flag = foc_republic_origin_empire_country
+        }
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+    }
+
+    allow = {
+        # Native running-operation checks are authoritative, not a permanent country flag.
+        custom_tooltip = {
+            fail_text = operation_one_at_a_time
+            is_running_espionage_operation = no
+        }
+        owner = {
+            NOT = { any_espionage_operation = { has_espionage_type = operation_foc_gcw_instigate_system_uprising } }
+        }
+        # Menu candidates are global in the legacy operation. Reserve them only
+        # while a real operation exists, never for the remainder of the campaign.
+        custom_tooltip = {
+            fail_text = foc_v232q_coup_busy
+            NOT = { exists = event_target:foc_v232q_active_coup_operation }
+        }
+
+        owner = {
+            is_ai = no
+            OR = {
+                has_country_flag = foc_republic_origin_imperial_rebel_country
+                has_country_flag = foc_republic_origin_rebel_alliance_country
+                has_country_flag = foc_khan_rebel_alliance_country
+            }
+        }
+        target = {
+            has_country_flag = foc_republic_origin_empire_country
+            # Keep the operation visible through potential, but only allow the
+            # player to pay for it while at least one actually selectable
+            # Imperial colony exists.
+            any_owned_planet = {
+                is_colony = yes
+                NOT = { has_carrier_flag = foc_gcw_recently_resolved }
+                foc_v202_system_has_no_imperial_fleet = yes
+            }
+        }
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+    }
+
+    on_create = {
+        if = {
+            limit = {
+                target = { NOT = { has_country_flag = foc_republic_origin_empire_country } }
+            }
+            owner = { remove_country_flag = foc_gcw_active_uprising_in_progress }
+            destroy_espionage_operation = this
+        }
+        else = {
+            save_global_event_target_as = foc_v232q_active_coup_operation
+            owner = {
+                set_country_flag = foc_gcw_active_uprising_in_progress
+                # Protect the one-day target-menu startup window from the V216
+                # stale-lock repair pulse.  This expires automatically.
+                set_timed_country_flag = { flag = foc_gcw_active_uprising_starting days = 30 }
+            }
+            set_espionage_operation_progress_locked = yes
+            espionage_operation_event = { id = foc_gcw_active.1 days = 1 }
+        }
+    }
+
+    stage = {
+        difficulty = 8
+        icon = GFX_espionage_chapter_icon_document
+        event = foc_gcw_active.10
+    }
+    stage = {
+        difficulty = 9
+        icon = GFX_espionage_chapter_icon_document
+        event = foc_gcw_active.20
+    }
+    stage = {
+        difficulty = 10
+        icon = GFX_espionage_chapter_icon_document
+        event = foc_gcw_active.30
+    }
+    stage = {
+        difficulty = 11
+        icon = GFX_espionage_chapter_icon_document
+        event = foc_gcw_active.40
+    }
+
+    # Required. Without on_roll_failed the engine logs
+    # "operation will never progress" and the dice roll is never processed.
+    on_roll_failed = {
+        standard_espionage_operation_on_roll_failed = {
+            RANDOM_EVENTS = operation_random_events_generic
+        }
+    }
+}

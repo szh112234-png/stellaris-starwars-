@@ -1,0 +1,20 @@
+# =============================================================================
+# 覆盖原文件：common/scripted_triggers/foc_sw_shipyard_triggers.txt
+# =============================================================================
+# v3 曾经把这个触发器放宽，让条约后的新共和国也能通过。那是白费力气——
+# special buildable 是**堕落帝国国家类型专用的通道**，普通国家类型根本不走这条
+# 路，触发器过不过都一样。真正的解法是给普通国家另外准备一份不带
+# is_special_buildable 的普通全局设计，见
+# common/global_ship_designs/foc_saga_new_republic_buildable_designs.txt。
+#
+# 所以这里恢复成原版逻辑，只服务堕落帝国版新共和国 / 帝国残余。两条通道各管
+# 一边，同一个国家不会同时看到两份同名设计。
+# =============================================================================
+
+foc_sw_new_republic_special_buildable = {
+    has_country_flag = foc_sw_new_republic_country
+}
+
+foc_sw_imperial_remnant_special_buildable = {
+    has_country_flag = foc_sw_imperial_remnant_country
+}

@@ -1,0 +1,335 @@
+namespace = foc_sai_supremacy_arkship
+
+# Deployment request.
+country_event = {
+	id = foc_sai_supremacy_arkship.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		is_ai = no
+		NOT = { has_country_flag = foc_sai_supremacy_arkship_pending }
+		NOT = {
+			any_owned_ship = { has_modifier = foc_sai_supremacy_arkship_stats }
+		}
+		exists = capital_scope
+	}
+
+	immediate = {
+        give_technology = { tech = tech_arkship_construction message = no }
+        give_technology = { tech = tech_military_arkship message = no }
+
+		set_country_flag = foc_sai_supremacy_arkship_pending
+		give_technology = { tech = tech_juggernaut message = no }
+		# Register the dedicated auto-generated hull design after unlocking its prerequisite.
+		# v17.18i: no global design refresh in the Arkship deploy path.
+		country_event = { id = foc_sai_supremacy_arkship.2 days = 1 }
+	}
+}
+
+# Spawn the event-only dedicated hull. Its core and every installed Arkship module
+# are auto-equipped/upgraded by the normal 4.4 starbase design system.
+country_event = {
+	id = foc_sai_supremacy_arkship.2
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		is_ai = no
+		has_country_flag = foc_sai_supremacy_arkship_pending
+		NOT = {
+			any_owned_ship = { has_modifier = foc_sai_supremacy_arkship_stats }
+		}
+		exists = capital_scope
+	}
+
+	immediate = {
+		# v17.18i: no global design refresh in the Arkship deploy path.
+		capital_scope = { save_event_target_as = foc_sai_supremacy_spawn_planet }
+
+		create_fleet = {
+			name = "NAME_FOC_SAI_SUPREMACY_ARKSHIP"
+			settings = { can_change_composition = no }
+			effect = {
+				set_owner = root
+				# V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+}
+				
+
+				
+
+				
+				create_ship = {
+				    fleet_cache_recalc = yes # v17.18h: update Arkship/hero fleet cache at creation.
+					name = "NAME_FOC_SAI_SUPREMACY_ARKSHIP"
+					design = NAME_FOC_SAI_SUPREMACY_ARKSHIP_TIER_1
+					graphical_culture = military_arkship
+					effect = {
+                        set_ship_flag = foc_v1718i_arkship_new_spawn
+
+						if = { limit = { NOT = { has_global_flag = foc_khan_strength_lowest } } add_modifier = { modifier = foc_sai_supremacy_arkship_stats days = -1 } }
+						ship_event = { id = foc_sai_supremacy_arkship.21 days = 1 }
+						set_ship_flag = foc_sai_supremacy_arkship
+						set_ship_flag = foc_sai_supremacy_event_spawned_only
+					}
+				}
+				set_location = {
+					target = event_target:foc_sai_supremacy_spawn_planet
+					distance = 20
+					angle = random
+				}
+			}
+		}
+
+		remove_country_flag = foc_sai_supremacy_arkship_pending
+		remove_country_flag = foc_sai_supremacy_arkship_granted
+	}
+}
+
+# Old-save migration from 1.8-2.2. Change only the starbase size/level.
+# Existing Arkship modules and buildings remain installed and immediately rebuild
+# against the dedicated Supremacy core instead of being overwritten by a forced whole-design replacement.
+country_event = {
+	id = foc_sai_supremacy_arkship.15
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		any_owned_ship = {
+			has_modifier = foc_sai_supremacy_arkship_stats
+			OR = {
+				is_ship_size = military_arkship_tier_1
+				is_ship_size = military_arkship_tier_2
+				is_ship_size = military_arkship_tier_3
+			}
+		}
+	}
+
+	immediate = {
+		# v17.18i: no global design refresh in the Arkship deploy path.
+		every_owned_ship = {
+			limit = { has_modifier = foc_sai_supremacy_arkship_stats }
+			if = {
+				limit = { is_ship_size = military_arkship_tier_1 }
+				starbase = { set_starbase_size = foc_sai_supremacy_arkship_tier_1 }
+			}
+			else_if = {
+				limit = { is_ship_size = military_arkship_tier_2 }
+				starbase = { set_starbase_size = foc_sai_supremacy_arkship_tier_2 }
+			}
+			else_if = {
+				limit = { is_ship_size = military_arkship_tier_3 }
+				starbase = { set_starbase_size = foc_sai_supremacy_arkship_tier_3 }
+			}
+			set_graphical_culture = military_arkship
+			set_ship_flag = foc_sai_supremacy_arkship
+			set_ship_flag = foc_sai_supremacy_event_spawned_only
+			remove_ship_flag = foc_sai_supremacy_model_tier_1
+			remove_ship_flag = foc_sai_supremacy_model_tier_2
+			remove_ship_flag = foc_sai_supremacy_model_tier_3
+		}
+	}
+}
+
+# Manual migration/repair edict entry point.
+country_event = {
+	id = foc_sai_supremacy_arkship.14
+	hide_window = yes
+	is_triggered_only = yes
+	immediate = {
+		country_event = { id = foc_sai_supremacy_arkship.15 }
+		country_event = { id = foc_sai_supremacy_arkship.13 days = 1 }
+		country_event = { id = foc_sai_supremacy_arkship.16 days = 2 }
+	}
+}
+
+# Save cleanup: the permanent modifier remains the authoritative event-ship identity.
+country_event = {
+	id = foc_sai_supremacy_arkship.13
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			any_owned_ship = {
+				has_modifier = foc_sai_supremacy_arkship_stats
+				NOT = { has_ship_flag = foc_sai_supremacy_event_spawned_only }
+			}
+			any_owned_ship = {
+				has_ship_flag = foc_sai_supremacy_arkship
+				NOT = { has_modifier = foc_sai_supremacy_arkship_stats }
+			}
+			any_owned_ship = { has_modifier = foc_sai_supremacy_hyperspace_tracker }
+		}
+	}
+
+	immediate = {
+		every_owned_ship = {
+			limit = { has_modifier = foc_sai_supremacy_arkship_stats }
+			set_ship_flag = foc_sai_supremacy_arkship
+			set_ship_flag = foc_sai_supremacy_event_spawned_only
+		}
+		every_owned_ship = {
+			limit = { has_modifier = foc_sai_supremacy_hyperspace_tracker }
+			remove_modifier = foc_sai_supremacy_hyperspace_tracker
+		}
+		every_owned_ship = {
+			limit = {
+				has_ship_flag = foc_sai_supremacy_arkship
+				NOT = { has_modifier = foc_sai_supremacy_arkship_stats }
+			}
+			remove_ship_flag = foc_sai_supremacy_arkship
+			remove_ship_flag = foc_sai_supremacy_event_spawned_only
+			remove_ship_flag = foc_sai_supremacy_model_tier_1
+			remove_ship_flag = foc_sai_supremacy_model_tier_2
+			remove_ship_flag = foc_sai_supremacy_model_tier_3
+		}
+	}
+}
+
+# Tier III fixed tracker auto-installer.
+# set_starbase_module uses the numeric slot index; the seventh slot is the dedicated
+# spinal_mount_1 slot declared by the Tier III Supremacy starbase level.
+country_event = {
+	id = foc_sai_supremacy_arkship.16
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+        # Keep the standalone cleanup of obsolete tracker bonuses; do not stack them with the module.
+        if = { limit = { has_modifier = foc_sai_supremacy_hyperspace_tracker_country_active } remove_modifier = foc_sai_supremacy_hyperspace_tracker_country_active }
+        remove_country_flag = foc_sai_supremacy_hyperspace_tracker_online
+        every_owned_ship = {
+            limit = { OR = { is_ship_size = foc_sai_supremacy_arkship_tier_1 is_ship_size = foc_sai_supremacy_arkship_tier_1_foc_lowest is_ship_size = foc_sai_supremacy_arkship_tier_2 is_ship_size = foc_sai_supremacy_arkship_tier_2_foc_lowest is_ship_size = foc_sai_supremacy_arkship_tier_3 is_ship_size = foc_sai_supremacy_arkship_tier_3_foc_lowest } }
+            if = { limit = { has_modifier = foc_sai_supremacy_hyperspace_tracker } remove_modifier = foc_sai_supremacy_hyperspace_tracker }
+            if = { limit = { has_modifier = foc_sai_supremacy_hyperspace_tracker_active } remove_modifier = foc_sai_supremacy_hyperspace_tracker_active }
+            if = {
+                limit = { OR = { is_ship_size = foc_sai_supremacy_arkship_tier_3 is_ship_size = foc_sai_supremacy_arkship_tier_3_foc_lowest } exists = starbase }
+                starbase = {
+                    if = {
+                        limit = { owner = { has_technology = tech_arkship_tier_3 } NOT = { has_starbase_module = foc_sai_supremacy_hyperspace_tracker_module } }
+                        set_starbase_module = { slot = 7 module = foc_sai_supremacy_hyperspace_tracker_module }
+                    }
+                    if = { limit = { has_starbase_module = foc_sai_supremacy_hyperspace_tracker_module } owner = { set_country_flag = foc_sai_supremacy_hyperspace_tracker_online } }
+                }
+            }
+        }
+}
+}
+
+
+# Repair the crisis flagship if Arkship initialization previously failed because
+# the dedicated FOC hull was not recognized by the Nomads scripted triggers.
+country_event = {
+    id = foc_sai_supremacy_arkship.18
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        any_owned_ship = {
+            has_ship_flag = foc_khan_supremacy_flagship
+            starbase = {
+                OR = {
+                    NOT = { has_starbase_module = sai_supremacy_arkship_engineering_bay }
+                    NOT = { has_starbase_module = sai_supremacy_arkship_docking_bay }
+                    NOT = { has_starbase_building = arkship_armor }
+                    NOT = { has_starbase_building = arkship_shield }
+                }
+            }
+        }
+    }
+
+    immediate = {
+        give_technology = { tech = tech_space_construction message = no }
+        give_technology = { tech = tech_ship_armor_1 message = no }
+        give_technology = { tech = tech_shields_1 message = no }
+        give_technology = { tech = tech_arkship_tier_3 message = no }
+
+        every_owned_ship = {
+            limit = { has_ship_flag = foc_khan_supremacy_flagship }
+            ship_event = { id = foc_sai_supremacy_arkship.22 days = 1 }
+        }
+
+        country_event = { id = foc_sai_supremacy_arkship.16 days = 1 }
+    }
+}
+
+# v17.18i: retained crisis post-init event ID. NEW ships use .21 and the native
+# initializer from the standalone reference; old ships do not receive default modules.
+ship_event = {
+    id = foc_sai_supremacy_arkship.22
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        OR = {
+            has_ship_flag = foc_khan_supremacy_flagship
+            has_ship_flag = foc_sai_supremacy_event_spawned_only
+            has_ship_flag = foc_sai_supremacy_arkship
+        }
+        OR = {
+            OR = { is_ship_size = foc_sai_supremacy_arkship_tier_1 is_ship_size = foc_sai_supremacy_arkship_tier_1_foc_lowest }
+            OR = { is_ship_size = foc_sai_supremacy_arkship_tier_2 is_ship_size = foc_sai_supremacy_arkship_tier_2_foc_lowest }
+            OR = { is_ship_size = foc_sai_supremacy_arkship_tier_3 is_ship_size = foc_sai_supremacy_arkship_tier_3_foc_lowest }
+        }
+    }
+
+    immediate = {
+        # Source-style invisible module conversion is allowed only immediately
+        # after our NEW-ship native initializer. Never repack old player modules.
+        if = {
+            limit = { has_ship_flag = foc_v1718i_fresh_native_modules exists = starbase }
+            owner = { country_event = { id = sai_supremacy_arkship.17 } }
+            remove_ship_flag = foc_v1718i_fresh_native_modules
+        }
+        if = {
+            limit = { exists = starbase }
+            foc_v1718h_sync_supremacy_build_mode = yes
+            if = {
+                limit = {
+                    has_ship_flag = foc_v1718i_native_init_called
+                    starbase = { is_arkship_starbase = yes arkship_starbase_has_shipwright_module = yes }
+                }
+                set_ship_flag = foc_sai_supremacy_arkship_core_initialized_v65
+            }
+        }
+        else = { log = "FOC_V1718I_STARBASE_MISSING: [This.GetName]; no object recreated." }
+        owner = { country_event = { id = foc_v1718i_arkship.10 days = 1 } }
+        ship_event = { id = foc_v1718h_arkship.2 days = 1 }
+}
+}
+
+
+# Native initialization for NEW crisis Supremacies, mirroring standalone .21.
+ship_event = {
+    id = foc_sai_supremacy_arkship.21
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { foc_v1718h_is_supremacy_ship = yes }
+    immediate = {
+        # Reference: CHANGELOG.zip/events/sai_supremacy_arkship_events.txt, .21.
+        # This flag means the native effect was CALLED, not a UI test success.
+        if = {
+            limit = {
+                has_ship_flag = foc_v1718i_arkship_new_spawn
+                NOT = { has_ship_flag = foc_v1718i_native_init_called }
+                exists = owner
+            }
+            initialize_arkship_starbase_effect = yes
+            set_ship_flag = foc_v1718i_native_init_called
+            set_ship_flag = foc_v1718i_fresh_native_modules
+            remove_ship_flag = foc_v1718i_arkship_new_spawn
+            log = "FOC_V1718I_NATIVE_INIT_CALLED: [This.GetName]; deferred native Arkship setup."
+            ship_event = { id = foc_sai_supremacy_arkship.22 days = 1 }
+        }
+    }
+}

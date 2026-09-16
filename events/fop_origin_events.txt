@@ -1,0 +1,1261 @@
+namespace = fop_origin
+
+# Player-only First Order origin initialization. The ordinary First Order crisis
+# is disabled only in games where this origin exists; every other origin keeps
+# the original crisis chain unchanged.
+country_event = {
+    id = fop_origin.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        has_origin = origin_fop_first_order
+        # V191: relocation deletes the engine staging capital. Never perform it
+        # until the shared Star Wars region and both Treaty-era state targets
+        # have completed their hidden game-start bootstrap.
+        has_global_flag = foc_sw_fallen_empires_ready
+        NOT = { has_country_flag = fop_first_order_origin_initialized }
+    }
+
+    immediate = {
+        log = "FOC_V191_UI: First Order origin relocation released after regional bootstrap."
+        set_country_flag = fop_first_order_origin_initialized
+        set_country_flag = fop_player_first_order
+        foc_v17_7_grant_first_order_start_arsenal = yes
+        set_country_flag = fop_origin_waiting_for_ilum
+        set_global_flag = fop_origin_replaces_first_order_crisis
+        set_global_flag = foc_khan_crisis_disabled
+        remove_global_flag = foc_khan_crisis_spawn_scheduled
+
+        # V97 player First Order national spirit/diplomacy initializer.
+        country_event = { id = fop_origin.206 }
+
+        # In 4.x capital_scope resolves to a colony. Enter its underlying planet
+        # explicitly before applying planet flags or saving the relocation target.
+        capital_scope = {
+            planet = {
+                set_planet_flag = fop_origin_staging_capital
+                save_global_event_target_as = fop_origin_staging_capital
+                solar_system = {
+                    set_star_flag = fop_origin_staging_system
+                    save_global_event_target_as = fop_origin_staging_system
+                }
+            }
+        }
+
+        foc_grant_dark_order_legacy_access = yes
+        give_technology = { tech = tech_arkship_construction message = no }
+        give_technology = { tech = tech_wormhole_stabilization message = no }
+        # V188: the playable First Order also begins with the basic civilian
+        # robotics chain, matching the playable Republic origin.
+        foc_v188_grant_basic_robotics = yes
+
+        # V159: the dedicated First Order origin begins in the same historical
+        # year as the Galactic Treaty. The First Order exists secretly in the
+        # Unknown Regions, but Luke/Ben sequel history now unfolds from this
+        # Treaty epoch instead of being pre-completed at game start.
+        set_global_flag = fop_origin_treaty_epoch
+        set_country_flag = fop_origin_treaty_epoch_initialized
+        remove_country_flag = fop_origin_story_timeline_locked
+        set_country_flag = fop_origin_story_timeline_released
+        set_country_flag = fop_origin_story_state_migrated
+        foc_v158_start_treaty_sequel_timeline = yes
+
+        # V185: dedicated First Order origin begins with Leia's independent
+        # D'Qar Resistance already forming. The historical Treaty+23y trigger
+        # remains intact as a non-duplicating fallback for every route.
+        foc_v185_prepare_leia_resistance_trigger = yes
+        country_event = { id = fop_origin.33 days = 1 }
+
+        # Treaty +24y: New Republic vs Imperial Remnant War in Heaven. They are
+        # ordinary countries in this origin, never Fallen/Awakened Empires.
+        if = {
+            limit = { NOT = { has_global_flag = foc_v112_treaty_wih_clock_started } }
+            set_global_flag = foc_v112_treaty_wih_clock_started
+            set_timed_global_flag = { flag = foc_v112_treaty_wih_24y_delay days = 8640 }
+        }
+
+        # Treaty +29y (= War in Heaven +5y): public First Order era for the
+        # playable origin. This does NOT spawn the NPC First Order crisis; it
+        # only releases Ben Solo -> Kylo Ren and the later player story chain.
+        set_timed_country_flag = { flag = fop_origin_public_emergence_delay days = 10440 }
+
+        # The regional successor states were created by the shared map bootstrap
+        # as scripted Fallen Empires. For the playable First Order origin they
+        # immediately become ordinary countries while retaining the Treaty-era
+        # megastructures, fleets and Jakku archaeology state.
+        if = {
+            limit = { exists = event_target:foc_sw_new_republic }
+            event_target:foc_sw_new_republic = { set_country_type = default }
+        }
+        if = {
+            limit = { exists = event_target:foc_sw_imperial_remnant }
+            event_target:foc_sw_imperial_remnant = { set_country_type = default }
+        }
+
+        # V161: do not merely assume the old Fallen-Empire bootstrap already made
+        # the Treaty-era infrastructure. Explicitly create/verify every canonical
+        # megastructure plus the Jakku Executor wreckage dig site.
+        foc_v161_ensure_treaty_infrastructure = yes
+
+        # Complete the Kuat-style hidden relocation in this same game-start tick.
+        # No monthly backfill is required for the V185 Leia/Starkiller flow.
+        country_event = { id = fop_origin.3 }
+    }
+}
+
+
+# Old-save compatibility and a permanent guard against the normal First Order
+# crisis being re-enabled while the player-origin replacement is active.
+country_event = {
+    id = fop_origin.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        has_origin = origin_fop_first_order
+    }
+
+    immediate = {
+        # Old saves may already carry a selected crisis-strength package.
+        # Clear it every maintenance tick; the origin has separate rewards.
+        foc_khan_clear_all_strength_modifiers = yes
+
+        if = {
+            limit = { NOT = { has_country_flag = fop_first_order_origin_initialized } }
+            country_event = { id = fop_origin.1 }
+        }
+        if = {
+            limit = { NOT = { has_technology = tech_arkship_construction } }
+            give_technology = { tech = tech_arkship_construction message = no }
+        }
+        # Repair old origin saves and restore the First Order-era legacy package.
+        # Xyston is intentionally excluded until the player enters Final Order.
+        if = {
+            limit = {
+                OR = {
+                    NOT = { has_country_flag = foc_dark_order_legacy_access }
+                    NOT = { has_technology = fop_tech_starkiller_base }
+                    NOT = { has_technology = foc_tech_dark_legacy_imperial }
+                    NOT = { has_technology = foc_tech_dark_legacy_resurgent }
+                    NOT = { has_technology = foc_tech_dark_legacy_supremacy }
+                }
+            }
+            foc_grant_dark_order_legacy_access = yes
+        }
+        if = {
+            limit = { NOT = { has_technology = tech_wormhole_stabilization } }
+            give_technology = { tech = tech_wormhole_stabilization message = no }
+        }
+        # V188 old-save/manual compatibility. This event is not on a monthly
+        # pulse, and the shared effect itself is safe to call more than once.
+        foc_v188_grant_basic_robotics = yes
+        # Saves created while the exclusive perk was not registered in the 4.4
+        # Ambitions category can have an active crisis path but no perk object.
+        # Restore it so the Ambitions button unlocks without restarting.
+        if = {
+            limit = {
+                has_country_flag = fop_origin_crisis_active
+                foc_khan_owns_completed_starkiller = yes
+                NOT = { has_ascension_perk = ap_fop_new_order_crisis }
+            }
+            add_ascension_perk = ap_fop_new_order_crisis
+        }
+
+        # Shipgirl opens its dedicated crisis interface once after activation
+        # and uses a permanent edict for later access. Recover old saves the
+        # same way instead of relying only on the vanilla Ambitions tab.
+        if = {
+            limit = {
+                has_country_flag = fop_origin_crisis_active
+                NOT = { has_country_flag = fop_origin_ambition_interface_announced }
+            }
+            set_country_flag = fop_origin_ambition_interface_announced
+            country_event = { id = fop_ambition.1 days = 2 }
+        }
+
+        set_global_flag = fop_origin_replaces_first_order_crisis
+        set_global_flag = foc_khan_crisis_disabled
+        remove_global_flag = foc_khan_crisis_spawn_scheduled
+
+        # V161 late-galaxy-setup/old-save retry. This effect is idempotent and
+        # stops doing work once all Treaty-era structures and the Jakku site exist.
+        if = {
+            limit = { NOT = { has_country_flag = foc_v161_treaty_infrastructure_verified } }
+            foc_v161_ensure_treaty_infrastructure = yes
+        }
+
+        # V97 old-save repair for the player First Order national spirit.
+        country_event = { id = fop_origin.206 }
+
+        # V84 old-save story-state migration: FO-origin games begin after the temple fall.
+        if = {
+            limit = { NOT = { has_country_flag = fop_origin_story_state_migrated } }
+            if = {
+                limit = { NOT = { has_global_flag = foc_saga_ben_solo_returned } }
+                set_global_flag = foc_saga_jedi_temple_burned
+                set_global_flag = foc_saga_ben_solo_fallen
+                set_global_flag = foc_saga_luke_in_exile
+                if = {
+                    limit = { NOT = { has_country_flag = foc_saga_kylo_fall_shown } }
+                    set_country_flag = foc_saga_kylo_fall_shown
+                    if = {
+                        limit = { NOT = { has_country_flag = fop_origin_story_timeline_locked } }
+                        set_timed_country_flag = { flag = foc_saga_kylo_knights_wait days = 720 }
+                    }
+                }
+                foc_saga_ensure_kylo = yes
+            }
+            set_country_flag = fop_origin_story_state_migrated
+        }
+
+        # V84 cold-war Resistance retry. Bloodline can occur before open war;
+        # if galaxy setup delayed the D'Qar initializer, keep retrying silently.
+        if = {
+            limit = {
+                has_country_flag = fop_origin_relocated_to_ilum
+                has_country_flag = fop_origin_bloodline_shown
+                NOT = { has_global_flag = foc_khan_rebel_spawned }
+                NOT = { has_global_flag = foc_khan_rebel_preparing }
+            }
+            country_event = { id = fop_origin.32 }
+        }
+
+        # V84 old-save repair for the opening Starkiller project.
+        if = {
+            limit = {
+                has_country_flag = fop_origin_relocated_to_ilum
+                NOT = { has_country_flag = fop_origin_story_timeline_locked }
+                NOT = { foc_khan_owns_completed_starkiller = yes }
+                NOT = { has_country_flag = foc_canon_starkiller_start_shown }
+            }
+            country_event = { id = foc_canon.31 }
+        }
+        # V96: the shared start-year selector must never alter the original
+        # First Order-origin chain after Starkiller Base is complete. Completion
+        # immediately releases any remaining chronology lock, then the legacy
+        # fop_origin.20 -> .30 -> annexation/war/Final Order flow runs unchanged.
+        if = {
+            limit = { foc_khan_owns_completed_starkiller = yes }
+            remove_modifier = fop_origin_starkiller_project_burden
+            if = {
+                limit = { has_country_flag = fop_origin_story_timeline_locked }
+                remove_country_flag = fop_origin_story_timeline_locked
+                set_country_flag = fop_origin_story_timeline_released
+            }
+        }
+
+        if = {
+            limit = {
+                has_country_flag = fop_origin_relocated_to_ilum
+                foc_khan_owns_completed_starkiller = yes
+                NOT = { has_country_flag = fop_origin_crisis_active }
+            }
+            country_event = { id = fop_origin.20 }
+        }
+    }
+}
+
+
+# Spawn the player's real Ilum at an L-Cluster-style, galaxy-core-relative
+# distance. It remains completely lane-isolated and uses an origin-only
+# initializer, so the ordinary First Order crisis keeps its original placement.
+country_event = {
+    id = fop_origin.3
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        has_origin = origin_fop_first_order
+        has_country_flag = fop_origin_waiting_for_ilum
+        NOT = { has_country_flag = fop_origin_ilum_spawn_pending }
+        NOT = { has_country_flag = fop_origin_relocated_to_ilum }
+        NOT = { any_system = { has_star_flag = fop_origin_ilum_home } }
+    }
+
+    immediate = {
+        set_country_flag = fop_origin_ilum_spawn_pending
+
+        set_spawn_system_batch = begin
+        no_scope = {
+            # Vanilla Terminal Egress uses 550-560 from the galactic core.
+            # A separate angle keeps Ilum away from both the L-Cluster and the
+            # Coruscant region while retaining its origin-only wormhole exit.
+            spawn_system = {
+                hyperlane = no
+                is_discovered = no
+                min_distance >= 550
+                max_distance <= 560
+                min_orientation_angle = 142
+                max_orientation_angle = 148
+                initializer = fop_origin_ilum_system
+                effect = {
+                    save_global_event_target_as = fop_origin_ilum_system
+                }
+            }
+        }
+        set_spawn_system_batch = end
+
+        if = {
+            limit = { exists = event_target:fop_origin_ilum_system }
+            country_event = { id = fop_origin.4 }
+        }
+        else = {
+            # Retry next month if galaxy setup has not exposed a valid spawn
+            # position yet; never delete the engine-required staging home first.
+            remove_country_flag = fop_origin_ilum_spawn_pending
+        }
+    }
+}
+
+
+# Relocate the playable empire to crisis-position Ilum, preserving all starting
+# population groups and fleets. This follows Kuat's origin-relocation sequence:
+# transfer 100% of each pop group, establish the true capital, then erase the
+# engine-required temporary home before the galaxy becomes playable.
+country_event = {
+    id = fop_origin.4
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        has_origin = origin_fop_first_order
+        has_country_flag = fop_origin_ilum_spawn_pending
+        NOT = { has_country_flag = fop_origin_relocated_to_ilum }
+        any_system = {
+            has_star_flag = foc_khan_ilum_home
+            any_system_planet = { has_planet_flag = foc_khan_starkiller_anchor }
+        }
+    }
+
+    immediate = {
+        set_update_modifiers_batch = begin
+
+        if = {
+            limit = { NOT = { exists = event_target:fop_origin_staging_capital } }
+            capital_scope = {
+                planet = {
+                    save_global_event_target_as = fop_origin_staging_capital
+                    solar_system = { save_global_event_target_as = fop_origin_staging_system }
+                }
+            }
+        }
+
+        random_system = {
+            limit = { has_star_flag = foc_khan_ilum_home }
+            save_global_event_target_as = foc_khan_first_order_system
+            save_global_event_target_as = fop_origin_ilum_system
+            set_star_flag = empire_home_system
+            set_star_flag = empire_cluster
+            random_system_planet = {
+                limit = { has_planet_flag = foc_khan_starkiller_anchor }
+                save_global_event_target_as = foc_khan_starkiller_anchor
+                save_global_event_target_as = fop_origin_ilum_planet
+            }
+        }
+
+        event_target:fop_origin_ilum_planet = {
+            create_colony = { owner = root }
+            set_owner = root
+            set_controller = root
+            generate_start_deposits_and_blockers = yes
+            clear_blockers = yes
+            set_name = "NAME_FOP_Ilum"
+            set_planet_flag = fop_ilum_capital
+            add_modifier = { modifier = fop_kyber_crystal_caves days = -1 }
+            add_modifier = { modifier = fop_imperial_mining_trench days = -1 }
+        }
+
+        event_target:fop_origin_staging_capital = {
+            every_owned_pop_group = {
+                resettle_pop_group = {
+                    POP_GROUP = this
+                    PLANET = event_target:fop_origin_ilum_planet
+                    PERCENTAGE = 1
+                }
+            }
+        }
+
+        event_target:fop_origin_ilum_planet = {
+            colony = {
+                inline_script = "foc_v232i_safe_colony_layout"
+                generate_home_planet_final_pass = yes
+            }
+            # V13: final-pass generation has finished; restore Ilum's permanent source.
+            foc_v13_repair_kyber_planet = yes
+            if = {
+                limit = { NOT = { has_modifier = fop_kyber_crystal_caves } }
+                add_modifier = { modifier = fop_kyber_crystal_caves days = -1 }
+            }
+            set_capital = yes
+            # V231: the player First Order capital opens with its own droid
+            # foundry and First Order Security Droid population.
+            foc_v231_seed_first_order_droid_pops = yes
+        }
+
+        every_owned_species = {
+            limit = { is_same_value = owner_main_species }
+            set_species_homeworld = event_target:fop_origin_ilum_planet
+        }
+
+        event_target:fop_origin_ilum_system = {
+            every_system_planet = {
+                set_surveyed = { surveyed = yes surveyor = root }
+            }
+            create_starbase = {
+                size = starbase_starport
+                module = shipyard
+                building = crew_quarters
+                owner = root
+            }
+        }
+        set_visited = event_target:fop_origin_ilum_system
+
+        # V11: make the custom strategic resource immediately visible/useful for
+        # the playable First Order instead of waiting for the first monthly tick.
+        if = {
+            limit = { NOT = { has_country_flag = fop_origin_v11_kyber_seeded } }
+            add_resource = { sr_kyber_swgs = 100 }
+            set_country_flag = fop_origin_v11_kyber_seeded
+        }
+
+        every_owned_fleet = {
+            limit = { is_mobile = yes }
+            set_location = {
+                target = event_target:fop_origin_ilum_planet
+                distance = 30
+                angle = random
+            }
+        }
+
+        event_target:fop_origin_staging_system = {
+            remove_star_flag = empire_home_system
+            remove_star_flag = empire_cluster
+            remove_star_flag = fop_ilum_system
+            remove_star_flag = fop_origin_staging_system
+            if = {
+                limit = { exists = starbase }
+                starbase = { fleet = { delete_fleet = this } }
+            }
+            set_name = random
+            random_system_planet = {
+                limit = { is_star = yes }
+                set_name = solar_system
+            }
+        }
+        event_target:fop_origin_staging_capital = {
+            remove_planet = yes
+        }
+
+        remove_country_flag = fop_origin_waiting_for_ilum
+        remove_country_flag = fop_origin_ilum_spawn_pending
+        set_country_flag = fop_origin_relocated_to_ilum
+
+        # Tier-I Supremacy is spawned only after the capital move, so it appears
+        # beside the real Ilum instead of at the discarded staging system.
+        set_country_flag = sai_supremacy_respawn_tier_1
+        country_event = { id = sai_supremacy_arkship.14 days = 2 }
+        country_event = { id = fop_origin.10 days = 3 }
+        # V95: opening story beats are released by fop_origin.205 at the
+        # shared 2200/2250/2300/2400 chronology gate.
+        country_event = { id = fop_origin.12 days = 1 }
+        country_event = { id = foc_starkiller_coords.5 days = 1 }
+        country_event = { id = foc_khan_balance.1 days = 5 }
+
+        set_update_modifiers_batch = end
+    }
+}
+
+
+# V95 unified chronology release for the First Order origin. Mechanical origin
+# setup remains immediate; only story beats that have not happened yet are held.
+country_event = {
+    id = fop_origin.205
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        has_origin = origin_fop_first_order
+        has_country_flag = fop_origin_relocated_to_ilum
+        has_country_flag = fop_origin_story_timeline_locked
+        foc_story_timeline_start_due = yes
+    }
+
+    immediate = {
+        remove_country_flag = fop_origin_story_timeline_locked
+        set_country_flag = fop_origin_story_timeline_released
+
+        # Knights of Ren stay two years after this route's selected start.
+        set_timed_country_flag = { flag = foc_saga_kylo_knights_wait days = 720 }
+
+        # First still-unresolved beats of the FO-origin route.
+        if = {
+            limit = {
+                NOT = { foc_khan_owns_completed_starkiller = yes }
+                NOT = { has_country_flag = foc_canon_starkiller_start_shown }
+            }
+            country_event = { id = foc_canon.31 days = 4 }
+        }
+        if = {
+            limit = {
+                NOT = { has_country_flag = fop_origin_bloodline_shown }
+                NOT = { has_global_flag = foc_khan_rebel_spawned }
+            }
+            country_event = { id = fop_origin.33 days = 8 }
+        }
+    }
+}
+
+# V159: Treaty +29y public emergence for the playable First Order origin.
+# The country already exists, so this intentionally does NOT call foc_khan.2
+# and never creates a duplicate crisis country. Ben remained narrative-only
+# through the +10y training and +23y temple destruction beats.
+country_event = {
+    id = fop_origin.207
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        has_origin = origin_fop_first_order
+        has_global_flag = fop_origin_treaty_epoch
+        NOT = { has_country_flag = fop_origin_public_emergence_delay }
+        has_global_flag = foc_saga_jedi_temple_burned
+        NOT = { has_country_flag = fop_origin_public_emergence }
+    }
+
+    immediate = {
+        set_country_flag = fop_origin_public_emergence
+        set_country_flag = foc_v160_player_fo_five_year_stage_done
+        set_global_flag = fop_origin_replaces_first_order_crisis
+        set_global_flag = foc_khan_crisis_disabled
+        remove_global_flag = foc_khan_crisis_spawn_scheduled
+        country_event = { id = foc_v160_player_fo.2 }
+        country_event = { id = foc_kylo.10 days = 1 }
+        if = {
+            limit = { has_country_flag = fop_origin_starkiller_first_real_impact }
+            country_event = { id = fop_origin.20 days = 1 }
+        }
+        log = "FOC_V160_FO_ORIGIN: Treaty +29y public emergence reached; Imperial Remnant absorbed, NPC First Order crisis suppressed, player crisis still requires a real Starkiller impact."
+    }
+}
+
+# V97 player First Order national spirit and diplomatic reaction.
+# fop_player_first_order is set both by the dedicated origin and by the
+# Republic-origin Imperial route when it transforms into the First Order.
+country_event = {
+    id = fop_origin.206
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        has_country_flag = fop_player_first_order
+    }
+
+    immediate = {
+        if = {
+            limit = { NOT = { has_modifier = fop_cradle_war_machine } }
+            add_modifier = { modifier = fop_cradle_war_machine days = -1 }
+        }
+
+        every_country = {
+            limit = {
+                is_country_type = default
+                NOT = { is_same_value = root }
+                NOT = { has_country_flag = foc_sw_imperial_remnant_country }
+                NOT = { has_country_flag = foc_republic_origin_player_imperial_remnant }
+            }
+            add_opinion_modifier = {
+                who = root
+                modifier = fop_opinion_cradle_war_machine
+            }
+        }
+
+        # Imperial Remnant is the explicit exception, including old saves where
+        # an empire may have received the penalty before becoming the Remnant.
+        every_country = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_sw_imperial_remnant_country
+                    has_country_flag = foc_republic_origin_player_imperial_remnant
+                }
+            }
+            remove_opinion_modifier = {
+                who = root
+                modifier = fop_opinion_cradle_war_machine
+            }
+        }
+    }
+}
+
+
+# V178: the playable First Order origin no longer receives a natural wormhole
+# in Ilum. Keep the legacy event ID as a permanently disabled no-op so queued
+# jobs in older saves cannot recreate the removed route.
+country_event = {
+    id = fop_origin.5
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = { always = no }
+}
+
+
+country_event = {
+    id = fop_origin.10
+    title = fop_origin.10.name
+    desc = fop_origin.10.desc
+    picture = GFX_origin_fop_first_order
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        has_origin = origin_fop_first_order
+        has_country_flag = fop_origin_relocated_to_ilum
+    }
+
+    option = { name = fop_origin.10.a }
+}
+
+
+# One-time news window for the player/Imperial Remnant special relationship.
+country_event = {
+    id = fop_origin.11
+    title = fop_origin.11.name
+    desc = fop_origin.11.desc
+    picture = GFX_origin_fop_first_order
+    is_triggered_only = yes
+
+    option = { name = fop_origin.11.a }
+}
+
+
+# Friendly succession relationship and exclusive Ilum-Jakku gate access. The
+# monthly invocation repairs communications and route knowledge after save/load;
+# it deliberately does not alter either empire's border policy.
+country_event = {
+    id = fop_origin.12
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        has_origin = origin_fop_first_order
+        has_country_flag = fop_origin_relocated_to_ilum
+        NOT = { has_country_flag = fop_origin_crisis_active }
+        exists = event_target:foc_sw_imperial_remnant
+        event_target:foc_sw_imperial_remnant = {
+            has_country_flag = foc_sw_imperial_remnant_country
+        }
+    }
+
+    immediate = {
+        establish_communications_no_message = event_target:foc_sw_imperial_remnant
+
+        # V112: mirror vanilla Scion at a structural level. The Imperial Remnant
+        # is the elder patron/overlord and the playable First Order its protected
+        # successor until Starkiller completion overturns the old hierarchy.
+        if = {
+            limit = { is_subject = no }
+            set_subject_of = {
+                who = event_target:foc_sw_imperial_remnant
+                preset = preset_fop_imperial_scion
+            }
+        }
+        else_if = {
+            limit = {
+                is_subject = yes
+                NOT = { overlord = { is_same_value = event_target:foc_sw_imperial_remnant } }
+            }
+            set_subject_of = { who = none }
+            set_subject_of = {
+                who = event_target:foc_sw_imperial_remnant
+                preset = preset_fop_imperial_scion
+            }
+        }
+        set_country_flag = fop_imperial_scion_relationship
+
+        event_target:foc_sw_imperial_remnant = {
+            establish_communications_no_message = root
+            set_country_flag = fop_imperial_remnant_recognizes_successor
+            set_faction_hostility = {
+                target = root
+                set_hostile = no
+                set_neutral = no
+                set_friendly = yes
+            }
+        }
+        set_faction_hostility = {
+            target = event_target:foc_sw_imperial_remnant
+            set_hostile = no
+            set_neutral = no
+            set_friendly = yes
+        }
+
+        add_seen_bypass_type = foc_imperial_remnant_route
+        add_seen_bypass_type = wormhole
+        set_country_flag = foc_starkiller_coordinates_known
+        set_country_flag = fop_imperial_remnant_route_unlocked
+        set_visited = event_target:foc_khan_first_order_system
+        set_visited = event_target:foc_sw_jakku_system
+        country_event = { id = foc_starkiller_coords.5 }
+
+        if = {
+            limit = { NOT = { has_country_flag = fop_imperial_relationship_announced } }
+            set_country_flag = fop_imperial_relationship_announced
+            country_event = { id = fop_origin.11 days = 1 }
+        }
+    }
+}
+
+
+# V185: Starkiller completion alone does not start the galactic war. The first
+# actual real shot is the public declaration: as soon as the beam fires it
+# reveals the playable First Order, activates the crisis path and opens total war.
+country_event = {
+    id = fop_origin.20
+    title = fop_origin.20.name
+    desc = fop_origin.20.desc
+    picture = GFX_fop_starkiller_base_event
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        is_ai = no
+        OR = {
+            has_origin = origin_fop_first_order
+            has_country_flag = fop_player_first_order
+            has_country_flag = foc_republic_origin_became_first_order
+            has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+            has_country_flag = foc_republic_origin_first_order_plan_completed
+        }
+        foc_khan_owns_completed_starkiller = yes
+        has_country_flag = fop_origin_starkiller_first_real_impact
+        NOT = { has_country_flag = fop_origin_crisis_active }
+    }
+
+    immediate = {
+        # The first real shot is also the public emergence point if the player
+        # fired before the historical five-year reveal.
+        if = {
+            limit = {
+                has_origin = origin_fop_first_order
+                NOT = { has_country_flag = fop_origin_public_emergence }
+            }
+            set_country_flag = fop_origin_public_emergence
+            set_country_flag = foc_v160_player_fo_five_year_stage_done
+            country_event = { id = foc_kylo.10 days = 1 }
+        }
+        if = {
+            limit = {
+                NOT = { has_origin = origin_fop_first_order }
+                has_country_flag = foc_republic_origin_first_order_plan_completed
+                NOT = { has_country_flag = foc_republic_origin_became_first_order }
+            }
+            foc_v160_promote_player_remnant_to_first_order = yes
+        }
+
+        remove_modifier = fop_origin_starkiller_project_burden
+        if = {
+            limit = { NOT = { has_ascension_perk = ap_fop_new_order_crisis } }
+            add_ascension_perk = ap_fop_new_order_crisis
+        }
+        country_event = { id = fop_origin.30 }
+    }
+
+    option = { name = fop_origin.20.a }
+}
+
+
+# "Galactic New Order" activation. The country remains fully playable while
+# crisis flags, formal total wars, and the five-stage ambition path drive play.
+country_event = {
+    id = fop_origin.30
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        OR = {
+            has_origin = origin_fop_first_order
+            has_country_flag = fop_player_first_order
+            has_country_flag = foc_republic_origin_became_first_order
+            has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+            has_country_flag = foc_republic_origin_first_order_plan_completed
+        }
+        foc_khan_owns_completed_starkiller = yes
+        has_country_flag = fop_origin_starkiller_first_real_impact
+        NOT = { has_country_flag = fop_origin_crisis_active }
+        NOT = { has_country_flag = fop_origin_final_order_decided }
+    }
+
+    immediate = {
+        # The Scion-like patronage ends the moment the First Order claims the
+        # Starkiller succession; annexation can then proceed without subject locks.
+        if = { limit = { is_subject = yes } set_subject_of = { who = none } }
+        remove_country_flag = fop_imperial_scion_relationship
+
+        set_country_flag = fop_origin_special_ascension_enabled
+        set_country_flag = fop_origin_crisis_active
+        set_country_flag = is_player_crisis
+        if = {
+            limit = { has_country_flag = foc_republic_origin_became_first_order }
+            set_country_flag = foc_republic_origin_empire_crisis
+        }
+        # FOC V28: the First Order inherits the ancient worlds by script, so it
+        # keeps the ancient infrastructure running and the storage that goes
+        # with it. Without this the captured Fallen-Empire buildings would stop
+        # producing while still charging upkeep.
+        set_country_flag = foc_sw_fe_infrastructure_heir
+        if = {
+            limit = { NOT = { has_modifier = foc_sw_fe_infrastructure_heir_core } }
+            add_modifier = { modifier = foc_sw_fe_infrastructure_heir_core days = -1 }
+        }
+
+        set_country_flag = foc_khan_starkiller_owner_enemy
+        set_timed_country_flag = { flag = fop_origin_final_order_delay days = 7200 }
+        set_variable = { which = fop_force_dominion_level value = 1 }
+        set_variable = { which = fop_force_dominion_points value = 0 }
+        save_global_event_target_as = fop_first_order_crisis_country
+
+        set_global_flag = fop_origin_player_crisis_exists
+        set_global_flag = foc_khan_crisis_started
+        set_global_flag = foc_khan_crisis_disabled
+        remove_global_flag = foc_khan_crisis_spawn_scheduled
+
+        foc_khan_clear_all_strength_modifiers = yes
+        country_event = { id = fop_origin.31 }
+        # V84: the Resistance is introduced through Leia's Bloodline break,
+        # while the New Republic itself remains the original Fallen Empire.
+        country_event = { id = fop_origin.33 days = 1 }
+
+        # Match Shipgirl's perk activation flow: show the dedicated screen once
+        # immediately, then let the edict reopen it whenever the player wants.
+        if = {
+            limit = { NOT = { has_country_flag = fop_origin_ambition_interface_announced } }
+            set_country_flag = fop_origin_ambition_interface_announced
+            country_event = { id = fop_ambition.1 days = 2 }
+        }
+        # V185: the first real shot is the declaration of total war. Do not wait
+        # for a monthly keeper or public-emergence timer.
+        country_event = { id = fop_origin.40 }
+        if = {
+            limit = { has_global_flag = foc_story_hosnian_destroyed }
+            country_event = { id = fop_origin.23 days = 1 }
+        }
+    }
+}
+
+
+# Immediate player annexation of every surviving Imperial Remnant asset.
+country_event = {
+    id = fop_origin.31
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_origin = origin_fop_first_order
+        has_country_flag = fop_origin_crisis_active
+        NOT = { has_global_flag = fop_origin_imperial_remnant_annexed }
+    }
+
+    immediate = {
+        if = {
+            limit = { NOT = { exists = event_target:foc_sw_imperial_remnant } }
+            random_country = {
+                limit = { has_country_flag = foc_sw_imperial_remnant_country }
+                save_global_event_target_as = foc_sw_imperial_remnant
+            }
+        }
+
+        if = {
+            limit = { exists = event_target:foc_sw_imperial_remnant }
+            event_target:foc_sw_imperial_remnant = {
+                every_owned_megastructure = { set_owner = root }
+                every_owned_fleet = {
+                    remove_fleet_flag = foc_sw_imperial_remnant_isd_fleet
+                    remove_fleet_flag = foc_sw_imperial_executor_fleet
+                    remove_fleet_flag = foc_sw_imperial_remnant_defense_platform
+                    set_owner = root
+                }
+                every_owned_starbase = { set_owner = root }
+                every_owned_planet = { set_owner = root }
+                set_country_flag = foc_sw_absorbed_by_first_order
+                destroy_country = yes
+            }
+
+            set_global_flag = foc_sw_imperial_remnant_defeated
+            set_global_flag = foc_sw_imperial_remnant_absorbed_by_first_order
+            set_global_flag = fop_origin_imperial_remnant_annexed
+            if = { limit = { exists = event_target:foc_sw_imperial_remnant } clear_global_event_target = foc_sw_imperial_remnant }
+            foc_sw_configure_bilbringi_shipyard_ring = yes
+        }
+        else = {
+            # A Remnant already destroyed by other powers must not block the path.
+            set_global_flag = fop_origin_imperial_remnant_annexed
+        }
+    }
+}
+
+
+# V221: alternate routes reuse the same 'Resistance Begins in Exile' narrative.
+# A human New Republic never opens this duplicate event; it uses .197 directly.
+# Other First Order/Imperial routes keep the standalone Resistance constructor.
+# V230: alternate playable routes use their own Leia/D'Qar narrative.
+# Human New Republic continues to use foc_republic_origin.197 exclusively.
+country_event = {
+    id = fop_origin.33
+    title = fop_origin.33.name
+    desc = fop_origin.33.desc
+    picture = GFX_foc_event_new_republic_fall
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+            is_ai = no
+            OR = {
+                AND = {
+                    has_global_flag = foc_v185_leia_resistance_authorized
+                    OR = {
+                        has_origin = origin_fop_first_order
+                        has_country_flag = foc_republic_origin_first_order_plan_completed
+                        has_country_flag = foc_republic_origin_became_first_order
+                    }
+                }
+                AND = {
+                    has_origin = origin_fop_first_order
+                    NOT = { has_country_flag = fop_origin_story_timeline_locked }
+                    has_country_flag = fop_origin_relocated_to_ilum
+                }
+                AND = {
+                    has_country_flag = foc_republic_origin_empire_crisis
+                    has_country_flag = fop_origin_crisis_active
+                }
+                AND = {
+                    has_global_flag = foc_khan_phase_one
+                    exists = event_target:foc_khan_first_order
+                }
+                AND = {
+                    has_country_flag = foc_republic_origin_player_imperial_remnant
+                    has_country_flag = foc_republic_origin_first_order_plan_completed
+                    has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+                    has_global_flag = foc_republic_origin_galactic_treaty
+                }
+            }
+            NOT = { has_country_flag = fop_origin_bloodline_arrival_shown_v147 }
+            NOT = {
+                AND = {
+                    has_country_flag = foc_republic_origin_player_republic
+                    has_country_flag = foc_sw_new_republic_country
+                }
+            }
+    }
+
+    immediate = {
+        set_country_flag = fop_origin_bloodline_arrival_shown_v147
+        set_country_flag = fop_origin_bloodline_shown
+
+        # Clear stale Imperial-Rebellion/old-Resistance state first, then
+        # authorize one standalone D'Qar constructor. This is independent of
+        # whether the player closes the narrative window.
+        foc_v185_prepare_leia_resistance_trigger = yes
+        log = "FOC_V230_LEIA: alternate-route D'Qar Resistance authorized."
+        country_event = { id = fop_origin.32 days = 1 }
+    }
+
+    option = {
+        name = fop_origin.33.a
+    }
+}
+
+# Origin-only bridge into the existing standalone Resistance chain for routes
+# where the human player is not the New Republic.
+country_event = {
+    id = fop_origin.32
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        OR = {
+            AND = {
+                has_global_flag = foc_v185_leia_resistance_authorized
+                OR = {
+                    has_origin = origin_fop_first_order
+                    has_country_flag = foc_republic_origin_first_order_plan_completed
+                    has_country_flag = foc_republic_origin_became_first_order
+                }
+            }
+            AND = {
+                has_origin = origin_fop_first_order
+                NOT = { has_country_flag = fop_origin_story_timeline_locked }
+                has_country_flag = fop_origin_relocated_to_ilum
+            }
+            AND = {
+                has_country_flag = foc_republic_origin_empire_crisis
+                has_country_flag = fop_origin_crisis_active
+            }
+            AND = {
+                has_country_flag = foc_republic_origin_player_imperial_remnant
+                has_country_flag = foc_republic_origin_first_order_plan_completed
+                has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+                has_global_flag = foc_republic_origin_galactic_treaty
+            }
+        }
+        NOT = { has_global_flag = foc_khan_crisis_finished }
+        NOT = { has_global_flag = foc_khan_rebel_spawned }
+    }
+
+    immediate = {
+        # V230: clear stale shared Rebel state before starting the later D'Qar
+        # Resistance constructor.
+        foc_v185_prepare_leia_resistance_trigger = yes
+
+        # One shared initializer now owns D'Qar discovery/reuse/spawn.
+        country_event = { id = foc_khan_rebel.1 }
+        country_event = { id = foc_khan_rebel.2 days = 2 }
+        country_event = { id = foc_khan_rebel.2 days = 5 }
+        country_event = { id = foc_khan_rebel.2 days = 12 }
+    }
+}
+
+# Player-crisis war keeper. This mirrors the vanilla declared-crisis and
+# Shipgirl structures: one anti-crisis leader opens one total war, then every
+# eligible normal and Fallen Empire joins the same coalition side.
+country_event = {
+    id = fop_origin.40
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        OR = {
+            has_origin = origin_fop_first_order
+            has_country_flag = foc_republic_origin_empire_crisis
+        }
+        has_country_flag = fop_origin_crisis_active
+    }
+
+    immediate = {
+        if = {
+            limit = {
+                has_country_flag = fop_origin_galactic_war_declared
+                NOT = { exists = event_target:fop_galactic_crisis_war }
+            }
+            remove_country_flag = fop_origin_galactic_war_declared
+            clear_global_event_target = fop_anti_crisis_war_leader
+        }
+
+        if = {
+            limit = { NOT = { has_country_flag = fop_origin_galactic_war_declared } }
+            random_country = {
+                limit = {
+                    NOT = { is_same_value = root }
+                    any_owned_planet = { is_colony = yes }
+                    is_subject = no
+                    OR = {
+                        is_regular_empire = yes
+                        is_country_type = fallen_empire
+                        is_country_type = awakened_fallen_empire
+                    }
+                }
+                save_global_event_target_as = fop_anti_crisis_war_leader
+            }
+
+            if = {
+                limit = { exists = event_target:fop_anti_crisis_war_leader }
+
+                # As in vanilla's declared-crisis effect, extract the crisis from
+                # pre-existing wars before forming the single galaxy coalition.
+                every_war = {
+                    limit = {
+                        any_war_participant = { is_same_value = root }
+                    }
+                    remove_war_participant = root
+                }
+
+                event_target:fop_anti_crisis_war_leader = {
+                    declare_war = {
+                        target = root
+                        attacker_war_goal = wg_fop_galactic_crisis
+                        effect = { save_global_event_target_as = fop_galactic_crisis_war }
+                    }
+                }
+
+                if = {
+                    limit = { exists = event_target:fop_galactic_crisis_war }
+                    set_country_flag = fop_origin_galactic_war_declared
+                    every_country = {
+                        limit = {
+                            NOT = { is_same_value = root }
+                            NOT = { is_same_value = event_target:fop_anti_crisis_war_leader }
+                            any_owned_planet = { is_colony = yes }
+                            OR = {
+                                is_regular_empire = yes
+                                is_country_type = fallen_empire
+                                is_country_type = awakened_fallen_empire
+                            }
+                            NOT = {
+                                AND = {
+                                    is_subject = yes
+                                    overlord = { is_same_value = root }
+                                }
+                            }
+                        }
+                        join_war_on_side = {
+                            war = event_target:fop_galactic_crisis_war
+                            side = event_target:fop_anti_crisis_war_leader
+                        }
+                    }
+                }
+            }
+        }
+
+        every_country = {
+            limit = {
+                NOT = { is_same_value = root }
+                any_owned_planet = { is_colony = yes }
+                OR = {
+                    is_regular_empire = yes
+                    is_country_type = fallen_empire
+                    is_country_type = awakened_fallen_empire
+                }
+                NOT = {
+                    AND = {
+                        is_subject = yes
+                        overlord = { is_same_value = root }
+                    }
+                }
+            }
+            establish_communications_no_message = root
+            set_hostile = root
+            set_faction_hostility = {
+                target = root
+                set_hostile = yes
+                set_neutral = no
+                set_friendly = no
+            }
+            root = {
+                establish_communications_no_message = prev
+                set_hostile = prev
+                set_faction_hostility = {
+                    target = prev
+                    set_hostile = yes
+                    set_neutral = no
+                    set_friendly = no
+                }
+            }
+        }
+    }
+}
+
+
+# Final Order decision: preserve the player-crisis timer/loss route, and also
+# deliver the choice when an independent Final Order is preparing or has arisen.
+# The existing monthly on-action recovers missed choices in older saves.
+country_event = {
+    id = fop_origin.45
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v17_player_first_order_pending = yes
+        NOT = { has_country_flag = foc_v1716_final_order_choice_open }
+        NOT = { has_global_flag = foc_khan_crisis_finished }
+        OR = {
+            # Independent Final Order birth overrides the player crisis timer.
+            has_global_flag = foc_khan_phase_two
+            has_global_flag = foc_khan_phase_two_preparing
+            any_country = { has_country_flag = foc_khan_final_order_country }
+            AND = {
+                has_global_flag = foc_khan_phase_one
+                foc_khan_phase_one_objectives_destroyed = yes
+            }
+            # Preserve the original player-crisis countdown and loss triggers.
+            AND = {
+                has_country_flag = fop_origin_crisis_active
+                OR = {
+                    AND = {
+                        has_country_flag = foc_republic_origin_empire_crisis
+                        NOT = { has_country_flag = fop_origin_final_order_delay }
+                    }
+                    AND = {
+                        NOT = { has_country_flag = foc_republic_origin_empire_crisis }
+                        OR = {
+                            NOT = { has_country_flag = fop_origin_final_order_delay }
+                            NOT = { foc_khan_owns_completed_starkiller = yes }
+                            NOT = {
+                                any_owned_ship = {
+                                    OR = {
+                                        has_ship_flag = sai_supremacy_arkship
+                                        has_modifier = sai_supremacy_arkship_stats
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    immediate = {
+        # A stale legacy decided flag is recoverable; this version marks the live window.
+        set_country_flag = foc_v1716_final_order_choice_open
+        set_country_flag = fop_origin_final_order_decided
+        foc_v1716_hold_final_order_hostility = yes
+        log = "FOC_V1716_FINAL_ORDER: opening the player First Order succession choice."
+        country_event = { id = fop_origin.50 }
+    }
+}
+
+
+country_event = {
+    id = fop_origin.50
+    title = fop_origin.50.name
+    desc = fop_origin.50.desc
+    picture = GFX_foc_event_final_order_rises
+    is_triggered_only = yes
+    force_open = yes
+
+    option = {
+        name = fop_origin.50.a
+        custom_tooltip = foc_v1716_final_order_accept_tt
+        hidden_effect = {
+            remove_country_flag = foc_v1716_final_order_choice_open
+            set_country_flag = fop_origin_final_order_decided
+            set_country_flag = fop_origin_chose_final_order
+            log = "FOC_V1716_FINAL_ORDER: player accepted the Final Order succession."
+            country_event = { id = fop_origin.53 }
+        }
+    }
+
+    option = {
+        name = fop_origin.50.b
+        custom_tooltip = foc_v1716_final_order_resist_tt
+        hidden_effect = {
+            remove_country_flag = foc_v1716_final_order_choice_open
+            set_country_flag = fop_origin_final_order_decided
+            set_country_flag = fop_origin_resisting_final_order
+            foc_v1716_resist_final_order = yes
+            log = "FOC_V1716_FINAL_ORDER: player rejected Palpatine; Final Order hostility enabled."
+            set_global_flag = fop_origin_final_order_transition
+            country_event = { id = fop_origin.56 }
+            country_event = { id = fop_origin.57 days = 8 }
+        }
+    }
+
+    trigger = { foc_v17_player_first_order_pending = yes }
+
+    immediate = {
+        set_country_flag = foc_v1716_final_order_choice_open
+        foc_v1716_hold_final_order_hostility = yes
+
+    }
+}

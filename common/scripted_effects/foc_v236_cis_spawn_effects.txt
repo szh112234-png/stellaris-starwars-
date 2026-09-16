@@ -1,0 +1,149 @@
+foc_v236_create_cis_corvette = {
+if = { limit = { has_global_flag = foc_khan_strength_lowest }
+
+
+
+# V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+}
+create_ship = { name = random design = "NAME_FOC_V236_CIS_CORVETTE_LOWEST" graphical_culture = cis_01 }
+}
+else_if = { limit = { has_global_flag = foc_khan_strength_madness }
+
+
+
+
+
+# V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+}
+create_ship = { name = random design = "NAME_FOC_V236_CIS_CORVETTE_ENHANCED" graphical_culture = cis_01 }
+}
+else = {
+
+
+
+
+
+# V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+}
+create_ship = { name = random design = "NAME_FOC_V236_CIS_CORVETTE_SG" graphical_culture = cis_01 }
+}
+}
+
+foc_v236_create_cis_destroyer = {
+if = { limit = { has_global_flag = foc_khan_strength_lowest }
+
+
+
+
+
+# V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+}
+create_ship = { name = random design = "NAME_FOC_V236_CIS_DESTROYER_LOWEST" graphical_culture = cis_01 }
+}
+else_if = { limit = { has_global_flag = foc_khan_strength_madness }
+
+
+
+# V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+}
+create_ship = { name = random design = "NAME_FOC_V236_CIS_DESTROYER_ENHANCED" graphical_culture = cis_01 }
+}
+else = {
+
+
+
+# V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+}
+create_ship = { name = random design = "NAME_FOC_V236_CIS_DESTROYER_SG" graphical_culture = cis_01 }
+}
+}
+
+foc_v236_create_cis_cruiser = {
+if = { limit = { has_global_flag = foc_khan_strength_lowest }
+
+
+
+# V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+}
+create_ship = { name = random design = "NAME_FOC_V236_CIS_CRUISER_LOWEST" graphical_culture = cis_01 }
+}
+else_if = { limit = { has_global_flag = foc_khan_strength_madness }
+
+
+
+# V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+}
+create_ship = { name = random design = "NAME_FOC_V236_CIS_CRUISER_ENHANCED" graphical_culture = cis_01 }
+}
+else = {
+
+
+
+# V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+}
+create_ship = { name = random design = "NAME_FOC_V236_CIS_CRUISER_SG" graphical_culture = cis_01 }
+}
+}
+
+foc_v236_create_cis_battleship = {
+if = { limit = { has_global_flag = foc_khan_strength_lowest }
+
+
+
+# V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+}
+create_ship = { name = random design = "NAME_FOC_V236_CIS_BATTLESHIP_LOWEST" graphical_culture = cis_01 }
+}
+else_if = { limit = { has_global_flag = foc_khan_strength_madness }
+
+
+
+# V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+}
+create_ship = { name = random design = "NAME_FOC_V236_CIS_BATTLESHIP_ENHANCED" graphical_culture = cis_01 }
+}
+else = {
+
+
+
+# V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+}
+create_ship = { name = random design = "NAME_FOC_V236_CIS_BATTLESHIP_SG" graphical_culture = cis_01 }
+}
+}

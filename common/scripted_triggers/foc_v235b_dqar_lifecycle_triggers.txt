@@ -1,0 +1,75 @@
+# V235b: distinguish an incomplete first foundation from a destroyed/lost base.
+# Only the permanent D'Qar identity flags are used; never match a translated name.
+foc_v235b_is_dqar_system = {
+    OR = {
+        has_star_flag = foc_khan_rebel_dqar_home
+        has_star_flag = foc_v175_d_qar_home
+    }
+}
+
+foc_v235b_is_dqar_planet = {
+    OR = {
+        has_planet_flag = foc_khan_rebel_dqar
+        has_planet_flag = foc_v175_d_qar
+    }
+}
+
+# Planet scope. Do not rely on is_colony: V235a could create a ghost colony on ruins.
+foc_v235b_base_planet_destroyed = {
+    OR = {
+        has_planet_flag = myk_starkiller_planet_destroyed
+        is_planet_class = pc_shattered
+        is_planet_class = pc_broken
+    }
+}
+
+# Planet scope. Shared by the three fixed Resistance bases and constructor guards.
+foc_v235b_base_planet_usable = {
+    is_star = no
+    NOT = { foc_v235b_base_planet_destroyed = yes }
+    solar_system = { NOT = { has_star_flag = star_cracked } }
+    OR = { is_colonizable = yes is_colony = yes }
+}
+
+# Any scope. Physical evidence blocks retries even BEFORE the migration pulse.
+foc_v235b_dqar_ruined = {
+    OR = {
+        has_global_flag = foc_v235b_dqar_destroyed
+        any_system = {
+            foc_v235b_is_dqar_system = yes
+            OR = {
+                has_star_flag = star_cracked
+                any_system_planet = {
+                    foc_v235b_is_dqar_planet = yes
+                    foc_v235b_base_planet_destroyed = yes
+                }
+            }
+        }
+    }
+}
+
+# Any scope. Handover/legacy settlement is still allowed BEFORE a real base loss.
+foc_v235b_dqar_settlement_allowed = {
+    NOT = { foc_v235b_dqar_ruined = yes }
+    NOR = {
+        has_global_flag = foc_khan_rebel_dqar_lost_311v
+        has_global_flag = foc_khan_rebel_crait_preparing_311v
+        has_global_flag = foc_khan_rebel_crait_spawned_311v
+        has_global_flag = foc_khan_rebel_ajan_kloss_preparing_311v
+        has_global_flag = foc_khan_rebel_ajan_kloss_spawned_311v
+    }
+}
+
+# Any scope. This is ONLY the standalone country's FIRST construction, not revival.
+foc_v235b_dqar_bootstrap_allowed = {
+    foc_v235b_dqar_settlement_allowed = yes
+    NOR = {
+        has_global_flag = foc_khan_rebel_destroyed
+        has_global_flag = foc_v161_dqar_resistance_founded
+        has_global_flag = foc_saga_dqar_held_by_rebels
+        has_global_flag = foc_v235b_dqar_foundation_closed
+    }
+    NOT = {
+        any_country = { has_country_flag = foc_khan_first_order_resistance_country }
+    }
+}

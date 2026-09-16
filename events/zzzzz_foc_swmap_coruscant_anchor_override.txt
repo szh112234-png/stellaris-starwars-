@@ -1,0 +1,309 @@
+# V231k: active Coruscant-anchor layout now moves Aldhani halfway toward Yaga Minor and mirrors Dathomir across the Yavin-Akiva route.
+# V178 v3 map: Zonama Sekot is removed; D'Qar, Crait and Ajan Kloss are hidden story systems. Coruscant is the sole placement anchor. All map routes are ordinary hyperlanes except Jakku-Ahch-To; the ordinary main galaxy is reached from Coruscant and Jakku by two independent wormholes. The outermost fixed system (Moraband) is placed at galaxy-center radius 550. Ilum/Exegol positions are unchanged.
+# V177: 位置与航道完全依照绘制的官方网格图。整个星团绕银心补偿旋转 -323.2°，
+# 使图上正北在游戏中朝上；科洛桑半径 487.8808 不变，方位角 0° -> 36.8°。
+# V183: Bilbringi/Muunilinst and Bracca/Mygeeto exchange physical map positions.
+# Their full local hyperlane neighbourhoods are permuted in foc_swmap.2 so the route graph moves with the map positions.
+# V125: ACTIVE generator - Mandalore and Malachor physical positions are swapped; their local hyperlane neighbourhoods are swapped as well to preserve a zero-crossing planar layout.
+namespace = foc_swmap
+
+# New-game bootstrap. It replaces the on-action entry point without reusing an
+# existing event ID, so the layout does not depend on duplicate-event load
+# order.
+country_event = {
+    id = foc_swmap.100
+    hide_window = yes
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    trigger = {
+        is_country_type = global_event
+        NOT = { has_global_flag = foc_sw_fallen_empires_created }
+        NOT = { has_global_flag = foc_sw_fallen_empires_initializing }
+    }
+
+    immediate = {
+        # The Republic and playable-Hutt origins are the pre-Imperial branches
+        # of this map. Mark them before the region exists so monthly migration
+        # events (most notably the post-Imperial Executor wreckage site on Jakku)
+        # can never run in the short interval before Republic-era setup.
+        if = {
+            limit = {
+                any_playable_country = {
+                    is_ai = no
+                    OR = {
+                        has_origin = origin_foc_republic_unification
+                        has_origin = origin_foc_hutt_criminal_empire
+                    }
+                }
+            }
+            set_global_flag = foc_republic_origin_bootstrap
+            set_global_flag = foc_republic_origin_no_jakku_executor_site
+            if = {
+                limit = {
+                    any_playable_country = {
+                        is_ai = no
+                        has_origin = origin_foc_hutt_criminal_empire
+                    }
+                }
+                set_global_flag = foc_v197_hutt_republic_era_selected
+            }
+        }
+        set_global_flag = foc_sw_fallen_empires_initializing
+        log = "FOC_SWMAP V178: generating the v3 Star Wars region; D'Qar, Crait and Ajan Kloss hidden, Jakku main-galaxy wormhole enabled, outer edge radius 550."
+        country_event = { id = foc_swmap.101 }
+    }
+}
+
+# New-game map layout.
+# V178 keeps the v3 coordinates and V168 scale, but D'Qar, Crait and Ajan
+# Kloss are no longer generated as fixed visible systems. Each remains on the
+# existing Resistance story chain and appears only when its stage is reached.
+#
+# Coruscant is the sole absolute placement anchor. Jakku and Endor are ordinary
+# child systems and never define the map frame. The ordinary galaxy is west of
+# Coruscant and is reached through independent Coruscant and Jakku wormholes. Ilum and Exegol remain separate story
+# systems, and the First Order origin no longer receives an Ilum wormhole.
+country_event = {
+    id = foc_swmap.101
+    hide_window = yes
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    immediate = {
+        if = {
+            limit = { exists = event_target:foc_swmap_main_galaxy_anchor }
+            clear_global_event_target = foc_swmap_main_galaxy_anchor
+        }
+        if = {
+            limit = { exists = event_target:foc_swmap_coruscant_wormhole_anchor }
+            clear_global_event_target = foc_swmap_coruscant_wormhole_anchor
+        }
+
+        set_spawn_system_batch = begin
+
+        # V167: Coruscant remains the only absolute placement anchor. 0 degrees is
+        # the eastern rim, so the main galaxy lies to its west.
+        no_scope = {
+            spawn_system = {
+                hyperlane = no
+                min_distance >= 487.8808
+                max_distance <= 487.8808
+                min_orientation_angle = 36.8000
+                max_orientation_angle = 36.8000
+                initializer = foc_sw_coruscant_system
+                effect = {
+                    save_global_event_target_as = foc_sw_coruscant_system
+                }
+            }
+        }
+
+        no_scope = {
+            event_target:foc_sw_coruscant_system? = {
+                # V178: all fixed visible non-Coruscant systems use the exact v3 HTML coordinates; D'Qar, Crait and Ajan Kloss are intentionally omitted here.
+                spawn_system = { hyperlane = no min_distance >= 73.4862 max_distance <= 73.4862 min_orientation_angle = 246.7323 max_orientation_angle = 246.7323 initializer = foc_v175_koboh_system } # 科博
+                spawn_system = { hyperlane = no min_distance >= 74.6163 max_distance <= 74.6163 min_orientation_angle = 250.9913 max_orientation_angle = 250.9913 initializer = foc_swmap_tanalorr_system } # 塔纳洛尔
+                spawn_system = { hyperlane = no min_distance >= 82.1288 max_distance <= 82.1288 min_orientation_angle = 260.5377 max_orientation_angle = 260.5377 initializer = foc_v175_imynusoph_system } # 伊米努索夫
+                spawn_system = { hyperlane = no min_distance >= 58.0738 max_distance <= 58.0738 min_orientation_angle = 234.4623 max_orientation_angle = 234.4623 initializer = foc_v175_bakura_system } # 巴库拉
+                spawn_system = { hyperlane = no min_distance >= 75.4779 max_distance <= 75.4779 min_orientation_angle = 259.6952 max_orientation_angle = 259.6952 initializer = foc_v175_terminus_system } # 特米努斯
+                spawn_system = { hyperlane = no min_distance >= 52.7266 max_distance <= 52.7266 min_orientation_angle = 230.1944 max_orientation_angle = 230.1944 initializer = foc_swmap_batuu_system } # 巴图
+                spawn_system = { hyperlane = no min_distance >= 54.4279 max_distance <= 54.4279 min_orientation_angle = 240.2551 max_orientation_angle = 240.2551 initializer = foc_swmap_endor_system } # 恩多
+                spawn_system = { hyperlane = no min_distance >= 49.4953 max_distance <= 49.4953 min_orientation_angle = 210.7627 max_orientation_angle = 210.7627 initializer = foc_swmap_ahchto_system } # 阿克托
+                spawn_system = { hyperlane = no min_distance >= 57.6801 max_distance <= 57.6801 min_orientation_angle = 249.4440 max_orientation_angle = 249.4440 initializer = foc_v175_lotho_minor_system } # 洛索·迈诺
+                spawn_system = { hyperlane = no min_distance >= 74.5666 max_distance <= 74.5666 min_orientation_angle = 264.8056 max_orientation_angle = 264.8056 initializer = foc_swmap_nevarro_system } # 内瓦罗
+                spawn_system = { hyperlane = no min_distance >= 51.4137 max_distance <= 51.4137 min_orientation_angle = 246.8014 max_orientation_angle = 246.8014 initializer = foc_v175_castilon_system } # 卡斯蒂隆
+                spawn_system = { hyperlane = no min_distance >= 63.3942 max_distance <= 63.3942 min_orientation_angle = 262.0425 max_orientation_angle = 262.0425 initializer = foc_swmap_hoth_system } # 霍斯
+                spawn_system = { hyperlane = no min_distance >= 58.8776 max_distance <= 58.8776 min_orientation_angle = 260.4297 max_orientation_angle = 260.4297 initializer = foc_swmap_anoat_system } # 阿诺特
+                spawn_system = { hyperlane = no min_distance >= 64.2414 max_distance <= 64.2414 min_orientation_angle = 266.6866 max_orientation_angle = 266.6866 initializer = foc_swmap_bespin_system } # 贝斯平
+                spawn_system = { hyperlane = no min_distance >= 67.5095 max_distance <= 67.5095 min_orientation_angle = 270.0000 max_orientation_angle = 270.0000 initializer = foc_swmap_mustafar_system } # 穆斯塔法
+                spawn_system = { hyperlane = no min_distance >= 67.6747 max_distance <= 67.6747 min_orientation_angle = 274.0042 max_orientation_angle = 274.0042 initializer = foc_swmap_dagobah_system } # 达戈巴
+                spawn_system = { hyperlane = no min_distance >= 33.7547 max_distance <= 33.7547 min_orientation_angle = 233.1301 max_orientation_angle = 233.1301 initializer = foc_sw_jakku_system } # 贾库
+                spawn_system = { hyperlane = no min_distance >= 71.1777 max_distance <= 71.1777 min_orientation_angle = 277.6306 max_orientation_angle = 277.6306 initializer = foc_v175_seatos_system } # 西托斯
+                spawn_system = { hyperlane = no min_distance >= 61.1324 max_distance <= 61.1324 min_orientation_angle = 276.3402 max_orientation_angle = 276.3402 initializer = foc_swmap_eriadu_system } # 埃里亚杜
+                spawn_system = { hyperlane = no min_distance >= 64.4927 max_distance <= 64.4927 min_orientation_angle = 278.4270 max_orientation_angle = 278.4270 initializer = foc_v175_uvena_prime_system } # 乌韦纳
+                spawn_system = { hyperlane = no min_distance >= 27.8349 max_distance <= 27.8349 min_orientation_angle = 194.0362 max_orientation_angle = 194.0362 initializer = foc_swmap_jedha_system } # 杰达
+                spawn_system = { hyperlane = no min_distance >= 68.8464 max_distance <= 68.8464 min_orientation_angle = 281.3099 max_orientation_angle = 281.3099 initializer = foc_swmap_utapau_system } # 乌塔帕
+                spawn_system = { hyperlane = no min_distance >= 54.4279 max_distance <= 54.4279 min_orientation_angle = 277.1250 max_orientation_angle = 277.1250 initializer = foc_swmap_sullust_system } # 苏卢斯特
+                spawn_system = { hyperlane = no min_distance >= 33.8626 max_distance <= 33.8626 min_orientation_angle = 265.4261 max_orientation_angle = 265.4261 initializer = foc_swmap_yagdhul_system } # 雅格杜尔
+                spawn_system = { hyperlane = no min_distance >= 36.5316 max_distance <= 36.5316 min_orientation_angle = 273.7084 max_orientation_angle = 273.7084 initializer = foc_swmap_mechis_system } # 梅基斯三号
+                spawn_system = { hyperlane = no min_distance >= 21.3484 max_distance <= 21.3484 min_orientation_angle = 251.5651 max_orientation_angle = 251.5651 initializer = foc_swmap_abregado_system } # 阿布雷加多
+                spawn_system = { hyperlane = no min_distance >= 25.3969 max_distance <= 25.3969 min_orientation_angle = 265.4261 max_orientation_angle = 265.4261 initializer = foc_swmap_fondor_system } # 丰多尔
+                spawn_system = { hyperlane = no min_distance >= 49.1476 max_distance <= 49.1476 min_orientation_angle = 285.9454 max_orientation_angle = 285.9454 initializer = foc_v175_malastare_system } # 马拉斯塔尔
+                spawn_system = { hyperlane = no min_distance >= 29.1251 max_distance <= 29.1251 min_orientation_angle = 274.6534 max_orientation_angle = 274.6534 initializer = foc_v175_ghorman_system } # 戈尔曼
+                spawn_system = { hyperlane = no min_distance >= 57.0005 max_distance <= 57.0005 min_orientation_angle = 288.6495 max_orientation_angle = 288.6495 initializer = foc_swmap_naboo_system } # 纳布
+                spawn_system = { hyperlane = no min_distance >= 34.4232 max_distance <= 34.4232 min_orientation_angle = 281.3099 max_orientation_angle = 281.3099 initializer = foc_v175_bestine_iv_system } # 贝斯汀四号
+                spawn_system = { hyperlane = no min_distance >= 72.7099 max_distance <= 72.7099 min_orientation_angle = 291.8014 max_orientation_angle = 291.8014 initializer = foc_v175_pantora_system } # 潘托拉
+                spawn_system = { hyperlane = no min_distance >= 15.0956 max_distance <= 15.0956 min_orientation_angle = 243.4349 max_orientation_angle = 243.4349 initializer = foc_v175_byss_system } # 比斯
+                spawn_system = { hyperlane = no min_distance >= 18.4790 max_distance <= 18.4790 min_orientation_angle = 279.4623 max_orientation_angle = 279.4623 initializer = foc_v175_bellassa_system } # 贝拉萨
+                spawn_system = { hyperlane = no min_distance >= 8.4656 max_distance <= 8.4656 min_orientation_angle = 246.5014 max_orientation_angle = 246.5014 initializer = foc_swmap_tython_system } # 泰桑
+                spawn_system = { hyperlane = no min_distance >= 60.3823 max_distance <= 60.3823 min_orientation_angle = 296.5651 max_orientation_angle = 296.5651 initializer = foc_swmap_adelphi_system } # 阿德尔菲
+                spawn_system = { hyperlane = no min_distance >= 21.3484 max_distance <= 21.3484 min_orientation_angle = 288.4349 max_orientation_angle = 288.4349 initializer = foc_sw_hosnian_system } # 霍斯尼亚
+                spawn_system = { hyperlane = no min_distance >= 17.8262 max_distance <= 17.8262 min_orientation_angle = 288.7780 max_orientation_angle = 288.7780 initializer = foc_swmap_duro_system } # 杜罗
+                spawn_system = { hyperlane = no min_distance >= 19.4786 max_distance <= 19.4786 min_orientation_angle = 297.8973 max_orientation_angle = 297.8973 initializer = foc_swmap_centerpoint_system } # 中心点
+                spawn_system = { hyperlane = no min_distance >= 14.5302 max_distance <= 14.5302 min_orientation_angle = 300.7355 max_orientation_angle = 300.7355 initializer = foc_swmap_corellia_system } # 科雷利亚
+                spawn_system = { hyperlane = no min_distance >= 5.3771 max_distance <= 5.3771 min_orientation_angle = 141.1155 max_orientation_angle = 141.1155 initializer = foc_sw_chandrila_system } # 千瑞拉
+                spawn_system = { hyperlane = no min_distance >= 9.5473 max_distance <= 9.5473 min_orientation_angle = 135.0000 max_orientation_angle = 135.0000 initializer = foc_v175_muunilinst_system } # 穆尼林斯特
+                spawn_system = { hyperlane = no min_distance >= 24.3409 max_distance <= 24.3409 min_orientation_angle = 303.6901 max_orientation_angle = 303.6901 initializer = foc_swmap_denon_system } # 德农
+                spawn_system = { hyperlane = no min_distance >= 56.7331 max_distance <= 56.7331 min_orientation_angle = 303.5955 max_orientation_angle = 303.5955 initializer = foc_swmap_christophsis_system } # 克里斯托弗西斯
+                spawn_system = { hyperlane = no min_distance >= 33.7547 max_distance <= 33.7547 min_orientation_angle = 306.8699 max_orientation_angle = 306.8699 initializer = foc_v175_pasaana_system } # 帕萨纳
+                spawn_system = { hyperlane = no min_distance >= 3.5241 max_distance <= 3.5241 min_orientation_angle = 106.6992 max_orientation_angle = 106.6992 initializer = foc_v175_corulag_system } # 科鲁拉格
+                spawn_system = { hyperlane = no min_distance >= 3.9364 max_distance <= 3.9364 min_orientation_angle = 329.0362 max_orientation_angle = 329.0362 initializer = foc_v175_skako_system } # 斯卡科
+                spawn_system = { hyperlane = no min_distance >= 7.0239 max_distance <= 7.0239 min_orientation_angle = 324.7824 max_orientation_angle = 324.7824 initializer = foc_v175_fedalle_system } # 费达勒
+                spawn_system = { hyperlane = no min_distance >= 16.8354 max_distance <= 16.8354 min_orientation_angle = 314.2306 max_orientation_angle = 314.2306 initializer = foc_sw_rendili_system } # 伦迪利
+                spawn_system = { hyperlane = no min_distance >= 61.9195 max_distance <= 61.9195 min_orientation_angle = 305.6829 max_orientation_angle = 305.6829 initializer = foc_v175_savareen_system } # 萨瓦林
+                spawn_system = { hyperlane = no min_distance >= 13.6237 max_distance <= 13.6237 min_orientation_angle = 318.0128 max_orientation_angle = 318.0128 initializer = foc_sw_kuat_system } # 夸特
+                spawn_system = { hyperlane = no min_distance >= 19.4459 max_distance <= 19.4459 min_orientation_angle = 315.1035 max_orientation_angle = 315.1035 initializer = foc_swmap_cato_neimoidia_system } # 卡托·内莫伊迪亚
+                spawn_system = { hyperlane = no min_distance >= 43.2271 max_distance <= 43.2271 min_orientation_angle = 308.6598 max_orientation_angle = 308.6598 initializer = foc_v175_vandor_system } # 范多尔
+                spawn_system = { hyperlane = no min_distance >= 24.3456 max_distance <= 24.3456 min_orientation_angle = 315.0000 max_orientation_angle = 315.0000 initializer = foc_swmap_balmorra_system } # 巴尔莫拉
+                spawn_system = { hyperlane = no min_distance >= 6.7509 max_distance <= 6.7509 min_orientation_angle = 90.0000 max_orientation_angle = 90.0000 initializer = foc_v175_yinchorr_system } # 因霍尔
+                spawn_system = { hyperlane = no min_distance >= 4.4011 max_distance <= 4.4011 min_orientation_angle = 32.4712 max_orientation_angle = 32.4712 initializer = foc_swmap_brentaal_system } # 布伦塔尔
+                spawn_system = { hyperlane = no min_distance >= 11.3468 max_distance <= 11.3468 min_orientation_angle = 329.6209 max_orientation_angle = 329.6209 initializer = foc_swfill_alderaan_system } # 奥德朗
+                spawn_system = { hyperlane = no min_distance >= 67.5095 max_distance <= 67.5095 min_orientation_angle = 306.8699 max_orientation_angle = 306.8699 initializer = foc_swmap_ryloth_system } # 莱洛斯
+                spawn_system = { hyperlane = no min_distance >= 28.6418 max_distance <= 28.6418 min_orientation_angle = 315.0000 max_orientation_angle = 315.0000 initializer = foc_v175_mimban_system } # 米姆班
+                spawn_system = { hyperlane = no min_distance >= 6.7509 max_distance <= 6.7509 min_orientation_angle = 0.0000 max_orientation_angle = 0.0000 initializer = foc_v175_carida_system } # 卡里达
+                spawn_system = { hyperlane = no min_distance >= 30.1912 max_distance <= 30.1912 min_orientation_angle = 116.5651 max_orientation_angle = 116.5651 initializer = foc_sw_yaga_minor_system } # 亚加-米诺
+                spawn_system = { hyperlane = no min_distance >= 13.6529 max_distance <= 13.6529 min_orientation_angle = 98.5308 max_orientation_angle = 98.5308 initializer = foc_swmap_ord_mantell_system } # 奥德·曼特尔
+                spawn_system = { hyperlane = no min_distance >= 59.6428 max_distance <= 59.6428 min_orientation_angle = 310.1792 max_orientation_angle = 310.1792 initializer = foc_swmap_tatooine_system } # 塔图因
+                spawn_system = { hyperlane = no min_distance >= 11.1339 max_distance <= 11.1339 min_orientation_angle = 75.9638 max_orientation_angle = 75.9638 initializer = foc_v175_numidian_pr_system } # 努米迪安
+                spawn_system = { hyperlane = no min_distance >= 66.0490 max_distance <= 66.0490 min_orientation_angle = 310.8554 max_orientation_angle = 310.8554 initializer = foc_swmap_geonosis_system } # 吉奥诺西斯
+                spawn_system = { hyperlane = no min_distance >= 9.5473 max_distance <= 9.5473 min_orientation_angle = 45.0000 max_orientation_angle = 45.0000 initializer = foc_v175_bogden_system } # 博格登
+                spawn_system = { hyperlane = no min_distance >= 36.3550 max_distance <= 36.3550 min_orientation_angle = 111.8014 max_orientation_angle = 111.8014 initializer = foc_sw_bilbringi_system } # 比尔布林吉
+                spawn_system = { hyperlane = no min_distance >= 57.2837 max_distance <= 57.2837 min_orientation_angle = 315.0000 max_orientation_angle = 315.0000 initializer = foc_v175_manda_system } # 曼达
+                spawn_system = { hyperlane = no min_distance >= 27.8349 max_distance <= 27.8349 min_orientation_angle = 104.0362 max_orientation_angle = 104.0362 initializer = foc_swmap_bracca_system } # 布拉卡
+                spawn_system = { hyperlane = no min_distance >= 15.0956 max_distance <= 15.0956 min_orientation_angle = 63.4349 max_orientation_angle = 63.4349 initializer = foc_v175_mapuzo_system } # 马普佐
+                spawn_system = { hyperlane = no min_distance >= 30.1912 max_distance <= 30.1912 min_orientation_angle = 333.4349 max_orientation_angle = 333.4349 initializer = foc_v175_ruusan_system } # 鲁桑
+                spawn_system = { hyperlane = no min_distance >= 52.7266 max_distance <= 52.7266 min_orientation_angle = 320.1944 max_orientation_angle = 320.1944 initializer = foc_v175_bothawui_system } # 博萨维
+                spawn_system = { hyperlane = no min_distance >= 42.6967 max_distance <= 42.6967 min_orientation_angle = 108.4349 max_orientation_angle = 108.4349 initializer = foc_sw_bastion_system } # 巴斯提恩
+                spawn_system = { hyperlane = no min_distance >= 39.3644 max_distance <= 39.3644 min_orientation_angle = 329.0362 max_orientation_angle = 329.0362 initializer = foc_swmap_aldoleem_system } # 阿尔多利姆
+                spawn_system = { hyperlane = no min_distance >= 59.6046 max_distance <= 59.6046 min_orientation_angle = 319.3635 max_orientation_angle = 319.3635 initializer = foc_swmap_scarif_system } # 斯卡里夫
+                spawn_system = { hyperlane = no min_distance >= 20.2528 max_distance <= 20.2528 min_orientation_angle = 0.0000 max_orientation_angle = 0.0000 initializer = foc_swmap_onderon_system } # 安多兰
+                spawn_system = { hyperlane = no min_distance >= 21.3484 max_distance <= 21.3484 min_orientation_angle = 71.5651 max_orientation_angle = 71.5651 initializer = foc_v175_ithor_system } # 伊索尔
+                spawn_system = { hyperlane = no min_distance >= 22.0339 max_distance <= 22.0339 min_orientation_angle = 95.2739 max_orientation_angle = 95.2739 initializer = foc_swmap_aldhani_system } # 奥达尼
+                spawn_system = { hyperlane = no min_distance >= 27.8349 max_distance <= 27.8349 min_orientation_angle = 345.9638 max_orientation_angle = 345.9638 initializer = foc_v175_umbara_system } # 乌姆巴拉
+                spawn_system = { hyperlane = no min_distance >= 66.0490 max_distance <= 66.0490 min_orientation_angle = 319.1446 max_orientation_angle = 319.1446 initializer = foc_swmap_kamino_system } # 卡米诺
+                spawn_system = { hyperlane = no min_distance >= 19.0946 max_distance <= 19.0946 min_orientation_angle = 45.0000 max_orientation_angle = 45.0000 initializer = foc_v175_wayland_system } # 韦兰
+                spawn_system = { hyperlane = no min_distance >= 24.9785 max_distance <= 24.9785 min_orientation_angle = 0.0000 max_orientation_angle = 0.0000 initializer = foc_swmap_kashyyyk_system } # 卡希克
+                spawn_system = { hyperlane = no min_distance >= 21.3484 max_distance <= 21.3484 min_orientation_angle = 18.4349 max_orientation_angle = 18.4349 initializer = foc_swmap_taanab_system } # 塔纳布
+                spawn_system = { hyperlane = no min_distance >= 33.7547 max_distance <= 33.7547 min_orientation_angle = 90.0000 max_orientation_angle = 90.0000 initializer = foc_v175_dantooine_system } # 丹图因
+                spawn_system = { hyperlane = no min_distance >= 29.8591 max_distance <= 29.8591 min_orientation_angle = 354.1605 max_orientation_angle = 354.1605 initializer = foc_swmap_mygeeto_system } # 梅基托
+                spawn_system = { hyperlane = no min_distance >= 22.6836 max_distance <= 22.6836 min_orientation_angle = 36.5289 max_orientation_angle = 36.5289 initializer = foc_swmap_mandalore_system } # 曼达洛
+                spawn_system = { hyperlane = no min_distance >= 23.0286 max_distance <= 23.0286 min_orientation_angle = 46.5835 max_orientation_angle = 46.5835 initializer = foc_v175_taris_system } # 塔里斯
+                spawn_system = { hyperlane = no min_distance >= 24.3409 max_distance <= 24.3409 min_orientation_angle = 56.3099 max_orientation_angle = 56.3099 initializer = foc_v175_at_attin_system } # 至阿廷
+                spawn_system = { hyperlane = no min_distance >= 25.5334 max_distance <= 25.5334 min_orientation_angle = 24.1932 max_orientation_angle = 24.1932 initializer = foc_v175_concord_dawn_system } # 康科德黎明
+                spawn_system = { hyperlane = no min_distance >= 25.4357 max_distance <= 25.4357 min_orientation_angle = 44.1042 max_orientation_angle = 44.1042 initializer = foc_v175_spellhaus_system } # 斯佩尔豪斯
+                spawn_system = { hyperlane = no min_distance >= 40.5057 max_distance <= 40.5057 min_orientation_angle = 90.0000 max_orientation_angle = 90.0000 initializer = foc_v175_lah_mu_system } # 拉穆
+                spawn_system = { hyperlane = no min_distance >= 42.6967 max_distance <= 42.6967 min_orientation_angle = 341.5651 max_orientation_angle = 341.5651 initializer = foc_v175_toydaria_system } # 托伊达里亚
+                spawn_system = { hyperlane = no min_distance >= 51.4137 max_distance <= 51.4137 min_orientation_angle = 336.8014 max_orientation_angle = 336.8014 initializer = foc_swmap_nal_hutta_system } # 纳尔赫塔
+                spawn_system = { hyperlane = no min_distance >= 28.8361 max_distance <= 28.8361 min_orientation_angle = 51.6544 max_orientation_angle = 51.6544 initializer = foc_sw_akiva_system } # 阿基瓦
+                spawn_system = { hyperlane = no min_distance >= 55.1195 max_distance <= 55.1195 min_orientation_angle = 335.0043 max_orientation_angle = 335.0043 initializer = foc_v175_nar_shaddaa_system } # 那沙达
+                spawn_system = { hyperlane = no min_distance >= 33.9291 max_distance <= 33.9291 min_orientation_angle = 44.2985 max_orientation_angle = 44.2985 initializer = foc_swmap_dathomir_system } # 达索米尔
+                spawn_system = { hyperlane = no min_distance >= 41.0644 max_distance <= 41.0644 min_orientation_angle = 80.5377 max_orientation_angle = 80.5377 initializer = foc_v175_zeffo_system } # 泽福
+                spawn_system = { hyperlane = no min_distance >= 33.7547 max_distance <= 33.7547 min_orientation_angle = 36.8699 max_orientation_angle = 36.8699 initializer = foc_sw_yavin_system } # 雅汶
+                spawn_system = { hyperlane = no min_distance >= 41.0644 max_distance <= 41.0644 min_orientation_angle = 9.4623 max_orientation_angle = 9.4623 initializer = foc_swmap_kijimi_system } # 基吉米
+                spawn_system = { hyperlane = no min_distance >= 56.6527 max_distance <= 56.6527 min_orientation_angle = 346.2121 max_orientation_angle = 346.2121 initializer = foc_swmap_maw_system } # 黑洞渊薮
+                spawn_system = { hyperlane = no min_distance >= 47.2566 max_distance <= 47.2566 min_orientation_angle = 0.0000 max_orientation_angle = 0.0000 initializer = foc_v175_boz_pity_system } # 博兹皮蒂
+                spawn_system = { hyperlane = no min_distance >= 52.4188 max_distance <= 52.4188 min_orientation_angle = 352.6004 max_orientation_angle = 352.6004 initializer = foc_swmap_kessel_system } # 凯瑟尔
+                spawn_system = { hyperlane = no min_distance >= 39.3644 max_distance <= 39.3644 min_orientation_angle = 30.9638 max_orientation_angle = 30.9638 initializer = foc_v175_stygeon_pr_system } # 斯泰吉恩
+                spawn_system = { hyperlane = no min_distance >= 57.5466 max_distance <= 57.5466 min_orientation_angle = 350.2062 max_orientation_angle = 350.2062 initializer = foc_v175_oba_diah_system } # 奥巴迪亚
+                spawn_system = { hyperlane = no min_distance >= 47.7364 max_distance <= 47.7364 min_orientation_angle = 8.1301 max_orientation_angle = 8.1301 initializer = foc_v175_saleucami_system } # 萨鲁卡米
+                spawn_system = { hyperlane = no min_distance >= 44.1723 max_distance <= 44.1723 min_orientation_angle = 30.2880 max_orientation_angle = 30.2880 initializer = foc_swmap_felucia_system } # 费卢西亚
+                spawn_system = { hyperlane = no min_distance >= 46.4517 max_distance <= 46.4517 min_orientation_angle = 22.6519 max_orientation_angle = 22.6519 initializer = foc_swmap_ossus_system } # 奥苏斯
+                spawn_system = { hyperlane = no min_distance >= 61.1324 max_distance <= 61.1324 min_orientation_angle = 353.6598 max_orientation_angle = 353.6598 initializer = foc_v175_eadu_system } # 埃杜
+                spawn_system = { hyperlane = no min_distance >= 47.7364 max_distance <= 47.7364 min_orientation_angle = 45.0000 max_orientation_angle = 45.0000 initializer = foc_v175_morlana_one_system } # 莫拉纳一号
+                spawn_system = { hyperlane = no min_distance >= 48.6818 max_distance <= 48.6818 min_orientation_angle = 33.6901 max_orientation_angle = 33.6901 initializer = foc_swmap_moraband_system } # 莫拉班德
+                spawn_system = { hyperlane = no min_distance >= 52.7266 max_distance <= 52.7266 min_orientation_angle = 50.1944 max_orientation_angle = 50.1944 initializer = foc_swmap_ferrix_system } # 费里克斯
+                spawn_system = { hyperlane = no min_distance >= 54.4279 max_distance <= 54.4279 min_orientation_angle = 29.7449 max_orientation_angle = 29.7449 initializer = foc_swmap_raxus_system } # 拉克萨斯
+                spawn_system = { hyperlane = no min_distance >= 57.6801 max_distance <= 57.6801 min_orientation_angle = 20.5560 max_orientation_angle = 20.5560 initializer = foc_v175_atollon_system } # 阿托伦
+                spawn_system = { hyperlane = no min_distance >= 60.2652 max_distance <= 60.2652 min_orientation_angle = 12.9465 max_orientation_angle = 12.9465 initializer = foc_swmap_lothal_system } # 洛塔
+                spawn_system = { hyperlane = no min_distance >= 59.4898 max_distance <= 59.4898 min_orientation_angle = 16.4813 max_orientation_angle = 16.4813 initializer = foc_v175_munto_codru_system } # 蒙托·科德鲁
+                spawn_system = { hyperlane = no min_distance >= 63.9828 max_distance <= 63.9828 min_orientation_angle = 9.4126 max_orientation_angle = 9.4126 initializer = foc_v175_garel_system } # 加雷尔
+                spawn_system = { hyperlane = no min_distance >= 58.0738 max_distance <= 58.0738 min_orientation_angle = 35.5377 max_orientation_angle = 35.5377 initializer = foc_swmap_malachor_system } # 马拉科
+                spawn_system = { hyperlane = no min_distance >= 64.0451 max_distance <= 64.0451 min_orientation_angle = 18.4349 max_orientation_angle = 18.4349 initializer = foc_swmap_mon_cala_system } # 蒙卡拉马里
+                spawn_system = { hyperlane = no min_distance >= 62.2407 max_distance <= 62.2407 min_orientation_angle = 40.6013 max_orientation_angle = 40.6013 initializer = foc_swmap_bonadan_system } # 博纳丹
+            }
+        }
+
+        set_spawn_system_batch = end
+
+        # V178: choose a normal main-galaxy rim system near the external
+        # region. Coruscant receives no direct main-galaxy route; the saved
+        # endpoint is paired with the natural wormhole in Jakku.
+        if = {
+            limit = { exists = event_target:foc_sw_jakku_system }
+            random_system = {
+                limit = {
+                    is_rim_system = yes
+                    has_natural_wormhole = no
+                    any_neighbor_system = { always = yes }
+                    NOR = {
+                        has_star_flag = foc_sw_new_republic_cluster
+                        has_star_flag = foc_sw_imperial_remnant_cluster
+                        has_star_flag = fop_origin_ilum_home
+                        has_star_flag = foc_khan_ilum_home
+                        has_star_flag = foc_khan_exegol_home
+                        has_star_flag = foc_swmap_v3_external_region
+                    }
+                    distance = {
+                        source = event_target:foc_sw_jakku_system
+                        max_distance < 180
+                        type = euclidean
+                    }
+                }
+                set_star_flag = foc_swmap_main_galaxy_anchor
+                set_star_flag = foc_sw_jakku_gateway_neighbor
+                set_star_flag = foc_sw_coruscant_gateway_neighbor
+                save_global_event_target_as = foc_swmap_main_galaxy_anchor
+            }
+        }
+
+        # If the local search cannot resolve a suitable system, fall back to an
+        # ordinary rim system. This still creates a wormhole, never a hyperlane.
+        if = {
+            limit = { NOT = { exists = event_target:foc_swmap_main_galaxy_anchor } }
+            random_rim_system = {
+                limit = {
+                    has_natural_wormhole = no
+                    any_neighbor_system = { always = yes }
+                    is_fe_cluster = no
+                    NOR = {
+                        has_star_flag = foc_sw_new_republic_cluster
+                        has_star_flag = foc_sw_imperial_remnant_cluster
+                        has_star_flag = fop_origin_ilum_home
+                        has_star_flag = foc_khan_ilum_home
+                        has_star_flag = foc_khan_exegol_home
+                        has_star_flag = foc_swmap_v3_external_region
+                    }
+                }
+                set_star_flag = foc_swmap_main_galaxy_anchor
+                set_star_flag = foc_sw_jakku_gateway_neighbor
+                set_star_flag = foc_sw_coruscant_gateway_neighbor
+                save_global_event_target_as = foc_swmap_main_galaxy_anchor
+            }
+        }
+
+        if = {
+            limit = {
+                exists = event_target:foc_sw_jakku_system
+                exists = event_target:foc_swmap_main_galaxy_anchor
+                event_target:foc_sw_jakku_system = { has_natural_wormhole = no }
+                event_target:foc_swmap_main_galaxy_anchor = { has_natural_wormhole = no }
+            }
+            event_target:foc_swmap_main_galaxy_anchor = {
+                spawn_natural_wormhole = { bypass_type = wormhole random_pos = no orbit_angle = 0 }
+            }
+            event_target:foc_sw_jakku_system = {
+                spawn_natural_wormhole = { bypass_type = wormhole random_pos = no orbit_angle = 180 }
+                link_wormholes = event_target:foc_swmap_main_galaxy_anchor
+            }
+            set_global_flag = foc_swmap_jakku_wormhole_fallback
+            set_global_flag = foc_swmap_jakku_main_wormhole_v177
+            # Keep obsolete direct-HYPERLANE repair paths inert. Coruscant's
+            # independent natural wormhole is created separately by foc_swmap.5.
+            set_global_flag = foc_sw_coruscant_galaxy_lane_added_311w
+            set_global_flag = foc_sw_coruscant_galaxy_lane_verified_311r
+            country_event = { id = foc_swmap.5 days = 1 }
+        }
+
+        country_event = { id = foc_swmap.2 }
+    }
+}

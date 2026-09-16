@@ -1,0 +1,88 @@
+namespace = foc_khan_211
+
+# One-shot repair for saves started on 2.10 or earlier.
+event = {
+    id = foc_khan_211.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        has_global_flag = foc_khan_phase_two
+        NOT = { has_global_flag = foc_khan_crisis_finished }
+        exists = event_target:foc_khan_final_order
+        exists = event_target:foc_khan_final_order_system
+        event_target:foc_khan_final_order = {
+            NOT = { has_country_flag = foc_khan_final_movement_211_repaired }
+        }
+    }
+    immediate = {
+        # Phase-I attack queues used shared system reservations. Remove every
+        # leftover reservation before reinstalling the Final Order controller.
+        every_system = {
+            remove_star_flag = foc_khan_sgk_system_reserved
+            every_system_planet = { remove_planet_flag = foc_khan_sgk_invasion_target }
+        }
+
+        event_target:foc_khan_final_order = {
+            set_country_flag = foc_khan_final_movement_211_repaired
+
+            # Reinstall the persistent SG/Kuat controller on every ordinary
+            # non-garrison fleet, including fleets carrying a stale 2.10 flag.
+            every_owned_fleet = {
+                limit = {
+                    any_owned_ship = { is_ship_class = shipclass_military }
+                    NOR = {
+                        has_fleet_flag = foc_khan_final_order_guard_fleet
+                        has_fleet_flag = foc_khan_first_order_guard_fleet
+                        has_fleet_flag = foc_khan_supremacy_fleet
+                        has_fleet_flag = foc_khan_xyston_planet_killer_fleet
+                        has_fleet_flag = foc_khan_final_order_engineering_fleet
+                        has_fleet_flag = foc_khan_first_order_engineering_fleet
+                    }
+                }
+                remove_fleet_flag = foc_khan_sgk_scripted_attack_fleet
+                remove_fleet_flag = foc_khan_sgk_bombarding_planet
+                remove_auto_move_target = yes
+                clear_orders = yes
+                clear_fleet_actions = this
+                fleet_event = { id = foc_khan_sgk_ai.10 days = 1 random = 3 }
+            }
+
+            # Reinstall the corrected 4.4-compatible queue on all eight special
+            # Xystons. Their target reservation logic now parses correctly.
+            every_owned_fleet = {
+                limit = {
+                    has_fleet_flag = foc_khan_xyston_planet_killer_fleet
+                    any_owned_ship = { OR = { is_ship_size = foc_khan_xystonsd is_ship_size = foc_khan_xystonsd_foc_lowest } }
+                }
+                clear_orders = yes
+                clear_fleet_actions = this
+                remove_auto_move_target = yes
+                fleet_event = { id = foc_khan_xyston_ai.10 days = 1 random = 8 }
+            }
+
+            # In an existing save the only Phase-II ordinary fleet may be the
+            # home guard. Add one difficulty-scaled support wave if no mobile
+            # expeditionary fleet exists.
+            if = {
+                limit = {
+                    NOT = {
+                        any_owned_fleet = {
+                            any_owned_ship = { is_ship_class = shipclass_military }
+                            NOR = {
+                                has_fleet_flag = foc_khan_final_order_guard_fleet
+                                has_fleet_flag = foc_khan_first_order_guard_fleet
+                                has_fleet_flag = foc_khan_supremacy_fleet
+                                has_fleet_flag = foc_khan_xyston_planet_killer_fleet
+                                has_fleet_flag = foc_khan_final_order_engineering_fleet
+                                has_fleet_flag = foc_khan_first_order_engineering_fleet
+                            }
+                        }
+                    }
+                }
+                event_target:foc_khan_final_order_system = {
+                    foc_khan_spawn_final_scaled_support_wave = yes
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,106 @@
+# FOC V159 - Imperial Remnant INITIAL Executor package integrity.
+# This is intentionally bounded to the immediate post-Treaty initialization
+# window. It must never become a permanent combat-loss replenishment system.
+
+foc_v159_repair_imperial_remnant_initial_executor_package = {
+    save_global_event_target_as = foc_sw_imperial_remnant
+    foc_story_grant_jakku_executor_blueprint = yes
+
+    # First repair flagged canonical groups that exist but lost their flagship
+    # during creation because the fixed design was not ready yet.
+    every_owned_fleet = {
+        limit = {
+            has_fleet_flag = foc_sw_imperial_executor_fleet
+            NOT = {
+                any_owned_ship = {
+                    OR = {
+                        is_ship_size = foc_sw_lusankya
+                        is_ship_size = foc_sw_lusankya_foc_lowest
+                    }
+                }
+            }
+        }
+        every_owned_ship = {
+            limit = {
+                OR = {
+                    is_ship_size = foc_khan_eclipse
+                    is_ship_size = foc_khan_eclipse_foc_lowest
+                }
+            }
+            destroy_ship = this
+        }
+        if = {
+            limit = { has_global_flag = foc_khan_strength_lowest }
+            
+
+            
+            # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_octuple_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_octuple_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_octuple_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_octuple_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_sphat_2 message = no } } }
+}
+            
+            # V15 full-armor prerequisite: foc_v15_defense_d3adb4bd7e34.
+            owner = {
+                if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+            }
+            create_ship = { name = random design = "NAME_FOC_SW_LUSANKYA_FOC_LOWEST" graphical_culture = empire_01 upgradable = no fleet_cache_recalc = yes }
+        }
+        else = {
+            
+
+            
+
+            
+            # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_octuple_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_octuple_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_octuple_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_octuple_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_sphat_2 message = no } } }
+}
+            
+            # V15 full-armor prerequisite: foc_v15_defense_5b042f1c03ca.
+            owner = {
+                if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+            }
+            create_ship = { name = random design = "NAME_FOC_SW_LUSANKYA" graphical_culture = empire_01 upgradable = no fleet_cache_recalc = yes }
+        }
+    }
+
+    # If an empty group disappeared entirely during initialization, rebuild only
+    # the missing canonical groups. These checks exist ONLY inside the V159
+    # initialization window.
+    if = { limit = { exists = event_target:foc_sw_bastion_system count_owned_fleet = { limit = { has_fleet_flag = foc_sw_imperial_executor_fleet } count < 8 } } event_target:foc_sw_bastion_system = { foc_v158_spawn_one_imperial_remnant_executor_group = yes } }
+    if = { limit = { exists = event_target:foc_sw_bastion_system count_owned_fleet = { limit = { has_fleet_flag = foc_sw_imperial_executor_fleet } count < 8 } } event_target:foc_sw_bastion_system = { foc_v158_spawn_one_imperial_remnant_executor_group = yes } }
+    if = { limit = { exists = event_target:foc_sw_bastion_system count_owned_fleet = { limit = { has_fleet_flag = foc_sw_imperial_executor_fleet } count < 8 } } event_target:foc_sw_bastion_system = { foc_v158_spawn_one_imperial_remnant_executor_group = yes } }
+    if = { limit = { exists = event_target:foc_sw_bastion_system count_owned_fleet = { limit = { has_fleet_flag = foc_sw_imperial_executor_fleet } count < 8 } } event_target:foc_sw_bastion_system = { foc_v158_spawn_one_imperial_remnant_executor_group = yes } }
+    if = { limit = { exists = event_target:foc_sw_bastion_system count_owned_fleet = { limit = { has_fleet_flag = foc_sw_imperial_executor_fleet } count < 8 } } event_target:foc_sw_bastion_system = { foc_v158_spawn_one_imperial_remnant_executor_group = yes } }
+    if = { limit = { exists = event_target:foc_sw_bastion_system count_owned_fleet = { limit = { has_fleet_flag = foc_sw_imperial_executor_fleet } count < 8 } } event_target:foc_sw_bastion_system = { foc_v158_spawn_one_imperial_remnant_executor_group = yes } }
+    if = { limit = { exists = event_target:foc_sw_bastion_system count_owned_fleet = { limit = { has_fleet_flag = foc_sw_imperial_executor_fleet } count < 8 } } event_target:foc_sw_bastion_system = { foc_v158_spawn_one_imperial_remnant_executor_group = yes } }
+    if = { limit = { exists = event_target:foc_sw_bastion_system count_owned_fleet = { limit = { has_fleet_flag = foc_sw_imperial_executor_fleet } count < 8 } } event_target:foc_sw_bastion_system = { foc_v158_spawn_one_imperial_remnant_executor_group = yes } }
+}
+
+foc_v159_begin_imperial_remnant_executor_initialization = {
+    if = {
+        limit = { NOT = { has_country_flag = foc_v159_remnant_executor_init_done } }
+        set_timed_country_flag = { flag = foc_v159_remnant_executor_init_window days = 30 }
+        country_event = { id = foc_v159_remnant_assets.1 days = 1 }
+    }
+}

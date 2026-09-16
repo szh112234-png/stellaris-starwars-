@@ -1,0 +1,80 @@
+# 2.51 transport controller.
+# Scope: an Order transport fleet. This retains the previously stable persistent
+# queue_actions controller, but target selection checks CURRENT controller rather
+# than legal owner. A colony already occupied by either Order is therefore no
+# longer a valid invasion target.
+
+foc_khan_229_transport_fleet_action = {
+    optimize_memory
+    remove_auto_move_target = yes
+    clear_orders = yes
+    clear_fleet_actions = this
+    remove_fleet_flag = foc_khan_sgk_scripted_transport_fleet
+    remove_fleet_flag = foc_khan_acot_native_transport_233
+    remove_fleet_flag = foc_khan_transport_controller_238
+    set_fleet_flag = foc_khan_229_transport_controller
+    set_fleet_stance = aggressive
+    set_aggro_range_measure_from = self
+    set_aggro_range = 500
+
+    queue_actions = {
+        repeat = {
+            find_closest_system = {
+                trigger = {
+                    id = foc_khan_229.transport.find_system
+                    root? = { can_access_system = prev }
+                    any_system_planet = {
+                        is_colony = yes
+                        exists = controller
+                        controller = {
+                            NOR = {
+                                has_country_flag = foc_khan_first_order_country
+                                has_country_flag = foc_khan_final_order_country
+                                has_country_flag = foc_khan_submitted_first_order
+                                has_country_flag = foc_khan_submitted_final_order
+                            }
+                        }
+                    }
+                }
+
+                found_system = {
+                    move_to = this
+                    wait = { duration = 5 random = 3 }
+
+                    find_closest_planet = {
+                        trigger = {
+                            id = foc_khan_229.transport.find_planet
+                            is_colony = yes
+                            exists = controller
+                            controller = {
+                                NOR = {
+                                    has_country_flag = foc_khan_first_order_country
+                                    has_country_flag = foc_khan_final_order_country
+                                    has_country_flag = foc_khan_submitted_first_order
+                                    has_country_flag = foc_khan_submitted_final_order
+                                }
+                            }
+                        }
+
+                        found_planet = {
+                            orbit_planet = this
+                            effect = {
+                                id = foc_khan_229.transport.prepare_landing
+                                root? = {
+                                    set_fleet_stance = aggressive
+                                    set_aggro_range_measure_from = self
+                                    set_aggro_range = 500
+                                }
+                            }
+                            wait = { duration = 120 random = 30 }
+                        }
+
+                        failed = { wait = { duration = 30 random = 15 } }
+                    }
+                }
+
+                failed = { wait = { duration = 60 random = 30 } }
+            }
+        }
+    }
+}

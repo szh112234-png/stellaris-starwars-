@@ -1,0 +1,8 @@
+# V17: monthly, not yearly. The event is fire_only_once with a tight trigger, and
+# foc_ds2_start_second_program already fires it directly on the loss tick; this is
+# only the catch-up path for saves that were past that point already.
+on_monthly_pulse_country = {
+    events = {
+        foc_v17_isd2.1
+    }
+}

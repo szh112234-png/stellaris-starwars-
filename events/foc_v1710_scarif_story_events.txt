@@ -1,0 +1,299 @@
+namespace = foc_v1710_story
+
+# Existing +30-day callback: advance one acknowledged stage per country.
+# A pending window blocks ticks and legacy delayed calls until its option is chosen.
+country_event = {
+    id = foc_v1710_story.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        foc_v1710_scarif_month_elapsed = yes
+        has_global_flag = foc_republic_origin_scarif_weakness_obtained
+        NOT = {
+            has_global_flag = foc_republic_origin_galactic_treaty
+        }
+        NOT = {
+            has_country_flag = foc_v1717e_scarif_choice_pending
+        }
+        NOT = {
+            has_country_flag = foc_v1717e_rescue_confirmed
+        }
+        OR = {
+            is_ai = no
+            NOT = {
+                any_playable_country = {
+                    is_ai = no
+                }
+            }
+        }
+    }
+    immediate = {
+        set_global_flag = foc_v1710_aftermath_dispatched
+        if = {
+            limit = {
+                NOT = {
+                    has_country_flag = foc_v1717e_scarif_confirmed
+                }
+            }
+            if = {
+                limit = {
+                    NOT = {
+                        has_country_flag = foc_v1717e_scarif_notice_shown
+                    }
+                }
+                if = {
+                    limit = {
+                        OR = {
+                            has_country_flag = foc_republic_origin_empire_country
+                            has_country_flag = foc_republic_origin_player_empire
+                        }
+                    }
+                    country_event = {
+                        id = foc_rogue_one.4
+                    }
+                }
+                else_if = {
+                    limit = {
+                        foc_v1710_is_gcw_rebel = yes
+                    }
+                    country_event = {
+                        id = foc_rogue_one.14
+                    }
+                }
+                else = {
+                    country_event = {
+                        id = foc_canon.44
+                    }
+                }
+            }
+        }
+        else_if = {
+            limit = {
+                NOT = {
+                    has_country_flag = foc_v1717e_emergence_confirmed
+                }
+            }
+            if = {
+                limit = {
+                    has_global_flag = foc_rogue_one_death_star_emergence_scheduled
+                    NOT = {
+                        has_global_flag = foc_rogue_one_death_star_emerged
+                    }
+                    foc_v1717e_death_star_one_alive = yes
+                    exists = event_target:foc_swmap_scarif_system
+                }
+                country_event = {
+                    id = foc_rogue_one.16
+                }
+            }
+            else = {
+                set_country_flag = foc_v1717e_emergence_confirmed
+                country_event = {
+                    id = foc_v1710_story.1
+                    days = 1
+                }
+            }
+        }
+        else_if = {
+            limit = {
+                NOT = {
+                    has_country_flag = foc_v1717e_courier_confirmed
+                }
+            }
+            if = {
+                limit = {
+                    OR = {
+                        has_country_flag = foc_republic_origin_empire_country
+                        has_country_flag = foc_republic_origin_player_empire
+                    }
+                }
+                country_event = {
+                    id = foc_rogue_one.5
+                }
+            }
+            else = {
+                country_event = {
+                    id = foc_rogue_one.15
+                }
+            }
+        }
+        else_if = {
+            limit = {
+                NOT = {
+                    has_country_flag = foc_v1717e_alderaan_confirmed
+                }
+            }
+            if = {
+                limit = {
+                    foc_v1717e_death_star_one_alive = yes
+                    NOT = {
+                        has_global_flag = foc_saga_alderaan_destroyed
+                    }
+                }
+                country_event = {
+                    id = foc_canon.34
+                }
+            }
+            else = {
+                set_country_flag = foc_v1717e_alderaan_confirmed
+                country_event = {
+                    id = foc_v1710_story.1
+                    days = 1
+                }
+            }
+        }
+        else = {
+            country_event = {
+                id = foc_canon.23
+            }
+        }
+    }
+}
+
+# Per-country maintenance and save recovery. Never awards bonuses before rescue.
+country_event = {
+    id = foc_v1710_story.2
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        OR = {
+            foc_v1710_is_gcw_rebel = yes
+            has_country_flag = foc_republic_origin_empire_country
+            has_country_flag = foc_v1717e_scarif_sequence_migrated
+            has_modifier = foc_republic_origin_scarif_intelligence
+            has_modifier = foc_republic_origin_scarif_death_star_attack_solution
+            has_modifier = foc_lowest_ds_scarif_attack_solution
+        }
+    }
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = foc_v1710_story_installed
+                }
+                NOT = {
+                    has_global_flag = foc_republic_origin_galactic_treaty
+                }
+            }
+            set_global_flag = foc_v1710_story_installed
+            if = {
+                limit = {
+                    has_global_flag = foc_republic_origin_scarif_weakness_obtained
+                    has_global_flag = foc_v212_obiwan_rescued_leia
+                    has_global_flag = foc_saga_alderaan_destroyed
+                }
+                set_global_flag = foc_v1710_scarif_chain_started
+                set_global_flag = foc_v1710_leia_rescue_completed
+                set_global_flag = foc_v1710_aftermath_dispatched
+                log = "FOC_V1710_MIGRATION: fully completed legacy story retained; no events replayed."
+            }
+        }
+        if = {
+            limit = {
+                NOT = {
+                    has_country_flag = foc_v1717e_scarif_sequence_migrated
+                }
+            }
+            set_country_flag = foc_v1717e_scarif_sequence_migrated
+            if = {
+                limit = {
+                    OR = {
+                        has_country_flag = foc_rogue_one_rebel_scarif_shown
+                        has_country_flag = foc_canon_battle_scarif
+                        has_global_flag = foc_v1710_leia_rescue_completed
+                        has_country_flag = foc_rogue_one_empire_scarif_shown
+                    }
+                }
+                set_country_flag = foc_v1717e_scarif_notice_shown
+                set_country_flag = foc_v1717e_scarif_confirmed
+            }
+            if = {
+                limit = {
+                    has_global_flag = foc_rogue_one_death_star_emerged
+                }
+                set_country_flag = foc_v1717e_emergence_confirmed
+            }
+            if = {
+                limit = {
+                    OR = {
+                        has_country_flag = foc_rogue_one_rebel_hope_shown
+                        has_country_flag = foc_rogue_one_empire_vader_shown
+                    }
+                }
+                set_country_flag = foc_v1717e_courier_confirmed
+            }
+            if = {
+                limit = {
+                    OR = {
+                        has_country_flag = foc_v1710_alderaan_shown
+                        has_global_flag = foc_saga_alderaan_destroyed
+                    }
+                }
+                set_country_flag = foc_v1717e_alderaan_confirmed
+            }
+            if = {
+                limit = {
+                    has_global_flag = foc_v1710_leia_rescue_completed
+                }
+                set_country_flag = foc_v1717e_emergence_confirmed
+                set_country_flag = foc_v1717e_courier_confirmed
+                set_country_flag = foc_v1717e_alderaan_confirmed
+                set_country_flag = foc_v1717e_rescue_confirmed
+            }
+        }
+        if = {
+            limit = {
+                has_global_flag = foc_republic_origin_scarif_weakness_obtained
+                NOT = {
+                    has_global_flag = foc_v1710_scarif_chain_started
+                }
+                NOT = {
+                    has_global_flag = foc_republic_origin_galactic_treaty
+                }
+            }
+            foc_v1710_begin_scarif_aftermath = yes
+        }
+        if = {
+            limit = {
+                OR = {
+                    foc_v1710_scarif_rewards_unlocked = no
+                    foc_v1710_is_gcw_rebel = no
+                }
+            }
+            remove_modifier = foc_republic_origin_scarif_intelligence
+            remove_modifier = foc_republic_origin_scarif_death_star_attack_solution
+            remove_modifier = foc_lowest_ds_scarif_attack_solution
+        }
+        else = {
+            foc_v1710_apply_rescued_leia_intelligence = yes
+        }
+        if = {
+            limit = {
+                foc_v1710_scarif_month_elapsed = yes
+                NOT = {
+                    has_country_flag = foc_v1717e_rescue_confirmed
+                }
+            }
+            country_event = {
+                id = foc_v1710_story.1
+            }
+        }
+        if = {
+            limit = {
+                has_global_flag = foc_v1710_leia_rescue_completed
+                NOT = {
+                    has_global_flag = foc_v212_obiwan_force_ghost
+                }
+            }
+            foc_v212_obiwan_rescues_leia = yes
+        }
+    }
+}
+
+# Save-load hook has no country scope.
+event = {
+    id = foc_v1710_story.90
+    hide_window = yes
+    is_triggered_only = yes
+    immediate = { every_country = { country_event = { id = foc_v1710_story.2 } } }
+}

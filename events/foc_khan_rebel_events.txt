@@ -1,0 +1,2937 @@
+namespace = foc_khan_rebel
+
+# Stage-I detector. The D'Qar Resistance base appears as soon as the First
+# Order crisis exists; the Phase-II branch is an old-save fallback.
+country_event = {
+	id = foc_khan_rebel.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+        # V235b: a successful first foundation is permanent history.
+        foc_v235b_dqar_bootstrap_allowed = yes
+		NOT = { has_global_flag = foc_khan_crisis_finished }
+		NOT = { has_global_flag = foc_khan_rebel_spawned }
+		NOT = { has_global_flag = foc_khan_rebel_preparing }
+		# V109: after the Galactic Treaty, D'Qar already exists as New Republic
+		# territory. It may not become the Resistance until Leia's Bloodline
+		# break is announced after the First Order appears.
+		OR = {
+			NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+			NOT = { any_system = { has_star_flag = foc_khan_rebel_dqar_home } }
+			has_global_flag = foc_v109_bloodline_resistance_authorized
+		}
+		# V229: only a HUMAN player New Republic is the in-place future Resistance.
+		# An AI New Republic must not block the standalone D'Qar Resistance used by
+		# First Order / Imperial Remnant / other alternate playable routes.
+		NOT = {
+			AND = {
+				has_global_flag = foc_republic_origin_galactic_treaty
+				any_playable_country = {
+					is_ai = no
+					has_country_flag = foc_republic_origin_player_republic
+					has_country_flag = foc_sw_new_republic_country
+				}
+			}
+		}
+		# Human New Republic continues in place through .197/.198; all other
+		# playable routes keep the standalone D'Qar constructor.
+		OR = {
+			# V185 immediate Leia triggers: FO origin game start or First Order Plan completion.
+			has_global_flag = foc_v185_leia_resistance_authorized
+			AND = {
+				has_global_flag = foc_republic_origin_galactic_treaty
+				has_global_flag = foc_v158_leia_resistance_foundation_due
+			}
+			AND = {
+				has_global_flag = foc_khan_phase_one
+				exists = event_target:foc_khan_first_order
+			}
+			AND = {
+				has_global_flag = foc_khan_phase_two
+				exists = event_target:foc_khan_final_order
+			}
+			AND = {
+				has_country_flag = foc_republic_origin_player_imperial_remnant
+				has_country_flag = foc_republic_origin_first_order_plan_completed
+				has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+				has_global_flag = foc_republic_origin_galactic_treaty
+			}
+			AND = {
+				has_global_flag = fop_origin_player_crisis_exists
+				exists = event_target:fop_first_order_crisis_country
+				event_target:fop_first_order_crisis_country = {
+					has_origin = origin_fop_first_order
+					has_country_flag = fop_origin_crisis_active
+				}
+			}
+		}
+	}
+
+	immediate = {
+        if = {
+            limit = { foc_v235b_dqar_bootstrap_allowed = yes }
+    		set_global_flag = foc_khan_rebel_preparing
+    		log = "FOC_V178_DQAR: Resistance bootstrap started; using the exact V177 map position."
+
+    		# New games have no fixed D'Qar. Old saves adopt the former fixed-map
+    		# system, while current games generate it from the Coruscant anchor.
+    		foc_v178_adopt_static_dqar = yes
+    		if = {
+    			limit = { any_system = { has_star_flag = foc_khan_rebel_dqar_home } }
+    			random_system = {
+    				limit = { has_star_flag = foc_khan_rebel_dqar_home }
+    				save_global_event_target_as = foc_khan_rebel_system
+    				save_global_event_target_as = foc_khan_rebel_dqar_system
+    				random_system_planet = {
+    					limit = {
+    						OR = {
+    							has_planet_flag = foc_khan_rebel_capital
+    							has_planet_flag = foc_khan_rebel_dqar
+    						}
+    					}
+    					set_planet_flag = foc_khan_rebel_capital
+    					save_global_event_target_as = foc_khan_rebel_capital
+    				}
+    			}
+    		}
+    		else = {
+    			foc_v178_spawn_dqar_at_map_position = yes
+    			if = {
+    				limit = { NOT = { exists = event_target:foc_khan_rebel_spawn_anchor } }
+    				# The map initializer is asynchronous. Release the lock, but also
+    				# explicitly restart Stage I so a one-shot story dispatch cannot be lost.
+    				remove_global_flag = foc_khan_rebel_preparing
+    				country_event = { id = foc_khan_rebel.1 days = 10 }
+    			}
+    		}
+
+    		# V203: the bootstrap owns its completion retries. Treaty +23y previously
+    		# called only this event, leaving D'Qar permanently stuck in "preparing".
+    		# Existing callers may also queue .2; its global guards make those calls
+    		# idempotent after the first successful country creation.
+    		if = {
+    			limit = { has_global_flag = foc_khan_rebel_preparing }
+    			country_event = { id = foc_khan_rebel.2 days = 2 }
+    			country_event = { id = foc_khan_rebel.2 days = 5 }
+    			country_event = { id = foc_khan_rebel.2 days = 15 }
+    		}
+	
+        }
+    }
+}
+
+# Find the founding system and create the Rebel Alliance. No scope.
+# Imperial-Rebellion stage uses Yavin IV; later Resistance stages use D'Qar.
+country_event = {
+	id = foc_khan_rebel.2
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+        # The earlier Imperial-Rebellion constructor still uses Yavin.
+        OR = {
+            has_global_flag = foc_republic_origin_empire_rebel_stage
+            foc_v235b_dqar_bootstrap_allowed = yes
+        }
+		has_global_flag = foc_khan_rebel_preparing
+		NOT = { has_global_flag = foc_khan_rebel_spawned }
+		# V229: same split rule as Stage I. Only the human New Republic blocks a
+		# second country; an AI New Republic may coexist with the independent Resistance.
+		NOT = {
+			AND = {
+				has_global_flag = foc_republic_origin_galactic_treaty
+				any_playable_country = {
+					is_ai = no
+					has_country_flag = foc_republic_origin_player_republic
+					has_country_flag = foc_sw_new_republic_country
+				}
+			}
+		}
+	}
+
+	immediate = {
+		# V92: the Imperial Rebellion is Yavin-based. D'Qar is created only
+		# after the Galactic Treaty, during the New Republic/Resistance era.
+		if = {
+			limit = { has_global_flag = foc_republic_origin_empire_rebel_stage }
+			if = {
+				limit = { NOT = { exists = event_target:foc_sw_yavin_system } }
+				random_system = {
+					limit = { has_star_flag = foc_sw_yavin_home }
+					save_global_event_target_as = foc_sw_yavin_system
+				}
+			}
+			if = {
+				limit = { exists = event_target:foc_sw_yavin_system }
+				event_target:foc_sw_yavin_system = {
+					save_global_event_target_as = foc_khan_rebel_system
+					random_system_planet = {
+						limit = { has_planet_flag = foc_sw_yavin_iv }
+						save_global_event_target_as = foc_khan_rebel_capital
+					}
+				}
+			}
+		}
+		else = {
+			random_system = {
+				limit = { has_star_flag = foc_khan_rebel_dqar_home }
+				save_global_event_target_as = foc_khan_rebel_system
+				save_global_event_target_as = foc_khan_rebel_dqar_system
+				random_system_planet = {
+					limit = { has_planet_flag = foc_khan_rebel_capital }
+					save_global_event_target_as = foc_khan_rebel_capital
+				}
+			}
+		}
+
+		if = {
+			limit = { NOT = { has_global_flag = foc_republic_origin_empire_rebel_stage } }
+			foc_v178_connect_dqar_map_routes = yes
+		}
+
+		if = {
+			limit = {
+				exists = event_target:foc_khan_rebel_system
+				exists = event_target:foc_khan_rebel_capital
+                # Recheck here as well as the event trigger, including old queued calls.
+                OR = {
+                    has_global_flag = foc_republic_origin_empire_rebel_stage
+                    foc_v235b_dqar_bootstrap_allowed = yes
+                }
+                # An existing flag/target does not make a shattered planet habitable.
+                event_target:foc_khan_rebel_capital = {
+                    foc_v235b_base_planet_usable = yes
+                    solar_system = { is_same_value = event_target:foc_khan_rebel_system }
+                }
+			}
+
+			# The Republic-origin Imperial rebellion reuses the player's original
+			# main species. The ordinary First Order crisis retains its standalone
+			# Rebel species and portrait behavior.
+			if = {
+				limit = {
+					OR = {
+						has_global_flag = foc_republic_origin_empire_rebel_stage
+						has_global_flag = foc_republic_origin_treaty_rebel_successor_enabled
+					}
+					exists = event_target:foc_republic_origin_species
+				}
+				event_target:foc_republic_origin_species = {
+					save_global_event_target_as = foc_khan_rebel_species
+				}
+			}
+			else = {
+				event_target:foc_khan_rebel_capital = {
+					create_species = {
+						name = "FOC_KHAN_REBEL_SPECIES"
+						plural = "FOC_KHAN_REBEL_SPECIES_PLURAL"
+						class = HUM
+						portrait = rebels
+						namelist = "rebels"
+						homeworld = this
+						traits = {
+							trait = trait_adaptive
+							trait = trait_nomadic
+							trait = trait_quarrelsome
+						}
+						effect = {
+							save_global_event_target_as = foc_khan_rebel_species
+						}
+					}
+				}
+			}
+
+			event_target:foc_khan_rebel_species = {
+				create_country = {
+					name = "FOC_KHAN_REBEL_ALLIANCE"
+					# 3.11v-normal: the Rebel Alliance is now an ordinary non-player
+					# empire using the vanilla default country type. All staged base
+					# and fleet generation is driven by country flags and event
+					# targets, so nothing below depends on the old special type.
+					type = default
+					auto_delete = no
+					ignore_initial_colony_error = yes
+					species = event_target:foc_khan_rebel_species
+					authority = auth_democratic
+					ethos = {
+						ethic = ethic_fanatic_egalitarian
+						ethic = ethic_militarist
+					}
+					civics = {
+						civic = civic_idealistic_foundation
+						civic = civic_citizen_service
+					}
+					origin = "origin_default"
+					name_list = "rebels"
+					flag = {
+						icon = { category = "rebels" file = "rebel1.dds" }
+						background = { category = "backgrounds" file = "00_solid.dds" }
+						colors = { "red" "white" "null" "null" }
+					}
+					effect = {
+						set_country_flag = foc_khan_rebel_alliance_country
+						# Every ordinary D'Qar country created after an Order crisis
+						# starts is the later Resistance. The Republic-origin Imperial
+						# Rebellion deliberately does not receive this identity.
+						if = {
+							limit = {
+								NOT = { has_global_flag = foc_republic_origin_empire_rebel_stage }
+							}
+							set_country_flag = foc_khan_first_order_resistance_country
+        country_event = { id = foc_v1718.10 days = 1 }
+							set_name = "FOC_KHAN_RESISTANCE"
+						}
+						if = {
+							limit = { has_global_flag = foc_republic_origin_treaty_rebel_successor_enabled }
+							set_country_flag = foc_republic_origin_post_treaty_rebel_country
+							set_country_flag = foc_republic_origin_order_technology_locked
+						}
+						if = {
+							limit = { has_global_flag = foc_republic_origin_empire_rebel_stage }
+							set_country_flag = foc_republic_origin_rebel_alliance_country
+        country_event = { id = foc_v1718.10 days = 1 }
+						}
+						# V137: same-day support activation.  The support events themselves are
+						# AI-only and explicitly keep Imperial Rebels on the one-year first delay.
+						country_event = { id = foc_v134_support.3 }
+						country_event = { id = foc_v136_leia.1 }
+						set_country_flag = ssp_fighter_group_rebel
+						remove_country_flag = ssp_strength_balanced
+						remove_country_flag = ssp_strength_enhanced
+						remove_country_flag = ssp_strength_extreme
+						set_country_flag = ssp_strength_sg
+						set_country_flag = ssp_strength_selected
+						foc_sync_ssp_strength_to_main_difficulty = yes
+						set_country_flag = ssp_size_original
+						if = { limit = { is_ai = yes } give_technology = { tech = tech_ssp_rebel_hyperspace message = no } }
+						remove_modifier = foc_khan_rebel_logistics_245
+						if = { limit = { is_ai = yes } give_technology = {
+							tech = foc_tech_swgs_crisis_point_defence
+							message = no
+						} }
+						set_graphical_culture = rebel_01
+						save_global_event_target_as = foc_khan_rebel_alliance
+						# 3.11w-balance: apply the Rebel combat package for the active
+						# crisis strength tier at creation (foc_khan_rebel.32 keeps it
+						# synchronized afterwards). 3.11w-v2: only the Madness tier grants
+						# a stat buff (equal to the First Order); lower tiers rely purely on
+						# extra Nebula ship counts, so no stat modifier is applied here.
+						if = {
+							limit = { has_global_flag = foc_khan_strength_madness }
+							add_modifier = { modifier = foc_khan_rebel_war_power_057 days = -1 }
+						}
+						add_resource = {
+							energy = 500000
+							minerals = 500000
+							alloys = 500000
+							unity = 250000
+						}
+						give_technology = { tech = tech_destroyers message = no }
+						give_technology = { tech = tech_cruisers message = no }
+						give_technology = { tech = tech_battleships message = no }
+						give_technology = { tech = tech_starbase_4 message = no }
+					}
+				}
+			}
+
+			if = {
+				limit = { exists = event_target:foc_khan_rebel_alliance }
+				remove_global_flag = foc_khan_rebel_preparing
+				set_global_flag = foc_khan_rebel_spawned
+				if = {
+					limit = { has_global_flag = foc_republic_origin_empire_rebel_stage }
+					log = "FOC_V230_YAVIN: Imperial Rebel Alliance country created successfully at Yavin IV."
+				}
+				else = {
+                    set_global_flag = foc_v235b_dqar_foundation_closed
+					log = "FOC_V230_DQAR: Resistance country created successfully at D'Qar."
+				}
+				# V147: verify full D'Qar ownership immediately after the Resistance is alive.
+				if = {
+					limit = {
+						has_global_flag = foc_republic_origin_galactic_treaty
+						has_global_flag = foc_khan_phase_one
+					}
+					event_target:foc_khan_rebel_alliance = {
+						country_event = { id = foc_khan_rebel.50 days = 1 }
+					}
+				}
+				# V185: announce only after the Resistance country is genuinely alive and
+				# D'Qar can be transferred. This covers startup, plan-completion and time triggers.
+				if = {
+					limit = {
+						NOT = { has_global_flag = foc_khan_rebel_birth_announced }
+						OR = {
+							has_global_flag = foc_v185_leia_resistance_authorized
+							has_global_flag = foc_v158_leia_resistance_foundation_due
+							AND = {
+								has_global_flag = foc_khan_phase_one
+								exists = event_target:foc_khan_first_order
+							}
+						}
+					}
+					set_global_flag = foc_khan_rebel_birth_announced
+					every_playable_country = {
+						limit = { is_ai = no }
+						country_event = { id = foc_khan_rebel.3 }
+					}
+				}
+
+				event_target:foc_khan_rebel_capital = {
+					if = {
+						limit = { is_colony = yes }
+						set_owner = event_target:foc_khan_rebel_alliance
+						set_controller = event_target:foc_khan_rebel_alliance
+						every_planet_army = { set_owner = event_target:foc_khan_rebel_alliance }
+					}
+					else = {
+						create_colony = { owner = event_target:foc_khan_rebel_alliance }
+						generate_start_deposits_and_blockers = yes
+						clear_blockers = yes
+						colony = {
+							inline_script = "foc_v232i_safe_colony_layout"
+							generate_start_pops = yes
+							generate_home_planet_final_pass = yes
+						}
+					}
+					set_capital = yes
+					if = {
+						limit = { NOT = { has_modifier = foc_dqar_hidden_resistance_base } }
+						add_modifier = { modifier = foc_dqar_hidden_resistance_base days = -1 }
+					}
+				}
+
+				# V232: the newly established Rebel/Resistance capital immediately uses
+				# the vanilla robot assembly plant and Republic-family droid line.
+				event_target:foc_khan_rebel_alliance = { foc_v231_bootstrap_republic_droids = yes }
+
+				event_target:foc_khan_rebel_system = {
+					if = {
+						limit = { NOT = { exists = starbase } }
+						create_starbase = {
+							size = starbase_outpost
+							owner = event_target:foc_khan_rebel_alliance
+							effect = { set_starbase_flag = foc_khan_rebel_base_starbase }
+						}
+					}
+					else = {
+						starbase = {
+							set_owner = event_target:foc_khan_rebel_alliance
+							set_starbase_flag = foc_khan_rebel_base_starbase
+						}
+					}
+					foc_v204_finalize_dqar_resistance_markers = yes
+
+
+                    # V185: D'Qar is not merely the narrative location. Once the
+                    # standalone Leia Resistance is created, mark the canonical
+                    # system as genuinely held so later D'Qar-loss logic cannot race.
+                    if = {
+                        limit = { NOT = { has_global_flag = foc_republic_origin_empire_rebel_stage } }
+                        set_global_flag = foc_saga_dqar_held_by_rebels
+                        set_global_flag = foc_v161_dqar_resistance_founded
+                    }
+
+                    # Establish the appropriate era's high command.
+                    if = {
+                        limit = { has_global_flag = foc_republic_origin_empire_rebel_stage }
+                        event_target:foc_khan_rebel_alliance = {
+                            # V212: Mon Mothma is the Imperial-Rebel ruler.
+                            # Leia and Luke are not created before their story dates.
+                            foc_v212_create_imperial_rebel_high_command = yes
+                        }
+                    }
+                    else = {
+                        # Standalone creation is now only an emergency fallback
+                        # when no New Republic exists. Appoint the real Leia through
+                        # the shared initializer, then add only missing officers.
+                        # Do not repaint the generic ruler or introduce Mon Mothma.
+                        event_target:foc_khan_rebel_alliance = {
+                            # V232n: Leia is appointed by the shared Resistance initializer below.
+                            foc_v213_ensure_resistance_high_command = yes
+                        }
+                    }
+
+                    # FOC 2.63: performance-oriented Rebel crisis fleets.
+                    # More Nebula/Starhawk capital ships, far fewer CR90/MC30 small hulls.
+                    if = { limit = { event_target:foc_khan_rebel_alliance = { foc_v14_advanced_arsenal_era_allowed = yes } }
+if = {
+                        limit = { has_global_flag = foc_khan_fleet_scale_low }
+                        create_fleet = {
+                            name = "FOC_KHAN_REBEL_HOME_FLEET"
+                            effect = {
+                                set_owner = event_target:foc_khan_rebel_alliance
+                                # V15 full-armor prerequisite: foc_v15_defense_4535a95ad86d.
+                                owner = {
+                                    if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+                                }
+                                
+                                # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_2 message = no } } }
+}
+                                
+
+                                
+
+                                
+                                set_location = event_target:foc_khan_rebel_capital
+                                create_ship = { name = "Amity" design = "NAME_FOC_REBEL_NEBULA" upgradable = no }
+                                while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_NEBULA" upgradable = no } }
+                                while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_MC80" graphical_culture = rebel_01 upgradable = no } }
+                                create_ship = { name = random design = "NAME_FOC_REBEL_MC30" graphical_culture = rebel_01 upgradable = no }
+                                while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_CR90" graphical_culture = rebel_01 upgradable = no } }
+                                if = { limit = { exists = event_target:foc_khan_rebel_ackbar } assign_leader = event_target:foc_khan_rebel_ackbar }
+                                foc_khan_rebel_bonus_nebula_by_tier = yes
+                                set_fleet_flag = foc_khan_rebel_attack_fleet
+                                set_fleet_stance = aggressive
+                                set_aggro_range_measure_from = self
+                                set_aggro_range = 9999
+                            }
+                            settings = { can_upgrade = no can_disband = yes can_change_composition = no spawn_debris = yes ai_ignore_strength = yes }
+                        }
+                        while = {
+                            count = 2
+                            create_fleet = {
+                                name = "FOC_KHAN_REBEL_FLEET"
+                                effect = {
+                                    set_owner = event_target:foc_khan_rebel_alliance
+                                    # V15 full-armor prerequisite: foc_v15_defense_1c44550ba58c.
+                                    owner = {
+                                        if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+                                    }
+                                    
+                                    # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_2 message = no } } }
+}
+                                    
+
+                                    
+
+                                    
+                                    set_location = event_target:foc_khan_rebel_capital
+                                    create_ship = { name = random design = "NAME_FOC_REBEL_NEBULA" upgradable = no }
+                                    create_ship = { name = random design = "NAME_FOC_REBEL_NEBULA" upgradable = no }
+                                    create_ship = { name = random design = "NAME_FOC_REBEL_MC80" graphical_culture = rebel_01 upgradable = no }
+                                    create_ship = { name = random design = "NAME_FOC_REBEL_MC30" graphical_culture = rebel_01 upgradable = no }
+                                    while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_CR90" graphical_culture = rebel_01 upgradable = no } }
+                                    foc_khan_rebel_bonus_nebula_by_tier = yes
+                                    set_fleet_flag = foc_khan_rebel_attack_fleet
+                                    set_fleet_stance = aggressive
+                                    set_aggro_range_measure_from = self
+                                    set_aggro_range = 9999
+                                }
+                                settings = { can_upgrade = no can_disband = yes can_change_composition = no spawn_debris = yes ai_ignore_strength = yes }
+                            }
+                        }
+                    }
+                    else = {
+                        create_fleet = {
+                            name = "FOC_KHAN_REBEL_HOME_FLEET"
+                            effect = {
+                                set_owner = event_target:foc_khan_rebel_alliance
+                                # V15 full-armor prerequisite: foc_v15_defense_c408b678259b.
+                                owner = {
+                                    if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+                                }
+                                
+                                # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_2 message = no } } }
+}
+                                
+
+                                
+
+                                
+                                set_location = event_target:foc_khan_rebel_capital
+                                while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_NEBULA" upgradable = no } }
+                                while = { count = 6 create_ship = { name = random design = "NAME_FOC_REBEL_NEBULA" upgradable = no } }
+                                while = { count = 4 create_ship = { name = random design = "NAME_FOC_REBEL_MC80" graphical_culture = rebel_01 upgradable = no } }
+                                while = { count = 4 create_ship = { name = random design = "NAME_FOC_REBEL_MC30" graphical_culture = rebel_01 upgradable = no } }
+                                while = { count = 8 create_ship = { name = random design = "NAME_FOC_REBEL_CR90" graphical_culture = rebel_01 upgradable = no } }
+                                if = { limit = { exists = event_target:foc_khan_rebel_ackbar } assign_leader = event_target:foc_khan_rebel_ackbar }
+                                foc_khan_rebel_bonus_nebula_by_tier = yes
+                                set_fleet_flag = foc_khan_rebel_attack_fleet
+                                set_fleet_stance = aggressive
+                                set_aggro_range_measure_from = self
+                                set_aggro_range = 9999
+                            }
+                            settings = { can_upgrade = no can_disband = yes can_change_composition = no spawn_debris = yes ai_ignore_strength = yes }
+                        }
+                        # Six capital-heavy groups replace sixteen small-ship swarms.
+                        while = {
+                            count = 6
+                            create_fleet = {
+                                name = "FOC_KHAN_REBEL_FLEET"
+                                effect = {
+                                    set_owner = event_target:foc_khan_rebel_alliance
+                                    # V15 full-armor prerequisite: foc_v15_defense_0197c5f38bfc.
+                                    owner = {
+                                        if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+                                    }
+                                    
+                                    # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_2 message = no } } }
+}
+                                    
+
+                                    
+
+                                    
+                                    set_location = event_target:foc_khan_rebel_capital
+                                    create_ship = { name = random design = "NAME_FOC_REBEL_NEBULA" upgradable = no }
+                                    while = { count = 3 create_ship = { name = random design = "NAME_FOC_REBEL_NEBULA" upgradable = no } }
+                                    while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_MC80" graphical_culture = rebel_01 upgradable = no } }
+                                    while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_MC30" graphical_culture = rebel_01 upgradable = no } }
+                                    while = { count = 4 create_ship = { name = random design = "NAME_FOC_REBEL_CR90" graphical_culture = rebel_01 upgradable = no } }
+                                    foc_khan_rebel_bonus_nebula_by_tier = yes
+                                    set_fleet_flag = foc_khan_rebel_attack_fleet
+                                    set_fleet_stance = aggressive
+                                    set_aggro_range_measure_from = self
+                                    set_aggro_range = 9999
+                                }
+                                settings = { can_upgrade = no can_disband = yes can_change_composition = no spawn_debris = yes ai_ignore_strength = yes }
+                            }
+                        }
+                    }
+
+                    # FOC 2.84: one dedicated capital defence fleet. It has no attack-fleet
+                    # flag and is therefore never sent out by foc_khan_rebel.30/.31.
+                    foc_khan_spawn_rebel_guard_fleet_284 = yes
+}
+else = { event_target:foc_khan_rebel_alliance = { set_country_flag = foc_v14_rebel_fleets_pending } }
+            }
+
+                    # V161: D'Qar ownership is now finalized for the later
+                    # Resistance. Treaty/New-Republic maintenance must never
+                    # auto-claim it back; real wartime conquest remains valid.
+                    if = {
+                        limit = {
+                            has_global_flag = foc_republic_origin_galactic_treaty
+                            NOT = { has_global_flag = foc_republic_origin_empire_rebel_stage }
+                        }
+                        set_global_flag = foc_v161_dqar_resistance_founded
+                        set_global_flag = foc_saga_dqar_held_by_rebels
+                    }
+				if = {
+					limit = { has_global_flag = foc_republic_origin_treaty_rebel_successor_enabled }
+					event_target:foc_khan_rebel_alliance = {
+						foc_republic_origin_remove_rebel_nebula_ships = yes
+					}
+				}
+				event_target:foc_khan_rebel_alliance = { country_event = { id = foc_khan_balance.1 days = 1 } }
+				# One day after D'Qar becomes a live capital, deploy the unique
+				# maximum-tier native Arkship. Its carried pc_ark colony keeps the same
+				# country alive without following later scripted base relocations.
+				event_target:foc_khan_rebel_alliance = { country_event = { id = foc_khan_rebel.45 days = 1 } }
+
+				# During the Republic-origin handover D'Qar is only an invisible staging
+				# country. Do not reveal it diplomatically until the player has selected
+				# a side and event foc_republic_origin.30 activates the civil war.
+				if = {
+					limit = {
+						NOT = { has_global_flag = foc_republic_origin_empire_rebel_stage }
+					}
+					# Neutral toward every ordinary state; hostile only to the Orders.
+					every_playable_country = {
+					limit = {
+						NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+						NOT = { has_country_flag = foc_khan_first_order_country }
+						NOT = { has_country_flag = foc_khan_final_order_country }
+						NOT = { has_country_flag = fop_player_first_order }
+						NOT = { has_country_flag = fop_player_final_order }
+						NOT = { has_country_flag = foc_republic_origin_player_empire }
+						NOT = { has_country_flag = foc_republic_origin_ai_empire }
+						NOT = { has_country_flag = foc_republic_origin_empire_country }
+					}
+					establish_communications_no_message = event_target:foc_khan_rebel_alliance
+					set_faction_hostility = {
+						target = event_target:foc_khan_rebel_alliance
+						set_hostile = no
+						set_friendly = no
+						set_neutral = yes
+					}
+					event_target:foc_khan_rebel_alliance = {
+						set_faction_hostility = {
+							target = prev
+							set_hostile = no
+							set_friendly = no
+							set_neutral = yes
+						}
+					}
+				}
+				}
+
+				if = {
+					limit = { exists = event_target:foc_khan_first_order }
+					event_target:foc_khan_rebel_alliance = {
+						set_faction_hostility = {
+							target = event_target:foc_khan_first_order
+							set_hostile = yes
+							set_friendly = no
+							set_neutral = no
+						}
+					}
+					event_target:foc_khan_first_order = {
+						set_faction_hostility = {
+							target = event_target:foc_khan_rebel_alliance
+							set_hostile = yes
+							set_friendly = no
+							set_neutral = no
+						}
+					}
+				}
+				if = {
+					limit = { exists = event_target:foc_khan_final_order }
+					event_target:foc_khan_rebel_alliance = {
+						set_faction_hostility = {
+							target = event_target:foc_khan_final_order
+							set_hostile = yes
+							set_friendly = no
+							set_neutral = no
+						}
+					}
+					event_target:foc_khan_final_order = {
+						set_faction_hostility = {
+							target = event_target:foc_khan_rebel_alliance
+							set_hostile = yes
+							set_friendly = no
+							set_neutral = no
+						}
+					}
+				}
+				if = {
+					limit = {
+						has_global_flag = fop_origin_player_crisis_exists
+						NOT = { exists = event_target:fop_first_order_crisis_country }
+					}
+					random_playable_country = {
+						limit = {
+							has_origin = origin_fop_first_order
+							has_country_flag = fop_origin_crisis_active
+						}
+						save_global_event_target_as = fop_first_order_crisis_country
+					}
+				}
+				if = {
+					limit = { exists = event_target:fop_first_order_crisis_country }
+					event_target:foc_khan_rebel_alliance = {
+						establish_communications_no_message = event_target:fop_first_order_crisis_country
+						set_hostile = event_target:fop_first_order_crisis_country
+					}
+					event_target:fop_first_order_crisis_country = {
+						establish_communications_no_message = event_target:foc_khan_rebel_alliance
+						set_hostile = event_target:foc_khan_rebel_alliance
+					}
+					event_target:foc_khan_rebel_alliance = {
+						set_faction_hostility = {
+							target = event_target:fop_first_order_crisis_country
+							set_hostile = yes
+							set_friendly = no
+							set_neutral = no
+						}
+					}
+					event_target:fop_first_order_crisis_country = {
+						set_faction_hostility = {
+							target = event_target:foc_khan_rebel_alliance
+							set_hostile = yes
+							set_friendly = no
+							set_neutral = no
+						}
+					}
+
+					# The origin crisis may have formed its galaxy-wide total war before
+					# D'Qar finishes spawning. Faction hostility alone does not enlist a
+					# default-type empire, so explicitly add the newborn Rebels to the
+					# anti-crisis side. If the war has not been created yet, fop_origin.40
+					# includes them when it assembles the coalition instead.
+					if = {
+						limit = {
+							exists = event_target:fop_galactic_crisis_war
+							exists = event_target:fop_anti_crisis_war_leader
+							event_target:fop_galactic_crisis_war = {
+								NOT = {
+									is_war_participant = {
+										who = event_target:foc_khan_rebel_alliance
+									}
+								}
+							}
+						}
+						event_target:foc_khan_rebel_alliance = {
+							join_war_on_side = {
+								war = event_target:fop_galactic_crisis_war
+								side = event_target:fop_anti_crisis_war_leader
+							}
+						}
+					}
+				}
+
+				# Invite every current Order satrapy.
+				every_playable_country = {
+					limit = {
+						is_regular_empire = yes
+						is_subject = yes
+						NOT = { has_country_flag = rebellion_cooldown }
+						NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+							overlord = {
+								OR = {
+									has_country_flag = foc_khan_first_order_country
+									has_country_flag = foc_khan_final_order_country
+									has_country_flag = fop_player_first_order
+									has_country_flag = fop_player_final_order
+								}
+							}
+					}
+					set_country_flag = foc_khan_rebel_invitation_offered
+					country_event = {
+						id = foc_khan_rebel.10
+						days = 5
+						random = 20
+					}
+				}
+			}
+		}
+		else = {
+			# If the asynchronous initializer did not yield both a system and a capital,
+			# release the lock and explicitly restart Stage I. Merely clearing the lock
+			# invalidated the already queued .2 calls and there was no monthly .1 detector.
+			remove_global_flag = foc_khan_rebel_preparing
+			country_event = { id = foc_khan_rebel.1 days = 10 }
+			log = "FOC_V203_DQAR: D'Qar was not ready; Stage I will restart in 10 days."
+		}
+	}
+}
+
+
+# V101: visible confirmation that the Resistance has actually been born.
+country_event = {
+	id = foc_khan_rebel.3
+	title = foc_khan_rebel.3.name
+	desc = foc_khan_rebel.3.desc
+	picture = GFX_foc_story_battle_of_dqar
+	location = event_target:foc_khan_rebel_system
+	is_triggered_only = yes
+	force_open = yes
+	option = { name = foc_khan_rebel.3.a }
+}
+
+# Invitation sent to every Order subject.
+country_event = {
+	id = foc_khan_rebel.10
+	title = foc_khan_rebel.10.name
+	desc = foc_khan_rebel.10.desc
+	picture = GFX_foc_event_starkiller_ultimatum
+	is_triggered_only = yes
+	force_open = yes
+	diplomatic = yes
+
+	trigger = {
+		is_regular_empire = yes
+		is_subject = yes
+		NOT = { has_country_flag = rebellion_cooldown }
+		NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+		exists = event_target:foc_khan_rebel_alliance
+		overlord = {
+				OR = {
+					has_country_flag = foc_khan_first_order_country
+					has_country_flag = foc_khan_final_order_country
+					has_country_flag = fop_player_first_order
+					has_country_flag = fop_player_final_order
+			}
+		}
+	}
+
+	option = {
+		name = foc_khan_rebel.10.a
+		ai_chance = {
+			base = 55
+			modifier = { factor = 1.5 has_ethic = ethic_egalitarian }
+			modifier = { factor = 1.5 has_ethic = ethic_fanatic_egalitarian }
+			modifier = { factor = 0.5 has_ethic = ethic_authoritarian }
+			modifier = { factor = 0.25 has_ethic = ethic_fanatic_authoritarian }
+		}
+		hidden_effect = { country_event = { id = foc_khan_rebel.11 } }
+	}
+
+	option = {
+		name = foc_khan_rebel.10.b
+		ai_chance = { base = 45 }
+		set_country_flag = foc_khan_rebel_invitation_refused
+	}
+}
+
+# Join the rebellion, break the satrapy agreement and become an independent ally.
+country_event = {
+	id = foc_khan_rebel.11
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		is_subject = yes
+		NOT = { has_country_flag = rebellion_cooldown }
+		exists = event_target:foc_khan_rebel_alliance
+	}
+
+	immediate = {
+		set_subject_of = { who = none }
+		remove_country_flag = foc_khan_submitted_first_order
+		remove_country_flag = foc_khan_submitted_final_order
+		remove_country_flag = foc_khan_rebel_invitation_refused
+		remove_country_flag = rebellion_cooldown
+		set_country_flag = foc_khan_rebel_member
+
+		set_faction_hostility = {
+			target = event_target:foc_khan_rebel_alliance
+			set_hostile = no
+			set_neutral = no
+			set_friendly = yes
+		}
+		event_target:foc_khan_rebel_alliance = {
+			set_faction_hostility = {
+				target = root
+				set_hostile = no
+				set_neutral = no
+				set_friendly = yes
+			}
+		}
+
+		if = {
+			limit = { exists = event_target:foc_khan_first_order }
+			set_faction_hostility = {
+				target = event_target:foc_khan_first_order
+				set_hostile = yes
+				set_neutral = no
+				set_friendly = no
+			}
+			event_target:foc_khan_first_order = {
+				set_faction_hostility = {
+					target = root
+					set_hostile = yes
+					set_neutral = no
+					set_friendly = no
+				}
+			}
+		}
+		if = {
+			limit = { exists = event_target:foc_khan_final_order }
+			set_faction_hostility = {
+				target = event_target:foc_khan_final_order
+				set_hostile = yes
+				set_neutral = no
+				set_friendly = no
+			}
+			event_target:foc_khan_final_order = {
+				set_faction_hostility = {
+					target = root
+					set_hostile = yes
+					set_neutral = no
+					set_friendly = no
+				}
+			}
+		}
+
+		if = {
+			limit = { exists = event_target:fop_first_order_crisis_country }
+			set_faction_hostility = {
+				target = event_target:fop_first_order_crisis_country
+				set_hostile = yes
+				set_neutral = no
+				set_friendly = no
+			}
+			event_target:fop_first_order_crisis_country = {
+				set_faction_hostility = {
+					target = root
+					set_hostile = yes
+					set_neutral = no
+					set_friendly = no
+				}
+			}
+		}
+
+		# Joining the rebellion does not create enemies among the former satrapies.
+		every_playable_country = {
+			limit = {
+				NOT = { is_same_value = root }
+				NOT = { has_country_flag = foc_khan_first_order_country }
+				NOT = { has_country_flag = foc_khan_final_order_country }
+				NOT = { has_country_flag = fop_player_first_order }
+				NOT = { has_country_flag = fop_player_final_order }
+				NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+			}
+			set_faction_hostility = {
+				target = root
+				set_hostile = no
+				set_neutral = yes
+				set_friendly = no
+			}
+			root = {
+				set_faction_hostility = {
+					target = prev
+					set_hostile = no
+					set_neutral = yes
+					set_friendly = no
+				}
+			}
+		}
+
+		# Rebel members are friendly to one another.
+		every_playable_country = {
+			limit = {
+				has_country_flag = foc_khan_rebel_member
+				NOT = { is_same_value = root }
+			}
+			set_faction_hostility = {
+				target = root
+				set_hostile = no
+				set_neutral = no
+				set_friendly = yes
+			}
+			root = {
+				set_faction_hostility = {
+					target = prev
+					set_hostile = no
+					set_neutral = no
+					set_friendly = yes
+				}
+			}
+		}
+	}
+}
+
+# Monthly relation enforcement. This keeps the Rebel Alliance neutral toward
+# loyal satrapies and ordinary states, and hostile only to the Orders.
+event = {
+	id = foc_khan_rebel.20
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_global_flag = foc_khan_rebel_spawned
+		exists = event_target:foc_khan_rebel_alliance
+		event_target:foc_khan_rebel_alliance = {
+			NOT = { has_country_flag = foc_story_rebel_surrendered_to_first_order }
+		}
+	}
+
+	immediate = {
+		# Subjects whose five-year minimum term ends after the Rebel Alliance has
+		# already formed receive a single delayed invitation.
+		every_playable_country = {
+			limit = {
+				is_regular_empire = yes
+				is_subject = yes
+				NOT = { has_country_flag = rebellion_cooldown }
+				NOT = { has_country_flag = foc_khan_rebel_invitation_offered }
+				NOT = { has_country_flag = foc_khan_rebel_invitation_refused }
+				NOT = { has_country_flag = foc_khan_rebel_member }
+				overlord = {
+					OR = {
+						has_country_flag = foc_khan_first_order_country
+						has_country_flag = foc_khan_final_order_country
+						has_country_flag = fop_player_first_order
+						has_country_flag = fop_player_final_order
+					}
+				}
+			}
+			set_country_flag = foc_khan_rebel_invitation_offered
+			country_event = { id = foc_khan_rebel.10 days = 1 random = 10 }
+		}
+
+		every_playable_country = {
+			limit = {
+				NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+				NOT = { has_country_flag = foc_khan_first_order_country }
+				NOT = { has_country_flag = foc_khan_final_order_country }
+				NOT = { has_country_flag = fop_player_first_order }
+				NOT = { has_country_flag = fop_player_final_order }
+				NOT = { has_country_flag = foc_republic_origin_player_empire }
+				NOT = { has_country_flag = foc_republic_origin_ai_empire }
+				NOT = { has_country_flag = foc_republic_origin_empire_country }
+				NOT = { has_country_flag = foc_khan_rebel_member }
+			}
+			set_faction_hostility = {
+				target = event_target:foc_khan_rebel_alliance
+				set_hostile = no
+				set_friendly = no
+				set_neutral = yes
+			}
+			event_target:foc_khan_rebel_alliance = {
+				set_faction_hostility = {
+					target = prev
+					set_hostile = no
+					set_friendly = no
+					set_neutral = yes
+				}
+			}
+		}
+
+
+		# Keep every accepted member inside the anti-Order coalition, including
+		# after the Final Order replaces the First Order.
+		every_playable_country = {
+			limit = { has_country_flag = foc_khan_rebel_member }
+			set_faction_hostility = {
+				target = event_target:foc_khan_rebel_alliance
+				set_hostile = no
+				set_friendly = yes
+				set_neutral = no
+			}
+			event_target:foc_khan_rebel_alliance = {
+				set_faction_hostility = {
+					target = prev
+					set_hostile = no
+					set_friendly = yes
+					set_neutral = no
+				}
+			}
+
+			if = {
+				limit = { exists = event_target:foc_khan_first_order }
+				set_faction_hostility = {
+					target = event_target:foc_khan_first_order
+					set_hostile = yes
+					set_friendly = no
+					set_neutral = no
+				}
+				event_target:foc_khan_first_order = {
+					set_faction_hostility = {
+						target = prev
+						set_hostile = yes
+						set_friendly = no
+						set_neutral = no
+					}
+				}
+			}
+			if = {
+				limit = { exists = event_target:foc_khan_final_order }
+				set_faction_hostility = {
+					target = event_target:foc_khan_final_order
+					set_hostile = yes
+					set_friendly = no
+					set_neutral = no
+				}
+				event_target:foc_khan_final_order = {
+					set_faction_hostility = {
+						target = prev
+						set_hostile = yes
+						set_friendly = no
+						set_neutral = no
+					}
+				}
+			}
+		}
+
+		if = {
+			limit = { exists = event_target:foc_khan_first_order }
+			event_target:foc_khan_rebel_alliance = {
+				set_faction_hostility = {
+					target = event_target:foc_khan_first_order
+					set_hostile = yes
+					set_friendly = no
+					set_neutral = no
+				}
+			}
+			event_target:foc_khan_first_order = {
+				set_faction_hostility = {
+					target = event_target:foc_khan_rebel_alliance
+					set_hostile = yes
+					set_friendly = no
+					set_neutral = no
+				}
+			}
+		}
+		if = {
+			limit = { exists = event_target:foc_khan_final_order }
+			event_target:foc_khan_rebel_alliance = {
+				set_faction_hostility = {
+					target = event_target:foc_khan_final_order
+					set_hostile = yes
+					set_friendly = no
+					set_neutral = no
+				}
+			}
+			event_target:foc_khan_final_order = {
+				set_faction_hostility = {
+					target = event_target:foc_khan_rebel_alliance
+					set_hostile = yes
+					set_friendly = no
+					set_neutral = no
+				}
+			}
+		}
+
+		# The Republic-origin Galactic Empire is a civil-war opponent rather than
+		# an ordinary neutral state. Reassert this pair after the generic Rebel
+		# relation pass so on-action ordering can never leave their fleets yellow
+		# and non-combatant while the diplomatic war itself remains active. This
+		# also repairs an affected save on its next monthly pulse.
+		if = {
+			limit = {
+				has_global_flag = foc_republic_origin_empire_war_active
+				exists = event_target:foc_republic_origin_empire
+				exists = event_target:foc_khan_rebel_alliance
+			}
+			event_target:foc_republic_origin_empire = {
+				establish_communications_no_message = event_target:foc_khan_rebel_alliance
+				set_faction_hostility = {
+					target = event_target:foc_khan_rebel_alliance
+					set_hostile = yes
+					set_friendly = no
+					set_neutral = no
+				}
+			}
+			event_target:foc_khan_rebel_alliance = {
+				establish_communications_no_message = event_target:foc_republic_origin_empire
+				set_faction_hostility = {
+					target = event_target:foc_republic_origin_empire
+					set_hostile = yes
+					set_friendly = no
+					set_neutral = no
+				}
+			}
+		}
+	}
+}
+
+
+# 2.24: restore the proven forced anti-Order dispatcher.
+# The Rebel country AI stays disabled so it cannot cancel these event orders.
+# Every idle Rebel battle group is explicitly sent toward the First Order; if
+# the First Order no longer has a colony, the Final Order becomes the target.
+event = {
+	id = foc_khan_rebel.30
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_global_flag = foc_khan_rebel_spawned
+		exists = event_target:foc_khan_rebel_alliance
+		event_target:foc_khan_rebel_alliance = {
+            is_ai = yes
+			NOT = { has_country_flag = foc_story_rebel_surrendered_to_first_order }
+			any_owned_fleet = {
+				has_fleet_flag = foc_khan_rebel_attack_fleet
+				is_fleet_idle = yes
+				exists = solar_system
+				any_owned_ship = { is_ship_class = shipclass_military }
+			}
+		}
+	}
+
+	immediate = {
+		event_target:foc_khan_rebel_alliance = {
+			every_owned_fleet = {
+				limit = {
+				    owner = { is_ai = yes }
+				    NOT = { has_fleet_flag = foc_republic_origin_rebellion_garrison }
+					has_fleet_flag = foc_khan_rebel_attack_fleet
+					is_fleet_idle = yes
+					exists = solar_system
+					any_owned_ship = { is_ship_class = shipclass_military }
+				}
+				remove_auto_move_target = yes
+				clear_orders = yes
+				clear_fleet_actions = this
+				fleet_event = { id = foc_khan_rebel.31 days = 1 random = 2 }
+			}
+		}
+	}
+}
+
+fleet_event = {
+	id = foc_khan_rebel.31
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+        NOT = { has_fleet_flag = foc_republic_origin_rebellion_garrison }
+		exists = this
+		exists = solar_system
+		has_fleet_flag = foc_khan_rebel_attack_fleet
+		owner = {
+            is_ai = yes
+			has_country_flag = foc_khan_rebel_alliance_country
+			NOT = { has_country_flag = foc_story_rebel_surrendered_to_first_order }
+		}
+		any_owned_ship = { is_ship_class = shipclass_military }
+	}
+
+	immediate = {
+		remove_auto_move_target = yes
+		clear_orders = yes
+		clear_fleet_actions = this
+		set_fleet_stance = aggressive
+		set_aggro_range_measure_from = self
+		set_aggro_range = 9999
+		foc_khan_anti_order_fleet_action = { ID = foc_khan_rebel.31 }
+	}
+}
+
+
+# Keep the Rebel combat package synchronized with the selected crisis tier.
+# Lowest/Beginner/Intermediate/High: no scripted Rebel combat bonus.
+# Madness: apply the original Rebel combat package.
+country_event = {
+	id = foc_khan_rebel.32
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_country_flag = foc_khan_rebel_alliance_country
+	}
+
+	immediate = {
+		# 3.11v-normal: the Rebel Alliance is an ordinary default empire. This
+		# migration now converts any Rebel country still using the old special
+		# type (existing saves) to the vanilla default type.
+		if = {
+			limit = { NOT = { is_country_type = default } }
+			set_country_type = default
+		}
+
+		# Human-controlled Rebels use normal player rules. Remove every inherited
+		# AI crisis package each month for old-save safety and do not run the AI
+		# base-recapture keeper. AI Rebels retain their original logistics,
+		# difficulty scaling and automatic capital-base protection unchanged.
+		if = {
+			limit = { is_ai = no }
+			foc_republic_origin_clear_player_rebel_crisis_bonuses = yes
+		}
+		else = {
+			if = {
+				limit = { has_modifier = foc_khan_rebel_logistics_245 }
+				remove_modifier = foc_khan_rebel_logistics_245
+			}
+			# V71: recapture/rebuild only the three FIXED Resistance base systems.
+			# Do not iterate every_owned_planet here: in 4.4 the Raddus pc_ark colony
+			# may become the capital after D'Qar falls, and colony->planet on an Arkship
+			# resolves to ship scope. Scanning known system_planet flags keeps all
+			# planet-only triggers away from the mobile home and prevents scope errors.
+			every_system = {
+				limit = {
+					OR = {
+						has_star_flag = foc_khan_rebel_dqar_home
+						has_star_flag = foc_khan_rebel_crait_home
+						has_star_flag = foc_khan_rebel_ajan_kloss_home
+					}
+					any_system_planet = {
+						is_colony = yes
+						is_capital = yes
+						exists = owner
+						owner = { is_same_value = root }
+						foc_v235b_base_planet_usable = yes
+						OR = {
+							has_planet_flag = foc_khan_rebel_dqar
+							has_planet_flag = foc_khan_rebel_crait
+							has_planet_flag = foc_khan_rebel_ajan_kloss
+						}
+					}
+				}
+				every_system_planet = {
+					limit = {
+						is_colony = yes
+						is_capital = yes
+						exists = owner
+						owner = { is_same_value = root }
+						foc_v235b_base_planet_usable = yes
+						OR = {
+							has_planet_flag = foc_khan_rebel_dqar
+							has_planet_flag = foc_khan_rebel_crait
+							has_planet_flag = foc_khan_rebel_ajan_kloss
+						}
+					}
+					solar_system = {
+						if = {
+							limit = { NOT = { exists = starbase } }
+							create_starbase = {
+								size = starbase_starhold
+								owner = root
+								effect = { set_starbase_flag = foc_khan_rebel_base_starbase }
+							}
+						}
+						else_if = {
+							limit = { starbase = { NOT = { owner = { is_same_value = root } } } }
+							starbase = {
+								set_owner = root
+								set_starbase_flag = foc_khan_rebel_base_starbase
+							}
+						}
+						log = "FOC_V71: restored the fixed Rebel base starbase while excluding the Raddus Arkship colony."
+					}
+				}
+			}
+
+			# crisis strength tier. First clear every tier modifier (handles tier
+		# changes and old saves), then add the one for the active tier.
+		if = { limit = { has_modifier = foc_khan_rebel_strength_lowest } remove_modifier = foc_khan_rebel_strength_lowest }
+		if = { limit = { has_modifier = foc_khan_rebel_strength_initial } remove_modifier = foc_khan_rebel_strength_initial }
+		if = { limit = { has_modifier = foc_khan_rebel_strength_intermediate } remove_modifier = foc_khan_rebel_strength_intermediate }
+		if = { limit = { has_modifier = foc_khan_rebel_strength_high } remove_modifier = foc_khan_rebel_strength_high }
+		if = { limit = { has_modifier = foc_khan_rebel_war_power_057 } remove_modifier = foc_khan_rebel_war_power_057 }
+
+			if = {
+				limit = { has_global_flag = foc_khan_strength_madness }
+				add_modifier = { modifier = foc_khan_rebel_war_power_057 days = -1 }
+			}
+		}
+	}
+}
+
+
+# FOC 2.84: one-shot old-save addition of the Rebel capital defence fleet.
+event = {
+    id = foc_khan_rebel.33
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        event_target:foc_khan_rebel_capital = { foc_v235b_base_planet_usable = yes }
+        has_global_flag = foc_khan_rebel_spawned
+        NOT = { has_global_flag = foc_khan_rebel_destroyed }
+        NOT = { has_global_flag = foc_khan_rebel_guard_fleet_initialized_284 }
+        exists = event_target:foc_khan_rebel_alliance
+        exists = event_target:foc_khan_rebel_system
+        exists = event_target:foc_khan_rebel_capital
+        event_target:foc_khan_rebel_alliance = {
+            has_country_flag = foc_khan_rebel_alliance_country
+        }
+        event_target:foc_khan_rebel_capital = {
+            exists = owner
+            owner = { is_same_value = event_target:foc_khan_rebel_alliance }
+        }
+    }
+
+    immediate = {
+        event_target:foc_khan_rebel_system = {
+            foc_khan_spawn_rebel_guard_fleet_284 = yes
+        }
+    }
+}
+
+
+# FOC 3.11v Stage II: Crait is revealed only after D'Qar has fallen. The
+# Starkiller objective remains a second chronology gate, so destroying the
+# superweapon alone can no longer make the next Rebel base appear early.
+event = {
+    id = foc_khan_rebel.34
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_khan_rebel_spawned
+        has_global_flag = foc_khan_rebel_dqar_lost_311v
+        has_global_flag = foc_khan_starkiller_destroyed
+        NOT = { has_global_flag = foc_khan_rebel_crait_spawned_311v }
+        NOT = { has_global_flag = foc_khan_rebel_crait_preparing_311v }
+        exists = event_target:foc_khan_rebel_alliance
+        event_target:foc_khan_rebel_alliance = {
+            has_country_flag = foc_khan_rebel_alliance_country
+        }
+        any_system = { has_star_flag = foc_khan_rebel_dqar_home }
+    }
+
+    immediate = {
+        set_global_flag = foc_khan_rebel_crait_preparing_311v
+        foc_v178_adopt_static_crait = yes
+        if = {
+            limit = { NOT = { any_system = { has_star_flag = foc_khan_rebel_crait_home } } }
+            foc_v178_spawn_crait_at_map_position = yes
+            if = {
+                limit = { NOT = { exists = event_target:foc_khan_rebel_spawn_anchor } }
+                remove_global_flag = foc_khan_rebel_crait_preparing_311v
+            }
+        }
+    }
+}
+
+
+# Finish Crait ownership, colony and defence setup after its initializer exists.
+event = {
+    id = foc_khan_rebel.35
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_khan_rebel_crait_preparing_311v
+        NOT = { has_global_flag = foc_khan_rebel_crait_spawned_311v }
+        exists = event_target:foc_khan_rebel_alliance
+        any_system = {
+            has_star_flag = foc_khan_rebel_crait_home
+            any_system_planet = { has_planet_flag = foc_khan_rebel_crait foc_v235b_base_planet_usable = yes }
+        }
+    }
+
+    immediate = {
+        random_system = {
+            limit = { has_star_flag = foc_khan_rebel_crait_home }
+            save_global_event_target_as = foc_khan_rebel_crait_system
+            random_system_planet = {
+                limit = { has_planet_flag = foc_khan_rebel_crait foc_v235b_base_planet_usable = yes }
+                save_global_event_target_as = foc_khan_rebel_crait
+                save_global_event_target_as = foc_khan_rebel_strike_target_311v
+            }
+        }
+        foc_v178_connect_crait_map_routes = yes
+
+        event_target:foc_khan_rebel_crait = {
+            if = {
+                limit = { NOT = { is_colony = yes } }
+                foc_khan_prepare_rebel_stage_colony_311v = yes
+            }
+            else = { set_owner = event_target:foc_khan_rebel_alliance }
+            set_planet_flag = foc_khan_rebel_capital
+            set_capital = yes
+            save_global_event_target_as = foc_khan_rebel_capital
+        }
+        if = {
+            limit = { exists = event_target:foc_khan_rebel_dqar_system }
+            event_target:foc_khan_rebel_dqar_system = {
+                every_system_planet = {
+                    limit = {
+                        has_planet_flag = foc_khan_rebel_capital
+                        NOT = { has_planet_flag = foc_khan_rebel_crait }
+                    }
+                    remove_planet_flag = foc_khan_rebel_capital
+                }
+            }
+        }
+        event_target:foc_khan_rebel_crait_system = {
+            save_global_event_target_as = foc_khan_rebel_system
+            foc_khan_claim_rebel_stage_system_311v = yes
+            # V234: player-owned formations must not inherit native AI garrison mode.
+            if = {
+                limit = { event_target:foc_khan_rebel_alliance = { is_ai = no } }
+                create_fleet = {
+                    name = "FOC_KHAN_REBEL_CRAIT_DEFENSE_FLEET"
+                    effect = {
+                        set_owner = event_target:foc_khan_rebel_alliance
+                        # V15 full-armor prerequisite: foc_v15_defense_71aa7f801cdd.
+                        owner = {
+                            if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+                        }
+                        
+                        # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_2 message = no } } }
+}
+                        
+
+                        
+
+                        
+                        set_location = event_target:foc_khan_rebel_crait
+                        create_ship = { name = random design = "NAME_FOC_REBEL_NEBULA" upgradable = no }
+                        while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_MC80" graphical_culture = rebel_01 upgradable = no } }
+                        while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_MC30" graphical_culture = rebel_01 upgradable = no } }
+                        while = { count = 4 create_ship = { name = random design = "NAME_FOC_REBEL_CR90" graphical_culture = rebel_01 upgradable = no } }
+                        set_fleet_flag = foc_khan_rebel_stage_guard_311v
+                        set_fleet_stance = passive
+                        set_aggro_range_measure_from = self
+                        set_aggro_range = 300
+                    }
+                    settings = { garrison = no can_upgrade = no can_disband = yes can_change_composition = no spawn_debris = yes ai_ignore_strength = yes }
+                }
+            }
+            else = {
+                create_fleet = {
+                    name = "FOC_KHAN_REBEL_CRAIT_DEFENSE_FLEET"
+                    effect = {
+                        set_owner = event_target:foc_khan_rebel_alliance
+                        # V15 full-armor prerequisite: foc_v15_defense_c1cacb240898.
+                        owner = {
+                            if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+                        }
+                        
+                        # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_2 message = no } } }
+}
+                        
+
+                        
+
+                        
+                        set_location = event_target:foc_khan_rebel_crait
+                        create_ship = { name = random design = "NAME_FOC_REBEL_NEBULA" upgradable = no }
+                        while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_MC80" graphical_culture = rebel_01 upgradable = no } }
+                        while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_MC30" graphical_culture = rebel_01 upgradable = no } }
+                        while = { count = 4 create_ship = { name = random design = "NAME_FOC_REBEL_CR90" graphical_culture = rebel_01 upgradable = no } }
+                        set_fleet_flag = foc_khan_rebel_stage_guard_311v
+                        set_fleet_stance = passive
+                        set_aggro_range_measure_from = self
+                        set_aggro_range = 300
+                    }
+                    settings = { garrison = yes can_upgrade = no can_disband = yes can_change_composition = no spawn_debris = yes ai_ignore_strength = yes }
+                }
+            }
+        }
+
+        remove_global_flag = foc_khan_rebel_crait_preparing_311v
+        set_global_flag = foc_khan_rebel_crait_spawned_311v
+        set_global_flag = foc_saga_crait_held_by_rebels
+        event_target:foc_khan_rebel_alliance = {
+            country_event = { id = foc_khan_balance.1 days = 1 }
+        }
+    }
+}
+
+
+# FOC 3.11v Stage III: Ajan Kloss appears only after Phase II begins and Crait
+# has been occupied by either the First Order or the Final Order.
+event = {
+    id = foc_khan_rebel.36
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        OR = {
+            has_global_flag = foc_khan_phase_two
+            AND = {
+                exists = event_target:fop_first_order_crisis_country
+                event_target:fop_first_order_crisis_country = {
+                    has_country_flag = fop_player_final_order
+                }
+            }
+        }
+        has_global_flag = foc_khan_rebel_crait_lost_311v
+        has_global_flag = foc_khan_rebel_spawned
+        NOT = { has_global_flag = foc_khan_rebel_ajan_kloss_spawned_311v }
+        NOT = { has_global_flag = foc_khan_rebel_ajan_kloss_preparing_311v }
+        exists = event_target:foc_khan_rebel_alliance
+        event_target:foc_khan_rebel_alliance = {
+            has_country_flag = foc_khan_rebel_alliance_country
+        }
+        OR = {
+            any_system = { has_star_flag = foc_khan_rebel_crait_home }
+            any_system = { has_star_flag = foc_khan_rebel_dqar_home }
+            any_system = { has_star_flag = foc_sw_jakku_home }
+        }
+    }
+
+    immediate = {
+        set_global_flag = foc_khan_rebel_ajan_kloss_preparing_311v
+        foc_v178_adopt_static_ajan_kloss = yes
+        if = {
+            limit = { NOT = { any_system = { has_star_flag = foc_khan_rebel_ajan_kloss_home } } }
+            foc_v178_spawn_ajan_kloss_at_map_position = yes
+            if = {
+                limit = { NOT = { exists = event_target:foc_khan_rebel_spawn_anchor } }
+                remove_global_flag = foc_khan_rebel_ajan_kloss_preparing_311v
+            }
+        }
+    }
+}
+
+
+# Finish Ajan Kloss setup, move the active Rebel capital there and reactivate
+# the Final Order strike assignment for the last base.
+event = {
+    id = foc_khan_rebel.37
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_khan_rebel_ajan_kloss_preparing_311v
+        NOT = { has_global_flag = foc_khan_rebel_ajan_kloss_spawned_311v }
+        exists = event_target:foc_khan_rebel_alliance
+        any_system = {
+            has_star_flag = foc_khan_rebel_ajan_kloss_home
+            any_system_planet = { has_planet_flag = foc_khan_rebel_ajan_kloss foc_v235b_base_planet_usable = yes }
+        }
+    }
+
+    immediate = {
+        random_system = {
+            limit = { has_star_flag = foc_khan_rebel_ajan_kloss_home }
+            save_global_event_target_as = foc_khan_rebel_ajan_kloss_system
+            random_system_planet = {
+                limit = { has_planet_flag = foc_khan_rebel_ajan_kloss foc_v235b_base_planet_usable = yes }
+                save_global_event_target_as = foc_khan_rebel_ajan_kloss
+                save_global_event_target_as = foc_khan_rebel_strike_target_311v
+            }
+        }
+
+        # V178: restore the four routes shown at Ajan Kloss's V177 map position.
+        foc_v178_connect_ajan_kloss_map_routes = yes
+
+        event_target:foc_khan_rebel_ajan_kloss = {
+            if = {
+                limit = { NOT = { is_colony = yes } }
+                foc_khan_prepare_rebel_stage_colony_311v = yes
+            }
+            else = { set_owner = event_target:foc_khan_rebel_alliance }
+            set_planet_flag = foc_khan_rebel_capital
+            set_capital = yes
+            save_global_event_target_as = foc_khan_rebel_capital
+        }
+        if = {
+            limit = { exists = event_target:foc_khan_rebel_dqar_system }
+            event_target:foc_khan_rebel_dqar_system = {
+                every_system_planet = {
+                    limit = {
+                        has_planet_flag = foc_khan_rebel_capital
+                        NOT = { has_planet_flag = foc_khan_rebel_ajan_kloss }
+                    }
+                    remove_planet_flag = foc_khan_rebel_capital
+                }
+            }
+        }
+        event_target:foc_khan_rebel_ajan_kloss_system = {
+            save_global_event_target_as = foc_khan_rebel_system
+            foc_khan_claim_rebel_stage_system_311v = yes
+            # V234: player-owned formations must not inherit native AI garrison mode.
+            if = {
+                limit = { event_target:foc_khan_rebel_alliance = { is_ai = no } }
+                create_fleet = {
+                    name = "FOC_KHAN_REBEL_AJAN_KLOSS_DEFENSE_FLEET"
+                    effect = {
+                        set_owner = event_target:foc_khan_rebel_alliance
+                        # V15 full-armor prerequisite: foc_v15_defense_b689ad73750b.
+                        owner = {
+                            if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+                        }
+                        
+                        # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_2 message = no } } }
+}
+                        
+
+                        
+
+                        
+                        set_location = event_target:foc_khan_rebel_ajan_kloss
+                        while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_NEBULA" upgradable = no } }
+                        while = { count = 3 create_ship = { name = random design = "NAME_FOC_REBEL_MC80" graphical_culture = rebel_01 upgradable = no } }
+                        while = { count = 3 create_ship = { name = random design = "NAME_FOC_REBEL_MC30" graphical_culture = rebel_01 upgradable = no } }
+                        while = { count = 6 create_ship = { name = random design = "NAME_FOC_REBEL_CR90" graphical_culture = rebel_01 upgradable = no } }
+                        set_fleet_flag = foc_khan_rebel_stage_guard_311v
+                        set_fleet_stance = passive
+                        set_aggro_range_measure_from = self
+                        set_aggro_range = 300
+                    }
+                    settings = { garrison = no can_upgrade = no can_disband = yes can_change_composition = no spawn_debris = yes ai_ignore_strength = yes }
+                }
+            }
+            else = {
+                create_fleet = {
+                    name = "FOC_KHAN_REBEL_AJAN_KLOSS_DEFENSE_FLEET"
+                    effect = {
+                        set_owner = event_target:foc_khan_rebel_alliance
+                        # V15 full-armor prerequisite: foc_v15_defense_56724a82345b.
+                        owner = {
+                            if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+                        }
+                        
+                        # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_2 message = no } } }
+}
+                        
+
+                        
+
+                        
+                        set_location = event_target:foc_khan_rebel_ajan_kloss
+                        while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_NEBULA" upgradable = no } }
+                        while = { count = 3 create_ship = { name = random design = "NAME_FOC_REBEL_MC80" graphical_culture = rebel_01 upgradable = no } }
+                        while = { count = 3 create_ship = { name = random design = "NAME_FOC_REBEL_MC30" graphical_culture = rebel_01 upgradable = no } }
+                        while = { count = 6 create_ship = { name = random design = "NAME_FOC_REBEL_CR90" graphical_culture = rebel_01 upgradable = no } }
+                        set_fleet_flag = foc_khan_rebel_stage_guard_311v
+                        set_fleet_stance = passive
+                        set_aggro_range_measure_from = self
+                        set_aggro_range = 300
+                    }
+                    settings = { garrison = yes can_upgrade = no can_disband = yes can_change_composition = no spawn_debris = yes ai_ignore_strength = yes }
+                }
+            }
+        }
+
+        remove_global_flag = foc_khan_rebel_destroyed
+        remove_global_flag = foc_khan_rebel_ajan_kloss_preparing_311v
+        set_global_flag = foc_khan_rebel_ajan_kloss_spawned_311v
+
+        if = {
+            limit = { exists = event_target:foc_khan_final_order }
+            event_target:foc_khan_final_order = {
+                remove_country_flag = foc_khan_final_rebel_guard_launched_311t
+                remove_country_flag = foc_khan_final_rebel_guard_returned_311t
+                every_owned_fleet = {
+                    limit = { has_fleet_flag = foc_khan_final_order_rebel_strike_guard_311t }
+                    remove_fleet_flag = foc_khan_final_rebel_guard_returning_311t
+                    remove_fleet_flag = foc_khan_final_rebel_guard_return_grace_311t
+                    remove_fleet_flag = foc_khan_final_rebel_guard_outbound_311t
+                    remove_fleet_flag = foc_khan_final_rebel_guard_outbound_grace_311t
+                }
+                country_event = { id = foc_final_guard.2 days = 1 }
+            }
+        }
+
+        event_target:foc_khan_rebel_alliance = {
+            country_event = { id = foc_khan_balance.1 days = 1 }
+        }
+    }
+}
+
+
+# The Ajan Kloss colony is the final Rebel base. Its capture ends the recurring
+# Resistance chain and releases the Final Order strike fleet back to Exegol.
+planet_event = {
+    id = foc_khan_rebel.38
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_khan_rebel_ajan_kloss_spawned_311v
+        NOT = { has_global_flag = foc_khan_rebel_destroyed }
+		NOT = { has_global_flag = foc_khan_rebel_final_base_lost_311v }
+        has_planet_flag = foc_khan_rebel_ajan_kloss
+        exists = event_target:foc_khan_rebel_alliance
+        OR = {
+            AND = {
+                exists = controller
+                controller = {
+                    OR = {
+                        has_country_flag = foc_khan_first_order_country
+                        has_country_flag = foc_khan_final_order_country
+                        has_country_flag = fop_player_first_order
+                        has_country_flag = fop_player_final_order
+                    }
+                }
+            }
+            # 3.11v-fix: the base also falls when the colony is destroyed by
+            # the Starkiller system shot or a Xyston planet killer.
+            has_planet_flag = myk_starkiller_planet_destroyed
+            NOT = { exists = owner }
+        }
+    }
+
+    immediate = {
+        set_global_flag = foc_khan_rebel_final_base_lost_311v
+        save_global_event_target_as = foc_khan_rebel_final_fallen_base_311v
+		event_target:foc_khan_rebel_alliance = {
+			# Losing Ajan Kloss cannot remotely delete a surviving mobile home.
+			# The Resistance is eliminated here only if the Raddus has already
+			# been destroyed in ordinary combat or by a system-killing weapon.
+			if = {
+				limit = {
+					NOT = {
+						any_owned_ship = {
+							has_ship_flag = foc_khan_rebel_home_arkship
+						}
+					}
+				}
+				root = { set_global_flag = foc_khan_rebel_destroyed }
+				destroy_country = yes
+			}
+		}
+        clear_global_event_target = foc_khan_rebel_strike_target_311v
+        if = {
+            limit = { exists = event_target:foc_khan_final_order }
+            event_target:foc_khan_final_order = {
+                country_event = { id = foc_final_guard.2 days = 1 }
+            }
+        }
+    }
+}
+
+
+# Old-save migration: versions through 3.11u used Yavin as the single Rebel
+# capital. Spawn D'Qar on the southern New Republic side before the staged
+# Crait/Ajan chain begins.
+event = {
+    id = foc_khan_rebel.39
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v235b_dqar_settlement_allowed = yes
+        has_global_flag = foc_khan_rebel_spawned
+        NOT = { has_global_flag = foc_khan_rebel_destroyed }
+        # V92: Yavin is intentionally the Imperial-Rebellion capital. The old
+        # Yavin->D'Qar migration must never run until that era is over.
+        NOT = { has_global_flag = foc_republic_origin_empire_rebel_stage }
+        NOT = { has_global_flag = foc_khan_rebel_dqar_migration_preparing_311v }
+        NOT = { has_global_flag = foc_khan_rebel_dqar_migrated_311v }
+        NOT = { any_system = { has_star_flag = foc_khan_rebel_dqar_home } }
+        exists = event_target:foc_khan_rebel_alliance
+        OR = {
+            any_system = { has_star_flag = foc_sw_coruscant_home }
+            any_system = { has_star_flag = foc_swmap_naboo_home }
+            any_system = { has_star_flag = foc_sw_jakku_home }
+        }
+    }
+
+    immediate = {
+        set_global_flag = foc_khan_rebel_dqar_migration_preparing_311v
+        foc_v178_adopt_static_dqar = yes
+        if = {
+            limit = { NOT = { any_system = { has_star_flag = foc_khan_rebel_dqar_home } } }
+            foc_v178_spawn_dqar_at_map_position = yes
+            if = {
+                limit = { NOT = { exists = event_target:foc_khan_rebel_spawn_anchor } }
+                remove_global_flag = foc_khan_rebel_dqar_migration_preparing_311v
+            }
+        }
+    }
+}
+
+
+# Complete the old-save relocation. The legacy Yavin colony becomes New
+# Republic territory when that country still exists; only the Rebel capital
+# migrates. V234: no surviving fleet is teleported to the new capital.
+event = {
+    id = foc_khan_rebel.40
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v235b_dqar_settlement_allowed = yes
+        # V234: the completion stage must obey the same era guard as .39.
+        NOT = { has_global_flag = foc_republic_origin_empire_rebel_stage }
+        has_global_flag = foc_khan_rebel_dqar_migration_preparing_311v
+        NOT = { has_global_flag = foc_khan_rebel_dqar_migrated_311v }
+        exists = event_target:foc_khan_rebel_alliance
+        any_system = {
+            has_star_flag = foc_khan_rebel_dqar_home
+            any_system_planet = { has_planet_flag = foc_khan_rebel_dqar }
+        }
+    }
+
+    immediate = {
+        random_system = {
+            limit = { has_star_flag = foc_khan_rebel_dqar_home }
+            save_global_event_target_as = foc_khan_rebel_system
+            save_global_event_target_as = foc_khan_rebel_dqar_system
+            random_system_planet = {
+                limit = { has_planet_flag = foc_khan_rebel_dqar }
+                set_planet_flag = foc_khan_rebel_capital
+                save_global_event_target_as = foc_khan_rebel_capital
+            }
+        }
+        foc_v178_connect_dqar_map_routes = yes
+
+        event_target:foc_khan_rebel_capital = {
+            if = {
+                limit = { NOT = { is_colony = yes } }
+                foc_khan_prepare_rebel_stage_colony_311v = yes
+            }
+            else = { set_owner = event_target:foc_khan_rebel_alliance }
+            set_capital = yes
+        }
+        event_target:foc_khan_rebel_dqar_system = {
+            foc_khan_claim_rebel_stage_system_311v = yes
+        }
+
+        # The legacy single-base system is identifiable by the generic Rebel
+        # flag without D'Qar's new stable flag.
+        if = {
+            limit = {
+                exists = event_target:foc_sw_new_republic
+                any_system = {
+                    has_star_flag = foc_khan_rebel_home
+                    NOT = { has_star_flag = foc_khan_rebel_dqar_home }
+                }
+            }
+            random_system = {
+                limit = {
+                    has_star_flag = foc_khan_rebel_home
+                    NOT = { has_star_flag = foc_khan_rebel_dqar_home }
+                }
+                remove_star_flag = foc_khan_rebel_home
+                set_star_flag = foc_sw_yavin_home
+                set_star_flag = foc_sw_new_republic_cluster
+                save_global_event_target_as = foc_sw_yavin_system
+                if = {
+                    limit = { exists = starbase }
+                    starbase = { set_owner = event_target:foc_sw_new_republic }
+                }
+                random_system_planet = {
+                    limit = { has_planet_flag = foc_khan_rebel_capital }
+                    remove_planet_flag = foc_khan_rebel_capital
+                    set_planet_flag = foc_sw_yavin_iv
+                    set_owner = event_target:foc_sw_new_republic
+                    save_global_event_target_as = foc_sw_yavin_iv
+                }
+            }
+        }
+
+        # V234: capital migration does not relocate any existing fleet.
+        # Keep garrisons, frontline fleets, player positions and current orders intact.
+
+        remove_global_flag = foc_khan_rebel_dqar_migration_preparing_311v
+        set_global_flag = foc_khan_rebel_dqar_migrated_311v
+    }
+}
+
+
+# D'Qar is the first base in the staged Resistance chain. Any occupation by a
+# non-Rebel controller counts as losing the system and unlocks the later Crait
+# stage once the Starkiller objective has also been completed.
+planet_event = {
+    id = foc_khan_rebel.41
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        # V235b: historical held-by-Rebels flag is authoritative even after country death.
+        # V84: D'Qar can fall as a story battle only after the First Order has arrived.
+        OR = {
+            has_global_flag = foc_khan_phase_one
+            has_global_flag = fop_origin_player_crisis_exists
+        }
+        NOT = { has_global_flag = foc_khan_rebel_dqar_lost_311v }
+        # Never treat the not-yet-colonized migration D'Qar as already lost.
+        NOT = { has_global_flag = foc_khan_rebel_dqar_migration_preparing_311v }
+        # 本补丁修复：迪卡战役被提前触发。
+        # 这个事件判定的是「迪卡的控制者不是义军同盟」，但在共和国起源里，
+        # foc_khan_rebel_spawned 置上之后、claim_for_rebels 真正把迪卡交给义军
+        # 之前，存在一段控制者仍是共和国／帝国的窗口。窗口里条件成立，于是
+        # 「迪卡战役」在义军还没拿到迪卡时就先弹了出来。
+        #
+        # 加一道前置：义军必须**真正持有过**迪卡，才谈得上失去它。
+        # 这个全局旗标由 foc_saga_dqar.1 在确认义军控制迪卡时置上。
+        has_global_flag = foc_saga_dqar_held_by_rebels
+        has_planet_flag = foc_khan_rebel_dqar
+        # V85: D'Qar falls only when the Resistance has completely lost the
+        # SYSTEM starbase. Losing only the colony/controller is not enough. A
+        # destroyed system (no starbase) also counts as complete loss.
+        OR = {
+            # A destroyed base stays lost even if a starbase/ghost colony survives.
+            foc_v235b_dqar_ruined = yes
+            solar_system = {
+                NOT = {
+                    space_owner? = {
+                        OR = {
+                            has_country_flag = foc_khan_rebel_alliance_country
+                            has_country_flag = foc_khan_first_order_resistance_country
+                        }
+                    }
+                }
+                # Intact New Republic ownership still uses the existing race repair.
+                NOT = { space_owner? = { has_country_flag = foc_sw_new_republic_country } }
+            }
+        }
+    }
+
+    immediate = {
+        save_global_event_target_as = foc_khan_rebel_dqar_fallen_base_311v
+        # On the destruction path there is no controller; attribute the fall to
+        # the First Order (the Starkiller era) or, failing that, the Final Order.
+        if = {
+            limit = { NOT = { foc_v235b_dqar_ruined = yes } solar_system = { exists = space_owner } }
+            solar_system = { space_owner = { save_global_event_target_as = foc_khan_rebel_dqar_conqueror_311v } }
+        }
+        else_if = {
+            limit = { exists = event_target:foc_khan_first_order }
+            event_target:foc_khan_first_order = {
+                save_global_event_target_as = foc_khan_rebel_dqar_conqueror_311v
+            }
+        }
+        else_if = {
+            limit = { exists = event_target:foc_khan_final_order }
+            event_target:foc_khan_final_order = {
+                save_global_event_target_as = foc_khan_rebel_dqar_conqueror_311v
+            }
+        }
+        remove_planet_flag = foc_khan_rebel_capital
+        set_global_flag = foc_v235b_dqar_foundation_closed
+        set_global_flag = foc_khan_rebel_dqar_lost_311v
+        log = "FOC_V235B_DQAR_LOSS_RECORDED: original loss story recorded once; no refoundation."
+        set_global_flag = foc_canon_dqar_battle_completed
+        if = {
+            limit = { NOT = { has_global_flag = foc_canon_fo_first_battle_recorded } }
+            set_global_flag = foc_canon_fo_first_battle_dqar
+        }
+        every_playable_country = {
+            limit = {
+                is_ai = no
+                OR = { has_origin = origin_foc_republic_unification has_origin = origin_fop_first_order }
+            }
+            foc_canon_mark_first_order_war_first_battle = yes
+        }
+
+        # Mechanical evacuation is independent of who is watching the news.
+        set_global_flag = foc_canon_dqar_evacuation_started
+        every_country = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_khan_rebel_alliance_country
+                    has_country_flag = foc_khan_first_order_resistance_country
+                }
+            }
+            set_country_flag = foc_canon_mobile_resistance_phase
+            add_resource = { unity = 5000 }
+        }
+
+        # V71: D'Qar loss immediately releases any stale static-objective order
+        # and starts the dedicated Raddus pursuit. This avoids waiting for the
+        # old 25-day cooldown or the next monthly pulse.
+        every_country = {
+            limit = {
+                is_ai = yes
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = foc_khan_final_order_country
+                }
+                any_owned_fleet = {
+                    any_owned_ship = {
+                        has_ship_flag = foc_khan_supremacy_flagship
+                        is_disabled = no
+                    }
+                }
+            }
+            every_owned_fleet = {
+                limit = {
+                    any_owned_ship = {
+                        has_ship_flag = foc_khan_supremacy_flagship
+                        is_disabled = no
+                    }
+                }
+                remove_fleet_flag = foc_khan_supremacy_order_cooldown_246
+                remove_fleet_flag = foc_khan_supremacy_raddus_chase_loop_v71
+                remove_auto_move_target = yes
+                clear_orders = yes
+                clear_fleet_actions = this
+                fleet_event = { id = foc_khan_supremacy_move.5 days = 1 }
+            }
+        }
+
+        every_playable_country = {
+            limit = {
+                is_ai = no
+                OR = {
+                    has_origin = origin_foc_republic_unification
+                    has_origin = origin_fop_first_order
+                }
+            }
+            country_event = { id = foc_khan_rebel.42 }
+        }
+    }
+}
+
+
+# Player-facing Battle of D'Qar notification.
+country_event = {
+    id = foc_khan_rebel.42
+    title = foc_khan_rebel.42.name
+    desc = foc_khan_rebel.42.desc
+    picture = GFX_foc_story_battle_of_dqar
+    location = event_target:foc_khan_rebel_dqar_fallen_base_311v
+    is_triggered_only = yes
+    force_open = yes
+    trigger = {
+        is_ai = no
+        OR = {
+            has_origin = origin_foc_republic_unification
+            has_origin = origin_fop_first_order
+        }
+        has_global_flag = foc_khan_rebel_dqar_lost_311v
+    }
+
+    option = { name = foc_khan_rebel.42.a }
+}
+
+
+# Monthly fallback for occupation paths suppressed by another MOD or restored
+# from a save made after D'Qar had already changed hands.
+event = {
+    id = foc_khan_rebel.43
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        OR = {
+            has_global_flag = foc_khan_phase_one
+            has_global_flag = fop_origin_player_crisis_exists
+        }
+        NOT = { has_global_flag = foc_khan_rebel_dqar_lost_311v }
+        NOT = { has_global_flag = foc_khan_rebel_dqar_migration_preparing_311v }
+        has_global_flag = foc_saga_dqar_held_by_rebels
+        any_system = {
+            has_star_flag = foc_khan_rebel_dqar_home
+            OR = {
+                foc_v235b_dqar_ruined = yes
+                AND = {
+                    NOT = { space_owner? = { OR = { has_country_flag = foc_khan_rebel_alliance_country has_country_flag = foc_khan_first_order_resistance_country } } }
+                    NOT = { space_owner? = { has_country_flag = foc_sw_new_republic_country } }
+                }
+            }
+            any_system_planet = { has_planet_flag = foc_khan_rebel_dqar }
+        }
+    }
+
+    immediate = {
+        random_system = {
+            limit = { has_star_flag = foc_khan_rebel_dqar_home OR = {
+                foc_v235b_dqar_ruined = yes
+                AND = {
+                    NOT = { space_owner? = { OR = { has_country_flag = foc_khan_rebel_alliance_country has_country_flag = foc_khan_first_order_resistance_country } } }
+                    NOT = { space_owner? = { has_country_flag = foc_sw_new_republic_country } }
+                }
+            } }
+            save_global_event_target_as = foc_khan_rebel_dqar_system
+            random_system_planet = {
+                limit = { has_planet_flag = foc_khan_rebel_dqar }
+                planet_event = { id = foc_khan_rebel.41 }
+            }
+        }
+    }
+}
+
+
+# 3.11v-fix: monthly fallback for the final Ajan Kloss base. The occupation
+# on_actions cannot fire when the colony is destroyed by the Starkiller or a
+# Xyston planet killer, so this re-runs the .38 defeat detector, whose trigger
+# now also accepts the destruction path.
+event = {
+    id = foc_khan_rebel.44
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_khan_rebel_ajan_kloss_spawned_311v
+        NOT = { has_global_flag = foc_khan_rebel_destroyed }
+        exists = event_target:foc_khan_rebel_alliance
+        any_system = {
+            has_star_flag = foc_khan_rebel_ajan_kloss_home
+            any_system_planet = {
+                has_planet_flag = foc_khan_rebel_ajan_kloss
+                OR = {
+                    AND = {
+                        exists = controller
+                        controller = {
+                            OR = {
+                                has_country_flag = foc_khan_first_order_country
+                                has_country_flag = foc_khan_final_order_country
+                                has_country_flag = fop_player_first_order
+                                has_country_flag = fop_player_final_order
+                            }
+                        }
+                    }
+                    has_planet_flag = myk_starkiller_planet_destroyed
+                    NOT = { exists = owner }
+                }
+            }
+        }
+    }
+
+    immediate = {
+        random_system = {
+            limit = { has_star_flag = foc_khan_rebel_ajan_kloss_home }
+            random_system_planet = {
+                limit = { has_planet_flag = foc_khan_rebel_ajan_kloss }
+                planet_event = { id = foc_khan_rebel.38 }
+            }
+        }
+    }
+}
+
+
+# FOC 3.21: every First Order-era Resistance, regardless of origin or
+# controller, receives exactly one maximum-tier Home One-model Arkship. The
+# earlier Republic-origin Imperial Rebellion is explicitly excluded. The
+# commissioned flag is set before creation and is never cleared after a real
+# commission, so loss of the Raddus cannot start an infinite reinforcement
+# loop. Its pc_ark colony can keep the Resistance alive independently; staged
+# base changes never teleport the ship.
+country_event = {
+	id = foc_khan_rebel.45
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_country_flag = foc_khan_rebel_alliance_country
+		has_global_flag = foc_khan_rebel_spawned
+		NOT = { has_global_flag = foc_khan_rebel_destroyed }
+		NOT = { has_global_flag = foc_republic_origin_empire_rebel_stage }
+		NOT = { has_country_flag = foc_republic_origin_imperial_rebel_country }
+		NOT = { has_country_flag = foc_republic_origin_rebel_alliance_country }
+		OR = {
+			has_country_flag = foc_khan_first_order_resistance_country
+			has_country_flag = foc_republic_origin_post_treaty_rebel_country
+			# Old-save migration: recognize an existing ordinary Resistance
+			# from its active Order-era context, then persist the new identity.
+			AND = {
+				OR = {
+					has_global_flag = foc_khan_phase_one
+					has_global_flag = foc_khan_phase_two
+					has_global_flag = fop_origin_player_crisis_exists
+					exists = event_target:foc_khan_first_order
+					exists = event_target:foc_khan_final_order
+					exists = event_target:fop_first_order_crisis_country
+				}
+			}
+		}
+		OR = {
+			exists = capital_scope
+			exists = event_target:foc_khan_rebel_capital
+		}
+	}
+
+	immediate = {
+		set_country_flag = foc_khan_first_order_resistance_country
+        country_event = { id = foc_v1718.10 days = 1 }
+		country_event = { id = foc_v134_support.3 }
+		country_event = { id = foc_v136_leia.1 }
+
+		# The full design's eighteen strategic hangars and command core must validate for
+		# both human and AI Rebels, including ordinary non-Republic-origin games.
+		# Reapply only after an actual country-form transition removed one of the
+		# required flags; the monthly safety pass otherwise remains read-only.
+		if = {
+			limit = {
+				OR = {
+					NOT = { has_country_flag = ssp_fighter_group_rebel }
+					NOT = { has_country_flag = ssp_strength_sg }
+					NOT = { has_country_flag = ssp_size_original }
+					NOT = { has_technology = tech_ssp_rebel_hyperspace }
+					NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+				}
+			}
+			remove_country_flag = ssp_fighter_group_republic
+			remove_country_flag = ssp_fighter_group_empire
+			set_country_flag = ssp_fighter_group_rebel
+			set_country_flag = ssp_strength_sg
+			set_country_flag = ssp_strength_selected
+			foc_sync_ssp_strength_to_main_difficulty = yes
+			set_country_flag = ssp_size_original
+			give_technology = { tech = tech_juggernaut message = no }
+			if = { limit = { is_ai = yes } give_technology = { tech = tech_ssp_rebel_hyperspace message = no } }
+			if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } }
+			refresh_auto_generated_ship_designs = yes
+		}
+
+		# Repair a save that already contains the dedicated ship but predates the
+		# one-shot country flag. This path never creates another ship.
+		if = {
+			limit = {
+				NOT = { has_country_flag = foc_khan_rebel_home_arkship_commissioned }
+				any_owned_ship = { has_ship_flag = foc_khan_rebel_home_arkship }
+			}
+			set_country_flag = foc_khan_rebel_home_arkship_commissioned
+		}
+
+		if = {
+			limit = {
+				NOT = { has_country_flag = foc_khan_rebel_home_arkship_commissioned }
+			}
+			# Set first: a failed/aborted creation is safer than repeated monthly
+			# spawning, which is explicitly forbidden for this unique flagship.
+			set_country_flag = foc_khan_rebel_home_arkship_commissioned
+
+			if = {
+				limit = {
+					exists = event_target:foc_khan_rebel_capital
+					event_target:foc_khan_rebel_capital = {
+						exists = owner
+						owner = { is_same_value = root }
+					}
+				}
+				event_target:foc_khan_rebel_capital = {
+					save_event_target_as = foc_khan_rebel_home_arkship_spawn
+				}
+			}
+			else = {
+				capital_scope = {
+					save_event_target_as = foc_khan_rebel_home_arkship_spawn
+				}
+			}
+
+			create_fleet = {
+				name = "NAME_FOC_REBEL_ARKSHIP_RADDUS"
+				settings = {
+					uses_naval_capacity = no
+					can_upgrade = no
+					can_disband = no
+					can_change_composition = no
+					can_change_leader = yes
+					spawn_debris = yes
+					ai_ignore_strength = yes
+				}
+				effect = {
+					set_owner = root
+					# V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+}
+					
+
+					
+
+					
+					create_ship = {
+						name = "NAME_FOC_REBEL_ARKSHIP_RADDUS"
+						design = "NAME_FOC_REBEL_ARKSHIP_RADDUS"
+						graphical_culture = rebel_01
+						upgradable = no
+						fleet_cache_recalc = yes
+						effect = {
+							set_ship_flag = foc_khan_rebel_home_arkship
+							set_ship_flag = foc_khan_rebel_home_arkship_v40_full
+							set_ship_flag = foc_khan_rebel_home_arkship_v41_home_one
+							# The edict Supremacy also initializes its custom Arkship one
+							# day later, after ownership and location are both valid.
+							ship_event = { id = foc_khan_rebel.49 days = 1 }
+						}
+					}
+					set_location = {
+						target = event_target:foc_khan_rebel_home_arkship_spawn
+						distance = 30
+						angle = random
+					}
+					set_fleet_flag = foc_khan_rebel_home_arkship_fleet
+					set_fleet_stance = passive
+					set_aggro_range_measure_from = self
+					set_aggro_range = 300
+				}
+			}
+
+			# A delayed country pass is retained as a save-safe fallback only; it
+			# never creates a second ship.
+			country_event = { id = foc_khan_rebel.45 days = 2 }
+		}
+
+		# Restore identity and fixed axial equipment after save loads or internal
+		# starbase reconstruction. This never creates a replacement flagship.
+		every_owned_fleet = {
+			limit = {
+				any_owned_ship = { has_ship_flag = foc_khan_rebel_home_arkship }
+			}
+			set_fleet_flag = foc_khan_rebel_home_arkship_fleet
+			set_fleet_stance = passive
+		}
+		every_owned_ship = {
+			limit = {
+				OR = {
+					has_ship_flag = foc_khan_rebel_home_arkship
+					OR = { is_ship_size = foc_rebel_home_arkship_tier_3 is_ship_size = foc_rebel_home_arkship_tier_3_foc_lowest }
+				}
+			}
+			set_ship_flag = foc_khan_rebel_home_arkship
+			set_graphical_culture = rebel_01
+			starbase = {
+				if = {
+					limit = {
+						NOT = { has_starbase_module = foc_rebel_home_arkship_engineering_bay }
+					}
+					set_starbase_module = {
+						slot = 1
+						module = foc_rebel_home_arkship_engineering_bay
+					}
+					set_ship_construction_type = starbase_shipyard
+				}
+				if = {
+					limit = {
+						NOT = { has_starbase_module = foc_rebel_home_arkship_docking_bay }
+					}
+					set_starbase_module = {
+						slot = 2
+						module = foc_rebel_home_arkship_docking_bay
+					}
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_starbase_module = foc_rebel_home_arkship_strike_command_module
+						}
+					}
+					set_starbase_module = {
+							slot = 7
+						module = foc_rebel_home_arkship_strike_command_module
+					}
+				}
+			}
+		}
+	}
+}
+
+# Old-save correction for the short-lived 3.18 build: remove a Raddus that was
+# commissioned for Palpatine-era Imperial Rebels (or carried into the immediate
+# New Republic successor) and free its one-shot flag. The real later Resistance
+# receives its own ship once the First Order era begins.
+country_event = {
+	id = foc_khan_rebel.46
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_country_flag = foc_khan_first_order_resistance_country }
+		OR = {
+			has_country_flag = foc_republic_origin_imperial_rebel_country
+			has_country_flag = foc_republic_origin_rebel_alliance_country
+			has_country_flag = foc_republic_origin_player_republic
+			has_country_flag = foc_republic_origin_republic_country
+			has_global_flag = foc_republic_origin_empire_rebel_stage
+		}
+		OR = {
+			has_country_flag = foc_khan_rebel_home_arkship_commissioned
+			any_owned_ship = {
+				OR = {
+					has_ship_flag = foc_khan_rebel_home_arkship
+					OR = { is_ship_size = foc_rebel_home_arkship_tier_3 is_ship_size = foc_rebel_home_arkship_tier_3_foc_lowest }
+				}
+			}
+		}
+	}
+
+	immediate = {
+		every_owned_ship = {
+			limit = {
+				OR = {
+					has_ship_flag = foc_khan_rebel_home_arkship
+					OR = { is_ship_size = foc_rebel_home_arkship_tier_3 is_ship_size = foc_rebel_home_arkship_tier_3_foc_lowest }
+				}
+			}
+			destroy_ship = this
+		}
+		remove_country_flag = foc_khan_rebel_home_arkship_commissioned
+	}
+}
+
+# FOC 3.21 old-save migration. A pre-3.21 Raddus stores its old model and design
+# inside the save, so changing the global design alone cannot repair it. Build
+# the Home One-model full-core ship at exactly the old ship's position first,
+# then retire the obsolete object two days later. The V41 and commissioned flags
+# make this a one-time conversion, never a reinforcement loop.
+country_event = {
+	id = foc_khan_rebel.47
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_country_flag = foc_khan_first_order_resistance_country
+		has_country_flag = foc_khan_rebel_home_arkship_commissioned
+		NOT = { has_country_flag = foc_khan_rebel_home_arkship_v41_migrated }
+		any_owned_ship = {
+			has_ship_flag = foc_khan_rebel_home_arkship
+			NOT = { has_ship_flag = foc_khan_rebel_home_arkship_v41_home_one }
+		}
+		NOT = {
+			any_owned_ship = { has_ship_flag = foc_khan_rebel_home_arkship_v41_home_one }
+		}
+	}
+
+	immediate = {
+		set_country_flag = ssp_fighter_group_rebel
+		set_country_flag = ssp_strength_sg
+		set_country_flag = ssp_strength_selected
+		foc_sync_ssp_strength_to_main_difficulty = yes
+		set_country_flag = ssp_size_original
+		give_technology = { tech = tech_juggernaut message = no }
+		if = { limit = { is_ai = yes } give_technology = { tech = tech_ssp_rebel_hyperspace message = no } }
+		if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } }
+
+		random_owned_ship = {
+			limit = {
+				has_ship_flag = foc_khan_rebel_home_arkship
+				NOT = { has_ship_flag = foc_khan_rebel_home_arkship_v41_home_one }
+			}
+			save_event_target_as = foc_khan_rebel_home_arkship_v41_anchor
+		}
+
+		create_fleet = {
+			name = "NAME_FOC_REBEL_ARKSHIP_RADDUS"
+			settings = {
+				uses_naval_capacity = no
+				can_upgrade = no
+				can_disband = no
+				can_change_composition = no
+				can_change_leader = yes
+				spawn_debris = yes
+				ai_ignore_strength = yes
+			}
+			effect = {
+				set_owner = root
+				# V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+}
+				
+
+				
+
+				
+				create_ship = {
+					name = "NAME_FOC_REBEL_ARKSHIP_RADDUS"
+					design = "NAME_FOC_REBEL_ARKSHIP_RADDUS"
+					graphical_culture = rebel_01
+					upgradable = no
+					fleet_cache_recalc = yes
+					effect = {
+						set_ship_flag = foc_khan_rebel_home_arkship
+						set_ship_flag = foc_khan_rebel_home_arkship_v40_full
+						set_ship_flag = foc_khan_rebel_home_arkship_v41_home_one
+						save_event_target_as = foc_khan_rebel_home_arkship_v41_new
+						ship_event = { id = foc_khan_rebel.49 days = 1 }
+					}
+				}
+				set_location = {
+					target = event_target:foc_khan_rebel_home_arkship_v41_anchor
+					distance = 0
+					angle = random
+				}
+				set_fleet_flag = foc_khan_rebel_home_arkship_fleet
+				set_fleet_stance = passive
+				set_aggro_range_measure_from = self
+				set_aggro_range = 300
+			}
+		}
+
+		if = {
+			limit = { exists = event_target:foc_khan_rebel_home_arkship_v41_new }
+			set_country_flag = foc_khan_rebel_home_arkship_v41_migrated
+			every_owned_ship = {
+				limit = {
+					has_ship_flag = foc_khan_rebel_home_arkship
+					NOT = { has_ship_flag = foc_khan_rebel_home_arkship_v41_home_one }
+				}
+				ship_event = { id = foc_khan_rebel.48 days = 2 }
+			}
+			country_event = { id = foc_khan_rebel.45 days = 2 }
+		}
+	}
+}
+
+ship_event = {
+	id = foc_khan_rebel.48
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_ship_flag = foc_khan_rebel_home_arkship
+		NOT = { has_ship_flag = foc_khan_rebel_home_arkship_v41_home_one }
+		owner = {
+			any_owned_ship = { has_ship_flag = foc_khan_rebel_home_arkship_v41_home_one }
+		}
+	}
+
+	immediate = { destroy_ship = this }
+}
+
+# Delayed custom Arkship initialization, patterned after the full-loadout
+# Supremacy created by its edict. It deliberately does not call the vanilla
+# Arkship initializer, which would rebuild Raddus with vanilla Arkship art.
+ship_event = {
+	id = foc_khan_rebel.49
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_ship_flag = foc_khan_rebel_home_arkship
+		OR = { is_ship_size = foc_rebel_home_arkship_tier_3 is_ship_size = foc_rebel_home_arkship_tier_3_foc_lowest }
+	}
+
+	immediate = {
+		set_graphical_culture = rebel_01
+		set_ship_flag = foc_khan_rebel_home_arkship_v41_home_one
+		starbase = {
+			# Full Tier-III Arkship core. The Raddus combat weapons remain in its
+			# fixed Home One design; these seven module slots provide Arkship
+			# construction, habitat, sensor, harvesting and fighter-command tools.
+			set_starbase_module = { slot = 1 module = foc_rebel_home_arkship_engineering_bay }
+			set_starbase_module = { slot = 2 module = foc_rebel_home_arkship_docking_bay }
+			set_starbase_module = { slot = 3 module = foc_rebel_home_arkship_habitation_module }
+			set_starbase_module = { slot = 4 module = foc_rebel_home_arkship_sensor_array }
+			set_starbase_module = { slot = 5 module = foc_rebel_home_arkship_mining_array }
+			# V141: utility slots are 1-6; the fighter-command system belongs in the
+			# dedicated axial slot (numeric starbase slot 7 / spinal_mount_1).
+			set_starbase_module = { slot = 6 module = foc_rebel_home_arkship_archive }
+			if = {
+				limit = { NOT = { has_starbase_module = foc_rebel_home_arkship_strike_command_module } }
+				set_starbase_module = { slot = 7 module = foc_rebel_home_arkship_strike_command_module }
+			}
+			set_starbase_building = { slot = 1 building = foc_rebel_home_arkship_armor }
+			set_starbase_building = { slot = 2 building = foc_rebel_home_arkship_shield }
+			set_ship_construction_type = starbase_shipyard
+		}
+		# Do not call colony = { planet = { ... } } here. Once Raddus becomes the
+		# mobile capital its Arkship colony resolves back to the ship object, and a
+		# planet-only flag call produces the ship/planet scope error seen in V37.
+		set_ship_flag = foc_khan_rebel_home_arkship_core_initialized
+	}
+}
+
+
+# V147: Bloodline/D'Qar convergence.  Old Imperial-Rebellion event targets can
+# disappear at the Galactic Treaty, so never rely on the historical target when
+# handing D'Qar to the First-Order-era Resistance.  Reacquire both country and
+# system from stable flags, then transfer the entire inhabited system once.
+country_event = {
+	id = foc_khan_rebel.50
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+        foc_v235b_dqar_settlement_allowed = yes
+		has_global_flag = foc_republic_origin_galactic_treaty
+		has_global_flag = foc_khan_phase_one
+		has_global_flag = foc_v109_bloodline_resistance_authorized
+		NOT = { has_global_flag = foc_v147_dqar_bloodline_handover_complete }
+		NOT = { has_global_flag = foc_khan_rebel_dqar_lost_311v }
+		any_system = { has_star_flag = foc_khan_rebel_dqar_home }
+		any_country = {
+			has_country_flag = foc_khan_first_order_resistance_country
+			has_country_flag = foc_khan_rebel_alliance_country
+		}
+	}
+
+	immediate = {
+		# Reacquire the live Resistance without ever dereferencing a missing target.
+		if = {
+			limit = { NOT = { exists = event_target:foc_khan_rebel_alliance } }
+			random_country = {
+				limit = {
+					has_country_flag = foc_khan_first_order_resistance_country
+					has_country_flag = foc_khan_rebel_alliance_country
+				}
+				save_global_event_target_as = foc_khan_rebel_alliance
+			}
+		}
+		else_if = {
+			limit = {
+				event_target:foc_khan_rebel_alliance = {
+					NOT = { has_country_flag = foc_khan_first_order_resistance_country }
+				}
+			}
+			random_country = {
+				limit = {
+					has_country_flag = foc_khan_first_order_resistance_country
+					has_country_flag = foc_khan_rebel_alliance_country
+				}
+				save_global_event_target_as = foc_khan_rebel_alliance
+			}
+		}
+
+		random_system = {
+			limit = { has_star_flag = foc_khan_rebel_dqar_home }
+			save_global_event_target_as = foc_khan_rebel_system
+			save_global_event_target_as = foc_khan_rebel_dqar_system
+
+			if = {
+				limit = { exists = starbase }
+				starbase = {
+					set_owner = event_target:foc_khan_rebel_alliance
+					set_starbase_flag = foc_khan_rebel_base_starbase
+				}
+			}
+			else = {
+				create_starbase = {
+					size = starbase_starhold
+					owner = event_target:foc_khan_rebel_alliance
+					effect = { set_starbase_flag = foc_khan_rebel_base_starbase }
+				}
+			}
+
+			every_system_planet = {
+				limit = { is_colony = yes }
+				set_owner = event_target:foc_khan_rebel_alliance
+				set_controller = event_target:foc_khan_rebel_alliance
+				every_planet_army = { set_owner = event_target:foc_khan_rebel_alliance }
+			}
+
+			random_system_planet = {
+				limit = { has_planet_flag = foc_khan_rebel_dqar }
+				set_planet_flag = foc_khan_rebel_capital
+				remove_modifier = foc_dqar_hidden_resistance_base
+				add_modifier = { modifier = foc_dqar_hidden_resistance_base days = -1 }
+				set_capital = yes
+				save_global_event_target_as = foc_khan_rebel_capital
+			}
+			foc_v204_finalize_dqar_resistance_markers = yes
+		}
+
+		set_global_flag = foc_khan_rebel_spawned
+		set_global_flag = foc_saga_dqar_held_by_rebels
+		set_global_flag = foc_v147_dqar_bloodline_handover_complete
+		remove_global_flag = foc_khan_rebel_preparing
+		log = "FOC_V147_DQAR: Bloodline handover verified; D'Qar fully transferred to the Resistance."
+	}
+}
+
+
+# V149: old-save recovery for the exact V147 race where D'Qar was handed to
+# the Resistance, then immediately stolen back by the New Republic Treaty pulse.
+country_event = {
+	id = foc_khan_rebel.51
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+        NOT = { foc_v235b_dqar_ruined = yes }
+        NOT = { has_global_flag = foc_khan_rebel_crait_spawned_311v }
+        NOT = { has_global_flag = foc_khan_rebel_ajan_kloss_spawned_311v }
+		has_country_flag = foc_khan_first_order_resistance_country
+		has_country_flag = foc_khan_rebel_alliance_country
+		has_global_flag = foc_khan_phase_one
+		has_global_flag = foc_v109_bloodline_resistance_authorized
+		has_global_flag = foc_khan_rebel_dqar_lost_311v
+		has_global_flag = foc_v147_dqar_bloodline_handover_complete
+		any_system = {
+			has_star_flag = foc_khan_rebel_dqar_home
+			space_owner? = { has_country_flag = foc_sw_new_republic_country }
+		}
+	}
+
+	immediate = {
+		remove_global_flag = foc_khan_rebel_dqar_lost_311v
+		remove_global_flag = foc_canon_dqar_battle_completed
+		remove_global_flag = foc_canon_dqar_evacuation_started
+		every_country = {
+			limit = {
+				OR = {
+					has_country_flag = foc_khan_rebel_alliance_country
+					has_country_flag = foc_khan_first_order_resistance_country
+				}
+			}
+			remove_country_flag = foc_canon_mobile_resistance_phase
+		}
+
+		if = {
+			limit = { has_global_flag = foc_canon_fo_first_battle_dqar }
+			remove_global_flag = foc_canon_fo_first_battle_dqar
+			remove_global_flag = foc_canon_fo_first_battle_recorded
+			every_country = {
+				limit = { has_country_flag = foc_canon_fo_first_battle_anchor }
+				remove_country_flag = foc_canon_fo_first_battle_anchor
+			}
+		}
+
+		if = {
+			limit = { exists = event_target:foc_khan_rebel_dqar_conqueror_311v }
+			clear_global_event_target = foc_khan_rebel_dqar_conqueror_311v
+		}
+		if = {
+			limit = { exists = event_target:foc_khan_rebel_dqar_fallen_base_311v }
+			clear_global_event_target = foc_khan_rebel_dqar_fallen_base_311v
+		}
+		remove_global_flag = foc_v147_dqar_bloodline_handover_complete
+		set_global_flag = foc_saga_dqar_held_by_rebels
+		country_event = { id = foc_khan_rebel.50 days = 1 }
+		log = "FOC_V149_DQAR: repaired false New Republic overwrite and rescheduled Resistance handover."
+	}
+}

@@ -1,0 +1,51 @@
+namespace = foc_khan_216
+
+# 2.16 migration: 4.4 uses the generated _queued planet-killer on_action.
+# Rebuild serialized special-Xyston queues from old saves after installing the
+# corrected hook, and clean temporary reservations left by failed executions.
+event = {
+	id = foc_khan_216.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_global_flag = foc_khan_phase_two
+		exists = event_target:foc_khan_final_order
+		NOT = { has_global_flag = foc_khan_216_xyston_queued_on_action_migrated }
+	}
+
+	immediate = {
+		set_global_flag = foc_khan_216_xyston_queued_on_action_migrated
+
+		every_system = {
+			remove_star_flag = foc_khan_xyston_system_reserved_212
+			every_system_planet = {
+				remove_planet_flag = foc_khan_xyston_target_reserved
+				if = {
+					limit = {
+						OR = {
+							is_planet_class = pc_shattered
+							is_planet_class = pc_shattered_2
+							is_planet_class = pc_broken
+							is_planet_class = pc_black_hole
+						}
+					}
+					set_planet_flag = foc_khan_xyston_destroyed_target_213
+				}
+			}
+		}
+
+		event_target:foc_khan_final_order = {
+			every_owned_fleet = {
+				limit = {
+					has_fleet_flag = foc_khan_xyston_planet_killer_fleet
+					any_owned_ship = { OR = { is_ship_size = foc_khan_xystonsd is_ship_size = foc_khan_xystonsd_foc_lowest } }
+				}
+				remove_auto_move_target = yes
+				clear_orders = yes
+				clear_fleet_actions = this
+				fleet_event = { id = foc_khan_xyston_ai.10 days = 1 random = 8 }
+			}
+		}
+	}
+}

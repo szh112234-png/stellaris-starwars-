@@ -1,0 +1,132 @@
+# Country scope; never uses ROOT (callers also include nested NPC country scopes).
+if = {
+    limit = { foc_v232n_is_resistance = yes }
+    set_country_flag = foc_v232n_leadership_busy
+    remove_country_flag = foc_republic_origin_imperial_rebel_country
+    remove_country_flag = foc_republic_origin_rebel_alliance_country
+    inline_script = "foc_v232n_close_conquest_queue"
+    save_event_target_as = foc_v232n_resistance_recipient
+
+    every_owned_leader = {
+        limit = { has_leader_flag = foc_saga_mon_mothma_leader has_leader_flag = foc_saga_leia_leader }
+        remove_leader_flag = foc_saga_leia_leader
+    }
+
+    if = {
+        limit = { NOT = { has_global_flag = foc_saga_leia_dead } }
+        # Prefer the living Leia already belonging to this country. Otherwise move
+        # the actual allied leader, rather than cloning/killing her or repainting Mothma.
+        if = {
+            limit = { NOT = { any_owned_leader = { has_leader_flag = foc_saga_leia_leader } } }
+            random_country = {
+                limit = {
+                    NOT = { is_same_value = event_target:foc_v232n_resistance_recipient }
+                    OR = {
+                        has_country_flag = foc_sw_new_republic_country
+                        has_country_flag = foc_khan_rebel_alliance_country
+                        has_country_flag = foc_republic_origin_imperial_rebel_country
+                        has_country_flag = foc_republic_origin_rebel_alliance_country
+                        foc_v232n_is_resistance = yes
+                    }
+                    any_owned_leader = { has_leader_flag = foc_saga_leia_leader }
+                }
+                random_owned_leader = {
+                    limit = { has_leader_flag = foc_saga_leia_leader }
+                    if = { limit = { is_ruler = no } unassign_leader = yes }
+                    set_owner = event_target:foc_v232n_resistance_recipient
+                }
+            }
+        }
+        if = {
+            limit = { NOT = { any_owned_leader = { has_leader_flag = foc_saga_leia_leader } } }
+            create_leader = {
+                tier = leader_tier_legendary
+                class = official
+                species = owner_main_species
+                name = "FOC_SAGA_LEIA_NAME"
+                gender = female
+                skill = 8
+                event_leader = yes
+                skip_background_generation = yes
+                randomize_traits = no
+                effect = {
+                    change_leader_portrait = foc_saga_leia_01
+                    set_leader_flag = foc_saga_leia_leader
+                    set_immortal = yes
+                }
+            }
+        }
+        if = {
+            limit = { any_owned_leader = { has_leader_flag = foc_saga_leia_leader } }
+            if = {
+                limit = { exists = ruler ruler = { has_leader_flag = foc_saga_leia_leader } }
+                ruler = { save_event_target_as = foc_v232n_leia_to_appoint }
+            }
+            else = {
+                random_owned_leader = {
+                    limit = { has_leader_flag = foc_saga_leia_leader }
+                    save_event_target_as = foc_v232n_leia_to_appoint
+                }
+                event_target:foc_v232n_leia_to_appoint = { unassign_leader = yes }
+                set_leader = event_target:foc_v232n_leia_to_appoint
+            }
+            # Flags only record an appointment actually visible in ruler scope.
+            if = {
+                limit = { exists = ruler ruler = { has_leader_flag = foc_saga_leia_leader } }
+                ruler = {
+                    set_name = "FOC_SAGA_LEIA_NAME"
+                    change_leader_portrait = foc_saga_leia_01
+                    set_leader_tier = leader_tier_legendary
+                    save_global_event_target_as = foc_saga_leia
+                }
+                if = {
+                    limit = { NOT = { has_country_flag = foc_v232n_leia_command_verified } }
+                    set_country_flag = foc_v232n_leia_command_verified
+                    log = "FOC_V232N_LEIA: Leia is the actual Resistance ruler; no ruler was renamed from Mon Mothma."
+                }
+            }
+        }
+    }
+
+    # Mothma belongs to the New Republic, not its Resistance successor. Prefer a
+    # surviving Republic; when none exists she retires out of the owned-leader pool.
+    # Exile is deliberately not kill_leader and sets no story death flag.
+    if = {
+        limit = { any_owned_leader = { has_leader_flag = foc_saga_mon_mothma_leader } }
+        if = {
+            limit = {
+                any_country = {
+                    has_country_flag = foc_sw_new_republic_country
+                    foc_v232n_is_resistance = no
+                    NOT = { is_same_value = event_target:foc_v232n_resistance_recipient }
+                }
+            }
+            random_country = {
+                limit = {
+                    has_country_flag = foc_sw_new_republic_country
+                    foc_v232n_is_resistance = no
+                    NOT = { is_same_value = event_target:foc_v232n_resistance_recipient }
+                }
+                save_event_target_as = foc_v232n_mothma_republic
+            }
+            every_owned_leader = {
+                limit = { has_leader_flag = foc_saga_mon_mothma_leader }
+                if = {
+                    limit = { event_target:foc_v232n_mothma_republic = { NOT = { any_owned_leader = { has_leader_flag = foc_saga_mon_mothma_leader } } } }
+                    if = { limit = { is_ruler = no } unassign_leader = yes }
+                    set_owner = event_target:foc_v232n_mothma_republic
+                    save_global_event_target_as = foc_saga_mon_mothma
+                }
+                else = { exile_leader_as = foc_v232n_retired_duplicate_mothma }
+            }
+        }
+        else = {
+            every_owned_leader = {
+                limit = { has_leader_flag = foc_saga_mon_mothma_leader }
+                exile_leader_as = foc_v232n_retired_mon_mothma
+            }
+        }
+        log = "FOC_V232N_LEIA: Mon Mothma removed from the Resistance leader pool (Republic transfer or retirement, not death)."
+    }
+    remove_country_flag = foc_v232n_leadership_busy
+}

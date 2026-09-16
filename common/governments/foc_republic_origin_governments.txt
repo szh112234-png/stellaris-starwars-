@@ -1,0 +1,33 @@
+gov_foc_republic_origin_republic = {
+    ruler_title = RT_FOC_REPUBLIC_ORIGIN_CHANCELLOR
+    ruler_title_female = RT_FOC_REPUBLIC_ORIGIN_CHANCELLOR
+    possible = {
+        has_authority = auth_democratic
+        has_valid_civic = civic_foc_republic_origin_galactic_senate
+    }
+    weight = { base = 20000 }
+}
+
+gov_foc_republic_origin_separatists = {
+    ruler_title = RT_FOC_REPUBLIC_ORIGIN_HEAD_OF_STATE
+    ruler_title_female = RT_FOC_REPUBLIC_ORIGIN_HEAD_OF_STATE
+    possible = {
+        has_authority = auth_oligarchic
+        has_valid_civic = civic_foc_republic_origin_separatist_council
+    }
+    weight = { base = 20000 }
+}
+
+gov_foc_republic_origin_empire = {
+    ruler_title = RT_FOC_REPUBLIC_ORIGIN_EMPEROR
+    ruler_title_female = RT_FOC_REPUBLIC_ORIGIN_EMPRESS
+    heir_title = HT_FOC_REPUBLIC_ORIGIN_SUPREME_COMMANDER
+    heir_title_female = HT_FOC_REPUBLIC_ORIGIN_SUPREME_COMMANDER
+    use_regnal_names = no
+    dynastic_last_names = no
+    possible = {
+        has_authority = auth_imperial
+        has_valid_civic = civic_foc_republic_origin_galactic_emperor
+    }
+    weight = { base = 20000 }
+}

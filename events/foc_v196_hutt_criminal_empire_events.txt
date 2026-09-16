@@ -1,0 +1,71 @@
+namespace = foc_v196_hutt
+
+# Hidden new-game/old-save dispatcher. The global completion flag is set only
+# after both the Hutt country and its three map systems exist.
+country_event = {
+    id = foc_v196_hutt.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        NOT = { has_global_flag = foc_v196_hutt_criminal_empire_initialized }
+        OR = {
+            has_origin = origin_foc_hutt_criminal_empire
+            NOT = {
+                any_playable_country = {
+                    is_ai = no
+                    has_origin = origin_foc_hutt_criminal_empire
+                }
+            }
+        }
+        any_system = { has_star_flag = foc_swmap_tatooine_home }
+        any_system = { has_star_flag = foc_swmap_nal_hutta_home }
+        any_system = { has_star_flag = foc_v175_nar_shaddaa_home }
+    }
+
+    immediate = {
+        foc_v196_establish_hutt_criminal_empire = yes
+    }
+}
+
+# V197 Hutt-origin Republic-era bootstrap. Hutt Space is established first so
+# its three systems are protected before the AI Republic claims the surrounding
+# pre-Imperial map. The monthly on-action retries partial startup safely.
+country_event = {
+    id = foc_v196_hutt.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        has_origin = origin_foc_hutt_criminal_empire
+        has_global_flag = foc_v197_hutt_republic_era_selected
+        NOT = { has_global_flag = foc_v197_hutt_republic_era_initialized }
+        has_global_flag = foc_republic_origin_bootstrap
+        NOT = {
+            any_playable_country = {
+                is_ai = no
+                has_origin = origin_foc_republic_unification
+            }
+        }
+        NOT = { has_global_flag = foc_sw_fallen_empires_ready }
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        any_system = { has_star_flag = foc_sw_coruscant_home }
+        any_system = { has_star_flag = foc_sw_jakku_home }
+        any_system = { has_star_flag = foc_swmap_tatooine_home }
+        any_system = { has_star_flag = foc_swmap_nal_hutta_home }
+        any_system = { has_star_flag = foc_v175_nar_shaddaa_home }
+    }
+
+    immediate = {
+        foc_v196_establish_hutt_criminal_empire = yes
+        if = {
+            limit = {
+                has_global_flag = foc_v196_hutt_criminal_empire_initialized
+                NOT = { has_global_flag = foc_v197_hutt_republic_era_initialized }
+            }
+            foc_v197_establish_ai_galactic_republic = yes
+        }
+    }
+}

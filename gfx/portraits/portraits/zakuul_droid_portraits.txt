@@ -1,0 +1,171 @@
+portraits = {
+	#GEMINI DROID
+	gemini_droid_01 = { entity = "portrait_ai_01_entity"	clothes_selector = "no_texture"	attachment_selector = "no_texture"	greeting_sound = "robot_human_greetings"
+		character_textures = { "gfx/models/portraits/zakuul/gemini_body.dds" }
+	}
+	
+	#Skytrooper
+	skytrooper_01 = { entity = "portrait_skytrooper_01_entity" clothes_selector = "no_texture"	attachment_selector = "no_texture"	greeting_sound = "robot_arthopoid_greetings"
+		character_textures = { "gfx/models/portraits/zakuul/skytrooper_body.dds" }
+	}
+	
+	#Static Elite Skytrooper
+	elitesky = { texturefile = "gfx/models/portraits/zakuul/elitesky.dds" greeting_sound = "robot_arthopoid_greetings" }
+	skytrooper_mk3 = { texturefile = "gfx/models/portraits/zakuul/skytrooper_battledroid.dds" greeting_sound = "robot_arthopoid_greetings" }
+	heavy_skytrooper = { texturefile = "gfx/models/portraits/zakuul/heavy_skytrooper.dds" greeting_sound = "robot_arthopoid_greetings" }
+	scout_skytrooper = { texturefile = "gfx/models/portraits/zakuul/scout_skytrooper.dds" greeting_sound = "robot_arthopoid_greetings" }
+}
+
+portrait_groups = {
+	skytrooper = {
+		default = skytrooper_01
+		game_setup = { 
+			add = {
+				portraits = {
+					skytrooper_01
+					gemini_droid_01
+					elitesky
+					skytrooper_mk3
+					heavy_skytrooper
+					scout_skytrooper
+				}
+			}
+		}
+
+		#species scope
+		species = { #generic portrait for a species
+			add = {
+				portraits = {
+					skytrooper_01
+				}
+			}
+		}		
+		
+		#pop scope
+		pop_group = { #for a specific pop
+			add = {
+				portraits = {
+					skytrooper_01
+				}
+			}
+		}
+		
+		#leader scope
+		leader = { #scientists, generals, admirals, governor
+			add = {
+				trigger = {
+					leader_class = scientist
+				}
+				portraits = {
+					gemini_droid_01
+				}
+			}
+			add = {
+				trigger = {
+					leader_class = general
+				}
+				portraits = {
+					skytrooper_01
+					elitesky
+					heavy_skytrooper
+					scout_skytrooper
+				}
+			}
+			add = {
+				trigger = {
+					leader_class = admiral
+				}
+				portraits = {
+					gemini_droid_01
+				}
+			}
+			add = {
+				trigger = {
+					leader_class = governor 
+				}
+				portraits = {
+					gemini_droid_01
+				}
+			}
+		}
+
+			
+		#leader scope 
+		ruler = {
+			add = {
+				portraits = {
+					gemini_droid_01
+				}
+			}
+		}
+	}	
+}
+
+portrait_groups = {
+	gemini = {
+		default = gemini_droid_01
+		game_setup = { 
+			add = {
+				portraits = {
+					gemini_droid_01
+				}
+			}
+		}
+
+		#species scope
+		species = { #generic portrait for a species
+			add = {
+				portraits = {
+					gemini_droid_01
+				}
+			}
+		}		
+		
+		#pop scope
+		pop_group = { #for a specific pop
+			add = {
+				portraits = {
+					gemini_droid_01
+				}
+			}
+		}
+		
+		#leader scope
+		leader = { #scientists, generals, admirals, governor
+			add = {
+				trigger = {
+					leader_class = scientist
+				}
+				portraits = {
+					gemini_droid_01
+				}
+			}
+			add = {
+				trigger = {
+					leader_class = commander
+				}
+				portraits = {
+					gemini_droid_01
+				}
+			}
+			add = {
+				trigger = {
+					leader_class = official 
+				}
+				portraits = {
+					gemini_droid_01
+				}
+			}
+		}
+
+			
+		#leader scope 
+		ruler = {
+			add = {
+				portraits = {
+					gemini_droid_01
+				}
+			}
+		}
+	}	
+}

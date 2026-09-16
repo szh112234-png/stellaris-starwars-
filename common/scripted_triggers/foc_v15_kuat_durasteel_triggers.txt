@@ -1,0 +1,27 @@
+# Country scope. Refund is not a completed shipyard expansion.
+foc_v15_kuat_expansion_really_completed = {
+    NOT = { has_country_flag = foc_v15_kuat_expansion_refunded }
+    OR = {
+        has_country_flag = foc_v15_kuat_durasteel_unlocked
+        AND = {
+            has_country_flag = foc_republic_origin_kuat_investment_done
+            has_country_flag = foc_republic_origin_kuat_venator_design_granted_v118e
+            has_country_flag = foc_v232r_plot_kuat
+        }
+    }
+}
+
+# The Republic-origin country retains its origin through Empire/Rebel succession.
+# Other origins and crisis factions keep their existing equipment unlock paths.
+foc_v15_durasteel_kuat_gate = {
+    OR = {
+        NOT = {
+            OR = {
+                has_origin = origin_foc_republic_unification
+                has_country_flag = foc_v197_hutt_era_ai_republic
+            }
+        }
+        foc_v15_kuat_expansion_really_completed = yes
+        foc_v17_resurgent_durasteel_eligible = yes
+    }
+}

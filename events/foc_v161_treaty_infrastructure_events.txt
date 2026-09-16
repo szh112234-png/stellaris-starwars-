@@ -1,0 +1,30 @@
+namespace = foc_v161_infra
+
+# Retry Treaty-era infrastructure initialization only for the active human
+# Star-Wars story route. Stops permanently once every required structure/site
+# is verified. This never touches fleets.
+country_event = {
+    id = foc_v161_infra.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        NOT = { has_global_flag = foc_v161_treaty_infrastructure_verified }
+        OR = {
+            has_origin = origin_fop_first_order
+            has_country_flag = foc_republic_origin_player_republic
+            has_country_flag = foc_republic_origin_player_imperial_remnant
+            has_country_flag = foc_republic_origin_post_treaty_player_rebels
+            has_country_flag = foc_republic_origin_empire_crisis
+        }
+        OR = {
+            has_global_flag = foc_republic_origin_galactic_treaty
+            has_global_flag = fop_origin_treaty_epoch
+        }
+    }
+
+    immediate = {
+        foc_v161_ensure_treaty_infrastructure = yes
+    }
+}

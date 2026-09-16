@@ -1,0 +1,51 @@
+# Rey integration. Legendary status uses Stellaris native leader_tier_legendary;
+# no custom "legendary" trait is used.
+
+foc_rey_apply_portrait = {
+    change_leader_portrait = foc_rey_legendary_01
+}
+
+foc_rey_ensure_legendary_leader = {
+    if = {
+        limit = { any_owned_leader = { has_leader_flag = foc_rey_legendary_leader } }
+        random_owned_leader = {
+            limit = { has_leader_flag = foc_rey_legendary_leader }
+            foc_rey_apply_portrait = yes
+            if = { limit = { NOT = { is_leader_tier = leader_tier_legendary } } set_leader_tier = leader_tier_legendary }
+            if = {
+                limit = { NOT = { has_trait = leader_trait_foc_force_sensitive } }
+                add_trait = { trait = leader_trait_foc_force_sensitive consume_selection = no }
+            }
+            if = {
+                limit = { NOT = { has_trait = leader_trait_psionic } }
+                add_trait = { trait = leader_trait_psionic consume_selection = no }
+            }
+            save_global_event_target_as = foc_rey_legendary
+        }
+    }
+    else = {
+        create_leader = {
+            tier = leader_tier_legendary
+            class = commander
+            species = owner_main_species
+            name = "FOC_REY_NAME"
+            gender = female
+            skill = 10
+            leader_age_min = 19
+            leader_age_max = 21
+            event_leader = yes
+            skip_background_generation = yes
+            randomize_traits = no
+            traits = { 0 = subclass_commander_general }
+            effect = {
+                foc_rey_apply_portrait = yes
+                add_trait = { trait = leader_trait_foc_force_sensitive consume_selection = no }
+                add_trait = { trait = leader_trait_psionic consume_selection = no }
+                set_leader_flag = foc_rey_legendary_leader
+                save_global_event_target_as = foc_rey_legendary
+            }
+        }
+    }
+    set_country_flag = foc_rey_legendary_present
+    set_global_flag = foc_rey_legendary_has_joined_rebels
+}

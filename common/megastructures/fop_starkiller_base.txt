@@ -1,0 +1,150 @@
+@fop_starkiller_stage_time = 720
+
+# Player First Order Starkiller Base. It reuses FOC graphics and firing logic,
+# but keeps an independent type ID so crisis owner-hostility scripts do not
+# mistake the playable origin for the crisis faction.
+fop_starkiller_base_site = {
+    entity = "construction_platform_entity"
+    construction_entity = "construction_platform_entity"
+    portrait = "GFX_myk_starkiller_base_megastructure" # 1.94: restored original big artwork; build-list icon handled by GFX_megastructure_* sprites instead
+    construction_blocks_and_blocked_by = self_type
+    place_entity_on_planet_plane = yes
+    show_galactic_map_icon = yes
+    show_in_outliner = yes
+    build_time = @fop_starkiller_stage_time
+
+    resources = {
+        category = megastructures
+        cost = { alloys = 20000 influence = 500 }
+    }
+
+    potential = {
+        exists = owner
+        owner = {
+            has_origin = origin_fop_first_order
+            has_technology = fop_tech_starkiller_base
+        }
+    }
+
+    possible = {
+        exists = starbase
+        custom_tooltip = {
+            fail_text = "requires_inside_border"
+            is_inside_border = from
+        }
+        custom_tooltip = {
+            fail_text = fop_starkiller_one_only
+            from = {
+                NOR = {
+                    any_owned_megastructure = { is_megastructure_type = fop_starkiller_base_site }
+                    any_owned_megastructure = { is_megastructure_type = fop_starkiller_base_final }
+                    any_owned_megastructure = { is_megastructure_type = myk_starkiller_base_site }
+                    any_owned_megastructure = { is_megastructure_type = myk_starkiller_base_final }
+                }
+            }
+        }
+    }
+
+    placement_rules = {
+        planet_possible = {
+            custom_tooltip = {
+                fail_text = fop_starkiller_requires_owned_colony
+                is_colony = yes
+                exists = owner
+                owner = { is_same_value = from }
+            }
+            custom_tooltip = {
+                fail_text = "requires_no_anomaly"
+                NOT = { has_anomaly = yes }
+            }
+            custom_tooltip = {
+                fail_text = "requires_no_existing_megastructure"
+                has_any_megastructure = no
+            }
+        }
+    }
+
+    ai_weight = { factor = 0 }
+}
+
+fop_starkiller_base_final = {
+    entity = "myk_starkiller_invisible_entity"
+    construction_entity = ""
+    portrait = "GFX_myk_starkiller_base_megastructure"
+    construction_blocks_and_blocked_by = self_type
+    upgrade_from = { fop_starkiller_base_site }
+    show_galactic_map_icon = yes
+    show_in_outliner = yes
+    build_time = @fop_starkiller_stage_time
+
+    resources = {
+        category = megastructures
+        cost = { alloys = 75000 sr_dark_matter = 2000 }
+        upkeep = { energy = 150 }
+    }
+
+    on_build_complete = {
+        fromfrom = {
+            foc_v1717_record_completed_starkiller = yes
+
+            planet = {
+                set_planet_flag = fop_starkiller_base_planet
+                # Shared firing-origin flag is required by the existing FOC weapon system.
+                set_planet_flag = myk_starkiller_base_planet_flag
+                add_modifier = {
+                    modifier = fop_starkiller_world
+                    days = -1
+                }
+                # Defence + engineering research buffs, shared with the crisis version.
+                # fop_starkiller_world above now only carries the origin economy lines.
+                add_modifier = {
+                    modifier = foc_starkiller_base_world
+                    days = -1
+                }
+                set_planet_entity = {
+                    entity = "myk_starkillerbase_planet_entity"
+                    picture = pc_arctic
+                }
+            }
+        }
+        from = {
+            # V17.17: completion opens Imperial weapon research; no weapon technology is awarded.
+            if = { limit = { has_origin = origin_fop_first_order } set_country_flag = foc_v1717_starkiller_arsenal_unlocked }
+            # V17.17c: only the finished base unlocks Imperial strategic aviation.
+            country_event = { id = foc_v1717c_aircraft.2 }
+
+            set_country_flag = foc_khan_starkiller_owner_enemy
+            if = {
+                limit = { is_subject = yes }
+                set_subject_of = { who = none }
+                remove_country_flag = foc_khan_submitted_first_order
+                remove_country_flag = foc_khan_submitted_final_order
+                remove_country_flag = rebellion_cooldown
+            }
+            # V96: Starkiller completion is the hard hand-off to the original
+            # First Order-origin post-construction story. Do not let the selected
+            # master start year delay or rewrite anything after this point.
+            if = {
+                limit = {
+                    has_origin = origin_fop_first_order
+                    has_country_flag = fop_origin_story_timeline_locked
+                }
+                remove_country_flag = fop_origin_story_timeline_locked
+                set_country_flag = fop_origin_story_timeline_released
+            }
+            # V185: construction absorbs the Imperial Remnant immediately but
+            # does not yet make the player a crisis. The first real shot does.
+            country_event = { id = foc_v160_player_fo.2 }
+            country_event = { id = foc_v185_flow.2 }
+            country_event = { id = foc_khan.1600 }
+        }
+    }
+
+    # Spawns the Starkiller defensive ring when the base completes. Same field vanilla
+    # uses for orbital rings (common/megastructures/15_orbital_ring.txt); the game
+    # builds this starbase level automatically on the anchor planet.
+    starbase = starbase_level_foc_starkiller_ring
+
+    scripted_action = { myk_starkiller_dyson_shoot }
+    ai_weight = { factor = 0 }
+}

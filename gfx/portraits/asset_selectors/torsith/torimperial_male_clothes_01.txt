@@ -1,0 +1,58 @@
+# This is a template which multiple species can use. 
+
+torimperial_male_clothes_01 = {
+	default = "gfx/models/portraits/torsith/torsith_male_clothes_impgeneral.dds"
+	
+	game_setup = {#will run with a limited country scope. species and government is set but the country does not actually exist
+		default = "gfx/models/portraits/torsith/torsith_male_clothes_impgeneral.dds"
+		
+		#random = {
+		#	trigger = { always = yes }
+		#	list = {
+		#		"gfx/models/portraits/torsith/torsith_male_clothes_impscientist.dds"
+		#		"gfx/models/portraits/torsith/torsith_male_clothes_impadmiral.dds"
+		#		"gfx/models/portraits/torsith/torsith_male_clothes_impgeneral.dds"
+		#		"gfx/models/portraits/torsith/torsith_male_clothes_impgovernor.dds"
+		#	}
+		#}
+	}
+	
+	#species scope
+	species = { #generic portrait for a species
+		default = "gfx/models/portraits/torsith/torsith_male_clothes_impgeneral.dds"
+	}
+	
+	#pop scope
+	pop = { #for a specific pop
+		default = "gfx/models/portraits/torsith/torsith_male_clothes_impagent.dds"
+		
+	#	"gfx/models/portraits/torsith/torsith_male_clothes_impgeneral.dds" 	= { tile = { has_building = building_power_plant_1 } }
+	#	"gfx/models/portraits/torsith/torsith_male_clothes_impscientist.dds" 	= { tile = { has_building = building_engineering_facility_1 } }
+	#	"gfx/models/portraits/torsith/torsith_male_clothes_impadmiral.dds" 	= { tile = { has_building = building_hydroponics_farm_1 } }
+	}
+	#leader scope
+	leader = { #scientists, generals, admirals, governor
+		"gfx/models/portraits/torsith/torsith_male_clothes_impscientist.dds" = { leader_class = scientist }
+		"gfx/models/portraits/torsith/torsith_male_clothes_impgeneral.dds" = { leader_class = commander leader_should_wear_general_uniform = yes }
+		"gfx/models/portraits/torsith/torsith_male_clothes_impadmiral.dds" = { leader_class = commander leader_should_wear_general_uniform = no }
+		"gfx/models/portraits/torsith/torsith_male_clothes_impgovernor.dds" = { leader_class = official }
+	}
+
+	#leader scope 
+	ruler = { #for rulers
+		default = "gfx/models/portraits/torsith/torsith_male_clothes_impgovernor.dds"
+		
+		"gfx/models/portraits/torsith/torsith_male_clothes_impagent.dds" = { owner = { has_generic_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/torsith/torsith_male_clothes_impadmiral.dds" = { owner = { has_militarist_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/torsith/kotorsith_male_clothes_sithlord.dds" = { owner = { has_spiritualist_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/torsith/torsith_male_clothes_impgovernor.dds"  = { owner = { has_pacifist_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/torsith/torsith_male_clothes_impgeneral.dds"  = { owner = { has_primitive_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/torsith/torsith_male_clothes_impscientist.dds" = { owner = { has_materialist_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/torsith/torsith_male_clothes_ruler.dds" = { owner = { has_authority = auth_imperial } }
+		
+	}
+}
+
+torimperial_male_hair_1 = { 
+	default = "gfx/models/portraits/human/human_male_hair_blonde_style_03_and_beard_light_style_01.dds"
+}

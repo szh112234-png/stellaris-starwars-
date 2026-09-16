@@ -1,0 +1,113 @@
+# V90: SG-equivalent Venator/Lucrehulk required components, dependency-free.
+utility_component_template = {
+    key = "VCSD_REACTOR"
+    potential = { always = no }
+    size = small
+    icon = "GFX_ship_part_dark_matter_power_core"
+    icon_frame = 1
+    power = 3000
+    resources = {
+        category = ship_components
+        cost = { sr_coaxium_foc = 10 }
+    }
+    component_set = "power_core"
+    size_restriction = { venatorclass foc_trade_lucrehulk venatorclass_foc_lowest foc_trade_lucrehulk_foc_lowest }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "VCSD_JUMPDRIVE"
+    potential = { always = no }
+    size = small
+    icon = "GFX_ship_part_jump_drive_1"
+    icon_frame = 1
+    power = -100
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 50 sr_coaxium_foc = 10 }
+    }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.75 ship_jumpdrive_cooldown_mult = -0.75 ship_ftl_jumpdrive_range_mult = 1.0 }
+    class_restriction = { shipclass_military }
+    size_restriction = { venatorclass foc_trade_lucrehulk venatorclass_foc_lowest foc_trade_lucrehulk_foc_lowest }
+    component_set = "ftl_components"
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "VCSD_THRUSTER"
+    potential = { always = no }
+    size = small
+    icon = "GFX_ship_part_subspace_drive"
+    icon_frame = 1
+    power = -150
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 10 sr_coaxium_foc = 10 }
+    }
+    modifier = { ship_evasion_add = 25 ship_speed_mult = 0.25 }
+    component_set = "thruster_components"
+    size_restriction = { venatorclass foc_trade_lucrehulk venatorclass_foc_lowest foc_trade_lucrehulk_foc_lowest }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "VCSD_SENSOR"
+    potential = { always = no }
+    size = medium
+    icon = "GFX_ship_part_sensor_4"
+    icon_frame = 1
+    power = -150
+    sensor_range = 12
+    hyperlane_range = 18
+    resources = {
+        category = ship_components
+        cost = { }
+    }
+    ship_modifier = { ship_tracking_add = 10 }
+    component_set = "sensor_components"
+    size_restriction = { venatorclass foc_trade_lucrehulk venatorclass_foc_lowest foc_trade_lucrehulk_foc_lowest }
+    ai_weight = { weight = 0 }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "VCSD_CORE"
+    potential = { always = no }
+    size = small
+    icon = "GFX_ship_part_computer_artillery_sapient"
+    icon_frame = 1
+    power = -15
+    resources = {
+        category = ship_components
+        cost = { }
+    }
+    class_restriction = { shipclass_military }
+    size_restriction = { venatorclass foc_trade_lucrehulk venatorclass_foc_lowest foc_trade_lucrehulk_foc_lowest }
+    component_set = "combat_computers"
+    ship_behavior = "line"
+    modifier = { ship_speed_mult = 0.30 }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+	key = "VCSD_CREW"
+	potential = { from = { NOT = { has_country_flag = foc_khan_component_lowest } } }
+	size = aux
+	icon = "GFX_VCSD_CREW"
+	icon_frame = 1
+	power = 0
+	resources = { category = ship_components cost = { } }
+	component_set = "venatorclass_crew"
+	size_restriction = { venatorclass foc_trade_lucrehulk venatorclass_foc_lowest foc_trade_lucrehulk_foc_lowest }
+	ai_weight = { weight = 99999 }
+}

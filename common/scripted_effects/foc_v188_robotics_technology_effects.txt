@@ -1,0 +1,14 @@
+# V231n - basic robotics staging for playable Republic and First Order origins.
+#
+# Do NOT grant tech_robotic_workers here. Stellaris 4.4 immediately fires action.56
+# when Robotic Workers is granted to a country with has_built_species = no, which
+# creates the generic vanilla Robot species. Faction seed effects create/own their
+# Protocol/Astromech/B1/K-2SO pops first, then grant Robotic Workers afterwards.
+
+foc_v188_grant_basic_robotics = {
+    if = {
+        limit = { NOT = { has_technology = tech_powered_exoskeletons } }
+        give_technology = { tech = tech_powered_exoskeletons message = no }
+    }
+    set_country_flag = foc_v188_basic_robotics_granted
+}

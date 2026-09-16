@@ -1,0 +1,274 @@
+# V119 - native/citizen species integration using resources supplied by the 17 Star Wars mod.
+
+foc_native_species_seed_kashyyyk = {
+    if = {
+        limit = {
+            is_colony = yes
+            NOT = { has_planet_flag = foc_native_species_kashyyyk_seeded }
+        }
+
+        create_species = {
+            name = foc_native_wookiee_name
+            plural = foc_native_wookiee_plural
+            adjective = foc_native_wookiee_adjective
+            name_list = "rebels"
+            class = "MAM"
+            portrait = "foc_wookiee_species_01"
+            homeworld = this
+            traits = {
+                trait = "trait_strong"
+                trait = "trait_enduring"
+                trait = "trait_sedentary"
+            }
+        }
+
+        last_created_species = {
+            set_species_flag = foc_native_wookiee_species
+            save_global_event_target_as = foc_native_wookiee_species
+
+            set_citizenship_type = {
+                country = prev.owner
+                type = citizenship_full
+                cooldown = no
+            }
+            set_military_service_type = {
+                country = prev.owner
+                type = military_service_full
+                cooldown = no
+            }
+            set_population_controls = {
+                country = prev.owner
+                type = population_control_no
+                cooldown = no
+            }
+            set_migration_controls = {
+                country = prev.owner
+                type = migration_control_no
+                cooldown = no
+            }
+            set_colonization_controls = {
+                country = prev.owner
+                type = colonization_control_no
+                cooldown = no
+            }
+        }
+
+        while = {
+            count = 3
+            create_pop_group = {
+                size = 100
+                species = last_created_species
+            }
+        }
+
+        set_planet_flag = foc_native_species_kashyyyk_seeded
+    }
+}
+
+foc_native_species_seed_mon_cala = {
+    if = {
+        limit = {
+            is_colony = yes
+            NOT = { has_planet_flag = foc_native_species_mon_cala_seeded }
+        }
+
+        # Mon Calamari - majority citizens of Dac.
+        create_species = {
+            name = foc_native_moncala_name
+            plural = foc_native_moncala_plural
+            adjective = foc_native_moncala_adjective
+            name_list = "rebels"
+            class = "HUM"
+            portrait = "foc_moncala_species_01"
+            homeworld = this
+            traits = {
+                trait = "trait_intelligent"
+                trait = "trait_natural_engineers"
+            }
+        }
+
+        last_created_species = {
+            set_species_flag = foc_native_moncala_species
+            save_global_event_target_as = foc_native_moncala_species
+
+            set_citizenship_type = {
+                country = prev.owner
+                type = citizenship_full
+                cooldown = no
+            }
+            set_military_service_type = {
+                country = prev.owner
+                type = military_service_full
+                cooldown = no
+            }
+            set_population_controls = {
+                country = prev.owner
+                type = population_control_no
+                cooldown = no
+            }
+            set_migration_controls = {
+                country = prev.owner
+                type = migration_control_no
+                cooldown = no
+            }
+            set_colonization_controls = {
+                country = prev.owner
+                type = colonization_control_no
+                cooldown = no
+            }
+        }
+
+        while = {
+            count = 2
+            create_pop_group = {
+                size = 100
+                species = last_created_species
+            }
+        }
+
+        # Quarren - a second native Dac civilization, kept as a substantial minority.
+        create_species = {
+            name = foc_native_quarren_name
+            plural = foc_native_quarren_plural
+            adjective = foc_native_quarren_adjective
+            name_list = "rebels"
+            class = "HUM"
+            portrait = "foc_quarren_species_01"
+            homeworld = this
+            traits = {
+                trait = "trait_industrious"
+                trait = "trait_adaptive"
+                trait = "trait_sedentary"
+            }
+        }
+
+        last_created_species = {
+            set_species_flag = foc_native_quarren_species
+            save_global_event_target_as = foc_native_quarren_species
+
+            set_citizenship_type = {
+                country = prev.owner
+                type = citizenship_full
+                cooldown = no
+            }
+            set_military_service_type = {
+                country = prev.owner
+                type = military_service_full
+                cooldown = no
+            }
+            set_population_controls = {
+                country = prev.owner
+                type = population_control_no
+                cooldown = no
+            }
+            set_migration_controls = {
+                country = prev.owner
+                type = migration_control_no
+                cooldown = no
+            }
+            set_colonization_controls = {
+                country = prev.owner
+                type = colonization_control_no
+                cooldown = no
+            }
+        }
+
+        create_pop_group = {
+            size = 100
+            species = last_created_species
+        }
+
+        set_planet_flag = foc_native_species_mon_cala_seeded
+    }
+}
+
+foc_native_species_seed_geonosis = {
+    if = {
+        limit = {
+            is_colony = yes
+            NOT = { has_planet_flag = foc_native_species_geonosis_seeded }
+        }
+
+        # The source 17 MOD itself models Geonosians as an industrial,
+        # rapidly reproducing native civilization. FOC keeps those traits but
+        # integrates them into the existing Republic/CIS political timeline.
+        create_species = {
+            name = foc_native_geonosian_name
+            plural = foc_native_geonosian_plural
+            adjective = foc_native_geonosian_adjective
+            name_list = "cis"
+            class = "ART"
+            portrait = "foc_geonosian_species_01"
+            homeworld = this
+            traits = {
+                trait = "trait_industrious"
+                trait = "trait_rapid_breeders"
+                trait = "trait_sedentary"
+            }
+        }
+
+        last_created_species = {
+            set_species_flag = foc_native_geonosian_species
+            save_global_event_target_as = foc_native_geonosian_species
+
+            # Geonosis is an advanced native civilization, not a primitive.
+            # Under the Republic it is represented as an autonomous/resident
+            # population; once the CIS owns the world it becomes a full member.
+            if = {
+                limit = {
+                    prev.owner = {
+                        has_country_flag = foc_republic_origin_separatist_country
+                    }
+                }
+                set_citizenship_type = {
+                    country = prev.owner
+                    type = citizenship_full
+                    cooldown = no
+                }
+                set_military_service_type = {
+                    country = prev.owner
+                    type = military_service_full
+                    cooldown = no
+                }
+            }
+            else = {
+                set_citizenship_type = {
+                    country = prev.owner
+                    type = citizenship_limited
+                    cooldown = no
+                }
+                set_military_service_type = {
+                    country = prev.owner
+                    type = military_service_limited
+                    cooldown = no
+                }
+            }
+
+            set_population_controls = {
+                country = prev.owner
+                type = population_control_no
+                cooldown = no
+            }
+            set_migration_controls = {
+                country = prev.owner
+                type = migration_control_no
+                cooldown = no
+            }
+            set_colonization_controls = {
+                country = prev.owner
+                type = colonization_control_no
+                cooldown = no
+            }
+        }
+
+        while = {
+            count = 3
+            create_pop_group = {
+                size = 100
+                species = last_created_species
+            }
+        }
+
+        set_planet_flag = foc_native_species_geonosis_seeded
+    }
+}

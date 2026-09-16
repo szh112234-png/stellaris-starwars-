@@ -1,0 +1,244 @@
+##############################################################
+###	PORTRAITS SETTINGS
+###
+### Which portraits are used is set in 
+### common\species_classes\00_species_classes.txt
+###
+###	This file configures how portraits and planet backgrounds are built.
+###	Default position orientation is lower left.
+##############################################################
+
+portraits = {
+
+	# Human
+	tor_mando_female_01 = {	entity = "portrait_human_female_01_entity"	clothes_selector = "tor_mando_female_clothes_01" 	attachment_selector = "tor_mando_female_01_hair"	greeting_sound = "human_female_greetings_03" custom_attachment_label = "HAIR_STYLE"  }
+	tor_mando_female_02 = {	entity = "portrait_human_female_02_entity"	clothes_selector = "tor_mando_female_clothes_01" 	attachment_selector = "tor_mando_female_01_hair"	greeting_sound = "human_female_greetings_04" custom_attachment_label = "HAIR_STYLE"  }
+	tor_mando_female_03 = {	entity = "portrait_human_female_03_entity"	clothes_selector = "tor_mando_female_clothes_01" 	attachment_selector = "tor_mando_female_01_hair"	greeting_sound = "human_female_greetings_05" custom_attachment_label = "HAIR_STYLE"  }	
+	tor_mando_female_04 = {	entity = "portrait_human_female_04_entity"	clothes_selector = "tor_mando_female_clothes_01" 	attachment_selector = "tor_mando_female_01_hair"	greeting_sound = "human_female_greetings_01" custom_attachment_label = "HAIR_STYLE"  }
+	tor_mando_female_05 = {	entity = "portrait_human_female_05_entity"	clothes_selector = "tor_mando_female_clothes_01" 	attachment_selector = "tor_mando_female_01_hair"	greeting_sound = "human_female_greetings_02" custom_attachment_label = "HAIR_STYLE"  }
+	
+	tor_mando_male_01 = {	entity = "portrait_human_male_01_entity"	clothes_selector = "tor_mando_male_clothes_01" 		attachment_selector = "tor_mando_male_01_hair"	greeting_sound = "human_male_greetings_03" custom_attachment_label = "HAIR_STYLE"  }	
+	tor_mando_male_02 = {	entity = "portrait_human_male_02_entity"	clothes_selector = "tor_mando_male_clothes_01" 		attachment_selector = "tor_mando_male_01_hair"	greeting_sound = "human_male_greetings_04" custom_attachment_label = "HAIR_STYLE"  }
+	tor_mando_male_03 = {	entity = "portrait_human_male_03_entity"	clothes_selector = "tor_mando_male_clothes_01" 		attachment_selector = "tor_mando_male_01_hair"	greeting_sound = "human_male_greetings_05" custom_attachment_label = "HAIR_STYLE"  }		
+	tor_mando_male_04 = {	entity = "portrait_human_male_04_entity"	clothes_selector = "tor_mando_male_clothes_01" 		attachment_selector = "tor_mando_male_01_hair"	greeting_sound = "human_male_greetings_01" custom_attachment_label = "HAIR_STYLE"  }
+	tor_mando_male_05 = {	entity = "portrait_human_male_05_entity"	clothes_selector = "tor_mando_male_clothes_01" 		attachment_selector = "tor_mando_male_01_hair"	greeting_sound = "human_male_greetings_02" custom_attachment_label = "HAIR_STYLE"  }
+
+}
+portrait_groups = {
+	tor_mando = {
+		default = tor_mando_male_01
+		game_setup = { #will run with a limited country scope. species and government is set but the country does not actually exist
+			add = {
+				trigger = {
+					ruler = {
+						OR = {
+							gender = male
+							gender = indeterminable
+						}
+					}
+				}
+				portraits = {
+					tor_mando_male_01
+					tor_mando_male_02
+					tor_mando_male_03
+					tor_mando_male_04
+					tor_mando_male_05
+				}
+			}
+			add = {
+				trigger = {
+					ruler = {
+						OR = {
+							gender = female
+							gender = indeterminable
+						}
+					}
+				}
+				portraits = {
+					tor_mando_female_01
+					tor_mando_female_02
+					tor_mando_female_03
+					tor_mando_female_04
+					tor_mando_female_05
+				}
+			}
+			#set = {
+			#	trigger = { ... }
+			#	portraits = { ... }
+			#	#using "set =" instead of "add" will first clear any portraits already added
+			#}
+		}		
+		
+		#species scope
+		species = { #generic portrait for a species
+			add = {
+				trigger = {
+					exists = species
+					NOT = { species = { species_gender = male } }
+				}
+				portraits = {
+					tor_mando_female_01
+					tor_mando_female_02
+					tor_mando_female_03
+					tor_mando_female_04
+					tor_mando_female_05
+				}
+			}
+			add = {
+				trigger = {
+					exists = species
+					NOT = { species = { species_gender = female } }
+				}
+				portraits = {
+					tor_mando_male_01
+					tor_mando_male_02
+					tor_mando_male_03
+					tor_mando_male_04
+					tor_mando_male_05
+				}
+			}
+		}		
+		
+		#pop scope
+		pop_group = { #for a specific pop
+			add = {
+				trigger = {
+					NOT = { species = { species_gender = male } }
+				}
+				portraits = {
+					tor_mando_female_01
+					tor_mando_female_02
+					tor_mando_female_03
+					tor_mando_female_04
+					tor_mando_female_05
+				}
+			}
+			add = {
+				trigger = {
+					NOT = { species = { species_gender = female } }
+				}
+				portraits = {
+					tor_mando_male_01
+					tor_mando_male_02
+					tor_mando_male_03
+					tor_mando_male_04
+					tor_mando_male_05
+				}
+			}
+		}
+		
+		#leader scope
+		leader = { #scientists, generals, admirals, governor
+			add = {
+				trigger = {
+					gender = female
+					leader_class = scientist
+				}
+				portraits = {
+					tor_mando_female_01
+					tor_mando_female_02
+					tor_mando_female_03				
+					tor_mando_female_04
+					tor_mando_female_05
+				}
+			}
+			add = {
+				trigger = {
+					gender = male
+					leader_class = scientist
+				}
+				portraits = {
+					tor_mando_male_01
+					tor_mando_male_02
+					tor_mando_male_03					
+					tor_mando_male_04
+					tor_mando_male_05
+				}
+			}
+			add = {
+				trigger = {
+					gender = female
+					leader_class = commander
+				}
+				portraits = {
+					tor_mando_female_01
+					tor_mando_female_02
+					tor_mando_female_03				
+					tor_mando_female_04
+					tor_mando_female_05
+				}
+			}
+			add = {
+				trigger = {
+					gender = male
+					leader_class = commander
+				}
+				portraits = {
+					tor_mando_male_01
+					tor_mando_male_02
+					tor_mando_male_03					
+					tor_mando_male_04
+					tor_mando_male_05
+				}
+			}
+			add = {
+				trigger = {
+					gender = female
+					leader_class = official
+				}
+				portraits = {
+					tor_mando_female_01
+					tor_mando_female_02
+					tor_mando_female_03				
+					tor_mando_female_04
+					tor_mando_female_05
+				}
+			}
+			add = {
+				trigger = {
+					gender = male
+					leader_class = official
+				}
+				portraits = {
+					tor_mando_male_01
+					tor_mando_male_02
+					tor_mando_male_03					
+					tor_mando_male_04
+					tor_mando_male_05
+				}
+			}
+		}
+		ruler = {
+			add = {
+				trigger = {
+					OR = {
+						gender = female
+						gender = indeterminable
+					}
+				}
+				portraits = {
+					tor_mando_female_01
+					tor_mando_female_02
+					tor_mando_female_03				
+					tor_mando_female_04
+					tor_mando_female_05
+				}
+			}
+			add = {
+				trigger = {
+					OR = {
+						gender = male
+						gender = indeterminable
+					}
+				}
+				portraits = {
+					tor_mando_male_01
+					tor_mando_male_02
+					tor_mando_male_03					
+					tor_mando_male_04
+					tor_mando_male_05
+				}
+			}
+		}
+	}
+}

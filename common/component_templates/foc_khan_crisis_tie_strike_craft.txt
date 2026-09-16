@@ -1,0 +1,85 @@
+# First Order / Final Order fixed-design TIE wing.
+# This duplicates the integrated Resurgent TIE visuals and baseline combat values,
+# but removes the player-only restriction so fixed crisis designs remain valid for AI.
+strike_craft_component_template = {
+	key = "FOC_KHAN_CRISIS_TIE"
+	size = LARGE
+	entity = "swg_starship_01_fighter_entity"
+
+	weapon_type = instant
+	projectile_gfx = "strike_craft_laser_3"
+	power = -60
+
+	resources = {
+		category = ship_components
+		cost = { 
+            sr_tibanna_swgs = 8
+        }
+		upkeep = { }
+	}
+
+	count = 2
+	regeneration_per_day = 5
+	launch_time = 2
+
+	damage = { min = 1200 max = 1200 }
+	cooldown = 2.3
+	range = 15
+	engagement_range = 500
+	accuracy = 1.0
+	tracking = 1.0
+
+	health = 40
+	armor = 40
+	shield = 0
+	evasion = 0.95
+
+	speed = 750
+	rotation_speed = 0.1
+	acceleration = 1.0
+
+	shield_penetration = 1.0
+	armor_damage = 1.5
+
+	ship_behavior = "foc_swgs_fighters_behavior"
+
+	icon = "GFX_ship_part_swgs_tie_fighter"
+	icon_frame = 1
+	component_set = "FOC_SWGS_TIE_FIGHTER"
+	prerequisites = { "foc_tech_swgs_crisis_point_defence" }
+
+	size_restriction = { imperialsd
+		resurgentbattlecruiser
+		xystonsd
+		foc_khan_xystonsd
+		foc_khan_xystonsd_combat
+		foc_khan_mandator
+		foc_khan_eclipse
+		foc_khan_eclipse_ii
+		foc_sai_supremacy_arkship_tier_1
+		foc_sai_supremacy_arkship_tier_2
+		foc_sai_supremacy_arkship_tier_3 imperialsd_foc_lowest resurgentbattlecruiser_foc_lowest foc_khan_xystonsd_foc_lowest foc_khan_xystonsd_combat_foc_lowest foc_khan_mandator_foc_lowest foc_khan_eclipse_foc_lowest foc_khan_eclipse_ii_foc_lowest foc_sai_supremacy_arkship_tier_1_foc_lowest foc_sai_supremacy_arkship_tier_2_foc_lowest foc_sai_supremacy_arkship_tier_3_foc_lowest  foc_v118_imperialsd_bastion_foc_lowest foc_imperialsd2 foc_imperialsd2_foc_lowest }
+
+	tags = {
+		weapon_type_strike_craft
+		weapon_type_kuat_strikcrafe_scale
+	}
+	ai_tags = { weapon_role_anti_hull carrier }
+
+	potential = {
+		from = {
+			OR = {
+				has_country_flag = foc_khan_first_order_country
+				has_country_flag = foc_khan_final_order_country
+			}
+		}
+	
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+	ai_weight = { weight = 10 }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}

@@ -1,0 +1,27 @@
+tech_foc_tri_hyperspace = {
+ icon = "tech_strike_craft_2"
+ cost = 6000
+ area = engineering
+ tier = 2
+ category = { voidcraft }
+ prerequisites = { "tech_strike_craft_2" }
+ prereqfor_desc = {
+  hide_prereq_for_desc = component
+  custom = {
+   title = "FOC_TECH_TRI_UNLOCK_TITLE"
+   desc = "FOC_TECH_TRI_UNLOCK_DESC"
+  }
+ }
+ weight = 80
+ ai_update_type = military
+ potential = {
+  country_uses_bio_ships = no
+  OR = {
+   has_country_flag = ssp_fighter_group_all
+   has_country_flag = ssp_fighter_group_cis
+  }
+ 
+        foc_v1718_allowed_country = yes
+    }
+ ai_weight = { weight = 20 }
+}

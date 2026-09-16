@@ -1,0 +1,79 @@
+# V137 - strategic fighter access follows Star Wars story-country identity.
+# Ordinary-origin countries are intentionally excluded and continue to use the
+# player's start-menu fighter-family selection.
+
+foc_v137_is_story_starfighter_country = {
+    OR = {
+        has_origin = origin_foc_republic_unification
+        has_origin = origin_fop_first_order
+        has_origin = origin_foc_mandalore_state
+
+        has_country_flag = foc_republic_origin_republic_country
+        has_country_flag = foc_republic_origin_separatist_country
+        has_country_flag = foc_republic_origin_separatist_council_remnant
+        has_country_flag = foc_republic_origin_empire_country
+        has_country_flag = foc_republic_origin_imperial_rebel_country
+        has_country_flag = foc_republic_origin_rebel_alliance_country
+        has_country_flag = foc_republic_origin_post_treaty_rebel_country
+        has_country_flag = foc_republic_origin_post_treaty_new_republic
+        has_country_flag = foc_republic_origin_became_first_order
+        has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+        has_country_flag = foc_republic_origin_empire_crisis
+
+        has_country_flag = foc_khan_rebel_alliance_country
+        has_country_flag = foc_khan_first_order_resistance_country
+        has_country_flag = foc_khan_first_order_country
+        has_country_flag = foc_khan_final_order_country
+
+        has_country_flag = foc_sw_new_republic_country
+        has_country_flag = foc_sw_imperial_remnant_country
+
+        has_country_flag = foc_republic_origin_player_republic
+        has_country_flag = foc_republic_origin_player_empire
+        has_country_flag = foc_republic_origin_player_imperial_remnant
+        has_country_flag = foc_republic_origin_player_rebels
+        has_country_flag = foc_republic_origin_post_treaty_player_rebels
+    }
+}
+
+foc_v137_has_rebel_starfighter_identity = {
+    OR = {
+        has_country_flag = foc_republic_origin_imperial_rebel_country
+        has_country_flag = foc_republic_origin_rebel_alliance_country
+        has_country_flag = foc_republic_origin_post_treaty_rebel_country
+        has_country_flag = foc_republic_origin_post_treaty_new_republic
+        has_country_flag = foc_khan_rebel_alliance_country
+        has_country_flag = foc_khan_first_order_resistance_country
+        has_country_flag = foc_sw_new_republic_country
+        has_country_flag = foc_republic_origin_player_rebels
+        has_country_flag = foc_republic_origin_post_treaty_player_rebels
+    }
+}
+
+foc_v137_has_imperial_starfighter_identity = {
+    OR = {
+        has_origin = origin_fop_first_order
+        has_country_flag = foc_republic_origin_empire_country
+        has_country_flag = foc_republic_origin_became_first_order
+        has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+        has_country_flag = foc_republic_origin_empire_crisis
+        has_country_flag = foc_khan_first_order_country
+        has_country_flag = foc_khan_final_order_country
+        has_country_flag = foc_sw_imperial_remnant_country
+        has_country_flag = foc_republic_origin_player_empire
+        has_country_flag = foc_republic_origin_player_imperial_remnant
+    }
+}
+
+foc_v137_has_republic_starfighter_identity = {
+    OR = {
+        has_country_flag = foc_republic_origin_republic_country
+        has_country_flag = foc_republic_origin_player_republic
+        AND = {
+            has_origin = origin_foc_republic_unification
+            NOT = { foc_v137_has_rebel_starfighter_identity = yes }
+            NOT = { foc_v137_has_imperial_starfighter_identity = yes }
+            NOT = { has_country_flag = foc_republic_origin_separatist_country }
+        }
+    }
+}

@@ -1,0 +1,36 @@
+tech_foc_sw_star_forge = {
+    cost = 20000
+    area = engineering
+    category = { voidcraft }
+    tier = 5
+    is_rare = yes
+    weight = 15
+    prerequisites = { tech_mega_engineering }
+    potential = {
+        # FIX: any_owned_planet yields COLONY scope in 4.x, and has_planet_flag only
+        # accepts PLANET scope ("Wrong scope for trigger 'has_planet_flag'" in error.log).
+        # Malachor V is pc_nuked and is never a colony, so the old check could also never
+        # be true and the tech was unobtainable. Now checks that the empire controls the
+        # Malachor system's starbase, the same pattern the mod already uses in
+        # events/foc_v104_colony_repair_events.txt.
+        any_system = {
+            has_star_flag = foc_swmap_malachor_home
+            exists = starbase
+            starbase = { owner = { is_same_value = root } }
+        }
+        OR = {
+            has_country_flag = foc_republic_origin_empire_country
+            has_country_flag = foc_republic_origin_player_empire
+            has_country_flag = foc_sw_imperial_remnant_country
+            has_country_flag = foc_republic_origin_player_imperial_remnant
+            has_country_flag = foc_khan_first_order_country
+            has_country_flag = foc_khan_final_order_country
+            has_country_flag = fop_player_first_order
+            has_country_flag = fop_player_final_order
+            has_country_flag = foc_republic_origin_dark_legacy_unlocked
+        }
+        NOT = { has_country_flag = foc_sw_new_republic_country }
+        NOT = { has_country_flag = foc_khan_rebel_alliance_country }
+    }
+    ai_weight = { weight = 0 }
+}

@@ -1,0 +1,96 @@
+# V14: V12 physical layout and hangars; ordinary weapon IDs replaced one-for-one.
+ship_design = {
+    name = "NAME_FOC_STORY_CORVETTE"
+    ship_size = corvette
+    is_event_design = yes
+    section = {
+        template = "CORVETTE_MID_S3"
+        slot = "mid"
+        component = { slot = "SMALL_GUN_01" template = "FOC_STD_TURBO_S_GEN1" }
+        component = { slot = "SMALL_GUN_02" template = "FOC_STD_TURBO_S_GEN1" }
+        component = { slot = "SMALL_GUN_03" template = "FOC_STD_TURBO_S_GEN1" }
+    }
+    required_component = "FOC_V1718_SHARED_HYPERDRIVE_1"
+    required_component = "FOC_V1718_SG_STANDARD_SWARM_COMPUTER"
+    required_component = "FOC_V1718_SHARED_THRUSTER_1"
+    required_component = "FOC_V1718E_SENSOR"
+    required_component = "FOC_V1718_SHARED_REACTOR_1"
+}
+ship_design = {
+    name = "NAME_FOC_STORY_DESTROYER"
+    ship_size = destroyer
+    is_event_design = yes
+    section = {
+        template = "DESTROYER_BOW_M1S2"
+        slot = "bow"
+        component = { slot = "MEDIUM_GUN_01" template = "FOC_STD_TURBO_M_GEN1" }
+        component = { slot = "SMALL_GUN_01" template = "FOC_STD_TURBO_S_GEN1" }
+        component = { slot = "SMALL_GUN_02" template = "FOC_STD_TURBO_S_GEN1" }
+    }
+    section = {
+        template = "DESTROYER_STERN_M1"
+        slot = "stern"
+        component = { slot = "MEDIUM_GUN_01" template = "FOC_STD_TURBO_M_GEN1" }
+    }
+    required_component = "FOC_V1718_SHARED_HYPERDRIVE_1"
+    required_component = "FOC_V1718_SG_STANDARD_PICKET_COMPUTER"
+    required_component = "FOC_V1718_SHARED_THRUSTER_1"
+    required_component = "FOC_V1718E_SENSOR"
+    required_component = "FOC_V1718_SHARED_REACTOR_1"
+}
+ship_design = {
+    name = "NAME_FOC_STORY_CRUISER"
+    ship_size = cruiser
+    is_event_design = yes
+    section = {
+        template = "CRUISER_BOW_M2"
+        slot = "bow"
+        component = { slot = "MEDIUM_GUN_01" template = "FOC_STD_TURBO_M_GEN1" }
+        component = { slot = "MEDIUM_GUN_02" template = "FOC_STD_TURBO_M_GEN1" }
+    }
+    section = {
+        template = "CRUISER_MID_M3"
+        slot = "mid"
+        component = { slot = "MEDIUM_GUN_01" template = "FOC_STD_TURBO_M_GEN1" }
+        component = { slot = "MEDIUM_GUN_02" template = "FOC_STD_TURBO_M_GEN1" }
+        component = { slot = "MEDIUM_GUN_03" template = "FOC_STD_TURBO_M_GEN1" }
+    }
+    section = {
+        template = "CRUISER_STERN_M1"
+        slot = "stern"
+        component = { slot = "MEDIUM_GUN_01" template = "FOC_STD_TURBO_M_GEN1" }
+    }
+    required_component = "FOC_V1718_SHARED_HYPERDRIVE_1"
+    required_component = "FOC_V1718_SG_STANDARD_LINE_COMPUTER"
+    required_component = "FOC_V1718_SHARED_THRUSTER_1"
+    required_component = "FOC_V1718E_SENSOR"
+    required_component = "FOC_V1718_SHARED_REACTOR_1"
+}
+ship_design = {
+    name = "NAME_FOC_STORY_BATTLESHIP"
+    ship_size = battleship
+    is_event_design = yes
+    section = {
+        template = "BATTLESHIP_BOW_L2"
+        slot = "bow"
+        component = { slot = "LARGE_GUN_01" template = "FOC_STD_TURBO_L_GEN1" }
+        component = { slot = "LARGE_GUN_02" template = "FOC_STD_TURBO_L_GEN1" }
+    }
+    section = {
+        template = "BATTLESHIP_MID_L3"
+        slot = "mid"
+        component = { slot = "LARGE_GUN_01" template = "FOC_STD_TURBO_L_GEN1" }
+        component = { slot = "LARGE_GUN_02" template = "FOC_STD_TURBO_L_GEN1" }
+        component = { slot = "LARGE_GUN_03" template = "FOC_STD_TURBO_L_GEN1" }
+    }
+    section = {
+        template = "BATTLESHIP_STERN_L1"
+        slot = "stern"
+        component = { slot = "LARGE_GUN_01" template = "FOC_STD_TURBO_L_GEN1" }
+    }
+    required_component = "FOC_V1718_SHARED_HYPERDRIVE_1"
+    required_component = "FOC_V1718_SG_STANDARD_LINE_COMPUTER"
+    required_component = "FOC_V1718_SHARED_THRUSTER_1"
+    required_component = "FOC_V1718E_SENSOR"
+    required_component = "FOC_V1718_SHARED_REACTOR_1"
+}

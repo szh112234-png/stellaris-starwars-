@@ -1,0 +1,17 @@
+# FOC V230 - Astromech Droid is one species/model family with two visual variants.
+# R2-D2 and BB-8 remain the same Astromech Droid species, as requested.
+portraits = {
+    foc_v230_astromech_r2 = { texturefile = "gfx/models/portraits/droid/r2_droid_01.dds" }
+    foc_v230_astromech_bb8 = { texturefile = "gfx/models/portraits/star_wars_droids/bb8_body.dds" }
+}
+
+portrait_groups = {
+    foc_v230_astromech_droid = {
+        default = foc_v230_astromech_r2
+        game_setup = { add = { portraits = { foc_v230_astromech_r2 foc_v230_astromech_bb8 } } }
+        species = { add = { portraits = { foc_v230_astromech_r2 foc_v230_astromech_bb8 } } }
+        pop = { add = { portraits = { foc_v230_astromech_r2 foc_v230_astromech_bb8 } } }
+        leader = { add = { portraits = { foc_v230_astromech_r2 foc_v230_astromech_bb8 } } }
+        ruler = { add = { portraits = { foc_v230_astromech_r2 foc_v230_astromech_bb8 } } }
+    }
+}

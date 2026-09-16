@@ -1,0 +1,25 @@
+namespace = foc_v223_species
+
+# V225: this namespace now initializes ONLY Protocol/Astromech/Security Droid species.
+country_event = {
+    id = foc_v223_species.1 hide_window = yes is_triggered_only = yes trigger = { is_ai = no }
+    immediate = { country_event = { id = foc_v223_species.2 } }
+}
+
+country_event = {
+    id = foc_v223_species.2 hide_window = yes is_triggered_only = yes trigger = { is_ai = no }
+    immediate = {
+        every_system = {
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_coruscant }
+                foc_v223_ensure_droid_species = yes
+            }
+        }
+        set_global_flag = foc_v223_species_initialized
+    }
+}
+
+country_event = {
+    id = foc_v223_species.3 hide_window = yes is_triggered_only = yes trigger = { is_ai = no }
+    immediate = { country_event = { id = foc_v223_species.2 } }
+}

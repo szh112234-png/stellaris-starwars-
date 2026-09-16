@@ -1,0 +1,23 @@
+namespace = foc_v223_story
+
+country_event = {
+    id = foc_v223_story.1 hide_window = yes is_triggered_only = yes trigger = { is_ai = no }
+    immediate = { country_event = { id = foc_v223_story.2 days = 120 } }
+}
+
+country_event = {
+    id = foc_v223_story.2 hide_window = yes is_triggered_only = yes trigger = { is_ai = no }
+    immediate = {
+        if = { limit = { has_global_flag = foc_canon_scarif_battle_completed } foc_v225_destroy_scarif_characters = yes }
+        every_country = { limit = { has_country_flag = foc_saga_padme_senator_shown } foc_v226_maintain_padme = yes }
+        every_country = { limit = { has_country_flag = foc_republic_origin_republic_country } foc_v223_add_republic_legends = yes foc_v223_repair_named_portraits = yes }
+        every_country = { limit = { OR = { has_country_flag = foc_republic_origin_empire_country has_country_flag = foc_sw_imperial_remnant_country } } foc_v223_remove_republic_legends_from_empire = yes foc_v223_add_empire_legends = yes foc_v223_repair_named_portraits = yes }
+        every_country = { limit = { OR = { has_country_flag = foc_republic_origin_imperial_rebel_country has_country_flag = foc_republic_origin_rebel_alliance_country has_country_flag = foc_khan_rebel_alliance_country } } foc_v223_add_imperial_rebel_legends = yes foc_v223_repair_named_portraits = yes }
+        every_country = { limit = { has_country_flag = foc_sw_new_republic_country } foc_v223_add_new_republic_legends = yes foc_v223_repair_named_portraits = yes }
+    }
+}
+
+country_event = {
+    id = foc_v223_story.3 hide_window = yes is_triggered_only = yes trigger = { is_ai = no }
+    immediate = { country_event = { id = foc_v223_story.2 } }
+}

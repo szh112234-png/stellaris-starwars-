@@ -1,0 +1,6 @@
+
+# V182: run the strategic-fighter migration once at game start only.
+# The former monthly retry was removed to prevent repeated backfill.
+on_game_start_country = {
+    events = { foc_263.1 }
+}

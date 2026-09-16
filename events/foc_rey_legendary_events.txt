@@ -1,0 +1,56 @@
+namespace = foc_rey
+
+# Rey appears only after the First Order has actually reached and controls Jakku.
+# The First Order may be AI-controlled or player-controlled; the event belongs to
+# Leia's Rebel/Resistance country and therefore never recruits Rey into the Order.
+country_event = {
+    id = foc_rey.1
+    title = foc_rey.1.name
+    desc = foc_rey.1.desc
+    picture = GFX_foc_saga_jedi_training
+    location = event_target:foc_sw_jakku_system
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        has_global_flag = foc_khan_phase_one
+        exists = event_target:foc_sw_jakku_system
+        event_target:foc_sw_jakku_system = {
+            exists = space_owner
+            space_owner = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = fop_player_first_order
+                    has_country_flag = foc_republic_origin_empire_crisis
+                }
+            }
+        }
+        OR = {
+            has_country_flag = foc_khan_first_order_resistance_country
+            has_country_flag = foc_republic_origin_post_treaty_rebel_country
+            has_country_flag = foc_khan_rebel_alliance_country
+        }
+        any_owned_leader = { has_leader_flag = foc_saga_leia_leader }
+        NOT = { has_country_flag = foc_rey_legendary_present }
+        NOT = { has_global_flag = foc_rey_legendary_has_joined_rebels }
+        NOT = { has_country_flag = foc_khan_first_order_country }
+        NOT = { has_country_flag = foc_khan_final_order_country }
+        NOT = { has_country_flag = fop_player_first_order }
+        NOT = { has_country_flag = fop_player_final_order }
+    }
+
+    immediate = {
+        foc_rey_ensure_legendary_leader = yes
+    }
+
+    option = { name = foc_rey.1.a }
+}
+
+# Old-save / portrait / native legendary-tier repair.
+country_event = {
+    id = foc_rey.2
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { any_owned_leader = { has_leader_flag = foc_rey_legendary_leader } }
+    immediate = { foc_rey_ensure_legendary_leader = yes }
+}

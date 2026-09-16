@@ -1,0 +1,705 @@
+# V231j: Aldhani remains at half its original Yaga Minor distance; Dathomir is the exact mirror of its V231g position across the Yavin-Akiva route.
+# V127 deterministic compact-map fallback: same geometry rotated into the fallback frame; exact positions preserve separation and planar hyperlanes.
+namespace = foc_swmap
+
+# V121: Mandalore and Malachor exchange physical spawn positions only; flags, hyperlanes and story identities are unchanged.
+# V119 main-map polish: narrowed main-region placement jitter to prevent
+# scripted hyperlane crossings. Ilum and Exegol remain outside this file.
+
+# New-game fallback image layout. Coruscant is pulled inward to 450-460 galaxy-core-relative
+# radius as vanilla Terminal Egress in a dedicated 50-60 degree compatibility
+# sector, clear of Shipgirl and Kuat generation sectors. Every other normal
+# Star Wars system remains Coruscant-relative. Ilum and Exegol are not here.
+country_event = {
+    id = foc_swmap.1
+    hide_window = yes
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    immediate = {
+        # Resolve a guaranteed ordinary-galaxy anchor before any external system
+        # exists. A rim system with a real neighbour is already part of the main
+        # hyperlane graph, and the saved target needs no later distance search.
+        random_rim_system = {
+            limit = { any_neighbor_system = { always = yes } }
+            set_star_flag = foc_swmap_main_galaxy_anchor
+            set_star_flag = foc_sw_jakku_gateway_neighbor
+            set_star_flag = foc_sw_coruscant_gateway_neighbor
+            save_global_event_target_as = foc_swmap_main_galaxy_anchor
+        }
+
+        set_spawn_system_batch = begin
+
+        # Match vanilla L-Cluster radial placement. The saved rim anchor above is
+        # used only as the endpoint of Jakku's main-galaxy wormhole, so all
+        # country creation and story effects remain unchanged.
+        no_scope = {
+            spawn_system = {
+                hyperlane = no
+                min_distance >= 455
+                max_distance <= 455
+                min_orientation_angle = 54
+                max_orientation_angle = 56
+                initializer = foc_sw_coruscant_system
+                effect = {
+                    save_global_event_target_as = foc_sw_coruscant_system
+                }
+            }
+        }
+
+        no_scope = {
+            event_target:foc_sw_coruscant_system? = {
+                # New Republic: one continuous inward/left region.
+                spawn_system = { hyperlane = no min_distance >= 39.0600 max_distance <= 39.0600 min_orientation_angle = 56.9115 max_orientation_angle = 56.9115 initializer = foc_sw_hosnian_system }
+                spawn_system = { hyperlane = no min_distance >= 17.8795 max_distance <= 17.8795 min_orientation_angle = 50.2842 max_orientation_angle = 50.2842 initializer = foc_sw_kuat_system }
+                spawn_system = { hyperlane = no min_distance >= 13.8312 max_distance <= 13.8312 min_orientation_angle = 84.9201 max_orientation_angle = 84.9201 initializer = foc_sw_chandrila_system }
+                spawn_system = { hyperlane = no min_distance >= 70.8826 max_distance <= 70.8826 min_orientation_angle = 81.5506 max_orientation_angle = 81.5506 initializer = foc_sw_akiva_system }
+                spawn_system = { hyperlane = no min_distance >= 61.3592 max_distance <= 61.3592 min_orientation_angle = 78.3766 max_orientation_angle = 78.3766 initializer = foc_sw_yavin_system }
+                spawn_system = { hyperlane = no min_distance >= 28.6663 max_distance <= 28.6663 min_orientation_angle = 54.8958 max_orientation_angle = 54.8958 initializer = foc_swmap_corellia_system }
+                spawn_system = { hyperlane = no min_distance >= 54.9846 max_distance <= 54.9846 min_orientation_angle = 58.5176 max_orientation_angle = 58.5176 initializer = foc_swmap_naboo_system }
+                spawn_system = { hyperlane = no min_distance >= 60.6442 max_distance <= 60.6442 min_orientation_angle = 66.9449 max_orientation_angle = 66.9449 initializer = foc_swmap_kashyyyk_system }
+                spawn_system = { hyperlane = no min_distance >= 60.6160 max_distance <= 60.6160 min_orientation_angle = 96.5500 max_orientation_angle = 96.5500 initializer = foc_swmap_mon_cala_system }
+                spawn_system = { hyperlane = no min_distance >= 68.4334 max_distance <= 68.4334 min_orientation_angle = 41.6154 max_orientation_angle = 41.6154 initializer = foc_swmap_endor_system }
+                spawn_system = { hyperlane = no min_distance >= 67.0500 max_distance <= 67.0500 min_orientation_angle = 23.0000 max_orientation_angle = 23.0000 initializer = foc_swmap_hoth_system }
+                spawn_system = { hyperlane = no min_distance >= 58.7536 max_distance <= 58.7536 min_orientation_angle = 33.5907 max_orientation_angle = 33.5907 initializer = foc_swmap_bespin_system }
+                # V73 latest additional story systems.
+                spawn_system = { hyperlane = no min_distance >= 64.6180 max_distance <= 64.6180 min_orientation_angle = 49.7728 max_orientation_angle = 49.7728 initializer = foc_swmap_dagobah_system }
+                spawn_system = { hyperlane = no min_distance >= 67.0114 max_distance <= 67.0114 min_orientation_angle = 89.4020 max_orientation_angle = 89.4020 initializer = foc_swmap_lothal_system }
+                # V73 canonical story systems (inner/rebel side).
+                spawn_system = { hyperlane = no min_distance >= 23.8500 max_distance <= 23.8500 min_orientation_angle = 93.0000 max_orientation_angle = 93.0000 initializer = foc_swfill_alderaan_system }
+                spawn_system = { hyperlane = no min_distance >= 37.6764 max_distance <= 37.6764 min_orientation_angle = 41.7740 max_orientation_angle = 41.7740 initializer = foc_swmap_bracca_system }
+                spawn_system = { hyperlane = no min_distance >= 48.8025 max_distance <= 48.8025 min_orientation_angle = 35.9873 max_orientation_angle = 35.9873 initializer = foc_swmap_tanalorr_system }
+                spawn_system = { hyperlane = no min_distance >= 50.5579 max_distance <= 50.5579 min_orientation_angle = 68.5163 max_orientation_angle = 68.5163 initializer = foc_swmap_ossus_system }
+                spawn_system = { hyperlane = no min_distance >= 85.9159 max_distance <= 85.9159 min_orientation_angle = 108.3059 max_orientation_angle = 108.3059 initializer = foc_swmap_ahchto_system }
+                spawn_system = { hyperlane = no min_distance >= 103.4297 max_distance <= 103.4297 min_orientation_angle = 69.6013 max_orientation_angle = 69.6013 initializer = foc_swmap_aldhani_system }
+
+                # Imperial Remnant: a separate continuous outward/right region.
+                spawn_system = { hyperlane = no min_distance >= 46.8000 max_distance <= 46.8000 min_orientation_angle = 48.0000 max_orientation_angle = 48.0000 initializer = foc_sw_jakku_system }
+                spawn_system = { hyperlane = no min_distance >= 76.9377 max_distance <= 76.9377 min_orientation_angle = 54.5932 max_orientation_angle = 54.5932 initializer = foc_sw_bastion_system }
+                spawn_system = { hyperlane = no min_distance >= 78.7325 max_distance <= 78.7325 min_orientation_angle = 61.9901 max_orientation_angle = 61.9901 initializer = foc_sw_yaga_minor_system }
+                spawn_system = { hyperlane = no min_distance >= 78.4675 max_distance <= 78.4675 min_orientation_angle = 69.4282 max_orientation_angle = 69.4282 initializer = foc_sw_bilbringi_system }
+                spawn_system = { hyperlane = no min_distance >= 69.0475 max_distance <= 69.0475 min_orientation_angle = 72.4736 max_orientation_angle = 72.4736 initializer = foc_sw_rendili_system }
+                spawn_system = { hyperlane = no min_distance >= 95.5463 max_distance <= 95.5463 min_orientation_angle = 73.7824 max_orientation_angle = 73.7824 initializer = foc_swmap_geonosis_system }
+                spawn_system = { hyperlane = no min_distance >= 46.8900 max_distance <= 46.8900 min_orientation_angle = 86.0000 max_orientation_angle = 86.0000 initializer = foc_swmap_kamino_system }
+                spawn_system = { hyperlane = no min_distance >= 87.4879 max_distance <= 87.4879 min_orientation_angle = 53.9591 max_orientation_angle = 53.9591 initializer = foc_swmap_mustafar_system }
+                spawn_system = { hyperlane = no min_distance >= 83.5838 max_distance <= 83.5838 min_orientation_angle = 96.0498 max_orientation_angle = 96.0498 initializer = foc_swmap_mandalore_system }
+                spawn_system = { hyperlane = no min_distance >= 84.4380 max_distance <= 84.4380 min_orientation_angle = 75.2519 max_orientation_angle = 75.2519 initializer = foc_swmap_scarif_system }
+                spawn_system = { hyperlane = no min_distance >= 81.7029 max_distance <= 81.7029 min_orientation_angle = 89.0948 max_orientation_angle = 89.0948 initializer = foc_swmap_kessel_system }
+                spawn_system = { hyperlane = no min_distance >= 83.5960 max_distance <= 83.5960 min_orientation_angle = 71.7176 max_orientation_angle = 71.7176 initializer = foc_swmap_dathomir_system }
+                spawn_system = { hyperlane = no min_distance >= 96.4230 max_distance <= 96.4230 min_orientation_angle = 65.0007 max_orientation_angle = 65.0007 initializer = foc_swmap_tatooine_system }
+                spawn_system = { hyperlane = no min_distance >= 88.8091 max_distance <= 88.8091 min_orientation_angle = 47.3813 max_orientation_angle = 47.3813 initializer = foc_swmap_aldoleem_system }
+                # V73 canonical Clone Wars / Rebel-era battle systems.
+                spawn_system = { hyperlane = no min_distance >= 88.6562 max_distance <= 88.6562 min_orientation_angle = 69.0990 max_orientation_angle = 69.0990 initializer = foc_swmap_christophsis_system }
+                spawn_system = { hyperlane = no min_distance >= 89.3534 max_distance <= 89.3534 min_orientation_angle = 60.4610 max_orientation_angle = 60.4610 initializer = foc_swmap_utapau_system }
+                spawn_system = { hyperlane = no min_distance >= 81.0707 max_distance <= 81.0707 min_orientation_angle = 81.9232 max_orientation_angle = 81.9232 initializer = foc_swmap_jedha_system }
+                spawn_system = { hyperlane = no min_distance >= 92.0726 max_distance <= 92.0726 min_orientation_angle = 79.6484 max_orientation_angle = 79.6484 initializer = foc_swmap_malachor_system }
+            }
+        }
+
+        set_spawn_system_batch = end
+        country_event = { id = foc_swmap.2 }
+    }
+}
+
+# Contract the simplified map's white routes across omitted intermediate systems.
+# Only Coruscant may receive an automatic ordinary-galaxy lane. This event owns
+# every internal Star Wars route. Endor-Jakku is the only inter-empire border.
+country_event = {
+    id = foc_swmap.2
+    hide_window = yes
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    immediate = {
+        # V183: Bilbringi<->Muunilinst and Bracca<->Mygeeto route neighbourhoods are swapped with their physical positions.
+        # V169 v3 route graph. Every mapped route is an ordinary hyperlane except
+        # the requested Jakku-Ahch-To wormhole. Ajan Kloss remains hidden and is
+        # therefore omitted from the fixed-map route graph.
+        random_system = { limit = { has_star_flag = foc_sw_coruscant_home } random_system = { limit = { has_star_flag = foc_swmap_brentaal_home } add_hyperlane = { from = this to = PREV } } } # 科洛桑 -- 布伦塔尔 [帕勒米安贸易航道]
+        random_system = { limit = { has_star_flag = foc_swmap_brentaal_home } random_system = { limit = { has_star_flag = foc_v175_bogden_home } add_hyperlane = { from = this to = PREV } } } # 布伦塔尔 -- 博格登 [帕勒米安贸易航道]
+        random_system = { limit = { has_star_flag = foc_v175_bogden_home } random_system = { limit = { has_star_flag = foc_swmap_taanab_home } add_hyperlane = { from = this to = PREV } } } # 博格登 -- 塔纳布 [帕勒米安贸易航道]
+        random_system = { limit = { has_star_flag = foc_swmap_taanab_home } random_system = { limit = { has_star_flag = foc_swmap_kijimi_home } add_hyperlane = { from = this to = PREV } } } # 塔纳布 -- 基吉米 [帕勒米安贸易航道]
+        random_system = { limit = { has_star_flag = foc_swmap_kijimi_home } random_system = { limit = { has_star_flag = foc_swmap_ossus_home } add_hyperlane = { from = this to = PREV } } } # 基吉米 -- 奥苏斯 [帕勒米安贸易航道]
+        random_system = { limit = { has_star_flag = foc_sw_coruscant_home } random_system = { limit = { has_star_flag = foc_swmap_corellia_home } add_hyperlane = { from = this to = PREV } } } # 科洛桑 -- 科雷利亚 [科雷利亚航路]
+        random_system = { limit = { has_star_flag = foc_swmap_corellia_home } random_system = { limit = { has_star_flag = foc_swmap_denon_home } add_hyperlane = { from = this to = PREV } } } # 科雷利亚 -- 德农 [科雷利亚航路]
+        random_system = { limit = { has_star_flag = foc_swmap_denon_home } random_system = { limit = { has_star_flag = foc_v175_mimban_home } add_hyperlane = { from = this to = PREV } } } # 德农 -- 米姆班 [科雷利亚航路]
+        random_system = { limit = { has_star_flag = foc_v175_mimban_home } random_system = { limit = { has_star_flag = foc_v175_vandor_home } add_hyperlane = { from = this to = PREV } } } # 米姆班 -- 范多尔 [科雷利亚航路]
+        random_system = { limit = { has_star_flag = foc_v175_vandor_home } random_system = { limit = { has_star_flag = foc_v175_savareen_home } add_hyperlane = { from = this to = PREV } } } # 范多尔 -- 萨瓦林 [科雷利亚航路]
+        random_system = { limit = { has_star_flag = foc_v175_savareen_home } random_system = { limit = { has_star_flag = foc_swmap_tatooine_home } add_hyperlane = { from = this to = PREV } } } # 萨瓦林 -- 塔图因 [科雷利亚航路]
+        random_system = { limit = { has_star_flag = foc_swmap_tatooine_home } random_system = { limit = { has_star_flag = foc_swmap_ryloth_home } add_hyperlane = { from = this to = PREV } } } # 塔图因 -- 莱洛斯 [科雷利亚航路]
+        random_system = { limit = { has_star_flag = foc_swmap_corellia_home } random_system = { limit = { has_star_flag = foc_swmap_duro_home } add_hyperlane = { from = this to = PREV } } } # 科雷利亚 -- 杜罗 [科雷利亚贸易主脊]
+        random_system = { limit = { has_star_flag = foc_swmap_duro_home } random_system = { limit = { has_star_flag = foc_swmap_fondor_home } add_hyperlane = { from = this to = PREV } } } # 杜罗 -- 丰多尔 [科雷利亚贸易主脊]
+        random_system = { limit = { has_star_flag = foc_swmap_fondor_home } random_system = { limit = { has_star_flag = foc_swmap_yagdhul_home } add_hyperlane = { from = this to = PREV } } } # 丰多尔 -- 雅格杜尔 [科雷利亚贸易主脊]
+        random_system = { limit = { has_star_flag = foc_swmap_yagdhul_home } random_system = { limit = { has_star_flag = foc_swmap_anoat_home } add_hyperlane = { from = this to = PREV } } } # 雅格杜尔 -- 阿诺特 [科雷利亚贸易主脊]
+        random_system = { limit = { has_star_flag = foc_swmap_anoat_home } random_system = { limit = { has_star_flag = foc_swmap_hoth_home } add_hyperlane = { from = this to = PREV } } } # 阿诺特 -- 霍斯 [科雷利亚贸易主脊]
+        random_system = { limit = { has_star_flag = foc_swmap_hoth_home } random_system = { limit = { has_star_flag = foc_swmap_bespin_home } add_hyperlane = { from = this to = PREV } } } # 霍斯 -- 贝斯平 [科雷利亚贸易主脊]
+        random_system = { limit = { has_star_flag = foc_swmap_abregado_home } random_system = { limit = { has_star_flag = foc_swmap_yagdhul_home } add_hyperlane = { from = this to = PREV } } } # 阿布雷加多 -- 雅格杜尔 [里马贸易航道]
+        random_system = { limit = { has_star_flag = foc_swmap_yagdhul_home } random_system = { limit = { has_star_flag = foc_swmap_mechis_home } add_hyperlane = { from = this to = PREV } } } # 雅格杜尔 -- 梅基斯三号 [里马贸易航道]
+        random_system = { limit = { has_star_flag = foc_swmap_mechis_home } random_system = { limit = { has_star_flag = foc_swmap_sullust_home } add_hyperlane = { from = this to = PREV } } } # 梅基斯三号 -- 苏卢斯特 [里马贸易航道]
+        random_system = { limit = { has_star_flag = foc_swmap_sullust_home } random_system = { limit = { has_star_flag = foc_swmap_eriadu_home } add_hyperlane = { from = this to = PREV } } } # 苏卢斯特 -- 埃里亚杜 [里马贸易航道]
+        random_system = { limit = { has_star_flag = foc_swmap_eriadu_home } random_system = { limit = { has_star_flag = foc_swmap_dagobah_home } add_hyperlane = { from = this to = PREV } } } # 埃里亚杜 -- 达戈巴 [里马贸易航道]
+        random_system = { limit = { has_star_flag = foc_swmap_bonadan_home } random_system = { limit = { has_star_flag = foc_swmap_ferrix_home } add_hyperlane = { from = this to = PREV } } } # 博纳丹 -- 费里克斯 [海地安大道]
+        random_system = { limit = { has_star_flag = foc_swmap_ferrix_home } random_system = { limit = { has_star_flag = foc_v175_morlana_one_home } add_hyperlane = { from = this to = PREV } } } # 费里克斯 -- 莫拉纳一号 [海地安大道]
+        random_system = { limit = { has_star_flag = foc_v175_morlana_one_home } random_system = { limit = { has_star_flag = foc_v175_stygeon_pr_home } add_hyperlane = { from = this to = PREV } } } # 莫拉纳一号 -- 斯泰吉恩 [海地安大道]
+        random_system = { limit = { has_star_flag = foc_v175_stygeon_pr_home } random_system = { limit = { has_star_flag = foc_v175_spellhaus_home } add_hyperlane = { from = this to = PREV } } } # 斯泰吉恩 -- 斯佩尔豪斯 [海地安大道]
+        random_system = { limit = { has_star_flag = foc_v175_spellhaus_home } random_system = { limit = { has_star_flag = foc_v175_at_attin_home } add_hyperlane = { from = this to = PREV } } } # 斯佩尔豪斯 -- 至阿廷 [海地安大道]
+        random_system = { limit = { has_star_flag = foc_v175_at_attin_home } random_system = { limit = { has_star_flag = foc_v175_mapuzo_home } add_hyperlane = { from = this to = PREV } } } # 至阿廷 -- 马普佐 [海地安大道]
+        random_system = { limit = { has_star_flag = foc_v175_mapuzo_home } random_system = { limit = { has_star_flag = foc_swmap_ord_mantell_home } add_hyperlane = { from = this to = PREV } } } # 马普佐 -- 奥德·曼特尔 [海地安大道]
+        random_system = { limit = { has_star_flag = foc_swmap_ord_mantell_home } random_system = { limit = { has_star_flag = foc_swmap_brentaal_home } add_hyperlane = { from = this to = PREV } } } # 奥德·曼特尔 -- 布伦塔尔 [海地安大道]
+        random_system = { limit = { has_star_flag = foc_swmap_brentaal_home } random_system = { limit = { has_star_flag = foc_v175_corulag_home } add_hyperlane = { from = this to = PREV } } } # 布伦塔尔 -- 科鲁拉格 [海地安大道]
+        random_system = { limit = { has_star_flag = foc_v175_skako_home } random_system = { limit = { has_star_flag = foc_v175_fedalle_home } add_hyperlane = { from = this to = PREV } } } # 斯卡科 -- 费达勒 [海地安大道]
+        random_system = { limit = { has_star_flag = foc_v175_fedalle_home } random_system = { limit = { has_star_flag = foc_swmap_corellia_home } add_hyperlane = { from = this to = PREV } } } # 费达勒 -- 科雷利亚 [海地安大道]
+        random_system = { limit = { has_star_flag = foc_swmap_corellia_home } random_system = { limit = { has_star_flag = foc_v175_bellassa_home } add_hyperlane = { from = this to = PREV } } } # 科雷利亚 -- 贝拉萨 [海地安大道]
+        random_system = { limit = { has_star_flag = foc_v175_bellassa_home } random_system = { limit = { has_star_flag = foc_swmap_fondor_home } add_hyperlane = { from = this to = PREV } } } # 贝拉萨 -- 丰多尔 [海地安大道]
+        random_system = { limit = { has_star_flag = foc_swmap_fondor_home } random_system = { limit = { has_star_flag = foc_swmap_mechis_home } add_hyperlane = { from = this to = PREV } } } # 丰多尔 -- 梅基斯三号 [海地安大道]
+        random_system = { limit = { has_star_flag = foc_swmap_mechis_home } random_system = { limit = { has_star_flag = foc_swmap_anoat_home } add_hyperlane = { from = this to = PREV } } } # 梅基斯三号 -- 阿诺特 [海地安大道]
+        random_system = { limit = { has_star_flag = foc_swmap_anoat_home } random_system = { limit = { has_star_flag = foc_v175_terminus_home } add_hyperlane = { from = this to = PREV } } } # 阿诺特 -- 特米努斯 [海地安大道]
+        random_system = { limit = { has_star_flag = foc_v175_terminus_home } random_system = { limit = { has_star_flag = foc_v175_imynusoph_home } add_hyperlane = { from = this to = PREV } } } # 特米努斯 -- 伊米努索夫 [海地安大道]
+        random_system = { limit = { has_star_flag = foc_v175_fedalle_home } random_system = { limit = { has_star_flag = foc_sw_kuat_home } add_hyperlane = { from = this to = PREV } } } # 费达勒 -- 夸特 [费达勒—夸特航道]
+        random_system = { limit = { has_star_flag = foc_swmap_jedha_home } random_system = { limit = { has_star_flag = foc_sw_jakku_home } add_hyperlane = { from = this to = PREV } } } # 杰达 -- 贾库 [杰达—贾库航道]
+        random_system = { limit = { has_star_flag = foc_v175_taris_home } random_system = { limit = { has_star_flag = foc_v175_spellhaus_home } add_hyperlane = { from = this to = PREV } } } # 塔里斯 -- 斯佩尔豪斯 [支线]
+        random_system = { limit = { has_star_flag = foc_sw_rendili_home } random_system = { limit = { has_star_flag = foc_swmap_cato_neimoidia_home } add_hyperlane = { from = this to = PREV } } } # 伦迪利 -- 卡托·内莫伊迪亚 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_duro_home } random_system = { limit = { has_star_flag = foc_v175_bellassa_home } add_hyperlane = { from = this to = PREV } } } # 杜罗 -- 贝拉萨 [支线]
+        random_system = { limit = { has_star_flag = foc_sw_chandrila_home } random_system = { limit = { has_star_flag = foc_v175_corulag_home } add_hyperlane = { from = this to = PREV } } } # 千瑞拉 -- 科鲁拉格 [支线]
+        random_system = { limit = { has_star_flag = foc_sw_rendili_home } random_system = { limit = { has_star_flag = foc_sw_kuat_home } add_hyperlane = { from = this to = PREV } } } # 伦迪利 -- 夸特 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_centerpoint_home } random_system = { limit = { has_star_flag = foc_swmap_duro_home } add_hyperlane = { from = this to = PREV } } } # 中心点 -- 杜罗 [支线]
+        random_system = { limit = { has_star_flag = foc_sw_kuat_home } random_system = { limit = { has_star_flag = foc_swfill_alderaan_home } add_hyperlane = { from = this to = PREV } } } # 夸特 -- 奥德朗 [支线]
+        random_system = { limit = { has_star_flag = foc_sw_coruscant_home } random_system = { limit = { has_star_flag = foc_v175_corulag_home } add_hyperlane = { from = this to = PREV } } } # 科洛桑 -- 科鲁拉格 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_yinchorr_home } random_system = { limit = { has_star_flag = foc_v175_corulag_home } add_hyperlane = { from = this to = PREV } } } # 因霍尔 -- 科鲁拉格 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_lothal_home } random_system = { limit = { has_star_flag = foc_v175_munto_codru_home } add_hyperlane = { from = this to = PREV } } } # 洛塔 -- 蒙托·科德鲁 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_centerpoint_home } random_system = { limit = { has_star_flag = foc_sw_hosnian_home } add_hyperlane = { from = this to = PREV } } } # 中心点 -- 霍斯尼亚 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_carida_home } random_system = { limit = { has_star_flag = foc_v175_skako_home } add_hyperlane = { from = this to = PREV } } } # 卡里达 -- 斯卡科 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_skako_home } random_system = { limit = { has_star_flag = foc_sw_coruscant_home } add_hyperlane = { from = this to = PREV } } } # 斯卡科 -- 科洛桑 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_taris_home } random_system = { limit = { has_star_flag = foc_v175_wayland_home } add_hyperlane = { from = this to = PREV } } } # 塔里斯 -- 韦兰 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_taris_home } random_system = { limit = { has_star_flag = foc_swmap_mandalore_home } add_hyperlane = { from = this to = PREV } } } # 塔里斯 -- 曼达洛 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_uvena_prime_home } random_system = { limit = { has_star_flag = foc_swmap_eriadu_home } add_hyperlane = { from = this to = PREV } } } # 乌韦纳 -- 埃里亚杜 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_nal_hutta_home } random_system = { limit = { has_star_flag = foc_v175_nar_shaddaa_home } add_hyperlane = { from = this to = PREV } } } # 纳尔赫塔 -- 那沙达 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_oba_diah_home } random_system = { limit = { has_star_flag = foc_swmap_maw_home } add_hyperlane = { from = this to = PREV } } } # 奥巴迪亚 -- 黑洞渊薮 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_carida_home } random_system = { limit = { has_star_flag = foc_v175_fedalle_home } add_hyperlane = { from = this to = PREV } } } # 卡里达 -- 费达勒 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_spellhaus_home } random_system = { limit = { has_star_flag = foc_swmap_mandalore_home } add_hyperlane = { from = this to = PREV } } } # 斯佩尔豪斯 -- 曼达洛 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_taris_home } random_system = { limit = { has_star_flag = foc_v175_at_attin_home } add_hyperlane = { from = this to = PREV } } } # 塔里斯 -- 至阿廷 [支线]
+        random_system = { limit = { has_star_flag = foc_sw_chandrila_home } random_system = { limit = { has_star_flag = foc_v175_muunilinst_home } add_hyperlane = { from = this to = PREV } } } # 千瑞拉 -- 穆尼林斯特 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_balmorra_home } random_system = { limit = { has_star_flag = foc_v175_mimban_home } add_hyperlane = { from = this to = PREV } } } # 巴尔莫拉 -- 米姆班 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_aldhani_home } random_system = { limit = { has_star_flag = foc_v175_mapuzo_home } add_hyperlane = { from = this to = PREV } } } # 奥达尼 -- 马普佐 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_ithor_home } random_system = { limit = { has_star_flag = foc_swmap_aldhani_home } add_hyperlane = { from = this to = PREV } } } # 伊索尔 -- 奥达尼 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_dathomir_home } random_system = { limit = { has_star_flag = foc_sw_yavin_home } add_hyperlane = { from = this to = PREV } } } # 达索米尔 -- 雅汶 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_munto_codru_home } random_system = { limit = { has_star_flag = foc_v175_atollon_home } add_hyperlane = { from = this to = PREV } } } # 蒙托·科德鲁 -- 阿托伦 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_umbara_home } random_system = { limit = { has_star_flag = foc_swmap_mygeeto_home } add_hyperlane = { from = this to = PREV } } } # 乌姆巴拉 -- 梅基托 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_kashyyyk_home } random_system = { limit = { has_star_flag = foc_swmap_onderon_home } add_hyperlane = { from = this to = PREV } } } # 卡希克 -- 安多兰 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_mandalore_home } random_system = { limit = { has_star_flag = foc_v175_wayland_home } add_hyperlane = { from = this to = PREV } } } # 曼达洛 -- 韦兰 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_crait_home } random_system = { limit = { has_star_flag = foc_swmap_naboo_home } add_hyperlane = { from = this to = PREV } } } # 克雷特 -- 纳布 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_mustafar_home } random_system = { limit = { has_star_flag = foc_swmap_dagobah_home } add_hyperlane = { from = this to = PREV } } } # 穆斯塔法 -- 达戈巴 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_balmorra_home } random_system = { limit = { has_star_flag = foc_swmap_denon_home } add_hyperlane = { from = this to = PREV } } } # 巴尔莫拉 -- 德农 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_taanab_home } random_system = { limit = { has_star_flag = foc_v175_concord_dawn_home } add_hyperlane = { from = this to = PREV } } } # 塔纳布 -- 康科德黎明 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_stygeon_pr_home } random_system = { limit = { has_star_flag = foc_swmap_felucia_home } add_hyperlane = { from = this to = PREV } } } # 斯泰吉恩 -- 费卢西亚 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_numidian_pr_home } random_system = { limit = { has_star_flag = foc_v175_mapuzo_home } add_hyperlane = { from = this to = PREV } } } # 努米迪安 -- 马普佐 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_geonosis_home } random_system = { limit = { has_star_flag = foc_swmap_ryloth_home } add_hyperlane = { from = this to = PREV } } } # 吉奥诺西斯 -- 莱洛斯 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_cato_neimoidia_home } random_system = { limit = { has_star_flag = foc_swmap_balmorra_home } add_hyperlane = { from = this to = PREV } } } # 卡托·内莫伊迪亚 -- 巴尔莫拉 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_at_attin_home } random_system = { limit = { has_star_flag = foc_sw_akiva_home } add_hyperlane = { from = this to = PREV } } } # 至阿廷 -- 阿基瓦 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_mon_cala_home } random_system = { limit = { has_star_flag = foc_v175_munto_codru_home } add_hyperlane = { from = this to = PREV } } } # 蒙卡拉马里 -- 蒙托·科德鲁 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_mustafar_home } random_system = { limit = { has_star_flag = foc_swmap_bespin_home } add_hyperlane = { from = this to = PREV } } } # 穆斯塔法 -- 贝斯平 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_scarif_home } random_system = { limit = { has_star_flag = foc_v175_manda_home } add_hyperlane = { from = this to = PREV } } } # 斯卡里夫 -- 曼达 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_utapau_home } random_system = { limit = { has_star_flag = foc_v175_seatos_home } add_hyperlane = { from = this to = PREV } } } # 乌塔帕 -- 西托斯 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_eadu_home } random_system = { limit = { has_star_flag = foc_v175_oba_diah_home } add_hyperlane = { from = this to = PREV } } } # 埃杜 -- 奥巴迪亚 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_d_qar_home } random_system = { limit = { has_star_flag = foc_swmap_adelphi_home } add_hyperlane = { from = this to = PREV } } } # 迪卡 -- 阿德尔菲 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_moraband_home } random_system = { limit = { has_star_flag = foc_swmap_felucia_home } add_hyperlane = { from = this to = PREV } } } # 莫拉班德 -- 费卢西亚 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_centerpoint_home } random_system = { limit = { has_star_flag = foc_swmap_denon_home } add_hyperlane = { from = this to = PREV } } } # 中心点 -- 德农 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_garel_home } random_system = { limit = { has_star_flag = foc_swmap_lothal_home } add_hyperlane = { from = this to = PREV } } } # 加雷尔 -- 洛塔 [支线]
+        random_system = { limit = { has_star_flag = foc_sw_chandrila_home } random_system = { limit = { has_star_flag = foc_v175_yinchorr_home } add_hyperlane = { from = this to = PREV } } } # 千瑞拉 -- 因霍尔 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_numidian_pr_home } random_system = { limit = { has_star_flag = foc_swmap_ord_mantell_home } add_hyperlane = { from = this to = PREV } } } # 努米迪安 -- 奥德·曼特尔 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_tatooine_home } random_system = { limit = { has_star_flag = foc_v175_manda_home } add_hyperlane = { from = this to = PREV } } } # 塔图因 -- 曼达 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_utapau_home } random_system = { limit = { has_star_flag = foc_v175_uvena_prime_home } add_hyperlane = { from = this to = PREV } } } # 乌塔帕 -- 乌韦纳 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_kessel_home } random_system = { limit = { has_star_flag = foc_v175_oba_diah_home } add_hyperlane = { from = this to = PREV } } } # 凯瑟尔 -- 奥巴迪亚 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_tanalorr_home } random_system = { limit = { has_star_flag = foc_v175_koboh_home } add_hyperlane = { from = this to = PREV } } } # 塔纳洛尔 -- 科博 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_seatos_home } random_system = { limit = { has_star_flag = foc_swmap_dagobah_home } add_hyperlane = { from = this to = PREV } } } # 西托斯 -- 达戈巴 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_kashyyyk_home } random_system = { limit = { has_star_flag = foc_swmap_mygeeto_home } add_hyperlane = { from = this to = PREV } } } # 卡希克 -- 梅基托 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_d_qar_home } random_system = { limit = { has_star_flag = foc_swmap_naboo_home } add_hyperlane = { from = this to = PREV } } } # 迪卡 -- 纳布 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_christophsis_home } random_system = { limit = { has_star_flag = foc_v175_savareen_home } add_hyperlane = { from = this to = PREV } } } # 克里斯托弗西斯 -- 萨瓦林 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_numidian_pr_home } random_system = { limit = { has_star_flag = foc_v175_bogden_home } add_hyperlane = { from = this to = PREV } } } # 努米迪安 -- 博格登 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_ryloth_home } random_system = { limit = { has_star_flag = foc_v175_savareen_home } add_hyperlane = { from = this to = PREV } } } # 莱洛斯 -- 萨瓦林 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_concord_dawn_home } random_system = { limit = { has_star_flag = foc_swmap_mandalore_home } add_hyperlane = { from = this to = PREV } } } # 康科德黎明 -- 曼达洛 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_uvena_prime_home } random_system = { limit = { has_star_flag = foc_swmap_dagobah_home } add_hyperlane = { from = this to = PREV } } } # 乌韦纳 -- 达戈巴 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_geonosis_home } random_system = { limit = { has_star_flag = foc_swmap_tatooine_home } add_hyperlane = { from = this to = PREV } } } # 吉奥诺西斯 -- 塔图因 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_kamino_home } random_system = { limit = { has_star_flag = foc_swmap_scarif_home } add_hyperlane = { from = this to = PREV } } } # 卡米诺 -- 斯卡里夫 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_ghorman_home } random_system = { limit = { has_star_flag = foc_v175_bestine_iv_home } add_hyperlane = { from = this to = PREV } } } # 戈尔曼 -- 贝斯汀四号 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_ossus_home } random_system = { limit = { has_star_flag = foc_swmap_felucia_home } add_hyperlane = { from = this to = PREV } } } # 奥苏斯 -- 费卢西亚 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_dathomir_home } random_system = { limit = { has_star_flag = foc_sw_akiva_home } add_hyperlane = { from = this to = PREV } } } # 达索米尔 -- 阿基瓦 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_carida_home } random_system = { limit = { has_star_flag = foc_swfill_alderaan_home } add_hyperlane = { from = this to = PREV } } } # 卡里达 -- 奥德朗 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_byss_home } random_system = { limit = { has_star_flag = foc_swmap_tython_home } add_hyperlane = { from = this to = PREV } } } # 比斯 -- 泰桑 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_pasaana_home } random_system = { limit = { has_star_flag = foc_v175_mimban_home } add_hyperlane = { from = this to = PREV } } } # 帕萨纳 -- 米姆班 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_dantooine_home } random_system = { limit = { has_star_flag = foc_v175_ajan_kloss_home } add_hyperlane = { from = this to = PREV } } } # 丹图因 -- 阿简·克洛斯 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_kijimi_home } random_system = { limit = { has_star_flag = foc_v175_saleucami_home } add_hyperlane = { from = this to = PREV } } } # 基吉米 -- 萨鲁卡米 [支线]
+        random_system = { limit = { has_star_flag = foc_sw_bastion_home } random_system = { limit = { has_star_flag = foc_sw_bilbringi_home } add_hyperlane = { from = this to = PREV } } } # 巴斯提恩 -- 比尔布林吉 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_raxus_home } random_system = { limit = { has_star_flag = foc_swmap_moraband_home } add_hyperlane = { from = this to = PREV } } } # 拉克萨斯 -- 莫拉班德 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_crait_home } random_system = { limit = { has_star_flag = foc_swmap_sullust_home } add_hyperlane = { from = this to = PREV } } } # 克雷特 -- 苏卢斯特 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_nevarro_home } random_system = { limit = { has_star_flag = foc_v175_terminus_home } add_hyperlane = { from = this to = PREV } } } # 内瓦罗 -- 特米努斯 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_yinchorr_home } random_system = { limit = { has_star_flag = foc_v175_muunilinst_home } add_hyperlane = { from = this to = PREV } } } # 因霍尔 -- 穆尼林斯特 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_bakura_home } random_system = { limit = { has_star_flag = foc_swmap_endor_home } add_hyperlane = { from = this to = PREV } } } # 巴库拉 -- 恩多 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_lah_mu_home } random_system = { limit = { has_star_flag = foc_v175_zeffo_home } add_hyperlane = { from = this to = PREV } } } # 拉穆 -- 泽福 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_stygeon_pr_home } random_system = { limit = { has_star_flag = foc_sw_yavin_home } add_hyperlane = { from = this to = PREV } } } # 斯泰吉恩 -- 雅汶 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_mon_cala_home } random_system = { limit = { has_star_flag = foc_v175_atollon_home } add_hyperlane = { from = this to = PREV } } } # 蒙卡拉马里 -- 阿托伦 [支线]
+        random_system = { limit = { has_star_flag = foc_sw_yaga_minor_home } random_system = { limit = { has_star_flag = foc_swmap_bracca_home } add_hyperlane = { from = this to = PREV } } } # 亚加-米诺 -- 布拉卡 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_castilon_home } random_system = { limit = { has_star_flag = foc_swmap_endor_home } add_hyperlane = { from = this to = PREV } } } # 卡斯蒂隆 -- 恩多 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_batuu_home } random_system = { limit = { has_star_flag = foc_v175_bakura_home } add_hyperlane = { from = this to = PREV } } } # 巴图 -- 巴库拉 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_bonadan_home } random_system = { limit = { has_star_flag = foc_swmap_malachor_home } add_hyperlane = { from = this to = PREV } } } # 博纳丹 -- 马拉科 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_umbara_home } random_system = { limit = { has_star_flag = foc_v175_ruusan_home } add_hyperlane = { from = this to = PREV } } } # 乌姆巴拉 -- 鲁桑 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_crait_home } random_system = { limit = { has_star_flag = foc_v175_malastare_home } add_hyperlane = { from = this to = PREV } } } # 克雷特 -- 马拉斯塔尔 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_bogden_home } random_system = { limit = { has_star_flag = foc_v175_carida_home } add_hyperlane = { from = this to = PREV } } } # 博格登 -- 卡里达 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_taanab_home } random_system = { limit = { has_star_flag = foc_swmap_onderon_home } add_hyperlane = { from = this to = PREV } } } # 塔纳布 -- 安多兰 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_byss_home } random_system = { limit = { has_star_flag = foc_swmap_abregado_home } add_hyperlane = { from = this to = PREV } } } # 比斯 -- 阿布雷加多 [支线]
+        random_system = { limit = { has_star_flag = foc_sw_yaga_minor_home } random_system = { limit = { has_star_flag = foc_sw_bilbringi_home } add_hyperlane = { from = this to = PREV } } } # 亚加-米诺 -- 比尔布林吉 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_boz_pity_home } random_system = { limit = { has_star_flag = foc_v175_saleucami_home } add_hyperlane = { from = this to = PREV } } } # 博兹皮蒂 -- 萨鲁卡米 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_castilon_home } random_system = { limit = { has_star_flag = foc_v175_lotho_minor_home } add_hyperlane = { from = this to = PREV } } } # 卡斯蒂隆 -- 洛索·迈诺 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_raxus_home } random_system = { limit = { has_star_flag = foc_swmap_malachor_home } add_hyperlane = { from = this to = PREV } } } # 拉克萨斯 -- 马拉科 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_uvena_prime_home } random_system = { limit = { has_star_flag = foc_v175_seatos_home } add_hyperlane = { from = this to = PREV } } } # 乌韦纳 -- 西托斯 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_bothawui_home } random_system = { limit = { has_star_flag = foc_v175_manda_home } add_hyperlane = { from = this to = PREV } } } # 博萨维 -- 曼达 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_dantooine_home } random_system = { limit = { has_star_flag = foc_v175_lah_mu_home } add_hyperlane = { from = this to = PREV } } } # 丹图因 -- 拉穆 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_bracca_home } random_system = { limit = { has_star_flag = foc_v175_ajan_kloss_home } add_hyperlane = { from = this to = PREV } } } # 布拉卡 -- 阿简·克洛斯 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_bothawui_home } random_system = { limit = { has_star_flag = foc_swmap_scarif_home } add_hyperlane = { from = this to = PREV } } } # 博萨维 -- 斯卡里夫 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_yinchorr_home } random_system = { limit = { has_star_flag = foc_swmap_ord_mantell_home } add_hyperlane = { from = this to = PREV } } } # 因霍尔 -- 奥德·曼特尔 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_umbara_home } random_system = { limit = { has_star_flag = foc_swmap_kashyyyk_home } add_hyperlane = { from = this to = PREV } } } # 乌姆巴拉 -- 卡希克 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_lothal_home } random_system = { limit = { has_star_flag = foc_swmap_mon_cala_home } add_hyperlane = { from = this to = PREV } } } # 洛塔 -- 蒙卡拉马里 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_kessel_home } random_system = { limit = { has_star_flag = foc_swmap_maw_home } add_hyperlane = { from = this to = PREV } } } # 凯瑟尔 -- 黑洞渊薮 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_christophsis_home } random_system = { limit = { has_star_flag = foc_swmap_adelphi_home } add_hyperlane = { from = this to = PREV } } } # 克里斯托弗西斯 -- 阿德尔菲 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_kessel_home } random_system = { limit = { has_star_flag = foc_v175_boz_pity_home } add_hyperlane = { from = this to = PREV } } } # 凯瑟尔 -- 博兹皮蒂 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_naboo_home } random_system = { limit = { has_star_flag = foc_v175_malastare_home } add_hyperlane = { from = this to = PREV } } } # 纳布 -- 马拉斯塔尔 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_kessel_home } random_system = { limit = { has_star_flag = foc_v175_eadu_home } add_hyperlane = { from = this to = PREV } } } # 凯瑟尔 -- 埃杜 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_naboo_home } random_system = { limit = { has_star_flag = foc_swmap_adelphi_home } add_hyperlane = { from = this to = PREV } } } # 纳布 -- 阿德尔菲 [支线]
+        random_system = { limit = { has_star_flag = foc_sw_akiva_home } random_system = { limit = { has_star_flag = foc_sw_yavin_home } add_hyperlane = { from = this to = PREV } } } # 阿基瓦 -- 雅汶 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_ossus_home } random_system = { limit = { has_star_flag = foc_swmap_moraband_home } add_hyperlane = { from = this to = PREV } } } # 奥苏斯 -- 莫拉班德 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_toydaria_home } random_system = { limit = { has_star_flag = foc_swmap_aldoleem_home } add_hyperlane = { from = this to = PREV } } } # 托伊达里亚 -- 阿尔多利姆 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_toydaria_home } random_system = { limit = { has_star_flag = foc_swmap_nal_hutta_home } add_hyperlane = { from = this to = PREV } } } # 托伊达里亚 -- 纳尔赫塔 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_batuu_home } random_system = { limit = { has_star_flag = foc_swmap_endor_home } add_hyperlane = { from = this to = PREV } } } # 巴图 -- 恩多 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_boz_pity_home } random_system = { limit = { has_star_flag = foc_swmap_kijimi_home } add_hyperlane = { from = this to = PREV } } } # 博兹皮蒂 -- 基吉米 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_ithor_home } random_system = { limit = { has_star_flag = foc_v175_ajan_kloss_home } add_hyperlane = { from = this to = PREV } } } # 伊索尔 -- 阿简·克洛斯 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_umbara_home } random_system = { limit = { has_star_flag = foc_swmap_onderon_home } add_hyperlane = { from = this to = PREV } } } # 乌姆巴拉 -- 安多兰 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_raxus_home } random_system = { limit = { has_star_flag = foc_v175_atollon_home } add_hyperlane = { from = this to = PREV } } } # 拉克萨斯 -- 阿托伦 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_moraband_home } random_system = { limit = { has_star_flag = foc_v175_morlana_one_home } add_hyperlane = { from = this to = PREV } } } # 莫拉班德 -- 莫拉纳一号 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_kamino_home } random_system = { limit = { has_star_flag = foc_swmap_geonosis_home } add_hyperlane = { from = this to = PREV } } } # 卡米诺 -- 吉奥诺西斯 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_nevarro_home } random_system = { limit = { has_star_flag = foc_swmap_mustafar_home } add_hyperlane = { from = this to = PREV } } } # 内瓦罗 -- 穆斯塔法 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_pasaana_home } random_system = { limit = { has_star_flag = foc_v175_vandor_home } add_hyperlane = { from = this to = PREV } } } # 帕萨纳 -- 范多尔 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_endor_home } random_system = { limit = { has_star_flag = foc_v175_lotho_minor_home } add_hyperlane = { from = this to = PREV } } } # 恩多 -- 洛索·迈诺 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_bracca_home } random_system = { limit = { has_star_flag = foc_sw_bilbringi_home } add_hyperlane = { from = this to = PREV } } } # 布拉卡 -- 比尔布林吉 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_dantooine_home } random_system = { limit = { has_star_flag = foc_swmap_bracca_home } add_hyperlane = { from = this to = PREV } } } # 丹图因 -- 布拉卡 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_imynusoph_home } random_system = { limit = { has_star_flag = foc_swmap_nevarro_home } add_hyperlane = { from = this to = PREV } } } # 伊米努索夫 -- 内瓦罗 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_crait_home } random_system = { limit = { has_star_flag = foc_swmap_eriadu_home } add_hyperlane = { from = this to = PREV } } } # 克雷特 -- 埃里亚杜 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_sullust_home } random_system = { limit = { has_star_flag = foc_v175_malastare_home } add_hyperlane = { from = this to = PREV } } } # 苏卢斯特 -- 马拉斯塔尔 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_aldoleem_home } random_system = { limit = { has_star_flag = foc_v175_ruusan_home } add_hyperlane = { from = this to = PREV } } } # 阿尔多利姆 -- 鲁桑 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_dantooine_home } random_system = { limit = { has_star_flag = foc_v175_zeffo_home } add_hyperlane = { from = this to = PREV } } } # 丹图因 -- 泽福 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_ghorman_home } random_system = { limit = { has_star_flag = foc_sw_hosnian_home } add_hyperlane = { from = this to = PREV } } } # 戈尔曼 -- 霍斯尼亚 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_geonosis_home } random_system = { limit = { has_star_flag = foc_v175_manda_home } add_hyperlane = { from = this to = PREV } } } # 吉奥诺西斯 -- 曼达 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_bellassa_home } random_system = { limit = { has_star_flag = foc_swmap_abregado_home } add_hyperlane = { from = this to = PREV } } } # 贝拉萨 -- 阿布雷加多 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_garel_home } random_system = { limit = { has_star_flag = foc_swmap_mon_cala_home } add_hyperlane = { from = this to = PREV } } } # 加雷尔 -- 蒙卡拉马里 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_ossus_home } random_system = { limit = { has_star_flag = foc_swmap_raxus_home } add_hyperlane = { from = this to = PREV } } } # 奥苏斯 -- 拉克萨斯 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_nal_hutta_home } random_system = { limit = { has_star_flag = foc_swmap_maw_home } add_hyperlane = { from = this to = PREV } } } # 纳尔赫塔 -- 黑洞渊薮 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_balmorra_home } random_system = { limit = { has_star_flag = foc_v175_ruusan_home } add_hyperlane = { from = this to = PREV } } } # 巴尔莫拉 -- 鲁桑 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_nevarro_home } random_system = { limit = { has_star_flag = foc_swmap_bespin_home } add_hyperlane = { from = this to = PREV } } } # 内瓦罗 -- 贝斯平 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_mygeeto_home } random_system = { limit = { has_star_flag = foc_v175_ruusan_home } add_hyperlane = { from = this to = PREV } } } # 梅基托 -- 鲁桑 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_nar_shaddaa_home } random_system = { limit = { has_star_flag = foc_swmap_maw_home } add_hyperlane = { from = this to = PREV } } } # 那沙达 -- 黑洞渊薮 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_numidian_pr_home } random_system = { limit = { has_star_flag = foc_v175_wayland_home } add_hyperlane = { from = this to = PREV } } } # 努米迪安 -- 韦兰 [支线]
+        random_system = { limit = { has_star_flag = foc_sw_chandrila_home } random_system = { limit = { has_star_flag = foc_swmap_tython_home } add_hyperlane = { from = this to = PREV } } } # 千瑞拉 -- 泰桑 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_d_qar_home } random_system = { limit = { has_star_flag = foc_v175_pantora_home } add_hyperlane = { from = this to = PREV } } } # 迪卡 -- 潘托拉 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_tanalorr_home } random_system = { limit = { has_star_flag = foc_v175_terminus_home } add_hyperlane = { from = this to = PREV } } } # 塔纳洛尔 -- 特米努斯 [支线]
+        random_system = { limit = { has_star_flag = foc_swfill_alderaan_home } random_system = { limit = { has_star_flag = foc_swmap_onderon_home } add_hyperlane = { from = this to = PREV } } } # 奥德朗 -- 安多兰 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_morlana_one_home } random_system = { limit = { has_star_flag = foc_swmap_felucia_home } add_hyperlane = { from = this to = PREV } } } # 莫拉纳一号 -- 费卢西亚 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_tython_home } random_system = { limit = { has_star_flag = foc_swmap_abregado_home } add_hyperlane = { from = this to = PREV } } } # 泰桑 -- 阿布雷加多 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_lothal_home } random_system = { limit = { has_star_flag = foc_v175_saleucami_home } add_hyperlane = { from = this to = PREV } } } # 洛塔 -- 萨鲁卡米 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_nal_hutta_home } random_system = { limit = { has_star_flag = foc_swmap_aldoleem_home } add_hyperlane = { from = this to = PREV } } } # 纳尔赫塔 -- 阿尔多利姆 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_bestine_iv_home } random_system = { limit = { has_star_flag = foc_sw_hosnian_home } add_hyperlane = { from = this to = PREV } } } # 贝斯汀四号 -- 霍斯尼亚 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_bothawui_home } random_system = { limit = { has_star_flag = foc_v175_vandor_home } add_hyperlane = { from = this to = PREV } } } # 博萨维 -- 范多尔 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_ryloth_home } random_system = { limit = { has_star_flag = foc_swmap_adelphi_home } add_hyperlane = { from = this to = PREV } } } # 莱洛斯 -- 阿德尔菲 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_utapau_home } random_system = { limit = { has_star_flag = foc_v175_pantora_home } add_hyperlane = { from = this to = PREV } } } # 乌塔帕 -- 潘托拉 [支线]
+        random_system = { limit = { has_star_flag = foc_sw_bastion_home } random_system = { limit = { has_star_flag = foc_v175_lah_mu_home } add_hyperlane = { from = this to = PREV } } } # 巴斯提恩 -- 拉穆 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_saleucami_home } random_system = { limit = { has_star_flag = foc_v175_munto_codru_home } add_hyperlane = { from = this to = PREV } } } # 萨鲁卡米 -- 蒙托·科德鲁 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_bothawui_home } random_system = { limit = { has_star_flag = foc_v175_nar_shaddaa_home } add_hyperlane = { from = this to = PREV } } } # 博萨维 -- 那沙达 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_utapau_home } random_system = { limit = { has_star_flag = foc_v175_d_qar_home } add_hyperlane = { from = this to = PREV } } } # 乌塔帕 -- 迪卡 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_muunilinst_home } random_system = { limit = { has_star_flag = foc_swmap_tython_home } add_hyperlane = { from = this to = PREV } } } # 穆尼林斯特 -- 泰桑 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_imynusoph_home } random_system = { limit = { has_star_flag = foc_swmap_tanalorr_home } add_hyperlane = { from = this to = PREV } } } # 伊米努索夫 -- 塔纳洛尔 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_mygeeto_home } random_system = { limit = { has_star_flag = foc_v175_toydaria_home } add_hyperlane = { from = this to = PREV } } } # 梅基托 -- 托伊达里亚 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_ferrix_home } random_system = { limit = { has_star_flag = foc_swmap_malachor_home } add_hyperlane = { from = this to = PREV } } } # 费里克斯 -- 马拉科 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_castilon_home } random_system = { limit = { has_star_flag = foc_swmap_batuu_home } add_hyperlane = { from = this to = PREV } } } # 卡斯蒂隆 -- 巴图 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_boz_pity_home } random_system = { limit = { has_star_flag = foc_v175_eadu_home } add_hyperlane = { from = this to = PREV } } } # 博兹皮蒂 -- 埃杜 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_bakura_home } random_system = { limit = { has_star_flag = foc_v175_lotho_minor_home } add_hyperlane = { from = this to = PREV } } } # 巴库拉 -- 洛索·迈诺 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_bestine_iv_home } random_system = { limit = { has_star_flag = foc_v175_malastare_home } add_hyperlane = { from = this to = PREV } } } # 贝斯汀四号 -- 马拉斯塔尔 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_pasaana_home } random_system = { limit = { has_star_flag = foc_v175_bestine_iv_home } add_hyperlane = { from = this to = PREV } } } # 帕萨纳 -- 贝斯汀四号 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_atollon_home } random_system = { limit = { has_star_flag = foc_swmap_malachor_home } add_hyperlane = { from = this to = PREV } } } # 阿托伦 -- 马拉科 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_zeffo_home } random_system = { limit = { has_star_flag = foc_v175_ajan_kloss_home } add_hyperlane = { from = this to = PREV } } } # 泽福 -- 阿简·克洛斯 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_pasaana_home } random_system = { limit = { has_star_flag = foc_sw_hosnian_home } add_hyperlane = { from = this to = PREV } } } # 帕萨纳 -- 霍斯尼亚 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_lah_mu_home } random_system = { limit = { has_star_flag = foc_sw_bilbringi_home } add_hyperlane = { from = this to = PREV } } } # 拉穆 -- 比尔布林吉 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_lotho_minor_home } random_system = { limit = { has_star_flag = foc_v175_koboh_home } add_hyperlane = { from = this to = PREV } } } # 洛索·迈诺 -- 科博 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_scarif_home } random_system = { limit = { has_star_flag = foc_v175_nar_shaddaa_home } add_hyperlane = { from = this to = PREV } } } # 斯卡里夫 -- 那沙达 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_garel_home } random_system = { limit = { has_star_flag = foc_v175_eadu_home } add_hyperlane = { from = this to = PREV } } } # 加雷尔 -- 埃杜 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_batuu_home } random_system = { limit = { has_star_flag = foc_swmap_ahchto_home } add_hyperlane = { from = this to = PREV } } } # 巴图 -- 阿克托 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_pantora_home } random_system = { limit = { has_star_flag = foc_v175_seatos_home } add_hyperlane = { from = this to = PREV } } } # 潘托拉 -- 西托斯 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_byss_home } random_system = { limit = { has_star_flag = foc_sw_jakku_home } add_hyperlane = { from = this to = PREV } } } # 比斯 -- 贾库 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_castilon_home } random_system = { limit = { has_star_flag = foc_sw_jakku_home } add_hyperlane = { from = this to = PREV } } } # 卡斯蒂隆 -- 贾库 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_ithor_home } random_system = { limit = { has_star_flag = foc_v175_zeffo_home } add_hyperlane = { from = this to = PREV } } } # 伊索尔 -- 泽福 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_muunilinst_home } random_system = { limit = { has_star_flag = foc_v175_byss_home } add_hyperlane = { from = this to = PREV } } } # 穆尼林斯特 -- 比斯 [支线]
+        random_system = { limit = { has_star_flag = foc_v175_bakura_home } random_system = { limit = { has_star_flag = foc_v175_koboh_home } add_hyperlane = { from = this to = PREV } } } # 巴库拉 -- 科博 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_ferrix_home } random_system = { limit = { has_star_flag = foc_sw_yavin_home } add_hyperlane = { from = this to = PREV } } } # 费里克斯 -- 雅汶 [支线]
+        random_system = { limit = { has_star_flag = foc_sw_yaga_minor_home } random_system = { limit = { has_star_flag = foc_v175_ithor_home } add_hyperlane = { from = this to = PREV } } } # 亚加-米诺 -- 伊索尔 [支线]
+        random_system = { limit = { has_star_flag = foc_sw_jakku_home } random_system = { limit = { has_star_flag = foc_swmap_ahchto_home } add_hyperlane = { from = this to = PREV } } } # 贾库 -- 阿克托 [支线]
+        random_system = { limit = { has_star_flag = foc_swmap_jedha_home } random_system = { limit = { has_star_flag = foc_swmap_ahchto_home } add_hyperlane = { from = this to = PREV } } } # 杰达 -- 阿克托 [支线]
+        random_system = { limit = { has_star_flag = foc_sw_yaga_minor_home } random_system = { limit = { has_star_flag = foc_swmap_aldhani_home } add_hyperlane = { from = this to = PREV } } } # 亚加-米诺 -- 奥达尼 [支线]
+
+        # D'Qar, Crait and Ajan Kloss are intentionally absent here. Their exact
+        # map connections are created only when each hidden Resistance story
+        # initializer appears.
+
+        # V178: Coruscant has no direct route to the ordinary galaxy. The
+        # placement event creates the Jakku <-> main-rim natural wormhole.
+        if = {
+            limit = { has_global_flag = foc_swmap_jakku_main_wormhole_v177 }
+            set_global_flag = foc_sw_coruscant_galaxy_lane_added_311w
+            set_global_flag = foc_sw_coruscant_galaxy_lane_verified_311r
+        }
+
+        # Disable all legacy repair paths that would recreate the old fan network
+        # or a second Coruscant gateway.
+        set_global_flag = foc_sw_cluster_hyperlanes_repaired_310f
+        set_global_flag = foc_swmap_simplified_image_layout
+        set_global_flag = foc_swmap_jakku_only_main_gateway
+        set_global_flag = foc_swmap_coruscant_only_main_gateway
+        # V179: the legacy names above only suppress direct hyperlane repairs;
+        # both Coruscant and Jakku now keep independent natural wormholes.
+        country_event = { id = foc_swmap.5 days = 1 }
+        if = {
+            limit = { has_global_flag = foc_swmap_jakku_main_wormhole_v177 }
+            set_global_flag = foc_sw_coruscant_galaxy_lane_added_311w
+            set_global_flag = foc_sw_coruscant_galaxy_lane_verified_311r
+        }
+        # V182: no delayed/monthly Jakku wormhole backfill. The primary map
+        # generator already creates the pair once; a failed one-time pass stays failed.
+        log = "FOC_SWMAP V182: v3 map created; monthly wormhole/backfill retries are disabled."
+
+        # The Republic-origin branch owns the region immediately after the
+        # spawn batch and internal lanes are complete. Dispatching here avoids
+        # waiting for the Fallen-Empire target collector or the first monthly
+        # pulse, so borders and core colonies exist before player interaction.
+        if = {
+            limit = {
+                any_playable_country = {
+                    is_ai = no
+                    has_origin = origin_foc_republic_unification
+                    NOT = { has_country_flag = foc_republic_origin_initialized }
+                }
+            }
+            set_global_flag = foc_republic_origin_bootstrap
+            set_global_flag = foc_republic_origin_no_jakku_executor_site
+            set_global_flag = foc_republic_origin_active
+            every_playable_country = {
+                limit = {
+                    is_ai = no
+                    has_origin = origin_foc_republic_unification
+                    NOT = { has_country_flag = foc_republic_origin_initialized }
+                }
+                country_event = { id = foc_republic_origin.1 }
+            }
+        }
+
+        # V127: Mandalore is a map-era state, so initialize it here rather
+        # than waiting for the first monthly country pulse.
+        every_playable_country = {
+            limit = { is_ai = no }
+            # V229: species bootstrap moved to the synchronous map-load phase below.
+            country_event = { id = foc_phase1.1 days = 10 }
+            country_event = { id = foc_v181_relay.1 days = 30 }
+        }
+
+        country_event = { id = foc_fallen_war.2 }
+
+        # V230: one synchronous map-load pass owns Hutt Space, Mandalore and
+        # every persistent extra species. This is a direct scripted effect, not a
+        # delayed event, so these states/species exist before the start UI opens.
+        every_playable_country = {
+            limit = { is_ai = no }
+            foc_v230_initialize_map_states_and_species = yes
+        }
+
+        # V191 government-view stability gate. foc_fallen_war.2 completes the
+        # ordinary successor-state setup synchronously; on the two playable
+        # custom origins it also completes the staging-capital relocation before
+        # this block is reached. Only then may the visible start-mode selector
+        # appear or be reopened. No monthly keeper is used.
+        every_playable_country = {
+            limit = {
+                NOT = { has_country_flag = foc_khan_start_mode_chosen_132 }
+                NOT = { has_country_flag = foc_khan_start_difficulty_prompt_253 }
+                is_ai = no
+                OR = {
+                    AND = {
+                        has_origin = origin_fop_first_order
+                        has_country_flag = fop_origin_relocated_to_ilum
+                    }
+                    AND = {
+                        has_origin = origin_foc_republic_unification
+                        has_country_flag = foc_republic_origin_initialized
+                    }
+                    AND = {
+                        has_origin = origin_foc_hutt_criminal_empire
+                        has_country_flag = foc_v196_hutt_player_origin_initialized
+                        OR = {
+                            has_global_flag = foc_v197_hutt_republic_era_initialized
+                            any_playable_country = {
+                                is_ai = no
+                                has_origin = origin_foc_republic_unification
+                                has_country_flag = foc_republic_origin_initialized
+                            }
+                        }
+                    }
+                    AND = {
+                        NOT = { has_origin = origin_fop_first_order }
+                        NOT = { has_origin = origin_foc_republic_unification }
+                        NOT = { has_origin = origin_foc_hutt_criminal_empire }
+                    }
+                }
+            }
+            set_country_flag = foc_v191_government_ui_stable
+            # V232h: Thrawn leads the Remnant from the First Order opening.
+            # This is after species/state creation and relocation; .3 assigns
+            # only the Remnant ruler and queues the player's window for day +1.
+            if = {
+                limit = { has_origin = origin_fop_first_order }
+                country_event = { id = foc_thrawn.3 }
+            }
+            log = "FOC_V191_UI: player origin bootstrap complete; start settings released."
+            # V17.17: open on January 1 in the same tick, after synchronous origin setup.
+            country_event = { id = foc_khan_settings.13 }
+        }
+
+        country_event = { id = foc_swmap.4 days = 5 }
+    }
+}
+
+# V178 main-galaxy wormhole repair. This event never adds a hyperlane.
+country_event = {
+    id = foc_swmap.3
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_swmap_simplified_image_layout
+        NOT = { has_global_flag = foc_swmap_jakku_main_wormhole_v177 }
+        any_system = { has_star_flag = foc_sw_jakku_home }
+    }
+
+    immediate = {
+        if = {
+            limit = { NOT = { exists = event_target:foc_sw_jakku_system } }
+            random_system = {
+                limit = { has_star_flag = foc_sw_jakku_home }
+                save_global_event_target_as = foc_sw_jakku_system
+            }
+        }
+        if = {
+            limit = { NOT = { exists = event_target:foc_swmap_main_galaxy_anchor } }
+            random_system = {
+                limit = { has_star_flag = foc_swmap_main_galaxy_anchor }
+                save_global_event_target_as = foc_swmap_main_galaxy_anchor
+            }
+        }
+        if = {
+            limit = {
+                exists = event_target:foc_sw_jakku_system
+                exists = event_target:foc_swmap_main_galaxy_anchor
+                event_target:foc_sw_jakku_system = { has_natural_wormhole = no }
+                event_target:foc_swmap_main_galaxy_anchor = { has_natural_wormhole = no }
+            }
+            event_target:foc_swmap_main_galaxy_anchor = {
+                spawn_natural_wormhole = { bypass_type = wormhole random_pos = no orbit_angle = 0 }
+            }
+            event_target:foc_sw_jakku_system = {
+                spawn_natural_wormhole = { bypass_type = wormhole random_pos = no orbit_angle = 180 }
+                link_wormholes = event_target:foc_swmap_main_galaxy_anchor
+            }
+            set_global_flag = foc_swmap_jakku_wormhole_fallback
+            set_global_flag = foc_swmap_jakku_main_wormhole_v177
+            # Keep obsolete Coruscant HYPERLANE repairs inert. Coruscant's own
+            # natural wormhole is independently restored by foc_swmap.5.
+            set_global_flag = foc_sw_coruscant_galaxy_lane_added_311w
+            set_global_flag = foc_sw_coruscant_galaxy_lane_verified_311r
+            country_event = { id = foc_swmap.5 days = 1 }
+            log = "FOC_SWMAP V178: Jakku main-galaxy wormhole repair succeeded."
+        }
+        # V182: no recurring Jakku wormhole repair schedule.
+    }
+}
+
+# Verify both distinct Jakku gates after the Fallen Empire creation chain.
+# The Imperial Remnant gate stays dormant until crisis Ilum supplies its nexus.
+country_event = {
+    id = foc_swmap.4
+    hide_window = yes
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    trigger = {
+        has_global_flag = foc_sw_fallen_empires_ready
+        any_system = { has_star_flag = foc_sw_jakku_home }
+        any_country = { has_country_flag = foc_sw_imperial_remnant_country }
+    }
+
+    immediate = {
+        random_country = {
+            limit = { has_country_flag = foc_sw_imperial_remnant_country }
+            save_global_event_target_as = foc_sw_imperial_remnant
+        }
+        random_system = {
+            limit = { has_star_flag = foc_sw_jakku_home }
+            save_global_event_target_as = foc_sw_jakku_system
+        }
+
+        event_target:foc_sw_jakku_system = {
+            # Jakku-Exegol: the Sith Wayfinder route.
+            if = {
+                limit = {
+                    NOT = {
+                        any_system_megastructure = {
+                            is_megastructure_type = foc_sith_wayfinder_gate
+                        }
+                    }
+                }
+                spawn_megastructure = {
+                    type = foc_sith_wayfinder_gate
+                    owner = event_target:foc_sw_imperial_remnant
+                    planet = star
+                    orbit_distance = 230
+                    orbit_angle = 300
+                    init_effect = {
+                        set_name = "NAME_FOC_SITH_WAYFINDER_JAKKU_GATE"
+                        set_megastructure_flag = foc_sith_wayfinder_jakku_gate
+                        save_global_event_target_as = foc_sith_wayfinder_jakku_gate
+                    }
+                }
+            }
+            every_system_megastructure = {
+                limit = { is_megastructure_type = foc_sith_wayfinder_gate }
+                set_name = "NAME_FOC_SITH_WAYFINDER_JAKKU_GATE"
+                set_megastructure_flag = foc_sith_wayfinder_jakku_gate
+                save_global_event_target_as = foc_sith_wayfinder_jakku_gate
+            }
+
+            # Jakku-Ilum: a separate Imperial Remnant route. Creating its Jakku
+            # endpoint now makes both structures visible; the existing Ilum
+            # event later creates the counterpart and unlocks actual travel.
+            if = {
+                limit = {
+                    NOT = {
+                        any_system_megastructure = {
+                            is_megastructure_type = foc_imperial_remnant_gate
+                        }
+                    }
+                }
+                spawn_megastructure = {
+                    type = foc_imperial_remnant_gate
+                    owner = event_target:foc_sw_imperial_remnant
+                    planet = star
+                    orbit_distance = 205
+                    orbit_angle = 120
+                    init_effect = {
+                        set_name = "NAME_FOC_IMPERIAL_REMNANT_GATE"
+                        set_megastructure_flag = foc_imperial_remnant_jakku_gate
+                        save_global_event_target_as = foc_imperial_remnant_jakku_gate
+                    }
+                }
+            }
+            every_system_megastructure = {
+                limit = { is_megastructure_type = foc_imperial_remnant_gate }
+                set_name = "NAME_FOC_IMPERIAL_REMNANT_GATE"
+                set_megastructure_flag = foc_imperial_remnant_jakku_gate
+                save_global_event_target_as = foc_imperial_remnant_jakku_gate
+            }
+        }
+        set_global_flag = foc_swmap_jakku_wayfinder_verified
+        set_global_flag = foc_swmap_jakku_two_gates_verified
+        log = "FOC_SWMAP: verified two separate Jakku gates for Exegol and Ilum."
+    }
+}
+
+# V179: restore Coruscant's original natural main-galaxy wormhole while keeping
+# the newly-added Jakku wormhole. The two external systems use different normal
+# rim endpoints, so each is an independent route and no hyperlane is created.
+country_event = {
+    id = foc_swmap.5
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_country_type = global_event
+        has_global_flag = foc_swmap_simplified_image_layout
+        NOT = { has_global_flag = foc_swmap_coruscant_main_wormhole_v179 }
+        any_system = { has_star_flag = foc_sw_coruscant_home }
+    }
+
+    immediate = {
+        if = {
+            limit = { NOT = { exists = event_target:foc_sw_coruscant_system } }
+            random_system = {
+                limit = { has_star_flag = foc_sw_coruscant_home }
+                save_global_event_target_as = foc_sw_coruscant_system
+            }
+        }
+
+        # Reuse a saved valid endpoint if one exists; otherwise choose a fresh
+        # ordinary rim system that does not already host Jakku's wormhole.
+        if = {
+            limit = { NOT = { exists = event_target:foc_swmap_coruscant_wormhole_anchor } }
+            random_rim_system = {
+                limit = {
+                    has_natural_wormhole = no
+                    any_neighbor_system = { always = yes }
+                    is_fe_cluster = no
+                    NOR = {
+                        has_star_flag = foc_swmap_main_galaxy_anchor
+                        has_star_flag = foc_sw_new_republic_cluster
+                        has_star_flag = foc_sw_imperial_remnant_cluster
+                        has_star_flag = fop_origin_ilum_home
+                        has_star_flag = foc_khan_ilum_home
+                        has_star_flag = foc_khan_exegol_home
+                        has_star_flag = foc_swmap_v3_external_region
+                    }
+                }
+                set_star_flag = foc_swmap_coruscant_wormhole_anchor
+                set_star_flag = foc_sw_coruscant_gateway_neighbor
+                save_global_event_target_as = foc_swmap_coruscant_wormhole_anchor
+            }
+        }
+
+        if = {
+            limit = {
+                exists = event_target:foc_sw_coruscant_system
+                event_target:foc_sw_coruscant_system = { has_natural_wormhole = yes }
+            }
+            # Old saves may already contain a valid Coruscant wormhole. Do not
+            # create a duplicate; simply mark the route as verified.
+            set_global_flag = foc_swmap_coruscant_wormhole_fallback
+            set_global_flag = foc_swmap_coruscant_main_wormhole_v169
+            set_global_flag = foc_swmap_coruscant_main_wormhole_v179
+            set_global_flag = foc_sw_coruscant_galaxy_lane_added_311w
+            set_global_flag = foc_sw_coruscant_galaxy_lane_verified_311r
+            log = "FOC_SWMAP V179: existing Coruscant natural wormhole verified."
+        }
+        else_if = {
+            limit = {
+                exists = event_target:foc_sw_coruscant_system
+                exists = event_target:foc_swmap_coruscant_wormhole_anchor
+                event_target:foc_swmap_coruscant_wormhole_anchor = { has_natural_wormhole = no }
+            }
+            event_target:foc_swmap_coruscant_wormhole_anchor = {
+                spawn_natural_wormhole = { bypass_type = wormhole random_pos = no orbit_angle = 0 }
+            }
+            event_target:foc_sw_coruscant_system = {
+                spawn_natural_wormhole = { bypass_type = wormhole random_pos = no orbit_angle = 180 }
+                link_wormholes = event_target:foc_swmap_coruscant_wormhole_anchor
+            }
+            set_global_flag = foc_swmap_coruscant_wormhole_fallback
+            set_global_flag = foc_swmap_coruscant_main_wormhole_v169
+            set_global_flag = foc_swmap_coruscant_main_wormhole_v179
+            # These only suppress obsolete direct-HYPERLANE repair scripts.
+            set_global_flag = foc_sw_coruscant_galaxy_lane_added_311w
+            set_global_flag = foc_sw_coruscant_galaxy_lane_verified_311r
+            log = "FOC_SWMAP V179: Coruscant independent main-galaxy wormhole restored alongside Jakku."
+        }
+        # V182: no recurring Coruscant wormhole repair schedule.
+    }
+}

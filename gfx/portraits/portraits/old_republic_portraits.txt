@@ -1,0 +1,215 @@
+##############################################################
+###	PORTRAITS SETTINGS
+###
+### Which portraits are used is set in 
+### common\species_classes\00_species_classes.txt
+###
+###	This file configures how portraits and planet backgrounds are built.
+###	Default position orientation is lower left.
+##############################################################
+
+portraits = {
+
+	# Human
+	oldrep_female_01 = {	entity = "portrait_human_female_01_entity"	clothes_selector = "oldrep_female_clothes_01" 	attachment_selector = "oldrep_female_hair_01"	greeting_sound = "human_female_greetings_03" character_textures = { "gfx/models/portraits/human/human_female_body_01.dds" } }
+	oldrep_female_02 = {	entity = "portrait_human_female_02_entity"	clothes_selector = "oldrep_female_clothes_01" 	attachment_selector = "oldrep_female_hair_01"	greeting_sound = "human_female_greetings_04" character_textures = { "gfx/models/portraits/human/human_female_body_02.dds" } }
+	oldrep_female_03 = {	entity = "portrait_human_female_03_entity"	clothes_selector = "oldrep_female_clothes_01" 	attachment_selector = "oldrep_female_hair_01"	greeting_sound = "human_female_greetings_05" character_textures = { "gfx/models/portraits/human/human_female_body_03.dds" } }	
+	oldrep_female_04 = {	entity = "portrait_human_female_04_entity"	clothes_selector = "oldrep_female_clothes_01" 	attachment_selector = "oldrep_female_hair_01"	greeting_sound = "human_female_greetings_01" character_textures = { "gfx/models/portraits/human/human_female_body_04.dds" } }
+	oldrep_female_05 = {	entity = "portrait_human_female_05_entity"	clothes_selector = "oldrep_female_clothes_01" 	attachment_selector = "oldrep_female_hair_01"	greeting_sound = "human_female_greetings_02" character_textures = { "gfx/models/portraits/human/human_female_body_05.dds" } }
+	oldrep_male_01 = {	entity = "portrait_human_male_01_entity"	clothes_selector = "oldrep_male_clothes_01" 		attachment_selector = "oldrep_male_hair_01"	greeting_sound = "human_male_greetings_03" character_textures = { "gfx/models/portraits/human/human_male_body_01.dds" }  }	
+	oldrep_male_02 = {	entity = "portrait_human_male_02_entity"	clothes_selector = "oldrep_male_clothes_01" 		attachment_selector = "oldrep_male_hair_01"	greeting_sound = "human_male_greetings_04" character_textures = { "gfx/models/portraits/human/human_male_body_02.dds" }  }
+	oldrep_male_03 = {	entity = "portrait_human_male_03_entity"	clothes_selector = "oldrep_male_clothes_01" 		attachment_selector = "oldrep_male_hair_01"	greeting_sound = "human_male_greetings_05" character_textures = { "gfx/models/portraits/human/human_male_body_03.dds" }  }		
+	oldrep_male_04 = {	entity = "portrait_human_male_04_entity"	clothes_selector = "oldrep_male_clothes_01" 		attachment_selector = "oldrep_male_hair_01"	greeting_sound = "human_male_greetings_01" character_textures = { "gfx/models/portraits/human/human_male_body_04.dds" }  }
+	oldrep_male_05 = {	entity = "portrait_human_male_05_entity"	clothes_selector = "oldrep_male_clothes_01" 		attachment_selector = "oldrep_male_hair_01"	greeting_sound = "human_male_greetings_02" character_textures = { "gfx/models/portraits/human/human_male_body_05.dds" } }
+
+	#Aqualish
+	aqualish = { texturefile = "gfx/models/portraits/oldrepublic/aqualish.dds" }
+	
+	#Duro
+	duro = { texturefile = "gfx/models/portraits/oldrepublic/duro.dds" }
+	
+	#Ithorian
+	ithorian = { texturefile = "gfx/models/portraits/oldrepublic/ithorian.dds" }
+	
+	#Rodian1
+	rodian1 = { texturefile = "gfx/models/portraits/oldrepublic/rodian1.dds" }
+	
+	#Rodian2
+	rodian2 = { texturefile = "gfx/models/portraits/oldrepublic/rodian2.dds" }
+	
+	#Selkath
+	selkath = { texturefile = "gfx/models/portraits/oldrepublic/selkath.dds" }
+	
+	#Zabrak
+	zabrak = { texturefile = "gfx/models/portraits/oldrepublic/zabrak.dds" }
+	
+	#Vandar
+	vandar = { texturefile = "gfx/models/portraits/oldrepublic/jedivandar.dds" }
+}
+
+portrait_groups = {
+	oldrepublic = {
+		default = oldrep_male_04
+		game_setup = { #will run with a limited country scope. species and government is set but the country does not actually exist
+			add = {
+				trigger = {
+					ruler = {
+						OR = {
+							gender = male
+							gender = indeterminable
+						}
+					}
+				}
+				portraits = {
+					oldrep_male_01
+					oldrep_male_02
+					oldrep_male_03
+					oldrep_male_04
+					oldrep_male_05
+					vandar
+				}
+			}
+			add = {
+				trigger = {
+					ruler = {
+						OR = {
+							gender = female
+							gender = indeterminable
+						}
+					}
+				}
+				portraits = {
+					oldrep_female_01
+					oldrep_female_02
+					oldrep_female_03
+					oldrep_female_04
+					oldrep_female_05
+				}
+			}
+			#set = {
+			#	trigger = { ... }
+			#	portraits = { ... }
+			#	#using "set =" instead of "add" will first clear any portraits already added
+			#}
+		}		
+		
+		#species scope
+		species = { #generic portrait for a species
+			add = {
+				portraits = {
+					oldrep_female_01
+					oldrep_female_02
+					oldrep_female_03
+					oldrep_female_04
+					oldrep_female_05
+					oldrep_male_01
+					oldrep_male_02
+					oldrep_male_03
+					oldrep_male_04
+					oldrep_male_05
+				}
+			}
+		}		
+		
+		#pop scope
+		pop_group = { #for a specific pop
+			add = {
+				portraits = {
+					oldrep_female_01
+					oldrep_female_02
+					oldrep_female_03
+					oldrep_female_04
+					oldrep_female_05
+					oldrep_male_01
+					oldrep_male_02
+					oldrep_male_03
+					oldrep_male_04
+					oldrep_male_05
+					duro
+					ithorian
+					selkath
+					rodian1
+					rodian2
+					aqualish
+					zabrak
+				}
+			}
+		}
+		
+		#leader scope
+		leader = { #scientists, generals, admirals, governor
+			add = {
+				trigger = {
+					gender = female
+				}
+				portraits = {
+					oldrep_female_01
+					oldrep_female_02
+					oldrep_female_03
+					oldrep_female_04
+					oldrep_female_05
+				}
+			}
+			add = {
+				trigger = {
+					gender = male
+				}
+				portraits = {
+					oldrep_male_01
+					oldrep_male_02
+					oldrep_male_03
+					oldrep_male_04
+					oldrep_male_05
+				}
+			}
+		}
+
+			
+		#leader scope 
+		ruler = {
+			add = {
+				trigger = {
+					OR = {
+						gender = female
+						gender = indeterminable
+					}
+				}
+				portraits = {
+					oldrep_female_01
+					oldrep_female_02
+					oldrep_female_03
+					oldrep_female_04
+					oldrep_female_05
+					aqualish
+					rodian1
+					rodian2
+					ithorian
+					selkath
+				}
+			}
+			add = {
+				trigger = {
+					OR = {
+						gender = male
+						gender = indeterminable
+					}
+				}
+				portraits = {
+					oldrep_male_01
+					oldrep_male_02
+					oldrep_male_03
+					oldrep_male_04
+					oldrep_male_05
+					ithorian
+					zabrak
+					rodian1
+					rodian2
+					selkath
+					aqualish
+					duro
+					vandar
+				}
+			}
+		}
+	}
+}

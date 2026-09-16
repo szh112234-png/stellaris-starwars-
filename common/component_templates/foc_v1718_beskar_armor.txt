@@ -1,0 +1,92 @@
+utility_component_template = {
+    key = FOC_V1718_SMALL_BESKAR_ARMOR
+    size = small
+    icon = GFX_ship_part_foc_v1718_beskar_armor
+    icon_frame = 1
+    power = -85
+    component_set = FOC_V1718_BESKAR_ARMOR
+    prerequisites = { foc_v1718_tech_beskar_armor }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        from = {
+            foc_v1718_beskar_research_ready = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+        }
+    }
+    modifier = {
+        ship_hull_add = 800
+        ship_hull_regen_add_static = 9.75
+        ship_shield_add = 800
+        ship_armor_add = 800
+        ship_shield_regen_add_static = 9.75
+        ship_armor_regen_add_static = 9.75
+    }
+    ship_modifier = { ship_damage_reduction_add = 4 ship_armor_hardening_add = 0.02 ship_shield_hardening_add = 0.02 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 200 sr_beskar_foc = 20 }
+    }
+    ai_weight = { weight = 300000 }
+}
+
+utility_component_template = {
+    key = FOC_V1718_MEDIUM_BESKAR_ARMOR
+    size = medium
+    icon = GFX_ship_part_foc_v1718_beskar_armor
+    icon_frame = 1
+    power = -200
+    component_set = FOC_V1718_BESKAR_ARMOR
+    prerequisites = { foc_v1718_tech_beskar_armor }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        from = {
+            foc_v1718_beskar_research_ready = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+        }
+    }
+    modifier = {
+        ship_hull_add = 2400
+        ship_hull_regen_add_static = 29.25
+        ship_shield_add = 2400
+        ship_armor_add = 2400
+        ship_shield_regen_add_static = 29.25
+        ship_armor_regen_add_static = 29.25
+    }
+    ship_modifier = { ship_damage_reduction_add = 12 ship_armor_hardening_add = 0.06 ship_shield_hardening_add = 0.06 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 600 sr_beskar_foc = 60 }
+    }
+    ai_weight = { weight = 300000 }
+}
+
+utility_component_template = {
+    key = FOC_V1718_LARGE_BESKAR_ARMOR
+    size = large
+    icon = GFX_ship_part_foc_v1718_beskar_armor
+    icon_frame = 1
+    power = -350
+    component_set = FOC_V1718_BESKAR_ARMOR
+    prerequisites = { foc_v1718_tech_beskar_armor }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        from = {
+            foc_v1718_beskar_research_ready = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+        }
+    }
+    modifier = {
+        ship_hull_add = 7200
+        ship_hull_regen_add_static = 87.75
+        ship_shield_add = 7200
+        ship_armor_add = 7200
+        ship_shield_regen_add_static = 87.75
+        ship_armor_regen_add_static = 87.75
+    }
+    ship_modifier = { ship_damage_reduction_add = 36 ship_armor_hardening_add = 0.18 ship_shield_hardening_add = 0.18 }
+    resources = {
+        category = ship_components
+        cost = { alloys = 1800 sr_beskar_foc = 180 }
+    }
+    ai_weight = { weight = 300000 }
+}

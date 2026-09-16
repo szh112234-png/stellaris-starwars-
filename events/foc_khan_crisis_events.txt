@@ -1,0 +1,3193 @@
+namespace = foc_khan
+
+# Galactic Community detector.
+# FOC 2.72: the Community awakens the New Republic and Imperial Remnant.
+# First Order is spawned when either side is eliminated or their War in Heaven
+# ends in peace. It then absorbs any surviving Imperial Remnant.
+country_event = {
+    id = foc_khan.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        has_global_flag = foc_sw_fallen_empires_ready
+        NOT = { has_global_flag = foc_sw_war_in_heaven_started }
+        NOT = { has_global_flag = foc_sw_war_in_heaven_scheduled }
+        exists = event_target:foc_sw_new_republic
+        exists = event_target:foc_sw_imperial_remnant
+        OR = {
+            # Republic saga: exactly twenty-four years after the Galactic Treaty.
+            AND = {
+                OR = {
+                    has_global_flag = foc_republic_origin_galactic_treaty
+                    has_global_flag = fop_origin_treaty_epoch
+                }
+                has_global_flag = foc_v112_treaty_wih_clock_started
+                NOT = { has_global_flag = foc_v112_treaty_wih_24y_delay }
+            }
+            # First Order origin and all ordinary origins: sixty years after the
+            # selected chronology start (2200 default; controller can delay it).
+            AND = {
+                NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+                foc_story_war_in_heaven_due = yes
+            }
+        }
+    }
+
+    immediate = {
+        set_global_flag = foc_sw_war_in_heaven_scheduled
+        event_target:foc_sw_new_republic = {
+            country_event = { id = foc_fallen_war.10 days = 1 }
+        }
+    }
+}
+
+# Spawn Ilum from a real system scope, following the Khan crisis pattern.
+country_event = {
+    id = foc_khan.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        NOT = { has_global_flag = foc_khan_crisis_started }
+        NOT = { has_global_flag = foc_khan_crisis_disabled }
+        # V159 hard guard: player-owned First Order paths never spawn a second
+        # NPC First Order, even if another script clears the global disable flag.
+        NOT = {
+            any_playable_country = {
+                is_ai = no
+                OR = {
+                    has_origin = origin_fop_first_order
+                    has_country_flag = foc_republic_origin_player_empire
+                    has_country_flag = foc_republic_origin_player_imperial_remnant
+                    has_country_flag = foc_republic_origin_empire_crisis
+                    has_country_flag = fop_player_first_order
+                    has_country_flag = foc_republic_origin_became_first_order
+                    has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+                }
+            }
+        }
+    }
+
+    immediate = {
+        remove_global_flag = foc_khan_crisis_spawn_scheduled
+        set_global_flag = foc_khan_crisis_started
+        set_global_flag = foc_khan_phase_one_preparing
+
+        # V112: crisis Ilum uses the same galaxy-core-relative location as the
+        # playable First Order origin instead of sitting next to Jakku.
+        set_spawn_system_batch = begin
+        no_scope = {
+            spawn_system = {
+                hyperlane = no
+                is_discovered = no
+                min_distance >= 550
+                max_distance <= 560
+                min_orientation_angle = 142
+                max_orientation_angle = 148
+                initializer = foc_khan_ilum_system
+            }
+        }
+        set_spawn_system_batch = end
+
+        country_event = { id = foc_khan.3 days = 3 }
+    }
+}
+
+# Find the newly spawned system by its initializer flag.
+country_event = {
+	id = foc_khan.3
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_global_flag = foc_khan_phase_one_preparing
+	}
+
+	immediate = {
+		random_system = {
+			limit = {
+				has_star_flag = foc_khan_ilum_home
+			}
+			save_global_event_target_as = foc_khan_first_order_system
+
+			random_system_planet = {
+				limit = {
+					has_planet_flag = foc_khan_starkiller_anchor
+				}
+				save_global_event_target_as = foc_khan_starkiller_anchor
+			}
+		}
+
+		# Remove ordinary lanes before the First Order receives fleets. Its
+		# exclusive gateway pair is created as soon as the crisis country exists.
+		country_event = { id = foc_khan.1710 }
+
+		if = {
+			limit = {
+				exists = event_target:foc_khan_first_order_system
+				exists = event_target:foc_khan_starkiller_anchor
+			}
+			country_event = {
+				id = foc_khan.4
+				days = 1
+			}
+		}
+		else = {
+			# Retry without duplicating the system.
+			country_event = {
+				id = foc_khan.3
+				days = 5
+			}
+		}
+	}
+}
+
+# Create First Order species and country, then spawn all Phase-I assets.
+country_event = {
+	id = foc_khan.4
+	hide_window = yes
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	trigger = {
+		exists = event_target:foc_khan_first_order_system
+		exists = event_target:foc_khan_starkiller_anchor
+		NOT = {
+			exists = event_target:foc_khan_first_order
+		}
+	}
+
+	immediate = {
+		event_target:foc_khan_starkiller_anchor = {
+			create_species = {
+				name = "FOC_KHAN_FIRST_ORDER_SPECIES"
+				plural = "FOC_KHAN_FIRST_ORDER_SPECIES_PLURAL"
+				class = HUM
+				portrait = first
+				namelist = first
+				homeworld = this
+
+				traits = {
+					trait = trait_imperial
+					trait = trait_conformists
+					trait = trait_repugnant
+				}
+
+				effect = {
+					save_global_event_target_as = foc_khan_first_order_species
+				}
+			}
+		}
+
+		event_target:foc_khan_first_order_species = {
+			create_country = {
+				name = "FOC_KHAN_FIRST_ORDER"
+				type = foc_khan_crisis_country
+				auto_delete = no
+				ignore_initial_colony_error = yes
+				species = root
+				authority = auth_imperial
+				origin = origin_default
+				ethos = {
+					ethic = ethic_fanatic_militarist
+					ethic = ethic_xenophobe
+				}
+				civics = {
+					civic = civic_distinguished_admiralty
+					civic = civic_nationalistic_zeal
+				}
+
+				flag = {
+					icon = {
+						category = "first"
+						file = "first_order.dds"
+					}
+					background = {
+						category = "backgrounds"
+						file = "00_solid.dds"
+					}
+					colors = {
+						"red"
+						"black"
+						"null"
+						"null"
+					}
+				}
+
+				name_list = "first"
+
+				effect = {
+					set_country_flag = foc_khan_first_order_country
+        country_event = { id = foc_v1718.10 days = 1 }
+					foc_std_weapon_grant_gen_3 = yes
+					set_country_flag = foc_sw_fe_infrastructure_heir
+					add_modifier = { modifier = foc_sw_fe_infrastructure_heir_core days = -1 }
+					set_country_flag = ssp_fighter_group_empire
+					remove_country_flag = ssp_strength_balanced
+					foc_sync_ssp_strength_to_main_difficulty = yes
+					set_country_flag = ssp_strength_selected
+					set_country_flag = ssp_size_original
+					if = { limit = { is_ai = yes } give_technology = { tech = tech_ssp_imperial_hyperspace message = no } }
+					if = { limit = { is_ai = yes } give_technology = {
+						tech = foc_tech_swgs_crisis_point_defence
+						message = no
+					} }
+                    if = { limit = { is_ai = yes } give_technology = {
+                        tech = foc_tech_swgs_crisis_point_defence
+                        message = no
+                    } }
+					set_variable = {
+						which = foc_khan_first_support_spawned
+						value = 0
+					}
+					set_graphical_culture = first_01
+					set_city_graphical_culture = first_01
+					save_global_event_target_as = foc_khan_first_order
+
+					# 0.79: apply the strength tier selected by player edict.
+					foc_khan_apply_selected_strength = yes
+
+					add_resource = {
+						energy = 1000000
+						minerals = 1000000
+						alloys = 1000000
+						unity = 1000000
+					}
+
+					give_technology = {
+						tech = tech_space_construction
+						message = no
+					}
+					give_technology = {
+						tech = tech_assault_armies
+						message = no
+					}
+					give_technology = {
+						tech = tech_destroyers
+						message = no
+					}
+					give_technology = {
+						tech = tech_battleships
+						message = no
+					}
+					give_technology = {
+						tech = tech_titans
+						message = no
+					}
+give_technology = {
+						tech = tech_juggernaut
+						message = no
+					}
+					give_technology = {
+						tech = myk_tech_starkiller_base
+						message = no
+					}
+				}
+			}
+		}
+
+		if = {
+			limit = {
+				exists = event_target:foc_khan_first_order
+			}
+
+			# Great-Khan-style dedicated ruler: create the named leader, force the
+			# exact portrait, then assign that leader as the country's ruler.
+			event_target:foc_khan_first_order = {
+				create_leader = {
+					class = random_ruler
+					species = owner_main_species
+					name = "Supreme Leader Snoke"
+					gender = male
+					skill = 10
+						immortal = yes
+					leader_age_min = 50
+					leader_age_max = 80
+					event_leader = yes
+					skip_background_generation = yes
+					randomize_traits = no
+					effect = {
+						change_leader_portrait = snoke_male_01
+						set_leader_flag = foc_khan_snoke_ruler
+						save_global_event_target_as = foc_khan_snoke_ruler
+					}
+				}
+				set_leader = last_created_leader
+				set_country_flag = foc_khan_snoke_ruler_created
+				set_country_flag = foc_khan_snoke_portrait_fixed_085
+			}
+
+			remove_global_flag = foc_khan_phase_one_preparing
+			set_global_flag = foc_khan_phase_one
+			set_global_flag = foc_khan_first_reinforcements_active
+
+			# V158: Ben Solo existed only as a narrative character before this tick.
+			# The actual First Order arrival is when he takes the name Kylo Ren and
+			# becomes a recruitable native Legendary commander.
+			set_global_flag = foc_saga_ben_solo_fallen
+			event_target:foc_khan_first_order = {
+				set_country_flag = foc_saga_kylo_fall_shown
+				foc_saga_ensure_kylo = yes
+				set_timed_country_flag = { flag = foc_saga_kylo_knights_wait days = 720 }
+			}
+
+			# V147: a Palpatine-era Rebel state must never suppress the later D'Qar
+			# Resistance. Treat the shared flag as valid only when a live First-Order
+			# Resistance actually owns the D'Qar colony; stale country flags/targets are
+			# cleared before Bloodline is dispatched.
+			if = {
+				limit = {
+					has_global_flag = foc_republic_origin_galactic_treaty
+					has_global_flag = foc_v109_dqar_new_republic_established
+					OR = {
+						has_global_flag = foc_khan_rebel_spawned
+						has_global_flag = foc_khan_rebel_preparing
+						exists = event_target:foc_khan_rebel_alliance
+					}
+					# FIX: any_owned_planet is COLONY scope in 4.x and has_planet_flag needs
+					# PLANET scope. Checked from the system side instead, which is the pattern
+					# used elsewhere in this mod and keeps the meaning identical: a live
+					# Resistance country actually owns the D'Qar colony.
+					NOT = {
+						any_system = {
+							has_star_flag = foc_khan_rebel_dqar_home
+							any_system_planet = {
+								has_planet_flag = foc_khan_rebel_dqar
+								is_colony = yes
+								exists = owner
+								owner = { has_country_flag = foc_khan_first_order_resistance_country }
+							}
+						}
+					}
+				}
+				remove_global_flag = foc_khan_rebel_spawned
+				remove_global_flag = foc_khan_rebel_preparing
+				if = { limit = { exists = event_target:foc_khan_rebel_alliance } clear_global_event_target = foc_khan_rebel_alliance }
+				if = { limit = { exists = event_target:foc_khan_rebel_system } clear_global_event_target = foc_khan_rebel_system }
+				if = { limit = { exists = event_target:foc_khan_rebel_capital } clear_global_event_target = foc_khan_rebel_capital }
+				log = "FOC_V147_DQAR: cleared stale Imperial-Rebellion state before Bloodline."
+			}
+
+			# V147: First Order arrival owns the visible Bloodline announcement.  A
+			# dedicated flag prevents unrelated earlier Leia-state migrations from
+			# suppressing the window when the Order actually appears.
+			if = {
+				limit = { NOT = { has_global_flag = foc_v147_bloodline_arrival_dispatched } }
+				set_global_flag = foc_v147_bloodline_arrival_dispatched
+				set_global_flag = foc_khan_leia_expelled_announced
+				every_playable_country = {
+					limit = { is_ai = no }
+					if = {
+						limit = {
+							has_country_flag = foc_republic_origin_player_republic
+							has_country_flag = foc_sw_new_republic_country
+						}
+						country_event = { id = foc_republic_origin.199 }
+					}
+					else = { country_event = { id = fop_origin.33 } }
+				}
+			}
+
+			# V101/V103: First Order arrival itself starts the Resistance bootstrap.
+			# Monthly on_actions remain as recovery, but normal games no longer wait
+			# for an unrelated later story condition before D'Qar begins spawning.
+			if = {
+				limit = {
+					NOT = {
+						any_country = {
+							is_ai = no
+							has_country_flag = foc_republic_origin_player_republic
+							has_country_flag = foc_sw_new_republic_country
+							NOT = { has_country_flag = foc_republic_origin_dqar_inheritance_complete }
+						}
+					}
+				}
+				event_target:foc_khan_first_order = {
+					country_event = { id = foc_khan_rebel.1 }
+					country_event = { id = foc_khan_rebel.2 days = 2 }
+					country_event = { id = foc_khan_rebel.2 days = 5 }
+					country_event = { id = foc_khan_rebel.2 days = 15 }
+				}
+			}
+
+			event_target:foc_khan_starkiller_anchor = {
+				create_colony = {
+					owner = event_target:foc_khan_first_order
+				}
+				generate_start_deposits_and_blockers = yes
+				clear_blockers = yes
+				colony = {
+					inline_script = "foc_v232i_safe_colony_layout"
+					generate_start_pops = yes
+					generate_home_planet_final_pass = yes
+				}
+				set_capital = yes
+				# V231: the First Order capital opens with its own droid foundry and
+				# First Order Security Droid population. Never B1, never Republic droids.
+				foc_v231_seed_first_order_droid_pops = yes
+				foc_khan_fortify_starkiller_planet = yes
+			}
+
+			event_target:foc_khan_first_order = {
+				give_technology = { tech = tech_space_construction message = no }
+				give_technology = { tech = tech_ship_armor_1 message = no }
+				give_technology = { tech = tech_shields_1 message = no }
+				give_technology = { tech = tech_arkship_tier_3 message = no }
+			}
+
+			event_target:foc_khan_first_order_system = {
+				create_starbase = {
+					size = starbase_citadel
+					owner = event_target:foc_khan_first_order
+					effect = {
+						set_starbase_flag = foc_khan_first_capital_starbase
+					}
+				}
+
+				spawn_megastructure = {
+					type = myk_starkiller_base_final
+					planet = event_target:foc_khan_starkiller_anchor
+					owner = event_target:foc_khan_first_order
+
+					init_effect = {
+						save_global_event_target_as = myk_starkiller_last_completed_megastructure
+						save_global_event_target_as = foc_khan_crisis_starkiller_base
+						set_megastructure_flag = foc_khan_crisis_starkiller
+                    set_global_flag = foc_v1717_starkiller_was_completed
+                    owner = { save_global_event_target_as = foc_v1717_starkiller_monitored_owner }
+					}
+				}
+
+				# Directly arm the scripted crisis ring one day after its starbase object exists.
+				event_target:foc_khan_first_order = {
+					country_event = { id = foc_starkiller_station.1 days = 1 }
+				}
+
+				create_fleet = {
+					name = "FOC_KHAN_SUPREMACY"
+					settings = { can_change_composition = no }
+					effect = {
+						set_owner = event_target:foc_khan_first_order
+						# V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+}
+						
+
+						
+
+						
+
+						create_ship = {
+						    fleet_cache_recalc = yes # v17.18h: update Arkship/hero fleet cache at creation.
+							name = "FOC_KHAN_SUPREMACY"
+							design = "NAME_FOC_KHAN_SUPREMACY_CRISIS"
+							graphical_culture = military_arkship
+							upgradable = no
+
+							effect = {
+                        set_ship_flag = foc_v1718i_arkship_new_spawn
+
+								if = { limit = { NOT = { has_global_flag = foc_khan_strength_lowest } } add_modifier = { modifier = foc_sai_supremacy_arkship_stats days = -1 } }
+								add_modifier = {
+									modifier = foc_khan_supremacy_heavy_ark_slowdown
+									days = -1
+								}
+								# V59: do not run the vanilla Arkship initializer on the custom Supremacy hull.
+								# Its module potentials reject custom sizes and can leave the Arkship runtime half-initialized.
+								ship_event = { id = foc_sai_supremacy_arkship.21 days = 1 }
+								set_ship_flag = foc_khan_supremacy_flagship
+								set_ship_flag = foc_sai_supremacy_arkship
+								set_ship_flag = foc_sai_supremacy_event_spawned_only
+							}
+						}
+
+						# Spawn well clear of the Starkiller base so the flagship is not
+						# co-located with it (and does not die when the base is destroyed),
+						# then hunt aggressively as a mobile boss fleet.
+						set_location = {
+							target = event_target:foc_khan_starkiller_anchor
+							distance = 120
+							angle = random
+						}
+
+						set_fleet_flag = foc_khan_supremacy_fleet
+						set_aggro_range_measure_from = self
+						set_aggro_range = 300
+
+						# 3.11w-v2: remember this fleet so the escort below can follow it.
+						save_event_target_as = foc_khan_supremacy_fleet_ref
+					}
+				}
+
+				# 3.12g: spawn the difficulty-scaled pure-Resurgent package after the
+				# Supremacy exists. At High/Madness this is eight fleets of 27 ships:
+				# one Supremacy escort, two Ilum guards and five mobile attack fleets.
+				foc_khan_spawn_first_initial_fleet_package = yes
+
+				# V142: the initial invasion package remains unchanged. Recurring support
+				# does not begin until the war has lasted a full 360 days.
+			}
+			set_timed_global_flag = { flag = foc_khan_first_support_monthly_cooldown_137 days = 360 }
+			set_timed_global_flag = { flag = foc_khan_first_war_support_delay_142 days = 360 }
+
+			# Create initial constructors and invasion armies shortly after the country is ready.
+			event_target:foc_khan_first_order = {
+				set_country_flag = foc_khan_supremacy_fixed_design_093
+				country_event = {
+					id = foc_khan.1100
+					days = 2
+				}
+				country_event = { id = foc_khan_balance.1 days = 1 }
+				country_event = { id = foc_khan.4701 days = 2 }
+			}
+
+			# FOC 3.20: First Order succession always absorbs the surviving Galactic
+			# Imperial Remnant immediately after the new country is fully created.
+			event_target:foc_khan_first_order = {
+				country_event = { id = foc_fallen_war.23 }
+				country_event = { id = foc_starkiller_coords.5 days = 1 }
+			}
+
+			# Apply the user's repaired Starkiller model and firing framework.
+			event_target:foc_khan_first_order = {
+				country_event = {
+					id = myk_starkiller.10
+					days = 1
+				}
+			}
+
+			# Hostile to the whole playable galaxy, without ordinary diplomacy.
+			every_playable_country = {
+				establish_communications_no_message = event_target:foc_khan_first_order
+
+				set_faction_hostility = {
+					target = event_target:foc_khan_first_order
+					set_neutral = no
+					set_hostile = yes
+				}
+
+				event_target:foc_khan_first_order = {
+					set_faction_hostility = {
+						target = PREV
+						set_neutral = no
+						set_hostile = yes
+					}
+				}
+
+				country_event = {
+					id = foc_khan.5
+				}
+			}
+
+			# FOC 2.71: the surviving New Republic Awakened Empire is also a direct enemy.
+			if = {
+				limit = { exists = event_target:foc_sw_new_republic }
+				event_target:foc_sw_new_republic = {
+					establish_communications_no_message = event_target:foc_khan_first_order
+					set_faction_hostility = {
+						target = event_target:foc_khan_first_order
+						set_neutral = no
+						set_friendly = no
+						set_hostile = yes
+					}
+				}
+				event_target:foc_khan_first_order = {
+					establish_communications_no_message = event_target:foc_sw_new_republic
+					set_faction_hostility = {
+						target = event_target:foc_sw_new_republic
+						set_neutral = no
+						set_friendly = no
+						set_hostile = yes
+					}
+				}
+			}
+
+			# Republic-origin Treaty route: warn the human New Republic as
+			# soon as the First Order exists. The event builds/reuses D'Qar,
+			# leaves a separate AI New Republic at Hosnian and lets the same
+			# player country inherit as the Resistance before any shot fires.
+			if = {
+				limit = {
+					has_global_flag = foc_republic_origin_galactic_treaty
+					exists = event_target:foc_sw_new_republic
+					event_target:foc_sw_new_republic = {
+						is_ai = no
+						has_country_flag = foc_republic_origin_player_republic
+						has_country_flag = foc_sw_new_republic_country
+					}
+				}
+				event_target:foc_sw_new_republic = {
+					country_event = { id = foc_republic_origin.199 }
+				}
+			}
+		}
+	}
+}
+
+# FOC 3.11r: establish crisis Ilum beyond the galaxy and remove every ordinary
+# hyperlane touching it. A separate keeper creates the exclusive Imperial
+# Remnant Gateway pair after the First Order country exists.
+country_event = {
+	id = foc_khan.1710
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_global_flag = foc_khan_crisis_started
+		NOT = { has_global_flag = foc_khan_ilum_gateway_topology_prepared_311r }
+		any_system = { has_star_flag = foc_khan_ilum_home }
+		any_system = { has_star_flag = foc_sw_jakku_home }
+	}
+
+	immediate = {
+		if = {
+			limit = { NOT = { exists = event_target:foc_khan_first_order_system } }
+			random_system = {
+				limit = { has_star_flag = foc_khan_ilum_home }
+				save_global_event_target_as = foc_khan_first_order_system
+			}
+		}
+		if = {
+			limit = { NOT = { exists = event_target:foc_sw_jakku_system } }
+			random_system = {
+				limit = { has_star_flag = foc_sw_jakku_home }
+				save_global_event_target_as = foc_sw_jakku_system
+			}
+		}
+
+		if = {
+			limit = {
+				exists = event_target:foc_khan_first_order_system
+				exists = event_target:foc_sw_jakku_system
+			}
+
+			# Crisis Ilum must have no ordinary lane; the scripted gateway is its
+			# only connection to the galaxy.
+			event_target:foc_khan_first_order_system = {
+				every_neighbor_system = {
+					remove_hyperlane = { from = this to = PREV }
+				}
+			}
+
+			event_target:foc_sw_jakku_system = {
+				star = { save_global_event_target_as = foc_sw_jakku_star }
+			}
+
+			set_global_flag = foc_khan_ilum_gateway_topology_prepared_311r
+			log = "FOC_3.11R: crisis Ilum has no ordinary hyperlanes and awaits its exclusive Jakku gateway pair."
+		}
+	}
+}
+
+# Keep crisis Exegol inside a vanilla Electric Storm. Because Exegol has no
+# ordinary hyperlanes, the storm remains confined to the hidden system; if the
+# engine ends it, this restores it on the next monthly pass.
+# 3.11w-fix: this was a country_event gated on is_country_type = global_event
+# and registered on on_monthly_pulse_country — but that pulse never runs for
+# the global_event country type (it has no pulse events; the same engine rule
+# this MOD documents for its own crisis types). The storm was therefore never
+# created. It is now a scopeless event on the plain monthly pulse.
+event = {
+	id = foc_khan.1711
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		host_has_dlc = "Cosmic Storms"
+		OR = {
+			has_global_flag = foc_khan_phase_two_preparing
+			has_global_flag = foc_khan_phase_two
+		}
+		NOT = { has_global_flag = foc_khan_crisis_finished }
+		any_system = { has_star_flag = foc_khan_exegol_home }
+	}
+
+	immediate = {
+		if = {
+			limit = { NOT = { exists = event_target:foc_khan_final_order_system } }
+			random_system = {
+				limit = { has_star_flag = foc_khan_exegol_home }
+				save_global_event_target_as = foc_khan_final_order_system
+			}
+		}
+
+		# 3.11w-2: the diagnostics showed the engine accepts the storm but it
+		# does not end up covering Exegol (start position is snapped elsewhere
+		# and the storm drifts). A permanent storm influence field centered on
+		# Exegol is the engine's own mechanism for attracting and holding
+		# storms over a system; create it once.
+		if = {
+			limit = {
+				NOT = { has_global_flag = foc_khan_exegol_storm_field_created_311w }
+				exists = event_target:foc_khan_final_order_system
+			}
+			create_cosmic_storm_influence_field = {
+				center = event_target:foc_khan_final_order_system
+				radius = { base = 60 }
+			}
+			set_global_flag = foc_khan_exegol_storm_field_created_311w
+			log = "FOC_3.11W: created a permanent storm influence field on crisis Exegol."
+		}
+
+		if = {
+			limit = {
+				exists = event_target:foc_khan_final_order_system
+				event_target:foc_khan_final_order_system = { is_inside_storm = no }
+			}
+			# 3.11w-3: sixteen consecutive months of diagnostics proved the
+			# engine accepts create_cosmic_storm but snaps the storm to its own
+			# placement grid, which never includes the hyperlane-isolated
+			# Exegol; every attempt just released a stray storm into the
+			# galaxy. The monthly creation loop is therefore removed. Exegol
+			# instead carries a permanent system modifier that replicates the
+			# vanilla Electric Storm's ship effects (+100% sublight speed,
+			# halved shields). The influence field above still attracts any
+			# naturally wandering storm toward Exegol as flavor.
+			event_target:foc_khan_final_order_system = {
+				if = {
+					limit = {
+						NOT = { has_modifier = foc_khan_exegol_electric_storm_311w }
+					}
+					add_modifier = {
+						modifier = foc_khan_exegol_electric_storm_311w
+						days = -1
+					}
+					log = "FOC_3.11W: applied the permanent Electric Storm system modifier to crisis Exegol."
+				}
+			}
+		}
+	}
+}
+
+country_event = {
+	id = foc_khan.5
+	title = foc_khan.5.name
+	desc = foc_khan.5.desc
+	picture = GFX_foc_event_first_order_descends
+	location = event_target:foc_khan_first_order_system
+	is_triggered_only = yes
+
+	option = {
+		name = foc_khan.5.a
+		ai_chance = {
+			base = 100
+			modifier = {
+				factor = 0.1
+				relative_power = {
+					who = event_target:foc_khan_first_order
+					category = fleet
+					value < equivalent
+				}
+			}
+		}
+	}
+
+	option = {
+		name = foc_khan.5.b
+		trigger = {
+			is_regular_empire = yes
+			is_subject = no
+			NOT = { foc_khan_starkiller_submission_blocked = yes }
+			NOT = { has_country_flag = foc_khan_submitted_first_order }
+		}
+		ai_chance = {
+			base = 1
+			modifier = {
+				factor = 100
+				relative_power = {
+					who = event_target:foc_khan_first_order
+					category = fleet
+					value < equivalent
+				}
+			}
+			modifier = {
+				factor = 0
+				is_homicidal = yes
+			}
+		}
+		hidden_effect = {
+			country_event = { id = foc_khan_vassal.20 }
+		}
+	}
+}
+
+# Compatibility stub for the retired pre-3.12f attack-fleet reinforcement.
+country_event = {
+	id = foc_khan.20
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = { always = no }
+}
+
+
+# Immediate destruction linkage. This is called directly when the anchor planet
+# changes into a destroyed planet class. Scope = the anchor planet.
+planet_event = {
+	id = foc_khan.34
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+        foc_v1717_starkiller_was_completed = yes
+        NOT = { foc_v1717_starkiller_still_exists = yes }
+
+		has_global_flag = foc_khan_phase_one
+		has_planet_flag = foc_khan_starkiller_anchor
+		NOT = { has_global_flag = foc_khan_starkiller_destroyed }
+		OR = {
+			has_planet_flag = myk_starkiller_planet_destroyed
+			is_planet_class = pc_shattered
+			is_planet_class = pc_shattered_2
+			is_planet_class = pc_broken
+			is_planet_class = pc_black_hole
+		}
+	}
+
+	immediate = {
+		# 0.88: remove temporary beam/impact megastructures if the base dies mid-shot.
+		foc_khan_cleanup_interrupted_starkiller_shot = yes
+		# Remove the exact crisis-generated megastructure when its saved target survives.
+		if = {
+			limit = { exists = event_target:foc_khan_crisis_starkiller_base }
+			event_target:foc_khan_crisis_starkiller_base = {
+				remove_megastructure = this
+			}
+		}
+
+		# Fallback for old saves or a stale megastructure event target.
+		solar_system = {
+			every_system_megastructure = {
+				limit = {
+					OR = {
+						has_megastructure_flag = foc_khan_crisis_starkiller
+						is_megastructure_type = myk_starkiller_base_final
+                        is_megastructure_type = fop_starkiller_base_final
+					}
+				}
+				remove_megastructure = this
+			}
+		}
+
+		set_global_flag = foc_khan_starkiller_destroyed
+		foc_story_notify_starkiller_destroyed = yes
+		remove_global_flag = foc_khan_first_reinforcements_active
+
+		# Snapshot total Order domination before Rebel invitations break subjects free.
+		if = {
+			limit = { foc_khan_all_ordinary_empires_subjugated = yes }
+			set_global_flag = foc_khan_order_dominated_galaxy_at_starkiller_fall
+		}
+		remove_global_flag = foc_khan_forced_starkiller_in_progress
+		remove_global_flag = foc_khan_forced_starkiller_cooldown
+		if = { limit = { exists = event_target:foc_khan_crisis_starkiller_base } clear_global_event_target = foc_khan_crisis_starkiller_base }
+		if = { limit = { exists = event_target:myk_starkiller_last_completed_megastructure } clear_global_event_target = myk_starkiller_last_completed_megastructure }
+		if = { limit = { exists = event_target:foc_khan_forced_starkiller_target_country } clear_global_event_target = foc_khan_forced_starkiller_target_country }
+		if = { limit = { exists = event_target:foc_khan_forced_starkiller_target_capital } clear_global_event_target = foc_khan_forced_starkiller_target_capital }
+		if = { limit = { exists = event_target:foc_khan_forced_starkiller_target_system } clear_global_event_target = foc_khan_forced_starkiller_target_system }
+	}
+}
+
+# Global fallback: the planet object can disappear completely before a country pulse,
+# especially when the First Order loses its only colony and is deleted immediately.
+event = {
+	id = foc_khan.36
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = { foc_v1717_starkiller_loss_confirmed = yes }
+
+	immediate = {
+		# 0.88: remove temporary beam/impact megastructures if the base dies mid-shot.
+		foc_khan_cleanup_interrupted_starkiller_shot = yes
+		if = {
+			limit = { exists = event_target:foc_khan_crisis_starkiller_base }
+			event_target:foc_khan_crisis_starkiller_base = {
+				remove_megastructure = this
+			}
+		}
+
+		if = {
+			limit = { exists = event_target:foc_khan_first_order_system }
+			event_target:foc_khan_first_order_system = {
+				every_system_megastructure = {
+					limit = {
+						OR = {
+							has_megastructure_flag = foc_khan_crisis_starkiller
+							is_megastructure_type = myk_starkiller_base_final
+                        is_megastructure_type = fop_starkiller_base_final
+						}
+					}
+					remove_megastructure = this
+				}
+			}
+		}
+
+		set_global_flag = foc_khan_starkiller_destroyed
+		foc_story_notify_starkiller_destroyed = yes
+		remove_global_flag = foc_khan_first_reinforcements_active
+
+		# Snapshot total Order domination before Rebel invitations break subjects free.
+		if = {
+			limit = { foc_khan_all_ordinary_empires_subjugated = yes }
+			set_global_flag = foc_khan_order_dominated_galaxy_at_starkiller_fall
+		}
+		remove_global_flag = foc_khan_forced_starkiller_in_progress
+		remove_global_flag = foc_khan_forced_starkiller_cooldown
+		if = { limit = { exists = event_target:foc_khan_crisis_starkiller_base } clear_global_event_target = foc_khan_crisis_starkiller_base }
+		if = { limit = { exists = event_target:myk_starkiller_last_completed_megastructure } clear_global_event_target = myk_starkiller_last_completed_megastructure }
+		if = { limit = { exists = event_target:foc_khan_forced_starkiller_target_country } clear_global_event_target = foc_khan_forced_starkiller_target_country }
+		if = { limit = { exists = event_target:foc_khan_forced_starkiller_target_capital } clear_global_event_target = foc_khan_forced_starkiller_target_capital }
+		if = { limit = { exists = event_target:foc_khan_forced_starkiller_target_system } clear_global_event_target = foc_khan_forced_starkiller_target_system }
+	}
+}
+
+
+# Persistent orphan cleanup. If another on_action or a delayed firing event runs in
+# an unusual order, remove every crisis Starkiller marker from the unique Ilum system.
+# This also repairs existing saves that already contain blank megastructure bars.
+event = {
+	id = foc_khan.37
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_global_flag = foc_khan_starkiller_destroyed
+	}
+
+	immediate = {
+		foc_khan_cleanup_interrupted_starkiller_shot = yes
+	}
+}
+
+# Remove the crisis Starkiller megastructure when its anchor planet is destroyed.
+country_event = {
+	id = foc_khan.35
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+        foc_v1717_starkiller_was_completed = yes
+        NOT = { foc_v1717_starkiller_still_exists = yes }
+
+		has_country_flag = foc_khan_first_order_country
+		has_global_flag = foc_khan_phase_one
+		exists = event_target:foc_khan_first_order_system
+		exists = event_target:foc_khan_starkiller_anchor
+		NOT = {
+			has_global_flag = foc_khan_starkiller_destroyed
+		}
+
+		AND = {
+            if = {
+                limit = { exists = event_target:foc_khan_starkiller_anchor }
+                event_target:foc_khan_starkiller_anchor = {
+			OR = {
+				has_planet_flag = myk_starkiller_planet_destroyed
+				is_planet_class = pc_shattered
+				is_planet_class = pc_shattered_2
+				is_planet_class = pc_broken
+				is_planet_class = pc_black_hole
+			}
+		}
+            }
+            else = { always = no }
+        }
+	}
+
+	immediate = {
+		# 0.88: remove temporary beam/impact megastructures if the base dies mid-shot.
+		foc_khan_cleanup_interrupted_starkiller_shot = yes
+		if = {
+			limit = { exists = event_target:foc_khan_crisis_starkiller_base }
+			event_target:foc_khan_crisis_starkiller_base = {
+				remove_megastructure = this
+			}
+		}
+
+		event_target:foc_khan_first_order_system = {
+			every_system_megastructure = {
+				limit = {
+					OR = {
+						has_megastructure_flag = foc_khan_crisis_starkiller
+						is_megastructure_type = myk_starkiller_base_final
+                        is_megastructure_type = fop_starkiller_base_final
+					}
+				}
+				remove_megastructure = this
+			}
+		}
+
+		set_global_flag = foc_khan_starkiller_destroyed
+		foc_story_notify_starkiller_destroyed = yes
+		remove_global_flag = foc_khan_first_reinforcements_active
+
+		# Snapshot total Order domination before Rebel invitations break subjects free.
+		if = {
+			limit = { foc_khan_all_ordinary_empires_subjugated = yes }
+			set_global_flag = foc_khan_order_dominated_galaxy_at_starkiller_fall
+		}
+		remove_global_flag = foc_khan_forced_starkiller_in_progress
+		remove_global_flag = foc_khan_forced_starkiller_cooldown
+		if = { limit = { exists = event_target:foc_khan_crisis_starkiller_base } clear_global_event_target = foc_khan_crisis_starkiller_base }
+		if = { limit = { exists = event_target:myk_starkiller_last_completed_megastructure } clear_global_event_target = myk_starkiller_last_completed_megastructure }
+		if = { limit = { exists = event_target:foc_khan_forced_starkiller_target_country } clear_global_event_target = foc_khan_forced_starkiller_target_country }
+		if = { limit = { exists = event_target:foc_khan_forced_starkiller_target_capital } clear_global_event_target = foc_khan_forced_starkiller_target_capital }
+		if = { limit = { exists = event_target:foc_khan_forced_starkiller_target_system } clear_global_event_target = foc_khan_forced_starkiller_target_system }
+	}
+}
+
+# Phase-I objective detector.
+country_event = {
+	id = foc_khan.30
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		is_ai = no
+		has_global_flag = foc_khan_phase_one
+		NOT = {
+			has_global_flag = foc_khan_phase_two
+		}
+		foc_khan_phase_one_objectives_destroyed = yes
+	}
+
+	immediate = {
+		# V17: if the First Order is the player, open the "rise of the Final Order"
+		# window first. foc_khan.60 stays blocked until the option is answered, so
+		# the crisis can no longer annex the player before the choice exists.
+		every_country = {
+            limit = { foc_v17_player_first_order_pending = yes }
+            country_event = { id = fop_origin.45 }
+        }
+		country_event = {
+			id = foc_khan.60
+		}
+	}
+}
+
+# Manual/debug transition and normal Phase-II start.
+country_event = {
+    id = foc_khan.60
+    hide_window = yes
+    is_triggered_only = yes
+    # V17.17: idempotent physical guards permit recovery of an interrupted attempt.
+
+    trigger = {
+        NOT = { has_global_flag = foc_khan_phase_two_preparing }
+        NOT = { exists = event_target:foc_khan_final_order }
+
+        NOT = { any_country = { has_country_flag = foc_khan_final_order_country } }
+
+        OR = { has_global_flag = foc_khan_phase_one has_global_flag = foc_v1717_final_order_debug_requested }
+        NOT = { has_global_flag = foc_khan_phase_two }
+        # V17.16: wait for every eligible human First Order to answer .50,
+        # including a rebranded Remnant without the player-crisis perk.
+        # Eligibility is independent of the legacy "window was sent" flag.
+        OR = {
+            has_global_flag = foc_v1717_final_order_debug_requested
+            NOT = { any_country = { foc_v17_player_first_order_pending = yes } }
+        }
+        # A player who accepted Palpatine's mantle IS the Final Order; fop_origin.53
+        # builds that branch and no NPC crisis country may be spawned alongside it.
+        NOT = { any_country = { has_country_flag = fop_player_final_order } }
+    }
+
+    immediate = {
+        remove_global_flag = foc_khan_first_reinforcements_active
+        set_global_flag = foc_khan_phase_two_preparing
+
+        # V112: Exegol is a separate Unknown-Regions enclave, not a satellite of
+        # Jakku. It uses a remote galaxy-core-relative position on the opposite
+        # side of the map; access still relies on the existing Wayfinder route.
+        if = {
+            limit = { NOT = { any_system = { has_star_flag = foc_khan_exegol_home } } }
+            set_spawn_system_batch = begin
+        no_scope = {
+            spawn_system = {
+                hyperlane = no
+                is_discovered = no
+                min_distance >= 550
+                max_distance <= 560
+                min_orientation_angle = 308
+                max_orientation_angle = 314
+                initializer = foc_khan_exegol_system
+            }
+        }
+        set_spawn_system_batch = end
+        }
+
+        if = {
+            limit = { has_global_flag = foc_v1717_final_order_debug_requested }
+            country_event = { id = foc_khan.61 }
+        }
+        else = { country_event = { id = foc_khan.61 days = 3 } }
+    }
+}
+
+country_event = {
+	id = foc_khan.61
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_global_flag = foc_khan_phase_two_preparing
+	}
+
+	immediate = {
+		random_system = {
+			limit = {
+				has_star_flag = foc_khan_exegol_home
+			}
+			save_global_event_target_as = foc_khan_final_order_system
+			isolate_system = yes
+
+			random_system_planet = {
+				limit = {
+					has_planet_flag = foc_khan_exegol_capital
+				}
+				save_global_event_target_as = foc_khan_exegol_capital
+			}
+		}
+
+		if = {
+			limit = {
+				exists = event_target:foc_khan_final_order_system
+				exists = event_target:foc_khan_exegol_capital
+			}
+			if = {
+                limit = { has_global_flag = foc_v1717_final_order_debug_requested }
+                country_event = { id = foc_khan.62 }
+            }
+            else = { country_event = { id = foc_khan.62 days = 1 } }
+		}
+		else = {
+			country_event = {
+				id = foc_khan.61
+				days = 5
+			}
+		}
+	}
+}
+
+country_event = {
+	id = foc_khan.62
+	hide_window = yes
+	is_triggered_only = yes
+	# V17.17: idempotent physical guards permit recovery of an interrupted attempt.
+
+	trigger = {
+        NOT = { any_country = { has_country_flag = foc_khan_final_order_country } }
+
+		exists = event_target:foc_khan_final_order_system
+		exists = event_target:foc_khan_exegol_capital
+		NOT = {
+			exists = event_target:foc_khan_final_order
+		}
+		# V17.16: no NPC can bypass an eligible human's unanswered succession choice.
+		OR = {
+            has_global_flag = foc_v1717_final_order_debug_requested
+            NOT = { any_country = { foc_v17_player_first_order_pending = yes } }
+        }
+		# A player who accepted Palpatine's mantle IS the Final Order; fop_origin.53
+		# builds that branch and no NPC crisis country may be spawned alongside it.
+		NOT = { any_country = { has_country_flag = fop_player_final_order } }
+	}
+
+	immediate = {
+		event_target:foc_khan_exegol_capital = {
+			create_species = {
+				name = "FOC_KHAN_FINAL_ORDER_SPECIES"
+				plural = "FOC_KHAN_FINAL_ORDER_SPECIES_PLURAL"
+				class = HUM
+				portrait = final_order
+				namelist = first
+				homeworld = this
+
+				traits = {
+					trait = trait_imperial
+					trait = trait_sith_cultist
+					trait = trait_conformists
+					trait = trait_survivor
+				}
+
+				effect = {
+					save_global_event_target_as = foc_khan_final_order_species
+				}
+			}
+		}
+
+		event_target:foc_khan_final_order_species = {
+			create_country = {
+				name = "FOC_KHAN_FINAL_ORDER"
+				type = foc_khan_crisis_country
+				auto_delete = no
+				ignore_initial_colony_error = yes
+				species = root
+				authority = auth_imperial
+				origin = origin_default
+				ethos = {
+					ethic = ethic_fanatic_militarist
+					ethic = ethic_xenophobe
+				}
+				civics = {
+					civic = civic_distinguished_admiralty
+					civic = civic_nationalistic_zeal
+				}
+
+				flag = {
+					icon = {
+						category = "first"
+						file = "sith_eternal.dds"
+					}
+					background = {
+						category = "backgrounds"
+						file = "00_solid.dds"
+					}
+					colors = {
+						"red"
+						"black"
+						"null"
+						"null"
+					}
+				}
+
+				name_list = "first"
+
+				effect = {
+					set_country_flag = foc_khan_final_order_country
+        country_event = { id = foc_v1718.10 days = 1 }
+					foc_std_weapon_grant_gen_3 = yes
+                    # Final Order has unconditional knowledge of its own secret route.
+                    add_seen_bypass_type = foc_sith_wayfinder
+                    # Retained Phase-I assets may still be at Ilum.
+                    add_seen_bypass_type = foc_imperial_remnant_route
+                    set_country_flag = foc_sith_wayfinder_route_known
+					set_country_flag = ssp_fighter_group_empire
+					remove_country_flag = ssp_strength_balanced
+					foc_sync_ssp_strength_to_main_difficulty = yes
+					set_country_flag = ssp_strength_selected
+					set_country_flag = ssp_size_original
+					if = { limit = { is_ai = yes } give_technology = { tech = tech_ssp_imperial_hyperspace message = no } }
+					if = { limit = { is_ai = yes } give_technology = {
+						tech = foc_tech_swgs_crisis_point_defence
+						message = no
+					} }
+                    if = { limit = { is_ai = yes } give_technology = {
+                        tech = foc_tech_swgs_crisis_point_defence
+                        message = no
+                    } }
+					set_variable = {
+						which = foc_khan_xyston_support_spawned
+						value = 0
+					}
+					set_graphical_culture = first_01
+					set_city_graphical_culture = first_01
+					save_global_event_target_as = foc_khan_final_order
+
+					# 0.79: apply the same selected tier, with Final Order phase scaling.
+					foc_khan_apply_selected_strength = yes
+
+					add_resource = {
+						energy = 2000000
+						minerals = 2000000
+						alloys = 2000000
+						unity = 2000000
+					}
+
+					give_technology = {
+						tech = tech_space_construction
+						message = no
+					}
+					give_technology = {
+						tech = tech_assault_armies
+						message = no
+					}
+					give_technology = {
+						tech = tech_battleships
+						message = no
+					}
+					give_technology = {
+						tech = tech_titans
+						message = no
+					}
+				}
+			}
+		}
+
+		if = {
+			limit = {
+				exists = event_target:foc_khan_final_order
+			}
+
+			# V232d: Palpatine still truly dies at Endor. When the Final Order crisis
+			# begins, the Sith Eternal restores his consciousness in an Exegol clone.
+			event_target:foc_khan_final_order = {
+				create_leader = {
+				    tier = leader_tier_legendary
+					class = random_ruler
+					species = owner_main_species
+					name = "Emperor Palpatine"
+					gender = male
+					skill = 10
+						immortal = yes
+					leader_age_min = 70
+					leader_age_max = 100
+					event_leader = yes
+					skip_background_generation = yes
+					randomize_traits = no
+					effect = {
+						change_leader_portrait = fopalpatine_male_01
+						set_leader_flag = foc_khan_palpatine_ruler
+						set_leader_flag = foc_saga_palpatine_exegol_clone
+						save_global_event_target_as = foc_khan_palpatine_ruler
+					}
+				}
+				set_leader = last_created_leader
+				set_country_flag = foc_khan_palpatine_ruler_created
+				set_country_flag = foc_khan_palpatine_portrait_fixed_085
+				set_country_flag = foc_saga_palpatine_returned_final_order
+				set_country_flag = foc_v232e_palpatine_return_applied
+			}
+			set_global_flag = foc_saga_palpatine_returned_final_order
+			if = {
+				limit = { has_global_flag = foc_saga_palpatine_died_at_endor }
+				set_global_flag = foc_saga_palpatine_resurrected_after_endor
+			}
+
+            # V232e: visible resurrection beat, not only a hidden state flag.
+            every_playable_country = {
+                limit = {
+                    is_ai = no
+                    NOT = { has_country_flag = foc_v232e_palpatine_return_story_shown }
+                }
+                country_event = { id = foc_v232e_palpatine_return.2 days = 1 }
+            }
+
+			remove_global_flag = foc_khan_phase_two_preparing
+			set_global_flag = foc_khan_phase_two
+			set_global_flag = foc_khan_final_reinforcements_active
+
+            # Restore the Jakku endpoint if a save/load or another mod removed it.
+            if = {
+                limit = {
+                    exists = event_target:foc_sw_jakku_system
+                    NOT = { exists = event_target:foc_sith_wayfinder_jakku_gate }
+                }
+                event_target:foc_sw_jakku_system = {
+                    spawn_megastructure = {
+                        type = foc_sith_wayfinder_gate
+                        owner = event_target:foc_khan_final_order
+                        planet = star
+                        orbit_distance = 230
+                        orbit_angle = 300
+                        init_effect = {
+                            set_name = "NAME_FOC_SITH_WAYFINDER_JAKKU_GATE"
+                            set_megastructure_flag = foc_sith_wayfinder_jakku_gate
+                            save_global_event_target_as = foc_sith_wayfinder_jakku_gate
+                        }
+                    }
+                }
+            }
+
+            # FOC 2.99: grant the unique level-10 Kylo Ren commander to each
+            # human regular empire when the Final Order is formally established.
+            every_playable_country = {
+                limit = {
+                    is_ai = no
+                    is_regular_empire = yes
+                    NOT = { has_country_flag = foc_khan_first_order_country }
+                    NOT = { has_country_flag = foc_khan_final_order_country }
+                }
+                country_event = { id = foc_hero_rewards.2 days = 1 }
+            }
+
+			event_target:foc_khan_exegol_capital = {
+				create_colony = {
+					owner = event_target:foc_khan_final_order
+				}
+				generate_start_deposits_and_blockers = yes
+				clear_blockers = yes
+				colony = {
+					inline_script = "foc_v232i_safe_colony_layout"
+					generate_start_pops = yes
+					generate_home_planet_final_pass = yes
+				}
+				set_capital = yes
+			}
+
+			event_target:foc_khan_final_order_system = {
+                spawn_megastructure = {
+                    type = foc_sith_wayfinder_gate
+                    owner = event_target:foc_khan_final_order
+                    planet = star
+                    orbit_distance = 180
+                    orbit_angle = 45
+                    init_effect = {
+                        set_name = "NAME_FOC_SITH_WAYFINDER_EXEGOL_GATE"
+                        set_megastructure_flag = foc_sith_wayfinder_exegol_gate
+                        save_global_event_target_as = foc_sith_wayfinder_exegol_gate
+                    }
+                }
+
+				create_starbase = {
+					size = starbase_citadel
+					owner = event_target:foc_khan_final_order
+					effect = {
+						set_starbase_flag = foc_khan_final_capital_starbase
+					}
+				}
+
+				# 3.12f: exactly one Exegol home guard plus difficulty-scaled pure
+				# Xyston attack fleets. High/Madness receives one Eclipse I, one
+				# Eclipse II, one Resurgent and 54 Xystons in the guard, plus six
+				# 27-Xyston mobile fleets.
+				foc_khan_spawn_final_initial_fleet_package = yes
+				event_target:foc_khan_final_order = {
+					set_country_flag = foc_khan_final_xystons_distributed_311u
+				}
+
+				# V142: no same-day Final Order support wave. The existing 360-day
+				# cooldown below is now the first-year war delay.
+
+				# 2.12: create a real Final Order invasion corps immediately.
+				# Monthly maintenance replenishes it only after losses.
+				foc_khan_spawn_final_invasion_fleet_212 = yes
+			}
+			set_timed_global_flag = { flag = foc_khan_final_support_monthly_cooldown_137 days = 360 }
+			set_timed_global_flag = { flag = foc_khan_final_war_support_delay_142 days = 360 }
+
+            # Two days after both endpoints and the mobile fleets exist, open the
+            # first expeditionary departure through the Exegol-Jakku route.
+            event_target:foc_khan_final_order = {
+                country_event = { id = foc_wayfinder.5 days = 2 }
+            }
+
+			event_target:foc_khan_final_order = {
+				set_country_flag = foc_khan_final_initial_72_xyston_203_done
+				set_country_flag = foc_khan_final_initial_fleet_204_done
+				country_event = { id = foc_khan_balance.1 days = 1 }
+			}
+
+			# Transfer surviving First Order assets when the country still exists.
+			# If a Starkiller attack erased it completely, Phase II still starts.
+			if = {
+				limit = {
+					exists = event_target:foc_khan_first_order
+					# V17: only an AI First Order hands its empire over. A human First
+					# Order used to lose every fleet, starbase and planet here without
+					# any war or Final Order event ever firing.
+					event_target:foc_khan_first_order = { is_ai = yes }
+				}
+				event_target:foc_khan_first_order = {
+					every_owned_fleet = {
+						# Convert every Phase-I role before ownership changes so the
+						# Final Order dispatcher can immediately recognize the fleet.
+						if = {
+							limit = { has_fleet_flag = foc_khan_first_order_attack_fleet }
+							remove_fleet_flag = foc_khan_first_order_attack_fleet
+							set_fleet_flag = foc_khan_final_order_attack_fleet
+						}
+						if = {
+							limit = { has_fleet_flag = foc_khan_first_order_guard_fleet }
+							remove_fleet_flag = foc_khan_first_order_guard_fleet
+							# The Final Order creates its own single Exegol guard. Surviving
+							# Ilum guards become mobile fleets instead of creating extra guards.
+							set_fleet_flag = foc_khan_final_order_attack_fleet
+							set_fleet_stance = aggressive
+						}
+						if = {
+							limit = {
+								OR = {
+									has_fleet_flag = foc_khan_first_order_invasion_force
+									any_owned_ship = { is_ship_class = shipclass_transport }
+								}
+							}
+							remove_fleet_flag = foc_khan_first_order_invasion_force
+							set_fleet_flag = foc_khan_final_order_invasion_force
+						}
+						if = {
+							limit = { has_fleet_flag = foc_khan_first_order_engineering_fleet }
+							remove_fleet_flag = foc_khan_first_order_engineering_fleet
+							set_fleet_flag = foc_khan_final_order_engineering_fleet
+						}
+						set_owner = event_target:foc_khan_final_order
+					}
+
+					every_owned_starbase = {
+						set_owner = event_target:foc_khan_final_order
+					}
+
+					every_owned_planet = {
+						set_owner = event_target:foc_khan_final_order
+					}
+
+					set_country_flag = foc_khan_absorbed_by_final_order
+				}
+			}
+			else_if = {
+				# A surviving human First Order keeps its empire. The dispatch below
+				# also checks all eligible player identities and holds hostility
+				# while a succession window is pending.
+				limit = {
+					exists = event_target:foc_khan_first_order
+					event_target:foc_khan_first_order = { is_ai = no }
+				}
+				event_target:foc_khan_first_order = {
+					if = {
+						limit = { NOT = { has_country_flag = fop_origin_final_order_decided } }
+						country_event = { id = fop_origin.45 }
+					}
+				}
+			}
+
+			# 1.19: immediately wake the Final Order after Phase-II fleet creation and
+			# Phase-I asset transfer. The former empty block could leave all inherited
+			# fleets without a valid attack order until a later monthly pulse.
+			event_target:foc_khan_final_order = {
+				remove_country_flag = foc_khan_final_ai_hard_refresh_cooldown_119
+				country_event = { id = foc_khan_ai_repair.5 days = 1 }
+				country_event = { id = foc_khan_bombfix.3 days = 1 }
+			}
+
+			every_playable_country = {
+				establish_communications_no_message = event_target:foc_khan_final_order
+
+				if = {
+                    limit = { foc_v17_player_first_order_pending = yes }
+                    foc_v1716_hold_final_order_hostility = yes
+                    country_event = { id = fop_origin.45 }
+                }
+                else_if = {
+					limit = {
+						has_country_flag = foc_khan_submitted_first_order
+						NOT = { foc_khan_starkiller_submission_blocked = yes }
+					}
+
+					set_subject_of = {
+						who = event_target:foc_khan_final_order
+						preset = preset_foc_khan_satrapy
+					}
+					remove_country_flag = foc_khan_submitted_first_order
+					set_country_flag = foc_khan_submitted_final_order
+
+					set_faction_hostility = {
+						target = event_target:foc_khan_final_order
+						set_hostile = no
+						set_neutral = no
+						set_friendly = yes
+					}
+					event_target:foc_khan_final_order = {
+						set_faction_hostility = {
+							target = PREV
+							set_hostile = no
+							set_neutral = no
+							set_friendly = yes
+						}
+					}
+					country_event = { id = foc_khan.64 }
+				}
+				else = {
+					set_faction_hostility = {
+						target = event_target:foc_khan_final_order
+						set_neutral = no
+						set_hostile = yes
+					}
+					event_target:foc_khan_final_order = {
+						set_faction_hostility = {
+							target = PREV
+							set_neutral = no
+							set_hostile = yes
+						}
+					}
+					country_event = { id = foc_khan.63 }
+				}
+			}
+		}
+	
+        if = {
+            limit = { exists = event_target:foc_khan_final_order }
+            remove_global_flag = foc_v1717_final_order_debug_requested
+            log = "FOC_V1717_FINAL_ORDER_DEBUG: Final Order established; original player succession choices dispatched."
+        }
+}
+}
+
+country_event = {
+	id = foc_khan.64
+	title = foc_khan.64.name
+	desc = foc_khan.64.desc
+	picture = GFX_foc_event_new_master
+	location = event_target:foc_khan_final_order_system
+	is_triggered_only = yes
+
+	option = {
+		name = foc_khan.64.a
+	}
+}
+
+country_event = {
+	id = foc_khan.63
+	title = foc_khan.63.name
+	desc = foc_khan.63.desc
+	picture = GFX_foc_event_final_order_rises
+	location = event_target:foc_khan_final_order_system
+	is_triggered_only = yes
+
+	option = {
+		name = foc_khan.63.a
+		ai_chance = {
+			base = 100
+			modifier = {
+				factor = 0.1
+				relative_power = {
+					who = event_target:foc_khan_final_order
+					category = fleet
+					value < equivalent
+				}
+			}
+		}
+	}
+
+	option = {
+		name = foc_khan.63.b
+		trigger = {
+			is_regular_empire = yes
+			is_subject = no
+			NOT = { has_country_flag = foc_khan_submitted_final_order }
+		}
+		ai_chance = {
+			base = 1
+			modifier = {
+				factor = 100
+				relative_power = {
+					who = event_target:foc_khan_final_order
+					category = fleet
+					value < equivalent
+				}
+			}
+			modifier = {
+				factor = 0
+				is_homicidal = yes
+			}
+		}
+		hidden_effect = {
+			country_event = { id = foc_khan_vassal.21 }
+		}
+	}
+
+    trigger = { NOT = { foc_v17_player_first_order_pending = yes } }
+}
+
+
+# Rebuild the global event targets used by the stable 0.35 support controller.
+# This runs before the two support events every month and repairs old saves.
+
+# Restore the original spawn-time global event targets using the same safe
+# planet/system scopes as foc_khan.3 and foc_khan.61.
+event = {
+	id = foc_khan.43
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+        foc_v1717_refresh_starkiller_history = yes
+
+		if = {
+			limit = {
+				NOT = { exists = event_target:foc_khan_first_order }
+				any_country = { has_country_flag = foc_khan_first_order_country }
+			}
+			random_country = {
+				limit = { has_country_flag = foc_khan_first_order_country }
+				save_global_event_target_as = foc_khan_first_order
+			}
+		}
+
+		if = {
+			limit = {
+				NOT = { has_global_flag = foc_khan_starkiller_destroyed }
+				OR = {
+					NOT = { exists = event_target:foc_khan_first_order_system }
+					NOT = { exists = event_target:foc_khan_starkiller_anchor }
+				}
+			}
+			random_system = {
+				limit = { has_star_flag = foc_khan_ilum_home }
+				save_global_event_target_as = foc_khan_first_order_system
+				random_system_planet = {
+					limit = {
+						has_planet_flag = foc_khan_starkiller_anchor
+						NOR = {
+							is_planet_class = pc_shattered
+							is_planet_class = pc_shattered_2
+							is_planet_class = pc_broken
+							is_planet_class = pc_black_hole
+						}
+					}
+					save_global_event_target_as = foc_khan_starkiller_anchor
+				}
+			}
+		}
+
+		if = {
+			limit = {
+				NOT = { exists = event_target:foc_khan_final_order }
+				any_country = { has_country_flag = foc_khan_final_order_country }
+			}
+			random_country = {
+				limit = { has_country_flag = foc_khan_final_order_country }
+				save_global_event_target_as = foc_khan_final_order
+			}
+		}
+
+		if = {
+			limit = {
+				NOT = { has_global_flag = foc_khan_exegol_destroyed }
+				OR = {
+					NOT = { exists = event_target:foc_khan_final_order_system }
+					NOT = { exists = event_target:foc_khan_exegol_capital }
+				}
+			}
+			random_system = {
+				limit = { has_star_flag = foc_khan_exegol_home }
+				save_global_event_target_as = foc_khan_final_order_system
+				random_system_planet = {
+					limit = {
+						has_planet_flag = foc_khan_exegol_capital
+						NOR = {
+							is_planet_class = pc_shattered
+							is_planet_class = pc_shattered_2
+							is_planet_class = pc_broken
+							is_planet_class = pc_black_hole
+						}
+					}
+					save_global_event_target_as = foc_khan_exegol_capital
+				}
+			}
+		}
+	}
+}
+
+# Annual First Order support. Exact fleet count and composition depend on tier.
+event = {
+	id = foc_khan.45
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_global_flag = foc_khan_phase_one
+		NOT = { has_global_flag = foc_khan_first_war_support_delay_142 }
+		NOT = { has_global_flag = foc_khan_first_support_monthly_cooldown_137 }
+		NOT = { has_global_flag = foc_khan_starkiller_destroyed }
+		exists = event_target:foc_khan_first_order
+		exists = event_target:foc_khan_first_order_system
+		exists = event_target:foc_khan_starkiller_anchor
+		event_target:foc_khan_first_order_system = {
+			exists = space_owner
+			space_owner = { is_same_value = event_target:foc_khan_first_order }
+			NOT = {
+				any_system_planet = {
+					is_colony = yes
+					NOT = { owner = { is_same_value = event_target:foc_khan_first_order } }
+				}
+			}
+		}
+		event_target:foc_khan_first_order = {
+			NOT = { has_country_flag = foc_khan_absorbed_by_final_order }
+			OR = {
+				NOT = { is_variable_set = foc_khan_first_support_spawned }
+				check_variable = { which = foc_khan_first_support_spawned value < 864 }
+			}
+		}
+	}
+
+	immediate = {
+		event_target:foc_khan_first_order = {
+			if = {
+				limit = { NOT = { is_variable_set = foc_khan_first_support_spawned } }
+				set_variable = { which = foc_khan_first_support_spawned value = 0 }
+			}
+		}
+
+		# V211: a disabled AI support tier still consumes the normal 360-day
+		# interval, but it does not create fleets, increment counters or announce
+		# a wave. Human-controlled First Order support remains unchanged.
+		if = {
+			limit = {
+				OR = {
+					event_target:foc_khan_first_order = { is_ai = no }
+					NOT = { has_global_flag = foc_v211_ai_support_first_order_disabled }
+				}
+			}
+
+			event_target:foc_khan_first_order_system = {
+				foc_khan_spawn_first_scaled_support_wave = yes
+			}
+
+			if = {
+				limit = { NOT = { has_global_flag = foc_khan_first_support_announced } }
+				set_global_flag = foc_khan_first_support_announced
+				every_playable_country = { country_event = { id = foc_khan.46 } }
+			}
+
+			if = {
+				limit = {
+					event_target:foc_khan_first_order = {
+						check_variable = { which = foc_khan_first_support_spawned value >= 864 }
+						NOT = { has_country_flag = foc_khan_first_support_cap_reached }
+					}
+				}
+				event_target:foc_khan_first_order = { set_country_flag = foc_khan_first_support_cap_reached }
+			}
+			log = "FOC_V211_AI_SUPPORT: First Order annual support wave fired at the configured AI scale."
+		}
+		else = {
+			log = "FOC_V211_AI_SUPPORT: First Order AI annual support wave skipped because its debug tier is disabled."
+		}
+
+		set_timed_global_flag = { flag = foc_khan_first_support_monthly_cooldown_137 days = 360 }
+	}
+}
+
+
+country_event = {
+	id = foc_khan.46
+	picture = GFX_foc_story_order_reinforcements
+	title = foc_khan.46.name
+	desc = foc_khan.46.desc
+	location = event_target:foc_khan_first_order_system
+	is_triggered_only = yes
+
+	option = {
+		name = foc_khan.46.a
+	}
+}
+
+# Annual Final Order support. Exact fleet count and composition depend on tier.
+event = {
+	id = foc_khan.80
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_global_flag = foc_khan_phase_two
+		NOT = { has_global_flag = foc_khan_crisis_finished }
+		NOT = { has_global_flag = foc_khan_final_war_support_delay_142 }
+		NOT = { has_global_flag = foc_khan_final_support_monthly_cooldown_137 }
+		NOT = { has_global_flag = foc_khan_exegol_destroyed }
+		exists = event_target:foc_khan_final_order
+		exists = event_target:foc_khan_final_order_system
+		exists = event_target:foc_khan_exegol_capital
+		event_target:foc_khan_final_order_system = {
+			exists = space_owner
+			space_owner = { is_same_value = event_target:foc_khan_final_order }
+			NOT = {
+				any_system_planet = {
+					is_colony = yes
+					NOT = { owner = { is_same_value = event_target:foc_khan_final_order } }
+				}
+			}
+		}
+		event_target:foc_khan_final_order = {
+			OR = {
+				NOT = { is_variable_set = foc_khan_xyston_support_spawned }
+				check_variable = { which = foc_khan_xyston_support_spawned value < 864 }
+			}
+		}
+	}
+
+	immediate = {
+		event_target:foc_khan_final_order = {
+			if = {
+				limit = { NOT = { is_variable_set = foc_khan_xyston_support_spawned } }
+				set_variable = { which = foc_khan_xyston_support_spawned value = 0 }
+			}
+		}
+
+		# V211: disabled AI support consumes this year's interval without creating
+		# fleets or changing the support counter. Human Final Order is unchanged.
+		if = {
+			limit = {
+				OR = {
+					event_target:foc_khan_final_order = { is_ai = no }
+					NOT = { has_global_flag = foc_v211_ai_support_final_order_disabled }
+				}
+			}
+
+			event_target:foc_khan_final_order_system = {
+				foc_khan_spawn_final_scaled_support_wave = yes
+			}
+
+			if = {
+				limit = {
+					event_target:foc_khan_final_order = {
+						check_variable = { which = foc_khan_xyston_support_spawned value >= 864 }
+						NOT = { has_country_flag = foc_khan_xyston_support_cap_announced }
+					}
+				}
+				event_target:foc_khan_final_order = { set_country_flag = foc_khan_xyston_support_cap_announced }
+				every_playable_country = { country_event = { id = foc_khan.81 } }
+			}
+			log = "FOC_V211_AI_SUPPORT: Final Order annual support wave fired at the configured AI scale."
+		}
+		else = {
+			log = "FOC_V211_AI_SUPPORT: Final Order AI annual support wave skipped because its debug tier is disabled."
+		}
+
+		set_timed_global_flag = { flag = foc_khan_final_support_monthly_cooldown_137 days = 360 }
+	}
+}
+
+
+country_event = {
+	id = foc_khan.81
+	picture = GFX_foc_story_order_reinforcements
+	title = foc_khan.81.name
+	desc = foc_khan.81.desc
+	location = event_target:foc_khan_final_order_system
+	is_triggered_only = yes
+
+	option = {
+		name = foc_khan.81.a
+	}
+}
+
+country_event = {
+	id = foc_khan.70
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = { always = no }
+}
+
+
+# 0.71 compatibility stubs for all legacy scripted military movement events.
+# They remain defined so old saves can discard scheduled events cleanly, but
+# they never issue orders; berserk_military_minister_module owns combat fleets.
+
+event = { id = foc_khan.32 hide_window = yes is_triggered_only = yes trigger = { always = no } }
+event = { id = foc_khan.28 hide_window = yes is_triggered_only = yes trigger = { always = no } }
+event = { id = foc_khan.29 hide_window = yes is_triggered_only = yes trigger = { always = no } }
+event = { id = foc_khan.31 hide_window = yes is_triggered_only = yes trigger = { always = no } }
+country_event = { id = foc_khan.25 hide_window = yes is_triggered_only = yes trigger = { always = no } }
+country_event = { id = foc_khan.75 hide_window = yes is_triggered_only = yes trigger = { always = no } }
+event = { id = foc_khan.462 hide_window = yes is_triggered_only = yes trigger = { always = no } }
+event = { id = foc_khan.762 hide_window = yes is_triggered_only = yes trigger = { always = no } }
+fleet_event = { id = foc_khan.26 hide_window = yes is_triggered_only = yes trigger = { always = no } }
+fleet_event = { id = foc_khan.27 hide_window = yes is_triggered_only = yes trigger = { always = no } }
+fleet_event = { id = foc_khan.76 hide_window = yes is_triggered_only = yes trigger = { always = no } }
+
+# Crisis-side Starkiller AI controller.
+# This controller does not alter the normal Starkiller files. It calls the same
+# original start/completion events used by the weapon action and keeps the
+# target-system scope alive for the full 180-day charge.
+
+event = {
+	id = foc_khan.1000
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_global_flag = foc_khan_phase_one
+		exists = event_target:foc_khan_first_order
+		exists = event_target:foc_khan_first_order_system
+		NOT = { has_global_flag = foc_khan_forced_starkiller_cooldown }
+		NOT = { has_global_flag = foc_khan_forced_starkiller_in_progress }
+		event_target:foc_khan_first_order_system = {
+			any_system_megastructure = {
+				is_megastructure_type = myk_starkiller_base_final
+			}
+		}
+		OR = {
+			# Canonical priority: if Hosnian itself is still a live hostile target,
+			# the controller must wake even if no other target-selection branch qualifies.
+			AND = {
+				exists = event_target:foc_sw_hosnian_system
+				event_target:foc_sw_hosnian_system = {
+					foc_khan_is_live_starkiller_target_system_311x = yes
+					any_system_planet = {
+						is_colony = yes
+						owner = {
+							NOT = { is_friendly_to = event_target:foc_khan_first_order }
+							NOT = { has_overlord = event_target:foc_khan_first_order }
+						}
+					}
+				}
+			}
+			AND = {
+				exists = event_target:foc_sw_new_republic
+				event_target:foc_sw_new_republic = {
+					foc_khan_has_live_starkiller_capital_311x = yes
+					NOT = { is_friendly_to = event_target:foc_khan_first_order }
+				}
+			}
+			any_playable_country = {
+				is_regular_empire = yes
+				foc_khan_has_live_starkiller_capital_311x = yes
+				NOT = { is_friendly_to = event_target:foc_khan_first_order }
+				NOT = { has_overlord = event_target:foc_khan_first_order }
+				NOR = {
+					has_country_flag = foc_khan_first_order_country
+					has_country_flag = foc_khan_final_order_country
+					has_country_flag = foc_khan_submitted_first_order
+					has_country_flag = foc_khan_submitted_final_order
+				}
+			}
+		}
+	}
+
+	immediate = {
+		if = { limit = { exists = event_target:foc_khan_crisis_starkiller_base } clear_global_event_target = foc_khan_crisis_starkiller_base }
+		if = { limit = { exists = event_target:foc_khan_forced_starkiller_target_country } clear_global_event_target = foc_khan_forced_starkiller_target_country }
+		if = { limit = { exists = event_target:foc_khan_forced_starkiller_target_capital } clear_global_event_target = foc_khan_forced_starkiller_target_capital }
+		if = { limit = { exists = event_target:foc_khan_forced_starkiller_target_system } clear_global_event_target = foc_khan_forced_starkiller_target_system }
+
+		# Reacquire the actual completed base every time, including after load.
+		event_target:foc_khan_first_order_system = {
+			every_system_megastructure = {
+				limit = { is_megastructure_type = myk_starkiller_base_final }
+				save_global_event_target_as = foc_khan_crisis_starkiller_base
+			}
+		}
+
+		# Canon target priority: while the saved Hosnian system target still
+		# exists, Starkiller Base attacks it before other eligible targets.
+		# V182: the monthly old-save target reacquisition branch was removed.
+		if = {
+			limit = {
+				exists = event_target:foc_sw_hosnian_system
+				event_target:foc_sw_hosnian_system = {
+					foc_khan_is_live_starkiller_target_system_311x = yes
+					any_system_planet = {
+						is_colony = yes
+						owner = {
+							NOT = { is_friendly_to = event_target:foc_khan_first_order }
+							NOT = { has_overlord = event_target:foc_khan_first_order }
+						}
+					}
+				}
+			}
+			event_target:foc_sw_hosnian_system = {
+				save_global_event_target_as = foc_khan_forced_starkiller_target_system
+				random_system_planet = {
+					limit = {
+						is_colony = yes
+						owner = {
+							NOT = { is_friendly_to = event_target:foc_khan_first_order }
+						}
+					}
+					save_global_event_target_as = foc_khan_forced_starkiller_target_capital
+					owner = { save_global_event_target_as = foc_khan_forced_starkiller_target_country }
+				}
+			}
+		}
+
+		# If Hosnian is already gone, the Resistance becomes the next priority.
+		if = {
+			limit = {
+				NOT = { exists = event_target:foc_khan_forced_starkiller_target_country }
+				exists = event_target:foc_khan_rebel_alliance
+				event_target:foc_khan_rebel_alliance = {
+					has_country_flag = foc_khan_rebel_alliance_country
+					foc_khan_has_live_starkiller_capital_311x = yes
+					NOT = { is_friendly_to = event_target:foc_khan_first_order }
+				}
+			}
+			event_target:foc_khan_rebel_alliance = {
+				save_global_event_target_as = foc_khan_forced_starkiller_target_country
+			}
+		}
+
+		# FOC 2.71: the surviving Star Wars Fallen Empire capital is the primary target.
+		if = {
+			limit = {
+				NOT = { exists = event_target:foc_khan_forced_starkiller_target_country }
+				exists = event_target:foc_sw_new_republic
+				event_target:foc_sw_new_republic = {
+					foc_khan_has_live_starkiller_capital_311x = yes
+					NOT = { is_friendly_to = event_target:foc_khan_first_order }
+				}
+			}
+			event_target:foc_sw_new_republic = {
+				save_global_event_target_as = foc_khan_forced_starkiller_target_country
+			}
+		}
+
+		# If that Fallen Empire no longer has a capital, choose the strongest hostile regular empire.
+		if = {
+			limit = { NOT = { exists = event_target:foc_khan_forced_starkiller_target_country } }
+			every_playable_country = {
+			limit = {
+				is_regular_empire = yes
+				foc_khan_has_live_starkiller_capital_311x = yes
+				NOT = { is_friendly_to = event_target:foc_khan_first_order }
+				NOT = { has_overlord = event_target:foc_khan_first_order }
+				NOR = {
+					has_country_flag = foc_khan_first_order_country
+					has_country_flag = foc_khan_final_order_country
+					has_country_flag = foc_khan_submitted_first_order
+					has_country_flag = foc_khan_submitted_final_order
+				}
+			}
+			export_trigger_value_to_variable = {
+				trigger = fleet_power
+				variable = foc_khan_starkiller_target_power
+			}
+		}
+
+		if = {
+			limit = { NOT = { exists = event_target:foc_khan_forced_starkiller_target_country } }
+			ordered_playable_country = {
+				position = 0
+				order_by = foc_khan_starkiller_target_power
+				limit = {
+					is_regular_empire = yes
+					foc_khan_has_live_starkiller_capital_311x = yes
+					NOT = { is_friendly_to = event_target:foc_khan_first_order }
+					NOT = { has_overlord = event_target:foc_khan_first_order }
+					NOR = {
+						has_country_flag = foc_khan_first_order_country
+						has_country_flag = foc_khan_final_order_country
+						has_country_flag = foc_khan_submitted_first_order
+						has_country_flag = foc_khan_submitted_final_order
+					}
+				}
+				save_global_event_target_as = foc_khan_forced_starkiller_target_country
+			}
+		}
+
+		if = {
+			limit = { NOT = { exists = event_target:foc_khan_forced_starkiller_target_country } }
+				random_playable_country = {
+					limit = {
+						is_regular_empire = yes
+						foc_khan_has_live_starkiller_capital_311x = yes
+					NOT = { is_friendly_to = event_target:foc_khan_first_order }
+					NOT = { has_overlord = event_target:foc_khan_first_order }
+					NOR = {
+						has_country_flag = foc_khan_first_order_country
+						has_country_flag = foc_khan_final_order_country
+						has_country_flag = foc_khan_submitted_first_order
+						has_country_flag = foc_khan_submitted_final_order
+					}
+				}
+				save_global_event_target_as = foc_khan_forced_starkiller_target_country
+			}
+		}
+
+		}
+
+		if = {
+			limit = {
+				exists = event_target:foc_khan_crisis_starkiller_base
+				exists = event_target:foc_khan_forced_starkiller_target_country
+			}
+
+			# Hosnian priority already supplies an explicit target system. Only derive
+			# the normal target from the chosen country's capital when no explicit
+			# system target was selected above.
+			if = {
+				limit = { NOT = { exists = event_target:foc_khan_forced_starkiller_target_system } }
+				event_target:foc_khan_forced_starkiller_target_country = {
+					capital_scope = {
+						save_global_event_target_as = foc_khan_forced_starkiller_target_capital
+						solar_system = { save_global_event_target_as = foc_khan_forced_starkiller_target_system }
+					}
+				}
+			}
+
+			if = {
+				limit = {
+					exists = event_target:foc_khan_forced_starkiller_target_capital
+					exists = event_target:foc_khan_forced_starkiller_target_system
+					event_target:foc_khan_forced_starkiller_target_capital = {
+						is_colony = yes
+					}
+					event_target:foc_khan_forced_starkiller_target_system = {
+						foc_khan_is_live_starkiller_target_system_311x = yes
+					}
+				}
+				set_global_flag = foc_khan_forced_starkiller_in_progress
+				log = "FOC_KHAN_STARKILLER_AI: charge started against [event_target:foc_khan_forced_starkiller_target_country.GetName], system [event_target:foc_khan_forced_starkiller_target_system.GetName]."
+
+				# Start the isolated crisis-only Starkiller beam event.
+				event_target:foc_khan_forced_starkiller_target_system = {
+					system_event = {
+						id = myk_starkiller_dyson.8200
+						scopes = { from = event_target:foc_khan_crisis_starkiller_base }
+					}
+
+					# Keep completion attached to the target system itself. Unlike the
+					# previous country-event implementation, phase changes, surrender,
+					# or country AI changes cannot silently cancel the cleanup.
+					system_event = {
+						id = foc_khan.1001
+						days = 180
+						scopes = { from = event_target:foc_khan_crisis_starkiller_base }
+					}
+				}
+			}
+		}
+	}
+}
+
+# Complete a committed AI shot. THIS = target system; FROM = firing base.
+# Charging cannot be stopped once this event has been scheduled.
+system_event = {
+	id = foc_khan.1001
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		log = "FOC_KHAN_STARKILLER_AI: committed shot completed."
+
+		if = {
+			limit = { exists = from }
+			from = { save_event_target_as = foc_khan_ai_firing_starkiller_base }
+			system_event = {
+				id = myk_starkiller_dyson.8201
+				scopes = { from = event_target:foc_khan_ai_firing_starkiller_base }
+			}
+		}
+		else = {
+			# If the firing base was destroyed during charging, still invoke the
+			# untouched cleanup event so beam markers cannot remain forever.
+			system_event = { id = myk_starkiller_dyson.8201 }
+		}
+
+		# The first successful crisis Starkiller strike reveals enough telemetry
+		# for ordinary empires to begin triangulating the hidden Ilum system.
+		if = {
+			limit = {
+				NOT = { has_global_flag = foc_khan_starkiller_first_system_destroyed }
+				OR = {
+					has_star_flag = star_cracked
+					star = { is_planet_class = pc_black_hole }
+				}
+			}
+			set_global_flag = foc_khan_starkiller_first_system_destroyed
+			every_playable_country = {
+				country_event = { id = foc_starkiller_coords.1 days = 1 }
+			}
+		}
+
+		set_timed_global_flag = {
+			flag = foc_khan_forced_starkiller_cooldown
+			days = 180
+		}
+		remove_global_flag = foc_khan_forced_starkiller_in_progress
+
+		every_playable_country = {
+			limit = { is_ai = no }
+			country_event = { id = foc_khan.1003 }
+		}
+		system_event = { id = foc_khan.1004 days = 1 }
+	}
+}
+
+country_event = {
+	id = foc_khan.1003
+	title = foc_khan.1003.name
+	desc = foc_khan.1003.desc
+	picture = GFX_foc_khan_starkiller_system_destroyed
+	is_triggered_only = yes
+	option = { name = foc_khan.1003.a }
+}
+
+# Delay target cleanup for one day so the news event can resolve its names.
+system_event = {
+	id = foc_khan.1004
+	hide_window = yes
+	is_triggered_only = yes
+	immediate = {
+		if = { limit = { exists = event_target:foc_khan_forced_starkiller_target_country } clear_global_event_target = foc_khan_forced_starkiller_target_country }
+		if = { limit = { exists = event_target:foc_khan_forced_starkiller_target_capital } clear_global_event_target = foc_khan_forced_starkiller_target_capital }
+		if = { limit = { exists = event_target:foc_khan_forced_starkiller_target_system } clear_global_event_target = foc_khan_forced_starkiller_target_system }
+	}
+}
+
+# End the crisis when the Exegol capital starbase is destroyed or lost.
+country_event = {
+	id = foc_khan.90
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		is_ai = no
+		has_global_flag = foc_khan_phase_two
+		# When the Ben Solo landing easter egg is active, only its actual player
+		# victor may resolve the crisis and receive Exegol.
+		OR = {
+			has_country_flag = foc_ben_solo_exegol_victor
+			NOT = { any_country = { has_country_flag = foc_ben_solo_exegol_victor } }
+		}
+		NOT = {
+			has_global_flag = foc_khan_crisis_finished
+		}
+		foc_khan_final_capital_destroyed = yes
+	
+        # A player successor must never be removed by the ordinary NPC defeat handler.
+        OR = {
+            NOT = { exists = event_target:foc_khan_final_order }
+            event_target:foc_khan_final_order = { is_ai = yes has_country_flag = foc_khan_final_order_country }
+        }
+    }
+
+	immediate = {
+		# FOC 2.80: the country that actually resolves the Final Order defeat
+		# receives the light/dark ending choice.
+		save_global_event_target_as = foc_story_final_order_victor
+		set_country_flag = foc_story_defeated_final_order
+
+		# Ben Solo's sacrifice awards the living Exegol colony and its system
+		# starbase to the player before the Final Order country is deleted.
+		if = {
+			limit = {
+				has_country_flag = foc_ben_solo_exegol_victor
+				exists = event_target:foc_khan_exegol_capital
+			}
+			event_target:foc_khan_exegol_capital = {
+				set_owner = ROOT
+				set_controller = ROOT
+			}
+			if = {
+				limit = { exists = event_target:foc_khan_final_order_system }
+				event_target:foc_khan_final_order_system = {
+					if = {
+						limit = { exists = starbase }
+						starbase = { set_owner = ROOT }
+					}
+				}
+			}
+		}
+
+		set_global_flag = foc_khan_crisis_finished
+		# V85: the current live ending path is foc_khan.90 -> foc_story.20/.23.
+		# Record Exegol victory here so the anchor cannot depend on legacy .91 being called.
+		set_global_flag = foc_canon_exegol_victory_anchor
+		set_global_flag = foc_canon_exegol_battle_completed
+		# "Destroyed" here also covers loss of control through a successful
+		# planetary invasion, permanently stopping all Final Order support.
+		set_global_flag = foc_khan_exegol_destroyed
+		remove_global_flag = foc_khan_final_reinforcements_active
+
+		# All surviving satrapies become independent before the crisis country is
+		# deleted. This prevents agreements from keeping a dead overlord alive.
+		every_playable_country = {
+			if = {
+				limit = {
+					is_subject = yes
+					overlord = { has_country_flag = foc_khan_final_order_country }
+				}
+				set_subject_of = { who = none }
+				remove_country_flag = foc_khan_submitted_final_order
+				remove_country_flag = rebellion_cooldown
+			}
+		}
+
+		# FOC 2.73: replace the generic victory notification with the dedicated
+		# "The Last Jedi" story event, protected against duplicate popups.
+		foc_story_notify_final_order_destroyed = yes
+
+		# The old code only stopped reinforcements and showed the victory event;
+		# the Final Order country, fleets and starbases therefore remained alive.
+		# Destroy the crisis country itself after the notification events are queued.
+		if = {
+			limit = { exists = event_target:foc_khan_final_order }
+			event_target:foc_khan_final_order = { destroy_country = yes }
+		}
+		clear_global_event_target = foc_khan_final_order
+	}
+}
+
+country_event = {
+	id = foc_khan.91
+	title = foc_khan.91.name
+	desc = foc_khan.91.desc
+	picture = GFX_evt_defender_of_the_galaxy
+	location = event_target:foc_khan_final_order_system
+	is_triggered_only = yes
+
+    # V85: this existing victory window IS the Exegol victory event. No duplicate
+    # canonical popup is created; the timestamp is recorded here.
+    immediate = {
+        set_global_flag = foc_canon_exegol_victory_anchor
+        set_global_flag = foc_canon_exegol_battle_completed
+    }
+
+	option = {
+		name = foc_khan.91.a
+	}
+}
+
+# Old-save repair: versions up to 0.90 could set the victory flag without
+# deleting the Final Order country. Remove any such lingering crisis country.
+event = {
+	id = foc_khan.92
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_global_flag = foc_khan_crisis_finished
+		any_country = { has_country_flag = foc_khan_final_order_country }
+	}
+
+	immediate = {
+		every_playable_country = {
+			limit = {
+				is_subject = yes
+				overlord = { has_country_flag = foc_khan_final_order_country }
+			}
+			set_subject_of = { who = none }
+			remove_country_flag = foc_khan_submitted_final_order
+			remove_country_flag = rebellion_cooldown
+		}
+
+		every_country = {
+			limit = { has_country_flag = foc_khan_final_order_country }
+			destroy_country = yes
+		}
+		clear_global_event_target = foc_khan_final_order
+	}
+}
+
+
+# First Order logistics production controller.
+# The crisis country intentionally has normal empire AI disabled, so constructors and
+# assault armies are produced through a bounded event system instead of ordinary AI queues.
+country_event = {
+	id = foc_khan.1100
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_country_flag = foc_khan_first_order_country
+		NOT = { has_global_flag = foc_khan_crisis_finished }
+		NOT = { has_global_flag = foc_khan_starkiller_destroyed }
+		exists = event_target:foc_khan_first_order_system
+		exists = event_target:foc_khan_starkiller_anchor
+	}
+
+	immediate = {
+		# Maintain three construction ships. One replacement is created per monthly check.
+		if = {
+			limit = {
+				count_owned_ship = {
+					count < 3
+					limit = { is_ship_class = shipclass_constructor }
+				}
+			}
+
+			event_target:foc_khan_first_order_system = {
+				create_fleet = {
+					name = "FOC_KHAN_ENGINEERING_FLEET"
+					effect = {
+						set_owner = event_target:foc_khan_first_order
+						create_ship = {
+							name = random
+							random_existing_design = constructor
+							graphical_culture = first_01
+							effect = { set_ship_flag = foc_khan_first_order_constructor }
+						}
+						set_location = {
+							target = event_target:foc_khan_starkiller_anchor
+							distance = 15
+							angle = random
+						}
+						set_fleet_flag = foc_khan_first_order_engineering_fleet
+					}
+				}
+			}
+		}
+
+		
+	}
+}
+
+# 0.71 compatibility stubs for the retired scripted transport controller.
+# Army/transport strategy is now also owned by the vanilla Contingency AI.
+event = { id = foc_khan.1115 hide_window = yes is_triggered_only = yes trigger = { always = no } }
+fleet_event = { id = foc_khan.1120 hide_window = yes is_triggered_only = yes trigger = { always = no } }
+fleet_event = { id = foc_khan.1130 hide_window = yes is_triggered_only = yes trigger = { always = no } }
+
+# Starkiller garrison maintenance remains independent of the awakening storyline.
+event = {
+	id = foc_khan.1205
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_global_flag = foc_khan_phase_one
+		NOT = { has_global_flag = foc_khan_starkiller_destroyed }
+		exists = event_target:foc_khan_first_order
+		exists = event_target:foc_khan_starkiller_anchor
+		event_target:foc_khan_starkiller_anchor = {
+			is_colony = yes
+			owner = { is_same_value = event_target:foc_khan_first_order }
+		}
+		event_target:foc_khan_first_order = { num_armies < 60 }
+	}
+
+	immediate = {
+		event_target:foc_khan_starkiller_anchor = {
+			while = {
+				count = 10
+				create_army = {
+					owner = event_target:foc_khan_first_order
+					species = event_target:foc_khan_first_order_species
+					type = defense_army
+				}
+			}
+		}
+	}
+}
+
+# Awakening gate: the Order had subjugated every ordinary empire at the exact
+# moment Starkiller fell. The snapshot prevents Rebel breakaways from erasing
+# the completed domination condition before the check runs.
+event = {
+	id = foc_khan.1200
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_global_flag = foc_khan_starkiller_destroyed
+		OR = {
+			has_global_flag = foc_khan_order_dominated_galaxy_at_starkiller_fall
+			foc_khan_all_ordinary_empires_subjugated = yes
+		}
+		NOT = { has_global_flag = foc_khan_fallen_empire_counteroffensive_started }
+		OR = {
+			exists = event_target:foc_khan_first_order
+			exists = event_target:foc_khan_final_order
+		}
+		any_country = {
+			OR = {
+				is_country_type = fallen_empire
+				is_country_type = awakened_fallen_empire
+			}
+		}
+	}
+
+	immediate = {
+		set_global_flag = foc_khan_fallen_empire_counteroffensive_started
+
+		# Existing awakened empires immediately join the counteroffensive.
+		every_country = {
+			limit = { is_country_type = awakened_fallen_empire }
+			set_country_flag = foc_khan_awakened_against_order
+		}
+
+		# Run the vanilla awakening event on one dormant Fallen Empire.
+		if = {
+			limit = {
+				any_country = {
+					is_country_type = fallen_empire
+					is_fallen_empire_machine = no
+				}
+			}
+			random_country = {
+				limit = {
+					is_country_type = fallen_empire
+					is_fallen_empire_machine = no
+				}
+				set_country_flag = foc_khan_awakened_against_order
+				country_event = { id = fallen_empires_awakening.1 days = 1 }
+			}
+		}
+		else_if = {
+			limit = {
+				any_country = {
+					is_country_type = fallen_empire
+					is_fallen_empire_machine = yes
+				}
+			}
+			random_country = {
+				limit = {
+					is_country_type = fallen_empire
+					is_fallen_empire_machine = yes
+				}
+				set_country_flag = foc_khan_awakened_against_order
+				country_event = { id = fallen_machine_empire.1 days = 1 }
+			}
+		}
+	}
+}
+
+# Maintain hostility and dispatch all counteroffensive military fleets.
+event = {
+	id = foc_khan.1210
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_global_flag = foc_khan_fallen_empire_counteroffensive_started
+		any_country = { has_country_flag = foc_khan_awakened_against_order }
+	}
+
+	immediate = {
+		every_country = {
+			limit = { has_country_flag = foc_khan_awakened_against_order }
+
+			if = {
+				limit = { exists = event_target:foc_khan_first_order }
+				establish_communications_no_message = event_target:foc_khan_first_order
+				set_faction_hostility = {
+					target = event_target:foc_khan_first_order
+					set_neutral = no
+					set_friendly = no
+					set_hostile = yes
+				}
+				event_target:foc_khan_first_order = {
+					set_faction_hostility = {
+						target = PREV
+						set_neutral = no
+						set_friendly = no
+						set_hostile = yes
+					}
+				}
+			}
+
+			if = {
+				limit = { exists = event_target:foc_khan_final_order }
+				establish_communications_no_message = event_target:foc_khan_final_order
+				set_faction_hostility = {
+					target = event_target:foc_khan_final_order
+					set_neutral = no
+					set_friendly = no
+					set_hostile = yes
+				}
+				event_target:foc_khan_final_order = {
+					set_faction_hostility = {
+						target = PREV
+						set_neutral = no
+						set_friendly = no
+						set_hostile = yes
+					}
+				}
+			}
+
+			every_owned_fleet = {
+				limit = {
+					exists = this
+					any_owned_ship = { is_ship_class = shipclass_military }
+				}
+				if = {
+					limit = { NOT = { has_fleet_flag = foc_khan_fallen_empire_attack_fleet } }
+					set_fleet_flag = foc_khan_fallen_empire_attack_fleet
+					clear_orders = yes
+					clear_fleet_actions = this
+					fleet_event = { id = foc_khan.1220 days = 1 random = 2 }
+				}
+				else_if = {
+					limit = { is_fleet_idle = yes }
+					fleet_event = { id = foc_khan.1220 days = 1 random = 2 }
+				}
+			}
+		}
+	}
+}
+
+# Fallen/Awakened Empire main fleet behavior: hunt only the First/Final Order.
+fleet_event = {
+	id = foc_khan.1220
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		exists = this
+		has_fleet_flag = foc_khan_fallen_empire_attack_fleet
+		owner? = { has_country_flag = foc_khan_awakened_against_order }
+		has_global_flag = foc_khan_fallen_empire_counteroffensive_started
+	}
+
+	immediate = {
+		# 2.20: leave strategic movement to the owning empire's normal military AI.
+		# The old closest_system action could execute without a valid coordinate.
+		set_fleet_stance = aggressive
+		set_aggro_range_measure_from = self
+		set_aggro_range = 9999
+	}
+}
+
+
+
+# Apply the Supremacy-only balance modifier and strip full-function arkship
+# bonuses from ships already present in old saves.
+event = {
+	id = foc_khan.1300
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		exists = event_target:foc_khan_first_order
+		event_target:foc_khan_first_order = {
+			any_owned_ship = {
+				has_ship_flag = foc_khan_supremacy_flagship
+				OR = {
+					NOT = { has_ship_flag = foc_sai_supremacy_arkship }
+					NOT = { has_ship_flag = foc_sai_supremacy_event_spawned_only }
+					NOT = { has_modifier = foc_sai_supremacy_arkship_stats }
+					NOT = { has_modifier = foc_khan_supremacy_heavy_ark_slowdown }
+				}
+			}
+		}
+	}
+
+	immediate = {
+		event_target:foc_khan_first_order = {
+			every_owned_ship = {
+				limit = { has_ship_flag = foc_khan_supremacy_flagship }
+				if = {
+					limit = { NOT = { has_ship_flag = foc_sai_supremacy_arkship } }
+					ship_event = { id = foc_sai_supremacy_arkship.22 days = 1 }
+					set_ship_flag = foc_sai_supremacy_arkship
+				}
+				if = {
+					limit = { NOT = { has_ship_flag = foc_sai_supremacy_event_spawned_only } }
+					set_ship_flag = foc_sai_supremacy_event_spawned_only
+				}
+				if = {
+					limit = { NOT = { has_modifier = foc_sai_supremacy_arkship_stats } }
+					if = { limit = { NOT = { has_global_flag = foc_khan_strength_lowest } } add_modifier = { modifier = foc_sai_supremacy_arkship_stats days = -1 } }
+				}
+				if = {
+					limit = { NOT = { has_modifier = foc_khan_supremacy_heavy_ark_slowdown } }
+					add_modifier = { modifier = foc_khan_supremacy_heavy_ark_slowdown days = -1 }
+				}
+			}
+		}
+	}
+}
+
+
+# 0.93 old-save migration: replace the pre-0.93 crisis Supremacy with the
+# crisis-exclusive fully equipped Tier III design. A country flag makes this
+# strictly one-shot and new games set the flag during initial crisis creation.
+country_event = {
+	id = foc_khan.1301
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_country_flag = foc_khan_first_order_country
+		NOT = { has_country_flag = foc_khan_supremacy_fixed_design_093 }
+		any_owned_ship = {
+			has_ship_flag = foc_khan_supremacy_flagship
+		}
+	}
+
+	immediate = {
+		random_owned_ship = {
+			limit = { has_ship_flag = foc_khan_supremacy_flagship }
+			save_event_target_as = foc_khan_legacy_supremacy
+		}
+
+		create_fleet = {
+			name = "FOC_KHAN_SUPREMACY"
+			settings = { can_change_composition = no }
+			effect = {
+				set_owner = root
+				# V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_2 message = no } } }
+if = { limit = { foc_v14_can_research_empire_arsenal = yes NOT = { has_technology = foc_tech_emp_turbo_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_turbo_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+}
+				
+
+				
+
+				
+
+				create_ship = {
+				    fleet_cache_recalc = yes # v17.18h: update Arkship/hero fleet cache at creation.
+					name = "FOC_KHAN_SUPREMACY"
+					design = "NAME_FOC_KHAN_SUPREMACY_CRISIS"
+					graphical_culture = military_arkship
+					upgradable = no
+
+					effect = {
+                        set_ship_flag = foc_v1718i_arkship_new_spawn
+
+						if = { limit = { NOT = { has_global_flag = foc_khan_strength_lowest } } add_modifier = { modifier = foc_sai_supremacy_arkship_stats days = -1 } }
+						add_modifier = {
+							modifier = foc_khan_supremacy_heavy_ark_slowdown
+							days = -1
+						}
+						ship_event = { id = foc_sai_supremacy_arkship.21 days = 1 }
+						set_ship_flag = foc_khan_supremacy_flagship
+						set_ship_flag = foc_sai_supremacy_arkship
+						set_ship_flag = foc_sai_supremacy_event_spawned_only
+					}
+				}
+
+				set_location = {
+					target = event_target:foc_khan_legacy_supremacy
+					distance = 0
+					angle = 0
+				}
+
+				set_fleet_flag = foc_khan_supremacy_fleet
+				set_aggro_range_measure_from = self
+				set_aggro_range = 500
+			}
+		}
+
+		event_target:foc_khan_legacy_supremacy = {
+			destroy_ship = this
+		}
+
+		set_country_flag = foc_khan_supremacy_fixed_design_093
+	}
+}
+
+
+# Great-Khan-style ruler/portrait repair for old saves.
+# Runs once for the First Order or Final Order country if it was created by an
+# earlier version that only renamed the automatically generated ruler.
+country_event = {
+	id = foc_khan.1400
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			AND = {
+				has_country_flag = foc_khan_first_order_country
+				NOT = { has_country_flag = foc_khan_snoke_ruler_created }
+			}
+			AND = {
+				has_country_flag = foc_khan_final_order_country
+				NOT = { has_country_flag = foc_khan_palpatine_ruler_created }
+			}
+		}
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				has_country_flag = foc_khan_first_order_country
+				NOT = { has_country_flag = foc_khan_snoke_ruler_created }
+			}
+			create_leader = {
+				class = commander
+				species = owner_main_species
+				name = "Supreme Leader Snoke"
+				gender = male
+				skill = 10
+				leader_age_min = 50
+				leader_age_max = 80
+				event_leader = yes
+				skip_background_generation = yes
+				randomize_traits = no
+				effect = {
+					change_leader_portrait = snoke_male_01
+					set_leader_flag = foc_khan_snoke_ruler
+					save_global_event_target_as = foc_khan_snoke_ruler
+				}
+			}
+			assign_leader = last_created_leader
+			set_country_flag = foc_khan_snoke_ruler_created
+		}
+
+		if = {
+			limit = {
+				has_country_flag = foc_khan_final_order_country
+				NOT = { has_country_flag = foc_khan_palpatine_ruler_created }
+			}
+			create_leader = {
+			    tier = leader_tier_legendary
+				class = commander
+				species = owner_main_species
+				name = "Emperor Palpatine"
+				gender = male
+				skill = 10
+				leader_age_min = 70
+				leader_age_max = 100
+				event_leader = yes
+				skip_background_generation = yes
+				randomize_traits = no
+				effect = {
+					change_leader_portrait = fopalpatine_male_01
+					set_leader_flag = foc_khan_palpatine_ruler
+					save_global_event_target_as = foc_khan_palpatine_ruler
+				}
+			}
+			assign_leader = last_created_leader
+			set_country_flag = foc_khan_palpatine_ruler_created
+		}
+	}
+}
+
+
+# Supremacy true-death handler.
+# The external player Arkship design is implemented as a disableable mobile
+# starbase. Ordinary weapon damage therefore stops at 1 hull and invokes
+# on_ship_disabled instead of on_ship_destroyed. The crisis Supremacy must not
+# use the recoverable player-arkship lifecycle, so destroy it immediately.
+ship_event = {
+	id = foc_khan.1500
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_ship_flag = foc_khan_supremacy_flagship
+	}
+
+	immediate = {
+		log = "FOC_KHAN_SUPREMACY: flagship disabled; converting disable state into real destruction."
+		set_global_flag = foc_khan_supremacy_destroyed_in_combat
+		foc_story_notify_supremacy_destroyed = yes
+		destroy_ship = this
+	}
+}
+
+# Old-save fallback for a Supremacy that was already sitting at 1 hull and
+# disabled before version 0.49 was installed.
+country_event = {
+	id = foc_khan.1501
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_country_flag = foc_khan_first_order_country
+		any_owned_ship = {
+			has_ship_flag = foc_khan_supremacy_flagship
+			is_disabled = yes
+		}
+	}
+
+	immediate = {
+		random_owned_ship = {
+			limit = {
+				has_ship_flag = foc_khan_supremacy_flagship
+				is_disabled = yes
+			}
+			log = "FOC_KHAN_SUPREMACY: removing a disabled 1-hull flagship from an old save."
+			set_global_flag = foc_khan_supremacy_destroyed_in_combat
+			foc_story_notify_supremacy_destroyed = yes
+			destroy_ship = this
+		}
+	}
+}
+
+
+# 3.11w: player Supremacy true-death handler.
+# The Supremacy arkship is a disableable mobile starbase, so ordinary weapon
+# damage stops it at 1 hull and fires on_ship_disabled instead of destroying
+# it -- leaving the player's flagship permanently recoverable. The crisis
+# Supremacy already converts that state into a real death via foc_khan.1500;
+# this does the same for the player's Supremacy so both sides play by the same
+# rule. Identified by ship size, so the ordinary Nomads arkship is untouched.
+ship_event = {
+	id = foc_khan.1502
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_ship_flag = foc_khan_supremacy_flagship }
+		OR = {
+			is_ship_size = sai_supremacy_arkship_tier_1
+			is_ship_size = sai_supremacy_arkship_tier_2
+			OR = { is_ship_size = sai_supremacy_arkship_tier_3 is_ship_size = sai_supremacy_arkship_tier_3_foc_lowest }
+		}
+	}
+
+	immediate = {
+		log = "FOC_3.11W: player Supremacy arkship disabled at 1 hull; converting the disable state into real destruction."
+		destroy_ship = this
+	}
+}
+
+
+# Immediate permanent stop for Final Order support when Exegol is destroyed.
+# Scope = Exegol planet from on_planet_class_changed.
+planet_event = {
+	id = foc_khan.82
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_planet_flag = foc_khan_exegol_capital
+		NOT = { has_global_flag = foc_khan_exegol_destroyed }
+		OR = {
+			is_planet_class = pc_shattered
+			is_planet_class = pc_shattered_2
+			is_planet_class = pc_broken
+			is_planet_class = pc_black_hole
+		}
+	}
+
+	immediate = {
+		set_global_flag = foc_khan_exegol_destroyed
+		clear_global_event_target = foc_khan_exegol_capital
+		clear_global_event_target = foc_khan_final_order_system
+		log = "FOC_KHAN_SUPPORT: Exegol destroyed. Final Order support permanently stopped."
+	}
+}
+
+# Old-save/global fallback. If Exegol vanished before the class-change hook fired,
+# mark it destroyed and permanently stop support.
+
+
+
+# Compatibility stub. Order fleets receive their legal bombardment stance
+# directly from foc_khan_bombfix.3 and the idle-fleet bombardment dispatcher.
+country_event = {
+	id = foc_khan.1700
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			has_country_flag = foc_khan_first_order_country
+			has_country_flag = foc_khan_final_order_country
+		}
+		NOT = { has_country_flag = foc_khan_bombardment_policy_071_checked }
+	}
+
+	immediate = {
+		set_country_flag = foc_khan_bombardment_policy_071_checked
+	}
+}
+
+# One-time AI reset retained for save compatibility. The dedicated Order country
+# type uses machine minister modules, while the MOD's monthly scripted dispatcher
+# handles idle military and transport fleets without using vanilla ai_empire.
+event = {
+	id = foc_khan.33
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_global_flag = foc_khan_full_contingency_ai_071 }
+		OR = {
+			has_global_flag = foc_khan_phase_one
+			has_global_flag = foc_khan_phase_two
+		}
+	}
+
+	immediate = {
+		set_global_flag = foc_khan_full_contingency_ai_071
+		set_global_flag = foc_khan_contingency_ai_066_active
+
+		every_country = {
+			limit = {
+				OR = {
+					has_country_flag = foc_khan_first_order_country
+					has_country_flag = foc_khan_final_order_country
+				}
+			}
+
+
+			every_owned_fleet = {
+				limit = {
+					OR = {
+						has_fleet_flag = foc_khan_first_order_attack_fleet
+						has_fleet_flag = foc_khan_final_order_attack_fleet
+						has_fleet_flag = foc_khan_first_order_guard_fleet
+						has_fleet_flag = foc_khan_final_order_guard_fleet
+						has_fleet_flag = foc_khan_supremacy_fleet
+						has_fleet_flag = foc_khan_first_order_invasion_force
+						has_fleet_flag = foc_khan_final_order_invasion_force
+						has_fleet_flag = foc_khan_first_order_engineering_fleet
+						has_fleet_flag = foc_khan_final_order_engineering_fleet
+					}
+				}
+				remove_fleet_flag = foc_khan_raid_order_active
+				remove_fleet_flag = foc_khan_forced_bombardment_active
+				remove_auto_move_target = yes
+				clear_orders = yes
+				clear_fleet_actions = this
+			}
+		}
+
+		log = "FOC_KHAN_AI_118: dedicated Order AI initialized without vanilla ai_empire."
+	}
+}
+
+# 1.02 migration: remove target markers left permanently by the brief 1.01 build.
+# Wait until no current Starkiller firing sequence is active so an in-progress shot
+# loaded from a 1.01 save keeps its target animation until normal completion.
+event = {
+	id = foc_khan.38
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_global_flag = foc_khan_102_scar_migration_done }
+		NOT = { exists = event_target:myk_starkiller_target_system }
+		NOT = { has_global_flag = foc_khan_forced_starkiller_in_progress }
+	}
+
+	immediate = {
+		every_country = {
+			every_owned_megastructure = {
+				limit = { has_megastructure_flag = myk_starkiller_persistent_target_scar }
+				remove_megastructure = this
+			}
+		}
+		set_global_flag = foc_khan_102_scar_migration_done
+	}
+}
+
+# 3.11w-v3: link the Supremacy escort to the flagship once both fleets exist.
+# Doing this two days after creation avoids referencing a half-built fleet,
+# which is why the earlier in-line auto_follow_fleet never took effect.
+country_event = {
+	id = foc_khan.4701
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		if = {
+			limit = {
+				any_owned_fleet = { has_fleet_flag = foc_khan_supremacy_fleet }
+				any_owned_fleet = { has_fleet_flag = foc_khan_supremacy_escort_fleet }
+			}
+			random_owned_fleet = {
+				limit = { has_fleet_flag = foc_khan_supremacy_fleet }
+				save_event_target_as = foc_khan_supremacy_fleet_link
+			}
+			every_owned_fleet = {
+				limit = { has_fleet_flag = foc_khan_supremacy_escort_fleet }
+				auto_follow_fleet = { target = event_target:foc_khan_supremacy_fleet_link attack_fleet = no }
+				log = "FOC_3.11W: Supremacy escort fleet linked and now following the flagship."
+			}
+		}
+		else = {
+			log = "FOC_3.11W: Supremacy escort link FAILED - flagship or escort fleet is missing."
+		}
+	}
+}

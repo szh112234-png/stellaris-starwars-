@@ -1,0 +1,340 @@
+# V79 - actual game effects for canonical story windows
+
+foc_canon_create_ahsoka = {
+    if = {
+        limit = { NOT = { exists = event_target:foc_canon_ahsoka } NOT = { any_owned_leader = { has_leader_flag = foc_canon_ahsoka_leader } } }
+        create_leader = {
+            tier = leader_tier_legendary
+            class = commander
+            species = owner_main_species
+            name = "FOC_CANON_AHSOKA_NAME"
+            gender = female
+            skill = 6
+            event_leader = yes
+            skip_background_generation = yes
+            randomize_traits = no
+            effect = {
+                change_leader_portrait = foc_saga_ahsoka_01
+                set_leader_flag = foc_canon_ahsoka_leader
+                add_trait = { trait = leader_trait_foc_force_sensitive consume_selection = no }
+                add_trait = { trait = leader_trait_psionic consume_selection = no }
+                save_global_event_target_as = foc_canon_ahsoka
+            }
+        }
+    }
+}
+
+foc_canon_remove_ahsoka = {
+    every_owned_leader = {
+        limit = { has_leader_flag = foc_canon_ahsoka_leader }
+        kill_leader = { show_notification = no }
+    }
+    if = {
+        limit = { exists = event_target:foc_canon_ahsoka }
+        clear_global_event_target = foc_canon_ahsoka
+    }
+}
+
+foc_canon_return_obiwan = {
+    if = {
+        limit = { NOT = { exists = event_target:foc_canon_obiwan_returned } NOT = { any_owned_leader = { has_leader_flag = foc_canon_obiwan_returned_leader } } }
+        create_leader = {
+            tier = leader_tier_legendary
+            class = commander
+            species = owner_main_species
+            name = "FOC_REPUBLIC_ORIGIN_KENOBI_NAME"
+            skill = 9
+            event_leader = yes
+            skip_background_generation = yes
+            effect = {
+                change_leader_portrait = foc_obiwan_male_01
+                set_leader_flag = foc_canon_obiwan_returned_leader
+                add_trait = { trait = leader_trait_foc_force_sensitive consume_selection = no }
+                add_trait = { trait = leader_trait_psionic consume_selection = no }
+                save_global_event_target_as = foc_canon_obiwan_returned
+            }
+        }
+    }
+    remove_country_flag = foc_canon_obiwan_in_hiding
+    set_country_flag = foc_canon_obiwan_active
+}
+
+foc_canon_kill_obiwan = {
+    remove_modifier = foc_republic_origin_jedi_survivor
+    every_owned_leader = {
+        limit = { has_leader_flag = foc_canon_obiwan_returned_leader }
+        kill_leader = { show_notification = no }
+    }
+    remove_country_flag = foc_canon_obiwan_active
+    set_country_flag = foc_canon_obiwan_dead
+    if = { limit = { exists = event_target:foc_canon_obiwan_returned } clear_global_event_target = foc_canon_obiwan_returned }
+    set_global_flag = foc_canon_obiwan_dead
+}
+
+foc_canon_ensure_han = {
+    if = {
+        limit = { NOT = { exists = event_target:foc_canon_han_solo } NOT = { any_owned_leader = { has_leader_flag = foc_canon_han_solo_leader } } }
+        create_leader = {
+            tier = leader_tier_legendary
+            class = commander
+            species = owner_main_species
+            name = "FOC_CANON_HAN_SOLO_NAME"
+            gender = male
+            skill = 7
+            event_leader = yes
+            skip_background_generation = yes
+            randomize_traits = no
+            effect = {
+                change_leader_portrait = foc_saga_han_solo_01
+                set_leader_flag = foc_canon_han_solo_leader
+                save_global_event_target_as = foc_canon_han_solo
+            }
+        }
+    }
+}
+
+foc_canon_mandalore_shadow_collective = {
+    if = {
+        limit = { exists = event_target:foc_swmap_mandalore_system }
+        event_target:foc_swmap_mandalore_system = {
+            every_system_planet = {
+                limit = { has_planet_flag = foc_swmap_mandalore }
+                add_modifier = { modifier = foc_canon_shadow_collective days = 1800 }
+                set_planet_flag = foc_canon_shadow_collective_rule
+            }
+        }
+    }
+}
+
+foc_canon_mandalore_purge = {
+    if = {
+        limit = { exists = event_target:foc_swmap_mandalore_system }
+        event_target:foc_swmap_mandalore_system = {
+            every_system_planet = {
+                limit = { has_planet_flag = foc_swmap_mandalore NOT = { is_planet_class = pc_nuked } }
+                remove_modifier = foc_lore_mandalore_beskar_warrior_clans
+                remove_modifier = foc_canon_shadow_collective
+                change_pc = pc_nuked
+                set_planet_flag = foc_canon_mandalore_glassed
+            }
+        }
+    }
+    set_global_flag = foc_canon_mandalore_glassed
+}
+
+foc_canon_mandalore_rebuild = {
+    if = {
+        limit = { exists = event_target:foc_swmap_mandalore_system }
+        event_target:foc_swmap_mandalore_system = {
+            every_system_planet = {
+                limit = { has_planet_flag = foc_swmap_mandalore }
+                add_modifier = { modifier = foc_canon_mandalore_reborn days = -1 }
+                set_planet_flag = foc_canon_mandalore_reclaimed
+            }
+        }
+    }
+}
+
+foc_canon_tanalorr_refuge_effect = {
+    if = {
+        limit = { exists = event_target:foc_swmap_tanalorr_system }
+        event_target:foc_swmap_tanalorr_system = {
+            every_system_planet = {
+                limit = { has_planet_flag = foc_swmap_tanalorr }
+                add_modifier = { modifier = foc_canon_tanalorr_refuge days = -1 }
+                set_planet_flag = foc_canon_hidden_path_refuge
+            }
+        }
+    }
+}
+
+foc_canon_aldhani_raid_effect = {
+    every_country = {
+        limit = { has_country_flag = foc_republic_origin_empire_country }
+        add_resource = { energy = -15000 unity = -5000 }
+        add_modifier = { modifier = foc_canon_aldhani_crackdown days = 1080 }
+    }
+    every_country = {
+        limit = { OR = { has_country_flag = foc_republic_origin_imperial_rebel_country has_country_flag = foc_republic_origin_rebel_alliance_country has_country_flag = foc_khan_rebel_alliance_country } }
+        add_resource = { energy = 15000 unity = 5000 }
+    }
+}
+
+foc_canon_operation_cinder_effect = {
+    every_country = {
+        limit = { OR = { has_country_flag = foc_republic_origin_empire_country has_country_flag = foc_sw_imperial_remnant_country } }
+        add_modifier = { modifier = foc_canon_operation_cinder days = 1440 }
+        add_resource = { unity = -10000 }
+    }
+}
+
+foc_canon_sith_seed_effect = {
+    set_global_flag = foc_canon_final_order_construction_started
+    every_country = {
+        limit = { has_country_flag = foc_sw_imperial_remnant_country }
+        add_modifier = { modifier = foc_canon_sith_eternal_seed days = 3600 }
+    }
+}
+
+foc_canon_starkiller_construction_effect = {
+    set_global_flag = foc_canon_starkiller_construction_started
+    if = {
+        limit = { has_origin = origin_fop_first_order }
+        # Opening First Order project: reward and burden apply only to the player.
+        # Do not alter the New Republic or Imperial Remnant Fallen Empires.
+        add_modifier = { modifier = foc_canon_starkiller_industry days = 3600 }
+        add_resource = { alloys = 25000 engineering_research = 5000 }
+        add_modifier = { modifier = fop_origin_starkiller_project_burden days = -1 }
+    }
+    else = {
+        every_country = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_sw_imperial_remnant_country
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = foc_republic_origin_became_first_order
+                }
+            }
+            add_modifier = { modifier = foc_canon_starkiller_industry days = 3600 }
+            add_resource = { alloys = 25000 engineering_research = 5000 }
+        }
+    }
+}
+
+foc_canon_people_fleet_effect = {
+    set_global_flag = foc_canon_people_fleet_arrived
+    every_country = {
+        limit = { OR = { has_country_flag = foc_khan_rebel_alliance_country has_country_flag = foc_khan_first_order_resistance_country has_country_flag = foc_sw_new_republic_country } }
+        add_modifier = { modifier = foc_canon_people_fleet days = 720 }
+        add_resource = { alloys = 50000 unity = 50000 }
+    }
+}
+
+
+foc_canon_destroy_kamino_cloning_centers = {
+    if = {
+        limit = { exists = event_target:foc_swmap_kamino_system }
+        event_target:foc_swmap_kamino_system = {
+            every_system_planet = {
+                limit = { has_planet_flag = foc_swmap_kamino }
+                remove_modifier = foc_lore_kamino_cloning_centers
+                add_modifier = { modifier = foc_canon_kamino_bombarded days = -1 }
+                set_planet_flag = foc_canon_kamino_cloning_destroyed
+            }
+        }
+    }
+    set_global_flag = foc_canon_kamino_cloning_destroyed
+}
+
+# Country scope: Yoda emerges from exile on Dagobah for Luke's training.
+foc_canon_return_yoda = {
+    if = {
+        limit = { NOT = { exists = event_target:foc_canon_yoda_returned } NOT = { any_owned_leader = { has_leader_flag = foc_canon_yoda_returned_leader } } }
+        create_leader = {
+            tier = leader_tier_legendary
+            class = commander
+            species = owner_main_species
+            name = "FOC_REPUBLIC_ORIGIN_YODA_NAME"
+            skill = 10
+            event_leader = yes
+            skip_background_generation = yes
+            randomize_traits = no
+            effect = {
+                change_leader_portrait = foc_saga_yoda_01
+                set_leader_flag = foc_canon_yoda_returned_leader
+                add_trait = { trait = leader_trait_foc_force_sensitive consume_selection = no }
+                add_trait = { trait = leader_trait_psionic consume_selection = no }
+                save_global_event_target_as = foc_canon_yoda_returned
+            }
+        }
+    }
+    set_global_flag = foc_canon_yoda_on_dagobah
+}
+
+# Country scope: Yoda's natural death after Luke's later return.
+foc_canon_kill_yoda = {
+    every_owned_leader = {
+        limit = { has_leader_flag = foc_canon_yoda_returned_leader }
+        kill_leader = { show_notification = no }
+    }
+    clear_global_event_target = foc_canon_yoda_returned
+    set_global_flag = foc_canon_yoda_dead
+}
+
+
+
+# Country scope: Cal Kestis becomes an active Hidden Path/Jedi survivor leader.
+foc_canon_create_cal_kestis = {
+    if = {
+        limit = {
+            NOT = { exists = event_target:foc_canon_cal_kestis }
+            NOT = { any_owned_leader = { has_leader_flag = foc_canon_cal_kestis_leader } }
+        }
+        create_leader = {
+            tier = leader_tier_legendary
+            class = commander
+            species = owner_main_species
+            name = "FOC_CANON_CAL_KESTIS_NAME"
+            gender = male
+            skill = 6
+            event_leader = yes
+            skip_background_generation = yes
+            randomize_traits = no
+            effect = {
+                change_leader_portrait = foc_saga_cal_kestis_01
+                set_leader_flag = foc_canon_cal_kestis_leader
+                save_global_event_target_as = foc_canon_cal_kestis
+            }
+        }
+    }
+}
+
+# Tanalorr: Cal survives into the Hidden Path era and gains experience.
+foc_canon_advance_cal_kestis = {
+    every_owned_leader = {
+        limit = { has_leader_flag = foc_canon_cal_kestis_leader }
+        add_experience = 1500
+    }
+}
+
+# V85: first completed battle of each historical phase. These are parallel anchors;
+# they never replace the existing era anchors (Clone War, Order 66, Treaty, Phase I...).
+foc_canon_mark_clone_war_first_battle = {
+    if = {
+        limit = { NOT = { has_country_flag = foc_canon_clone_war_first_battle_anchor } }
+        set_country_flag = foc_canon_clone_war_first_battle_anchor
+        set_global_flag = foc_canon_clone_war_first_battle_recorded
+        # Generic Clone-War narrative beats now count from the first completed battle.
+        set_timed_country_flag = { flag = foc_canon_wait_mortis days = 360 }
+        set_timed_country_flag = { flag = foc_canon_wait_tup_inquisitors days = 720 }
+        set_timed_country_flag = { flag = foc_canon_wait_ahsoka_leaves days = 900 }
+        set_timed_country_flag = { flag = foc_canon_wait_yoda_ghost days = 1080 }
+    }
+}
+
+foc_canon_mark_galactic_civil_war_first_battle = {
+    if = {
+        limit = { NOT = { has_country_flag = foc_canon_gcw_first_battle_anchor } }
+        set_country_flag = foc_canon_gcw_first_battle_anchor
+        set_global_flag = foc_canon_gcw_first_battle_recorded
+        # Malachor is narrative-only in V85 and is timed from the phase's earliest battle.
+        set_timed_country_flag = { flag = foc_canon_wait_malachor_story days = 1080 }
+    }
+}
+
+foc_canon_mark_first_order_war_first_battle = {
+    if = {
+        limit = { NOT = { has_country_flag = foc_canon_fo_first_battle_anchor } }
+        set_country_flag = foc_canon_fo_first_battle_anchor
+        set_global_flag = foc_canon_fo_first_battle_recorded
+    }
+}
+
+foc_canon_mark_final_order_first_battle = {
+    if = {
+        limit = { NOT = { has_country_flag = foc_canon_final_order_first_battle_anchor } }
+        set_country_flag = foc_canon_final_order_first_battle_anchor
+        set_global_flag = foc_canon_final_order_first_battle_recorded
+    }
+}
+

@@ -1,0 +1,29 @@
+#####################
+# Edicts
+#####################
+
+sws_cis_01_addon = {
+	length = -1
+	icon = "GFX_edict_type_policy"
+
+	resources = {
+		category = campaigns
+		cost = { influence = 0 }
+	}
+
+	effect = {
+		set_country_flag = cis_ships_addon_edict_enabled
+		give_technology = { tech = tech_sws_cis_01_addon_sections }
+	}
+
+	potential = {
+		graphical_culture = "cis_01"
+		is_ai = no
+		NOT = {
+			has_technology = tech_sws_cis_01_addon_sections
+		}
+	}
+	allow = {
+		is_ai = no
+	}
+}

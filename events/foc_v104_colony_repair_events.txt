@@ -1,0 +1,116 @@
+namespace = foc_v104
+
+# V104 one-time old-save repair for the later-added fixed story worlds.
+# New games already receive foc_sw_nr_colony / foc_sw_ir_colony in the initializer;
+# this pass exists so V103-era saves do not need to be restarted.
+country_event = {
+    id = foc_v104.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        NOT = { has_country_flag = foc_v104_story_colonies_repaired }
+        OR = {
+            has_country_flag = foc_sw_new_republic_country
+            has_country_flag = foc_sw_imperial_remnant_country
+            has_country_flag = foc_republic_origin_republic_country
+            has_country_flag = foc_republic_origin_empire_country
+            has_country_flag = foc_republic_origin_separatist_country
+            has_country_flag = foc_republic_origin_imperial_rebel_country
+            has_country_flag = foc_khan_rebel_alliance_country
+            has_country_flag = foc_khan_first_order_country
+            has_country_flag = foc_khan_final_order_country
+        }
+        any_system = {
+            exists = starbase
+            starbase = { owner = { is_same_value = root } }
+            any_system_planet = {
+                is_colony = no
+                NOT = { foc_jedha_is_destroyed_planet = yes }
+                OR = {
+                    has_planet_flag = foc_swmap_utapau
+                    has_planet_flag = foc_swmap_christophsis
+                    has_planet_flag = foc_swmap_jedha
+                    has_planet_flag = foc_swmap_malachor
+                    has_planet_flag = foc_swmap_bracca
+                    has_planet_flag = foc_swmap_tanalorr
+                    has_planet_flag = foc_swmap_aldhani
+                    has_planet_flag = foc_swmap_ossus
+                    has_planet_flag = foc_swmap_ahchto
+                    has_planet_flag = foc_swmap_dagobah
+                    has_planet_flag = foc_swmap_aldoleem
+                }
+            }
+        }
+    }
+
+    immediate = {
+        every_system = {
+            limit = {
+                exists = starbase
+                starbase = { owner = { is_same_value = root } }
+            }
+            every_system_planet = {
+                limit = {
+                    is_colony = no
+                    NOT = { foc_jedha_is_destroyed_planet = yes }
+                    OR = {
+                        has_planet_flag = foc_swmap_utapau
+                        has_planet_flag = foc_swmap_christophsis
+                        has_planet_flag = foc_swmap_jedha
+                        has_planet_flag = foc_swmap_malachor
+                        has_planet_flag = foc_swmap_bracca
+                        has_planet_flag = foc_swmap_tanalorr
+                        has_planet_flag = foc_swmap_aldhani
+                        has_planet_flag = foc_swmap_ossus
+                        has_planet_flag = foc_swmap_ahchto
+                        has_planet_flag = foc_swmap_dagobah
+                        has_planet_flag = foc_swmap_aldoleem
+                    }
+                }
+
+                if = {
+                    limit = {
+                        OR = {
+                            has_planet_flag = foc_swmap_bracca
+                            has_planet_flag = foc_swmap_tanalorr
+                            has_planet_flag = foc_swmap_aldhani
+                            has_planet_flag = foc_swmap_ossus
+                            has_planet_flag = foc_swmap_ahchto
+                            has_planet_flag = foc_swmap_dagobah
+                        }
+                    }
+                    set_planet_flag = foc_sw_nr_colony
+                }
+                else = { set_planet_flag = foc_sw_ir_colony }
+
+                create_colony = { owner = root }
+                generate_start_deposits_and_blockers = yes
+                clear_blockers = yes
+                colony = {
+                    inline_script = "foc_v232i_safe_colony_layout"
+                    generate_start_pops = yes
+                }
+
+                if = {
+                    limit = { root = { has_country_flag = foc_republic_origin_republic_country } }
+                    set_planet_flag = foc_republic_origin_member_world
+                    foc_republic_origin_install_member_world_nexus = yes
+                }
+                else_if = {
+                    limit = {
+                        root = {
+                            OR = {
+                                has_country_flag = foc_sw_new_republic_country
+                                has_country_flag = foc_sw_imperial_remnant_country
+                            }
+                        }
+                    }
+                    foc_sw_apply_fallen_empire_buildings = yes
+                }
+                foc_sw_restore_canonical_colony_name = yes
+            }
+        }
+        set_country_flag = foc_v104_story_colonies_repaired
+    }
+}

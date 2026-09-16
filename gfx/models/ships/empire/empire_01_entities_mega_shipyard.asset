@@ -1,0 +1,78 @@
+##########
+# Mega Shipyard
+##########
+
+##########
+# SPECIAL
+##########
+
+entity = {
+	name = "empire_shipyard_L2_shield_entity"
+	pdxmesh = "empire_shipyard_L2_shield_mesh"
+	
+	game_data = {
+		uv_animation_speed   = -0.05
+		uv_animation_direction  = { 0.0 1.0 }
+	}
+}
+
+entity = {
+	name = "empire_shipyard_L3_shield_entity"
+	pdxmesh = "empire_shipyard_L3_shield_mesh"
+	
+	game_data = {
+		uv_animation_speed   = -0.05
+		uv_animation_direction  = { 0.0 1.0 }
+	}
+}
+
+##########
+# Phase I
+##########
+
+entity = {
+	name = "empire_01_mega_shipyard_01_stage_1_entity"
+	pdxmesh = "empire_shipyard_L1_mesh"
+	scale = 2.0
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_outpost_station_idle" } }
+	}
+}
+
+##########
+# Phase II
+##########
+
+entity = {
+	name = "empire_01_mega_shipyard_01_stage_2_entity"
+	pdxmesh = "empire_shipyard_L2_mesh"
+	scale = 2.0
+
+	locator = { name = "root" rotation = { 0 0 0 } position = { 0 0 0 } }
+	attach = { root = "empire_shipyard_L2_shield_entity" }
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_outpost_station_idle" } }
+	}
+}
+
+##########
+# Phase III
+##########
+
+entity = {
+	name = "empire_01_mega_shipyard_01_stage_3_entity"
+	pdxmesh = "empire_shipyard_L3_mesh"
+	scale = 2.0
+
+	locator = { name = "root" rotation = { 0 0 0 } position = { 0 0 0 } }
+	attach = { root = "empire_shipyard_L3_shield_entity" }
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_outpost_station_idle" } }
+	}
+}

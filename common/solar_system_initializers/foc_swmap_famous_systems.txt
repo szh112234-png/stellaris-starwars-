@@ -1,0 +1,712 @@
+# Famous Star Wars systems used by FOC's external region.
+# All identifiers are local to FOC. No Star Wars map mod definitions are required.
+
+foc_swmap_corellia_system = {
+    name = "Corellia"
+    class = "sc_g"
+    usage = misc_system_init
+    flags = { foc_swmap_corellia_home foc_sw_new_republic_cluster }
+    max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_corellia_system }
+
+    planet = { name = "Corell" class = "pc_g_star" orbit_distance = 0 orbit_angle = 1 size = 24 }
+    planet = {
+        name = "Corellia"
+        class = "pc_continental"
+        orbit_distance = 70
+        orbit_angle = 35
+        size = 25
+        flags = { foc_sw_nr_colony foc_swmap_corellia }
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_lore_corellia_massive_shipyards days = -1 }
+        }
+    }
+    planet = { name = "Drall" class = "pc_continental" orbit_distance = 28 orbit_angle = 90 size = 18 init_effect = { prevent_anomaly = yes } }
+    planet = {
+        name = "Talus"
+        class = "pc_continental"
+        orbit_distance = 26
+        orbit_angle = 145
+        size = 19
+        init_effect = { prevent_anomaly = yes }
+        moon = { name = "Tralus" class = "pc_barren" orbit_distance = 10 orbit_angle = 70 size = 7 init_effect = { prevent_anomaly = yes } }
+    }
+    planet = { name = "Selonia" class = "pc_ocean" orbit_distance = 28 orbit_angle = 205 size = 20 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Crollia" class = "pc_barren" orbit_distance = 32 orbit_angle = 265 size = 13 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Soronia" class = "pc_frozen" orbit_distance = 34 orbit_angle = 320 size = 15 init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_naboo_system = {
+    name = "Naboo"
+    class = "sc_k"
+    usage = misc_system_init
+    flags = { foc_swmap_naboo_home foc_sw_new_republic_cluster }
+    max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_naboo_system }
+
+    planet = { name = "Naboo" class = "pc_k_star" orbit_distance = 0 orbit_angle = 1 size = 23 }
+    planet = { name = "Moth" class = "pc_barren" orbit_distance = 38 orbit_angle = 25 size = 10 init_effect = { prevent_anomaly = yes } }
+    planet = {
+        name = "Erep"
+        class = "pc_barren"
+        orbit_distance = 26
+        orbit_angle = 80
+        size = 11
+        init_effect = { prevent_anomaly = yes }
+        moon = { name = "Ere" class = "pc_barren" orbit_distance = 8 orbit_angle = 120 size = 5 init_effect = { prevent_anomaly = yes } }
+    }
+    planet = {
+        name = "Naboo"
+        class = "pc_continental"
+        orbit_distance = 34
+        orbit_angle = 135
+        size = 25
+        flags = { foc_sw_nr_colony foc_swmap_naboo }
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_lore_naboo_harmonious_civilization days = -1 }
+        }
+        moon = { name = "Ohma-D'un" class = "pc_ocean" orbit_distance = 11 orbit_angle = 40 size = 9 init_effect = { prevent_anomaly = yes } }
+        moon = { name = "Rori" class = "pc_continental" orbit_distance = 10 orbit_angle = 165 size = 8 init_effect = { prevent_anomaly = yes } }
+        moon = { name = "NAME_FOC_V133_LOC_NABOO_III" class = "pc_barren" orbit_distance = 9 orbit_angle = 280 size = 5 init_effect = { prevent_anomaly = yes } }
+    }
+    planet = { name = "Widow" class = "pc_barren_cold" orbit_distance = 34 orbit_angle = 210 size = 12 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Storm" class = "pc_gas_giant" orbit_distance = 42 orbit_angle = 270 size = 28 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Behpour" class = "pc_toxic" orbit_distance = 42 orbit_angle = 330 size = 17 init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_kashyyyk_system = {
+    name = "Kashyyyk"
+    class = "sc_g"
+    usage = misc_system_init
+    flags = { foc_swmap_kashyyyk_home foc_sw_new_republic_cluster }
+    max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_kashyyyk_system }
+
+    planet = { name = "Kashyyyk" class = "pc_g_star" orbit_distance = 0 orbit_angle = 1 size = 24 }
+    planet = { name = "Taakarroo" class = "pc_barren" orbit_distance = 38 orbit_angle = 30 size = 12 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Kallalarra" class = "pc_toxic" orbit_distance = 28 orbit_angle = 75 size = 15 init_effect = { prevent_anomaly = yes } }
+    planet = {
+        name = "Kashyyyk"
+        class = "pc_tropical"
+        orbit_distance = 34
+        orbit_angle = 125
+        size = 27
+        flags = { foc_sw_nr_colony foc_swmap_kashyyyk }
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_lore_kashyyyk_wroshyr_world days = -1 }
+        }
+        moon = { name = "Orga" class = "pc_tropical" orbit_distance = 11 orbit_angle = 40 size = 8 init_effect = { prevent_anomaly = yes } }
+        moon = { name = "Chyntuck" class = "pc_savannah" orbit_distance = 10 orbit_angle = 175 size = 7 init_effect = { prevent_anomaly = yes } }
+        moon = { name = "Kthysh" class = "pc_toxic" orbit_distance = 10 orbit_angle = 290 size = 6 init_effect = { prevent_anomaly = yes } }
+    }
+    planet = {
+        name = "Trandosha"
+        class = "pc_arid"
+        orbit_distance = 38
+        orbit_angle = 200
+        size = 21
+        init_effect = { prevent_anomaly = yes }
+        moon = { name = "Wasskah" class = "pc_tropical" orbit_distance = 11 orbit_angle = 80 size = 8 init_effect = { prevent_anomaly = yes } }
+    }
+    planet = { name = "Alaris" class = "pc_gas_giant" orbit_distance = 44 orbit_angle = 270 size = 30 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Shurr" class = "pc_gas_giant" orbit_distance = 46 orbit_angle = 330 size = 27 init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_mon_cala_system = {
+    name = "NAME_FOC_V132_MON_CALAMARI"
+    class = "sc_binary_10"
+    usage = misc_system_init
+    flags = { foc_swmap_mon_cala_home foc_sw_new_republic_cluster }
+    max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_mon_cala_system }
+
+    planet = { name = "NAME_FOC_V133_LOC_DACA_I" class = "pc_f_star" orbit_distance = 0 orbit_angle = 0 size = 22 }
+    planet = { name = "NAME_FOC_V133_LOC_DACA_II" class = "pc_f_star" orbit_distance = 12 orbit_angle = 180 size = 19 }
+    planet = { name = "NAME_FOC_V133_LOC_MOL_LUXU" class = "pc_barren" orbit_distance = 48 orbit_angle = 35 size = 12 init_effect = { prevent_anomaly = yes } }
+    planet = {
+        name = "NAME_FOC_V132_DAC_MON_CALAMARI"
+        class = "pc_ocean"
+        orbit_distance = 34
+        orbit_angle = 90
+        size = 27
+        flags = { foc_sw_nr_colony foc_swmap_mon_cala }
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_lore_mon_cala_starship_craft days = -1 }
+        }
+        moon = { name = "Cala" class = "pc_barren_cold" orbit_distance = 10 orbit_angle = 60 size = 6 init_effect = { prevent_anomaly = yes } }
+    }
+    planet = { name = "NAME_FOC_V133_LOC_ICEBERG_I" class = "pc_frozen" orbit_distance = 36 orbit_angle = 155 size = 16 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "NAME_FOC_V133_LOC_ICEBERG_II" class = "pc_frozen" orbit_distance = 31 orbit_angle = 210 size = 15 init_effect = { prevent_anomaly = yes } }
+    planet = {
+        name = "NAME_FOC_V133_LOC_MON_ERON"
+        class = "pc_ocean"
+        orbit_distance = 35
+        orbit_angle = 260
+        size = 20
+        init_effect = { prevent_anomaly = yes }
+        moon = { name = "Ero" class = "pc_barren_cold" orbit_distance = 9 orbit_angle = 40 size = 5 init_effect = { prevent_anomaly = yes } }
+        moon = { name = "Roh" class = "pc_barren_cold" orbit_distance = 9 orbit_angle = 210 size = 5 init_effect = { prevent_anomaly = yes } }
+    }
+    planet = { name = "NAME_FOC_V133_LOC_SEP_ELOPON" class = "pc_gas_giant" orbit_distance = 44 orbit_angle = 325 size = 31 init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_endor_system = {
+    name = "Endor"
+    class = "sc_binary_8"
+    usage = misc_system_init
+    flags = { foc_swmap_endor_home foc_sw_new_republic_cluster }
+    max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_endor_system }
+
+    planet = { name = "NAME_FOC_V133_LOC_ENDOR_I" class = "pc_g_star" orbit_distance = 0 orbit_angle = 0 size = 24 }
+    planet = { name = "NAME_FOC_V133_LOC_ENDOR_II" class = "pc_k_star" orbit_distance = 14 orbit_angle = 180 size = 19 }
+    planet = {
+        name = "Endor"
+        class = "pc_gas_giant"
+        orbit_distance = 82
+        orbit_angle = 40
+        size = 32
+        init_effect = { prevent_anomaly = yes }
+        moon = { name = "NAME_FOC_V133_LOC_ENDOR_MOON_I" class = "pc_barren" orbit_distance = 8 orbit_angle = 10 size = 4 init_effect = { prevent_anomaly = yes } }
+        moon = { name = "NAME_FOC_V133_LOC_ENDOR_MOON_II" class = "pc_barren" orbit_distance = 8 orbit_angle = 50 size = 4 init_effect = { prevent_anomaly = yes } }
+        moon = { name = "NAME_FOC_V133_LOC_ENDOR_III" class = "pc_barren_cold" orbit_distance = 8 orbit_angle = 90 size = 5 init_effect = { prevent_anomaly = yes } }
+        moon = { name = "NAME_FOC_V133_LOC_ENDOR_IV" class = "pc_frozen" orbit_distance = 9 orbit_angle = 130 size = 5 init_effect = { prevent_anomaly = yes } }
+        moon = { name = "NAME_FOC_V133_LOC_ENDOR_V" class = "pc_barren" orbit_distance = 9 orbit_angle = 170 size = 5 init_effect = { prevent_anomaly = yes } }
+        moon = { name = "NAME_FOC_V133_LOC_ENDOR_VI" class = "pc_barren_cold" orbit_distance = 9 orbit_angle = 210 size = 6 init_effect = { prevent_anomaly = yes } }
+        moon = { name = "NAME_FOC_V133_LOC_ENDOR_VII" class = "pc_frozen" orbit_distance = 10 orbit_angle = 250 size = 5 init_effect = { prevent_anomaly = yes } }
+        moon = { name = "NAME_FOC_V132_KEF_BIR" class = "pc_ocean" orbit_distance = 11 orbit_angle = 290 size = 12 init_effect = { prevent_anomaly = yes } }
+        moon = {
+            name = "NAME_FOC_V132_FOREST_MOON_ENDOR"
+            class = "pc_tropical"
+            orbit_distance = 12
+            orbit_angle = 330
+            size = 16
+            flags = { foc_sw_nr_colony foc_swmap_endor_forest_moon }
+            init_effect = {
+                prevent_anomaly = yes
+                add_modifier = { modifier = foc_lore_endor_living_forest days = -1 }
+            }
+        }
+    }
+}
+
+foc_swmap_hoth_system = {
+    name = "Hoth"
+    class = "sc_m"
+    usage = misc_system_init
+    flags = { foc_swmap_hoth_home foc_sw_new_republic_cluster }
+    max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_hoth_system }
+
+    planet = { name = "Hoth" class = "pc_m_star" orbit_distance = 0 orbit_angle = 1 size = 21 }
+    planet = { name = "NAME_FOC_V133_LOC_HOTH_I" class = "pc_barren_cold" orbit_distance = 45 orbit_angle = 35 size = 11 init_effect = { prevent_anomaly = yes } }
+    planet = {
+        name = "Hoth"
+        class = "pc_arctic"
+        orbit_distance = 32
+        orbit_angle = 110
+        size = 22
+        flags = { foc_sw_nr_colony foc_swmap_hoth }
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_lore_hoth_echo_base days = -1 }
+        }
+        moon = { name = "NAME_FOC_V133_LOC_HOTH_I_A" class = "pc_frozen" orbit_distance = 9 orbit_angle = 30 size = 5 init_effect = { prevent_anomaly = yes } }
+        moon = { name = "NAME_FOC_V133_LOC_HOTH_I_B" class = "pc_barren_cold" orbit_distance = 9 orbit_angle = 150 size = 5 init_effect = { prevent_anomaly = yes } }
+        moon = { name = "NAME_FOC_V133_LOC_HOTH_I_C" class = "pc_frozen" orbit_distance = 9 orbit_angle = 270 size = 6 init_effect = { prevent_anomaly = yes } }
+    }
+    planet = { name = "NAME_FOC_V133_LOC_HOTH_III" class = "pc_gas_giant" orbit_distance = 42 orbit_angle = 205 size = 28 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "NAME_FOC_V133_LOC_HOTH_IV" class = "pc_frozen" orbit_distance = 40 orbit_angle = 300 size = 15 init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_bespin_system = {
+    name = "Bespin"
+    class = "sc_f"
+    usage = misc_system_init
+    flags = { foc_swmap_bespin_home foc_sw_new_republic_cluster }
+    max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_bespin_system }
+
+    planet = { name = "NAME_FOC_V132_BESPIN_STAR" class = "pc_f_star" orbit_distance = 0 orbit_angle = 1 size = 24 }
+    planet = { name = "Miser" class = "pc_molten" orbit_distance = 38 orbit_angle = 30 size = 13 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Orin" class = "pc_barren" orbit_distance = 28 orbit_angle = 90 size = 14 init_effect = { prevent_anomaly = yes } }
+    planet = {
+        name = "Bespin"
+        class = "pc_gas_giant"
+        orbit_distance = 42
+        orbit_angle = 160
+        size = 35
+        init_effect = {
+            prevent_anomaly = yes
+            if = { limit = { NOT = { has_deposit = d_foc_bespin_tibanna_gas_1000 } } add_deposit = d_foc_bespin_tibanna_gas_1000 }
+if = { limit = { has_deposit = d_foc_tibanna_gas_2 } remove_deposit = d_foc_tibanna_gas_2 }
+if = { limit = { has_deposit = d_foc_tibanna_gas_3 } remove_deposit = d_foc_tibanna_gas_3 }
+if = { limit = { has_deposit = d_foc_tibanna_gas_6 } remove_deposit = d_foc_tibanna_gas_6 }
+        }
+        moon = { name = "Cynda" class = "pc_barren_cold" orbit_distance = 10 orbit_angle = 60 size = 7 init_effect = { prevent_anomaly = yes } }
+        moon = { name = "NAME_FOC_V133_LOC_BESPIN_MINOR" class = "pc_frozen" orbit_distance = 11 orbit_angle = 220 size = 6 init_effect = { prevent_anomaly = yes } }
+    }
+    planet = {
+        name = "NAME_FOC_V132_CLOUD_CITY"
+        class = "pc_habitat"
+        orbit_distance = 18
+        orbit_angle = 220
+        size = 14
+        flags = { foc_sw_nr_colony foc_swmap_cloud_city }
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_lore_bespin_tibanna_industry days = -1 }
+        }
+    }
+    asteroid_belt = { type = rocky_asteroid_belt radius = 185 }
+}
+
+foc_swmap_lothal_system = {
+    name = "Lothal"
+    class = "sc_g"
+    usage = misc_system_init
+    flags = { foc_swmap_lothal_home foc_sw_new_republic_cluster }
+    max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_lothal_system }
+
+    planet = { name = "Lothal" class = "pc_g_star" orbit_distance = 0 orbit_angle = 1 size = 23 init_effect = { } }
+    planet = { name = "NAME_FOC_V133_LOC_LOTHAL_I" class = "pc_barren" orbit_distance = 42 orbit_angle = 35 size = 12 init_effect = { prevent_anomaly = yes } }
+    planet = {
+        name = "Lothal"
+        class = "pc_savannah"
+        orbit_distance = 34
+        orbit_angle = 105
+        size = 25
+        flags = { foc_sw_nr_colony foc_swmap_lothal }
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_lore_lothal_fields_and_temple days = -1 }
+            add_modifier = { modifier = foc_kyber_source_tier_3 days = -1 }
+        }
+        moon = { name = "NAME_FOC_V132_LOTHAL_INDUSTRIAL_MOON" class = "pc_barren" orbit_distance = 10 orbit_angle = 70 size = 7 init_effect = { prevent_anomaly = yes } }
+        moon = { name = "NAME_FOC_V132_LOTHAL_RELAY_MOON" class = "pc_barren_cold" orbit_distance = 10 orbit_angle = 230 size = 6 init_effect = { prevent_anomaly = yes } }
+    }
+    planet = { name = "NAME_FOC_V133_LOC_LOTHAL_III" class = "pc_gas_giant" orbit_distance = 46 orbit_angle = 200 size = 29 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "NAME_FOC_V133_LOC_LOTHAL_IV" class = "pc_frozen" orbit_distance = 40 orbit_angle = 300 size = 14 init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_geonosis_system = {
+    name = "Geonosis"
+    class = "sc_k"
+    usage = misc_system_init
+    flags = { foc_swmap_geonosis_home foc_sw_imperial_remnant_cluster }
+    max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_geonosis_system }
+
+    planet = { name = "Ea" class = "pc_k_star" orbit_distance = 0 orbit_angle = 1 size = 22 }
+    planet = { name = "Geriss" class = "pc_barren" orbit_distance = 40 orbit_angle = 25 size = 12 init_effect = { prevent_anomaly = yes } }
+    planet = {
+        name = "Geonosis"
+        class = "pc_desert"
+        orbit_distance = 33
+        orbit_angle = 85
+        size = 24
+        flags = { foc_sw_ir_colony foc_swmap_geonosis }
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_lore_geonosis_droid_foundries days = -1 }
+        }
+        moon = { name = "Bahryn" class = "pc_arctic" orbit_distance = 10 orbit_angle = 30 size = 8 init_effect = { prevent_anomaly = yes } }
+        moon = { name = "NAME_FOC_V133_LOC_BAHRYN_II" class = "pc_barren_cold" orbit_distance = 9 orbit_angle = 105 size = 5 init_effect = { prevent_anomaly = yes } }
+        moon = { name = "NAME_FOC_V133_LOC_BAHRYN_III" class = "pc_barren_cold" orbit_distance = 9 orbit_angle = 180 size = 5 init_effect = { prevent_anomaly = yes } }
+        moon = { name = "NAME_FOC_V133_LOC_BAHRYN_IV" class = "pc_frozen" orbit_distance = 10 orbit_angle = 260 size = 6 init_effect = { prevent_anomaly = yes } }
+    }
+    planet = { name = "Conus" class = "pc_molten" orbit_distance = 36 orbit_angle = 165 size = 16 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Mabonte" class = "pc_toxic" orbit_distance = 38 orbit_angle = 235 size = 17 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Habon" class = "pc_gas_giant" orbit_distance = 44 orbit_angle = 310 size = 28 init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_kamino_system = {
+    name = "Kamino"
+    class = "sc_m"
+    usage = misc_system_init
+    flags = { foc_swmap_kamino_home foc_sw_new_republic_cluster }
+    max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_kamino_system }
+
+    planet = { name = "Kamino" class = "pc_m_star" orbit_distance = 0 orbit_angle = 1 size = 21 }
+    planet = { name = "Kas" class = "pc_molten" orbit_distance = 36 orbit_angle = 30 size = 12 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "NAME_FOC_V133_LOC_YUKA_MAJOR" class = "pc_barren" orbit_distance = 26 orbit_angle = 75 size = 15 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Jomon" class = "pc_barren" orbit_distance = 27 orbit_angle = 120 size = 13 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Faa" class = "pc_continental" orbit_distance = 30 orbit_angle = 165 size = 18 init_effect = { prevent_anomaly = yes } }
+    planet = {
+        name = "Kamino"
+        class = "pc_ocean"
+        orbit_distance = 36
+        orbit_angle = 215
+        size = 25
+        flags = { foc_sw_nr_colony foc_swmap_kamino }
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_lore_kamino_cloning_centers days = -1 }
+        }
+        moon = { name = "Korasa" class = "pc_frozen" orbit_distance = 10 orbit_angle = 40 size = 6 init_effect = { prevent_anomaly = yes } }
+        moon = { name = "Su" class = "pc_frozen" orbit_distance = 10 orbit_angle = 160 size = 5 init_effect = { prevent_anomaly = yes } }
+        moon = { name = "NAME_FOC_V133_LOC_TAL_AN" class = "pc_frozen" orbit_distance = 10 orbit_angle = 280 size = 6 init_effect = { prevent_anomaly = yes } }
+    }
+    planet = { name = "NAME_FOC_V133_LOC_CASNA_AURE" class = "pc_gas_giant" orbit_distance = 45 orbit_angle = 275 size = 30 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "NAME_FOC_V133_LOC_CASNA_BESH" class = "pc_gas_giant" orbit_distance = 42 orbit_angle = 330 size = 27 init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_mustafar_system = {
+    name = "Mustafar"
+    class = "sc_k"
+    usage = misc_system_init
+    flags = { foc_swmap_mustafar_home foc_sw_imperial_remnant_cluster }
+    max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_mustafar_system }
+
+    planet = { name = "Priate" class = "pc_k_star" orbit_distance = 0 orbit_angle = 1 size = 23 }
+    planet = { name = "Schada" class = "pc_molten" orbit_distance = 38 orbit_angle = 25 size = 14 init_effect = { prevent_anomaly = yes } }
+    planet = {
+        name = "Jestefad"
+        class = "pc_gas_giant"
+        orbit_distance = 34
+        orbit_angle = 90
+        size = 30
+        init_effect = { prevent_anomaly = yes }
+        moon = { name = "Lefrani" class = "pc_barren" orbit_distance = 9 orbit_angle = 25 size = 5 init_effect = { prevent_anomaly = yes } }
+        moon = {
+            name = "Mustafar"
+            class = "pc_molten"
+            orbit_distance = 12
+            orbit_angle = 150
+            size = 20
+            flags = { foc_swmap_mustafar }
+            init_effect = {
+                prevent_anomaly = yes
+                add_modifier = { modifier = foc_lore_mustafar_mineral_world days = -1 }
+            }
+        }
+        moon = {
+            name = "Nur"
+            class = "pc_ocean"
+            orbit_distance = 11
+            orbit_angle = 275
+            size = 14
+            flags = { foc_sw_ir_colony foc_swmap_nur }
+            init_effect = {
+                prevent_anomaly = yes
+                add_modifier = { modifier = foc_lore_nur_inquisitor_fortress days = -1 }
+            }
+        }
+    }
+    planet = { name = "Rietta" class = "pc_gas_giant" orbit_distance = 42 orbit_angle = 190 size = 27 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Vietta" class = "pc_broken" orbit_distance = 40 orbit_angle = 285 size = 16 init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_mandalore_system = {
+    name = "Mandalore"
+    class = "sc_b"
+    usage = misc_system_init
+    flags = { foc_swmap_mandalore_home }
+    max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_mandalore_system }
+
+    planet = { name = "Mandalore" class = "pc_b_star" orbit_distance = 0 orbit_angle = 1 size = 25 }
+    planet = { name = "Nog" class = "pc_molten" orbit_distance = 44 orbit_angle = 30 size = 13 init_effect = { prevent_anomaly = yes } }
+    planet = {
+        name = "Akaan"
+        class = "pc_barren"
+        orbit_distance = 28
+        orbit_angle = 80
+        size = 15
+        init_effect = { prevent_anomaly = yes }
+        moon = { name = "NAME_FOC_V133_LOC_AKAAN_I" class = "pc_barren" orbit_distance = 8 orbit_angle = 80 size = 5 init_effect = { prevent_anomaly = yes } }
+        moon = { name = "NAME_FOC_V133_LOC_AKAAN_II" class = "pc_barren" orbit_distance = 8 orbit_angle = 240 size = 5 init_effect = { prevent_anomaly = yes } }
+    }
+    planet = { name = "Tracyn" class = "pc_molten" orbit_distance = 31 orbit_angle = 145 size = 16 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Kalevala" class = "pc_desert" orbit_distance = 33 orbit_angle = 205 size = 19 init_effect = { prevent_anomaly = yes } }
+    planet = {
+        name = "Mandalore"
+        class = "pc_desert"
+        orbit_distance = 36
+        orbit_angle = 265
+        size = 25
+        flags = { foc_sw_ir_colony foc_swmap_mandalore }
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_lore_mandalore_beskar_warrior_clans days = -1 }
+        
+            add_modifier = { modifier = foc_v1718_beskar_source days = -1 }
+        }
+        moon = { name = "Concordia" class = "pc_barren" orbit_distance = 11 orbit_angle = 100 size = 8 init_effect = { prevent_anomaly = yes } }
+    }
+    planet = { name = "NAME_FOC_V132_MANDALORE_OUTER" class = "pc_gas_giant" orbit_distance = 46 orbit_angle = 330 size = 28 init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_scarif_system = {
+    name = "Scarif"
+    class = "sc_f"
+    usage = misc_system_init
+    flags = { foc_swmap_scarif_home foc_sw_imperial_remnant_cluster }
+    max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_scarif_system }
+
+    planet = { name = "Scarif" class = "pc_f_star" orbit_distance = 0 orbit_angle = 1 size = 23 }
+    planet = { name = "NAME_FOC_V133_LOC_SCARIF_I" class = "pc_molten" orbit_distance = 40 orbit_angle = 35 size = 13 init_effect = { prevent_anomaly = yes } }
+    planet = {
+        name = "Scarif"
+        class = "pc_tropical"
+        orbit_distance = 35
+        orbit_angle = 115
+        size = 24
+        flags = { foc_sw_ir_colony foc_swmap_scarif }
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_lore_scarif_imperial_archive days = -1 }
+        }
+        moon = { name = "NAME_FOC_V132_SCARIF_SHIELD_MOON" class = "pc_barren" orbit_distance = 10 orbit_angle = 80 size = 6 init_effect = { prevent_anomaly = yes } }
+    }
+    planet = { name = "NAME_FOC_V133_LOC_SCARIF_III" class = "pc_gas_giant" orbit_distance = 46 orbit_angle = 220 size = 29 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "NAME_FOC_V133_LOC_SCARIF_IV" class = "pc_frozen" orbit_distance = 42 orbit_angle = 315 size = 15 init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_kessel_system = {
+    name = "Kessel"
+    class = "sc_f"
+    usage = misc_system_init
+    flags = { foc_swmap_kessel_home foc_sw_imperial_remnant_cluster }
+    max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_kessel_system }
+
+    planet = { name = "Kessa" class = "pc_f_star" orbit_distance = 0 orbit_angle = 1 size = 23 }
+    planet = { name = "Senna" class = "pc_molten" orbit_distance = 40 orbit_angle = 30 size = 14 init_effect = { prevent_anomaly = yes } }
+    planet = {
+        name = "Kessel"
+        class = "pc_arid"
+        orbit_distance = 34
+        orbit_angle = 105
+        size = 21
+        flags = { foc_sw_ir_colony foc_swmap_kessel }
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_lore_kessel_spice_coaxium_mines days = -1 }
+        
+            add_modifier = { modifier = foc_v1718_coaxium_source days = -1 }
+        }
+        moon = { name = "NAME_FOC_V132_GARRISON_MOON" class = "pc_barren" orbit_distance = 10 orbit_angle = 150 size = 7 init_effect = { prevent_anomaly = yes } }
+    }
+    planet = { name = "Karedda" class = "pc_frozen" orbit_distance = 39 orbit_angle = 210 size = 15 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "NAME_FOC_V132_KESSEL_OUTER" class = "pc_gas_giant" orbit_distance = 46 orbit_angle = 310 size = 28 init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_dathomir_system = {
+    name = "Dathomir"
+    class = "sc_m"
+    usage = misc_system_init
+    flags = { foc_swmap_dathomir_home foc_sw_imperial_remnant_cluster }
+    max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_dathomir_system }
+
+    planet = { name = "Domir" class = "pc_m_star" orbit_distance = 0 orbit_angle = 1 size = 34 }
+    planet = { name = "NAME_FOC_V133_LOC_DATHOMIR_I" class = "pc_molten" orbit_distance = 52 orbit_angle = 30 size = 13 init_effect = { prevent_anomaly = yes } }
+    planet = {
+        name = "Dathomir"
+        class = "pc_savannah"
+        orbit_distance = 38
+        orbit_angle = 105
+        size = 25
+        flags = { foc_sw_ir_colony foc_swmap_dathomir }
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_lore_dathomir_nightsister_nexus days = -1 }
+        }
+        moon = { name = "NAME_FOC_V133_LOC_DATHOMIR_MOON_I" class = "pc_barren" orbit_distance = 9 orbit_angle = 20 size = 5 init_effect = { prevent_anomaly = yes } }
+        moon = { name = "NAME_FOC_V133_LOC_DATHOMIR_MOON_II" class = "pc_barren_cold" orbit_distance = 9 orbit_angle = 105 size = 5 init_effect = { prevent_anomaly = yes } }
+        moon = { name = "NAME_FOC_V133_LOC_DATHOMIR_MOON_III" class = "pc_barren" orbit_distance = 10 orbit_angle = 195 size = 6 init_effect = { prevent_anomaly = yes } }
+        moon = { name = "NAME_FOC_V133_LOC_DATHOMIR_MOON_IV" class = "pc_barren_cold" orbit_distance = 10 orbit_angle = 285 size = 6 init_effect = { prevent_anomaly = yes } }
+    }
+    planet = { name = "NAME_FOC_V132_DATHOMIR_OUTER" class = "pc_gas_giant" orbit_distance = 48 orbit_angle = 230 size = 29 init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_tatooine_system = {
+    name = "Tatooine"
+    class = "sc_binary_8"
+    usage = misc_system_init
+    flags = { foc_swmap_tatooine_home foc_v196_hutt_criminal_empire_system }
+    max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_tatooine_system }
+
+    planet = { name = "NAME_FOC_V133_LOC_TATOO_I" class = "pc_g_star" orbit_distance = 0 orbit_angle = 0 size = 23 }
+    planet = { name = "NAME_FOC_V133_LOC_TATOO_II" class = "pc_k_star" orbit_distance = 13 orbit_angle = 180 size = 19 }
+    planet = {
+        name = "Tatooine"
+        class = "pc_desert"
+        orbit_distance = 68
+        orbit_angle = 45
+        size = 23
+        flags = { foc_swmap_tatooine }
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_lore_tatooine_hutt_spaceport days = -1 }
+        }
+        moon = { name = "Ghomrassen" class = "pc_barren_cold" orbit_distance = 9 orbit_angle = 35 size = 5 init_effect = { prevent_anomaly = yes } }
+        moon = { name = "Guermessa" class = "pc_barren_cold" orbit_distance = 9 orbit_angle = 155 size = 5 init_effect = { prevent_anomaly = yes } }
+        moon = { name = "Chenini" class = "pc_barren" orbit_distance = 10 orbit_angle = 275 size = 6 init_effect = { prevent_anomaly = yes } }
+    }
+    planet = {
+        name = "Ohann"
+        class = "pc_gas_giant"
+        orbit_distance = 42
+        orbit_angle = 155
+        size = 29
+        init_effect = { prevent_anomaly = yes }
+        moon = { name = "Chenchi" class = "pc_barren" orbit_distance = 9 orbit_angle = 70 size = 5 init_effect = { prevent_anomaly = yes } }
+        moon = { name = "Anoha" class = "pc_barren" orbit_distance = 10 orbit_angle = 230 size = 6 init_effect = { prevent_anomaly = yes } }
+    }
+    planet = {
+        name = "Adriana"
+        class = "pc_gas_giant"
+        orbit_distance = 48
+        orbit_angle = 280
+        size = 31
+        init_effect = { prevent_anomaly = yes }
+        moon = { name = "Adria" class = "pc_barren_cold" orbit_distance = 10 orbit_angle = 45 size = 6 init_effect = { prevent_anomaly = yes } }
+        moon = { name = "Ari" class = "pc_frozen" orbit_distance = 10 orbit_angle = 170 size = 5 init_effect = { prevent_anomaly = yes } }
+        moon = { name = "Ardana" class = "pc_frozen" orbit_distance = 11 orbit_angle = 290 size = 6 init_effect = { prevent_anomaly = yes } }
+    }
+}
+
+
+# =============================================================================
+# V73 canonical story systems added for battle-triggered saga events.
+# =============================================================================
+
+foc_swmap_utapau_system = {
+    name = "Utapau"
+    class = "sc_k"
+    usage = misc_system_init
+    flags = { foc_swmap_utapau_home foc_sw_imperial_remnant_cluster }
+    max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_utapau_system }
+    planet = { name = "NAME_FOC_V132_UTAPAU_STAR" class = "pc_k_star" orbit_distance = 0 orbit_angle = 1 size = 21 init_effect = { } }
+    planet = { name = "NAME_FOC_V133_LOC_UTAPAU_I" class = "pc_barren" orbit_distance = 40 orbit_angle = 40 size = 11 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Utapau" class = "pc_arid" orbit_distance = 34 orbit_angle = 120 size = 21 flags = { foc_sw_ir_colony foc_swmap_utapau } init_effect = { prevent_anomaly = yes add_modifier = { modifier = foc_kyber_source_tier_3 days = -1 } } }
+    planet = { name = "NAME_FOC_V133_LOC_UTAPAU_III" class = "pc_gas_giant" orbit_distance = 48 orbit_angle = 235 size = 29 init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_christophsis_system = {
+    name = "Christophsis"
+    class = "sc_a"
+    usage = misc_system_init
+    flags = { foc_swmap_christophsis_home foc_sw_imperial_remnant_cluster }
+    max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_christophsis_system }
+    planet = { name = "NAME_FOC_V132_CHRISTOPHSIS_STAR" class = "pc_a_star" orbit_distance = 0 orbit_angle = 1 size = 24 init_effect = { } }
+    planet = { name = "Christophsis" class = "pc_arid" orbit_distance = 52 orbit_angle = 95 size = 22 flags = { foc_sw_ir_colony foc_swmap_christophsis } init_effect = { prevent_anomaly = yes add_modifier = { modifier = foc_kyber_source_tier_2 days = -1 } } }
+    planet = { name = "NAME_FOC_V133_LOC_CHRISTOPHSIS_II" class = "pc_barren" orbit_distance = 38 orbit_angle = 210 size = 13 init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_jedha_system = {
+    name = "Jedha"
+    class = "sc_k"
+    usage = misc_system_init
+    flags = { foc_swmap_jedha_home foc_sw_imperial_remnant_cluster }
+    max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_jedha_system }
+    planet = { name = "NAME_FOC_V132_JEDHA_STAR" class = "pc_k_star" orbit_distance = 0 orbit_angle = 1 size = 21 init_effect = { } }
+    planet = { name = "Jedha" class = "pc_desert" orbit_distance = 48 orbit_angle = 130 size = 20 flags = { foc_sw_ir_colony foc_swmap_jedha } init_effect = { prevent_anomaly = yes add_modifier = { modifier = foc_kyber_source_tier_1 days = -1 } } }
+    planet = { name = "NAME_FOC_V133_LOC_JEDHA_II" class = "pc_barren_cold" orbit_distance = 39 orbit_angle = 250 size = 12 init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_malachor_system = {
+    name = "Malachor"
+    class = "sc_m"
+    usage = misc_system_init
+    flags = { foc_swmap_malachor_home foc_sw_imperial_remnant_cluster }
+    max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_malachor_system }
+    planet = { name = "NAME_FOC_V132_MALACHOR_STAR" class = "pc_m_star" orbit_distance = 0 orbit_angle = 1 size = 19 }
+    planet = { name = "NAME_FOC_V132_MALACHOR_V" class = "pc_nuked" orbit_distance = 62 orbit_angle = 155 size = 19 flags = { foc_sw_ir_colony foc_swmap_malachor } init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_bracca_system = {
+    name = "Bracca"
+    class = "sc_k"
+    usage = misc_system_init
+    flags = { foc_swmap_bracca_home foc_sw_new_republic_cluster }
+    max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_bracca_system }
+    planet = { name = "NAME_FOC_V132_BRACCA_STAR" class = "pc_k_star" orbit_distance = 0 orbit_angle = 1 size = 20 }
+    planet = { name = "Bracca" class = "pc_nuked" orbit_distance = 45 orbit_angle = 100 size = 19 flags = { foc_sw_nr_colony foc_swmap_bracca } init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_tanalorr_system = {
+    name = "Tanalorr"
+    class = "sc_g"
+    usage = misc_system_init
+    flags = { foc_swmap_tanalorr_home foc_sw_new_republic_cluster }
+    max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_tanalorr_system }
+    planet = { name = "NAME_FOC_V132_TANALORR_STAR" class = "pc_g_star" orbit_distance = 0 orbit_angle = 1 size = 22 }
+    planet = { name = "Tanalorr" class = "pc_gaia" orbit_distance = 58 orbit_angle = 130 size = 20 flags = { foc_sw_nr_colony foc_swmap_tanalorr } init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_aldhani_system = {
+    name = "Aldhani"
+    class = "sc_g"
+    usage = misc_system_init
+    flags = { foc_swmap_aldhani_home foc_sw_new_republic_cluster }
+    max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_aldhani_system }
+    planet = { name = "NAME_FOC_V132_ALDHANI_STAR" class = "pc_g_star" orbit_distance = 0 orbit_angle = 1 size = 22 }
+    planet = { name = "Aldhani" class = "pc_alpine" orbit_distance = 44 orbit_angle = 105 size = 18 flags = { foc_sw_nr_colony foc_swmap_aldhani } init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_ossus_system = {
+    name = "Ossus"
+    class = "sc_g"
+    usage = misc_system_init
+    flags = { foc_swmap_ossus_home foc_sw_new_republic_cluster }
+    max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_ossus_system }
+    planet = { name = "NAME_FOC_V132_OSSUS_STAR" class = "pc_g_star" orbit_distance = 0 orbit_angle = 1 size = 23 }
+    planet = { name = "Ossus" class = "pc_savannah" orbit_distance = 52 orbit_angle = 115 size = 21 flags = { foc_sw_nr_colony foc_swmap_ossus } init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_ahchto_system = {
+    name = "NAME_FOC_V132_AHCH_TO"
+    class = "sc_k"
+    usage = misc_system_init
+    flags = { foc_swmap_ahchto_home foc_sw_new_republic_cluster }
+    max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_ahchto_system }
+    planet = { name = "NAME_FOC_V132_AHCH_TO_STAR" class = "pc_k_star" orbit_distance = 0 orbit_angle = 1 size = 20 }
+    planet = { name = "NAME_FOC_V132_AHCH_TO" class = "pc_ocean" orbit_distance = 55 orbit_angle = 140 size = 18 flags = { foc_sw_nr_colony foc_swmap_ahchto } init_effect = { prevent_anomaly = yes } }
+}
+
+
+# =============================================================================
+# V73 latest canonical story systems.
+# =============================================================================
+foc_swmap_dagobah_system = {
+    name = "Dagobah"
+    class = "sc_m"
+    usage = misc_system_init
+    flags = { foc_swmap_dagobah_home foc_sw_new_republic_cluster }
+    max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_dagobah_system }
+    planet = { name = "NAME_FOC_V132_DAGOBAH_STAR" class = "pc_m_star" orbit_distance = 0 orbit_angle = 1 size = 19 }
+    planet = { name = "Dagobah" class = "pc_tropical" orbit_distance = 46 orbit_angle = 120 size = 20 flags = { foc_sw_nr_colony foc_swmap_dagobah } init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swmap_aldoleem_system = {
+    name = "NAME_FOC_V132_ALDOLEEM"
+    class = "sc_k"
+    usage = misc_system_init
+    flags = { foc_swmap_aldoleem_home foc_sw_imperial_remnant_cluster }
+    max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swmap_aldoleem_system }
+    planet = { name = "NAME_FOC_V132_ALDOLEEM_STAR" class = "pc_k_star" orbit_distance = 0 orbit_angle = 1 size = 20 }
+    planet = { name = "NAME_FOC_V132_ALDOLEEM" class = "pc_arid" orbit_distance = 49 orbit_angle = 135 size = 18 flags = { foc_sw_ir_colony foc_swmap_aldoleem } init_effect = { prevent_anomaly = yes } }
+}

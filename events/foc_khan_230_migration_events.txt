@@ -1,0 +1,55 @@
+namespace = foc_khan_230
+
+# One-time 2.30 migration for existing saves.
+event = {
+    id = foc_khan_230.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        NOT = { has_global_flag = foc_khan_230_migrated }
+        OR = {
+            any_country = { has_country_flag = foc_khan_first_order_country }
+            any_country = { has_country_flag = foc_khan_final_order_country }
+        }
+    }
+
+    immediate = {
+        set_global_flag = foc_khan_230_migrated
+
+        every_country = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = foc_khan_final_order_country
+                }
+            }
+
+            # Retire the one-shot 2.29 army gate and let the zero-survivor check run.
+            remove_country_flag = foc_khan_229_army_initialized
+            remove_country_flag = foc_khan_230_army_reinforcement_cooldown
+
+            every_owned_fleet = {
+                limit = { any_owned_ship = { is_ship_class = shipclass_transport } }
+                remove_fleet_flag = foc_khan_229_transport_controller
+                remove_auto_move_target = yes
+                clear_orders = yes
+                clear_fleet_actions = this
+                fleet_event = { id = foc_khan_229.2 days = 2 random = 5 }
+            }
+        }
+
+        # 3.12f uses the new 864-ship reinforcement cap. Clear an obsolete cap
+        # announcement only while the saved counter is still below that value.
+        every_country = {
+            limit = {
+                has_country_flag = foc_khan_final_order_country
+                OR = {
+                    NOT = { is_variable_set = foc_khan_xyston_support_spawned }
+                    check_variable = { which = foc_khan_xyston_support_spawned value < 864 }
+                }
+            }
+            remove_country_flag = foc_khan_xyston_support_cap_announced
+        }
+    }
+}

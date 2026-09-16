@@ -1,0 +1,59 @@
+namespace = foc_khan_219
+
+# 2.19 migration for saves made with 2.18.
+# - ordinary 18-ship support fleets get the new Final-Order-only system reservation
+# - special Xystons drop the queue that 2.18 could cancel before weapon resolution
+event = {
+    id = foc_khan_219.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_khan_phase_two
+        exists = event_target:foc_khan_final_order
+        NOT = { has_global_flag = foc_khan_219_fleet_queues_rebuilt }
+    }
+
+    immediate = {
+        set_global_flag = foc_khan_219_fleet_queues_rebuilt
+
+        every_system = {
+            remove_star_flag = foc_khan_sgk_final_system_reserved_219
+            remove_star_flag = foc_khan_xyston_system_reserved_212
+            every_system_planet = {
+                remove_planet_flag = foc_khan_xyston_target_reserved
+                if = {
+                    limit = {
+                        OR = {
+                            is_planet_class = pc_shattered
+                            is_planet_class = pc_shattered_2
+                            is_planet_class = pc_broken
+                            is_planet_class = pc_black_hole
+                        }
+                    }
+                    set_planet_flag = foc_khan_xyston_destroyed_target_213
+                }
+            }
+        }
+
+        event_target:foc_khan_final_order = {
+
+            # Ordinary fleets are handed to ACOT-style engine AI by 2.20.
+
+            # Rebuild the eight special planet-killer queues after clearing the
+            # 2.18 pending state. Their new destruction hook now resolves through
+            # the normal, queued and unqueued keys.
+            every_owned_fleet = {
+                limit = {
+                    has_fleet_flag = foc_khan_xyston_planet_killer_fleet
+                    any_owned_ship = { OR = { is_ship_size = foc_khan_xystonsd is_ship_size = foc_khan_xystonsd_foc_lowest } }
+                }
+                remove_fleet_flag = foc_khan_xyston_retarget_pending_218
+                remove_auto_move_target = yes
+                clear_orders = yes
+                clear_fleet_actions = this
+                fleet_event = { id = foc_khan_xyston_ai.10 days = 2 random = 12 }
+            }
+        }
+    }
+}

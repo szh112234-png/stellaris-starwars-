@@ -1,0 +1,263 @@
+@foc_khan_distance = 30
+
+foc_khan_ilum_system = {
+    name = "NAME_FOC_KHAN_ILUM_SYSTEM"
+    class = "sc_k"
+    usage = misc_system_init
+    flags = { foc_khan_ilum_home }
+    max_instances = 1
+
+    init_effect = { every_neighbor_system = { set_star_flag = empire_cluster } }
+    asteroid_belt = { type = icy_asteroid_belt radius = 375 }
+
+    # A weak, cold primary at the edge of the Unknown Regions.
+    planet = { name = "NAME_FOC_KHAN_ILUM_STAR" class = "pc_k_star" orbit_distance = 0 orbit_angle = 1 size = 20 has_ring = no init_effect = { } }
+
+    # Ilum itself remains habitable despite its brutal ice-sheet climate. The
+    # crisis megastructure event uses this planet flag as Starkiller's anchor.
+    planet = {
+        name = "NAME_FOC_KHAN_ILUM"
+        class = "pc_arctic"
+        orbit_distance = 58
+        orbit_angle = 25
+        size = 22
+        has_ring = no
+        flags = { foc_khan_starkiller_anchor foc_khan_ilum_planet }
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = fop_kyber_crystal_caves days = -1 }
+            add_modifier = { modifier = foc_kyber_source_tier_1 days = -1 }
+        }
+    }
+
+    # Ilum II-IV: cold rocky/tundra bodies. Only Ilum is colonisable.
+    planet = { name = "NAME_FOC_KHAN_ILUM_II" class = "pc_barren_cold" orbit_distance = 42 orbit_angle = 80 size = 13 has_ring = no init_effect = { prevent_anomaly = yes } }
+    planet = { name = "NAME_FOC_KHAN_ILUM_III" class = "pc_frozen" orbit_distance = 44 orbit_angle = 145 size = 15 has_ring = no init_effect = { prevent_anomaly = yes } }
+    planet = { name = "NAME_FOC_KHAN_ILUM_IV" class = "pc_barren_cold" orbit_distance = 46 orbit_angle = 205 size = 14 has_ring = no init_effect = { prevent_anomaly = yes } }
+
+    # Ilum V-VII: the three outer gas giants.
+    planet = { name = "NAME_FOC_KHAN_ILUM_V" class = "pc_gas_giant" orbit_distance = 54 orbit_angle = 245 size = 24 has_ring = yes init_effect = { prevent_anomaly = yes } }
+    planet = { name = "NAME_FOC_KHAN_ILUM_VI" class = "pc_gas_giant" orbit_distance = 59 orbit_angle = 295 size = 28 has_ring = no init_effect = { prevent_anomaly = yes } }
+    planet = { name = "NAME_FOC_KHAN_ILUM_VII" class = "pc_gas_giant" orbit_distance = 64 orbit_angle = 340 size = 31 has_ring = yes init_effect = { prevent_anomaly = yes } }
+}
+
+foc_khan_exegol_system = {
+    name = "NAME_FOC_KHAN_UNKNOWN_REGIONS_SYSTEM"
+    class = "sc_m"
+    usage = misc_system_init
+    flags = { foc_khan_exegol_home foc_sith_wayfinder_unknown_region }
+    max_instances = 1
+
+    asteroid_belt = { type = rocky_asteroid_belt radius = 250 }
+    asteroid_belt = { type = rocky_asteroid_belt radius = 320 }
+
+    planet = {
+        name = "NAME_FOC_KHAN_EXEGOL_PULSAR"
+        class = "pc_m_star"
+        orbit_distance = 0
+        orbit_angle = 1
+        size = 18
+        has_ring = no
+        init_effect = {
+            create_ambient_object = { type = "nebula_L6_entity" entity_offset_height = -2 location = this }
+        }
+    }
+    planet = {
+        name = "NAME_FOC_KHAN_EXEGOL"
+        class = "pc_nuked"
+        orbit_distance = 95
+        orbit_angle = 160
+        size = 20
+        has_ring = no
+        flags = { foc_khan_exegol_capital }
+        init_effect = {
+            prevent_anomaly = yes
+            set_planet_entity = { entity = "nuked_planet_01_entity" picture = pc_exegol }
+            add_modifier = { modifier = foc_lore_exegol_sith_eternal_sanctuary days = -1 }
+            add_modifier = { modifier = foc_kyber_source_tier_1 days = -1 }
+        }
+    }
+    planet = { name = "NAME_FOC_KHAN_EXEGOL_II" class = "pc_shattered" orbit_distance = 48 orbit_angle = 220 size = 15 has_ring = no init_effect = { prevent_anomaly = yes } }
+    planet = { name = "NAME_FOC_KHAN_EXEGOL_III" class = "pc_shattered" orbit_distance = 52 orbit_angle = 285 size = 18 has_ring = no init_effect = { prevent_anomaly = yes } }
+    planet = { name = "NAME_FOC_KHAN_EXEGOL_IV" class = "pc_shattered" orbit_distance = 56 orbit_angle = 335 size = 13 has_ring = no init_effect = { prevent_anomaly = yes } }
+}
+
+
+# New Republic Yavin. This is present from game start and is deliberately
+# separate from the later Resistance-base chain near Jakku.
+foc_sw_yavin_system = {
+    name = "NAME_FOC_KHAN_YAVIN_SYSTEM"
+    class = "sc_f"
+    usage = misc_system_init
+    flags = { foc_sw_yavin_home foc_sw_new_republic_cluster }
+    max_instances = 1
+
+    init_effect = {
+        save_global_event_target_as = foc_sw_yavin_system
+        every_neighbor_system = { set_star_flag = empire_cluster }
+    }
+
+    planet = { name = "NAME_FOC_KHAN_YAVIN_STAR" class = "pc_f_star" orbit_distance = 0 orbit_angle = 1 size = 30 has_ring = no }
+    planet = { name = "NAME_FOC_KHAN_YAVIN_I" class = "pc_molten" orbit_distance = 38 orbit_angle = 30 size = 11 has_ring = no init_effect = { prevent_anomaly = yes } }
+    planet = { name = "NAME_FOC_KHAN_YAVIN_II" class = "pc_barren" orbit_distance = 30 orbit_angle = 105 size = 13 has_ring = no init_effect = { prevent_anomaly = yes } }
+    planet = { name = "NAME_FOC_KHAN_YAVIN_III" class = "pc_frozen" orbit_distance = 34 orbit_angle = 175 size = 10 has_ring = no init_effect = { prevent_anomaly = yes } }
+
+    planet = {
+        name = "NAME_FOC_KHAN_YAVIN_PRIME"
+        class = "pc_gas_giant"
+        orbit_distance = 52
+        orbit_angle = 245
+        size = 32
+        has_ring = yes
+        init_effect = { set_planet_entity = { entity = "yavin_01_entity" } }
+
+        moon = {
+            name = "NAME_FOC_KHAN_YAVIN_IV"
+            class = "pc_tropical"
+            orbit_distance = 11
+            orbit_angle = 15
+            size = 18
+            has_ring = no
+            flags = { foc_sw_nr_colony foc_sw_yavin_iv }
+            init_effect = {
+                prevent_anomaly = yes
+                add_modifier = { modifier = foc_yavin_massassi_temples days = -1 }
+            }
+        }
+        moon = { name = "NAME_FOC_KHAN_YAVIN_V" class = "pc_frozen" orbit_distance = 5 orbit_angle = 55 size = 5 has_ring = no init_effect = { prevent_anomaly = yes } }
+        moon = { name = "NAME_FOC_KHAN_YAVIN_VI" class = "pc_barren_cold" orbit_distance = 4 orbit_angle = 95 size = 6 has_ring = no init_effect = { prevent_anomaly = yes } }
+        moon = { name = "NAME_FOC_KHAN_YAVIN_VII" class = "pc_asteroid" orbit_distance = 4 orbit_angle = 135 size = 4 has_ring = no init_effect = { prevent_anomaly = yes } }
+        moon = { name = "NAME_FOC_KHAN_YAVIN_VIII" class = "pc_ice_asteroid" orbit_distance = 4 orbit_angle = 175 size = 4 has_ring = no init_effect = { prevent_anomaly = yes } }
+        moon = { name = "NAME_FOC_KHAN_YAVIN_IX" class = "pc_barren" orbit_distance = 4 orbit_angle = 215 size = 5 has_ring = no init_effect = { prevent_anomaly = yes } }
+        moon = { name = "NAME_FOC_KHAN_YAVIN_X" class = "pc_frozen" orbit_distance = 4 orbit_angle = 250 size = 6 has_ring = no init_effect = { prevent_anomaly = yes } }
+        moon = { name = "NAME_FOC_KHAN_YAVIN_XI" class = "pc_ice_asteroid" orbit_distance = 4 orbit_angle = 285 size = 3 has_ring = no init_effect = { prevent_anomaly = yes } }
+        moon = { name = "NAME_FOC_KHAN_YAVIN_XII" class = "pc_barren_cold" orbit_distance = 4 orbit_angle = 320 size = 5 has_ring = no init_effect = { prevent_anomaly = yes } }
+        moon = { name = "NAME_FOC_KHAN_YAVIN_XIII" class = "pc_asteroid" orbit_distance = 4 orbit_angle = 350 size = 3 has_ring = no init_effect = { prevent_anomaly = yes } }
+    }
+}
+
+
+# Stage I Resistance base: D'Qar appears at its exact V177 map position
+# when the story reaches that stage. The legacy initializer key is retained.
+foc_khan_rebel_system = {
+    name = "NAME_FOC_KHAN_DQAR_SYSTEM"
+    class = "sc_g"
+    usage = misc_system_init
+    flags = { foc_khan_rebel_home foc_khan_rebel_dqar_home }
+    max_instances = 1
+
+    init_effect = {
+        save_global_event_target_as = foc_khan_rebel_dqar_system
+        every_neighbor_system = { set_star_flag = empire_cluster }
+    }
+
+    planet = { name = "NAME_FOC_KHAN_DQAR_STAR" class = "pc_g_star" orbit_distance = 0 orbit_angle = 1 size = 21 has_ring = no }
+    planet = { name = "NAME_FOC_KHAN_DQAR_I" class = "pc_barren" orbit_distance = 38 orbit_angle = 40 size = 11 has_ring = no init_effect = { prevent_anomaly = yes } }
+    planet = {
+        name = "NAME_FOC_KHAN_DQAR"
+        class = "pc_continental"
+        orbit_distance = 34
+        orbit_angle = 120
+        size = 20
+        has_ring = no
+        flags = { foc_khan_rebel_capital foc_khan_rebel_dqar }
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_dqar_hidden_resistance_base days = -1 }
+        }
+    }
+    planet = { name = "NAME_FOC_KHAN_DQAR_III" class = "pc_barren_cold" orbit_distance = 36 orbit_angle = 190 size = 13 has_ring = no init_effect = { prevent_anomaly = yes } }
+    planet = {
+        name = "NAME_FOC_KHAN_DQAR_IV"
+        class = "pc_gas_giant"
+        orbit_distance = 48
+        orbit_angle = 255
+        size = 27
+        has_ring = yes
+        moon = { name = "NAME_FOC_KHAN_DQAR_IV_A" class = "pc_frozen" orbit_distance = 10 orbit_angle = 60 size = 5 has_ring = no init_effect = { prevent_anomaly = yes } }
+        moon = { name = "NAME_FOC_KHAN_DQAR_IV_B" class = "pc_ice_asteroid" orbit_distance = 5 orbit_angle = 210 size = 3 has_ring = no init_effect = { prevent_anomaly = yes } }
+    }
+    planet = {
+        name = "NAME_FOC_KHAN_DQAR_V"
+        class = "pc_gas_giant"
+        orbit_distance = 56
+        orbit_angle = 320
+        size = 31
+        has_ring = yes
+        moon = { name = "NAME_FOC_KHAN_DQAR_V_A" class = "pc_barren_cold" orbit_distance = 11 orbit_angle = 105 size = 6 has_ring = no init_effect = { prevent_anomaly = yes } }
+        moon = { name = "NAME_FOC_KHAN_DQAR_V_B" class = "pc_frozen" orbit_distance = 5 orbit_angle = 270 size = 5 has_ring = no init_effect = { prevent_anomaly = yes } }
+    }
+}
+
+
+# Stage II Resistance base: Crait is added at its exact V177 map position after D'Qar falls and Starkiller Base is destroyed.
+foc_khan_rebel_crait_system = {
+    name = "NAME_FOC_KHAN_CRAIT_SYSTEM"
+    class = "sc_k"
+    usage = misc_system_init
+    flags = { foc_khan_rebel_crait_home }
+    max_instances = 1
+
+    init_effect = {
+        save_global_event_target_as = foc_khan_rebel_crait_system
+        every_neighbor_system = { set_star_flag = empire_cluster }
+    }
+
+    asteroid_belt = { type = rocky_asteroid_belt radius = 250 }
+    asteroid_belt = { type = rocky_asteroid_belt radius = 285 }
+    planet = { name = "NAME_FOC_KHAN_CRAIT_STAR" class = "pc_k_star" orbit_distance = 0 orbit_angle = 1 size = 20 has_ring = no }
+    planet = { name = "NAME_FOC_KHAN_CRAIT_I" class = "pc_barren" orbit_distance = 40 orbit_angle = 35 size = 10 has_ring = no init_effect = { prevent_anomaly = yes } }
+    planet = { name = "NAME_FOC_KHAN_CRAIT_II" class = "pc_barren" orbit_distance = 32 orbit_angle = 135 size = 12 has_ring = no init_effect = { prevent_anomaly = yes } }
+    planet = {
+        name = "NAME_FOC_KHAN_CRAIT"
+        class = "pc_desert"
+        orbit_distance = 46
+        orbit_angle = 235
+        size = 18
+        has_ring = no
+        flags = { foc_khan_rebel_crait }
+        init_effect = {
+            prevent_anomaly = yes
+            add_modifier = { modifier = foc_crait_salt_mine_redoubt days = -1 }
+        }
+    }
+}
+
+
+# Stage III and final Resistance base: Ajan Kloss is added at its exact
+# V177 map position after Phase II begins and Crait has fallen.
+foc_khan_rebel_ajan_kloss_system = {
+    name = "NAME_FOC_KHAN_AJAN_KLOSS_SYSTEM"
+    class = "sc_f"
+    usage = misc_system_init
+    flags = { foc_khan_rebel_ajan_kloss_home }
+    max_instances = 1
+
+    init_effect = {
+        save_global_event_target_as = foc_khan_rebel_ajan_kloss_system
+        every_neighbor_system = { set_star_flag = empire_cluster }
+    }
+
+    planet = { name = "NAME_FOC_KHAN_AJAN_KLOSS_STAR" class = "pc_f_star" orbit_distance = 0 orbit_angle = 1 size = 23 has_ring = no }
+    planet = {
+        name = "NAME_FOC_KHAN_AJAN_KLOSS_PRIME"
+        class = "pc_gas_giant"
+        orbit_distance = 55
+        orbit_angle = 175
+        size = 34
+        has_ring = yes
+        moon = {
+            name = "NAME_FOC_KHAN_AJAN_KLOSS"
+            class = "pc_tropical"
+            orbit_distance = 13
+            orbit_angle = 75
+            size = 20
+            has_ring = no
+            flags = { foc_khan_rebel_ajan_kloss }
+            init_effect = {
+                prevent_anomaly = yes
+                add_modifier = { modifier = foc_ajan_kloss_resistance_camp days = -1 }
+            }
+        }
+    }
+}

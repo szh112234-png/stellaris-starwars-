@@ -1,0 +1,24 @@
+namespace = foc_v181_relay
+
+country_event = {
+    id = foc_v181_relay.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        has_global_flag = foc_swmap_simplified_image_layout
+        NOT = { has_global_flag = foc_v182_main_route_hyper_relays_initialized }
+        NOT = { has_global_flag = foc_v181_main_route_hyper_relays_complete }
+        any_system = { has_star_flag = foc_sw_coruscant_home }
+    }
+
+    immediate = {
+        # Mark the pass before spawning so save/load or duplicate event dispatch
+        # can never run a second construction sweep.
+        set_global_flag = foc_v182_main_route_hyper_relays_initialized
+        foc_v181_seed_main_route_hyper_relays = yes
+        set_global_flag = foc_v181_main_route_hyper_relays_complete
+        log = "FOC_V182: one-time vanilla Hyper Relay deployment completed; monthly backfill disabled."
+    }
+}

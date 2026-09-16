@@ -1,0 +1,36 @@
+# v17.10: the battle must have occurred, then a full thirty days must elapse.
+foc_v1710_scarif_month_elapsed = {
+    has_global_flag = foc_v1710_scarif_chain_started
+    NOT = { has_global_flag = foc_v1710_scarif_wait_30d }
+}
+foc_v1710_is_gcw_rebel = {
+    NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+    NOT = { has_country_flag = foc_khan_first_order_resistance_country }
+    NOT = { has_country_flag = foc_republic_origin_post_treaty_rebel_country }
+    OR = {
+        has_country_flag = foc_republic_origin_imperial_rebel_country
+        has_country_flag = foc_republic_origin_rebel_alliance_country
+        has_country_flag = foc_republic_origin_player_rebels
+        has_country_flag = foc_khan_rebel_alliance_country
+    }
+}
+foc_v1710_scarif_rewards_unlocked = {
+    has_global_flag = foc_republic_origin_scarif_weakness_obtained
+    has_global_flag = foc_v1710_leia_rescue_completed
+    foc_v1710_scarif_month_elapsed = yes
+    NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+}
+
+# Optional event targets must be checked before the engine enters their scope.
+foc_v1717e_death_star_one_alive = {
+    NOT = { has_global_flag = foc_republic_origin_death_star_one_destroyed }
+    if = {
+        limit = { exists = event_target:foc_republic_origin_empire }
+        event_target:foc_republic_origin_empire = {
+            has_country_flag = foc_republic_origin_death_star_one_built
+            NOT = { has_country_flag = foc_republic_origin_death_star_one_destroyed }
+            any_owned_ship = { has_ship_flag = foc_republic_origin_death_star_one }
+        }
+    }
+    else = { always = no }
+}

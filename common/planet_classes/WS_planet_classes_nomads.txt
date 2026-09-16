@@ -1,0 +1,137 @@
+pc_ark = {
+	entity = "continental_planet"  # Ignored for arkships; the actual ship model is used instead
+	icon = GFX_planet_type_generic_arkship
+	icon_large = GFX_planet_type_generic_arkship_big
+
+	conditional_icon = {
+		trigger = {
+			ship = { is_ship_size = civilian_arkship_tier_1 }
+		}
+		icon = GFX_planet_type_civilian_arkship_1
+		icon_large = GFX_planet_type_civilian_arkship_1_big
+	}
+	conditional_icon = {
+		trigger = {
+			ship = { is_ship_size = civilian_arkship_tier_2 }
+		}
+		icon = GFX_planet_type_civilian_arkship_2
+		icon_large = GFX_planet_type_civilian_arkship_2_big
+	}
+	conditional_icon = {
+		trigger = {
+			ship = { is_ship_size = civilian_arkship_tier_3 }
+		}
+		icon = GFX_planet_type_civilian_arkship_3
+		icon_large = GFX_planet_type_civilian_arkship_3_big
+	}
+	conditional_icon = {
+		trigger = {
+			ship = { is_ship_size = science_arkship_tier_1 }
+		}
+		icon = GFX_planet_type_science_arkship_1
+		icon_large = GFX_planet_type_science_arkship_1_big
+	}
+	conditional_icon = {
+		trigger = {
+			ship = { is_ship_size = science_arkship_tier_2 }
+		}
+		icon = GFX_planet_type_science_arkship_2
+		icon_large = GFX_planet_type_science_arkship_2_big
+	}
+	conditional_icon = {
+		trigger = {
+			ship = { is_ship_size = science_arkship_tier_3 }
+		}
+		icon = GFX_planet_type_science_arkship_3
+		icon_large = GFX_planet_type_science_arkship_3_big
+	}
+	conditional_icon = {
+		trigger = {
+			ship = { is_ship_size = military_arkship_tier_1 }
+		}
+		icon = GFX_planet_type_military_arkship_1
+		icon_large = GFX_planet_type_military_arkship_1_big
+	}
+	conditional_icon = {
+		trigger = {
+			ship = { is_ship_size = military_arkship_tier_2 }
+		}
+		icon = GFX_planet_type_military_arkship_2
+		icon_large = GFX_planet_type_military_arkship_2_big
+	}
+	conditional_icon = {
+		trigger = {
+			ship = { is_ship_size = military_arkship_tier_3 }
+		}
+		icon = GFX_planet_type_military_arkship_3
+		icon_large = GFX_planet_type_military_arkship_3_big
+	}
+
+	modifier = {
+		pop_environment_tolerance = 1.0
+	}
+
+	climate = "artificial"
+	initial = yes
+
+	auto_trait_prio = {
+		trait_auto_pc_ark_preference
+	}
+
+	starting_planet = no
+
+	starting_district = district_ark_city
+
+	atmosphere_color		= hsv { 0.59 0.45 0.95 }
+	atmosphere_intensity	= 1.0
+	atmosphere_width		= 0.5
+
+	min_distance_from_sun = @habitable_min_distance
+	max_distance_from_sun = @habitable_max_distance
+	spawn_odds = 0
+
+	extra_orbit_size = 0
+	extra_planet_count = 0
+
+	planet_size = { min = 9 max = 9 }
+
+	colonizable = yes
+	district_set = nomad
+	uses_alternative_skies_for_moons = no
+	uses_alternative_skies_if_has_orbital_ring = no
+	is_artificial_planet = yes
+	default_planet_selection = yes
+
+	carry_cap_per_free_district = @carry_cap_normal
+
+	single_build_queue = yes
+}
+
+pc_protostar = {
+	entity = t_star_class_star_entity
+	entity_scale = 15.0
+	picture = "pc_browndwarf"
+	icon = GFX_planet_type_gas_giant
+	icon_large = GFX_planet_type_gas_giant_big
+
+	atmosphere_color		= hsv { 0.87 0.6 0.4 }
+	atmosphere_intensity	= 0.7
+	atmosphere_width		= 0.7
+
+	climate = "luminosity_0"
+	star = yes
+	star_gfx = no
+
+	min_distance_from_sun = 0
+	max_distance_from_sun = 0
+	spawn_odds = 0
+
+	extra_orbit_size = 0
+	extra_planet_count = 0
+
+	chance_of_ring = 0
+
+	planet_size = { min = 30 max = 35 }
+
+	colonizable = no
+}

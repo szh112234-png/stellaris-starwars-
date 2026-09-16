@@ -1,0 +1,23 @@
+# Country scope. Successor identities take priority over retained Republic flags.
+# Existing researched technology is retained; retired aircraft disappear from
+# research/designer selection, while fixed support fleets retain their loadouts.
+foc_v1717c_republic_strategic_aircraft_retired = {
+    OR = {
+        foc_v137_has_imperial_starfighter_identity = yes
+        foc_v137_has_rebel_starfighter_identity = yes
+        has_country_flag = fop_player_first_order
+        has_country_flag = fop_player_final_order
+        has_country_flag = fop_origin_player_final_order_established
+    }
+}
+
+foc_v1717c_republic_strategic_aircraft_allowed = {
+    NOT = { foc_v1717c_republic_strategic_aircraft_retired = yes }
+    foc_v1716_republic_start_arsenal_allowed = yes
+}
+
+# Only human First Order origins need the completed base. Sites and blueprints
+# do not satisfy the existing completion-only arsenal milestone.
+foc_v1717c_imperial_strategic_aircraft_allowed = {
+    foc_v1717_first_order_empire_arsenal_allowed = yes
+}

@@ -1,0 +1,595 @@
+# =============================================================================
+# FOC V212 - Obi-Wan / Rebel high-command / named-character timeline
+# =============================================================================
+# All clocks are anchored to the actual Galactic Civil War flag.  Named exits
+# are idempotent and can be called by both direct hooks and monthly save repair.
+# =============================================================================
+
+# Country scope: the pre-Treaty Imperial Rebellion.
+# Mon Mothma is the political leader. Leia and Luke are deliberately absent
+# until their own story milestones.
+foc_v212_create_imperial_rebel_high_command = {
+    if = {
+        limit = {
+            foc_v232n_is_resistance = no
+            NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+            OR = {
+                has_country_flag = foc_republic_origin_imperial_rebel_country
+                has_country_flag = foc_republic_origin_rebel_alliance_country
+                AND = {
+                    has_country_flag = foc_khan_rebel_alliance_country
+                    NOT = { has_country_flag = foc_khan_first_order_resistance_country }
+                    NOT = { has_country_flag = foc_republic_origin_post_treaty_rebel_country }
+                }
+            }
+        }
+
+        # Reserved for the later post-Treaty Leia/Resistance initializer; keep
+        # it clear for as long as this country is still the Imperial Rebellion.
+        remove_country_flag = foc_republic_origin_rebel_command_created
+
+        if = {
+            limit = { NOT = { has_country_flag = foc_v212_imperial_rebel_high_command_created } }
+            set_country_flag = foc_v212_imperial_rebel_high_command_created
+            # V211 and older made Leia the ruler at country creation. Convert
+            # that same ruler object into Mon Mothma so no government handover
+            # or player-country switch is required.
+            if = {
+                limit = { exists = event_target:foc_saga_leia }
+                clear_global_event_target = foc_saga_leia
+            }
+            ruler = {
+                remove_leader_flag = foc_saga_leia_leader
+                remove_leader_flag = foc_republic_origin_jedi_leader
+                remove_leader_flag = foc_v1717e_republic_palpatine_leader
+                set_name = "FOC_SAGA_MON_MOTHMA_NAME"
+                change_leader_portrait = foc_saga_mon_mothma_01
+                set_leader_flag = foc_saga_mon_mothma_leader
+                set_leader_tier = leader_tier_legendary
+                set_immortal = yes
+                save_global_event_target_as = foc_saga_mon_mothma
+            }
+            # Remove the old duplicate official created beside a Leia ruler.
+            every_owned_leader = {
+                limit = {
+                    has_leader_flag = foc_saga_mon_mothma_leader
+                    is_ruler = no
+                }
+                set_immortal = no
+                kill_leader = { show_notification = no }
+            }
+
+            # V211 and older also created Leia and Luke immediately. Remove only
+            # those premature Imperial-Rebel copies; their V212 milestone effects
+            # recreate or transfer them at Alderaan / +19y (or DS-I completion).
+            if = {
+                limit = { NOT = { has_global_flag = foc_v212_leia_joined_imperial_rebels } }
+                every_owned_leader = {
+                    limit = { has_leader_flag = foc_saga_leia_leader }
+                    set_immortal = no
+                    kill_leader = { show_notification = no }
+                }
+                if = { limit = { exists = event_target:foc_saga_leia } clear_global_event_target = foc_saga_leia }
+            }
+            if = {
+                limit = { NOT = { has_global_flag = foc_v212_luke_joined_imperial_rebels } }
+                every_owned_leader = {
+                    limit = { has_leader_flag = foc_saga_luke_leader }
+                    set_immortal = no
+                    kill_leader = { show_notification = no }
+                }
+                if = { limit = { exists = event_target:foc_saga_luke } clear_global_event_target = foc_saga_luke }
+            }
+        }
+
+        # Older staged-Rebel saves usually kept Ackbar as an event target even
+        # though the original initializer omitted his leader flag.
+        if = {
+            limit = { exists = event_target:foc_khan_rebel_ackbar }
+            event_target:foc_khan_rebel_ackbar = {
+                set_leader_flag = foc_republic_origin_ackbar_leader
+                set_leader_tier = leader_tier_legendary
+                set_immortal = yes
+                change_leader_portrait = rebelmoncala_male_01
+            }
+        }
+
+        if = {
+            limit = {
+                NOT = { has_global_flag = foc_v212_ackbar_died_on_raddus }
+                NOT = { any_owned_leader = { has_leader_flag = foc_republic_origin_ackbar_leader } }
+            }
+            create_leader = {
+                tier = leader_tier_legendary
+                class = commander
+                species = owner_main_species
+                name = "Admiral Ackbar"
+                skill = 8
+                event_leader = yes
+                skip_background_generation = yes
+                randomize_traits = no
+                effect = {
+                    change_leader_portrait = rebelmoncala_male_01
+                    set_leader_flag = foc_republic_origin_ackbar_leader
+                    set_immortal = yes
+                    save_global_event_target_as = foc_khan_rebel_ackbar
+                }
+            }
+        }
+
+        if = {
+            limit = {
+                NOT = { has_global_flag = foc_v212_raddus_died_at_scarif }
+                NOT = { any_owned_leader = { has_leader_flag = foc_republic_origin_raddus_leader } }
+            }
+            create_leader = {
+                tier = leader_tier_legendary
+                class = commander
+                species = owner_main_species
+                name = "FOC_V212_RADDUS_NAME"
+                skill = 7
+                event_leader = yes
+                skip_background_generation = yes
+                randomize_traits = no
+                effect = {
+                    change_leader_portrait = raddus_male_01
+                    set_leader_flag = foc_republic_origin_raddus_leader
+                    set_immortal = yes
+                    save_global_event_target_as = foc_v212_admiral_raddus
+                }
+            }
+        }
+
+        if = {
+            limit = { NOT = { any_owned_leader = { has_leader_flag = foc_republic_origin_lando_leader } } }
+            create_leader = {
+                tier = leader_tier_legendary
+                class = commander
+                species = owner_main_species
+                name = "Lando Calrissian"
+                skill = 6
+                event_leader = yes
+                skip_background_generation = yes
+                randomize_traits = no
+                effect = {
+                    change_leader_portrait = foc_saga_lando_01
+                    set_leader_flag = foc_republic_origin_lando_leader
+                }
+            }
+        }
+    }
+}
+
+# No required scope. Start the two exact Imperial-Rebellion clocks only after
+# the civil war has actually begun and the surviving Rebel country exists.
+foc_v212_start_gcw_character_clock = {
+    if = {
+        limit = {
+            has_global_flag = foc_republic_origin_empire_war_active
+            NOT = { has_global_flag = foc_v212_gcw_character_clock_started }
+        }
+        if = {
+            limit = {
+                exists = event_target:foc_khan_rebel_alliance
+                event_target:foc_khan_rebel_alliance = {
+                    NOT = { has_country_flag = foc_khan_first_order_resistance_country }
+                    NOT = { has_country_flag = foc_republic_origin_post_treaty_rebel_country }
+                    OR = {
+                        has_country_flag = foc_republic_origin_imperial_rebel_country
+                        has_country_flag = foc_republic_origin_rebel_alliance_country
+                        has_country_flag = foc_khan_rebel_alliance_country
+                    }
+                }
+            }
+            event_target:foc_khan_rebel_alliance = {
+                set_country_flag = foc_v212_gcw_character_clock_owner
+                set_timed_country_flag = { flag = foc_v212_wait_luke_training_19y days = 6840 }
+                country_event = { id = foc_v212_story.11 days = 6840 }
+                foc_v212_create_imperial_rebel_high_command = yes
+            }
+        }
+        else = {
+            random_country = {
+                limit = {
+                    NOT = { has_country_flag = foc_khan_first_order_resistance_country }
+                    NOT = { has_country_flag = foc_republic_origin_post_treaty_rebel_country }
+                    OR = {
+                        has_country_flag = foc_republic_origin_imperial_rebel_country
+                        has_country_flag = foc_republic_origin_rebel_alliance_country
+                        has_country_flag = foc_khan_rebel_alliance_country
+                    }
+                }
+                set_country_flag = foc_v212_gcw_character_clock_owner
+                set_timed_country_flag = { flag = foc_v212_wait_luke_training_19y days = 6840 }
+                country_event = { id = foc_v212_story.11 days = 6840 }
+                foc_v212_create_imperial_rebel_high_command = yes
+            }
+        }
+        if = {
+            limit = { any_country = { has_country_flag = foc_v212_gcw_character_clock_owner } }
+            set_global_flag = foc_v212_gcw_character_clock_started
+            log = "FOC_V212_CHARACTERS: Galactic Civil War character clock started (Luke +19y; Leia recruitment +10y; rescue follows Scarif +30 days)."
+        }
+    }
+}
+
+# Country scope: canonical Rebel country.
+foc_v212_ensure_obiwan_with_rebels = {
+    if = {
+        limit = {
+            NOT = { has_global_flag = foc_v212_obiwan_force_ghost }
+            NOT = { has_global_flag = foc_canon_obiwan_dead }
+        }
+        foc_canon_return_obiwan = yes
+        every_owned_leader = {
+            limit = { has_leader_flag = foc_canon_obiwan_returned_leader }
+            set_leader_tier = leader_tier_legendary
+            set_immortal = yes
+            change_leader_portrait = foc_obiwan_male_01
+            save_global_event_target_as = foc_canon_obiwan_returned
+        }
+    }
+}
+
+# Country scope: canonical Rebel country. Ten years after the real civil-war
+# opening, Obi-Wan rescues Leia from Vader. Leia does not join the Rebellion yet.
+foc_v212_obiwan_rescues_leia = {
+    if = {
+        limit = {
+            has_global_flag = foc_v1710_leia_rescue_completed
+            NOT = {
+                has_global_flag = foc_v212_obiwan_force_ghost
+            }
+        }
+        if = {
+            limit = {
+                exists = event_target:foc_khan_rebel_alliance
+            }
+            event_target:foc_khan_rebel_alliance = {
+                if = {
+                    limit = {
+                        foc_v1710_is_gcw_rebel = yes
+                    }
+                    foc_v212_obiwan_becomes_force_ghost = yes
+                }
+            }
+        }
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = foc_v212_obiwan_force_ghost
+                }
+            }
+            random_country = {
+                limit = {
+                    foc_v1710_is_gcw_rebel = yes
+                }
+                foc_v212_obiwan_becomes_force_ghost = yes
+            }
+        }
+    }
+    else_if = {
+        limit = {
+            foc_v1710_scarif_month_elapsed = yes
+            has_global_flag = foc_republic_origin_scarif_weakness_obtained
+            NOT = {
+                has_global_flag = foc_v1710_leia_rescue_completed
+            }
+            NOT = {
+                has_global_flag = foc_republic_origin_galactic_treaty
+            }
+        }
+        country_event = {
+            id = foc_v1710_story.1
+        }
+    }
+}
+
+# Country scope: canonical Rebel country. Keep existing Luke if a migrated save
+# already has him; otherwise create the nineteen-year-old commander here.
+foc_v212_ensure_young_luke = {
+    if = {
+        limit = { NOT = { has_global_flag = foc_saga_luke_died } }
+        foc_phase1_move_luke_here = yes
+        if = {
+            limit = { any_owned_leader = { has_leader_flag = foc_saga_luke_leader } }
+            random_owned_leader = {
+                limit = { has_leader_flag = foc_saga_luke_leader }
+                set_leader_tier = leader_tier_legendary
+                set_immortal = yes
+                foc_saga_apply_luke_portrait = yes
+                if = {
+                    limit = { NOT = { has_trait = leader_trait_foc_force_sensitive } }
+                    add_trait = { trait = leader_trait_foc_force_sensitive consume_selection = no }
+                }
+                if = {
+                    limit = { NOT = { has_trait = leader_trait_psionic } }
+                    add_trait = { trait = leader_trait_psionic consume_selection = no }
+                }
+                save_global_event_target_as = foc_saga_luke
+            }
+        }
+        else = {
+            create_leader = {
+                tier = leader_tier_legendary
+                class = commander
+                species = owner_main_species
+                name = "FOC_SAGA_LUKE_NAME"
+                gender = male
+                skill = 6
+                leader_age_min = 19
+                leader_age_max = 20
+                event_leader = yes
+                skip_background_generation = yes
+                randomize_traits = no
+                traits = { 0 = subclass_commander_general }
+                effect = {
+                    foc_saga_apply_luke_portrait = yes
+                    set_leader_flag = foc_saga_luke_leader
+                    set_immortal = yes
+                    add_trait = { trait = leader_trait_foc_force_sensitive consume_selection = no }
+                    add_trait = { trait = leader_trait_psionic consume_selection = no }
+                    save_global_event_target_as = foc_saga_luke
+                }
+            }
+        }
+    }
+}
+
+# Country scope: canonical Rebel country. Called at +19 years or immediately
+# when Death Star I completes, whichever happens first.
+foc_v212_obiwan_trains_luke = {
+    if = {
+        limit = {
+            NOT = { has_global_flag = foc_v212_luke_joined_imperial_rebels }
+            NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        }
+        foc_v212_ensure_obiwan_with_rebels = yes
+        foc_v212_ensure_young_luke = yes
+        if = {
+            limit = { any_owned_leader = { has_leader_flag = foc_saga_luke_leader } }
+            set_global_flag = foc_v212_luke_joined_imperial_rebels
+            set_country_flag = foc_v212_luke_trained_by_obiwan
+            log = "FOC_V212_CHARACTERS: Obi-Wan found and trained Luke; Luke joined the Imperial Rebellion."
+        }
+    }
+    if = {
+        limit = {
+            has_global_flag = foc_v212_luke_joined_imperial_rebels
+            NOT = { has_global_flag = foc_v212_luke_training_announced }
+        }
+        set_global_flag = foc_v212_luke_training_announced
+        every_playable_country = {
+            limit = { is_ai = no }
+            country_event = { id = foc_v212_story.3 }
+        }
+    }
+}
+
+# Country scope: canonical Rebel country. Legacy effect ID retained.
+# v17.11: joins after 10 years of civil war, independent of Alderaan/rescue.
+foc_v212_leia_joins_after_alderaan = {
+    if = {
+        limit = {
+            foc_v1711_leia_join_time_ready = yes
+            foc_v1710_is_gcw_rebel = yes
+            NOT = { has_global_flag = foc_v212_leia_joined_imperial_rebels }
+            NOT = { has_global_flag = foc_saga_leia_dead }
+            NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        }
+        foc_v212_create_imperial_rebel_high_command = yes
+        foc_phase1_move_leia_here = yes
+        if = {
+            limit = { any_owned_leader = { has_leader_flag = foc_saga_leia_leader } }
+            random_owned_leader = {
+                limit = { has_leader_flag = foc_saga_leia_leader }
+                set_leader_tier = leader_tier_legendary
+                set_immortal = yes
+                foc_saga_apply_leia_portrait = yes
+                save_global_event_target_as = foc_saga_leia
+            }
+        }
+        else = {
+            create_leader = {
+                tier = leader_tier_legendary
+                class = official
+                species = owner_main_species
+                name = "FOC_SAGA_LEIA_NAME"
+                gender = female
+                skill = 8
+                leader_age_min = 18
+                leader_age_max = 22
+                event_leader = yes
+                skip_background_generation = yes
+                randomize_traits = no
+                effect = {
+                    foc_saga_apply_leia_portrait = yes
+                    set_leader_flag = foc_saga_leia_leader
+                    set_immortal = yes
+                    save_global_event_target_as = foc_saga_leia
+                }
+            }
+        }
+        if = {
+            limit = { any_owned_leader = { has_leader_flag = foc_saga_leia_leader } }
+            set_global_flag = foc_v212_leia_joined_imperial_rebels
+            set_country_flag = foc_v212_leia_rebel_member
+            log = "FOC_V212_CHARACTERS: Leia joined the Imperial Rebellion at the ten-year civil-war milestone; no rescue rewards granted."
+        }
+    }
+    if = {
+        limit = {
+            has_global_flag = foc_v212_leia_joined_imperial_rebels
+            NOT = { has_global_flag = foc_v212_leia_join_announced }
+        }
+        set_global_flag = foc_v212_leia_join_announced
+        every_playable_country = {
+            limit = { is_ai = no }
+            country_event = { id = foc_v212_story.4 }
+        }
+    }
+}
+
+# Country scope: Rebel country which owns Obi-Wan. The confirmed Leia
+# rescue ends his active service and establishes persistent Force-ghost guidance.
+foc_v212_obiwan_becomes_force_ghost = {
+    if = {
+        limit = {
+            NOT = {
+                has_global_flag = foc_v212_obiwan_force_ghost
+            }
+        }
+        remove_modifier = foc_republic_origin_jedi_survivor
+        if = {
+            limit = {
+                exists = event_target:foc_canon_obiwan_returned
+            }
+            event_target:foc_canon_obiwan_returned = {
+                if = {
+                    limit = {
+                        has_leader_flag = foc_canon_obiwan_returned_leader
+                    }
+                    set_leader_flag = foc_v212_obiwan_force_ghost_leader
+                    set_immortal = no
+                    kill_leader = {
+                        show_notification = no
+                    }
+                }
+            }
+        }
+        every_country = {
+            every_owned_leader = {
+                limit = {
+                    has_leader_flag = foc_canon_obiwan_returned_leader
+                }
+                set_leader_flag = foc_v212_obiwan_force_ghost_leader
+                set_immortal = no
+                kill_leader = {
+                    show_notification = no
+                }
+            }
+            if = {
+                limit = {
+                    has_country_flag = foc_canon_obiwan_active
+                }
+                remove_country_flag = foc_canon_obiwan_active
+                set_country_flag = foc_canon_obiwan_dead
+            }
+        }
+        remove_country_flag = foc_canon_obiwan_active
+        set_country_flag = foc_canon_obiwan_dead
+        set_country_flag = foc_v212_obiwan_force_ghost_country
+        if = {
+            limit = {
+                NOT = {
+                    has_modifier = foc_saga_force_ghost_guidance
+                }
+            }
+            add_modifier = {
+                modifier = foc_saga_force_ghost_guidance
+                days = -1
+            }
+        }
+        if = {
+            limit = {
+                exists = event_target:foc_canon_obiwan_returned
+            }
+            clear_global_event_target = foc_canon_obiwan_returned
+        }
+        set_global_flag = foc_canon_obiwan_dead
+        set_global_flag = foc_v212_obiwan_force_ghost
+        log = "FOC_V212_CHARACTERS: Obi-Wan sacrificed himself during Leia's rescue and became a Jedi Force ghost."
+    }
+}
+
+# No required scope. Tarkin's unique Death-Star commander dies with DS-I.
+foc_v212_kill_tarkin_at_yavin = {
+    if = {
+        limit = { NOT = { has_global_flag = foc_v212_tarkin_died_with_death_star_one } }
+        set_global_flag = foc_v212_tarkin_died_with_death_star_one
+        if = {
+            limit = { exists = event_target:foc_republic_origin_tarkin }
+            event_target:foc_republic_origin_tarkin = {
+                set_leader_flag = foc_v212_tarkin_dead_leader
+                set_immortal = no
+                kill_leader = { show_notification = no }
+            }
+            clear_global_event_target = foc_republic_origin_tarkin
+        }
+        every_country = {
+            every_owned_leader = {
+                limit = { has_leader_flag = foc_republic_origin_death_star_commander }
+                set_leader_flag = foc_v212_tarkin_dead_leader
+                set_immortal = no
+                kill_leader = { show_notification = no }
+            }
+        }
+        every_country = {
+            limit = { has_country_flag = foc_republic_origin_empire_country }
+            set_country_flag = foc_v212_tarkin_dead
+        }
+        log = "FOC_V212_CHARACTERS: Grand Moff Tarkin died when Death Star I was destroyed."
+    }
+}
+
+# No required scope. Admiral Raddus dies at Scarif and cannot be recreated by
+# the later D'Qar/Resistance high-command constructor.
+foc_v212_kill_raddus_at_scarif = {
+    if = {
+        limit = { NOT = { has_global_flag = foc_v212_raddus_died_at_scarif } }
+        set_global_flag = foc_v212_raddus_died_at_scarif
+        if = {
+            limit = { exists = event_target:foc_v212_admiral_raddus }
+            event_target:foc_v212_admiral_raddus = {
+                set_leader_flag = foc_v212_raddus_dead_leader
+                set_immortal = no
+                kill_leader = { show_notification = no }
+            }
+            clear_global_event_target = foc_v212_admiral_raddus
+        }
+        every_country = {
+            every_owned_leader = {
+                limit = { has_leader_flag = foc_republic_origin_raddus_leader }
+                set_leader_flag = foc_v212_raddus_dead_leader
+                set_immortal = no
+                kill_leader = { show_notification = no }
+            }
+        }
+        log = "FOC_V212_CHARACTERS: Admiral Raddus died in the Battle of Scarif."
+    }
+}
+
+# No required scope. Kylo Ren's bridge strike on Raddus kills Ackbar but does
+# not destroy the unique Raddus flagship itself.
+foc_v212_kill_ackbar_on_raddus = {
+    if = {
+        limit = { NOT = { has_global_flag = foc_v212_ackbar_died_on_raddus } }
+        set_global_flag = foc_v212_ackbar_died_on_raddus
+        if = {
+            limit = { exists = event_target:foc_khan_rebel_ackbar }
+            event_target:foc_khan_rebel_ackbar = {
+                set_leader_flag = foc_v212_ackbar_dead_leader
+                set_immortal = no
+                kill_leader = { show_notification = no }
+            }
+            clear_global_event_target = foc_khan_rebel_ackbar
+        }
+        every_country = {
+            every_owned_leader = {
+                limit = { has_leader_flag = foc_republic_origin_ackbar_leader }
+                set_leader_flag = foc_v212_ackbar_dead_leader
+                set_immortal = no
+                kill_leader = { show_notification = no }
+            }
+        }
+        log = "FOC_V212_CHARACTERS: Admiral Ackbar died in Kylo Ren's strike on the bridge of Raddus."
+    }
+}
+
+# No required scope. Direct/monthly Death Star I resolver: Tarkin only.
+# Obi-Wan already exits during the confirmed Leia rescue.
+foc_v212_resolve_death_star_one_character_fates = {
+    # Obi-Wan's sacrifice belongs to the confirmed Leia rescue. The live DS-I
+    # destruction hook and Yavin aftermath own only Tarkin's death.
+    foc_v212_kill_tarkin_at_yavin = yes
+}

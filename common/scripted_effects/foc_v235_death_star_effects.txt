@@ -1,0 +1,30 @@
+# V235 exact Phase-I early deadline. New games start this on project creation.
+# Old saves use the existing monthly age counter; its precision is one month.
+foc_v235_start_death_star_early_clock = {
+    if = {
+        limit = {
+            is_ai = yes
+            has_country_flag = foc_republic_origin_empire_country
+            has_country_flag = foc_republic_origin_death_star_project_started
+            NOT = { has_country_flag = foc_republic_origin_death_star_one_built }
+            NOT = { has_country_flag = foc_v235_ds1_clock_started }
+        }
+        set_variable = { which = foc_v235_ds1_wait_days value = 900 }
+        if = {
+            limit = { is_variable_set = foc_v202_death_star_one_project_months }
+            set_variable = { which = foc_v235_ds1_elapsed_days value = foc_v202_death_star_one_project_months }
+            multiply_variable = { which = foc_v235_ds1_elapsed_days value = 30 }
+            subtract_variable = { which = foc_v235_ds1_wait_days value = foc_v235_ds1_elapsed_days }
+        }
+        set_country_flag = foc_v235_ds1_clock_started
+        if = {
+            limit = { check_variable = { which = foc_v235_ds1_wait_days value > 0 } }
+            set_timed_country_flag = { flag = foc_v235_ds1_early_wait days = foc_v235_ds1_wait_days }
+            country_event = { id = foc_v235.6 days = foc_v235_ds1_wait_days }
+        }
+        else = {
+            country_event = { id = foc_v235.6 days = 1 }
+        }
+        log = "FOC_V235_DS_CLOCK: [This.GetName]; early deadline in [This.foc_v235_ds1_wait_days] days, counted from the original project start."
+    }
+}

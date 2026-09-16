@@ -1,0 +1,57 @@
+# The Jedi Order serves the Republic as generals, negotiators and keepers of
+# the peace. Its value is mostly on the ground and in the Senate rather than in
+# the line of battle, so the package is deliberately modest.
+foc_republic_origin_jedi_order = {
+    army_damage_mult = 0.15
+    army_defense_damage_mult = 0.15
+    planet_stability_add = 5
+    planet_crime_add = -10
+    leaders_upkeep_mult = -0.20
+    diplo_weight_mult = 0.10
+}
+
+# Wartime command. Jedi Generals take the field with the Grand Army, which
+# makes the Republic's armies formidable and its fleets a little bolder.
+foc_republic_origin_jedi_generals = {
+    army_damage_mult = 0.30
+    army_defense_damage_mult = 0.30
+    army_starting_experience_add = 300
+    
+    ship_evasion_mult = 0.10
+}
+
+# One survivor of the purge: hiding, training, waiting. Worth very little in
+# fleet strength and a great deal to the people who know the Order still lives.
+foc_republic_origin_jedi_survivor = {
+    planet_stability_add = 5
+    army_damage_mult = 0.20
+    country_war_exhaustion_mult = -0.25
+    ship_evasion_mult = 0.05
+    country_unity_produces_mult = 0.10
+}
+
+# The Inquisitorius hunts what remains of the Order. Effective, and hated.
+foc_republic_origin_inquisitorius = {
+    army_damage_mult = 0.20
+    pop_government_ethic_attraction = 0.25
+    planet_stability_add = -3
+    planet_crime_add = 10
+}
+
+# Backing an investigation into the Chancellor's own office is not free. The
+# Senate closes ranks around him and the Order is painted as overreaching.
+foc_republic_origin_senate_backlash = {
+    diplo_weight_mult = -0.20
+    planet_stability_add = -5
+    country_unity_produces_mult = -0.15
+}
+
+# Vader is not a fleet doctrine. He is one man who makes the Empire's armies
+# and its officers behave very differently when he is aboard.
+foc_republic_origin_darth_vader = {
+    army_damage_mult = 0.30
+    army_defense_damage_mult = 0.20
+    
+    pop_government_ethic_attraction = 0.20
+    planet_stability_add = -2
+}

@@ -1,0 +1,313 @@
+# FOC-original Galactic Civil War strategic ledger and partisan effects.
+# Design goal: serve the Republic -> Empire/Rebels -> Alliance timeline already
+# present in FOC. No hidden Rebel country, no copied New Dawn variable layout.
+
+foc_gcw_initialize_rebel_ledger = {
+    if = {
+        limit = { NOT = { has_country_flag = foc_gcw_ledger_initialized } }
+        set_country_flag = foc_gcw_ledger_initialized
+        set_variable = { which = foc_gcw_support value = 20 }
+        set_variable = { which = foc_gcw_supply value = 20 }
+        set_variable = { which = foc_gcw_intelligence value = 15 }
+        set_variable = { which = foc_gcw_readiness value = 20 }
+        set_timed_country_flag = { flag = foc_gcw_annual_tick days = 360 }
+    }
+    save_global_event_target_as = foc_gcw_rebel_ledger
+    if = {
+        limit = { NOT = { exists = event_target:foc_khan_rebel_alliance } }
+        save_global_event_target_as = foc_khan_rebel_alliance
+    }
+}
+
+foc_gcw_initialize_empire_ledger = {
+    if = {
+        limit = { NOT = { has_country_flag = foc_gcw_empire_ledger_initialized } }
+        set_country_flag = foc_gcw_empire_ledger_initialized
+        set_variable = { which = foc_gcw_control value = 70 }
+        set_variable = { which = foc_gcw_morale value = 75 }
+        set_timed_country_flag = { flag = foc_gcw_empire_annual_tick days = 360 }
+        set_timed_country_flag = { flag = foc_gcw_partisan_tick days = 90 }
+    }
+    save_global_event_target_as = foc_gcw_empire_ledger
+}
+
+foc_gcw_clamp_rebel_ledger = {
+    if = { limit = { check_variable = { which = foc_gcw_support value > 100 } } set_variable = { which = foc_gcw_support value = 100 } }
+    if = { limit = { check_variable = { which = foc_gcw_supply value > 100 } } set_variable = { which = foc_gcw_supply value = 100 } }
+    if = { limit = { check_variable = { which = foc_gcw_intelligence value > 100 } } set_variable = { which = foc_gcw_intelligence value = 100 } }
+    if = { limit = { check_variable = { which = foc_gcw_readiness value > 100 } } set_variable = { which = foc_gcw_readiness value = 100 } }
+
+    if = { limit = { check_variable = { which = foc_gcw_support value < 0 } } set_variable = { which = foc_gcw_support value = 0 } }
+    if = { limit = { check_variable = { which = foc_gcw_supply value < 0 } } set_variable = { which = foc_gcw_supply value = 0 } }
+    if = { limit = { check_variable = { which = foc_gcw_intelligence value < 0 } } set_variable = { which = foc_gcw_intelligence value = 0 } }
+    if = { limit = { check_variable = { which = foc_gcw_readiness value < 0 } } set_variable = { which = foc_gcw_readiness value = 0 } }
+}
+
+foc_gcw_clamp_empire_ledger = {
+    if = { limit = { check_variable = { which = foc_gcw_control value > 100 } } set_variable = { which = foc_gcw_control value = 100 } }
+    if = { limit = { check_variable = { which = foc_gcw_morale value > 100 } } set_variable = { which = foc_gcw_morale value = 100 } }
+    if = { limit = { check_variable = { which = foc_gcw_control value < 0 } } set_variable = { which = foc_gcw_control value = 0 } }
+    if = { limit = { check_variable = { which = foc_gcw_morale value < 0 } } set_variable = { which = foc_gcw_morale value = 0 } }
+}
+
+# Country scope: update the visible strategic state modifiers from the Empire's ledger.
+foc_gcw_refresh_empire_state = {
+    remove_modifier = foc_gcw_empire_high_control
+    remove_modifier = foc_gcw_empire_low_control
+    remove_modifier = foc_gcw_empire_high_morale
+    remove_modifier = foc_gcw_empire_low_morale
+
+    if = {
+        limit = { check_variable = { which = foc_gcw_control value >= 70 } }
+        add_modifier = { modifier = foc_gcw_empire_high_control days = -1 }
+    }
+    else_if = {
+        limit = { check_variable = { which = foc_gcw_control value < 40 } }
+        add_modifier = { modifier = foc_gcw_empire_low_control days = -1 }
+    }
+
+    if = {
+        limit = { check_variable = { which = foc_gcw_morale value >= 70 } }
+        add_modifier = { modifier = foc_gcw_empire_high_morale days = -1 }
+    }
+    else_if = {
+        limit = { check_variable = { which = foc_gcw_morale value < 40 } }
+        add_modifier = { modifier = foc_gcw_empire_low_morale days = -1 }
+    }
+}
+
+# Planet scope: clear every partisan state after a successful sweep/concession/liberation.
+foc_gcw_clear_partisan_state = {
+    remove_modifier = foc_gcw_partisan_cell
+    remove_modifier = foc_gcw_partisan_network
+    remove_modifier = foc_gcw_partisan_uprising
+    remove_modifier = foc_gcw_partisan_armed
+    remove_carrier_flag = foc_gcw_partisan_cell_flag
+    remove_carrier_flag = foc_gcw_partisan_network_flag
+    remove_carrier_flag = foc_gcw_partisan_uprising_flag
+    remove_carrier_flag = foc_gcw_partisan_armed_flag
+}
+
+# Planet scope: promote a cell into a real underground network and offer the
+# existing Imperial Rebellion a chance to support it.
+foc_gcw_promote_to_network = {
+    save_event_target_as = foc_v232r_partisan_planet
+
+    remove_modifier = foc_gcw_partisan_cell
+    remove_carrier_flag = foc_gcw_partisan_cell_flag
+    if = {
+        limit = { NOT = { has_modifier = foc_gcw_partisan_network } }
+        add_modifier = { modifier = foc_gcw_partisan_network days = -1 }
+    }
+    set_carrier_flag = foc_gcw_partisan_network_flag
+    save_global_event_target_as = foc_gcw_current_partisan_planet
+
+    if = {
+        limit = { exists = event_target:foc_gcw_rebel_ledger }
+        event_target:foc_gcw_rebel_ledger = {
+            change_variable = { which = foc_gcw_support value = 2 }
+            change_variable = { which = foc_gcw_intelligence value = 1 }
+            event_target:foc_v232r_partisan_planet = {
+                if = {
+                    limit = {
+                        OR = {
+                            has_modifier = foc_phase1_corellian_commercial_spine
+                            has_modifier = foc_phase1_coreward_industrial_corridor
+                            has_modifier = foc_phase1_outer_rim_supply_lane
+                        }
+                    }
+                    event_target:foc_gcw_rebel_ledger = {
+                        change_variable = { which = foc_gcw_supply value = 1 }
+                        change_variable = { which = foc_gcw_intelligence value = 1 }
+                    }
+                }
+            }
+            foc_gcw_clamp_rebel_ledger = yes
+            if = {
+                limit = {
+                    is_ai = no
+                    # Do not use root here: when this effect is called from an
+                    # espionage operation, root is espionage_operation scope.
+                    # The saved partisan planet is always a planet/carrier scope.
+                    event_target:foc_v232r_partisan_planet = {
+                        NOT = { has_carrier_flag = foc_gcw_active_uprising_targeted }
+                    }
+                }
+                country_event = { id = foc_gcw.30 days = 1 }
+            }
+        }
+    }
+}
+
+# Planet scope: the network has crossed into open insurrection.
+foc_gcw_promote_to_uprising = {
+    save_event_target_as = foc_v232r_partisan_planet
+
+    remove_modifier = foc_gcw_partisan_cell
+    remove_modifier = foc_gcw_partisan_network
+    remove_carrier_flag = foc_gcw_partisan_cell_flag
+    remove_carrier_flag = foc_gcw_partisan_network_flag
+    if = {
+        limit = { NOT = { has_modifier = foc_gcw_partisan_uprising } }
+        add_modifier = { modifier = foc_gcw_partisan_uprising days = -1 }
+    }
+    set_carrier_flag = foc_gcw_partisan_uprising_flag
+
+    if = {
+        limit = { exists = event_target:foc_gcw_rebel_ledger }
+        event_target:foc_gcw_rebel_ledger = {
+            change_variable = { which = foc_gcw_support value = 4 }
+            change_variable = { which = foc_gcw_readiness value = 2 }
+            event_target:foc_v232r_partisan_planet = {
+                if = {
+                    limit = {
+                        OR = {
+                            has_modifier = foc_phase1_corellian_commercial_spine
+                            has_modifier = foc_phase1_coreward_industrial_corridor
+                            has_modifier = foc_phase1_outer_rim_supply_lane
+                        }
+                    }
+                    event_target:foc_gcw_rebel_ledger = {
+                        change_variable = { which = foc_gcw_supply value = 1 }
+                        change_variable = { which = foc_gcw_readiness value = 1 }
+                    }
+                }
+            }
+            foc_gcw_clamp_rebel_ledger = yes
+        }
+    }
+}
+
+# Planet scope: a successful uprising transfers the whole star system to the
+# already-existing Imperial Rebellion/Rebel Alliance. No duplicate Partisan country.
+foc_gcw_liberate_system_to_rebels = {
+    owner = { save_global_event_target_as = foc_gcw_partisan_old_owner }
+
+    solar_system = {
+        if = {
+            limit = { exists = event_target:foc_khan_rebel_alliance }
+            foc_republic_origin_claim_for_rebels = yes
+        }
+        every_system_planet = {
+            limit = { is_colony = yes }
+            foc_gcw_clear_partisan_state = yes
+            set_timed_carrier_flag = { flag = foc_gcw_recently_resolved days = 1440 }
+        }
+    }
+
+    if = {
+        limit = { exists = event_target:foc_gcw_rebel_ledger }
+        event_target:foc_gcw_rebel_ledger = {
+            change_variable = { which = foc_gcw_support value = 8 }
+            change_variable = { which = foc_gcw_supply value = 4 }
+            change_variable = { which = foc_gcw_readiness value = 5 }
+            foc_gcw_clamp_rebel_ledger = yes
+        }
+    }
+
+    if = {
+        limit = { exists = event_target:foc_gcw_partisan_old_owner }
+        event_target:foc_gcw_partisan_old_owner = {
+            change_variable = { which = foc_gcw_control value = -6 }
+            change_variable = { which = foc_gcw_morale value = -5 }
+            foc_gcw_clamp_empire_ledger = yes
+            foc_gcw_refresh_empire_state = yes
+        }
+    }
+}
+
+# Planet scope: one paid yearly operation advances the same local organization
+# by one stage. Ownership is never changed here: the planet must reach open
+# revolt and resolve through the ordinary foc_gcw.13 uprising event.
+foc_v202_advance_resource_backed_border_resistance = {
+    if = {
+        limit = { has_carrier_flag = foc_gcw_partisan_uprising_flag }
+        carrier_event = { id = foc_gcw.13 days = 1 }
+    }
+    else_if = {
+        limit = { has_carrier_flag = foc_gcw_partisan_network_flag }
+        foc_gcw_promote_to_uprising = yes
+        carrier_event = { id = foc_gcw.13 days = 1 }
+    }
+    else_if = {
+        limit = { has_carrier_flag = foc_gcw_partisan_cell_flag }
+        foc_gcw_promote_to_network = yes
+    }
+    else = {
+        add_modifier = { modifier = foc_gcw_partisan_cell days = -1 }
+        set_carrier_flag = foc_gcw_partisan_cell_flag
+    }
+}
+
+# Country scope (Rebels): keep funding one valid frontier planet until it
+# revolts. If any Imperial-owned fleet enters that system, the route is blocked and a
+# new undefended adjacent target may be selected on the next paid operation.
+foc_v202_fund_resource_backed_border_resistance = {
+    save_global_event_target_as = foc_v202_border_resistance_patron
+    save_event_target_as = foc_v232r_border_patron
+
+    if = {
+        limit = {
+            exists = event_target:foc_v202_supported_border_planet
+            event_target:foc_v202_supported_border_planet = {
+                is_colony = yes
+                is_capital = no
+                foc_v202_system_has_no_imperial_fleet = yes
+                owner = {
+                    has_country_flag = foc_republic_origin_empire_country
+                    is_at_war_with = event_target:foc_v232r_border_patron
+                    NOR = {
+                        has_country_flag = foc_republic_origin_death_star_completed
+                        has_country_flag = foc_republic_origin_death_star_one_built
+                        has_country_flag = foc_republic_origin_death_star_two_built
+                    }
+                }
+                solar_system = {
+                    any_neighbor_system = {
+                        space_owner? = { is_same_value = event_target:foc_v232r_border_patron }
+                    }
+                }
+            }
+        }
+        event_target:foc_v202_supported_border_planet = {
+            foc_v202_advance_resource_backed_border_resistance = yes
+        }
+    }
+    else = {
+        random_country = {
+            limit = {
+                has_country_flag = foc_republic_origin_empire_country
+                is_at_war_with = event_target:foc_v232r_border_patron
+                NOR = {
+                    has_country_flag = foc_republic_origin_death_star_completed
+                    has_country_flag = foc_republic_origin_death_star_one_built
+                    has_country_flag = foc_republic_origin_death_star_two_built
+                }
+                any_owned_planet = {
+                    is_colony = yes
+                    is_capital = no
+                    foc_v202_system_has_no_imperial_fleet = yes
+                    solar_system = {
+                        any_neighbor_system = {
+                            space_owner? = { is_same_value = event_target:foc_v232r_border_patron }
+                        }
+                    }
+                }
+            }
+            random_owned_planet = {
+                limit = {
+                    is_colony = yes
+                    is_capital = no
+                    foc_v202_system_has_no_imperial_fleet = yes
+                    solar_system = {
+                        any_neighbor_system = {
+                            space_owner? = { is_same_value = event_target:foc_v232r_border_patron }
+                        }
+                    }
+                }
+                save_global_event_target_as = foc_v202_supported_border_planet
+                foc_v202_advance_resource_backed_border_resistance = yes
+            }
+        }
+    }
+}

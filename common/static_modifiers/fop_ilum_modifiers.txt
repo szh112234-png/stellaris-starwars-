@@ -1,0 +1,34 @@
+fop_kyber_crystal_caves = {
+    planet_researchers_produces_mult = 0.15
+    planet_miners_rare_crystals_produces_add = 0.25
+    icon = "gfx/interface/icons/planet_modifiers/nova_crystals.dds"
+    icon_frame = 1
+}
+
+fop_imperial_mining_trench = {
+    # V17: Ilum is held at full stability by the trench garrison.
+    planet_stability_add = 100
+    planet_max_districts_add = -1
+    planet_jobs_engineering_research_produces_mult = 0.10
+    planet_building_build_speed_mult = 0.10
+    icon = "gfx/interface/icons/planet_modifiers/klegger_mining.dds"
+    icon_frame = 1
+}
+
+fop_airless_low_gravity_rock = {
+    planet_orbital_bombardment_damage = 0.25
+    icon = "gfx/interface/icons/planet_modifiers/frozen_wasteland.dds"
+    icon_frame = 3
+}
+
+# Origin-flavour economy lines only. The defensive lines (army_defense_health_mult,
+# planet_orbital_bombardment_damage) moved to foc_starkiller_base_world in
+# foc_starkiller_base_modifiers.txt, which BOTH the crisis and the origin base apply.
+# Keeping them here as well would have double-stacked on the player origin.
+fop_starkiller_world = {
+    planet_max_districts_add = 4
+    planet_army_build_speed_mult = 0.50
+    planet_building_build_speed_mult = 0.25
+    icon = "gfx/interface/icons/planet_modifiers/thermal_oscillator.dds"
+    icon_frame = 1
+}

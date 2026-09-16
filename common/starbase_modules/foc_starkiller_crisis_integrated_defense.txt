@@ -1,0 +1,22 @@
+# FOC 2.65 crisis Starkiller structural module.
+# Weapons are mounted directly on the core section; this module only keeps every module slot occupied.
+
+foc_starkiller_crisis_integrated_defense = {
+    icon = "GFX_starbase_defense_platform"
+    section = "FOC_STARKILLER_CRISIS_INTEGRATED_DEFENSE_SECTION"
+    construction_days = 1
+    starbase_type = orbital_ring
+    category = sm_defense_cat
+    potential = {
+        exists = owner
+        owner = { has_country_flag = foc_khan_first_order_country }
+        has_starbase_size = foc_starkiller_ring
+    }
+    resources = { category = starbase_modules cost = { } upkeep = { energy = 3 } }
+    station_modifier = {
+        ship_hull_mult = 0.10
+        ship_armor_mult = 0.10
+        ship_shield_mult = 0.10
+    }
+    ai_weight = { weight = 0 }
+}

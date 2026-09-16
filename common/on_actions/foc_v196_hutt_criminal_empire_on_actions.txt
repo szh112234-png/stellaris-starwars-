@@ -1,0 +1,8 @@
+# Monthly fallback repairs existing saves; new games dispatch synchronously from
+# the map-generation event and therefore fail the global-flag trigger here.
+on_monthly_pulse_country = {
+    events = {
+        foc_v196_hutt.2
+        foc_v196_hutt.1
+    }
+}

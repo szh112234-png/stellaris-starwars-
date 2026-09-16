@@ -1,0 +1,57 @@
+# FOC-namespaced art chain derived from the supplied 2389218030 Executor model.
+# Only the frame and hull are integrated; the source mod's buildable ship,
+# weapons, strike craft and utility components are intentionally not imported.
+
+entity = {
+	name = "foc_executor_2389_frame_entity"
+	pdxmesh = "foc_executor_2389_frame_mesh"
+}
+
+entity = {
+	name = "foc_executor_2389_hull_entity"
+	pdxmesh = "foc_executor_2389_hull_mesh"
+
+	state = { name = "idle" state_time = 5
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_titan_ship_hum_01" } }
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_titan_ship_hum_02" } }
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_titan_ship_hum_03" } }
+		event = { time = 0 node = "engines01" particle = "juggernaut_exhaust_idle_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engines02" particle = "juggernaut_exhaust_idle_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engines03" particle = "juggernaut_exhaust_idle_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engines04" particle = "juggernaut_exhaust_idle_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engines05" particle = "juggernaut_exhaust_idle_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engines06" particle = "juggernaut_exhaust_idle_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engines07" particle = "juggernaut_exhaust_idle_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engines08" particle = "juggernaut_exhaust_idle_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engines09" particle = "juggernaut_exhaust_idle_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engines010" particle = "juggernaut_exhaust_idle_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engines011" particle = "juggernaut_exhaust_idle_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engines012" particle = "juggernaut_exhaust_idle_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engines013" particle = "juggernaut_exhaust_idle_circle_l" trigger_once = yes keep_particle = yes }
+	}
+
+	state = { name = "moving" state_time = 5
+		event = { trigger_once = yes sound = { soundeffect = "moving_out_titan" } }
+		event = { time = 0 node = "engines01" particle = "juggernaut_exhaust_moving_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engines02" particle = "juggernaut_exhaust_moving_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engines03" particle = "juggernaut_exhaust_moving_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engines04" particle = "juggernaut_exhaust_moving_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engines05" particle = "juggernaut_exhaust_moving_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engines06" particle = "juggernaut_exhaust_moving_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engines07" particle = "juggernaut_exhaust_moving_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engines08" particle = "juggernaut_exhaust_moving_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engines09" particle = "juggernaut_exhaust_moving_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engines010" particle = "juggernaut_exhaust_moving_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engines011" particle = "juggernaut_exhaust_moving_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engines012" particle = "juggernaut_exhaust_moving_circle_l" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "engines013" particle = "juggernaut_exhaust_moving_circle_l" trigger_once = yes keep_particle = yes }
+	}
+
+	state = { name = "death" looping = no
+		event = { time = 0.0 node = "target_locator_01" particle = "ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } keep_particle = yes trigger_once = yes }
+		event = { time = 3.0 node = "target_locator_02" particle = "ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } keep_particle = yes trigger_once = yes }
+		event = { time = 4.0 node = "target_locator_03" particle = "ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } keep_particle = yes trigger_once = yes }
+		event = { time = 6.0 node = "target_locator_04" particle = "ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } keep_particle = yes trigger_once = yes }
+		event = { time = 8.0 node = "target_locator_05" particle = "ship_explosion_particle" sound = { soundeffect = "ship_destroyed" } keep_particle = yes trigger_once = yes }
+	}
+}

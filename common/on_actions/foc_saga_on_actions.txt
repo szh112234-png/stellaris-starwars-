@@ -1,0 +1,136 @@
+# =============================================================================
+# 天行者线、凯洛·伦线与分离主义强化的挂钩
+# =============================================================================
+# V201: 月脉冲只保留真实剧情/年度支援控制器，以及按新增控制星系结算的
+# 帝国叛军征服奖励；旧档修复、舰船补齐、船坞补齐和驻军补齐全部移除。
+# =============================================================================
+
+on_monthly_pulse_country = {
+    events = {
+        # V212 exact Galactic-Civil-War character clocks and old-save exits.
+        foc_v212_story.1
+        foc_v212_story.2
+
+        # Luke Skywalker story.
+        foc_luke.10
+        foc_luke.11
+        foc_luke.12
+        foc_luke.13
+        foc_luke.20
+        foc_luke.23
+        foc_luke.21
+        foc_luke.22
+        foc_luke.14
+        foc_luke.16
+        foc_luke.17
+        foc_luke.30
+        foc_luke.31
+
+        # Post-Endor and Clone Wars story.
+        foc_thrawn.1
+        # V232h: once-only First Order opening catch-up; stops after success.
+        foc_thrawn.3
+        foc_cw.1
+        foc_cw.2
+        foc_cw.7
+        # V209: reconstruct the independent 1080-day assault clock for old saves.
+        foc_cw.10
+        foc_cw.6
+        foc_cw.3
+        foc_cw.4
+        foc_cw.5
+
+        # Rebel-era story. .6 is the normal MC80 unlock dispatcher; the separate
+        # monthly fixed-design repair (.8) is intentionally removed.
+        foc_reb.1
+        foc_reb.2
+        foc_reb.3
+        foc_reb.6
+        foc_reb.4
+        foc_reb.5
+
+        # V201: restore the existing system-count delta dispatcher. Its first
+        # valid pulse records a baseline; later net gains award one conquest
+        # fleet per additional Rebel-controlled system.
+        foc_rebel_growth.1
+
+        # Thrawn/Remnant story and normal balance state.
+        foc_rem.1
+        foc_rem.2
+        foc_rem.3
+        foc_rem.4
+        foc_rem.5
+        foc_balance.1
+        foc_balance.2
+        # V215: clear the Imperial-only planet garrison debuff from every
+        # non-Imperial legal owner. Occupied Imperial planets are handled by .2.
+        foc_balance.4
+        foc_balance.3
+        foc_balance.10
+        foc_balance.20
+        foc_saga_dqar.2
+
+        # Padme and Kylo story.
+        foc_padme.10
+        foc_padme.11
+        foc_padme.12
+        foc_padme.13
+        foc_kylo.10
+        foc_kylo.11
+        foc_kylo.12
+        foc_kylo.13
+        foc_kylo.14
+        foc_kylo.15
+        foc_kylo.16
+        foc_kylo.17
+
+        # Separatist story. .6 only starts the exact annual support clock for
+        # an old save that predates the war-start dispatcher; it is once-only.
+        foc_cis.1
+        foc_cis.2
+        foc_cis.3
+        # V209: persist the stage-II reinforcement cutoff for migrated saves.
+        foc_cis.9
+        # V205 one-shot: guarantee one 25-Lucrehulk opening fleet in every CIS-controlled system.
+        foc_cis.8
+        foc_cis.6
+
+        # V198 old-save starters. New Clone Wars and new Imperial Rebellions
+        # dispatch their full packages synchronously.
+        foc_v198_republic_support.1
+        foc_v198_republic_support.3
+
+        # V204 Resistance heavy-ship authorization / old-save repair.
+        foc_ai_capital.2
+
+        # V203 one-shot convergence for Treaty saves with a stale Empire identity
+        # or a D'Qar bootstrap that was started without its construction retries.
+        foc_v203_story_repair.1
+
+        # Deliberately annual AI support controllers, not monthly backfill.
+        # V232q: no fleet-power-based early reinforcement. .5 is a retired ID.
+        # .6 applies/removes the matching Death Star emergency acceleration.
+        foc_v134_support.6
+        foc_v134_support.1
+        foc_v134_support.3
+        foc_v135_support.1
+        foc_v135_support.2
+        foc_v135_support.3
+        foc_v135_support.4
+        foc_v135_support.5
+
+        # Treaty law and disarmament progression.
+        foc_v135_treaty.1
+        foc_v135_treaty.2
+    }
+}
+
+# 弑星者基地备用目标控制器。原生 foc_khan.1000 挂在 on_monthly_pulse 上，
+# 这里保持同一个脉冲，保证两者节奏一致、旗标不会错位。
+on_monthly_pulse = {
+    events = {
+        # Core Starkiller target controller and D'Qar held-state guard only.
+        foc_sk.1
+        foc_saga_dqar.1
+    }
+}

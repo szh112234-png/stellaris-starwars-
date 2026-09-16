@@ -1,0 +1,47 @@
+namespace = foc_khan_248
+
+# One-time 2.48 repair for saves that already ran 2.46/2.47 with the wrong
+# 2.40 transport scripted effect. Those fleets may carry stale controller flags
+# while having no queue. Clear only transport orders and reinstall the real queue.
+event = {
+    id = foc_khan_248.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        NOT = { has_global_flag = foc_khan_248_army_queue_repaired }
+        any_country = {
+            OR = {
+                has_country_flag = foc_khan_first_order_country
+                has_country_flag = foc_khan_final_order_country
+            }
+            any_owned_fleet = {
+                any_owned_ship = { is_ship_class = shipclass_transport }
+            }
+        }
+    }
+
+    immediate = {
+        set_global_flag = foc_khan_248_army_queue_repaired
+        every_country = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = foc_khan_final_order_country
+                }
+            }
+            every_owned_fleet = {
+                limit = { any_owned_ship = { is_ship_class = shipclass_transport } }
+                remove_auto_move_target = yes
+                clear_orders = yes
+                clear_fleet_actions = this
+                remove_fleet_flag = foc_khan_sgk_scripted_transport_fleet
+                remove_fleet_flag = foc_khan_acot_native_transport_233
+                remove_fleet_flag = foc_khan_transport_controller_238
+                remove_fleet_flag = foc_khan_army_order_cooldown_246
+                remove_fleet_flag = foc_khan_229_transport_controller
+                foc_khan_229_transport_fleet_action = yes
+            }
+        }
+    }
+}

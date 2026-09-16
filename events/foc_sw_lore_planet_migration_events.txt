@@ -1,0 +1,625 @@
+namespace = foc_sw_lore_planets
+
+# FOC 3.12d one-shot old-save migration. New systems receive the same modifiers
+# directly from their initializer; this event only fills worlds already saved.
+event = {
+    id = foc_sw_lore_planets.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        NOT = { has_global_flag = foc_sw_lore_planets_migrated_312d }
+        any_system = {
+            OR = {
+                has_star_flag = foc_sw_hosnian_home
+                has_star_flag = foc_sw_bastion_home
+                has_star_flag = foc_swmap_corellia_home
+                has_star_flag = foc_swmap_geonosis_home
+                has_star_flag = foc_khan_ilum_home
+                has_star_flag = foc_khan_exegol_home
+                has_star_flag = foc_sw_yavin_home
+                has_star_flag = foc_khan_rebel_home
+            }
+        }
+    }
+
+    immediate = {
+        # Original New Republic worlds.
+        every_system = {
+            limit = { has_star_flag = foc_sw_hosnian_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_hosnian_prime }
+                if = {
+                    limit = { NOT = { has_modifier = foc_lore_hosnian_senate_world } }
+                    add_modifier = { modifier = foc_lore_hosnian_senate_world days = -1 }
+                }
+            }
+            every_system_planet = {
+                limit = {
+                    has_planet_flag = foc_sw_nr_colony
+                    NOT = { has_planet_flag = foc_sw_hosnian_prime }
+                }
+                set_planet_flag = foc_sw_hosnian_minor
+                if = {
+                    limit = { NOT = { has_modifier = foc_lore_hosnian_cosmopolitan_system } }
+                    add_modifier = { modifier = foc_lore_hosnian_cosmopolitan_system days = -1 }
+                }
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_sw_coruscant_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_coruscant }
+                if = {
+                    limit = { NOT = { has_modifier = foc_lore_coruscant_galactic_metropolis } }
+                    add_modifier = { modifier = foc_lore_coruscant_galactic_metropolis days = -1 }
+                }
+            }
+            every_system_planet = {
+                limit = {
+                    has_planet_flag = foc_sw_nr_colony
+                    NOT = { has_planet_flag = foc_sw_coruscant }
+                }
+                if = {
+                    limit = { planet_size = 17 }
+                    set_planet_flag = foc_sw_coruscant_minor
+                }
+                else_if = {
+                    limit = { planet_size = 15 }
+                    set_planet_flag = foc_sw_tausen_4
+                }
+                else_if = {
+                    limit = { planet_size = 16 }
+                    set_planet_flag = foc_sw_tausen_7
+                }
+                if = {
+                    limit = { NOT = { has_modifier = foc_lore_core_world_support_network } }
+                    add_modifier = { modifier = foc_lore_core_world_support_network days = -1 }
+                }
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_sw_kuat_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_kuat }
+                if = {
+                    limit = { NOT = { has_modifier = foc_lore_kuat_orbital_shipbuilding } }
+                    add_modifier = { modifier = foc_lore_kuat_orbital_shipbuilding days = -1 }
+                }
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_sw_chandrila_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_chandrila }
+                if = {
+                    limit = { NOT = { has_modifier = foc_lore_chandrila_republican_traditions } }
+                    add_modifier = { modifier = foc_lore_chandrila_republican_traditions days = -1 }
+                }
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_sw_akiva_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_akiva }
+                if = {
+                    limit = { NOT = { has_modifier = foc_lore_akiva_droid_foundries } }
+                    add_modifier = { modifier = foc_lore_akiva_droid_foundries days = -1 }
+                }
+            }
+        }
+
+        # Original Imperial Remnant worlds.
+        every_system = {
+            limit = { has_star_flag = foc_sw_bastion_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_bastion }
+                if = {
+                    limit = { NOT = { has_modifier = foc_lore_bastion_imperial_fortress } }
+                    add_modifier = { modifier = foc_lore_bastion_imperial_fortress days = -1 }
+                }
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_sw_bilbringi_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_bilbringi }
+                if = {
+                    limit = { NOT = { has_modifier = foc_lore_bilbringi_military_yards } }
+                    add_modifier = { modifier = foc_lore_bilbringi_military_yards days = -1 }
+                }
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_sw_yaga_minor_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_yaga_minor }
+                if = {
+                    limit = { NOT = { has_modifier = foc_lore_yaga_minor_ubiqtorate } }
+                    add_modifier = { modifier = foc_lore_yaga_minor_ubiqtorate days = -1 }
+                }
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_sw_rendili_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_rendili }
+                if = {
+                    limit = { NOT = { has_modifier = foc_lore_rendili_stardrive } }
+                    add_modifier = { modifier = foc_lore_rendili_stardrive days = -1 }
+                }
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_sw_jakku_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_jakku }
+                if = {
+                    limit = { NOT = { has_modifier = foc_lore_jakku_ship_graveyard } }
+                    add_modifier = { modifier = foc_lore_jakku_ship_graveyard days = -1 }
+                }
+            }
+        }
+
+        # New Republic famous systems.
+        every_system = {
+            limit = { has_star_flag = foc_swmap_corellia_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_nr_colony }
+                set_planet_flag = foc_swmap_corellia
+                if = {
+                    limit = { NOT = { has_modifier = foc_lore_corellia_massive_shipyards } }
+                    add_modifier = { modifier = foc_lore_corellia_massive_shipyards days = -1 }
+                }
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_naboo_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_nr_colony }
+                set_planet_flag = foc_swmap_naboo
+                if = {
+                    limit = { NOT = { has_modifier = foc_lore_naboo_harmonious_civilization } }
+                    add_modifier = { modifier = foc_lore_naboo_harmonious_civilization days = -1 }
+                }
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_kashyyyk_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_nr_colony }
+                set_planet_flag = foc_swmap_kashyyyk
+                if = {
+                    limit = { NOT = { has_modifier = foc_lore_kashyyyk_wroshyr_world } }
+                    add_modifier = { modifier = foc_lore_kashyyyk_wroshyr_world days = -1 }
+                }
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_mon_cala_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_nr_colony }
+                set_planet_flag = foc_swmap_mon_cala
+                if = {
+                    limit = { NOT = { has_modifier = foc_lore_mon_cala_starship_craft } }
+                    add_modifier = { modifier = foc_lore_mon_cala_starship_craft days = -1 }
+                }
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_endor_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_nr_colony }
+                set_planet_flag = foc_swmap_endor_forest_moon
+                if = {
+                    limit = { NOT = { has_modifier = foc_lore_endor_living_forest } }
+                    add_modifier = { modifier = foc_lore_endor_living_forest days = -1 }
+                }
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_hoth_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_nr_colony }
+                set_planet_flag = foc_swmap_hoth
+                if = {
+                    limit = { NOT = { has_modifier = foc_lore_hoth_echo_base } }
+                    add_modifier = { modifier = foc_lore_hoth_echo_base days = -1 }
+                }
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_bespin_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_nr_colony }
+                set_planet_flag = foc_swmap_cloud_city
+                if = {
+                    limit = { NOT = { has_modifier = foc_lore_bespin_tibanna_industry } }
+                    add_modifier = { modifier = foc_lore_bespin_tibanna_industry days = -1 }
+                }
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_lothal_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_nr_colony }
+                set_planet_flag = foc_swmap_lothal
+                if = {
+                    limit = { NOT = { has_modifier = foc_lore_lothal_fields_and_temple } }
+                    add_modifier = { modifier = foc_lore_lothal_fields_and_temple days = -1 }
+                }
+            }
+        }
+
+        # Imperial Remnant famous systems.
+        every_system = {
+            limit = { has_star_flag = foc_swmap_geonosis_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_ir_colony }
+                set_planet_flag = foc_swmap_geonosis
+                if = {
+                    limit = { NOT = { has_modifier = foc_lore_geonosis_droid_foundries } }
+                    add_modifier = { modifier = foc_lore_geonosis_droid_foundries days = -1 }
+                }
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_kamino_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_nr_colony }
+                set_planet_flag = foc_swmap_kamino
+                if = {
+                    limit = { NOT = { has_modifier = foc_lore_kamino_cloning_centers } }
+                    add_modifier = { modifier = foc_lore_kamino_cloning_centers days = -1 }
+                }
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_mustafar_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_swmap_mustafar }
+                if = {
+                    limit = { NOT = { has_modifier = foc_lore_mustafar_mineral_world } }
+                    add_modifier = { modifier = foc_lore_mustafar_mineral_world days = -1 }
+                }
+            }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_ir_colony }
+                set_planet_flag = foc_swmap_nur
+                if = {
+                    limit = { NOT = { has_modifier = foc_lore_nur_inquisitor_fortress } }
+                    add_modifier = { modifier = foc_lore_nur_inquisitor_fortress days = -1 }
+                }
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_mandalore_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_ir_colony }
+                set_planet_flag = foc_swmap_mandalore
+                if = {
+                    limit = { NOT = { has_modifier = foc_lore_mandalore_beskar_warrior_clans } }
+                    add_modifier = { modifier = foc_lore_mandalore_beskar_warrior_clans days = -1 }
+                }
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_scarif_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_ir_colony }
+                set_planet_flag = foc_swmap_scarif
+                if = {
+                    limit = { NOT = { has_modifier = foc_lore_scarif_imperial_archive } }
+                    add_modifier = { modifier = foc_lore_scarif_imperial_archive days = -1 }
+                }
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_kessel_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_ir_colony }
+                set_planet_flag = foc_swmap_kessel
+                if = {
+                    limit = { NOT = { has_modifier = foc_lore_kessel_spice_coaxium_mines } }
+                    add_modifier = { modifier = foc_lore_kessel_spice_coaxium_mines days = -1 }
+                }
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_dathomir_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_ir_colony }
+                set_planet_flag = foc_swmap_dathomir
+                if = {
+                    limit = { NOT = { has_modifier = foc_lore_dathomir_nightsister_nexus } }
+                    add_modifier = { modifier = foc_lore_dathomir_nightsister_nexus days = -1 }
+                }
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_tatooine_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_ir_colony }
+                set_planet_flag = foc_swmap_tatooine
+                if = {
+                    limit = { NOT = { has_modifier = foc_lore_tatooine_hutt_spaceport } }
+                    add_modifier = { modifier = foc_lore_tatooine_hutt_spaceport days = -1 }
+                }
+            }
+        }
+
+        # Crisis, origin and Resistance worlds.
+        every_system = {
+            limit = { has_star_flag = foc_khan_ilum_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_khan_ilum_planet }
+                if = {
+                    limit = { NOT = { has_modifier = fop_kyber_crystal_caves } }
+                    add_modifier = { modifier = fop_kyber_crystal_caves days = -1 }
+                }
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_khan_exegol_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_khan_exegol_capital }
+                if = {
+                    limit = { NOT = { has_modifier = foc_lore_exegol_sith_eternal_sanctuary } }
+                    add_modifier = { modifier = foc_lore_exegol_sith_eternal_sanctuary days = -1 }
+                }
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_sw_yavin_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_yavin_iv }
+                if = {
+                    limit = { NOT = { has_modifier = foc_yavin_massassi_temples } }
+                    add_modifier = { modifier = foc_yavin_massassi_temples days = -1 }
+                }
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_khan_rebel_dqar_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_khan_rebel_dqar }
+                if = {
+                    limit = { NOT = { has_modifier = foc_dqar_hidden_resistance_base } }
+                    add_modifier = { modifier = foc_dqar_hidden_resistance_base days = -1 }
+                }
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_khan_rebel_crait_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_khan_rebel_crait }
+                if = {
+                    limit = { NOT = { has_modifier = foc_crait_salt_mine_redoubt } }
+                    add_modifier = { modifier = foc_crait_salt_mine_redoubt days = -1 }
+                }
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_khan_rebel_ajan_kloss_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_khan_rebel_ajan_kloss }
+                if = {
+                    limit = { NOT = { has_modifier = foc_ajan_kloss_resistance_camp } }
+                    add_modifier = { modifier = foc_ajan_kloss_resistance_camp days = -1 }
+                }
+            }
+        }
+
+        # The vanilla generated-home-world final pass randomised these colony
+        # names in older FOC saves. All identity flags now exist, so restore the
+        # canonical map names once without touching ordinary player colonies.
+        every_system = {
+            limit = {
+                OR = {
+                    has_star_flag = foc_sw_new_republic_cluster
+                    has_star_flag = foc_sw_imperial_remnant_cluster
+                }
+            }
+            every_system_planet = {
+                limit = {
+                    OR = {
+                        has_planet_flag = foc_sw_nr_colony
+                        has_planet_flag = foc_sw_ir_colony
+                    }
+                }
+                foc_sw_restore_canonical_colony_name = yes
+            }
+        }
+
+        set_global_flag = foc_sw_lore_planets_migrated_312d
+        log = "FOC_3.12D_LORE_PLANETS: scripted Star Wars worlds migrated."
+    }
+}
+
+# FOC 3.12e canonical-name keeper. The 3.12d migration was deliberately
+# one-shot, so an existing save that had already consumed that migration could
+# retain names generated by generate_home_planet_final_pass. This event is not
+# gated by a migration flag: it repairs the identity flags added in 3.12d and
+# then restores only FOC's 31 scripted NR/IR colonies once per month.
+event = {
+    id = foc_sw_lore_planets.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        any_system = {
+            OR = {
+                has_star_flag = foc_sw_new_republic_cluster
+                has_star_flag = foc_sw_imperial_remnant_cluster
+            }
+        }
+    }
+
+    immediate = {
+        # The four secondary colonies shared only their faction colony flag in
+        # saves created before 3.12d. Their fixed system and size identify them.
+        every_system = {
+            limit = { has_star_flag = foc_sw_hosnian_home }
+            every_system_planet = {
+                limit = {
+                    has_planet_flag = foc_sw_nr_colony
+                    NOT = { has_planet_flag = foc_sw_hosnian_prime }
+                }
+                set_planet_flag = foc_sw_hosnian_minor
+            }
+        }
+        every_system = {
+            limit = { has_star_flag = foc_sw_coruscant_home }
+            every_system_planet = {
+                limit = {
+                    has_planet_flag = foc_sw_nr_colony
+                    NOT = { has_planet_flag = foc_sw_coruscant }
+                }
+                if = {
+                    limit = { planet_size = 17 }
+                    set_planet_flag = foc_sw_coruscant_minor
+                }
+                else_if = {
+                    limit = { planet_size = 15 }
+                    set_planet_flag = foc_sw_tausen_4
+                }
+                else_if = {
+                    limit = { planet_size = 16 }
+                    set_planet_flag = foc_sw_tausen_7
+                }
+            }
+        }
+
+        # Famous-system colony identity flags did not exist in pre-3.12d saves.
+        every_system = {
+            limit = { has_star_flag = foc_swmap_corellia_home }
+            every_system_planet = { limit = { has_planet_flag = foc_sw_nr_colony } set_planet_flag = foc_swmap_corellia }
+        }
+        every_system = {
+            limit = { has_star_flag = foc_swmap_naboo_home }
+            every_system_planet = { limit = { has_planet_flag = foc_sw_nr_colony } set_planet_flag = foc_swmap_naboo }
+        }
+        every_system = {
+            limit = { has_star_flag = foc_swmap_kashyyyk_home }
+            every_system_planet = { limit = { has_planet_flag = foc_sw_nr_colony } set_planet_flag = foc_swmap_kashyyyk }
+        }
+        every_system = {
+            limit = { has_star_flag = foc_swmap_mon_cala_home }
+            every_system_planet = { limit = { has_planet_flag = foc_sw_nr_colony } set_planet_flag = foc_swmap_mon_cala }
+        }
+        every_system = {
+            limit = { has_star_flag = foc_swmap_endor_home }
+            every_system_planet = { limit = { has_planet_flag = foc_sw_nr_colony } set_planet_flag = foc_swmap_endor_forest_moon }
+        }
+        every_system = {
+            limit = { has_star_flag = foc_swmap_hoth_home }
+            every_system_planet = { limit = { has_planet_flag = foc_sw_nr_colony } set_planet_flag = foc_swmap_hoth }
+        }
+        every_system = {
+            limit = { has_star_flag = foc_swmap_bespin_home }
+            every_system_planet = { limit = { has_planet_flag = foc_sw_nr_colony } set_planet_flag = foc_swmap_cloud_city }
+        }
+        every_system = {
+            limit = { has_star_flag = foc_swmap_lothal_home }
+            every_system_planet = { limit = { has_planet_flag = foc_sw_nr_colony } set_planet_flag = foc_swmap_lothal }
+        }
+        every_system = {
+            limit = { has_star_flag = foc_swmap_geonosis_home }
+            every_system_planet = { limit = { has_planet_flag = foc_sw_ir_colony } set_planet_flag = foc_swmap_geonosis }
+        }
+        every_system = {
+            limit = { has_star_flag = foc_swmap_kamino_home }
+            every_system_planet = { limit = { has_planet_flag = foc_sw_nr_colony } set_planet_flag = foc_swmap_kamino }
+        }
+        every_system = {
+            limit = { has_star_flag = foc_swmap_mustafar_home }
+            every_system_planet = { limit = { has_planet_flag = foc_sw_ir_colony } set_planet_flag = foc_swmap_nur }
+        }
+        every_system = {
+            limit = { has_star_flag = foc_swmap_mandalore_home }
+            every_system_planet = { limit = { has_planet_flag = foc_sw_ir_colony } set_planet_flag = foc_swmap_mandalore }
+        }
+        every_system = {
+            limit = { has_star_flag = foc_swmap_scarif_home }
+            every_system_planet = { limit = { has_planet_flag = foc_sw_ir_colony } set_planet_flag = foc_swmap_scarif }
+        }
+        every_system = {
+            limit = { has_star_flag = foc_swmap_kessel_home }
+            every_system_planet = { limit = { has_planet_flag = foc_sw_ir_colony } set_planet_flag = foc_swmap_kessel }
+        }
+        every_system = {
+            limit = { has_star_flag = foc_swmap_dathomir_home }
+            every_system_planet = { limit = { has_planet_flag = foc_sw_ir_colony } set_planet_flag = foc_swmap_dathomir }
+        }
+        every_system = {
+            limit = { has_star_flag = foc_swmap_tatooine_home }
+            every_system_planet = { limit = { has_planet_flag = foc_sw_ir_colony } set_planet_flag = foc_swmap_tatooine }
+        }
+
+        every_system = {
+            limit = {
+                OR = {
+                    has_star_flag = foc_sw_new_republic_cluster
+                    has_star_flag = foc_sw_imperial_remnant_cluster
+                }
+            }
+            every_system_planet = {
+                limit = {
+                    OR = {
+                        has_planet_flag = foc_sw_nr_colony
+                        has_planet_flag = foc_sw_ir_colony
+                    }
+                }
+                foc_sw_restore_canonical_colony_name = yes
+            }
+        }
+    }
+}
+
+
+# V110 - additional lore identities. Kept idempotent so old and new saves converge.
+event = {
+    id = foc_sw_lore_planets.3
+    hide_window = yes
+    is_triggered_only = yes
+    immediate = {
+        every_system = { limit = { has_star_flag = foc_swfill_alderaan_home } every_system_planet = { limit = { has_planet_flag = foc_swfill_alderaan NOT = { has_modifier = foc_lore_alderaan_jewel_of_the_core } } add_modifier = { modifier = foc_lore_alderaan_jewel_of_the_core days = -1 } } }
+        every_system = { limit = { has_star_flag = foc_swmap_bracca_home } every_system_planet = { limit = { has_planet_flag = foc_swmap_bracca NOT = { has_modifier = foc_lore_bracca_shipbreaking_yards } } add_modifier = { modifier = foc_lore_bracca_shipbreaking_yards days = -1 } } }
+        every_system = { limit = { has_star_flag = foc_swmap_tanalorr_home } every_system_planet = { limit = { has_planet_flag = foc_swmap_tanalorr NOT = { has_modifier = foc_lore_tanalorr_hidden_refuge } } add_modifier = { modifier = foc_lore_tanalorr_hidden_refuge days = -1 } } }
+        every_system = { limit = { has_star_flag = foc_swmap_ossus_home } every_system_planet = { limit = { has_planet_flag = foc_swmap_ossus NOT = { has_modifier = foc_lore_ossus_jedi_ruins } } add_modifier = { modifier = foc_lore_ossus_jedi_ruins days = -1 } } }
+        every_system = { limit = { has_star_flag = foc_swmap_ahchto_home } every_system_planet = { limit = { has_planet_flag = foc_swmap_ahchto NOT = { has_modifier = foc_lore_ahchto_first_temple } } add_modifier = { modifier = foc_lore_ahchto_first_temple days = -1 } } }
+        every_system = { limit = { has_star_flag = foc_swmap_aldhani_home } every_system_planet = { limit = { has_planet_flag = foc_swmap_aldhani NOT = { has_modifier = foc_lore_aldhani_highlands } } add_modifier = { modifier = foc_lore_aldhani_highlands days = -1 } } }
+        every_system = { limit = { has_star_flag = foc_swmap_utapau_home } every_system_planet = { limit = { has_planet_flag = foc_swmap_utapau NOT = { has_modifier = foc_lore_utapau_sinkhole_cities } } add_modifier = { modifier = foc_lore_utapau_sinkhole_cities days = -1 } } }
+        every_system = { limit = { has_star_flag = foc_swmap_christophsis_home } every_system_planet = { limit = { has_planet_flag = foc_swmap_christophsis NOT = { has_modifier = foc_lore_christophsis_crystal_world } } add_modifier = { modifier = foc_lore_christophsis_crystal_world days = -1 } } }
+        every_system = { limit = { has_star_flag = foc_swmap_jedha_home } every_system_planet = { limit = { has_planet_flag = foc_swmap_jedha NOT = { foc_jedha_is_destroyed_planet = yes } NOT = { has_modifier = foc_lore_jedha_holy_city } } add_modifier = { modifier = foc_lore_jedha_holy_city days = -1 } } }
+        every_system = { limit = { has_star_flag = foc_swmap_malachor_home } every_system_planet = { limit = { has_planet_flag = foc_swmap_malachor NOT = { has_modifier = foc_lore_malachor_sith_battlefield } } add_modifier = { modifier = foc_lore_malachor_sith_battlefield days = -1 } } }
+        every_system = { limit = { has_star_flag = foc_swmap_aldoleem_home } every_system_planet = { limit = { has_planet_flag = foc_swmap_aldoleem NOT = { has_modifier = foc_lore_aldoleem_industrial_mines } } add_modifier = { modifier = foc_lore_aldoleem_industrial_mines days = -1 } } }
+    }
+}

@@ -1,0 +1,91 @@
+# Country scope. Idempotent; several perspectives of Scarif may call this.
+# All timers are global so deleting the original dispatch country cannot bypass the wait.
+foc_v1710_begin_scarif_aftermath = {
+    if = {
+        limit = {
+            has_global_flag = foc_republic_origin_scarif_weakness_obtained
+            NOT = {
+                has_global_flag = foc_canon_scarif_battle_completed
+            }
+        }
+        every_country = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_republic_origin_imperial_rebel_country
+                    has_country_flag = foc_republic_origin_rebel_alliance_country
+                }
+            }
+            add_resource = {
+                unity = 7500
+                engineering_research = 5000
+            }
+        }
+        foc_v212_kill_raddus_at_scarif = yes
+        foc_v225_destroy_scarif_characters = yes
+        set_global_flag = foc_canon_scarif_blueprints_transmitted
+        set_global_flag = foc_canon_scarif_battle_completed
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = foc_canon_gcw_first_battle_recorded
+                }
+            }
+            set_global_flag = foc_canon_gcw_first_battle_scarif
+        }
+        foc_canon_mark_galactic_civil_war_first_battle = yes
+    }
+    if = {
+        limit = {
+            has_global_flag = foc_republic_origin_scarif_weakness_obtained
+            NOT = {
+                has_global_flag = foc_v1710_scarif_chain_started
+            }
+            NOT = {
+                has_global_flag = foc_republic_origin_galactic_treaty
+            }
+        }
+        set_global_flag = foc_v1710_story_installed
+        set_global_flag = foc_v1710_scarif_chain_started
+        set_timed_global_flag = {
+            flag = foc_v1710_scarif_wait_30d
+            days = 30
+        }
+        if = {
+            limit = {
+                foc_v1717e_death_star_one_alive = yes
+                exists = event_target:foc_swmap_scarif_system
+            }
+            set_global_flag = foc_rogue_one_death_star_emergence_scheduled
+        }
+        every_country = {
+            limit = {
+                OR = {
+                    foc_v1710_is_gcw_rebel = yes
+                    has_country_flag = foc_republic_origin_empire_country
+                    is_ai = no
+                }
+            }
+            country_event = {
+                id = foc_v1710_story.1
+                days = 30
+            }
+        }
+        log = "FOC_V1717E_SCARIF: thirty-day battle clock started; later windows require acknowledgement."
+    }
+}
+# Country scope. This is the only new grant path; both normal dispatch and load
+# repair require the rescue-event completion flag, not the old ten-year flag.
+foc_v1710_apply_rescued_leia_intelligence = {
+    if = {
+        limit = {
+            foc_v1710_is_gcw_rebel = yes
+            foc_v1710_scarif_rewards_unlocked = yes
+        }
+        set_country_flag = foc_republic_origin_scarif_weakness_obtained
+        if = {
+            limit = { NOT = { has_modifier = foc_republic_origin_scarif_intelligence } }
+            add_modifier = { modifier = foc_republic_origin_scarif_intelligence days = -1 }
+        }
+        country_event = { id = foc_republic_origin.184 }
+    }
+}

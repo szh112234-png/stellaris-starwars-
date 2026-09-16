@@ -1,0 +1,220 @@
+namespace = foc_v135_support
+
+# Mon Cala annual bonus controller: AI Rebel states only. On first acquisition,
+# begin a fresh 360-day countdown; no fleet is granted immediately.
+country_event = {
+    id = foc_v135_support.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = yes
+        OR = {
+            has_country_flag = foc_republic_origin_imperial_rebel_country
+            has_country_flag = foc_republic_origin_rebel_alliance_country
+            has_country_flag = foc_khan_rebel_alliance_country
+        }
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        OR = {
+            any_country = {
+                has_country_flag = foc_republic_origin_empire_country
+                is_at_war_with = root
+            }
+            has_global_flag = foc_khan_phase_one
+            has_global_flag = foc_khan_phase_two
+            any_country = { has_country_flag = fop_origin_galactic_war_declared }
+        }
+        NOT = { has_country_flag = foc_v135_mon_cala_support_active }
+        exists = event_target:foc_swmap_mon_cala_system
+        event_target:foc_swmap_mon_cala_system = {
+            exists = space_owner
+            space_owner = { is_same_value = root }
+            NOT = {
+                any_system_planet = {
+                    is_colony = yes
+                    NOT = { owner = { is_same_value = root } }
+                }
+            }
+        }
+    }
+
+    immediate = {
+        set_country_flag = foc_v135_mon_cala_support_active
+        set_timed_country_flag = { flag = foc_v135_mon_cala_support_cooldown days = 360 }
+    }
+}
+
+# Mon Cala annual tick: +20 dedicated Rebel main-line MC80s while the system is held.
+country_event = {
+    id = foc_v135_support.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = yes
+        has_country_flag = foc_v135_mon_cala_support_active
+        NOT = { has_country_flag = foc_v135_mon_cala_support_cooldown }
+        OR = {
+            has_country_flag = foc_republic_origin_imperial_rebel_country
+            has_country_flag = foc_republic_origin_rebel_alliance_country
+            has_country_flag = foc_khan_rebel_alliance_country
+        }
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        exists = event_target:foc_swmap_mon_cala_system
+        event_target:foc_swmap_mon_cala_system = {
+            exists = space_owner
+            space_owner = { is_same_value = root }
+            NOT = {
+                any_system_planet = {
+                    is_colony = yes
+                    NOT = { owner = { is_same_value = root } }
+                }
+            }
+        }
+    }
+
+    immediate = {
+        foc_v135_spawn_mon_cala_20_mc80_line = yes
+        set_timed_country_flag = { flag = foc_v135_mon_cala_support_cooldown days = 360 }
+    }
+}
+
+# Kuat annual bonus controller: AI Rebel states only.
+country_event = {
+    id = foc_v135_support.3
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = yes
+        OR = {
+            has_country_flag = foc_republic_origin_imperial_rebel_country
+            has_country_flag = foc_republic_origin_rebel_alliance_country
+            has_country_flag = foc_khan_rebel_alliance_country
+        }
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        OR = {
+            any_country = {
+                has_country_flag = foc_republic_origin_empire_country
+                is_at_war_with = root
+            }
+            has_global_flag = foc_khan_phase_one
+            has_global_flag = foc_khan_phase_two
+            any_country = { has_country_flag = fop_origin_galactic_war_declared }
+        }
+        NOT = { has_country_flag = foc_v135_kuat_support_active }
+        any_system = {
+            has_star_flag = foc_sw_kuat_home
+            space_owner? = { is_same_value = root }
+            NOT = {
+                any_system_planet = {
+                    is_colony = yes
+                    NOT = { owner = { is_same_value = root } }
+                }
+            }
+        }
+    }
+
+    immediate = {
+        set_country_flag = foc_v135_kuat_support_active
+        set_timed_country_flag = { flag = foc_v135_kuat_support_cooldown days = 360 }
+    }
+}
+
+# Kuat annual tick: +15 Nebula-class warships while Kuat is held.
+country_event = {
+    id = foc_v135_support.4
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = yes
+        has_country_flag = foc_v135_kuat_support_active
+        NOT = { has_country_flag = foc_v135_kuat_support_cooldown }
+        OR = {
+            has_country_flag = foc_republic_origin_imperial_rebel_country
+            has_country_flag = foc_republic_origin_rebel_alliance_country
+            has_country_flag = foc_khan_rebel_alliance_country
+        }
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        any_system = {
+            has_star_flag = foc_sw_kuat_home
+            space_owner? = { is_same_value = root }
+            NOT = {
+                any_system_planet = {
+                    is_colony = yes
+                    NOT = { owner = { is_same_value = root } }
+                }
+            }
+        }
+    }
+
+    immediate = {
+        foc_v135_spawn_kuat_15_nebula = yes
+        set_timed_country_flag = { flag = foc_v135_kuat_support_cooldown days = 360 }
+    }
+}
+
+# Dynamic ownership reset. Losing a strategic shipyard immediately cancels its
+# annual support and its current countdown. Recapture starts a fresh full year.
+country_event = {
+    id = foc_v135_support.5
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = yes
+        OR = {
+            has_country_flag = foc_v135_mon_cala_support_active
+            has_country_flag = foc_v135_kuat_support_active
+        }
+    }
+
+    immediate = {
+        if = {
+            limit = {
+                has_country_flag = foc_v135_mon_cala_support_active
+                NOT = { exists = event_target:foc_swmap_mon_cala_system }
+            }
+            remove_country_flag = foc_v135_mon_cala_support_active
+            remove_country_flag = foc_v135_mon_cala_support_cooldown
+        }
+        else_if = {
+            limit = {
+                has_country_flag = foc_v135_mon_cala_support_active
+                event_target:foc_swmap_mon_cala_system = {
+                    OR = {
+                        NOT = { exists = space_owner }
+                        NOT = { space_owner = { is_same_value = root } }
+                        any_system_planet = {
+                            is_colony = yes
+                            NOT = { owner = { is_same_value = root } }
+                        }
+                    }
+                }
+            }
+            remove_country_flag = foc_v135_mon_cala_support_active
+            remove_country_flag = foc_v135_mon_cala_support_cooldown
+        }
+
+        if = {
+            limit = {
+                has_country_flag = foc_v135_kuat_support_active
+                NOT = {
+                    any_system = {
+                        has_star_flag = foc_sw_kuat_home
+                        space_owner? = { is_same_value = root }
+                        NOT = {
+                            any_system_planet = {
+                                is_colony = yes
+                                NOT = { owner = { is_same_value = root } }
+                            }
+                        }
+                    }
+                }
+            }
+            remove_country_flag = foc_v135_kuat_support_active
+            remove_country_flag = foc_v135_kuat_support_cooldown
+        }
+    }
+}

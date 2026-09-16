@@ -1,0 +1,44 @@
+namespace = foc_v230_resistance
+
+# V235b: retry ONLY a first foundation that never succeeded.
+# Losing D'Qar, evacuation, or extermination must never restart this constructor.
+country_event = {
+    id = foc_v230_resistance.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v235b_dqar_bootstrap_allowed = yes
+        is_ai = no
+        has_global_flag = foc_v109_bloodline_resistance_authorized
+        NOT = { has_global_flag = foc_khan_crisis_finished }
+        NOT = {
+            AND = {
+                has_country_flag = foc_republic_origin_player_republic
+                has_country_flag = foc_sw_new_republic_country
+            }
+        }
+        NOT = {
+            any_system = {
+                has_star_flag = foc_khan_rebel_dqar_home
+                any_system_planet = {
+                    has_planet_flag = foc_khan_rebel_dqar
+                    is_colony = yes
+                    exists = owner
+                    owner = { has_country_flag = foc_khan_first_order_resistance_country }
+                }
+            }
+        }
+    }
+
+    immediate = {
+        foc_v185_prepare_leia_resistance_trigger = yes
+        if = {
+            limit = { foc_v235b_dqar_bootstrap_allowed = yes NOT = { has_global_flag = foc_khan_rebel_spawned } }
+            country_event = { id = foc_khan_rebel.1 }
+            country_event = { id = foc_khan_rebel.2 days = 2 }
+            country_event = { id = foc_khan_rebel.2 days = 5 }
+            country_event = { id = foc_khan_rebel.2 days = 12 }
+        }
+    }
+}

@@ -1,0 +1,22 @@
+# Country scope. Legacy permits do not bypass player weapon research.
+foc_v17_7_supremacy_full_loadout_researched = {
+    OR = {
+        NOT = { has_origin = origin_fop_first_order }
+        AND = {
+            has_technology = foc_tech_emp_turbo_2
+            has_technology = foc_tech_emp_turbo_3
+            has_technology = foc_tech_std_pd_2
+            has_technology = foc_tech_std_pd_3
+        }
+    }
+}
+
+# Explicit empty-tier requests remain valid at the origin's opening.
+foc_v17_7_supremacy_spawn_allowed = {
+    OR = {
+        foc_v17_7_supremacy_full_loadout_researched = yes
+        has_country_flag = sai_supremacy_respawn_tier_1
+        has_country_flag = sai_supremacy_respawn_tier_2
+        has_country_flag = sai_supremacy_respawn_tier_3
+    }
+}

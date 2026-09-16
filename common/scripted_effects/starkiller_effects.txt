@@ -1,0 +1,221 @@
+
+# Kuat-style stellar death visual using vanilla supernova ambient objects.
+# This is self-contained and does not require the Kuat mod.
+myk_starkiller_create_kuat_style_supernova = {
+    star = {
+        create_ambient_object = { type = "red_giant_supernova" play_animation_once = yes location = this }
+        last_created_ambient_object = { set_location = { target = prev distance = 0 angle = random } }
+        create_ambient_object = { type = "red_giant_supernova_nebula" location = this entity_scale_to_size = yes scale = 1.4 }
+        last_created_ambient_object = {
+            set_ambient_object_flag = destroyed_system_effect
+            set_location = { target = prev distance = 0 angle = random }
+        }
+    }
+}
+
+
+# Nicoll-Dyson-style war exhaustion for destroyed colonies.
+# Must run while the planet is still a colony and still has an owner.
+myk_starkiller_add_planet_destruction_war_exhaustion = {
+    if = {
+        limit = {
+            is_colony = yes
+            exists = owner
+            exists = event_target:myk_starkiller_base_owner
+            owner = {
+                is_at_war_with = event_target:myk_starkiller_base_owner
+            }
+        }
+        owner = {
+            add_static_war_exhaustion = {
+                attacker = event_target:myk_starkiller_base_owner
+                location = prev
+                value_for_planet_destruction = 1
+            }
+        }
+    }
+}
+
+myk_starkiller_destroy_all_fleets_in_system = {
+    every_fleet_in_system = {
+        destroy_fleet = {
+            target = this
+            destroy_template = yes
+            kill_leader = yes
+        }
+    }
+}
+
+# Kuat-style ringworld handling: replace the ring megastructure at its original
+# location with three damaged sections, rather than forcing ring sections into
+# ordinary shattered planets.
+myk_starkiller_replace_ringworlds_kuat_style = {
+    every_system_megastructure = {
+        if = {
+            limit = {
+                OR = {
+                    is_megastructure_type = ring_world_restored
+                    is_megastructure_type = ring_world_ruined
+                    is_megastructure_type = ring_world_2
+                }
+            }
+            # Adapted from Kuat's Starkiller destruction effect: remove the
+            # complete ring megastructure and spawn the three damaged sections
+            # at the same location. No Kuat dependency is required.
+            solar_system = {
+                spawn_planet = {
+                    class = "pc_ringworld_tech_damaged"
+                    location = prev
+                    orbit_angle_offset = 30
+                }
+                spawn_planet = {
+                    class = "pc_ringworld_seam_damaged"
+                    location = prev
+                }
+                spawn_planet = {
+                    class = "pc_ringworld_habitable_damaged"
+                    location = prev
+                    orbit_angle_offset = -30
+                }
+            }
+            remove_megastructure = this
+        }
+    }
+}
+
+# Remove ordinary target-system megastructures only after the beam has completed.
+# All known Starkiller temporary carriers are explicitly protected.
+myk_starkiller_remove_destroyed_system_megastructures_after_beam = {
+    every_system_megastructure = {
+        limit = {
+            NOR = {
+                is_megastructure_type = myk_starkiller_sun_drain
+                is_megastructure_type = myk_starkiller_fire_origin_marker
+                is_megastructure_type = myk_starkiller_beacon_origin_marker
+                is_megastructure_type = myk_starkiller_fire_target_marker
+                is_megastructure_type = myk_starkiller_beacon_target_marker
+            }
+        }
+        remove_megastructure = this
+    }
+}
+
+myk_starkiller_destroy_entire_system = {
+    foc_v235b_lock_destroyed_dqar_system = yes
+    # Any Treaty New Republic must secure D'Qar before destroy_colony can
+    # auto-delete its last colony; the same country then becomes the Resistance.
+    if = {
+        limit = { has_star_flag = foc_sw_hosnian_home }
+        foc_republic_origin_prepare_player_republic_for_hosnian_impact = yes
+    }
+
+    myk_starkiller_destroy_all_fleets_in_system = yes
+
+    # Remove all colonies before changing or removing their supporting bodies.
+    every_system_planet = {
+        limit = { is_star = no is_colony = yes }
+        myk_starkiller_add_planet_destruction_war_exhaustion = yes
+        every_owned_pop_group = { kill_all_pop = yes }
+        destroy_colony = yes
+    }
+
+    myk_starkiller_replace_ringworlds_kuat_style = yes
+
+    # Ordinary planets are shattered. Ringworld sections are left to the
+    # Kuat-style megastructure replacement above and are never force-converted.
+    every_system_planet = {
+        limit = { is_star = no }
+        clear_deposits = yes
+        clear_planet_modifiers = yes
+        prevent_anomaly = yes
+        if = {
+            limit = { is_ringworld = no }
+            change_pc = pc_shattered
+        }
+        set_planet_flag = myk_starkiller_planet_destroyed
+    }
+
+    # Kuat destruction order: notify the game, play the supernova, then update
+    # both the system class and the physical star body to a black hole.
+    fire_on_action = { on_action = on_destroy_star_system }
+    set_star_flag = star_cracked
+    set_star_class = sc_black_hole
+    myk_starkiller_create_kuat_style_supernova = yes
+    star = {
+        clear_deposits = yes
+        clear_planet_modifiers = yes
+        prevent_anomaly = yes
+        change_pc = pc_black_hole
+    }
+
+    foc_v235b_dispatch_dqar_loss = yes
+
+    # FOC 2.73: the destruction of the Hosnian capital system has its own
+    # galaxy-wide story event. The one-shot effect prevents duplicate popups.
+    if = {
+        limit = { has_star_flag = foc_sw_hosnian_home }
+        foc_story_notify_hosnian_destroyed = yes
+    }
+}
+
+myk_starkiller_destroy_single_planet = {
+    foc_v235b_lock_destroyed_dqar_planet = yes
+    myk_starkiller_add_planet_destruction_war_exhaustion = yes
+    if = {
+        limit = { is_colony = yes }
+        every_owned_pop_group = { kill_all_pop = yes }
+        destroy_colony = yes
+    }
+    clear_deposits = yes
+    clear_planet_modifiers = yes
+    prevent_anomaly = yes
+    change_pc = pc_shattered
+    set_planet_flag = myk_starkiller_planet_destroyed
+    if = {
+        limit = { foc_v235b_is_dqar_planet = yes }
+        planet_event = { id = foc_khan_rebel.41 }
+    }
+}
+
+# Destroy every colonizable/habitable world in the target system.
+# Ordinary worlds become shattered planets. Ring-world colonies are emptied,
+# then the complete ring megastructure is replaced by damaged/ruined sections.
+myk_starkiller_destroy_habitable_planets_in_system = {
+    every_system_planet = {
+        limit = { foc_v235b_is_dqar_planet = yes myk_starkiller_is_habitable_target = yes }
+        foc_v235b_lock_destroyed_dqar_planet = yes
+    }
+    myk_starkiller_destroy_all_fleets_in_system = yes
+
+    # Kuat-style order: process every actual colony first, even when a custom
+    # planet class incorrectly reports is_colonizable = no.
+    every_system_planet = {
+        limit = { myk_starkiller_is_habitable_target = yes }
+
+        if = {
+            limit = { is_ringworld = yes }
+            myk_starkiller_add_planet_destruction_war_exhaustion = yes
+            if = {
+                limit = { is_colony = yes }
+                every_owned_pop_group = { kill_all_pop = yes }
+                destroy_colony = yes
+            }
+            clear_deposits = yes
+            clear_planet_modifiers = yes
+            prevent_anomaly = yes
+            set_planet_flag = myk_starkiller_planet_destroyed
+        }
+        else = {
+            myk_starkiller_destroy_single_planet = yes
+        }
+    }
+
+    # Once all ring colonies are gone, replace the supporting ring structure
+    # with the same three damaged sections used by Kuat's Starkiller effect.
+    myk_starkiller_replace_ringworlds_kuat_style = yes
+    foc_v235b_dispatch_dqar_loss = yes
+}
+
+myk_starkiller_destroy_target_habitable_planets = {
+    myk_starkiller_destroy_habitable_planets_in_system = yes
+}

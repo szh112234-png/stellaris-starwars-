@@ -1,0 +1,620 @@
+namespace = foc_luke
+
+# =============================================================================
+# 卢克·天行者剧情线
+# =============================================================================
+# 帝国时代（雅雯 → 达戈巴 → 贝斯滨 → 恩多）
+#   → 新共和国时代（重建武士团 → 神殿之火）
+#   → 第一秩序时代（阿奇托 → 克瑞特 → 与原力合一）
+#
+# 全部节点都由一次性国家标记控制，挂在 on_monthly_pulse_country 上，重复读档
+# 或重复触发都不会出现第二次。所有头像调用统一走
+# foc_saga_apply_luke_portrait，见 foc_saga_character_effects.txt。
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# 第一幕：帝国时代
+# -----------------------------------------------------------------------------
+
+# 雅雯之战。死星一号被摧毁的那一刻，义军才第一次听说这个名字。
+country_event = {
+    id = foc_luke.10
+    title = foc_luke.10.name
+    desc = foc_luke.10.desc
+    picture = GFX_foc_saga_yavin_victory
+    show_sound = event_ship_bridge
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        is_regular_empire = yes
+        has_global_flag = foc_republic_origin_death_star_one_destroyed
+        NOT = { has_country_flag = foc_saga_luke_yavin_shown }
+        OR = {
+            has_country_flag = foc_republic_origin_imperial_rebel_country
+            has_country_flag = foc_republic_origin_rebel_alliance_country
+            has_country_flag = foc_khan_rebel_alliance_country
+            has_country_flag = foc_republic_origin_post_treaty_rebel_country
+        }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_luke_yavin_shown
+        foc_saga_ensure_luke = yes
+        set_timed_country_flag = { flag = foc_saga_luke_dagobah_wait days = 540 }
+    }
+
+    option = {
+        name = foc_luke.10.a
+        add_modifier = { modifier = foc_saga_hope_of_the_rebellion days = -1 }
+    }
+}
+
+# 达戈巴。一个学徒去找最后一位大师。
+country_event = {
+    id = foc_luke.11
+    title = foc_luke.11.name
+    desc = foc_luke.11.desc
+    picture = GFX_foc_saga_jedi_training
+    location = event_target:foc_swmap_dagobah_system
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_saga_luke_yavin_shown
+        # V73: Luke departs for Dagobah after the actual Battle of Hoth, not on a free-running timer.
+        has_country_flag = foc_canon_battle_hoth
+        NOT = { has_global_flag = foc_republic_origin_death_star_two_destroyed }
+        NOT = { has_country_flag = foc_saga_luke_dagobah_shown }
+        NOT = { has_country_flag = foc_saga_luke_dagobah_wait }
+        NOT = { has_global_flag = foc_saga_luke_died }
+        any_owned_leader = { has_leader_flag = foc_saga_luke_leader }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_luke_dagobah_shown
+        foc_canon_return_yoda = yes
+        set_timed_country_flag = { flag = foc_saga_luke_bespin_wait days = 420 }
+    }
+
+    option = {
+        name = foc_luke.11.a
+        foc_saga_luke_advance = yes
+    }
+}
+
+# 贝斯滨。一句话拆掉了他全部的身世。
+country_event = {
+    id = foc_luke.12
+    title = foc_luke.12.name
+    desc = foc_luke.12.desc
+    picture = GFX_foc_saga_jedi_duel
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_saga_luke_dagobah_shown
+        # V232c: once the exact-tick Endor finale has resolved, never backfill
+        # Bespin afterward. The old catch-up path remains available only when
+        # the direct Death Star II destruction hook did not run (old-save fallback).
+        NOT = { has_global_flag = foc_saga_final_redemption_resolved }
+        NOT = { has_country_flag = foc_saga_luke_bespin_shown }
+        OR = {
+            NOT = { has_country_flag = foc_saga_luke_bespin_wait }
+            has_country_flag = foc_saga_luke_catchup_done
+        }
+        NOT = { has_global_flag = foc_saga_luke_died }
+        any_owned_leader = { has_leader_flag = foc_saga_luke_leader }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_luke_bespin_shown
+    }
+
+    # 放下光剑，还是握紧它。两条路都通向恩多，但代价不同。
+    option = {
+        name = foc_luke.12.a
+        foc_saga_luke_advance = yes
+        add_modifier = { modifier = foc_saga_jedi_restraint days = -1 }
+    }
+
+    option = {
+        name = foc_luke.12.b
+        foc_saga_luke_advance = yes
+        add_modifier = { modifier = foc_saga_rebel_vengeance days = 7200 }
+    }
+}
+
+# 恩多。皇帝之死，与达斯·维达的救赎。
+country_event = {
+    id = foc_luke.13
+    title = foc_luke.13.name
+    desc = foc_luke.13.desc
+    picture = GFX_foc_saga_death_star_ruin
+    show_sound = event_ship_bridge
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        is_regular_empire = yes
+        has_global_flag = foc_republic_origin_death_star_two_destroyed
+        # V232c direct destruction handler owns the authoritative finale. Keep
+        # this older window only as a compatibility fallback for saves where
+        # Death Star II was already gone before V232c was installed.
+        NOT = { has_global_flag = foc_saga_final_redemption_resolved }
+        has_country_flag = foc_saga_luke_bespin_shown
+        NOT = { has_country_flag = foc_saga_luke_endor_shown }
+        OR = {
+            has_country_flag = foc_republic_origin_imperial_rebel_country
+            has_country_flag = foc_republic_origin_rebel_alliance_country
+            has_country_flag = foc_khan_rebel_alliance_country
+            has_country_flag = foc_republic_origin_post_treaty_rebel_country
+        }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_luke_endor_shown
+        foc_saga_ensure_luke = yes
+        set_global_flag = foc_saga_anakin_redeemed
+    }
+
+    option = {
+        name = foc_luke.13.a
+        foc_saga_luke_advance = yes
+        add_modifier = { modifier = foc_saga_return_of_the_jedi days = -1 }
+    }
+}
+
+# -----------------------------------------------------------------------------
+# 第二幕：新共和国时代
+# -----------------------------------------------------------------------------
+
+# 银河条约签订4年后，卢克在奥苏斯重建绝地圣殿。
+country_event = {
+    id = foc_luke.20
+    title = foc_luke.20.name
+    desc = foc_luke.20.desc
+    picture = GFX_foc_saga_new_jedi_temple
+    location = event_target:foc_swmap_ossus_system
+    is_triggered_only = yes
+
+    trigger = {
+        is_regular_empire = yes
+        OR = {
+            has_global_flag = foc_republic_origin_galactic_treaty
+            has_global_flag = fop_origin_treaty_epoch
+        }
+        has_global_flag = foc_v158_treaty_sequel_timeline_started
+        NOT = { has_global_flag = foc_v158_treaty_luke_4y_delay }
+        NOT = { has_country_flag = foc_saga_luke_new_order_shown }
+        NOT = { has_global_flag = foc_saga_luke_died }
+        OR = {
+            has_country_flag = foc_republic_origin_republic_country
+            has_country_flag = foc_sw_new_republic_country
+            has_country_flag = foc_republic_origin_post_treaty_rebel_country
+            has_country_flag = foc_khan_first_order_resistance_country
+        }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_luke_new_order_shown
+        foc_saga_ensure_luke = yes
+        set_global_flag = foc_saga_new_jedi_order_founded
+        if = {
+            limit = { exists = event_target:foc_swmap_ossus_system }
+            event_target:foc_swmap_ossus_system = {
+                every_system_planet = {
+                    limit = { has_planet_flag = foc_swmap_ossus }
+                    add_modifier = { modifier = foc_canon_ossus_jedi_temple days = -1 }
+                    set_planet_flag = foc_canon_new_jedi_temple
+                }
+            }
+        }
+        random_owned_leader = {
+            limit = { has_leader_flag = foc_saga_luke_leader }
+            foc_saga_apply_luke_jedi_portrait = yes
+        }
+    }
+
+    option = {
+        name = foc_luke.20.a
+        foc_saga_luke_advance = yes
+        add_modifier = { modifier = foc_saga_new_jedi_order days = -1 }
+    }
+}
+
+# Treaty +10 years: Ben Solo is still only a narrative character. No leader is
+# created, transferred or recruitable at this stage.
+country_event = {
+    id = foc_luke.23
+    title = foc_luke.23.name
+    desc = foc_luke.23.desc
+    picture = GFX_foc_saga_new_jedi_temple
+    location = event_target:foc_swmap_ossus_system
+    is_triggered_only = yes
+
+    trigger = {
+        is_regular_empire = yes
+        OR = {
+            has_global_flag = foc_republic_origin_galactic_treaty
+            has_global_flag = fop_origin_treaty_epoch
+        }
+        has_global_flag = foc_v158_treaty_sequel_timeline_started
+        NOT = { has_global_flag = foc_v158_treaty_ben_10y_delay }
+        has_global_flag = foc_saga_new_jedi_order_founded
+        NOT = { has_global_flag = foc_saga_ben_solo_training_started }
+        OR = {
+            has_country_flag = foc_republic_origin_republic_country
+            has_country_flag = foc_sw_new_republic_country
+            has_country_flag = foc_republic_origin_post_treaty_rebel_country
+            has_country_flag = foc_khan_first_order_resistance_country
+        }
+    }
+
+    immediate = {
+        set_global_flag = foc_saga_ben_solo_training_started
+        set_country_flag = foc_saga_ben_solo_training_shown
+    }
+
+    option = { name = foc_luke.23.a }
+}
+
+# Treaty +23 years: Ben destroys the Ossus temple. He remains a narrative-only
+# character and does NOT become a recruitable Kylo Ren until the First Order
+# actually appears. Leia's political break and Resistance foundation happen in
+# the same Treaty year.
+country_event = {
+    id = foc_luke.21
+    title = foc_luke.21.name
+    desc = foc_luke.21.desc
+    picture = GFX_foc_saga_temple_burns
+    location = event_target:foc_swmap_ossus_system
+    show_sound = event_mystic_reveal
+    is_triggered_only = yes
+
+    trigger = {
+        is_regular_empire = yes
+        OR = {
+            has_global_flag = foc_republic_origin_galactic_treaty
+            has_global_flag = fop_origin_treaty_epoch
+        }
+        has_global_flag = foc_v158_treaty_sequel_timeline_started
+        NOT = { has_global_flag = foc_v158_treaty_temple_23y_delay }
+        NOT = { has_country_flag = foc_saga_luke_temple_burned_shown }
+        NOT = { has_global_flag = foc_saga_luke_died }
+        has_country_flag = foc_saga_luke_new_order_shown
+        OR = {
+            has_country_flag = foc_republic_origin_republic_country
+            has_country_flag = foc_sw_new_republic_country
+            has_country_flag = foc_republic_origin_post_treaty_rebel_country
+            has_country_flag = foc_khan_first_order_resistance_country
+        }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_luke_temple_burned_shown
+        set_global_flag = foc_saga_jedi_temple_burned
+        set_global_flag = foc_saga_ben_solo_fallen
+        set_global_flag = foc_v158_leia_resistance_foundation_due
+        set_global_flag = foc_v109_bloodline_resistance_authorized
+
+        # Dedicated FO origin: Bloodline belongs to the Treaty +23y political
+        # break, not to game start. This may create/repair Leia's Resistance,
+        # while the separate crisis-arrival event remains disabled for the player.
+        every_playable_country = {
+            limit = {
+                is_ai = no
+                has_origin = origin_fop_first_order
+                NOT = { has_country_flag = fop_origin_bloodline_shown }
+            }
+            country_event = { id = fop_origin.33 days = 1 }
+        }
+        if = {
+            limit = { exists = event_target:foc_swmap_ossus_system }
+            event_target:foc_swmap_ossus_system = {
+                every_system_planet = {
+                    limit = { has_planet_flag = foc_swmap_ossus }
+                    remove_modifier = foc_canon_ossus_jedi_temple
+                    add_modifier = { modifier = foc_canon_ossus_temple_ruins days = -1 }
+                    set_planet_flag = foc_canon_jedi_temple_ruins
+                }
+            }
+        }
+        remove_modifier = foc_saga_new_jedi_order
+
+        # Human New Republic inherits into Leia's Resistance in place. AI New
+        # Republic uses the ordinary D'Qar country constructor. The old
+        # First-Order-arrival constructor remains as a fallback if this fails.
+        if = {
+            limit = {
+                is_ai = no
+                has_country_flag = foc_republic_origin_player_republic
+                has_country_flag = foc_sw_new_republic_country
+                NOT = { has_country_flag = foc_republic_origin_dqar_inheritance_complete }
+            }
+            country_event = { id = foc_republic_origin.197 days = 1 }
+        }
+        else_if = {
+            limit = {
+                is_ai = yes
+                has_country_flag = foc_sw_new_republic_country
+                NOT = { has_global_flag = foc_khan_rebel_spawned }
+                NOT = { has_global_flag = foc_khan_rebel_preparing }
+            }
+            country_event = { id = foc_khan_rebel.1 days = 1 }
+        }
+
+        set_timed_country_flag = { flag = foc_saga_luke_ahchto_wait days = 30 }
+    }
+
+    option = {
+        name = foc_luke.21.a
+        add_modifier = { modifier = foc_saga_broken_master days = -1 }
+    }
+}
+
+# -----------------------------------------------------------------------------
+# 第三幕：第一秩序时代
+# -----------------------------------------------------------------------------
+
+# 阿奇托。第一座绝地神殿，和一个决定再也不出手的人。
+country_event = {
+    id = foc_luke.22
+    title = foc_luke.22.name
+    desc = foc_luke.22.desc
+    picture = GFX_foc_saga_ancient_jedi_text
+    location = event_target:foc_swmap_ahchto_system
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        NOT = { has_country_flag = foc_saga_luke_ahchto_shown }
+        NOT = { has_country_flag = foc_saga_luke_ahchto_wait }
+        NOT = { has_global_flag = foc_saga_luke_died }
+        has_country_flag = foc_saga_luke_temple_burned_shown
+        has_global_flag = foc_saga_jedi_temple_burned
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_luke_ahchto_shown
+        set_global_flag = foc_saga_luke_in_exile
+        foc_saga_luke_retire = yes
+    }
+
+    option = {
+        name = foc_luke.22.a
+        add_modifier = { modifier = foc_saga_last_jedi days = -1 }
+    }
+}
+
+# 克瑞特。原有的 foc_story.31 / .33 负责克瑞特的政治结局，这里负责天行者
+# 本人的结局：投影、拖住整支第一秩序地面部队、然后与原力合一。
+country_event = {
+    id = foc_luke.30
+    title = foc_luke.30.name
+    desc = foc_luke.30.desc
+    picture = GFX_foc_saga_jedi_duel
+    show_sound = event_mystic_reveal
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        NOT = { has_country_flag = foc_saga_luke_crait_shown }
+        NOT = { has_global_flag = foc_saga_luke_died }
+        NOT = { has_global_flag = foc_story_rebel_capital_decision_resolved }
+        has_country_flag = foc_saga_luke_ahchto_shown
+        OR = {
+            has_global_flag = foc_khan_rebel_crait_lost_311v
+            has_global_flag = foc_khan_rebel_final_base_lost_311v
+            has_global_flag = foc_khan_phase_two
+        }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_luke_crait_shown
+        remove_modifier = foc_saga_last_jedi
+        foc_saga_luke_become_one_with_the_force = yes
+    }
+
+    option = {
+        name = foc_luke.30.a
+        add_modifier = { modifier = foc_saga_spark_of_hope days = -1 }
+    }
+}
+
+# 原力之灵。阿奇托的最后一课，讲给下一代听。
+country_event = {
+    id = foc_luke.31
+    title = foc_luke.31.name
+    desc = foc_luke.31.desc
+    picture = GFX_foc_saga_holocron
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_global_flag = foc_saga_luke_died
+        NOT = { has_country_flag = foc_saga_luke_ghost_shown }
+        has_country_flag = foc_saga_luke_crait_shown
+        OR = {
+            has_global_flag = foc_khan_phase_two
+            has_global_flag = foc_khan_crisis_finished
+        }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_luke_ghost_shown
+    }
+
+    option = {
+        name = foc_luke.31.a
+        add_modifier = { modifier = foc_saga_force_ghost_guidance days = -1 }
+    }
+}
+
+# -----------------------------------------------------------------------------
+# V232c：死星二号的“精确销毁时点”恩多终局
+# -----------------------------------------------------------------------------
+# on_ship_destroyed 的 ROOT 是刚被摧毁的舰船。这里只处理带有
+# foc_republic_origin_death_star_two 标记的死星二号，因此不会被普通舰船误触发。
+# 核心 Death Star 奖励/双死星起义仍由原 foc_republic_origin.140 月度控制器结算；
+# 本事件只把“人物死亡 + 最终救赎剧情”提前到真实爆炸的同一时点。
+ship_event = {
+    id = foc_luke.18
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_ship_flag = foc_republic_origin_death_star_two
+        NOT = { has_global_flag = foc_saga_final_redemption_resolved }
+    }
+
+    immediate = {
+        owner = { foc_v232f_resolve_endor_redemption = yes }
+        log = "FOC_V232F_ENDOR: direct on_ship_destroyed hook reached for Death Star II."
+    }
+}
+
+# 最后的救赎：天选之子的归宿。V232f 由直接销毁钩子或权威死星二号损失控制器调用。
+country_event = {
+    id = foc_luke.19
+    title = foc_luke.19.name
+    desc = foc_luke.19.desc
+    picture = GFX_foc_saga_death_star_ruin
+    location = event_target:foc_swmap_endor_system
+    show_sound = event_mystic_reveal
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        has_global_flag = foc_saga_final_redemption_resolved
+        NOT = { has_country_flag = foc_saga_final_redemption_story_shown }
+    }
+
+    immediate = { set_country_flag = foc_saga_final_redemption_story_shown }
+
+    option = { name = foc_luke.19.a }
+}
+
+# 帕尔帕廷已经由 kill_leader 真正死亡。等帝国继承系统完成后，把新任元首
+# 规范化成无名帝国摄政，维持原有的“摄政政府 -> 索龙接管”后续剧情。
+country_event = {
+    id = foc_luke.32
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = { has_country_flag = foc_saga_palpatine_dead }
+
+    # V232f compatibility sink: older V232c saves may already have this event
+    # queued for the next day.  Do not enter a ruler scope while the imperial
+    # throne can still be vacant; later normal succession / Thrawn logic owns it.
+    immediate = {
+        log = "FOC_V232F_ENDOR: legacy regent-normalization call consumed safely; no vacant-ruler scope used."
+    }
+}
+
+# -----------------------------------------------------------------------------
+# 恩多的另一半：帝国失去达斯·维达
+# -----------------------------------------------------------------------------
+# foc_luke.13 是义军视角的叙事。这一条负责机制：死星二号被摧毁的同时，
+# 达斯·维达真正死亡，帝国失去 foc_republic_origin_darth_vader 修正。
+# 原版流程里维达会一直活到银河条约，与恩多的结局对不上。
+country_event = {
+    id = foc_luke.14
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_republic_origin_death_star_two_destroyed
+        NOT = { has_country_flag = foc_saga_vader_dead }
+        OR = {
+            has_country_flag = foc_republic_origin_empire_country
+            has_country_flag = foc_republic_origin_player_empire
+            has_modifier = foc_republic_origin_darth_vader
+            any_owned_leader = { has_leader_flag = foc_republic_origin_vader_leader }
+            any_owned_leader = { has_leader_flag = foc_republic_origin_anakin_leader }
+        }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_vader_dead
+        set_global_flag = foc_saga_vader_died_at_endor
+        set_global_flag = foc_saga_anakin_redeemed
+        foc_saga_kill_darth_vader = yes
+        # 反应炉井里掉下去的是两个人。
+        foc_saga_emperor_dies_at_endor = yes
+        if = {
+            limit = { is_ai = no }
+            country_event = { id = foc_luke.15 days = 1 }
+            country_event = { id = foc_luke.17 days = 2 }
+        }
+    }
+}
+
+# 帝国视角的恩多。
+country_event = {
+    id = foc_luke.15
+    title = foc_luke.15.name
+    desc = foc_luke.15.desc
+    picture = GFX_foc_saga_imperial_officers
+    show_sound = event_ship_bridge
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        NOT = { has_country_flag = foc_saga_endor_imperial_report_shown }
+    }
+
+    immediate = { set_country_flag = foc_saga_endor_imperial_report_shown }
+
+    option = { name = foc_luke.15.a }
+}
+
+# 追赶补丁：如果死星二号被打掉时天行者的线还停在雅雯或达戈巴，把等待计时
+# 清掉并把中间节点补上，避免恩多先于贝斯滨出现。
+country_event = {
+    id = foc_luke.16
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_global_flag = foc_republic_origin_death_star_two_destroyed
+        NOT = { has_global_flag = foc_saga_final_redemption_resolved }
+        has_country_flag = foc_saga_luke_yavin_shown
+        NOT = { has_country_flag = foc_saga_luke_bespin_shown }
+        NOT = { has_country_flag = foc_saga_luke_catchup_done }
+        NOT = { has_global_flag = foc_saga_luke_died }
+    }
+
+    immediate = {
+        set_country_flag = foc_saga_luke_catchup_done
+        remove_country_flag = foc_saga_luke_dagobah_wait
+        remove_country_flag = foc_saga_luke_bespin_wait
+        if = {
+            limit = { NOT = { has_country_flag = foc_saga_luke_dagobah_shown } }
+            country_event = { id = foc_luke.11 }
+        }
+        country_event = { id = foc_luke.12 days = 30 }
+    }
+}
+
+# 皇帝之死。foc_luke.14 已经在机制层面完成了替换，这一条只负责讲清楚
+# 帝国从今天起由谁说了算。
+country_event = {
+    id = foc_luke.17
+    title = foc_luke.17.name
+    desc = foc_luke.17.desc
+    picture = GFX_foc_saga_moff_executed
+    show_sound = event_mystic_reveal
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_global_flag = foc_saga_palpatine_died_at_endor
+        NOT = { has_country_flag = foc_saga_emperor_death_report_shown }
+    }
+
+    immediate = { set_country_flag = foc_saga_emperor_death_report_shown }
+
+    option = { name = foc_luke.17.a }
+}

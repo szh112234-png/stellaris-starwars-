@@ -1,0 +1,62 @@
+# 2.13 shared Starkiller ownership checks.
+# Keep the player version (fop_*) and the general/crisis-compatible version
+# (myk_*) equivalent for diplomacy and subject restrictions.
+
+foc_khan_owns_completed_starkiller = {
+	OR = {
+		any_owned_megastructure = {
+			is_megastructure_type = myk_starkiller_base_final
+		}
+		any_owned_megastructure = {
+			is_megastructure_type = fop_starkiller_base_final
+		}
+	}
+}
+
+# The country flag is set immediately on completion; the physical ownership
+# check is the permanent fallback and also covers old saves.
+foc_khan_starkiller_submission_blocked = {
+	OR = {
+		has_country_flag = foc_khan_starkiller_owner_enemy
+		foc_khan_owns_completed_starkiller = yes
+
+		# The Rebel/New Republic storyline states are existential enemies of
+		# the Order and may never resolve the crisis by becoming satrapies.
+		has_country_flag = foc_khan_rebel_alliance_country
+		has_country_flag = foc_republic_origin_rebel_alliance_country
+		has_country_flag = foc_republic_origin_imperial_rebel_country
+		has_country_flag = foc_republic_origin_player_rebels
+		has_country_flag = foc_republic_origin_post_treaty_rebel_country
+		has_country_flag = foc_republic_origin_post_treaty_player_rebels
+		has_country_flag = foc_sw_new_republic_country
+		has_country_flag = foc_republic_origin_ai_new_republic_after_dqar
+		has_country_flag = foc_khan_rebel_member
+		has_country_flag = foc_sw_new_republic_awakened
+	}
+}
+
+# 2.14: a regular empire is considered fully occupied only when it still owns
+# at least one colony and every owned colony is controlled by the active Order.
+# Uncolonized systems and construction sites do not prevent forced submission.
+foc_khan_all_colonies_controlled_by_first_order = {
+	exists = event_target:foc_khan_first_order
+	any_owned_planet = { is_colony = yes }
+	NOT = {
+		any_owned_planet = {
+			is_colony = yes
+			NOT = { is_controlled_by = event_target:foc_khan_first_order }
+		}
+	}
+}
+
+foc_khan_all_colonies_controlled_by_final_order = {
+	exists = event_target:foc_khan_final_order
+	any_owned_planet = { is_colony = yes }
+	NOT = {
+		any_owned_planet = {
+			is_colony = yes
+			NOT = { is_controlled_by = event_target:foc_khan_final_order }
+		}
+	}
+}
+

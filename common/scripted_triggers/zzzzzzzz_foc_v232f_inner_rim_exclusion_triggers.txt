@@ -1,0 +1,31 @@
+# V232f - hard exclusion guard for the Inner Rim uprising.
+# These five systems can still belong to the New Republic after the Galactic
+# Concordance, but they must never be auto-transferred by the Death Star II
+# uprising.  We deliberately identify them three ways (system flag, planet
+# flag, and global event target) so old saves / map rebuilds cannot bypass it.
+
+foc_v232f_is_inner_rim_uprising_excluded_system = {
+    OR = {
+        has_star_flag = foc_swmap_aldoleem_home
+        has_star_flag = foc_sw_rendili_home
+        has_star_flag = foc_swmap_christophsis_home
+        has_star_flag = foc_swmap_utapau_home
+        has_star_flag = foc_swmap_jedha_home
+
+        any_system_planet = {
+            OR = {
+                has_planet_flag = foc_swmap_aldoleem
+                has_planet_flag = foc_sw_rendili
+                has_planet_flag = foc_swmap_christophsis
+                has_planet_flag = foc_swmap_utapau
+                has_planet_flag = foc_swmap_jedha
+            }
+        }
+
+        AND = { exists = event_target:foc_swmap_aldoleem_system  is_same_value = event_target:foc_swmap_aldoleem_system }
+        AND = { exists = event_target:foc_sw_rendili_system      is_same_value = event_target:foc_sw_rendili_system }
+        AND = { exists = event_target:foc_swmap_christophsis_system is_same_value = event_target:foc_swmap_christophsis_system }
+        AND = { exists = event_target:foc_swmap_utapau_system    is_same_value = event_target:foc_swmap_utapau_system }
+        AND = { exists = event_target:foc_swmap_jedha_system     is_same_value = event_target:foc_swmap_jedha_system }
+    }
+}

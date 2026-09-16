@@ -1,0 +1,736 @@
+namespace = foc_gcw_active
+
+# Target-system selector. ROOT = espionage operation; owner = Rebel country; target = Galactic Empire.
+espionage_operation_event = {
+    id = foc_gcw_active.1
+    title = foc_gcw_active.1.name
+    desc = foc_gcw_active.1.desc
+    picture = GFX_foc_canon_v75_42
+    is_triggered_only = yes
+    force_open = yes
+
+    immediate = {
+        # V216: validate by the actual Galactic Empire identity.  Do not depend
+        # on a global event target that can be stale in migrated saves.
+        if = {
+            limit = {
+                target = { NOT = { has_country_flag = foc_republic_origin_empire_country } }
+            }
+            foc_gcw_active_uprising_cleanup = yes
+            destroy_espionage_operation = this
+        }
+        else = {
+                foc_gcw_active_uprising_clear_candidates = yes
+
+                # Remove stale temporary menu marks, then fill up to twelve distinct Imperial systems.
+                target = {
+                    every_owned_planet = {
+                        solar_system = {
+                            if = {
+                                limit = { has_star_flag = foc_gcw_active_candidate_system }
+                                remove_star_flag = foc_gcw_active_candidate_system
+                            }
+                        }
+                    }
+                }
+                target = {
+                    random_owned_planet = {
+                        limit = {
+                            is_colony = yes
+                            NOT = { has_carrier_flag = foc_gcw_recently_resolved }
+                            foc_v202_system_has_no_imperial_fleet = yes
+                            solar_system = { NOT = { has_star_flag = foc_gcw_active_candidate_system } }
+                        }
+                        solar_system = {
+                            save_global_event_target_as = foc_gcw_active_candidate_1
+                            set_star_flag = foc_gcw_active_candidate_system
+                        }
+                    }
+                }
+                target = {
+                    random_owned_planet = {
+                        limit = {
+                            is_colony = yes
+                            NOT = { has_carrier_flag = foc_gcw_recently_resolved }
+                            foc_v202_system_has_no_imperial_fleet = yes
+                            solar_system = { NOT = { has_star_flag = foc_gcw_active_candidate_system } }
+                        }
+                        solar_system = {
+                            save_global_event_target_as = foc_gcw_active_candidate_2
+                            set_star_flag = foc_gcw_active_candidate_system
+                        }
+                    }
+                }
+                target = {
+                    random_owned_planet = {
+                        limit = {
+                            is_colony = yes
+                            NOT = { has_carrier_flag = foc_gcw_recently_resolved }
+                            foc_v202_system_has_no_imperial_fleet = yes
+                            solar_system = { NOT = { has_star_flag = foc_gcw_active_candidate_system } }
+                        }
+                        solar_system = {
+                            save_global_event_target_as = foc_gcw_active_candidate_3
+                            set_star_flag = foc_gcw_active_candidate_system
+                        }
+                    }
+                }
+                target = {
+                    random_owned_planet = {
+                        limit = {
+                            is_colony = yes
+                            NOT = { has_carrier_flag = foc_gcw_recently_resolved }
+                            foc_v202_system_has_no_imperial_fleet = yes
+                            solar_system = { NOT = { has_star_flag = foc_gcw_active_candidate_system } }
+                        }
+                        solar_system = {
+                            save_global_event_target_as = foc_gcw_active_candidate_4
+                            set_star_flag = foc_gcw_active_candidate_system
+                        }
+                    }
+                }
+                target = {
+                    random_owned_planet = {
+                        limit = {
+                            is_colony = yes
+                            NOT = { has_carrier_flag = foc_gcw_recently_resolved }
+                            foc_v202_system_has_no_imperial_fleet = yes
+                            solar_system = { NOT = { has_star_flag = foc_gcw_active_candidate_system } }
+                        }
+                        solar_system = {
+                            save_global_event_target_as = foc_gcw_active_candidate_5
+                            set_star_flag = foc_gcw_active_candidate_system
+                        }
+                    }
+                }
+                target = {
+                    random_owned_planet = {
+                        limit = {
+                            is_colony = yes
+                            NOT = { has_carrier_flag = foc_gcw_recently_resolved }
+                            foc_v202_system_has_no_imperial_fleet = yes
+                            solar_system = { NOT = { has_star_flag = foc_gcw_active_candidate_system } }
+                        }
+                        solar_system = {
+                            save_global_event_target_as = foc_gcw_active_candidate_6
+                            set_star_flag = foc_gcw_active_candidate_system
+                        }
+                    }
+                }
+                target = {
+                    random_owned_planet = {
+                        limit = {
+                            is_colony = yes
+                            NOT = { has_carrier_flag = foc_gcw_recently_resolved }
+                            foc_v202_system_has_no_imperial_fleet = yes
+                            solar_system = { NOT = { has_star_flag = foc_gcw_active_candidate_system } }
+                        }
+                        solar_system = {
+                            save_global_event_target_as = foc_gcw_active_candidate_7
+                            set_star_flag = foc_gcw_active_candidate_system
+                        }
+                    }
+                }
+                target = {
+                    random_owned_planet = {
+                        limit = {
+                            is_colony = yes
+                            NOT = { has_carrier_flag = foc_gcw_recently_resolved }
+                            foc_v202_system_has_no_imperial_fleet = yes
+                            solar_system = { NOT = { has_star_flag = foc_gcw_active_candidate_system } }
+                        }
+                        solar_system = {
+                            save_global_event_target_as = foc_gcw_active_candidate_8
+                            set_star_flag = foc_gcw_active_candidate_system
+                        }
+                    }
+                }
+                target = {
+                    random_owned_planet = {
+                        limit = {
+                            is_colony = yes
+                            NOT = { has_carrier_flag = foc_gcw_recently_resolved }
+                            foc_v202_system_has_no_imperial_fleet = yes
+                            solar_system = { NOT = { has_star_flag = foc_gcw_active_candidate_system } }
+                        }
+                        solar_system = {
+                            save_global_event_target_as = foc_gcw_active_candidate_9
+                            set_star_flag = foc_gcw_active_candidate_system
+                        }
+                    }
+                }
+                target = {
+                    random_owned_planet = {
+                        limit = {
+                            is_colony = yes
+                            NOT = { has_carrier_flag = foc_gcw_recently_resolved }
+                            foc_v202_system_has_no_imperial_fleet = yes
+                            solar_system = { NOT = { has_star_flag = foc_gcw_active_candidate_system } }
+                        }
+                        solar_system = {
+                            save_global_event_target_as = foc_gcw_active_candidate_10
+                            set_star_flag = foc_gcw_active_candidate_system
+                        }
+                    }
+                }
+                target = {
+                    random_owned_planet = {
+                        limit = {
+                            is_colony = yes
+                            NOT = { has_carrier_flag = foc_gcw_recently_resolved }
+                            foc_v202_system_has_no_imperial_fleet = yes
+                            solar_system = { NOT = { has_star_flag = foc_gcw_active_candidate_system } }
+                        }
+                        solar_system = {
+                            save_global_event_target_as = foc_gcw_active_candidate_11
+                            set_star_flag = foc_gcw_active_candidate_system
+                        }
+                    }
+                }
+                target = {
+                    random_owned_planet = {
+                        limit = {
+                            is_colony = yes
+                            NOT = { has_carrier_flag = foc_gcw_recently_resolved }
+                            foc_v202_system_has_no_imperial_fleet = yes
+                            solar_system = { NOT = { has_star_flag = foc_gcw_active_candidate_system } }
+                        }
+                        solar_system = {
+                            save_global_event_target_as = foc_gcw_active_candidate_12
+                            set_star_flag = foc_gcw_active_candidate_system
+                        }
+                    }
+                }
+                target = {
+                    every_owned_planet = {
+                        solar_system = {
+                            if = {
+                                limit = { has_star_flag = foc_gcw_active_candidate_system }
+                                remove_star_flag = foc_gcw_active_candidate_system
+                            }
+                        }
+                    }
+                }
+    
+        }
+    }
+
+    option = {
+        name = foc_gcw_active.target.1
+        trigger = { exists = event_target:foc_gcw_active_candidate_1 }
+        hidden_effect = {
+            event_target:foc_gcw_active_candidate_1 = {
+                save_global_event_target_as = foc_gcw_active_uprising_target_system
+                random_system_planet = {
+                    limit = {
+                        is_colony = yes
+                        owner = { has_country_flag = foc_republic_origin_empire_country }
+                    }
+                    save_global_event_target_as = foc_gcw_active_uprising_target
+                    set_carrier_flag = foc_gcw_active_uprising_targeted
+                }
+            }
+            foc_gcw_active_uprising_clear_candidates = yes
+            set_espionage_operation_progress_locked = no
+        }
+    }
+    option = {
+        name = foc_gcw_active.target.2
+        trigger = { exists = event_target:foc_gcw_active_candidate_2 }
+        hidden_effect = {
+            event_target:foc_gcw_active_candidate_2 = {
+                save_global_event_target_as = foc_gcw_active_uprising_target_system
+                random_system_planet = {
+                    limit = {
+                        is_colony = yes
+                        owner = { has_country_flag = foc_republic_origin_empire_country }
+                    }
+                    save_global_event_target_as = foc_gcw_active_uprising_target
+                    set_carrier_flag = foc_gcw_active_uprising_targeted
+                }
+            }
+            foc_gcw_active_uprising_clear_candidates = yes
+            set_espionage_operation_progress_locked = no
+        }
+    }
+    option = {
+        name = foc_gcw_active.target.3
+        trigger = { exists = event_target:foc_gcw_active_candidate_3 }
+        hidden_effect = {
+            event_target:foc_gcw_active_candidate_3 = {
+                save_global_event_target_as = foc_gcw_active_uprising_target_system
+                random_system_planet = {
+                    limit = {
+                        is_colony = yes
+                        owner = { has_country_flag = foc_republic_origin_empire_country }
+                    }
+                    save_global_event_target_as = foc_gcw_active_uprising_target
+                    set_carrier_flag = foc_gcw_active_uprising_targeted
+                }
+            }
+            foc_gcw_active_uprising_clear_candidates = yes
+            set_espionage_operation_progress_locked = no
+        }
+    }
+    option = {
+        name = foc_gcw_active.target.4
+        trigger = { exists = event_target:foc_gcw_active_candidate_4 }
+        hidden_effect = {
+            event_target:foc_gcw_active_candidate_4 = {
+                save_global_event_target_as = foc_gcw_active_uprising_target_system
+                random_system_planet = {
+                    limit = {
+                        is_colony = yes
+                        owner = { has_country_flag = foc_republic_origin_empire_country }
+                    }
+                    save_global_event_target_as = foc_gcw_active_uprising_target
+                    set_carrier_flag = foc_gcw_active_uprising_targeted
+                }
+            }
+            foc_gcw_active_uprising_clear_candidates = yes
+            set_espionage_operation_progress_locked = no
+        }
+    }
+    option = {
+        name = foc_gcw_active.target.5
+        trigger = { exists = event_target:foc_gcw_active_candidate_5 }
+        hidden_effect = {
+            event_target:foc_gcw_active_candidate_5 = {
+                save_global_event_target_as = foc_gcw_active_uprising_target_system
+                random_system_planet = {
+                    limit = {
+                        is_colony = yes
+                        owner = { has_country_flag = foc_republic_origin_empire_country }
+                    }
+                    save_global_event_target_as = foc_gcw_active_uprising_target
+                    set_carrier_flag = foc_gcw_active_uprising_targeted
+                }
+            }
+            foc_gcw_active_uprising_clear_candidates = yes
+            set_espionage_operation_progress_locked = no
+        }
+    }
+    option = {
+        name = foc_gcw_active.target.6
+        trigger = { exists = event_target:foc_gcw_active_candidate_6 }
+        hidden_effect = {
+            event_target:foc_gcw_active_candidate_6 = {
+                save_global_event_target_as = foc_gcw_active_uprising_target_system
+                random_system_planet = {
+                    limit = {
+                        is_colony = yes
+                        owner = { has_country_flag = foc_republic_origin_empire_country }
+                    }
+                    save_global_event_target_as = foc_gcw_active_uprising_target
+                    set_carrier_flag = foc_gcw_active_uprising_targeted
+                }
+            }
+            foc_gcw_active_uprising_clear_candidates = yes
+            set_espionage_operation_progress_locked = no
+        }
+    }
+    option = {
+        name = foc_gcw_active.target.7
+        trigger = { exists = event_target:foc_gcw_active_candidate_7 }
+        hidden_effect = {
+            event_target:foc_gcw_active_candidate_7 = {
+                save_global_event_target_as = foc_gcw_active_uprising_target_system
+                random_system_planet = {
+                    limit = {
+                        is_colony = yes
+                        owner = { has_country_flag = foc_republic_origin_empire_country }
+                    }
+                    save_global_event_target_as = foc_gcw_active_uprising_target
+                    set_carrier_flag = foc_gcw_active_uprising_targeted
+                }
+            }
+            foc_gcw_active_uprising_clear_candidates = yes
+            set_espionage_operation_progress_locked = no
+        }
+    }
+    option = {
+        name = foc_gcw_active.target.8
+        trigger = { exists = event_target:foc_gcw_active_candidate_8 }
+        hidden_effect = {
+            event_target:foc_gcw_active_candidate_8 = {
+                save_global_event_target_as = foc_gcw_active_uprising_target_system
+                random_system_planet = {
+                    limit = {
+                        is_colony = yes
+                        owner = { has_country_flag = foc_republic_origin_empire_country }
+                    }
+                    save_global_event_target_as = foc_gcw_active_uprising_target
+                    set_carrier_flag = foc_gcw_active_uprising_targeted
+                }
+            }
+            foc_gcw_active_uprising_clear_candidates = yes
+            set_espionage_operation_progress_locked = no
+        }
+    }
+    option = {
+        name = foc_gcw_active.target.9
+        trigger = { exists = event_target:foc_gcw_active_candidate_9 }
+        hidden_effect = {
+            event_target:foc_gcw_active_candidate_9 = {
+                save_global_event_target_as = foc_gcw_active_uprising_target_system
+                random_system_planet = {
+                    limit = {
+                        is_colony = yes
+                        owner = { has_country_flag = foc_republic_origin_empire_country }
+                    }
+                    save_global_event_target_as = foc_gcw_active_uprising_target
+                    set_carrier_flag = foc_gcw_active_uprising_targeted
+                }
+            }
+            foc_gcw_active_uprising_clear_candidates = yes
+            set_espionage_operation_progress_locked = no
+        }
+    }
+    option = {
+        name = foc_gcw_active.target.10
+        trigger = { exists = event_target:foc_gcw_active_candidate_10 }
+        hidden_effect = {
+            event_target:foc_gcw_active_candidate_10 = {
+                save_global_event_target_as = foc_gcw_active_uprising_target_system
+                random_system_planet = {
+                    limit = {
+                        is_colony = yes
+                        owner = { has_country_flag = foc_republic_origin_empire_country }
+                    }
+                    save_global_event_target_as = foc_gcw_active_uprising_target
+                    set_carrier_flag = foc_gcw_active_uprising_targeted
+                }
+            }
+            foc_gcw_active_uprising_clear_candidates = yes
+            set_espionage_operation_progress_locked = no
+        }
+    }
+    option = {
+        name = foc_gcw_active.target.11
+        trigger = { exists = event_target:foc_gcw_active_candidate_11 }
+        hidden_effect = {
+            event_target:foc_gcw_active_candidate_11 = {
+                save_global_event_target_as = foc_gcw_active_uprising_target_system
+                random_system_planet = {
+                    limit = {
+                        is_colony = yes
+                        owner = { has_country_flag = foc_republic_origin_empire_country }
+                    }
+                    save_global_event_target_as = foc_gcw_active_uprising_target
+                    set_carrier_flag = foc_gcw_active_uprising_targeted
+                }
+            }
+            foc_gcw_active_uprising_clear_candidates = yes
+            set_espionage_operation_progress_locked = no
+        }
+    }
+    option = {
+        name = foc_gcw_active.target.12
+        trigger = { exists = event_target:foc_gcw_active_candidate_12 }
+        hidden_effect = {
+            event_target:foc_gcw_active_candidate_12 = {
+                save_global_event_target_as = foc_gcw_active_uprising_target_system
+                random_system_planet = {
+                    limit = {
+                        is_colony = yes
+                        owner = { has_country_flag = foc_republic_origin_empire_country }
+                    }
+                    save_global_event_target_as = foc_gcw_active_uprising_target
+                    set_carrier_flag = foc_gcw_active_uprising_targeted
+                }
+            }
+            foc_gcw_active_uprising_clear_candidates = yes
+            set_espionage_operation_progress_locked = no
+        }
+    }
+
+    # V216: do not leave the player in an empty selector if every Imperial
+    # colony is currently guarded or otherwise ineligible.  Abort cleanly; the
+    # operation itself remains visible and can be launched again later.
+    option = {
+        name = foc_gcw_active.target.none
+        trigger = {
+            NOT = { exists = event_target:foc_gcw_active_candidate_1 }
+            NOT = { exists = event_target:foc_gcw_active_candidate_2 }
+            NOT = { exists = event_target:foc_gcw_active_candidate_3 }
+            NOT = { exists = event_target:foc_gcw_active_candidate_4 }
+            NOT = { exists = event_target:foc_gcw_active_candidate_5 }
+            NOT = { exists = event_target:foc_gcw_active_candidate_6 }
+            NOT = { exists = event_target:foc_gcw_active_candidate_7 }
+            NOT = { exists = event_target:foc_gcw_active_candidate_8 }
+            NOT = { exists = event_target:foc_gcw_active_candidate_9 }
+            NOT = { exists = event_target:foc_gcw_active_candidate_10 }
+            NOT = { exists = event_target:foc_gcw_active_candidate_11 }
+            NOT = { exists = event_target:foc_gcw_active_candidate_12 }
+        }
+        custom_tooltip = foc_gcw_active.target.none.tooltip
+        hidden_effect = {
+            foc_gcw_active_uprising_cleanup = yes
+            destroy_espionage_operation = this
+        }
+    }
+
+    option = {
+        name = foc_gcw_active.target.more
+        trigger = {
+            OR = {
+                exists = event_target:foc_gcw_active_candidate_1
+                exists = event_target:foc_gcw_active_candidate_2
+                exists = event_target:foc_gcw_active_candidate_3
+                exists = event_target:foc_gcw_active_candidate_4
+                exists = event_target:foc_gcw_active_candidate_5
+                exists = event_target:foc_gcw_active_candidate_6
+                exists = event_target:foc_gcw_active_candidate_7
+                exists = event_target:foc_gcw_active_candidate_8
+                exists = event_target:foc_gcw_active_candidate_9
+                exists = event_target:foc_gcw_active_candidate_10
+                exists = event_target:foc_gcw_active_candidate_11
+                exists = event_target:foc_gcw_active_candidate_12
+            }
+        }
+        hidden_effect = {
+            foc_gcw_active_uprising_clear_candidates = yes
+            espionage_operation_event = { id = foc_gcw_active.1 days = 1 }
+        }
+    }
+    option = {
+        name = foc_gcw_active.target.cancel
+        hidden_effect = {
+            foc_gcw_active_uprising_cleanup = yes
+            destroy_espionage_operation = this
+        }
+    }
+}
+
+# Stage 1 - establish clandestine contacts / cell.
+espionage_operation_event = {
+    id = foc_gcw_active.10
+    show_sound = event_default
+    title = foc_gcw_active.10.name
+    desc = foc_gcw_active.10.desc
+    picture = GFX_foc_canon_v75_42
+    espionage_operation = yes
+    is_triggered_only = yes
+    force_open = yes
+
+    option = {
+        name = foc_gcw_active.continue
+        trigger = { foc_v232q_coup_target_valid = yes }
+        hidden_effect = {
+            event_target:foc_gcw_active_uprising_target = {
+                if = {
+                    limit = {
+                        NOT = { has_carrier_flag = foc_gcw_partisan_cell_flag }
+                        NOT = { has_carrier_flag = foc_gcw_partisan_network_flag }
+                        NOT = { has_carrier_flag = foc_gcw_partisan_uprising_flag }
+                    }
+                    add_modifier = { modifier = foc_gcw_partisan_cell days = -1 }
+                    set_carrier_flag = foc_gcw_partisan_cell_flag
+                }
+            }
+        }
+    }
+    option = {
+        name = foc_gcw_active.abort
+        trigger = { foc_v232q_coup_target_valid = no }
+        hidden_effect = {
+            foc_gcw_active_uprising_cleanup = yes
+            destroy_espionage_operation = this
+        }
+    }
+}
+
+# Stage 2 - turn the cell into a persistent underground network.
+espionage_operation_event = {
+    id = foc_gcw_active.20
+    show_sound = event_default
+    title = foc_gcw_active.20.name
+    desc = foc_gcw_active.20.desc
+    picture = GFX_foc_canon_v75_42
+    espionage_operation = yes
+    is_triggered_only = yes
+    force_open = yes
+
+    option = {
+        name = foc_gcw_active.continue
+        trigger = { foc_v232q_coup_target_valid = yes }
+        hidden_effect = {
+            event_target:foc_gcw_active_uprising_target = {
+                if = {
+                    limit = {
+                        NOT = { has_carrier_flag = foc_gcw_partisan_network_flag }
+                        NOT = { has_carrier_flag = foc_gcw_partisan_uprising_flag }
+                    }
+                    if = {
+                        limit = { NOT = { has_carrier_flag = foc_gcw_partisan_cell_flag } }
+                        add_modifier = { modifier = foc_gcw_partisan_cell days = -1 }
+                        set_carrier_flag = foc_gcw_partisan_cell_flag
+                    }
+                    foc_gcw_promote_to_network = yes
+                }
+            }
+        }
+    }
+    option = {
+        name = foc_gcw_active.abort
+        trigger = { foc_v232q_coup_target_valid = no }
+        hidden_effect = { foc_gcw_active_uprising_cleanup = yes destroy_espionage_operation = this }
+    }
+}
+
+# Stage 3 - smuggle weapons and turn the network into an armed partisan force.
+espionage_operation_event = {
+    id = foc_gcw_active.30
+    show_sound = event_default
+    title = foc_gcw_active.30.name
+    desc = foc_gcw_active.30.desc
+    picture = GFX_foc_event_war_in_heaven
+    espionage_operation = yes
+    is_triggered_only = yes
+    force_open = yes
+
+    option = {
+        name = foc_gcw_active.continue
+        trigger = { foc_v232q_coup_target_valid = yes }
+        hidden_effect = {
+            event_target:foc_gcw_active_uprising_target = {
+                if = {
+                    limit = {
+                        NOT = { has_carrier_flag = foc_gcw_partisan_network_flag }
+                        NOT = { has_carrier_flag = foc_gcw_partisan_uprising_flag }
+                    }
+                    if = {
+                        limit = { NOT = { has_carrier_flag = foc_gcw_partisan_cell_flag } }
+                        add_modifier = { modifier = foc_gcw_partisan_cell days = -1 }
+                        set_carrier_flag = foc_gcw_partisan_cell_flag
+                    }
+                    foc_gcw_promote_to_network = yes
+                }
+                if = {
+                    limit = {
+                        NOT = { has_carrier_flag = foc_gcw_partisan_uprising_flag }
+                        NOT = { has_carrier_flag = foc_gcw_partisan_armed_flag }
+                    }
+                    add_modifier = { modifier = foc_gcw_partisan_armed days = -1 }
+                    set_carrier_flag = foc_gcw_partisan_armed_flag
+                }
+            }
+        }
+    }
+    option = {
+        name = foc_gcw_active.abort
+        trigger = { foc_v232q_coup_target_valid = no }
+        hidden_effect = { foc_gcw_active_uprising_cleanup = yes destroy_espionage_operation = this }
+    }
+}
+
+# Stage 4 - launch a planetary uprising. The normal Imperial response event,
+# not the espionage operation itself, decides whether the system changes hands.
+espionage_operation_event = {
+    id = foc_gcw_active.40
+    show_sound = event_default
+    title = foc_gcw_active.40.name
+    desc = foc_gcw_active.40.desc
+    picture = GFX_foc_event_war_in_heaven
+    espionage_operation = yes
+    is_triggered_only = yes
+    force_open = yes
+
+    option = {
+        name = foc_gcw_active.launch
+        trigger = { foc_v232q_coup_target_valid = yes }
+        hidden_effect = {
+            event_target:foc_gcw_active_uprising_target = {
+                if = {
+                    limit = { NOT = { has_carrier_flag = foc_gcw_partisan_uprising_flag } }
+                    foc_gcw_promote_to_uprising = yes
+                }
+                carrier_event = { id = foc_gcw.13 days = 1 }
+            }
+            set_espionage_operation_flag = foc_v232q_coup_resolved
+            foc_gcw_active_uprising_cleanup = yes
+            destroy_espionage_operation = this
+        }
+    }
+    option = {
+        name = foc_gcw_active.abort
+        trigger = { foc_v232q_coup_target_valid = no }
+        hidden_effect = { foc_gcw_active_uprising_cleanup = yes destroy_espionage_operation = this }
+    }
+}
+
+# Cleanup hook for manual cancellation / any non-standard operation termination.
+espionage_operation_event = {
+    id = foc_gcw_active.90
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { has_espionage_type = operation_foc_gcw_instigate_system_uprising }
+    immediate = { foc_gcw_active_uprising_cleanup = yes }
+}
+
+# V232q: actual-operation based repair, including old finished objects that
+# remained on the network and stale global target references.
+country_event = {
+    id = foc_gcw_active.91
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        is_ai = no
+        OR = {
+            has_country_flag = foc_gcw_active_uprising_in_progress
+            has_country_flag = foc_gcw_active_uprising_starting
+            any_espionage_operation = { has_espionage_type = operation_foc_gcw_instigate_system_uprising }
+        }
+    }
+    immediate = {
+        # Safe old-save migration: require the resolved flag or the old finale
+        # cleanup signature. Do not infer completion from a chapter index alone.
+        every_espionage_operation = {
+            limit = { has_espionage_type = operation_foc_gcw_instigate_system_uprising }
+            if = {
+                limit = {
+                    OR = {
+                        has_espionage_operation_flag = foc_v232q_coup_resolved
+                        AND = {
+                            owner = {
+                                NOT = { has_country_flag = foc_gcw_active_uprising_in_progress }
+                                NOT = { has_country_flag = foc_gcw_active_uprising_starting }
+                            }
+                            NOT = { exists = event_target:foc_gcw_active_uprising_target }
+                            NOT = { exists = event_target:foc_gcw_active_uprising_target_system }
+                        }
+                    }
+                }
+                foc_gcw_active_uprising_cleanup = yes
+                log = "FOC_V232Q_COUP: retired a completed legacy operation; no new uprising or reward was granted."
+                destroy_espionage_operation = this
+            }
+            else = {
+                # Recover only the pointer to a still-live legacy operation.
+                save_global_event_target_as = foc_v232q_active_coup_operation
+                owner = { set_country_flag = foc_gcw_active_uprising_in_progress }
+            }
+        }
+        foc_v232q_cleanup_orphaned_coup = yes
+    }
+}
+
+# Load recovery is no-scope; country events establish the correct ROOT.
+event = {
+    id = foc_gcw_active.92
+    hide_window = yes
+    is_triggered_only = yes
+    immediate = { every_country = { limit = { is_ai = no } country_event = { id = foc_gcw_active.91 } } }
+}
+
+# Only run completion cleanup after the finale actually resolved.
+espionage_operation_event = {
+    id = foc_gcw_active.93
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        has_espionage_type = operation_foc_gcw_instigate_system_uprising
+        has_espionage_operation_flag = foc_v232q_coup_resolved
+    }
+    immediate = { foc_gcw_active_uprising_cleanup = yes }
+}

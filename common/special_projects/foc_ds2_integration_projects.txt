@@ -1,0 +1,25 @@
+special_project = {
+    key = "FOC_DS2_MOBILE_REFIT_PROJECT"
+    cost = 12000
+    tech_department = engineering_technology
+    timelimit = -1
+    location = yes
+    picture = GFX_evt_ship_in_orbit_3
+    icon = "gfx/interface/icons/deathstar_world_cracker.dds"
+    event_scope = country_event
+    on_success = {
+        if = {
+            limit = { is_ai = no }
+            set_country_flag = foc_ds2_refit_work_complete
+            country_event = { id = foc_ds2_integration.20 }
+        }
+    }
+    abort_trigger = {
+        OR = {
+            is_ai = yes
+            NOT = { has_country_flag = foc_republic_origin_empire_country }
+            has_country_flag = foc_ds2_refit_completed
+            NOT = { any_owned_ship = { has_ship_flag = foc_republic_origin_death_star_two } }
+        }
+    }
+}

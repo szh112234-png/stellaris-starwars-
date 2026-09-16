@@ -1,0 +1,34 @@
+foc_v1718_sync_equipment_techs = {
+    if = {
+        limit = { foc_v1718_allowed_country = yes NOT = { has_country_flag = foc_v1718_sync_running } }
+        set_country_flag = foc_v1718_sync_running
+        if = { limit = { foc_v1718_base_ready = yes } if = { limit = { NOT = { has_technology = foc_v1718_tech_reactor_1 } } give_technology = { tech = foc_v1718_tech_reactor_1 message = no } }
+            if = { limit = { NOT = { has_technology = foc_v1718_tech_hyperdrive_1 } } give_technology = { tech = foc_v1718_tech_hyperdrive_1 message = no } }
+            if = { limit = { NOT = { has_technology = foc_v1718_tech_thruster_1 } } give_technology = { tech = foc_v1718_tech_thruster_1 message = no } } }
+        if = { limit = { foc_v14_is_imperial_arsenal_country = yes foc_v1718_emp_stage2_ready = yes } if = { limit = { NOT = { has_technology = foc_v1718_tech_emp_reactor_2 } } give_technology = { tech = foc_v1718_tech_emp_reactor_2 message = no } }
+            if = { limit = { NOT = { has_technology = foc_v1718_tech_emp_hyperdrive_2 } } give_technology = { tech = foc_v1718_tech_emp_hyperdrive_2 message = no } }
+            if = { limit = { NOT = { has_technology = foc_v1718_tech_emp_thruster_2 } } give_technology = { tech = foc_v1718_tech_emp_thruster_2 message = no } } }
+        if = { limit = { foc_v1718_reb_branch = yes } if = { limit = { NOT = { has_technology = foc_v1718_tech_reb_reactor_2 } } give_technology = { tech = foc_v1718_tech_reb_reactor_2 message = no } }
+            if = { limit = { NOT = { has_technology = foc_v1718_tech_reb_hyperdrive_2 } } give_technology = { tech = foc_v1718_tech_reb_hyperdrive_2 message = no } }
+            if = { limit = { NOT = { has_technology = foc_v1718_tech_reb_thruster_2 } } give_technology = { tech = foc_v1718_tech_reb_thruster_2 message = no } } }
+        if = { limit = { foc_v14_is_imperial_arsenal_country = yes foc_v1718_emp_stage3_ready = yes } if = { limit = { NOT = { has_technology = foc_v1718_tech_emp_reactor_3 } } give_technology = { tech = foc_v1718_tech_emp_reactor_3 message = no } }
+            if = { limit = { NOT = { has_technology = foc_v1718_tech_emp_hyperdrive_3 } } give_technology = { tech = foc_v1718_tech_emp_hyperdrive_3 message = no } }
+            if = { limit = { NOT = { has_technology = foc_v1718_tech_emp_thruster_3 } } give_technology = { tech = foc_v1718_tech_emp_thruster_3 message = no } } }
+        if = { limit = { foc_v1718_reb_stage3_ready = yes } if = { limit = { NOT = { has_technology = foc_v1718_tech_reb_reactor_3 } } give_technology = { tech = foc_v1718_tech_reb_reactor_3 message = no } }
+            if = { limit = { NOT = { has_technology = foc_v1718_tech_reb_hyperdrive_3 } } give_technology = { tech = foc_v1718_tech_reb_hyperdrive_3 message = no } }
+            if = { limit = { NOT = { has_technology = foc_v1718_tech_reb_thruster_3 } } give_technology = { tech = foc_v1718_tech_reb_thruster_3 message = no } } }
+        # Fourth/fifth generations, Beskar and advanced computers are NEVER given.
+        remove_country_flag = foc_v1718_sync_running
+    }
+}
+foc_v1718_repair_source_planet = {
+    if = {
+        limit = { NOT = { foc_v1718_source_planet_alive = yes } }
+        remove_modifier = foc_v1718_coaxium_source
+        remove_modifier = foc_v1718_beskar_source
+    }
+    else = {
+        if = { limit = { has_planet_flag = foc_swmap_kessel NOT = { has_modifier = foc_v1718_coaxium_source } } add_modifier = { modifier = foc_v1718_coaxium_source days = -1 } }
+        if = { limit = { has_planet_flag = foc_swmap_mandalore NOT = { has_modifier = foc_v1718_beskar_source } } add_modifier = { modifier = foc_v1718_beskar_source days = -1 } }
+    }
+}

@@ -1,0 +1,34 @@
+fop_force_shroud_realm_system = {
+    name = "NAME_FOP_FORCE_SHROUD_REALM"
+    class = "sc_black_hole"
+    usage = misc_system_init
+    flags = { fop_force_shroud_realm }
+    max_instances = 1
+
+    init_effect = {
+        save_global_event_target_as = fop_force_shroud_realm_system
+        isolate_system = yes
+    }
+
+    planet = {
+        name = "NAME_FOP_FORCE_SHROUD_HEART"
+        class = "pc_black_hole"
+        orbit_distance = 0
+        orbit_angle = 1
+        size = 30
+        has_ring = no
+        init_effect = { prevent_anomaly = yes }
+    }
+    planet = {
+        name = "NAME_FOP_FORCE_SHROUD_THRONE"
+        class = "pc_shrouded"
+        orbit_distance = 90
+        orbit_angle = 45
+        size = 25
+        has_ring = yes
+        flags = { fop_force_shroud_throne }
+        init_effect = { prevent_anomaly = yes }
+    }
+    planet = { name = "NAME_FOP_FORCE_SHROUD_ECHO_I" class = "pc_shrouded" orbit_distance = 55 orbit_angle = 145 size = 18 has_ring = no init_effect = { prevent_anomaly = yes } }
+    planet = { name = "NAME_FOP_FORCE_SHROUD_ECHO_II" class = "pc_shrouded" orbit_distance = 65 orbit_angle = 245 size = 20 has_ring = no init_effect = { prevent_anomaly = yes } }
+}

@@ -1,0 +1,754 @@
+namespace = foc_gcw
+
+# Rebel-side strategic ledger. The Imperial Rebellion exists from the Imperial
+# proclamation in FOC, so the ledger begins immediately rather than waiting for
+# a hidden country to reveal itself.
+country_event = {
+    id = foc_gcw.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        OR = {
+            has_country_flag = foc_republic_origin_imperial_rebel_country
+            has_country_flag = foc_republic_origin_rebel_alliance_country
+            has_country_flag = foc_khan_rebel_alliance_country
+        }
+        any_country = { has_country_flag = foc_republic_origin_empire_country }
+    }
+    immediate = {
+        foc_gcw_initialize_rebel_ledger = yes
+
+        # Annual organic growth. It reacts to the rebellion's own economy and
+        # therefore works for either a human or AI Rebel side.
+        if = {
+            limit = { NOT = { has_country_flag = foc_gcw_annual_tick } }
+            set_timed_country_flag = { flag = foc_gcw_annual_tick days = 360 }
+
+            change_variable = { which = foc_gcw_support value = 1 }
+
+            if = {
+                limit = { resource_stockpile_compare = { resource = energy value >= 25000 } }
+                change_variable = { which = foc_gcw_supply value = 2 }
+            }
+            if = {
+                limit = { resource_stockpile_compare = { resource = alloys value >= 12000 } }
+                change_variable = { which = foc_gcw_readiness value = 2 }
+            }
+            if = {
+                limit = { resource_stockpile_compare = { resource = unity value >= 12000 } }
+                change_variable = { which = foc_gcw_support value = 1 }
+            }
+            if = {
+                limit = { check_variable = { which = foc_phase1_rebel_intelligence value > 0 } }
+                change_variable = { which = foc_gcw_intelligence value = 2 }
+            }
+
+            foc_gcw_clamp_rebel_ledger = yes
+        }
+
+        # When the existing FOC story upgrades the Imperial Rebellion into the
+        # wider Rebel Alliance, cash out the accumulated preparation exactly once.
+        if = {
+            limit = {
+                has_global_flag = foc_saga_rebel_alliance_declared
+                NOT = { has_country_flag = foc_gcw_alliance_mobilization_applied }
+            }
+            country_event = { id = foc_gcw.5 }
+        }
+    }
+}
+
+# Empire-side manager: annual strategic control and one organic partisan
+# evaluation every 90 days. Paid frontier support is now initiated by the
+# Rebel country and never transfers a system directly.
+country_event = {
+    id = foc_gcw.2
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        has_country_flag = foc_republic_origin_empire_country
+        any_country = {
+            OR = {
+                has_country_flag = foc_republic_origin_imperial_rebel_country
+                has_country_flag = foc_republic_origin_rebel_alliance_country
+                has_country_flag = foc_khan_rebel_alliance_country
+            }
+        }
+    }
+    immediate = {
+        foc_gcw_initialize_empire_ledger = yes
+
+        if = {
+            limit = { NOT = { has_country_flag = foc_gcw_empire_annual_tick } }
+            set_timed_country_flag = { flag = foc_gcw_empire_annual_tick days = 360 }
+
+            # The three systems that already matter to FOC's Treaty conditions
+            # now also shape perceived Imperial control.
+            if = {
+                limit = { any_system = { has_star_flag = foc_sw_coruscant_home space_owner? = { is_same_value = root } } }
+                change_variable = { which = foc_gcw_control value = 2 }
+                change_variable = { which = foc_gcw_morale value = 1 }
+            }
+            else = {
+                change_variable = { which = foc_gcw_control value = -3 }
+                change_variable = { which = foc_gcw_morale value = -2 }
+            }
+
+            if = {
+                limit = { any_system = { has_star_flag = foc_sw_kuat_home space_owner? = { is_same_value = root } } }
+                change_variable = { which = foc_gcw_control value = 1 }
+            }
+            else = { change_variable = { which = foc_gcw_control value = -2 } }
+
+            if = {
+                limit = { any_system = { has_star_flag = foc_sw_jakku_home space_owner? = { is_same_value = root } } }
+                change_variable = { which = foc_gcw_morale value = 1 }
+            }
+            else = { change_variable = { which = foc_gcw_morale value = -2 } }
+
+            foc_gcw_clamp_empire_ledger = yes
+            foc_gcw_refresh_empire_state = yes
+        }
+
+        # V190: while either Death Star is physically present in the Imperial
+        # fleet, fear suppresses the organic/random uprising layer. Once no Death
+        # Star remains, that original sampler resumes automatically. Player-directed
+        # espionage operations are intentionally unaffected.
+        if = {
+            limit = {
+                NOT = { has_country_flag = foc_gcw_partisan_tick }
+                NOT = {
+                    any_owned_ship = {
+                        OR = {
+                            has_ship_flag = foc_republic_origin_death_star_one
+                            has_ship_flag = foc_republic_origin_death_star_two
+                        }
+                    }
+                }
+            }
+            set_timed_country_flag = { flag = foc_gcw_partisan_tick days = 90 }
+            random_owned_planet = {
+                limit = {
+                    is_colony = yes
+                    is_capital = no
+                    foc_v202_system_has_no_imperial_fleet = yes
+                    NOT = { has_carrier_flag = foc_gcw_recently_resolved }
+                }
+                carrier_event = { id = foc_gcw.10 }
+            }
+        }
+
+    }
+}
+
+# Apply one of four FOC-specific mobilization tiers at Rebel Alliance declaration.
+country_event = {
+    id = foc_gcw.5
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        NOT = { has_country_flag = foc_gcw_alliance_mobilization_applied }
+        has_global_flag = foc_saga_rebel_alliance_declared
+        OR = {
+            has_country_flag = foc_republic_origin_imperial_rebel_country
+            has_country_flag = foc_republic_origin_rebel_alliance_country
+            has_country_flag = foc_khan_rebel_alliance_country
+        }
+    }
+    immediate = {
+        set_country_flag = foc_gcw_alliance_mobilization_applied
+
+        remove_modifier = foc_gcw_rebel_mobilization_1
+        remove_modifier = foc_gcw_rebel_mobilization_2
+        remove_modifier = foc_gcw_rebel_mobilization_3
+        remove_modifier = foc_gcw_rebel_mobilization_4
+
+        if = {
+            limit = {
+                check_variable = { which = foc_gcw_support value >= 60 }
+                check_variable = { which = foc_gcw_supply value >= 55 }
+                check_variable = { which = foc_gcw_intelligence value >= 50 }
+                check_variable = { which = foc_gcw_readiness value >= 55 }
+            }
+            set_country_flag = foc_gcw_mobilization_tier_4
+            add_modifier = { modifier = foc_gcw_rebel_mobilization_4 days = -1 }
+            add_resource = { energy = 50000 alloys = 30000 unity = 20000 }
+            if = { limit = { is_ai = no } country_event = { id = foc_gcw.6 } }
+        }
+        else_if = {
+            limit = {
+                check_variable = { which = foc_gcw_support value >= 45 }
+                check_variable = { which = foc_gcw_supply value >= 40 }
+                check_variable = { which = foc_gcw_intelligence value >= 35 }
+                check_variable = { which = foc_gcw_readiness value >= 40 }
+            }
+            set_country_flag = foc_gcw_mobilization_tier_3
+            add_modifier = { modifier = foc_gcw_rebel_mobilization_3 days = -1 }
+            add_resource = { energy = 35000 alloys = 20000 unity = 15000 }
+            if = { limit = { is_ai = no } country_event = { id = foc_gcw.6 } }
+        }
+        else_if = {
+            limit = {
+                check_variable = { which = foc_gcw_support value >= 30 }
+                check_variable = { which = foc_gcw_supply value >= 30 }
+                check_variable = { which = foc_gcw_readiness value >= 25 }
+            }
+            set_country_flag = foc_gcw_mobilization_tier_2
+            add_modifier = { modifier = foc_gcw_rebel_mobilization_2 days = -1 }
+            add_resource = { energy = 20000 alloys = 12000 unity = 10000 }
+            if = { limit = { is_ai = no } country_event = { id = foc_gcw.6 } }
+        }
+        else = {
+            set_country_flag = foc_gcw_mobilization_tier_1
+            add_modifier = { modifier = foc_gcw_rebel_mobilization_1 days = -1 }
+            add_resource = { energy = 10000 alloys = 5000 unity = 5000 }
+            if = { limit = { is_ai = no } country_event = { id = foc_gcw.6 } }
+        }
+
+        every_owned_fleet = {
+            if = { limit = { owner = { is_ai = no } } set_fleet_stance = passive }
+        }
+    }
+}
+
+country_event = {
+    id = foc_gcw.6
+    title = foc_gcw.6.name
+    desc = {
+        trigger = { has_country_flag = foc_gcw_mobilization_tier_4 }
+        text = foc_gcw.6.desc.4
+    }
+    desc = {
+        trigger = { has_country_flag = foc_gcw_mobilization_tier_3 }
+        text = foc_gcw.6.desc.3
+    }
+    desc = {
+        trigger = { has_country_flag = foc_gcw_mobilization_tier_2 }
+        text = foc_gcw.6.desc.2
+    }
+    desc = {
+        trigger = { has_country_flag = foc_gcw_mobilization_tier_1 }
+        text = foc_gcw.6.desc.1
+    }
+    picture = GFX_foc_event_war_in_heaven
+    is_triggered_only = yes
+    force_open = yes
+    option = { name = foc_gcw.ok }
+}
+
+# -------------------- Partisans --------------------
+
+# Quarterly evaluator for one Imperial colony.
+carrier_event = {
+    id = foc_gcw.10
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        is_colony = yes
+        owner = { has_country_flag = foc_republic_origin_empire_country }
+        foc_v202_system_has_no_imperial_fleet = yes
+    }
+    immediate = {
+        if = {
+            limit = { has_carrier_flag = foc_gcw_partisan_uprising_flag }
+            # An uprising cannot remain frozen forever.
+            random_list = {
+                55 = { planet_event = { id = foc_gcw.13 } }
+                45 = { }
+            }
+        }
+        else_if = {
+            limit = { has_carrier_flag = foc_gcw_partisan_network_flag }
+            if = {
+                limit = { has_carrier_flag = foc_gcw_partisan_armed_flag }
+                random_list = {
+                    50 = {
+                        foc_gcw_promote_to_uprising = yes
+                        carrier_event = { id = foc_gcw.13 days = 1 }
+                    }
+                    50 = { }
+                }
+            }
+            else = {
+                random_list = {
+                    28 = {
+                        foc_gcw_promote_to_uprising = yes
+                        carrier_event = { id = foc_gcw.13 days = 1 }
+                    }
+                    72 = { }
+                }
+            }
+        }
+        else_if = {
+            limit = { has_carrier_flag = foc_gcw_partisan_cell_flag }
+            random_list = {
+                38 = {
+                    foc_gcw_promote_to_network = yes
+                    carrier_event = { id = foc_gcw.12 days = 1 }
+                }
+                62 = { }
+            }
+        }
+        else = {
+            # Local stability determines the chance that resistance coheres into
+            # a persistent cell. Only one randomly selected Imperial colony is
+            # evaluated each 90-day tick, keeping this cheap on large maps.
+            if = {
+                limit = { planet_stability < 40 }
+                random_list = {
+                    55 = {
+                        add_modifier = { modifier = foc_gcw_partisan_cell days = -1 }
+                        set_carrier_flag = foc_gcw_partisan_cell_flag
+                        if = { limit = { owner = { is_ai = no } } carrier_event = { id = foc_gcw.11 days = 1 } }
+                    }
+                    45 = { }
+                }
+            }
+            else_if = {
+                limit = { planet_stability < 55 }
+                random_list = {
+                    35 = {
+                        add_modifier = { modifier = foc_gcw_partisan_cell days = -1 }
+                        set_carrier_flag = foc_gcw_partisan_cell_flag
+                        if = { limit = { owner = { is_ai = no } } carrier_event = { id = foc_gcw.11 days = 1 } }
+                    }
+                    65 = { }
+                }
+            }
+            else_if = {
+                limit = { planet_stability < 70 }
+                random_list = {
+                    20 = {
+                        add_modifier = { modifier = foc_gcw_partisan_cell days = -1 }
+                        set_carrier_flag = foc_gcw_partisan_cell_flag
+                        if = { limit = { owner = { is_ai = no } } carrier_event = { id = foc_gcw.11 days = 1 } }
+                    }
+                    80 = { }
+                }
+            }
+            else = {
+                random_list = {
+                    8 = {
+                        add_modifier = { modifier = foc_gcw_partisan_cell days = -1 }
+                        set_carrier_flag = foc_gcw_partisan_cell_flag
+                        if = { limit = { owner = { is_ai = no } } carrier_event = { id = foc_gcw.11 days = 1 } }
+                    }
+                    92 = { }
+                }
+            }
+        }
+    }
+}
+
+carrier_event = {
+    id = foc_gcw.11
+    title = foc_gcw.11.name
+    desc = foc_gcw.11.desc
+    picture = GFX_foc_canon_v75_22
+    is_triggered_only = yes
+    force_open = yes
+    trigger = {
+        owner = { has_country_flag = foc_republic_origin_empire_country }
+        foc_v202_system_has_no_imperial_fleet = yes
+    }
+
+    option = {
+        name = foc_gcw.11.a
+        allow = {
+            owner = {
+                resource_stockpile_compare = { resource = energy value >= 1500 }
+                resource_stockpile_compare = { resource = unity value >= 500 }
+            }
+        }
+        owner = { add_resource = { energy = -1500 unity = -500 } }
+        hidden_effect = {
+            random_list = {
+                70 = {
+                    foc_gcw_clear_partisan_state = yes
+                    set_timed_carrier_flag = { flag = foc_gcw_recently_resolved days = 720 }
+                    owner = {
+                        change_variable = { which = foc_gcw_control value = 2 }
+                        foc_gcw_clamp_empire_ledger = yes
+                        foc_gcw_refresh_empire_state = yes
+                    }
+                    if = {
+                        limit = { exists = event_target:foc_gcw_rebel_ledger }
+                        event_target:foc_gcw_rebel_ledger = {
+                            change_variable = { which = foc_gcw_intelligence value = -2 }
+                            foc_gcw_clamp_rebel_ledger = yes
+                        }
+                    }
+                }
+                30 = {
+                    foc_gcw_promote_to_network = yes
+                    carrier_event = { id = foc_gcw.12 days = 1 }
+                }
+            }
+        }
+        ai_chance = { factor = 6 }
+    }
+
+    option = {
+        name = foc_gcw.11.b
+        owner = { add_resource = { alloys = -800 } }
+        foc_gcw_clear_partisan_state = yes
+        set_timed_carrier_flag = { flag = foc_gcw_recently_resolved days = 540 }
+        owner = {
+            change_variable = { which = foc_gcw_morale value = 2 }
+            foc_gcw_clamp_empire_ledger = yes
+            foc_gcw_refresh_empire_state = yes
+        }
+        if = {
+            limit = { exists = event_target:foc_gcw_rebel_ledger }
+            event_target:foc_gcw_rebel_ledger = {
+                change_variable = { which = foc_gcw_support value = 4 }
+                foc_gcw_clamp_rebel_ledger = yes
+            }
+        }
+        ai_chance = { factor = 3 }
+    }
+
+    option = {
+        name = foc_gcw.11.c
+        owner = {
+            change_variable = { which = foc_gcw_control value = 1 }
+            foc_gcw_clamp_empire_ledger = yes
+            foc_gcw_refresh_empire_state = yes
+        }
+        ai_chance = { factor = 1 }
+    }
+}
+
+carrier_event = {
+    id = foc_gcw.12
+    title = foc_gcw.12.name
+    desc = foc_gcw.12.desc
+    picture = GFX_foc_canon_v75_42
+    is_triggered_only = yes
+    force_open = yes
+    trigger = {
+        owner = { has_country_flag = foc_republic_origin_empire_country }
+        foc_v202_system_has_no_imperial_fleet = yes
+    }
+
+    option = {
+        name = foc_gcw.12.a
+        allow = {
+            owner = {
+                resource_stockpile_compare = { resource = energy value >= 2500 }
+                resource_stockpile_compare = { resource = unity value >= 1000 }
+            }
+        }
+        owner = { add_resource = { energy = -2500 unity = -1000 } }
+        hidden_effect = {
+            random_list = {
+                60 = {
+                    foc_gcw_clear_partisan_state = yes
+                    set_timed_carrier_flag = { flag = foc_gcw_recently_resolved days = 1080 }
+                    owner = {
+                        change_variable = { which = foc_gcw_control value = 3 }
+                        change_variable = { which = foc_gcw_morale value = 2 }
+                        foc_gcw_clamp_empire_ledger = yes
+                        foc_gcw_refresh_empire_state = yes
+                    }
+                    if = {
+                        limit = { exists = event_target:foc_gcw_rebel_ledger }
+                        event_target:foc_gcw_rebel_ledger = {
+                            change_variable = { which = foc_gcw_intelligence value = -3 }
+                            change_variable = { which = foc_gcw_readiness value = -2 }
+                            foc_gcw_clamp_rebel_ledger = yes
+                        }
+                    }
+                }
+                40 = {
+                    foc_gcw_promote_to_uprising = yes
+                    carrier_event = { id = foc_gcw.13 days = 1 }
+                }
+            }
+        }
+        ai_chance = { factor = 5 }
+    }
+
+    option = {
+        name = foc_gcw.12.b
+        owner = { add_resource = { alloys = -1500 } }
+        remove_modifier = foc_gcw_partisan_network
+        remove_carrier_flag = foc_gcw_partisan_network_flag
+        add_modifier = { modifier = foc_gcw_partisan_cell days = -1 }
+        set_carrier_flag = foc_gcw_partisan_cell_flag
+        owner = {
+            change_variable = { which = foc_gcw_morale value = 2 }
+            foc_gcw_clamp_empire_ledger = yes
+            foc_gcw_refresh_empire_state = yes
+        }
+        if = {
+            limit = { exists = event_target:foc_gcw_rebel_ledger }
+            event_target:foc_gcw_rebel_ledger = {
+                change_variable = { which = foc_gcw_support value = 6 }
+                foc_gcw_clamp_rebel_ledger = yes
+            }
+        }
+        ai_chance = { factor = 3 }
+    }
+
+    option = {
+        name = foc_gcw.12.c
+        owner = { add_resource = { unity = -1500 } }
+        foc_gcw_clear_partisan_state = yes
+        add_modifier = { modifier = foc_gcw_local_concessions days = 1080 }
+        set_timed_carrier_flag = { flag = foc_gcw_recently_resolved days = 1080 }
+        owner = {
+            change_variable = { which = foc_gcw_control value = -4 }
+            foc_gcw_clamp_empire_ledger = yes
+            foc_gcw_refresh_empire_state = yes
+        }
+        if = {
+            limit = { exists = event_target:foc_gcw_rebel_ledger }
+            event_target:foc_gcw_rebel_ledger = {
+                change_variable = { which = foc_gcw_support value = -2 }
+                foc_gcw_clamp_rebel_ledger = yes
+            }
+        }
+        ai_chance = { factor = 2 }
+    }
+}
+
+carrier_event = {
+    id = foc_gcw.13
+    title = foc_gcw.13.name
+    desc = foc_gcw.13.desc
+    picture = GFX_foc_event_war_in_heaven
+    is_triggered_only = yes
+    force_open = yes
+    trigger = {
+        owner = { has_country_flag = foc_republic_origin_empire_country }
+        foc_v202_system_has_no_imperial_fleet = yes
+    }
+
+    option = {
+        name = foc_gcw.13.a
+        allow = {
+            owner = {
+                resource_stockpile_compare = { resource = energy value >= 4000 }
+                resource_stockpile_compare = { resource = alloys value >= 2500 }
+            }
+        }
+        owner = { add_resource = { energy = -4000 alloys = -2500 } }
+        hidden_effect = {
+            random_list = {
+                55 = {
+                    foc_gcw_clear_partisan_state = yes
+                    set_timed_carrier_flag = { flag = foc_gcw_recently_resolved days = 1440 }
+                    owner = {
+                        change_variable = { which = foc_gcw_control value = 4 }
+                        change_variable = { which = foc_gcw_morale value = 3 }
+                        foc_gcw_clamp_empire_ledger = yes
+                        foc_gcw_refresh_empire_state = yes
+                    }
+                    if = {
+                        limit = { exists = event_target:foc_gcw_rebel_ledger }
+                        event_target:foc_gcw_rebel_ledger = {
+                            change_variable = { which = foc_gcw_support value = 3 }
+                            change_variable = { which = foc_gcw_readiness value = -3 }
+                            foc_gcw_clamp_rebel_ledger = yes
+                        }
+                    }
+                }
+                45 = { foc_gcw_liberate_system_to_rebels = yes }
+            }
+        }
+        ai_chance = { factor = 7 }
+    }
+
+    option = {
+        name = foc_gcw.13.b
+        foc_gcw_liberate_system_to_rebels = yes
+        ai_chance = { factor = 1 }
+    }
+}
+
+# Rebel-player response to a newly established underground network.
+country_event = {
+    id = foc_gcw.30
+    title = foc_gcw.30.name
+    desc = foc_gcw.30.desc
+    picture = GFX_foc_canon_v75_42
+    is_triggered_only = yes
+    force_open = yes
+    trigger = {
+        is_ai = no
+        exists = event_target:foc_gcw_current_partisan_planet
+    }
+
+    option = {
+        name = foc_gcw.30.a
+        allow = {
+            resource_stockpile_compare = { resource = energy value >= 1000 }
+            resource_stockpile_compare = { resource = alloys value >= 500 }
+        }
+        add_resource = { energy = -1000 alloys = -500 }
+        change_variable = { which = foc_gcw_supply value = -2 }
+        change_variable = { which = foc_gcw_support value = 2 }
+        change_variable = { which = foc_gcw_readiness value = 2 }
+        event_target:foc_gcw_current_partisan_planet = {
+            if = {
+                limit = { NOT = { has_modifier = foc_gcw_partisan_armed } }
+                add_modifier = { modifier = foc_gcw_partisan_armed days = -1 }
+            }
+            set_carrier_flag = foc_gcw_partisan_armed_flag
+        }
+        foc_gcw_clamp_rebel_ledger = yes
+    }
+
+    option = {
+        name = foc_gcw.30.b
+        allow = { resource_stockpile_compare = { resource = unity value >= 500 } }
+        add_resource = { unity = -500 }
+        change_variable = { which = foc_gcw_intelligence value = 3 }
+        # V189: this is now a real espionage gain, not only an internal GCW ledger value.
+        every_spynetwork = {
+            limit = {
+                owner = { is_same_value = root }
+                target = { has_country_flag = foc_republic_origin_empire_country }
+            }
+            add_spy_network_level = 8
+        }
+        foc_gcw_clamp_rebel_ledger = yes
+    }
+
+    option = {
+        name = foc_gcw.30.c
+    }
+}
+
+# V189 - Player Imperial Rebel intelligence investment.
+# Fired from on_yearly_pulse_country; this is a gameplay event, not a repair/backfill loop.
+country_event = {
+    id = foc_gcw.31
+    title = foc_gcw.31.name
+    desc = foc_gcw.31.desc
+    picture = GFX_foc_canon_v75_42
+    is_triggered_only = yes
+    force_open = yes
+    trigger = {
+        is_ai = no
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        OR = {
+            has_country_flag = foc_republic_origin_imperial_rebel_country
+            has_country_flag = foc_republic_origin_rebel_alliance_country
+            has_country_flag = foc_khan_rebel_alliance_country
+        }
+        any_country = { has_country_flag = foc_republic_origin_empire_country }
+        any_spynetwork = {
+            owner = { is_same_value = root }
+            target = { has_country_flag = foc_republic_origin_empire_country }
+        }
+    }
+
+    option = {
+        name = foc_gcw.31.a
+        allow = {
+            resource_stockpile_compare = { resource = energy value >= 1500 }
+            resource_stockpile_compare = { resource = unity value >= 750 }
+        }
+        add_resource = { energy = -1500 unity = -750 }
+        change_variable = { which = foc_gcw_intelligence value = 2 }
+        every_spynetwork = {
+            limit = {
+                owner = { is_same_value = root }
+                target = { has_country_flag = foc_republic_origin_empire_country }
+            }
+            add_spy_network_level = 10
+        }
+        foc_gcw_clamp_rebel_ledger = yes
+    }
+
+    option = {
+        name = foc_gcw.31.b
+        allow = {
+            resource_stockpile_compare = { resource = energy value >= 3500 }
+            resource_stockpile_compare = { resource = unity value >= 1500 }
+        }
+        add_resource = { energy = -3500 unity = -1500 }
+        change_variable = { which = foc_gcw_intelligence value = 4 }
+        change_variable = { which = foc_gcw_support value = 1 }
+        every_spynetwork = {
+            limit = {
+                owner = { is_same_value = root }
+                target = { has_country_flag = foc_republic_origin_empire_country }
+            }
+            add_spy_network_level = 20
+        }
+        foc_gcw_clamp_rebel_ledger = yes
+    }
+
+    option = {
+        name = foc_gcw.31.c
+    }
+}
+
+# V202 - Human Rebel yearly funding decision. Each paid year advances exactly
+# one sustained, undefended frontier target by one partisan stage. It cannot
+# directly transfer ownership, and the special route ends permanently once the
+# Empire has obtained either Death Star.
+country_event = {
+    id = foc_gcw.32
+    title = foc_gcw.32.name
+    desc = foc_gcw.32.desc
+    picture = GFX_foc_canon_v75_42
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        is_ai = no
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        OR = {
+            has_country_flag = foc_republic_origin_imperial_rebel_country
+            has_country_flag = foc_republic_origin_rebel_alliance_country
+            has_country_flag = foc_khan_rebel_alliance_country
+        }
+        foc_v202_has_unguarded_imperial_border_colony = yes
+    }
+
+    option = {
+        name = foc_gcw.32.a
+        allow = {
+            resource_stockpile_compare = { resource = energy value >= 2000 }
+            resource_stockpile_compare = { resource = alloys value >= 1000 }
+            resource_stockpile_compare = { resource = unity value >= 500 }
+        }
+        add_resource = { energy = -2000 alloys = -1000 unity = -500 }
+        foc_v202_fund_resource_backed_border_resistance = yes
+    }
+
+    option = { name = foc_gcw.32.b }
+}
+
+# V202 - AI Rebels make the same yearly payment automatically when they can
+# afford it. The resource requirement is real; no stockpile means no progress.
+country_event = {
+    id = foc_gcw.33
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = yes
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        OR = {
+            has_country_flag = foc_republic_origin_imperial_rebel_country
+            has_country_flag = foc_republic_origin_rebel_alliance_country
+            has_country_flag = foc_khan_rebel_alliance_country
+        }
+        resource_stockpile_compare = { resource = energy value >= 2000 }
+        resource_stockpile_compare = { resource = alloys value >= 1000 }
+        resource_stockpile_compare = { resource = unity value >= 500 }
+        foc_v202_has_unguarded_imperial_border_colony = yes
+    }
+
+    immediate = {
+        add_resource = { energy = -2000 alloys = -1000 unity = -500 }
+        foc_v202_fund_resource_backed_border_resistance = yes
+    }
+}

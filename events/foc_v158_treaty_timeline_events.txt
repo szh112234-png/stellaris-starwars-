@@ -1,0 +1,34 @@
+namespace = foc_v158_timeline
+
+# Old-save fallback. New Treaty events start this clock in the exact Treaty tick.
+country_event = {
+    id = foc_v158_timeline.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        has_country_flag = foc_sw_new_republic_country
+        has_global_flag = foc_republic_origin_galactic_treaty
+        NOT = { has_global_flag = foc_v158_treaty_sequel_timeline_started }
+    }
+    immediate = { foc_v158_start_treaty_sequel_timeline = yes }
+}
+
+# V159 old-save migration only. The monthly on_action may enter here once,
+# then the country is permanently marked migrated. The actual Executor check is
+# bounded to a 30-day initialization window and never replenishes later losses.
+country_event = {
+    id = foc_v158_timeline.2
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        has_country_flag = foc_sw_imperial_remnant_country
+        has_global_flag = foc_republic_origin_galactic_treaty
+        NOT = { has_global_flag = foc_sw_war_in_heaven_started }
+        NOT = { has_country_flag = foc_v159_remnant_executor_migration_checked }
+    }
+    immediate = {
+        set_country_flag = foc_v159_remnant_executor_migration_checked
+        foc_v158_restore_imperial_remnant_treaty_assets = yes
+        foc_v159_begin_imperial_remnant_executor_initialization = yes
+    }
+}

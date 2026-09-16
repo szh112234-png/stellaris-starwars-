@@ -1,0 +1,422 @@
+# FOC V223 droid timeline + additional legendary leaders
+
+foc_v223_create_c3po = {
+    if = {
+        limit = { NOT = { any_owned_leader = { has_leader_flag = foc_v223_c3po_leader } }  }
+        create_leader = {
+            tier = leader_tier_legendary
+            class = official
+            species = event_target:foc_v223_protocol_droid_species
+            name = "FOC_V223_C3PO_NAME"
+            skill = 8
+            event_leader = yes
+            skip_background_generation = yes
+            randomize_traits = no
+            effect = {
+                change_leader_portrait = foc_v223_c3po
+                set_leader_flag = foc_v223_c3po_leader
+                set_immortal = yes
+            }
+        }
+    }
+}
+
+foc_v223_create_r2d2 = {
+    if = {
+        limit = { NOT = { any_owned_leader = { has_leader_flag = foc_v223_r2d2_leader } }  }
+        create_leader = {
+            tier = leader_tier_legendary
+            class = scientist
+            species = event_target:foc_v223_astromech_droid_species
+            name = "FOC_V223_R2D2_NAME"
+            skill = 9
+            event_leader = yes
+            skip_background_generation = yes
+            randomize_traits = no
+            effect = {
+                change_leader_portrait = foc_v223_r2d2
+                set_leader_flag = foc_v223_r2d2_leader
+                set_immortal = yes
+            }
+        }
+    }
+}
+
+foc_v223_create_bb8 = {
+    if = {
+        limit = { NOT = { any_owned_leader = { has_leader_flag = foc_v223_bb8_leader } }  }
+        create_leader = {
+            tier = leader_tier_legendary
+            class = scientist
+            species = event_target:foc_v223_astromech_droid_species
+            name = "FOC_V223_BB8_NAME"
+            skill = 8
+            event_leader = yes
+            skip_background_generation = yes
+            randomize_traits = no
+            effect = {
+                change_leader_portrait = foc_v223_bb8
+                set_leader_flag = foc_v223_bb8_leader
+                set_immortal = yes
+            }
+        }
+    }
+}
+
+foc_v223_create_k2so = {
+    if = {
+        limit = { NOT = { any_owned_leader = { has_leader_flag = foc_v223_k2so_leader } } NOT = { has_global_flag = foc_canon_scarif_battle_completed } }
+        create_leader = {
+            tier = leader_tier_legendary
+            class = commander
+            species = event_target:foc_v223_security_droid_species
+            name = "FOC_V223_K2SO_NAME"
+            skill = 8
+            event_leader = yes
+            skip_background_generation = yes
+            randomize_traits = no
+            effect = {
+                change_leader_portrait = foc_v223_k2so
+                set_leader_flag = foc_v223_k2so_leader
+                set_immortal = yes
+            }
+        }
+    }
+}
+
+foc_v223_create_bail = {
+    if = {
+        limit = { NOT = { any_owned_leader = { has_leader_flag = foc_v223_bail_organa_leader } }  }
+        create_leader = {
+            tier = leader_tier_legendary
+            class = official
+            species = owner_main_species
+            name = "FOC_V223_BAIL_NAME"
+            gender = male
+            skill = 8
+            event_leader = yes
+            skip_background_generation = yes
+            randomize_traits = no
+            effect = {
+                change_leader_portrait = foc_v223_bail
+                set_leader_flag = foc_v223_bail_organa_leader
+                set_immortal = yes
+            }
+        }
+    }
+}
+
+foc_v223_create_rex = {
+    if = {
+        limit = { NOT = { any_owned_leader = { has_leader_flag = foc_v223_rex_leader } }  }
+        create_leader = {
+            tier = leader_tier_legendary
+            class = commander
+            species = owner_main_species
+            name = "FOC_V223_REX_NAME"
+            gender = male
+            skill = 9
+            event_leader = yes
+            skip_background_generation = yes
+            randomize_traits = no
+            effect = {
+                change_leader_portrait = foc_v223_rex
+                set_leader_flag = foc_v223_rex_leader
+                set_immortal = yes
+            }
+        }
+    }
+}
+
+foc_v223_create_krennic = {
+    if = {
+        limit = { NOT = { any_owned_leader = { has_leader_flag = foc_v223_krennic_leader } }  }
+        create_leader = {
+            tier = leader_tier_legendary
+            class = scientist
+            species = owner_main_species
+            name = "FOC_V223_KRENNIC_NAME"
+            gender = male
+            skill = 8
+            event_leader = yes
+            skip_background_generation = yes
+            randomize_traits = no
+            effect = {
+                change_leader_portrait = foc_v223_krennic
+                set_leader_flag = foc_v223_krennic_leader
+                set_immortal = yes
+            }
+        }
+    }
+}
+
+foc_v223_create_gideon = {
+    if = {
+        limit = { NOT = { any_owned_leader = { has_leader_flag = foc_v223_gideon_leader } }  }
+        create_leader = {
+            tier = leader_tier_legendary
+            class = commander
+            species = owner_main_species
+            name = "FOC_V223_GIDEON_NAME"
+            gender = male
+            skill = 8
+            event_leader = yes
+            skip_background_generation = yes
+            randomize_traits = no
+            effect = {
+                change_leader_portrait = foc_v223_gideon
+                set_leader_flag = foc_v223_gideon_leader
+                set_immortal = yes
+            }
+        }
+    }
+}
+
+foc_v223_create_wedge = {
+    if = {
+        limit = { NOT = { any_owned_leader = { has_leader_flag = foc_v223_wedge_leader } }  }
+        create_leader = {
+            tier = leader_tier_legendary
+            class = commander
+            species = owner_main_species
+            name = "FOC_V223_WEDGE_NAME"
+            gender = male
+            skill = 8
+            event_leader = yes
+            skip_background_generation = yes
+            randomize_traits = no
+            effect = {
+                change_leader_portrait = foc_v223_wedge
+                set_leader_flag = foc_v223_wedge_leader
+                set_immortal = yes
+            }
+        }
+    }
+}
+
+foc_v223_create_cassian = {
+    if = {
+        limit = { NOT = { any_owned_leader = { has_leader_flag = foc_v223_cassian_leader } }  }
+        create_leader = {
+            tier = leader_tier_legendary
+            class = commander
+            species = owner_main_species
+            name = "FOC_V223_CASSIAN_NAME"
+            gender = male
+            skill = 8
+            event_leader = yes
+            skip_background_generation = yes
+            randomize_traits = no
+            effect = {
+                change_leader_portrait = foc_v223_cassian
+                set_leader_flag = foc_v223_cassian_leader
+                set_immortal = yes
+            }
+        }
+    }
+}
+
+foc_v223_create_jyn = {
+    if = {
+        limit = { NOT = { any_owned_leader = { has_leader_flag = foc_v223_jyn_leader } }  }
+        create_leader = {
+            tier = leader_tier_legendary
+            class = commander
+            species = owner_main_species
+            name = "FOC_V223_JYN_NAME"
+            gender = female
+            skill = 8
+            event_leader = yes
+            skip_background_generation = yes
+            randomize_traits = no
+            effect = {
+                change_leader_portrait = foc_v223_jyn
+                set_leader_flag = foc_v223_jyn_leader
+                set_immortal = yes
+            }
+        }
+    }
+}
+
+foc_v223_create_hera = {
+    if = {
+        limit = { NOT = { any_owned_leader = { has_leader_flag = foc_v223_hera_leader } }  }
+        create_leader = {
+            tier = leader_tier_legendary
+            class = commander
+            species = event_target:foc_v187_twilek_species
+            name = "FOC_V223_HERA_NAME"
+            gender = female
+            skill = 9
+            event_leader = yes
+            skip_background_generation = yes
+            randomize_traits = no
+            effect = {
+                change_leader_portrait = foc_v223_hera
+                set_leader_flag = foc_v223_hera_leader
+                set_immortal = yes
+            }
+        }
+    }
+}
+
+foc_v223_create_nien = {
+    if = {
+        limit = { NOT = { any_owned_leader = { has_leader_flag = foc_v223_nien_leader } }  }
+        create_leader = {
+            tier = leader_tier_legendary
+            class = commander
+            species = owner_main_species
+            name = "FOC_V223_NIEN_NAME"
+            gender = male
+            skill = 7
+            event_leader = yes
+            skip_background_generation = yes
+            randomize_traits = no
+            effect = {
+                change_leader_portrait = foc_v223_nien
+                set_leader_flag = foc_v223_nien_leader
+                set_immortal = yes
+            }
+        }
+    }
+}
+
+foc_v223_create_sabine = {
+    if = {
+        limit = { NOT = { any_owned_leader = { has_leader_flag = foc_v223_sabine_leader } }  }
+        create_leader = {
+            tier = leader_tier_legendary
+            class = commander
+            species = owner_main_species
+            name = "FOC_V223_SABINE_NAME"
+            gender = female
+            skill = 8
+            event_leader = yes
+            skip_background_generation = yes
+            randomize_traits = no
+            effect = {
+                change_leader_portrait = foc_v223_sabine
+                set_leader_flag = foc_v223_sabine_leader
+                set_immortal = yes
+            }
+        }
+    }
+}
+
+foc_v223_add_republic_legends = {
+    if = { limit = { has_country_flag = foc_republic_origin_republic_country }
+        if = { limit = { exists = event_target:foc_v223_protocol_droid_species } foc_v223_create_c3po = yes }
+        if = { limit = { exists = event_target:foc_v223_astromech_droid_species } foc_v223_create_r2d2 = yes }
+        foc_v223_create_bail = yes
+        foc_v223_create_rex = yes
+    }
+}
+
+foc_v223_remove_republic_legends_from_empire = {
+    every_owned_leader = {
+        limit = { OR = { has_leader_flag = foc_v223_c3po_leader has_leader_flag = foc_v223_r2d2_leader has_leader_flag = foc_v223_bail_organa_leader has_leader_flag = foc_v223_rex_leader } }
+        set_immortal = no
+        kill_leader = { show_notification = no }
+    }
+}
+
+foc_v223_add_empire_legends = {
+    if = { limit = { OR = { has_country_flag = foc_republic_origin_empire_country has_country_flag = foc_sw_imperial_remnant_country } }
+        if = { limit = { NOT = { has_global_flag = foc_canon_scarif_battle_completed } } foc_v223_create_krennic = yes }
+        foc_v223_create_gideon = yes
+    }
+}
+
+foc_v223_add_imperial_rebel_legends = {
+    if = { limit = { OR = { has_country_flag = foc_republic_origin_imperial_rebel_country has_country_flag = foc_republic_origin_rebel_alliance_country has_country_flag = foc_khan_rebel_alliance_country } }
+        if = { limit = { exists = event_target:foc_v223_protocol_droid_species } foc_v223_create_c3po = yes }
+        if = { limit = { exists = event_target:foc_v223_astromech_droid_species } foc_v223_create_r2d2 = yes }
+        if = { limit = { exists = event_target:foc_v223_security_droid_species NOT = { has_global_flag = foc_canon_scarif_battle_completed } } foc_v223_create_k2so = yes }
+        foc_v223_create_bail = yes
+        foc_v223_create_rex = yes
+        foc_v223_create_wedge = yes
+        if = { limit = { NOT = { has_global_flag = foc_canon_scarif_battle_completed } } foc_v223_create_cassian = yes }
+        if = { limit = { NOT = { has_global_flag = foc_canon_scarif_battle_completed } } foc_v223_create_jyn = yes }
+        if = { limit = { exists = event_target:foc_v187_twilek_species } foc_v223_create_hera = yes }
+        foc_v223_create_nien = yes
+        foc_v223_create_sabine = yes
+    }
+}
+
+foc_v223_add_new_republic_legends = {
+    if = { limit = { has_country_flag = foc_sw_new_republic_country exists = event_target:foc_v223_astromech_droid_species }
+        foc_v223_create_bb8 = yes
+    }
+}
+
+foc_v223_destroy_k2so_at_scarif = {
+    every_country = {
+        limit = { OR = { has_country_flag = foc_republic_origin_imperial_rebel_country has_country_flag = foc_republic_origin_rebel_alliance_country has_country_flag = foc_khan_rebel_alliance_country } }
+        every_owned_leader = {
+            limit = { has_leader_flag = foc_v223_k2so_leader }
+            set_immortal = no
+            kill_leader = { show_notification = no }
+        }
+    }
+    set_global_flag = foc_v223_k2so_destroyed_at_scarif
+}
+
+foc_v223_repair_named_portraits = {
+    # V224: all leaders that already existed in FOC are restored to their original FOC portraits.
+    # Only genuinely new V223 leaders/droids continue using the imported portrait pack.
+    every_owned_leader = {
+        if = { limit = { has_leader_flag = foc_republic_origin_yoda_leader } change_leader_portrait = foc_saga_yoda_01 }
+        if = { limit = { has_leader_flag = foc_republic_origin_kenobi_leader } change_leader_portrait = foc_obiwan_male_01 }
+        if = { limit = { has_leader_flag = foc_republic_origin_anakin_leader NOT = { has_leader_flag = foc_republic_origin_vader_leader } } change_leader_portrait = foc_anakin_male_01 }
+        if = { limit = { has_leader_flag = foc_republic_origin_vader_leader } change_leader_portrait = foc_vader_male_01 }
+        if = { limit = { has_leader_flag = foc_republic_origin_death_star_commander } change_leader_portrait = foc_tarkin_male_01 }
+        if = { limit = { has_leader_flag = foc_saga_thrawn_leader } change_leader_portrait = foc_saga_thrawn_01 }
+        if = { limit = { has_leader_flag = foc_saga_mon_mothma_leader } change_leader_portrait = foc_saga_mon_mothma_01 }
+        if = { limit = { has_leader_flag = foc_republic_origin_lando_leader } change_leader_portrait = foc_saga_lando_01 }
+        if = {
+            limit = { has_leader_flag = foc_saga_luke_leader }
+            if = { limit = { has_global_flag = foc_saga_new_jedi_order_founded } change_leader_portrait = foc_saga_luke_jedi_01 }
+            else = { change_leader_portrait = foc_saga_luke_01 }
+        }
+        if = { limit = { has_leader_flag = foc_saga_han_leader } change_leader_portrait = foc_saga_han_solo_01 }
+        if = { limit = { has_leader_flag = foc_republic_origin_ackbar_leader } change_leader_portrait = rebelmoncala_male_01 }
+        if = { limit = { has_leader_flag = foc_republic_origin_raddus_leader } change_leader_portrait = raddus_male_01 }
+        if = { limit = { has_leader_flag = foc_bo_katan_legendary_leader } change_leader_portrait = foc_bo_katan_legendary_01 }
+        if = { limit = { has_leader_flag = foc_din_djarin_legendary_leader } change_leader_portrait = foc_din_djarin_legendary_01 }
+        if = { limit = { has_leader_flag = foc_khan_snoke_ruler } change_leader_portrait = snoke_male_01 }
+        if = { limit = { has_leader_flag = foc_khan_palpatine_ruler } change_leader_portrait = fopalpatine_male_01 }
+        if = { limit = { has_leader_flag = fop_player_palpatine_ruler } change_leader_portrait = fopalpatine_male_01 }
+    }
+    # A country may remember Thrawn after Snoke or Palpatine succeeds him.
+    # Only the actual Thrawn leader may receive Thrawn's portrait.
+    if = {
+        limit = { exists = ruler }
+        ruler = {
+            if = { limit = { has_leader_flag = foc_saga_thrawn_leader } change_leader_portrait = foc_saga_thrawn_01 }
+        }
+    }
+}
+
+
+# V225: canonical Scarif fatalities. The global sweep also repairs older V223/V224 saves.
+foc_v225_destroy_scarif_characters = {
+    every_country = {
+        every_owned_leader = {
+            limit = {
+                OR = {
+                    has_leader_flag = foc_v223_krennic_leader
+                    has_leader_flag = foc_v223_cassian_leader
+                    has_leader_flag = foc_v223_jyn_leader
+                    has_leader_flag = foc_v223_k2so_leader
+                }
+            }
+            set_immortal = no
+            kill_leader = { show_notification = no }
+        }
+    }
+    set_global_flag = foc_v225_krennic_dead_at_scarif
+    set_global_flag = foc_v225_cassian_dead_at_scarif
+    set_global_flag = foc_v225_jyn_dead_at_scarif
+    set_global_flag = foc_v223_k2so_destroyed_at_scarif
+}

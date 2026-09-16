@@ -1,0 +1,12 @@
+namespace = foc_v236_aircraft
+country_event = {
+ id = foc_v236_aircraft.10 hide_window = yes is_triggered_only = yes
+ trigger = { foc_v236_has_cis_aircraft_identity = yes }
+ immediate = {
+  foc_v236_adopt_cis_aircraft = yes
+  foc_v236_register_cis_designs = yes
+  every_owned_fleet = { limit = { is_in_combat = no }
+   every_owned_ship = { foc_v236_retrofit_cis_ship = yes }
+  }
+ }
+}

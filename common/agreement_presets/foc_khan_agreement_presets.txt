@@ -1,0 +1,52 @@
+preset_foc_khan_satrapy = {
+	icon = "GFX_diplomacy_status_is_satrapy"
+	term_data = {
+		discrete_terms = {
+			{ key = specialist_type value = specialist_none }
+			{ key = subject_integration value = subject_can_not_be_integrated }
+			{ key = subject_diplomacy value = subject_can_do_diplomacy }
+			{ key = subject_expand value = subject_can_expand }
+			{ key = joins_overlord_wars value = joins_overlord_wars_all }
+			{ key = joins_subject_wars value = joins_subject_wars_none }
+			{ key = naval_capacity value = naval_cap_satrapy }
+			{ key = subject_loyalty value = subject_loyalty_effects }
+			{ key = protectorate value = subject_is_not_protectorate }
+		}
+		resource_terms = {
+			{ key = resource_subsidies_basic value = 0.3 }
+		}
+	}
+	potential = {
+		from = {
+			OR = {
+				has_country_flag = foc_khan_first_order_country
+				has_country_flag = foc_khan_final_order_country
+				has_country_flag = fop_player_first_order
+				has_country_flag = fop_player_final_order
+			}
+		}
+	}
+}
+
+
+# V112: the playable First Order begins as the protected successor of the
+# Imperial Remnant, mirroring the broad structure of vanilla Scion: it remains
+# diplomatically active and expandable, cannot be integrated, until the Starkiller succession overturns the old hierarchy.
+preset_fop_imperial_scion = {
+    icon = "GFX_diplomacy_status_is_satrapy"
+    term_data = {
+        discrete_terms = {
+            { key = specialist_type value = specialist_none }
+            { key = subject_integration value = subject_can_not_be_integrated }
+            { key = subject_diplomacy value = subject_can_do_diplomacy }
+            { key = subject_expand value = subject_can_expand }
+            { key = joins_overlord_wars value = joins_overlord_wars_all }
+            { key = joins_subject_wars value = joins_subject_wars_none }
+            { key = subject_loyalty value = subject_loyalty_effects }
+            { key = protectorate value = subject_is_not_protectorate }
+        }
+    }
+    potential = {
+        from = { has_country_flag = foc_sw_imperial_remnant_country }
+    }
+}

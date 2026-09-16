@@ -1,0 +1,83 @@
+namespace = foc_v198_republic_support
+
+# Old-save starter for an AI Republic whose Clone Wars were already active when
+# V198 was installed. New wars start synchronously from foc_republic_origin.10.
+country_event = {
+    id = foc_v198_republic_support.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = yes
+        has_country_flag = foc_republic_origin_republic_country
+        has_country_flag = foc_republic_origin_separatist_war_started
+        has_global_flag = foc_republic_origin_separatist_war_active
+        NOT = { has_country_flag = foc_republic_origin_separatist_war_won }
+        NOT = { has_country_flag = foc_v198_ai_republic_venator_support_started }
+        any_system = { has_star_flag = foc_sw_kuat_home }
+        any_country = {
+            has_country_flag = foc_republic_origin_separatist_country
+            is_at_war_with = root
+        }
+    }
+
+    immediate = {
+        foc_v198_start_ai_republic_venator_support = yes
+    }
+}
+
+# Exactly 360 days after the support clock starts (and after each prior batch),
+# create four independent fleets of twenty-five Venators at Kuat. Both the story flag and the real war object
+# are required.
+# If the war has ended this trigger fails, nothing spawns, and no next tick is
+# scheduled, so the support chain terminates permanently.
+country_event = {
+    id = foc_v198_republic_support.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = yes
+        has_country_flag = foc_republic_origin_republic_country
+        has_country_flag = foc_republic_origin_separatist_war_started
+        has_country_flag = foc_v198_ai_republic_venator_support_started
+        has_global_flag = foc_republic_origin_separatist_war_active
+        NOT = { has_country_flag = foc_republic_origin_separatist_war_won }
+        any_system = { has_star_flag = foc_sw_kuat_home }
+        any_country = {
+            has_country_flag = foc_republic_origin_separatist_country
+            is_at_war_with = root
+        }
+    }
+
+    immediate = {
+        foc_v199_spawn_ai_republic_four_25_venator_fleets_at_kuat = yes
+        country_event = { id = foc_v198_republic_support.2 days = 360 }
+    }
+}
+
+# Old-save repair for an Imperial Rebellion that was already created before
+# V198. The country flag inside the grant effect prevents duplicate armies.
+country_event = {
+    id = foc_v198_republic_support.3
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_country_flag = foc_republic_origin_imperial_rebel_country
+        NOT = { has_country_flag = foc_v198_imperial_rebel_ground_force_granted }
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        exists = event_target:foc_khan_rebel_alliance
+        exists = event_target:foc_khan_rebel_system
+        exists = event_target:foc_khan_rebel_capital
+        is_same_value = event_target:foc_khan_rebel_alliance
+        event_target:foc_khan_rebel_capital = {
+            is_colony = yes
+            owner = { is_same_value = root }
+        }
+    }
+
+    immediate = {
+        foc_v198_grant_imperial_rebel_1000_ground_force = yes
+    }
+}

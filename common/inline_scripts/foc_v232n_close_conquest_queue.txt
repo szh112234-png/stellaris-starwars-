@@ -1,0 +1,6 @@
+# Country scope. Do not confiscate already-delivered fleets/resources or earned upkeep stacks.
+if = {
+    limit = { is_variable_set = foc_v232i_pending_conquest_rewards }
+    set_variable = { which = foc_v232i_pending_conquest_rewards value = 0 }
+}
+remove_country_flag = foc_v232i_conquest_offer_active

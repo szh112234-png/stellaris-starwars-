@@ -1,0 +1,22 @@
+utility_component_template = {
+ key = "FOC_TRI_COMMAND_CORE"
+ size = aux
+ icon = "GFX_ship_part_foc_tri"
+ icon_frame = 1
+ component_set = "FOC_TRI_COMMAND_CORE_SET"
+ power = -25
+ ship_limit = 1
+ resources = { category = ship_components cost = { alloys = 40 } upkeep = { energy = 1 } }
+ potential = {
+ from = {
+  OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_cis
+    has_technology = tech_foc_tri_hyperspace
+   }
+ }
+	}
+ prerequisites = { "tech_foc_tri_hyperspace" }
+ scripted_action = { foc_tri_strike }
+ ai_weight = { weight = 500 }
+}

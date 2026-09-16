@@ -1,0 +1,47 @@
+namespace = foc_v135_treaty
+
+# After the Galactic Treaty, the ordinary New Republic adopts a sweeping
+# military reduction act. Leia's independent Rebel/Resistance state is excluded.
+country_event = {
+    id = foc_v135_treaty.1
+    title = foc_v135_treaty.1.name
+    desc = foc_v135_treaty.1.desc
+    picture = GFX_foc_event_war_in_heaven
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_republic_origin_galactic_treaty
+        has_country_flag = foc_sw_new_republic_country
+        NOT = { has_country_flag = foc_v135_military_reduction_act_enacted }
+        NOT = { has_country_flag = foc_republic_origin_post_treaty_rebel_country }
+        NOT = { has_country_flag = foc_khan_first_order_resistance_country }
+    }
+
+    immediate = {
+        set_country_flag = foc_v135_military_reduction_act_enacted
+        add_modifier = { modifier = foc_v135_new_republic_military_reduction_act days = -1 }
+    }
+
+    option = { name = foc_v135_treaty.1.a }
+}
+
+# Safety cleanup: if the same playable country later becomes Leia's Rebels or
+# the Resistance, remove the New Republic reduction immediately.
+country_event = {
+    id = foc_v135_treaty.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_modifier = foc_v135_new_republic_military_reduction_act
+        OR = {
+            has_country_flag = foc_republic_origin_post_treaty_rebel_country
+            has_country_flag = foc_khan_first_order_resistance_country
+        }
+    }
+
+    immediate = {
+        remove_modifier = foc_v135_new_republic_military_reduction_act
+        remove_country_flag = foc_v135_military_reduction_act_enacted
+    }
+}

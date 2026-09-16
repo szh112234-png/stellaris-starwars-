@@ -1,0 +1,10 @@
+# v62: The fighter settings are now a child menu of the single Star Wars MOD settings edict.
+# Keep the legacy edict key for save compatibility, but never show a second edict entry.
+ssp_star_wars_fighter_settings_edict = {
+    length = 0
+    icon = "GFX_edict_type_policy"
+    potential = { always = no }
+    allow = { always = yes }
+    effect = { country_event = { id = ssp_standalone.110 } }
+    ai_weight = { weight = 0 }
+}

@@ -1,0 +1,67 @@
+# This is a template which multiple species can use. 
+
+torsith_female_clothes_01 = {
+	default = "gfx/models/portraits/torsith/torsith_female_clothes_sithinquisitor.dds"
+	
+	game_setup = {#will run with a limited country scope. species and government is set but the country does not actually exist
+		default = "gfx/models/portraits/torsith/torsith_female_clothes_sithinquisitor.dds"
+	}
+	
+	#species scope
+	species = { #generic portrait for a species
+		default = "gfx/models/portraits/torsith/torsith_female_clothes_sithinquisitor.dds"
+	}
+	
+	#pop scope
+	pop = { #for a specific pop
+		default = "gfx/models/portraits/torsith/torsith_female_clothes_sithinquisitor.dds"
+		
+		#"gfx/models/portraits/torsith/torsith_female_clothes_sithinquisitor.dds" 	= { OR = { is_pop_category = worker is_enslaved = yes is_pop_category = simple_drone }  }
+		#"gfx/models/portraits/torsith/torsith_female_clothes_sithscientist.dds" 	= { OR = { is_pop_category = specialist is_pop_category = complex_drone } }
+		#"gfx/models/portraits/torsith/torsith_female_clothes_sithruler.dds" 	= { is_pop_category = ruler }
+		
+		
+		random = {
+			list = {
+				"gfx/models/portraits/torsith/torsith_female_clothes_sithinquisitor.dds"
+				"gfx/models/portraits/torsith/torsith_female_clothes_sithinquisitor1.dds"
+				"gfx/models/portraits/torsith/torsith_female_clothes_sithgeneral.dds"
+				"gfx/models/portraits/torsith/torsith_female_clothes_sithrecluse.dds"
+				"gfx/models/portraits/torsith/torsith_female_clothes_sithgovernor.dds"
+				"gfx/models/portraits/torsith/torsith_female_clothes_sithscientist.dds"
+				"gfx/models/portraits/torsith/torsith_female_clothes_sithruler.dds"
+			}
+		}
+		
+	}
+	#leader scope
+	leader = { #scientists, generals, admirals, governor
+		"gfx/models/portraits/torsith/torsith_female_clothes_sithscientist.dds" = { leader_class = scientist }
+		"gfx/models/portraits/torsith/torsith_female_clothes_sithgeneral.dds" = { leader_class = commander leader_should_wear_general_uniform = yes }
+		"gfx/models/portraits/torsith/torsith_female_clothes_sithinquisitor.dds" = { leader_class = commander leader_should_wear_general_uniform = no }
+		"gfx/models/portraits/torsith/torsith_female_clothes_sithgovernor.dds" = { leader_class = official }
+	}
+
+	#leader scope 
+	ruler = { #for rulers
+		default = "gfx/models/portraits/torsith/torsith_female_clothes_ruler.dds"
+		
+		"gfx/models/portraits/torsith/torsith_female_clothes_sithruler.dds" = { owner = { has_generic_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/torsith/torsith_female_clothes_sithgeneral.dds" = { owner = { has_militarist_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/torsith/torsith_female_clothes_sithinquisitor.dds" = { owner = { has_spiritualist_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/torsith/torsith_female_clothes_sithinquisitor1.dds" = { owner = { has_pacifist_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/torsith/torsith_female_clothes_sithrecluse.dds" = { owner = { has_primitive_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/torsith/torsith_female_clothes_sithscientist.dds" = { owner = { has_materialist_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/torsith/torsith_female_clothes_ruler.dds" = { owner = { has_authority = auth_imperial } }
+	}
+}
+
+human_female_hair_1 = { 
+	default = "gfx/models/portraits/human/human_female_hair_red_style_01.dds"
+	
+	ruler = {
+	default = "gfx/models/portraits/human/human_female_hair_black_style_01.dds"
+	
+		"gfx/models/portraits/human/human_female_hair_black_style_01.dds" = { owner = { has_militarist_government = yes } }
+	}
+}

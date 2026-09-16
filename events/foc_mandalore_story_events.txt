@@ -1,0 +1,380 @@
+namespace = foc_mandalore
+
+# V207 - hidden Mandalore state-machine watcher.
+# This event deliberately runs on the human country rather than only on the
+# Republic story actor.  That keeps the whole chain alive when the Republic is
+# AI-controlled, such as the playable-Hutt campaign.
+country_event = {
+    id = foc_mandalore.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        any_system = { has_star_flag = foc_swmap_mandalore_home }
+    }
+
+    immediate = {
+        foc_mandalore_ensure_system_target = yes
+        foc_mandalore_ensure_species = yes
+
+        # Old-save support for the exact two-year Maul clock.  The timed country
+        # flag belongs on the Republic story actor, not on an unrelated player
+        # country that merely hosts this global watcher.
+        if = {
+            limit = {
+                has_global_flag = foc_republic_origin_separatist_war_active
+                NOT = { has_global_flag = foc_mandalore_maul_two_year_clock_initialized }
+                NOT = { has_global_flag = foc_mandalore_maul_coup_completed }
+                any_country = { foc_v197_republic_story_actor = yes }
+            }
+            random_country = {
+                limit = { foc_v197_republic_story_actor = yes }
+                set_timed_country_flag = {
+                    flag = foc_mandalore_wait_maul_coup_two_years
+                    days = 720
+                }
+            }
+            set_global_flag = foc_mandalore_maul_two_year_clock_initialized
+            log = "FOC_MANDALORE_V207: repaired the two-year Maul clock on the Republic story actor."
+        }
+
+        # Opening-state repair.  New games normally create Mandalore through .2,
+        # but a missing/stale country target must not permanently kill the chain.
+        if = {
+            limit = {
+                NOT = { has_global_flag = foc_republic_origin_jedi_purged }
+                NOT = { has_global_flag = foc_mandalore_annexed_by_empire }
+                NOT = { has_global_flag = foc_mandalore_restored_independent }
+                NOT = { exists = event_target:foc_mandalore_country }
+            }
+            foc_mandalore_create_country = yes
+            if = {
+                limit = { exists = event_target:foc_mandalore_country }
+                foc_mandalore_set_satine_state = yes
+                set_global_flag = foc_mandalore_opening_independence_initialized
+                log = "FOC_MANDALORE_V207: restored the missing independent Mandalore opening state."
+            }
+        }
+
+        # Maul-state repair.  In a Hutt campaign the canonical marker lives on
+        # the AI Republic actor, so checking only the human root was incorrect.
+        if = {
+            limit = {
+                OR = {
+                    has_global_flag = foc_mandalore_maul_coup_completed
+                    any_country = { has_country_flag = foc_canon_maul_mandalore }
+                }
+                NOT = { has_global_flag = foc_mandalore_maul_takeover_applied }
+                NOT = { has_global_flag = foc_canon_mandalore_siege_completed }
+                NOT = { has_global_flag = foc_republic_origin_jedi_purged }
+                exists = event_target:foc_mandalore_country
+            }
+            foc_mandalore_maul_takeover = yes
+
+            # Only reconstruct the one-year siege wait when the coup event itself
+            # never completed.  A naturally expired timer must not be reset.
+            if = {
+                limit = {
+                    NOT = { has_global_flag = foc_mandalore_maul_coup_completed }
+                    any_country = { foc_v197_republic_story_actor = yes }
+                }
+                random_country = {
+                    limit = { foc_v197_republic_story_actor = yes }
+                    if = {
+                        limit = { NOT = { has_country_flag = foc_canon_maul_mandalore } }
+                        set_country_flag = foc_canon_maul_mandalore
+                    }
+                    if = {
+                        limit = { NOT = { has_country_flag = foc_canon_wait_mandalore_siege } }
+                        set_timed_country_flag = {
+                            flag = foc_canon_wait_mandalore_siege
+                            days = 360
+                        }
+                    }
+                }
+                set_global_flag = foc_mandalore_maul_coup_completed
+            }
+            log = "FOC_MANDALORE_V207: Maul takeover state verified."
+        }
+
+        if = {
+            limit = {
+                has_global_flag = foc_canon_mandalore_siege_completed
+                NOT = { has_global_flag = foc_republic_origin_jedi_purged }
+                exists = event_target:foc_mandalore_country
+                NOT = { has_global_flag = foc_mandalore_bo_katan_restored }
+            }
+            foc_mandalore_bo_katan_restoration = yes
+            log = "FOC_MANDALORE_V207: Bo-Katan post-siege government restored."
+        }
+
+        # Order 66 annexation.  The visible event may be shown to any human
+        # observer; it is no longer restricted to a human Republic-origin root.
+        if = {
+            limit = {
+                has_global_flag = foc_republic_origin_jedi_purged
+                any_country = { has_country_flag = foc_republic_origin_empire_country }
+                exists = event_target:foc_mandalore_country
+                NOT = { has_global_flag = foc_mandalore_annexed_by_empire }
+                NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+            }
+            country_event = { id = foc_mandalore.20 }
+        }
+
+        # Old saves can reach the Treaty with neither branch marker because the
+        # former watcher was never dispatched.  Re-evaluate actual control, with
+        # a safe Imperial fallback for a still-independent pre-Treaty Mandalore.
+        if = {
+            limit = {
+                has_global_flag = foc_republic_origin_galactic_treaty
+                OR = {
+                    NOR = {
+                        has_global_flag = foc_mandalore_treaty_rebel_control
+                        has_global_flag = foc_mandalore_treaty_empire_control
+                    }
+                    AND = {
+                        has_global_flag = foc_mandalore_treaty_rebel_control
+                        has_global_flag = foc_mandalore_treaty_empire_control
+                    }
+                }
+            }
+            foc_mandalore_capture_treaty_control = yes
+        }
+
+        # The Great Purge is normally fired by the canonical battle watcher after
+        # Death Star II is destroyed.  A fast Treaty transition or an old save can
+        # miss that one monthly window; rebuild the missing purge state here before
+        # evaluating the six-year Imperial-occupation restoration.
+        if = {
+            limit = {
+                has_global_flag = foc_republic_origin_galactic_treaty
+                has_global_flag = foc_mandalore_treaty_empire_control
+                has_global_flag = foc_republic_origin_death_star_two_destroyed
+                NOT = { has_global_flag = foc_canon_mandalore_glassed }
+                NOT = { has_global_flag = foc_mandalore_restored_independent }
+            }
+            foc_canon_mandalore_purge = yes
+            foc_mandalore_establish_gideon_base = yes
+            set_global_flag = foc_canon_mandalore_purge_battle_completed
+            log = "FOC_MANDALORE_V207: repaired a missed Great Purge state at the Treaty."
+        }
+
+        # Treaty branch A: Rebel control at the exact signing means accession to
+        # the New Republic and transfer of Bo-Katan/Din to its command structure.
+        if = {
+            limit = {
+                has_global_flag = foc_republic_origin_galactic_treaty
+                has_global_flag = foc_mandalore_treaty_rebel_control
+                NOT = { has_global_flag = foc_mandalore_annexed_into_new_republic }
+            }
+            foc_mandalore_transfer_to_new_republic = yes
+            if = {
+                limit = { has_global_flag = foc_mandalore_annexed_into_new_republic }
+                country_event = { id = foc_mandalore.21 days = 1 }
+                log = "FOC_MANDALORE_V207: Treaty Rebel-control branch completed; Mandalore joined the New Republic."
+            }
+        }
+
+        # Treaty branch B: Imperial control places Mandalore under the Imperial
+        # Remnant and starts (or repairs) the six-year restoration clock.
+        if = {
+            limit = {
+                has_global_flag = foc_republic_origin_galactic_treaty
+                has_global_flag = foc_mandalore_treaty_empire_control
+                NOT = { has_global_flag = foc_mandalore_restored_independent }
+                NOT = { has_global_flag = foc_mandalore_post_treaty_imperial_occupation }
+            }
+            foc_mandalore_keep_with_imperial_remnant = yes
+            if = {
+                limit = { has_global_flag = foc_mandalore_post_treaty_imperial_occupation }
+                log = "FOC_MANDALORE_V207: Treaty Imperial-control branch completed; Mandalore retained by the Imperial Remnant."
+            }
+        }
+
+        # If the Imperial Remnant has already been defeated or transformed into
+        # the First Order before this watcher repairs the Treaty branch, preserve
+        # the historical occupation clock anyway. Restoration must not depend on
+        # a dead country remaining available as an event target.
+        if = {
+            limit = {
+                has_global_flag = foc_republic_origin_galactic_treaty
+                has_global_flag = foc_mandalore_treaty_empire_control
+                NOT = { has_global_flag = foc_mandalore_restored_independent }
+                NOT = { has_global_flag = foc_mandalore_post_treaty_imperial_occupation }
+                OR = {
+                    has_global_flag = foc_khan_phase_one
+                    has_global_flag = foc_khan_phase_two
+                    NOT = {
+                        any_country = {
+                            OR = {
+                                has_country_flag = foc_sw_imperial_remnant_country
+                                has_country_flag = foc_republic_origin_player_imperial_remnant
+                            }
+                        }
+                    }
+                }
+            }
+            foc_mandalore_start_or_repair_six_year_clock = yes
+            set_global_flag = foc_mandalore_post_treaty_imperial_occupation
+            log = "FOC_MANDALORE_V207: Imperial Remnant unavailable; preserved Mandalore's six-year occupation/restoration clock."
+        }
+
+        # Partial old-save repair: occupation may already be marked while its
+        # clock was never initialized.
+        if = {
+            limit = {
+                has_global_flag = foc_republic_origin_galactic_treaty
+                has_global_flag = foc_mandalore_treaty_empire_control
+                has_global_flag = foc_mandalore_post_treaty_imperial_occupation
+                NOT = { has_global_flag = foc_mandalore_six_year_clock_started }
+                NOT = { has_global_flag = foc_mandalore_restored_independent }
+            }
+            foc_mandalore_start_or_repair_six_year_clock = yes
+        }
+
+        # Do not permanently cancel an overdue restoration merely because the
+        # First Order has already begun.  The six-year clock remains authoritative.
+        if = {
+            limit = {
+                has_global_flag = foc_republic_origin_galactic_treaty
+                has_global_flag = foc_mandalore_treaty_empire_control
+                has_global_flag = foc_mandalore_six_year_clock_started
+                has_global_flag = foc_canon_mandalore_glassed
+                NOT = { has_global_flag = foc_mandalore_wait_restoration_six_years }
+                NOT = { has_global_flag = foc_mandalore_restored_independent }
+                NOT = { has_global_flag = foc_mandalore_restoration_event_pending }
+            }
+            set_global_flag = foc_mandalore_restoration_event_pending
+            country_event = { id = foc_canon.30 days = 1 }
+            log = "FOC_MANDALORE_V207: six-year restoration event dispatched."
+        }
+
+        # When Leia's later Rebel/Resistance country exists, both commanders
+        # follow her rather than remaining duplicated inside the New Republic.
+        if = {
+            limit = {
+                has_global_flag = foc_mandalore_new_republic_commanders_granted
+                NOT = { has_global_flag = foc_mandalore_commanders_joined_leia }
+                any_country = {
+                    OR = {
+                        has_country_flag = foc_republic_origin_post_treaty_rebel_country
+                        has_country_flag = foc_khan_first_order_resistance_country
+                    }
+                }
+            }
+            foc_mandalore_commanders_join_leia = yes
+            if = {
+                limit = { has_global_flag = foc_mandalore_commanders_joined_leia }
+                log = "FOC_MANDALORE_V207: Bo-Katan and Din Djarin joined Leia's Resistance command."
+            }
+        }
+
+        # Concord Dawn mirrors Mandalore's current political owner.
+        foc_mandalore_sync_concord_dawn_owner = yes
+
+        if = {
+            limit = {
+                has_global_flag = foc_canon_mandalore_glassed
+                NOT = { has_global_flag = foc_mandalore_gideon_base_active }
+                NOT = { has_global_flag = foc_mandalore_gideon_base_destroyed }
+            }
+            foc_mandalore_establish_gideon_base = yes
+            log = "FOC_MANDALORE_V207: Gideon hidden-base state verified."
+        }
+    }
+}
+
+
+# Immediate new-game bootstrap.  The map invokes this one day after the Star
+# Wars region is finished; .1 now provides a genuine monthly recovery path.
+country_event = {
+    id = foc_mandalore.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        any_system = { has_star_flag = foc_swmap_mandalore_home }
+        NOT = { has_global_flag = foc_republic_origin_jedi_purged }
+    }
+
+    immediate = {
+        log = "FOC_MANDALORE_BOOTSTRAP: begin immediate Mandalore initialization."
+        foc_mandalore_ensure_system_target = yes
+        foc_mandalore_ensure_species = yes
+
+        if = {
+            limit = {
+                exists = event_target:foc_swmap_mandalore_system
+                exists = event_target:foc_mandalore_species
+                NOT = { exists = event_target:foc_mandalore_country }
+            }
+            foc_mandalore_create_country = yes
+        }
+
+        if = {
+            limit = { exists = event_target:foc_mandalore_country }
+            foc_mandalore_set_satine_state = yes
+            set_global_flag = foc_mandalore_opening_independence_initialized
+            log = "FOC_MANDALORE_BOOTSTRAP: Mandalore country created successfully."
+        }
+        else = {
+            log = "FOC_MANDALORE_BOOTSTRAP: country missing after bootstrap; the monthly V207 watcher will retry."
+        }
+
+        foc_mandalore_sync_concord_dawn_owner = yes
+    }
+}
+
+
+country_event = {
+    id = foc_mandalore.20
+    title = foc_mandalore.20.name
+    desc = foc_mandalore.20.desc
+    picture = GFX_foc_saga_mandalore_rally
+    location = event_target:foc_swmap_mandalore_system
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        is_ai = no
+        has_global_flag = foc_republic_origin_jedi_purged
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        any_country = { has_country_flag = foc_republic_origin_empire_country }
+        exists = event_target:foc_swmap_mandalore_system
+        exists = event_target:foc_mandalore_country
+        NOT = { has_global_flag = foc_mandalore_annexed_by_empire }
+    }
+
+    immediate = {
+        foc_mandalore_annex_by_empire = yes
+        if = {
+            limit = { has_global_flag = foc_mandalore_annexed_by_empire }
+            log = "FOC_MANDALORE_V207: Order 66 annexation completed."
+        }
+    }
+
+    option = { name = foc_canon.ok }
+}
+
+
+country_event = {
+    id = foc_mandalore.21
+    title = foc_mandalore_new_republic_accession
+    desc = foc_mandalore_new_republic_accession_desc
+    picture = GFX_foc_saga_mandalore_rally
+    location = event_target:foc_swmap_mandalore_system
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        has_global_flag = foc_republic_origin_galactic_treaty
+        has_global_flag = foc_mandalore_treaty_rebel_control
+        has_global_flag = foc_mandalore_annexed_into_new_republic
+        NOT = { has_global_flag = foc_mandalore_new_republic_accession_shown }
+    }
+
+    immediate = { set_global_flag = foc_mandalore_new_republic_accession_shown }
+    option = { name = foc_canon.ok }
+}

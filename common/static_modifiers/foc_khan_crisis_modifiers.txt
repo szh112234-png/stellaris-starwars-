@@ -1,0 +1,74 @@
+foc_khan_first_order_power = {
+	
+	
+	ship_hull_mult = 3.00
+	ship_armor_mult = 3.00
+	ship_shield_mult = 3.00
+	ship_speed_mult = 0.60
+	ship_tracking_add = 20
+	ship_accuracy_add = 15
+	ship_armor_hardening_add = 0.50
+	ship_shield_hardening_add = 0.50
+	country_naval_cap_mult = 20
+
+	ship_sensor_range_add = 1000
+	ship_hyperlane_range_add = 1000
+}
+
+foc_khan_final_order_power = {
+	
+	
+	ship_hull_mult = 5.00
+	ship_armor_mult = 5.00
+	ship_shield_mult = 5.00
+	ship_speed_mult = 0.80
+	ship_tracking_add = 35
+	ship_accuracy_add = 25
+	ship_armor_hardening_add = 0.75
+	ship_shield_hardening_add = 0.75
+	country_naval_cap_mult = 40
+
+	ship_sensor_range_add = 1000
+	ship_hyperlane_range_add = 1000
+}
+
+
+# Layered planetary defence network for the crisis Starkiller Base.
+foc_khan_starkiller_fortress_network = {
+	planet_orbital_bombardment_damage = -0.75
+	army_defense_damage_mult = 2.00
+}
+
+
+# The Supremacy is a massive mobile arkship, not a fast pursuit vessel.
+# This ship-only modifier offsets the First Order's global crisis speed bonus.
+foc_khan_supremacy_heavy_ark_slowdown = {
+	# A 60 km mobile capital should remain slower than ordinary attack fleets.
+	ship_speed_mult = -0.75
+
+	# v17.17c: the fixed hull already includes the requested Viscount defense
+	# ratio; do not apply the obsolete extra +50% defense to crisis flagships.
+	
+	
+	
+	
+	
+	ship_tracking_add = 15
+	ship_accuracy_add = 10
+	ship_armor_hardening_add = 0.25
+	ship_shield_hardening_add = 0.25
+}
+
+
+# Temporary launch-corridor boost for newly spawned crisis ships.
+# Applied for 60 days at creation so fleets clear Ilum/Exegol instead of stacking.
+foc_khan_spawn_corridor_acceleration = {
+	ship_speed_mult = 3.00
+}
+
+# 2.49: Non-combat strategic acceleration for First Order and Final Order ships.
+# This contains no combat damage, fire-rate, hull, armor or shield bonuses.
+foc_khan_order_out_of_combat_acceleration = {
+	ship_speed_mult = 2.00
+	ship_windup_mult = -0.80
+}

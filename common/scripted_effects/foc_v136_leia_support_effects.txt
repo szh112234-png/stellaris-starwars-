@@ -1,0 +1,112 @@
+# V144 - AI-only annual Nebula support for Leia's Order-era Rebel/Resistance state.
+# Country scope. Human players never receive this support.
+# If Raddus exists, the support fleet appears in Raddus's current system.
+# If Raddus is gone, the fleet appears in a random Rebel-controlled system.
+
+foc_v136_spawn_leia_10_nebula = {
+    if = {
+        limit = { NOT = { has_global_flag = foc_v211_ai_support_rebel_disabled } }
+        if = {
+            limit = {
+                any_owned_fleet = {
+                    OR = {
+                        has_fleet_flag = foc_khan_rebel_home_arkship_fleet
+                        any_owned_ship = {
+                            is_disabled = no
+                            has_ship_flag = foc_khan_rebel_home_arkship
+                        }
+                    }
+                    solar_system = {
+                        exists = space_owner
+                        space_owner = { is_same_value = root }
+                        NOT = {
+                            any_system_planet = {
+                                is_colony = yes
+                                NOT = { owner = { is_same_value = root } }
+                            }
+                        }
+                    }
+                }
+            }
+
+            random_owned_fleet = {
+                limit = {
+                    OR = {
+                        has_fleet_flag = foc_khan_rebel_home_arkship_fleet
+                        any_owned_ship = {
+                            is_disabled = no
+                            has_ship_flag = foc_khan_rebel_home_arkship
+                        }
+                    }
+                    solar_system = {
+                        exists = space_owner
+                        space_owner = { is_same_value = root }
+                        NOT = {
+                            any_system_planet = {
+                                is_colony = yes
+                                NOT = { owner = { is_same_value = root } }
+                            }
+                        }
+                    }
+                }
+                solar_system = {
+                    create_fleet = {
+                        name = "FOC_V136_LEIA_NEBULA_SUPPORT"
+                        settings = {
+                            can_upgrade = no
+                            can_disband = yes
+                            can_change_composition = no
+                            spawn_debris = yes
+                            ai_ignore_strength = yes
+                        }
+                        effect = {
+                            set_owner = root
+                            foc_v211_create_scaled_rebel_10_nebulas = yes
+                            set_location = { target = prev distance = 45 angle = random }
+                            set_aggro_range_measure_from = self
+                            set_aggro_range = 9999
+                            set_fleet_stance = aggressive
+                            set_formation_scale = 2
+                            set_fleet_flag = foc_republic_origin_rebellion_fleet
+                            set_fleet_flag = foc_v136_leia_nebula_support_fleet
+                        }
+                    }
+                }
+            }
+        }
+        else = {
+            random_system = {
+                limit = {
+                    space_owner? = { is_same_value = root }
+                    NOT = {
+                        any_system_planet = {
+                            is_colony = yes
+                            NOT = { owner = { is_same_value = root } }
+                        }
+                    }
+                }
+                create_fleet = {
+                    name = "FOC_V136_LEIA_NEBULA_SUPPORT"
+                    settings = {
+                        can_upgrade = no
+                        can_disband = yes
+                        can_change_composition = no
+                        spawn_debris = yes
+                        ai_ignore_strength = yes
+                    }
+                    effect = {
+                        set_owner = root
+                        foc_v211_create_scaled_rebel_10_nebulas = yes
+                        set_location = { target = prev distance = 50 angle = random }
+                        set_aggro_range_measure_from = self
+                        set_aggro_range = 9999
+                        set_fleet_stance = aggressive
+                        set_formation_scale = 2
+                        set_fleet_flag = foc_republic_origin_rebellion_fleet
+                        set_fleet_flag = foc_v136_leia_nebula_support_fleet
+                    }
+                }
+            }
+        }
+    }
+}

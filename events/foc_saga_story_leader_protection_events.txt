@@ -1,0 +1,146 @@
+namespace = foc_story_leader_protect
+
+# V66: Story-critical named characters cannot naturally die before the MOD's
+# existing scripted departure event. Explicit kill_leader effects still work;
+# their canonical exit effects set immortality back to no immediately first.
+country_event = {
+    id = foc_story_leader_protect.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        OR = {
+            AND = {
+                has_country_flag = foc_republic_origin_player_rebels
+                any_owned_leader = { has_leader_flag = foc_v1717e_republic_palpatine_leader }
+            }
+            any_owned_leader = {
+                OR = {
+                    has_leader_flag = foc_saga_luke_leader
+                    has_leader_flag = foc_saga_leia_leader
+                    has_leader_flag = foc_saga_kylo_leader
+                    has_leader_flag = foc_hero_kylo_ren
+                    has_leader_flag = foc_republic_origin_jedi_leader
+                    has_leader_flag = foc_republic_origin_anakin_leader
+                    has_leader_flag = foc_republic_origin_vader_leader
+                    has_leader_flag = foc_saga_grievous_leader
+                    has_leader_flag = foc_saga_mon_mothma_leader
+                    has_leader_flag = foc_canon_obiwan_returned_leader
+                    has_leader_flag = foc_republic_origin_death_star_commander
+                    has_leader_flag = foc_republic_origin_ackbar_leader
+                    has_leader_flag = foc_republic_origin_raddus_leader
+                }
+            }
+            AND = {
+                NOT = { has_global_flag = foc_saga_palpatine_died_at_endor }
+                OR = {
+                    AND = {
+                        has_country_flag = foc_republic_origin_republic_country
+                        has_country_flag = foc_republic_origin_naboo_crisis_resolved
+                    }
+                    has_country_flag = foc_republic_origin_empire_country
+                    has_country_flag = foc_republic_origin_player_empire
+                }
+            }
+        }
+    }
+
+    immediate = {
+        # V17.17e: reuse the existing monthly leader maintenance for old saves.
+        # Identity is explicit: never guess from class/tier or dismiss a Rebel hero.
+        if = {
+            limit = { has_country_flag = foc_republic_origin_player_rebels }
+            every_owned_leader = {
+                limit = {
+                    has_leader_flag = foc_v1717e_republic_palpatine_leader
+                    NOT = { has_leader_flag = foc_saga_mon_mothma_leader }
+                }
+                kill_leader = { fire = yes show_notification = no }
+            }
+        }
+
+        # Palpatine: Naboo -> Chancellor -> Emperor -> existing Endor replacement.
+        if = {
+            limit = {
+                NOT = { has_global_flag = foc_saga_palpatine_died_at_endor }
+                OR = {
+                    AND = {
+                        has_country_flag = foc_republic_origin_republic_country
+                        has_country_flag = foc_republic_origin_naboo_crisis_resolved
+                    }
+                    has_country_flag = foc_republic_origin_empire_country
+                    has_country_flag = foc_republic_origin_player_empire
+                }
+            }
+            ruler = { set_immortal = yes }
+        }
+
+        every_owned_leader = {
+            limit = {
+                OR = {
+                    AND = {
+                        has_leader_flag = foc_saga_luke_leader
+                        NOT = { has_global_flag = foc_saga_luke_died }
+                    }
+                    AND = {
+                        has_leader_flag = foc_saga_leia_leader
+                        NOT = { has_global_flag = foc_saga_leia_dead }
+                    }
+                    AND = {
+                        has_leader_flag = foc_v226_padme_leader
+                        NOT = { has_global_flag = foc_saga_padme_dead }
+                    }
+                    AND = {
+                        OR = {
+                            has_leader_flag = foc_saga_kylo_leader
+                            has_leader_flag = foc_hero_kylo_ren
+                        }
+                        NOT = { has_global_flag = foc_story_ben_solo_death_completed }
+                    }
+                    # The Jedi present before Order 66 survive normal aging so
+                    # the purge, not the calendar, decides their fate.
+                    AND = {
+                        has_leader_flag = foc_republic_origin_jedi_leader
+                        NOT = { has_global_flag = foc_republic_origin_jedi_purged }
+                    }
+                    # Anakin/Vader survives the purge and exits at Endor.
+                    AND = {
+                        OR = {
+                            has_leader_flag = foc_republic_origin_anakin_leader
+                            has_leader_flag = foc_republic_origin_vader_leader
+                        }
+                        NOT = { has_global_flag = foc_saga_vader_died_at_endor }
+                    }
+                    # Grievous exits at the existing Utapau event.
+                    AND = {
+                        has_leader_flag = foc_saga_grievous_leader
+                        NOT = { has_global_flag = foc_saga_grievous_dead }
+                    }
+                    # V212 named Rebel/Imperial characters leave only at their
+                    # authoritative scripted battle milestones.
+                    AND = {
+                        has_leader_flag = foc_saga_mon_mothma_leader
+                        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+                    }
+                    AND = {
+                        has_leader_flag = foc_canon_obiwan_returned_leader
+                        NOT = { has_global_flag = foc_v212_obiwan_force_ghost }
+                    }
+                    AND = {
+                        has_leader_flag = foc_republic_origin_death_star_commander
+                        NOT = { has_global_flag = foc_v212_tarkin_died_with_death_star_one }
+                    }
+                    AND = {
+                        has_leader_flag = foc_republic_origin_ackbar_leader
+                        NOT = { has_global_flag = foc_v212_ackbar_died_on_raddus }
+                    }
+                    AND = {
+                        has_leader_flag = foc_republic_origin_raddus_leader
+                        NOT = { has_global_flag = foc_v212_raddus_died_at_scarif }
+                    }
+                }
+            }
+            set_immortal = yes
+        }
+    }
+}

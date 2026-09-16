@@ -1,0 +1,287 @@
+# Universal service/sensor parts. Starter parts do not grant stage-I tech.
+utility_component_template = {
+    key = "FOC_V1718E_SENSOR"
+    size = small
+    component_set = sensor_components
+    icon = "GFX_foc_v1718c_ship_part_swgs_sensor"
+    icon_frame = 1
+    power = -50
+    sensor_range = 6
+    hyperlane_range = 9
+    ship_modifier = { ship_tracking_add = 5 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            NOT = { has_technology = foc_v1718_tech_sg_computers }
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = { alloys = 25 }
+    }
+    ai_weight = { weight = 100000 }
+}
+utility_component_template = {
+    key = "FOC_V1718E_ADVANCED_SENSOR"
+    size = small
+    component_set = sensor_components
+    icon = "GFX_foc_v1718c_ship_part_swgs_sensor"
+    icon_frame = 1
+    power = -50
+    sensor_range = 12
+    hyperlane_range = 18
+    ship_modifier = { ship_tracking_add = 10 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            has_technology = foc_v1718_tech_sg_computers
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = { alloys = 100 }
+    }
+    ai_weight = { weight = 260000 }
+}
+utility_component_template = {
+    key = "FOC_V1718E_STARTER_REACTOR"
+    size = small
+    component_set = power_core
+    icon = "GFX_foc_v1718c_ship_part_swgs_reactor"
+    icon_frame = 1
+    power = 1000
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            NOT = { has_technology = foc_v1718_tech_reactor_1 }
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = { alloys = 10 sr_coaxium_foc = 2 }
+    }
+    ai_weight = { weight = 90000 }
+}
+utility_component_template = {
+    key = "FOC_V1718E_STARTER_THRUSTER"
+    size = small
+    component_set = thruster_components
+    icon = "GFX_foc_v1718c_ship_part_swgs_thruster"
+    icon_frame = 1
+    power = -10
+    modifier = { ship_speed_mult = 0.05 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            NOT = { has_technology = foc_v1718_tech_thruster_1 }
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = { alloys = 10 sr_coaxium_foc = 2 }
+    }
+    ai_weight = { weight = 90000 }
+}
+utility_component_template = {
+    key = "FOC_V1718E_STARTER_HYPERDRIVE"
+    size = small
+    component_set = ftl_components
+    icon = "GFX_foc_v1718c_ship_part_swgs_hyperdrive"
+    icon_frame = 1
+    power = -10
+    ftl = yes
+    jumpdrive = no
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            NOT = { has_technology = foc_v1718_tech_hyperdrive_1 }
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = { alloys = 10 sr_coaxium_foc = 2 }
+    }
+    ai_weight = { weight = 90000 }
+}
+utility_component_template = {
+    key = "FOC_V1718E_STARTER_COMPUTER"
+    size = small
+    component_set = combat_computers
+    icon = "GFX_foc_v1718c_ship_part_swgs_strange_computer"
+    icon_frame = 1
+    power = -5
+    ship_behavior = line
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            NOT = { has_global_flag = foc_khan_strength_lowest }
+            NOT = { has_technology = foc_v1718_tech_reactor_1 }
+        }
+    
+        # Native Arkship controller is required for Supremacy.
+        NOT = { foc_v1718h_is_supremacy_ship = yes }
+    }
+    resources = {
+        category = ship_components
+        cost = { alloys = 10 }
+    }
+    ai_weight = { weight = 90000 }
+}
+utility_component_template = {
+    key = "FOC_V1718E_SENSOR_LOWEST"
+    size = small
+    component_set = sensor_components
+    icon = "GFX_foc_v1718c_ship_part_swgs_sensor"
+    icon_frame = 1
+    power = -20
+    sensor_range = 4
+    hyperlane_range = 6
+    ship_modifier = { ship_tracking_add = 5 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            NOT = { has_technology = foc_v1718_tech_sg_computers }
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = { alloys = 25 }
+    }
+    ai_weight = { weight = 100000 }
+}
+utility_component_template = {
+    key = "FOC_V1718E_ADVANCED_SENSOR_LOWEST"
+    size = small
+    component_set = sensor_components
+    icon = "GFX_foc_v1718c_ship_part_swgs_sensor"
+    icon_frame = 1
+    power = -20
+    sensor_range = 4
+    hyperlane_range = 6
+    ship_modifier = { ship_tracking_add = 5 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = { foc_v1718_allowed_country = yes has_global_flag = foc_khan_strength_lowest has_technology = foc_v1718_tech_sg_computers }
+    }
+    resources = {
+        category = ship_components
+        cost = { alloys = 100 }
+    }
+    ai_weight = { weight = 260000 }
+}
+utility_component_template = {
+    key = "FOC_V1718E_STARTER_REACTOR_LOWEST"
+    size = small
+    component_set = power_core
+    icon = "GFX_foc_v1718c_ship_part_swgs_reactor"
+    icon_frame = 1
+    power = 500
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            NOT = { has_technology = foc_v1718_tech_reactor_1 }
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = { alloys = 10 sr_coaxium_foc = 2 }
+    }
+    ai_weight = { weight = 90000 }
+}
+utility_component_template = {
+    key = "FOC_V1718E_STARTER_THRUSTER_LOWEST"
+    size = small
+    component_set = thruster_components
+    icon = "GFX_foc_v1718c_ship_part_swgs_thruster"
+    icon_frame = 1
+    power = -10
+    modifier = { ship_speed_mult = 0.05 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            NOT = { has_technology = foc_v1718_tech_thruster_1 }
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = { alloys = 10 sr_coaxium_foc = 2 }
+    }
+    ai_weight = { weight = 90000 }
+}
+utility_component_template = {
+    key = "FOC_V1718E_STARTER_HYPERDRIVE_LOWEST"
+    size = small
+    component_set = ftl_components
+    icon = "GFX_foc_v1718c_ship_part_swgs_hyperdrive"
+    icon_frame = 1
+    power = -10
+    ftl = yes
+    jumpdrive = no
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            NOT = { has_technology = foc_v1718_tech_hyperdrive_1 }
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = { alloys = 10 sr_coaxium_foc = 2 }
+    }
+    ai_weight = { weight = 90000 }
+}
+utility_component_template = {
+    key = "FOC_V1718E_STARTER_COMPUTER_LOWEST"
+    size = small
+    component_set = combat_computers
+    icon = "GFX_foc_v1718c_ship_part_swgs_strange_computer"
+    icon_frame = 1
+    power = -5
+    ship_behavior = line
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    potential = {
+        foc_v1718_non_death_star_ship = yes
+        from = {
+            foc_v1718_allowed_country = yes
+            has_global_flag = foc_khan_strength_lowest
+            NOT = { has_technology = foc_v1718_tech_reactor_1 }
+        }
+    
+        # Native Arkship controller is required for Supremacy.
+        NOT = { foc_v1718h_is_supremacy_ship = yes }
+    }
+    resources = {
+        category = ship_components
+        cost = { alloys = 10 }
+    }
+    ai_weight = { weight = 90000 }
+}

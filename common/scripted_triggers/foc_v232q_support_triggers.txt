@@ -1,0 +1,45 @@
+# Country scope. Only the actual Galactic Empire, not its later successor.
+# V17.17f: annual Imperial support requires an owned and unoccupied Kuat yard.
+foc_v232q_empire_support_eligible = {
+    # V17: annual support is an AI-only crutch. The Empire stream used to have no
+    # is_ai gate, so a human Galactic Empire also received the yearly wave while
+    # every other stream (v134 rebel, v135 shipyard, v136 Leia) was AI-only.
+    is_ai = yes
+    has_country_flag = foc_republic_origin_empire_country
+    any_owned_starbase = {
+        solar_system = {
+            OR = { has_star_flag = foc_sw_kuat_home has_star_flag = foc_swmap_kuat_home }
+            # In planet scope PREVPREV is this owned starbase. Reject a Kuat
+            # colony lost to another owner or occupied while the base survives.
+            NOT = {
+                any_system_planet = {
+                    is_colony = yes
+                    OR = {
+                        NOT = { is_owned_by = prevprev.owner }
+                        is_occupied_flag = yes
+                    }
+                }
+            }
+        }
+        if = {
+            limit = { exists = controller }
+            controller = { is_same_value = prev.owner }
+        }
+        else = { always = no }
+    }
+    OR = {
+        has_global_flag = foc_v232q_death_star_one_combat_loss
+        has_global_flag = foc_republic_origin_death_star_one_destroyed
+        has_country_flag = foc_republic_origin_death_star_one_destroyed
+    }
+    NOT = { has_global_flag = foc_v232q_empire_support_ended }
+    NOT = { has_global_flag = foc_republic_origin_death_star_two_destroyed }
+    NOT = { has_country_flag = foc_republic_origin_death_star_two_destroyed }
+    NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+    # Preserve the explicit support-off debug setting from V211.
+    NOT = { has_global_flag = foc_v211_ai_support_empire_disabled }
+    OR = {
+        exists = capital_scope
+        any_owned_starbase = { exists = solar_system }
+    }
+}

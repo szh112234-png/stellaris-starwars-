@@ -1,0 +1,19 @@
+# Country scope. Safe for research, scripted technology grants and old saves.
+foc_v17_unlock_resurgent_durasteel = {
+    if = {
+        limit = {
+            foc_v17_resurgent_durasteel_eligible = yes
+            OR = {
+                NOT = { has_country_flag = foc_v17_resurgent_durasteel_unlocked }
+                NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+            }
+        }
+        # Set the guard before give_technology: a technology on_action can re-enter.
+        set_country_flag = foc_v17_resurgent_durasteel_unlocked
+        if = {
+            limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } }
+            if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } }
+        }
+        refresh_auto_generated_ship_designs = yes
+    }
+}

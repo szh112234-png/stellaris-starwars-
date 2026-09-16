@@ -1,0 +1,68 @@
+portraits = {
+	
+	###RESURGENT SITH EMPIRE###
+	
+	sith_droid_01 = { entity = "portrait_droid_01_entity" clothes_selector = "no_texture"	attachment_selector = "no_texture"	greeting_sound = "robot_human_greetings"
+		character_textures = { "gfx/models/portraits/torsith/sithdroids/sithdroid1.dds" }
+	}
+	
+	Mark1_sith_droid_01 = { texturefile = "gfx/models/portraits/torsith/sithdroids/mark1_sithdroid.dds" greeting_sound = "robot_human_greetings" } 
+	
+	
+}
+
+
+portrait_groups = {
+		sithdroids = {
+		default = sith_droid_01
+		game_setup = { 
+			add = {
+				portraits = {
+					sith_droid_01
+					Mark1_sith_droid_01
+				}
+			}
+		}
+
+		#species scope
+		species = { #generic portrait for a species
+			add = {
+				portraits = {
+					sith_droid_01
+					Mark1_sith_droid_01
+				}
+			}
+		}		
+		
+		#pop scope
+		pop_group = { #for a specific pop
+			add = {
+				portraits = {
+					sith_droid_01
+					Mark1_sith_droid_01
+					
+				}
+			}
+		}
+		
+		#leader scope
+		leader = { #scientists, generals, admirals, governor
+			add = {
+				portraits = {
+					sith_droid_01
+					
+				}
+			}
+		}
+
+			
+		#leader scope 
+		ruler = {
+			add = {
+				portraits = {
+					sith_droid_01
+				}
+			}
+		}
+	}	
+}

@@ -1,0 +1,59 @@
+# V231p - current-map Treaty territory helpers.
+#
+# The active V231o/V231p map contains 119 fixed non-Coruscant spawns plus the
+# separately anchored Coruscant system.  Older explicit lists covered only the
+# earlier map and must not be used as the uprising candidate list.
+#
+# These triggers intentionally describe FINAL Galactic Concordance ownership.
+# Hutt Space remains independent.  The explicit Imperial Remnant list below is
+# authoritative; every other current Star-Wars-map system belongs to the New
+# Republic.  Both the Treaty transfer and the double-Death-Star uprising use
+# these helpers so the two mechanics cannot drift apart again.
+
+foc_v231p_is_treaty_imperial_remnant_system = {
+    OR = {
+        has_star_flag = foc_sw_bastion_home
+        has_star_flag = foc_sw_yaga_minor_home
+        has_star_flag = foc_sw_bilbringi_home
+        has_star_flag = foc_sw_jakku_home
+        has_star_flag = foc_swmap_mandalore_home
+        has_star_flag = foc_swmap_dathomir_home
+        has_star_flag = foc_swmap_scarif_home
+        has_star_flag = foc_swmap_geonosis_home
+        has_star_flag = foc_swmap_moraband_home
+        has_star_flag = foc_swmap_maw_home
+        has_star_flag = foc_swmap_batuu_home
+        has_star_flag = foc_swmap_eriadu_home
+        has_star_flag = foc_swmap_kamino_home
+        has_star_flag = foc_swmap_mustafar_home
+        has_star_flag = foc_swmap_kessel_home
+        has_star_flag = foc_swmap_malachor_home
+        has_star_flag = foc_swmap_bracca_home
+        has_star_flag = foc_v175_dantooine_home
+        has_star_flag = foc_v175_ithor_home
+        has_star_flag = foc_v175_numidian_pr_home
+        has_star_flag = foc_v175_bogden_home
+        has_star_flag = foc_swmap_bonadan_home
+        has_star_flag = foc_v175_carida_home
+        has_star_flag = foc_swmap_kijimi_home
+        has_star_flag = foc_v175_oba_diah_home
+        has_star_flag = foc_v175_pasaana_home
+        has_star_flag = foc_v175_lah_mu_home
+        has_star_flag = foc_v175_zeffo_home
+        has_star_flag = foc_v175_koboh_home
+        has_star_flag = foc_v175_savareen_home
+    }
+}
+
+foc_v231p_is_treaty_new_republic_system = {
+    # Restrict the fallback to the current Star-Wars map universe.  The old
+    # NR/IR cluster flags are used ONLY as a map-membership marker here; final
+    # ownership is decided by the Remnant exclusion list above.
+    OR = {
+        has_star_flag = foc_sw_new_republic_cluster
+        has_star_flag = foc_sw_imperial_remnant_cluster
+        has_star_flag = foc_swmap_mandalore_home
+    }
+    NOT = { has_star_flag = foc_v196_hutt_criminal_empire_system }
+    NOT = { foc_v231p_is_treaty_imperial_remnant_system = yes }
+}

@@ -1,0 +1,54 @@
+namespace = foc_v173_mapfix
+
+# V178 old-save/new-map repair: guarantee the Republic origin wormhole technology
+# even when an older map-fix flag already exists, and colonize newly-added v3
+# member worlds that existed before their
+# foc_sw_nr_colony/foc_sw_ir_colony flags were added. Only systems still owned
+# by the Republic are touched, so later Separatist/Rebel/Imperial handovers are
+# never overwritten.
+country_event = {
+    id = foc_v173_mapfix.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        has_origin = origin_foc_republic_unification
+        has_country_flag = foc_republic_origin_initialized
+        has_country_flag = foc_republic_origin_republic_country
+        OR = {
+            NOT = { has_country_flag = foc_v173_origin_mapfix_done }
+            NOT = { has_technology = tech_wormhole_stabilization }
+        }
+    }
+
+    immediate = {
+        give_technology = { tech = tech_wormhole_stabilization message = no }
+        add_seen_bypass_type = wormhole
+
+        save_global_event_target_as = foc_republic_origin_republic
+
+        every_system = {
+            limit = {
+                has_star_flag = foc_swmap_v3_external_region
+                NOT = { has_star_flag = foc_v196_hutt_criminal_empire_system }
+                exists = starbase
+                starbase = { owner = { is_same_value = root } }
+            }
+            every_system_planet = {
+                limit = {
+                    is_colony = no
+                    OR = {
+                        has_planet_flag = foc_sw_nr_colony
+                        has_planet_flag = foc_sw_ir_colony
+                    }
+                }
+                foc_republic_origin_prepare_member_world = yes
+                foc_republic_origin_install_member_world_nexus = yes
+            }
+        }
+
+        set_country_flag = foc_v173_origin_mapfix_done
+        log = "FOC_V178: repaired Republic wormhole tech and newly-added v3 member colonies."
+    }
+}

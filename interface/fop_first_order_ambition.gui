@@ -1,0 +1,224 @@
+guiTypes = {
+    containerWindowType = {
+        name = "fop_ambition_option"
+        position = { x = 0 y = 0 }
+        size = { width = 202 height = 45 }
+        moveable = no
+        buttonType = {
+            name = "option_button"
+            quadTextureSprite = "GFX_standard_button_142_34_button"
+            position = { x = 0 y = 0 }
+            size = { x = 202 y = 41 }
+            font = "malgun_goth_24"
+            text = "OPTION_TEXT"
+        }
+        OverlappingElementsBoxType = {
+            name = "trigger_icons"
+            position = { x = 0 y = 10 }
+            size = { x = 65 y = 28 }
+        }
+        OverlappingElementsBoxType = {
+            name = "effect_icons"
+            position = { x = 170 y = 8 }
+            size = { x = 32 y = 28 }
+            format = right
+        }
+    }
+
+    containerWindowType = {
+        name = "fop_ambition_hiding_button"
+        position = { x = 0 y = 0 }
+        size = { width = 1 height = 1 }
+        moveable = no
+        buttonType = {
+            name = "option_button"
+            quadTextureSprite = "GFX_standard_button_142_34_button"
+            position = { x = 0 y = 0 }
+            size = { x = 1 y = 1 }
+            text = "OPTION_TEXT"
+            no_clicksound = yes
+            oversound = no_sound
+        }
+        OverlappingElementsBoxType = { name = "trigger_icons" position = { x = 0 y = 0 } size = { x = 1 y = 1 } }
+    }
+
+    containerWindowType = {
+        name = "fop_ambition_window"
+        orientation = center
+        origo = center
+        moveable = yes
+        size = { width = 1200 height = 720 }
+
+        background = {
+            name = "background"
+            spriteType = "GFX_fop_ambition_white_bg"
+            position = { x = 0 y = 0 }
+            orientation = center
+        }
+
+        instantTextBoxType = {
+            name = "fop_ambition_main_title"
+            font = "malgun_goth_24"
+            text = "fop_ambition_window_title"
+            position = { x = 55 y = 30 }
+            maxWidth = 700
+            maxHeight = 35
+            format = left
+        }
+        instantTextBoxType = {
+            name = "fop_ambition_subtitle"
+            font = "cg_16b"
+            text = "fop_ambition_window_subtitle"
+            position = { x = 55 y = 70 }
+            maxWidth = 700
+            maxHeight = 55
+            format = left
+        }
+        iconType = {
+            name = "fop_ambition_point_icon"
+            spriteType = "GFX_fop_ambition_point"
+            position = { x = 724 y = 34 }
+            pdx_tooltip = "fop_ambition_points_tooltip"
+            alwaysTransparent = yes
+        }
+        # Dynamic localisation commands are only evaluated in an
+        # effectButtonType buttonText inside this custom GUI.
+        effectButtonType = {
+            name = "fop_ambition_points"
+            spriteType = "GFX_fop_ambition_points_text"
+            position = { x = 776 y = 32 }
+            size = { x = 230 y = 44 }
+            buttonText = "fop_ambition_points_gui"
+            buttonFont = "malgun_goth_24"
+            format = left
+            text_offset = { x = 0 y = 8 }
+            effect = "fop_ambition_points_display"
+            alwaysTransparent = yes
+            no_clicksound = yes
+            oversound = no_sound
+        }
+
+        buttonType = {
+            name = "close"
+            quadTextureSprite = "GFX_standard_button_142_34_button"
+            position = { x = -175 y = 30 }
+            Orientation = "UPPER_RIGHT"
+            size = { x = 142 y = 34 }
+            font = "malgun_goth_24"
+            text = "CLOSE"
+            shortcut = "ESCAPE"
+            clicksound = "back_click"
+        }
+
+        buttonType = { name = "stage_1_panel" quadTextureSprite = "GFX_fop_ambition_white_stage_panel" position = { x = 55 y = 135 } size = { x = 690 y = 92 } alwaysTransparent = yes }
+        buttonType = { name = "stage_2_panel" quadTextureSprite = "GFX_fop_ambition_white_stage_panel" position = { x = 55 y = 237 } size = { x = 690 y = 92 } alwaysTransparent = yes }
+        buttonType = { name = "stage_3_panel" quadTextureSprite = "GFX_fop_ambition_white_stage_panel" position = { x = 55 y = 339 } size = { x = 690 y = 92 } alwaysTransparent = yes }
+        buttonType = { name = "stage_4_panel" quadTextureSprite = "GFX_fop_ambition_white_stage_panel" position = { x = 55 y = 441 } size = { x = 690 y = 92 } alwaysTransparent = yes }
+        buttonType = { name = "stage_5_panel" quadTextureSprite = "GFX_fop_ambition_white_stage_panel" position = { x = 55 y = 543 } size = { x = 690 y = 92 } alwaysTransparent = yes }
+
+        @stage_icon_x = 78
+        @stage_text_x = 155
+        @stage_icon_size = 64
+        effectButtonType = { name = "stage_1_locked" spriteType = "GFX_fop_ambition_stage_1_locked" position = { x = @stage_icon_x y = 149 } size = { x = @stage_icon_size y = @stage_icon_size } effect = "fop_ambition_stage_1_locked" }
+        effectButtonType = { name = "stage_1_active" spriteType = "GFX_fop_ambition_stage_1_active" position = { x = @stage_icon_x y = 149 } size = { x = @stage_icon_size y = @stage_icon_size } effect = "fop_ambition_stage_1_active" }
+        effectButtonType = { name = "stage_2_locked" spriteType = "GFX_fop_ambition_stage_2_locked" position = { x = @stage_icon_x y = 251 } size = { x = @stage_icon_size y = @stage_icon_size } effect = "fop_ambition_stage_2_locked" }
+        effectButtonType = { name = "stage_2_active" spriteType = "GFX_fop_ambition_stage_2_active" position = { x = @stage_icon_x y = 251 } size = { x = @stage_icon_size y = @stage_icon_size } effect = "fop_ambition_stage_2_active" }
+        effectButtonType = { name = "stage_3_locked" spriteType = "GFX_fop_ambition_stage_3_locked" position = { x = @stage_icon_x y = 353 } size = { x = @stage_icon_size y = @stage_icon_size } effect = "fop_ambition_stage_3_locked" }
+        effectButtonType = { name = "stage_3_active" spriteType = "GFX_fop_ambition_stage_3_active" position = { x = @stage_icon_x y = 353 } size = { x = @stage_icon_size y = @stage_icon_size } effect = "fop_ambition_stage_3_active" }
+        effectButtonType = { name = "stage_4_locked" spriteType = "GFX_fop_ambition_stage_4_locked" position = { x = @stage_icon_x y = 455 } size = { x = @stage_icon_size y = @stage_icon_size } effect = "fop_ambition_stage_4_locked" }
+        effectButtonType = { name = "stage_4_active" spriteType = "GFX_fop_ambition_stage_4_active" position = { x = @stage_icon_x y = 455 } size = { x = @stage_icon_size y = @stage_icon_size } effect = "fop_ambition_stage_4_active" }
+        effectButtonType = { name = "stage_5_locked" spriteType = "GFX_fop_ambition_stage_5_locked" position = { x = @stage_icon_x y = 557 } size = { x = @stage_icon_size y = @stage_icon_size } effect = "fop_ambition_stage_5_locked" }
+        effectButtonType = { name = "stage_5_active" spriteType = "GFX_fop_ambition_stage_5_active" position = { x = @stage_icon_x y = 557 } size = { x = @stage_icon_size y = @stage_icon_size } effect = "fop_ambition_stage_5_active" }
+
+        instantTextBoxType = { name = "stage_1_name" font = "malgun_goth_24" text = "fop_ambition_stage_1_name" position = { x = @stage_text_x y = 151 } maxWidth = 560 maxHeight = 28 format = left }
+        instantTextBoxType = { name = "stage_1_desc" font = "cg_16b" text = "fop_ambition_stage_1_short" position = { x = @stage_text_x y = 184 } maxWidth = 560 maxHeight = 35 format = left }
+        instantTextBoxType = { name = "stage_2_name" font = "malgun_goth_24" text = "fop_ambition_stage_2_name" position = { x = @stage_text_x y = 253 } maxWidth = 560 maxHeight = 28 format = left }
+        instantTextBoxType = { name = "stage_2_desc" font = "cg_16b" text = "fop_ambition_stage_2_short" position = { x = @stage_text_x y = 286 } maxWidth = 560 maxHeight = 35 format = left }
+        instantTextBoxType = { name = "stage_3_name" font = "malgun_goth_24" text = "fop_ambition_stage_3_name" position = { x = @stage_text_x y = 355 } maxWidth = 560 maxHeight = 28 format = left }
+        instantTextBoxType = { name = "stage_3_desc" font = "cg_16b" text = "fop_ambition_stage_3_short" position = { x = @stage_text_x y = 388 } maxWidth = 560 maxHeight = 35 format = left }
+        instantTextBoxType = { name = "stage_4_name" font = "malgun_goth_24" text = "fop_ambition_stage_4_name" position = { x = @stage_text_x y = 457 } maxWidth = 560 maxHeight = 28 format = left }
+        instantTextBoxType = { name = "stage_4_desc" font = "cg_16b" text = "fop_ambition_stage_4_short" position = { x = @stage_text_x y = 490 } maxWidth = 560 maxHeight = 35 format = left }
+        instantTextBoxType = { name = "stage_5_name" font = "malgun_goth_24" text = "fop_ambition_stage_5_name" position = { x = @stage_text_x y = 559 } maxWidth = 560 maxHeight = 28 format = left }
+        instantTextBoxType = { name = "stage_5_desc" font = "cg_16b" text = "fop_ambition_stage_5_short" position = { x = @stage_text_x y = 592 } maxWidth = 560 maxHeight = 35 format = left }
+
+        buttonType = {
+            name = "alien_message_background"
+            size = { x = 370 y = 520 }
+            position = { x = 775 y = 125 }
+            spriteType = "GFX_fop_ambition_white_side_panel"
+            alwaysTransparent = yes
+        }
+        instantTextBoxType = {
+            name = "alien_message"
+            font = "cg_16b"
+            position = { x = 800 y = 165 }
+            maxWidth = 320
+            maxHeight = 370
+            format = left
+            scrollbartype = "standardtext_slider"
+        }
+        instantTextBoxType = { name = "heading" font = "malgun_goth_24" text = "DIPLOMACY" position = { x = -1453 y = -12450 } maxWidth = 1 maxHeight = 1 }
+
+        containerWindowType = {
+            name = "EVENT_DIPLO"
+            position = { x = 800 y = 0 }
+            size = { width = 330 height = 690 }
+            moveable = no
+            instantTextBoxType = { name = "action_title" font = "malgun_goth_24" position = { x = 0 y = 120 } maxWidth = 320 maxHeight = 30 alwaysTransparent = yes }
+            instantTextBoxType = { name = "action_desc" font = "malgun_goth_24" position = { x = -1453 y = -12450 } }
+            listboxType = {
+                name = "option_list"
+                position = { x = 0 y = 565 }
+                backGround = ""
+                size = { x = 202 y = 55 }
+                spacing = 5
+                scrollbartype = "standardlistbox_slider"
+                borderSize = { x = 0 y = 0 }
+                Orientation = "UPPER_LEFT"
+            }
+        }
+
+        iconType = { name = "empire_header_line" quadTextureSprite = "GFX_line_long_caravaneer" position = { x = -1453 y = -12450 } }
+        buttonType = { name = "focus_button" position = { x = -1453 y = -12450 } spriteType = "GFX_fleetview_focus" }
+        buttonType = { name = "tts_button" position = { x = -1453 y = -12450 } size = { x = 1 y = 1 } quadTextureSprite = "GFX_standard_button_142_34_button" }
+        buttonType = { name = "confirm_button" quadTextureSprite = "GFX_standard_button_142_34_button" position = { x = -1453 y = -12450 } }
+        containerWindowType = {
+            name = "portrait_background"
+            position = { x = -1453 y = -12450 }
+            size = { width = 0 height = 0 }
+            iconType = { name = "event_picture" spriteType = "GFX_diplomacy_portrait_frame" }
+            iconType = { name = "portrait" spriteType = "GFX_portrait_character" }
+        }
+        containerWindowType = {
+            name = "portrait"
+            position = { x = -1453 y = -12450 }
+            size = { width = 0 height = 0 }
+            iconType = { name = "portrait" spriteType = "GFX_portrait_gamesetup_mask" }
+            iconType = { name = "black_frame" spriteType = "GFX_diplomacy_portrait_shadow_frame" }
+            iconType = { name = "stripes_1" spriteType = "GFX_diplomacy_stripes_2" }
+            iconType = { name = "city_frame" spriteType = "GFX_diplomacy_portrait_frame" }
+        }
+        iconType = { name = "empire_info_bg" spriteType = "GFX_diplomacy_dark_fade_bg" position = { x = -1453 y = -12450 } }
+        instantTextBoxType = { name = "empire_name" font = "malgun_goth_24" position = { x = -1453 y = -12450 } }
+        instantTextBoxType = { name = "empire_government_type" font = "cg_16b" position = { x = -1453 y = -12450 } }
+        instantTextBoxType = { name = "empire_personality_type" font = "cg_16b" position = { x = -1453 y = -12450 } }
+        OverlappingElementsBoxType = { name = "empire_ethics_icons" position = { x = -1453 y = -12450 } }
+        buttonType = { name = "empire_flag" spriteType = "GFX_empire_flag_128" position = { x = -1453 y = -12450 } }
+        containerWindowType = {
+            name = "leader_details"
+            position = { x = -1453 y = -12450 }
+            containerWindowType = { name = "empire_traits_box" }
+            instantTextBoxType = { name = "empire_traits_label" font = "cg_16b" }
+            overlappingElementsBoxType = { name = "leader_traits" }
+            instantTextBoxType = { name = "leader_name" font = "cg_16b" }
+            instantTextBoxType = { name = "leader_species" font = "cg_16b" }
+        }
+        containerWindowType = {
+            name = "opinion_window"
+            position = { x = -1453 y = -12450 }
+            size = { width = 1 height = 1 }
+            iconType = { name = "their_opinion_icon" spriteType = "GFX_diplomacy_opinion" }
+            instantTextBoxType = { name = "their_opinion" font = "cg_16b" }
+        }
+    }
+}

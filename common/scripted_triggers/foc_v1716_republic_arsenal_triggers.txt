@@ -1,0 +1,15 @@
+# Country scope. A refunded/aborted Kuat project is not a completed expansion.
+# Scripted opening/support ships keep their fixed equipment; this gate controls
+# human research, technology awards and access in the ship designer.
+foc_v1716_republic_start_arsenal_allowed = {
+    OR = {
+        is_ai = yes
+        NOT = {
+            OR = {
+                has_origin = origin_foc_republic_unification
+                has_country_flag = foc_republic_origin_republic_country
+            }
+        }
+        foc_v15_kuat_expansion_really_completed = yes
+    }
+}

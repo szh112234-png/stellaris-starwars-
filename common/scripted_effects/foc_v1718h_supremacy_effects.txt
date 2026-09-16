@@ -1,0 +1,27 @@
+# Ship scope. Restore construction mode only from modules ALREADY installed.
+# Never grant modules, rebuild the ship, overwrite its design, or touch its colony.
+foc_v1718h_sync_supremacy_build_mode = {
+    if = {
+        limit = { foc_v1718h_is_supremacy_ship = yes exists = starbase }
+        starbase = {
+            if = {
+                limit = {
+                    OR = {
+                        has_starbase_module = sai_supremacy_arkship_beastport
+                        has_starbase_module = arkship_beastport
+                    }
+                }
+                set_ship_construction_type = starbase_beastport
+            }
+            else_if = {
+                limit = {
+                    OR = {
+                        has_starbase_module = sai_supremacy_arkship_engineering_bay
+                        has_starbase_module = arkship_engineering_bay
+                    }
+                }
+                set_ship_construction_type = starbase_shipyard
+            }
+        }
+    }
+}

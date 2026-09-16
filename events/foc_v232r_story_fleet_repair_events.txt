@@ -1,0 +1,297 @@
+namespace = foc_v232r
+
+country_event = {
+    id = foc_v232r.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_republic_origin_republic_country
+        has_global_flag = foc_republic_origin_separatist_war_active
+        has_country_flag = foc_saga_cw_coruscant_assault_launched
+    }
+    immediate = {
+        set_country_flag = foc_v232r_coruscant_poll_running
+        country_event = { id = foc_cw.3 }
+        if = {
+            limit = { NOT = { has_country_flag = foc_saga_cw_coruscant_shown } }
+            country_event = { id = foc_v232r.1 days = 7 }
+        }
+        else = { remove_country_flag = foc_v232r_coruscant_poll_running }
+    }
+}
+
+# One day after real Dooku death: appoint an actual surviving Grievous, never a renamed Dooku.
+country_event = {
+    id = foc_v232r.2
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        has_country_flag = foc_republic_origin_separatist_country
+        has_global_flag = foc_republic_origin_separatist_war_active
+        has_global_flag = foc_saga_dooku_dead
+    }
+    immediate = {
+        if = {
+            limit = { NOT = { has_global_flag = foc_saga_grievous_dead } }
+            foc_saga_grievous_becomes_cis_ruler = yes
+        }
+        else = {
+            remove_country_flag = foc_saga_grievous_cis_ruler
+            remove_modifier = foc_saga_grievous_command
+            # The dead ruler was removed on the previous day; normal succession is retained.
+        }
+    }
+}
+
+# Source-tracked old-save migration. Never infer an undocumented choice from its absence.
+country_event = {
+    id = foc_v232r.3
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_republic_origin_republic_country
+        has_global_flag = foc_republic_origin_separatist_war_active
+        NOT = { has_country_flag = foc_republic_origin_separatist_war_won }
+        NOT = { has_country_flag = foc_republic_origin_order_66_executed }
+        NOT = { has_country_flag = foc_v232r_plot_ledger_initialized }
+    }
+    immediate = {
+        set_country_flag = foc_v232r_plot_ledger_initialized
+        set_country_flag = foc_v232r_legacy_plot_migration
+        # A completed old bar is not a reason to skip the new battle requirements.
+        remove_country_flag = foc_republic_origin_palpatine_plot_complete
+        if = {
+            limit = { NOT = { any_situation = { is_situation_type = situation_foc_republic_origin_palpatine_plot } } }
+            start_situation = { type = situation_foc_republic_origin_palpatine_plot }
+        }
+        remove_country_flag = foc_v232o_separatist_surrender_offer_pending
+        if = { limit = { has_country_flag = foc_republic_origin_naboo_crisis_resolved } set_country_flag = foc_v232r_plot_naboo }
+        if = { limit = { has_country_flag = foc_republic_origin_clone_army_plan } set_country_flag = foc_v232r_plot_clone_army }
+        if = { limit = { has_country_flag = foc_republic_origin_kuat_investment_done } set_country_flag = foc_v232r_plot_kuat }
+        if = { limit = { has_country_flag = foc_saga_cw_coruscant_shown } set_country_flag = foc_v232r_plot_coruscant }
+        if = {
+            limit = { NOT = { has_country_flag = foc_v232r_plot_choice_12_done } has_country_flag = foc_republic_origin_combines_refused }
+            set_country_flag = foc_v232r_plot_choice_12_done
+        }
+        if = {
+            limit = { NOT = { has_country_flag = foc_v232r_plot_choice_13_done } has_country_flag = foc_republic_origin_military_act_passed }
+            set_country_flag = foc_v232r_plot_choice_13_done
+            set_country_flag = foc_v232r_plot_choice_13_favorable
+        }
+        if = {
+            limit = { NOT = { has_country_flag = foc_v232r_plot_choice_13_done } has_country_flag = foc_republic_origin_military_act_blocked }
+            set_country_flag = foc_v232r_plot_choice_13_done
+        }
+        if = {
+            limit = { NOT = { has_country_flag = foc_v232r_plot_choice_14_done } has_country_flag = foc_republic_origin_audit_pursued }
+            set_country_flag = foc_v232r_plot_choice_14_done
+        }
+        if = {
+            limit = { NOT = { has_country_flag = foc_v232r_plot_choice_15_done } has_country_flag = foc_republic_origin_emergency_powers_extended }
+            set_country_flag = foc_v232r_plot_choice_15_done
+            set_country_flag = foc_v232r_plot_choice_15_favorable
+        }
+        if = {
+            limit = { NOT = { has_country_flag = foc_v232r_plot_choice_15_done } has_country_flag = foc_republic_origin_emergency_powers_lapsed }
+            set_country_flag = foc_v232r_plot_choice_15_done
+        }
+        if = {
+            limit = { NOT = { has_country_flag = foc_v232r_plot_choice_8_done } has_country_flag = foc_republic_origin_jedi_investigation_refused }
+            set_country_flag = foc_v232r_plot_choice_8_done
+            set_country_flag = foc_v232r_plot_choice_8_favorable
+        }
+        if = {
+            limit = { NOT = { has_country_flag = foc_v232r_plot_choice_8_done } has_country_flag = foc_republic_origin_jedi_investigation_backed }
+            set_country_flag = foc_v232r_plot_choice_8_done
+        }
+        if = { limit = { NOT = { has_country_flag = foc_v232r_plot_choice_12_done } } country_event = { id = foc_v232r.112 days = 1 } }
+        if = { limit = { NOT = { has_country_flag = foc_v232r_plot_choice_13_done } } country_event = { id = foc_v232r.113 days = 2 } }
+        if = { limit = { NOT = { has_country_flag = foc_v232r_plot_choice_14_done } } country_event = { id = foc_v232r.114 days = 3 } }
+        if = { limit = { NOT = { has_country_flag = foc_v232r_plot_choice_15_done } } country_event = { id = foc_v232r.115 days = 4 } }
+        if = { limit = { NOT = { has_country_flag = foc_v232r_plot_choice_8_done } } country_event = { id = foc_v232r.108 days = 5 } }
+        foc_v232r_recalculate_plot = yes
+        log = "FOC_V232R_PLOT: legacy wartime score rebuilt from recorded decisions; undocumented choices require a score-only review." 
+    }
+}
+
+# V234: retired live-settings migration. Kept only for queued-event compatibility.
+country_event = {
+    id = foc_v232r.4
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { is_ai = no }
+    immediate = {
+        # V234: compatibility no-op for already queued legacy calls.
+        # Do not mutate live fleet settings on 4.4.6. New fleets receive their
+        # composition permissions in create_fleet.settings instead.
+    }
+}
+
+# One global monthly/load entry; no recurring chain per country outside the actual raid.
+event = {
+    id = foc_v232r.10
+    hide_window = yes
+    is_triggered_only = yes
+    immediate = {
+        every_country = {
+            if = {
+                limit = {
+                    foc_v197_republic_story_actor = yes
+                    has_country_flag = foc_republic_origin_republic_country
+                    has_global_flag = foc_republic_origin_separatist_war_active
+                    NOT = { has_country_flag = foc_republic_origin_separatist_war_won }
+                    NOT = { has_country_flag = foc_republic_origin_order_66_executed }
+                }
+                country_event = { id = foc_v232r.3 }
+                if = {
+                    limit = { has_country_flag = foc_v232r_plot_ledger_initialized }
+                    foc_v232r_recalculate_plot = yes
+                }
+                if = {
+                    limit = {
+                        has_country_flag = foc_saga_cw_coruscant_assault_launched
+                        NOT = { has_country_flag = foc_saga_cw_coruscant_shown }
+                        NOT = { has_country_flag = foc_v232r_coruscant_poll_running }
+                    }
+                    set_country_flag = foc_v232r_coruscant_poll_running
+                    country_event = { id = foc_v232r.1 days = 1 }
+                }
+                # Old .3 completion without true ruler death: kill the marked actor once.
+                if = {
+                    limit = {
+                        has_country_flag = foc_saga_cw_coruscant_shown
+                        NOT = { has_country_flag = foc_v232r_dooku_cleanup_checked }
+                    }
+                    set_country_flag = foc_v232r_dooku_cleanup_checked
+                    foc_v232r_kill_dooku_at_coruscant = yes
+                    every_country = {
+                        limit = { has_country_flag = foc_republic_origin_separatist_country }
+                        country_event = { id = foc_v232r.2 days = 1 }
+                    }
+                }
+            }
+        }
+    }
+}
+
+country_event = {
+    id = foc_v232r.112
+    title = foc_v232r.legacy_choice.name
+    desc = foc_v232r.legacy_choice_12.desc
+    picture = GFX_foc_sep_palpatine
+    is_triggered_only = yes
+    force_open = yes
+    trigger = {
+        has_country_flag = foc_v232r_legacy_plot_migration
+        has_global_flag = foc_republic_origin_separatist_war_active
+        NOT = { has_country_flag = foc_v232r_plot_choice_12_done }
+    }
+    option = {
+        name = foc_v232r.legacy_choice_12.a
+        ai_chance = { factor = 100 }
+        foc_v232r_plot_choice_12_a = yes
+    }
+    option = {
+        name = foc_v232r.legacy_choice_12.b
+        ai_chance = { factor = 0 }
+        foc_v232r_plot_choice_12_b = yes
+    }
+}
+
+country_event = {
+    id = foc_v232r.113
+    title = foc_v232r.legacy_choice.name
+    desc = foc_v232r.legacy_choice_13.desc
+    picture = GFX_foc_sep_palpatine
+    is_triggered_only = yes
+    force_open = yes
+    trigger = {
+        has_country_flag = foc_v232r_legacy_plot_migration
+        has_global_flag = foc_republic_origin_separatist_war_active
+        NOT = { has_country_flag = foc_v232r_plot_choice_13_done }
+    }
+    option = {
+        name = foc_v232r.legacy_choice_13.a
+        ai_chance = { factor = 100 }
+        foc_v232r_plot_choice_13_a = yes
+    }
+    option = {
+        name = foc_v232r.legacy_choice_13.b
+        ai_chance = { factor = 0 }
+        foc_v232r_plot_choice_13_b = yes
+    }
+}
+
+country_event = {
+    id = foc_v232r.114
+    title = foc_v232r.legacy_choice.name
+    desc = foc_v232r.legacy_choice_14.desc
+    picture = GFX_foc_sep_palpatine
+    is_triggered_only = yes
+    force_open = yes
+    trigger = {
+        has_country_flag = foc_v232r_legacy_plot_migration
+        has_global_flag = foc_republic_origin_separatist_war_active
+        NOT = { has_country_flag = foc_v232r_plot_choice_14_done }
+    }
+    option = {
+        name = foc_v232r.legacy_choice_14.a
+        ai_chance = { factor = 0 }
+        foc_v232r_plot_choice_14_a = yes
+    }
+    option = {
+        name = foc_v232r.legacy_choice_14.b
+        ai_chance = { factor = 100 }
+        foc_v232r_plot_choice_14_b = yes
+    }
+}
+
+country_event = {
+    id = foc_v232r.115
+    title = foc_v232r.legacy_choice.name
+    desc = foc_v232r.legacy_choice_15.desc
+    picture = GFX_foc_sep_palpatine
+    is_triggered_only = yes
+    force_open = yes
+    trigger = {
+        has_country_flag = foc_v232r_legacy_plot_migration
+        has_global_flag = foc_republic_origin_separatist_war_active
+        NOT = { has_country_flag = foc_v232r_plot_choice_15_done }
+    }
+    option = {
+        name = foc_v232r.legacy_choice_15.a
+        ai_chance = { factor = 100 }
+        foc_v232r_plot_choice_15_a = yes
+    }
+    option = {
+        name = foc_v232r.legacy_choice_15.b
+        ai_chance = { factor = 0 }
+        foc_v232r_plot_choice_15_b = yes
+    }
+}
+
+country_event = {
+    id = foc_v232r.108
+    title = foc_v232r.legacy_choice.name
+    desc = foc_v232r.legacy_choice_8.desc
+    picture = GFX_foc_sep_palpatine
+    is_triggered_only = yes
+    force_open = yes
+    trigger = {
+        has_country_flag = foc_v232r_legacy_plot_migration
+        has_global_flag = foc_republic_origin_separatist_war_active
+        NOT = { has_country_flag = foc_v232r_plot_choice_8_done }
+    }
+    option = {
+        name = foc_v232r.legacy_choice_8.a
+        ai_chance = { factor = 0 }
+        foc_v232r_plot_choice_8_a = yes
+    }
+    option = {
+        name = foc_v232r.legacy_choice_8.b
+        ai_chance = { factor = 100 }
+        foc_v232r_plot_choice_8_b = yes
+    }
+}

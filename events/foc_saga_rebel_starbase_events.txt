@@ -1,0 +1,104 @@
+namespace = foc_rebyard
+
+# =============================================================================
+# 义军 / 帝国叛军：补上造船基础设施
+# =============================================================================
+# 挂月脉冲，一次性旗标控制。对新开局和已经在跑的存档同样有效——后者读档后
+# 一个月内自动补上。
+#
+# 只升三座（首都一座星港级双船坞 + 两座星港单船坞），其余星系保持前哨站，
+# 与共和国那边 foc_republic_origin_establish_core_starbases 的取舍一致，
+# 不会因为遍地要塞把义军的维护费拖垮。
+# =============================================================================
+
+country_event = {
+    id = foc_rebyard.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        exists = event_target:foc_khan_rebel_alliance
+        is_same_value = event_target:foc_khan_rebel_alliance
+        NOT = { has_country_flag = foc_saga_rebel_yards_established }
+        any_owned_planet = { is_capital = yes }
+        OR = {
+            has_country_flag = foc_republic_origin_imperial_rebel_country
+            has_country_flag = foc_khan_rebel_alliance_country
+            has_country_flag = foc_republic_origin_rebel_alliance_country
+        }
+    }
+
+    immediate = {
+        foc_saga_establish_rebel_core_starbases = yes
+        if = {
+            limit = { is_ai = no }
+            country_event = { id = foc_rebyard.2 days = 1 }
+        }
+    }
+}
+
+country_event = {
+    id = foc_rebyard.2
+    title = foc_rebyard.2.name
+    desc = foc_rebyard.2.desc
+    picture = GFX_foc_saga_rebel_fleet
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        NOT = { has_country_flag = foc_saga_rebel_yard_notice_shown }
+    }
+
+    immediate = { set_country_flag = foc_saga_rebel_yard_notice_shown }
+
+    option = { name = foc_rebyard.2.a }
+}
+
+# =============================================================================
+# 叛军阶段的星云级：双死星覆灭 + 占领夸特
+# =============================================================================
+country_event = {
+    id = foc_rebyard.3
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        exists = event_target:foc_khan_rebel_alliance
+        is_same_value = event_target:foc_khan_rebel_alliance
+        NOT = { has_country_flag = foc_saga_rebel_nebula_granted }
+        has_global_flag = foc_republic_origin_both_death_stars_destroyed
+        # 夸特的环形船台必须真的在我们手上。
+        exists = event_target:foc_sw_kuat_system
+        event_target:foc_sw_kuat_system = {
+            exists = space_owner
+            space_owner = { is_same_value = root }
+        }
+    }
+
+    immediate = {
+        foc_saga_grant_rebel_nebula = yes
+        if = {
+            limit = { is_ai = no }
+            country_event = { id = foc_rebyard.4 days = 1 }
+        }
+    }
+}
+
+country_event = {
+    id = foc_rebyard.4
+    title = foc_rebyard.4.name
+    desc = foc_rebyard.4.desc
+    picture = GFX_foc_saga_kuat_yards
+    show_sound = event_ship_bridge
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        NOT = { has_country_flag = foc_saga_rebel_nebula_notice_shown }
+    }
+
+    immediate = { set_country_flag = foc_saga_rebel_nebula_notice_shown }
+
+    option = { name = foc_rebyard.4.a }
+}
+

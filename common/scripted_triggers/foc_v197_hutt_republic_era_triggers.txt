@@ -1,0 +1,20 @@
+# V197: events originally written for the human Republic may also advance the
+# dedicated AI Republic created for a playable-Hutt campaign. The marker stays
+# on the same country when it later becomes the Empire or successor Republic.
+foc_v197_republic_story_actor = {
+    OR = {
+        has_country_flag = foc_v197_hutt_era_ai_republic
+        AND = {
+            is_ai = no
+            OR = {
+                has_origin = origin_foc_republic_unification
+                has_country_flag = foc_republic_origin_republic_country
+                has_country_flag = foc_republic_origin_player_republic
+                has_country_flag = foc_republic_origin_player_empire
+                has_country_flag = foc_republic_origin_player_rebels
+                has_country_flag = foc_republic_origin_player_imperial_remnant
+                has_country_flag = foc_republic_origin_post_treaty_player_rebels
+            }
+        }
+    }
+}

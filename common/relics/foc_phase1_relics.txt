@@ -1,0 +1,203 @@
+@foc_phase1_relic_duration = 3600
+
+r_foc_malachor_memory_crystal = {
+    activation_duration = @foc_phase1_relic_duration
+    portrait = "GFX_foc_relic_malachor_memory_crystal"
+    can_be_stolen = yes
+    resources = { category = relics cost = { unity = 3000 } }
+    score = 2000
+    triggered_country_modifier = {
+        potential = { always = yes }
+        species_leader_exp_gain = 0.10
+        category_psionics_research_speed_mult = 0.10
+    }
+    active_effect = {
+        add_modifier = { modifier = foc_phase1_malachor_relic_triumph days = @foc_phase1_relic_duration }
+        add_resource = { unity = 5000 physics_research = 5000 }
+        hidden_effect = { add_modifier = { modifier = relic_activation_cooldown days = @foc_phase1_relic_duration } }
+    }
+    possible = { inline_script = { script = relics/activation_checks RELIC = r_foc_malachor_memory_crystal } }
+    ai_weight = { weight = 50 }
+}
+
+r_foc_scarif_cipher_core = {
+    activation_duration = @foc_phase1_relic_duration
+    portrait = "GFX_foc_relic_scarif_cipher_core"
+    can_be_stolen = yes
+    resources = { category = relics cost = { unity = 2500 } }
+    score = 1500
+    triggered_country_modifier = {
+        potential = { always = yes }
+        intel_decryption_add = 1
+        category_computing_research_speed_mult = 0.10
+    }
+    active_effect = {
+        add_modifier = { modifier = foc_phase1_scarif_relic_triumph days = @foc_phase1_relic_duration }
+        add_resource = { engineering_research = 5000 }
+        hidden_effect = { add_modifier = { modifier = relic_activation_cooldown days = @foc_phase1_relic_duration } }
+    }
+    possible = { inline_script = { script = relics/activation_checks RELIC = r_foc_scarif_cipher_core } }
+    ai_weight = { weight = 40 }
+}
+
+
+r_foc_ossus_jedi_archive = {
+    activation_duration = @foc_phase1_relic_duration
+    portrait = "GFX_foc_relic_ossus_jedi_archive"
+    can_be_stolen = yes
+    resources = { category = relics cost = { unity = 3000 } }
+    score = 1800
+    triggered_country_modifier = {
+        potential = { always = yes }
+        species_leader_exp_gain = 0.10
+        category_psionics_research_speed_mult = 0.08
+    }
+    active_effect = {
+        add_modifier = { modifier = foc_phase1_ossus_relic_triumph days = @foc_phase1_relic_duration }
+        add_resource = { unity = 5000 society_research = 5000 }
+        hidden_effect = { add_modifier = { modifier = relic_activation_cooldown days = @foc_phase1_relic_duration } }
+    }
+    possible = { inline_script = { script = relics/activation_checks RELIC = r_foc_ossus_jedi_archive } }
+    ai_weight = { weight = 50 }
+}
+
+r_foc_mandalore_clan_codex = {
+    activation_duration = @foc_phase1_relic_duration
+    portrait = "GFX_foc_relic_mandalore_clan_codex"
+    can_be_stolen = yes
+    resources = { category = relics cost = { unity = 3000 } }
+    score = 1800
+    triggered_country_modifier = {
+        potential = { always = yes }
+        army_damage_mult = 0.10
+        country_naval_cap_add = 25
+    }
+    active_effect = {
+        add_modifier = { modifier = foc_phase1_mandalore_relic_triumph days = @foc_phase1_relic_duration }
+        add_resource = { unity = 5000 alloys = 3000 }
+        hidden_effect = { add_modifier = { modifier = relic_activation_cooldown days = @foc_phase1_relic_duration } }
+    }
+    possible = { inline_script = { script = relics/activation_checks RELIC = r_foc_mandalore_clan_codex } }
+    ai_weight = { weight = 45 }
+}
+
+
+# V129 - recovered from the Ossus archive excavation.
+r_foc_ancient_jedi_lightsaber = {
+    activation_duration = @foc_phase1_relic_duration
+    portrait = "GFX_foc_relic_ancient_jedi_lightsaber"
+    can_be_stolen = yes
+    resources = { category = relics cost = { unity = 2500 } }
+    score = 1400
+
+    triggered_country_modifier = {
+        potential = { always = yes }
+        species_leader_exp_gain = 0.05
+        army_damage_mult = 0.05
+    }
+
+    active_effect = {
+        add_modifier = {
+            modifier = foc_phase1_lightsaber_relic_triumph
+            days = @foc_phase1_relic_duration
+        }
+        add_resource = {
+            unity = 4000
+            society_research = 3000
+        }
+        hidden_effect = {
+            add_modifier = {
+                modifier = relic_activation_cooldown
+                days = @foc_phase1_relic_duration
+            }
+        }
+    }
+
+    possible = {
+        inline_script = {
+            script = relics/activation_checks
+            RELIC = r_foc_ancient_jedi_lightsaber
+        }
+    }
+    ai_weight = { weight = 45 }
+}
+
+
+# V130 - Mandalorian political relic. It enters the story at Maul's seizure of Mandalore.
+r_foc_darksaber = {
+    activation_duration = @foc_phase1_relic_duration
+    portrait = "GFX_foc_relic_darksaber"
+    can_be_stolen = yes
+    resources = { category = relics cost = { unity = 3000 } }
+    score = 2200
+
+    triggered_country_modifier = {
+        potential = { always = yes }
+        army_damage_mult = 0.10
+        country_unity_produces_mult = 0.05
+        country_naval_cap_add = 25
+    }
+
+    active_effect = {
+        add_modifier = {
+            modifier = foc_phase1_darksaber_relic_triumph
+            days = @foc_phase1_relic_duration
+        }
+        add_resource = { unity = 5000 alloys = 2500 }
+        hidden_effect = {
+            add_modifier = {
+                modifier = relic_activation_cooldown
+                days = @foc_phase1_relic_duration
+            }
+        }
+    }
+
+    possible = {
+        inline_script = {
+            script = relics/activation_checks
+            RELIC = r_foc_darksaber
+        }
+    }
+    ai_weight = { weight = 55 }
+}
+
+# V130 - physical Sith navigation artifact. The first empire to decode the
+# project receives the relic; later empires may still decode their own route.
+r_foc_sith_wayfinder = {
+    activation_duration = @foc_phase1_relic_duration
+    portrait = "GFX_foc_relic_sith_wayfinder"
+    can_be_stolen = yes
+    resources = { category = relics cost = { unity = 3500 } }
+    score = 2400
+
+    triggered_country_modifier = {
+        potential = { always = yes }
+        intel_decryption_add = 2
+        ship_windup_mult = -0.15
+        ship_speed_mult = 0.03
+    }
+
+    active_effect = {
+        add_modifier = {
+            modifier = foc_phase1_sith_wayfinder_relic_triumph
+            days = @foc_phase1_relic_duration
+        }
+        add_resource = { physics_research = 5000 unity = 3500 }
+        add_seen_bypass_type = foc_sith_wayfinder
+        set_country_flag = foc_sith_wayfinder_route_known
+        hidden_effect = {
+            add_modifier = {
+                modifier = relic_activation_cooldown
+                days = @foc_phase1_relic_duration
+            }
+        }
+    }
+
+    possible = {
+        inline_script = {
+            script = relics/activation_checks
+            RELIC = r_foc_sith_wayfinder
+        }
+    }
+    ai_weight = { weight = 50 }
+}

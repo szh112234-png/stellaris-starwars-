@@ -1,0 +1,122 @@
+namespace = foc_thrawn
+
+# V232h: ordinary post-Endor/Treaty succession. The First Order origin has its
+# own opening route (.3), because that origin does not set the historical Treaty
+# flag required here. The two routes share appointment, sound and report guards.
+country_event = {
+    id = foc_thrawn.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_republic_origin_galactic_treaty
+        NOT = { has_global_flag = foc_khan_phase_one }
+        NOT = { has_global_flag = foc_khan_phase_two }
+        has_country_flag = foc_sw_imperial_remnant_country
+        NOT = { has_country_flag = foc_saga_thrawn_in_command }
+    }
+
+    immediate = {
+        foc_saga_thrawn_takes_command = yes
+        if = {
+            limit = { has_country_flag = foc_v232h_thrawn_command_initialized }
+            every_playable_country = {
+                limit = { is_ai = no }
+                foc_v232h_queue_thrawn_return_report = yes
+            }
+        }
+    }
+}
+
+# Existing return story and localisation, now with the user's complete speech.
+# show_sound belongs to this visible event, not to the hidden AI appointment.
+country_event = {
+    id = foc_thrawn.2
+    title = foc_thrawn.2.name
+    desc = foc_thrawn.2.desc
+    picture = GFX_foc_saga_thrawn
+    show_sound = foc_v232h_thrawn_return_speech
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        is_ai = no
+        has_global_flag = foc_saga_thrawn_leads_the_remnant
+        NOT = { has_country_flag = foc_saga_thrawn_report_shown }
+    }
+
+    immediate = {
+        remove_country_flag = foc_v232h_thrawn_report_pending
+        set_country_flag = foc_saga_thrawn_report_shown
+        log = "FOC_V232H_THRAWN: visible return story delivered; the event uses the custom speech sound."
+    }
+
+    option = { name = foc_thrawn.2.a }
+}
+
+# First Order OPENING: dispatched in the final map-bootstrap/UI-safe block, after
+# the successor states, extra species and Ilum relocation all exist. A monthly
+# once-only fallback also covers already-started G saves; it stops after success.
+# No Treaty, Starkiller completion, public crisis or 24/29-year wait is required.
+country_event = {
+    id = foc_thrawn.3
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        has_origin = origin_fop_first_order
+        has_country_flag = fop_first_order_origin_initialized
+        has_country_flag = fop_origin_relocated_to_ilum
+        has_global_flag = foc_sw_fallen_empires_ready
+        NOT = { has_country_flag = fop_origin_crisis_active }
+        NOT = { has_country_flag = fop_player_final_order }
+        NOT = { has_country_flag = foc_v232h_thrawn_opening_done }
+        any_country = {
+            has_country_flag = foc_sw_imperial_remnant_country
+            NOT = { has_origin = origin_fop_first_order }
+            NOR = {
+                has_country_flag = fop_player_first_order
+                has_country_flag = fop_player_final_order
+                has_country_flag = foc_khan_first_order_country
+                has_country_flag = foc_khan_final_order_country
+            }
+        }
+    }
+
+    immediate = {
+        log = "FOC_V232H_THRAWN: First Order opening route reached; appointing the Remnant leader."
+        random_country = {
+            limit = {
+                has_country_flag = foc_sw_imperial_remnant_country
+                NOT = { has_origin = origin_fop_first_order }
+                NOR = {
+                    has_country_flag = fop_player_first_order
+                    has_country_flag = fop_player_final_order
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = foc_khan_final_order_country
+                }
+            }
+            save_event_target_as = foc_v232h_opening_remnant
+            foc_saga_thrawn_takes_command = yes
+        }
+        if = {
+            limit = { exists = event_target:foc_v232h_opening_remnant }
+            if = {
+                limit = {
+                    event_target:foc_v232h_opening_remnant = { exists = ruler }
+                }
+                if = {
+                    limit = {
+                        event_target:foc_v232h_opening_remnant = {
+                            ruler = { has_leader_flag = foc_saga_thrawn_leader }
+                        }
+                    }
+                    set_country_flag = foc_v232h_thrawn_opening_done
+                    foc_v232h_queue_thrawn_return_report = yes
+                    log = "FOC_V232H_THRAWN: First Order opening completed; only the Remnant ruler was changed."
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,142 @@
+namespace = foc_v187_species
+
+country_event = {
+    id = foc_v187_species.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = { is_ai = no }
+
+    immediate = {
+        country_event = { id = foc_v187_species.2 }
+    }
+}
+
+country_event = {
+    id = foc_v187_species.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        NOT = { has_global_flag = foc_v187_additional_species_initialized }
+        any_system = { has_star_flag = foc_sw_coruscant_home }
+    }
+
+    immediate = {
+        set_global_flag = foc_v187_additional_species_initialized
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_ryloth_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_swmap_ryloth }
+                foc_v187_seed_twilek = yes
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_v175_bothawui_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_v175_bothawui }
+                foc_v187_seed_bothan = yes
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_cato_neimoidia_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_swmap_cato_neimoidia }
+                foc_v187_seed_neimoidian = yes
+                foc_v187_seed_skakoan = yes
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_nal_hutta_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_swmap_nal_hutta }
+                foc_v187_seed_hutt = yes
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_v175_nar_shaddaa_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_v175_nar_shaddaa }
+                foc_v187_add_hutt_diaspora = yes
+                foc_v187_seed_rodian = yes
+                foc_v187_seed_zeltron = yes
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_moraband_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_swmap_moraband }
+                foc_v187_seed_sith = yes
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_dathomir_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_swmap_dathomir }
+                foc_v187_seed_zabrak = yes
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_sw_yaga_minor_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_yaga_minor }
+                foc_v187_seed_chiss = yes
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_sw_coruscant_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_sw_coruscant }
+                foc_v187_seed_duros = yes
+                foc_v187_seed_togruta = yes
+                foc_v187_seed_kel_dor = yes
+                foc_v187_seed_korunnai = yes
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_v175_dantooine_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_v175_dantooine }
+                foc_v187_seed_echani = yes
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_v175_taris_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_v175_taris }
+                foc_v187_seed_arkanian = yes
+                foc_v187_seed_arkanian_offshoot = yes
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_jedha_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_swmap_jedha }
+                foc_v187_seed_chalactan = yes
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_v175_carida_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_v175_carida }
+                foc_v187_seed_thyrsian = yes
+            }
+        }
+
+        log = "FOC_V187_SPECIES: 19 missing biological species and 27 additive population groups initialized once; legacy FOC species unchanged."
+    }
+}

@@ -1,0 +1,108 @@
+namespace = foc_v160_player_fo
+
+# Player-only five-year War-in-Heaven stage. The ordinary NPC First Order crisis
+# remains owned by foc_fallen_war.71 -> foc_khan.2 and is intentionally untouched.
+country_event = {
+    id = foc_v160_player_fo.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        has_global_flag = foc_sw_war_in_heaven_started
+        has_global_flag = foc_v112_treaty_wih_five_year_watch
+        NOT = { has_global_flag = foc_v112_treaty_wih_five_year_grace }
+        NOT = { has_country_flag = foc_v160_player_fo_five_year_stage_done }
+        OR = {
+            has_origin = origin_fop_first_order
+            AND = {
+                OR = {
+                    has_country_flag = foc_republic_origin_player_imperial_remnant
+                    has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+                }
+                has_country_flag = foc_republic_origin_first_order_plan_completed
+            }
+        }
+    }
+
+    immediate = {
+        set_country_flag = foc_v160_player_fo_five_year_stage_done
+        set_global_flag = fop_origin_replaces_first_order_crisis
+        set_global_flag = foc_khan_crisis_disabled
+        remove_global_flag = foc_khan_crisis_spawn_scheduled
+
+        if = {
+            limit = { has_origin = origin_fop_first_order }
+            set_country_flag = fop_origin_public_emergence
+            country_event = { id = foc_v160_player_fo.2 }
+            country_event = { id = foc_kylo.10 days = 1 }
+            log = "FOC_V185_PLAYER_FO: playable First Order reached its historical public-emergence point; Imperial Remnant absorption is now tied to Starkiller completion, while crisis status is tied to the first real shot."
+        }
+        else = {
+            foc_v160_promote_player_remnant_to_first_order = yes
+        }
+
+        # If the player somehow fired Starkiller before public emergence, the
+        # stored real-impact flag may now activate the crisis path.
+        if = {
+            limit = { has_country_flag = fop_origin_starkiller_first_real_impact }
+            country_event = { id = fop_origin.20 days = 1 }
+        }
+    }
+}
+
+# V185 dedicated First Order origin: absorb the separate AI Imperial Remnant
+# as soon as Starkiller Base is physically complete. Public emergence and crisis
+# status still wait for the first real shot.
+country_event = {
+    id = foc_v160_player_fo.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        has_origin = origin_fop_first_order
+        foc_khan_owns_completed_starkiller = yes
+        NOT = { has_global_flag = fop_origin_imperial_remnant_annexed }
+    }
+
+    immediate = {
+        if = {
+            limit = { NOT = { exists = event_target:foc_sw_imperial_remnant } }
+            random_country = {
+                limit = {
+                    has_country_flag = foc_sw_imperial_remnant_country
+                    NOT = { is_same_value = root }
+                }
+                save_global_event_target_as = foc_sw_imperial_remnant
+            }
+        }
+
+        if = {
+            limit = {
+                exists = event_target:foc_sw_imperial_remnant
+                event_target:foc_sw_imperial_remnant = { NOT = { is_same_value = root } }
+            }
+            event_target:foc_sw_imperial_remnant = {
+                every_owned_megastructure = { set_owner = root }
+                every_owned_fleet = {
+                    remove_fleet_flag = foc_sw_imperial_remnant_isd_fleet
+                    remove_fleet_flag = foc_sw_imperial_executor_fleet
+                    remove_fleet_flag = foc_sw_imperial_remnant_defense_platform
+                    set_owner = root
+                }
+                every_owned_starbase = { set_owner = root }
+                every_owned_planet = { set_owner = root }
+                set_country_flag = foc_sw_absorbed_by_first_order
+                destroy_country = yes
+            }
+            set_global_flag = foc_sw_imperial_remnant_absorbed_by_first_order
+            set_global_flag = fop_origin_imperial_remnant_annexed
+            if = { limit = { exists = event_target:foc_sw_imperial_remnant } clear_global_event_target = foc_sw_imperial_remnant }
+            foc_sw_configure_bilbringi_shipyard_ring = yes
+        }
+        else = {
+            set_global_flag = fop_origin_imperial_remnant_annexed
+        }
+    }
+}

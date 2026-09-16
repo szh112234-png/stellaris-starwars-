@@ -1,0 +1,232 @@
+# V232n: new-system entitlements and both payout choices end at Death Star II loss.
+# V232i: Imperial Rebel conquest rewards.
+# First scan records existing systems without granting starting rewards.
+# Thereafter each newly controlled inhabited system grants one entitlement;
+# empty systems are recorded without rewards; losing/retaking a system cannot farm rewards.
+# A: exactly 20 fixed-design MC80s. B: 29,800 alloys + another -5% ship upkeep.
+# Source alloy cost per reward MC80 LINE: 700 bare hull + 390 ordinary weapons + 360 hangars + 40 command component = 1490; 20 ships = 29800 alloys.
+# Player entitlements are queued; AI receives 20 ships immediately.
+
+foc_saga_count_rebel_systems = {
+    # Compatibility shim: old callers can still invoke this helper safely.
+    set_variable = { which = foc_saga_rebel_systems_now value = 0 }
+    every_system = {
+        limit = {
+            exists = space_owner
+            space_owner = { is_same_value = event_target:foc_khan_rebel_alliance }
+        }
+        event_target:foc_khan_rebel_alliance = {
+            change_variable = { which = foc_saga_rebel_systems_now value = 1 }
+        }
+    }
+}
+
+# 星系作用域。V204 的征服奖励舰队严格由 20 艘 MC80 组成；不带
+# MC30、CR90 或其他护航舰，也不修改开局八支战斗群和年度支援。
+foc_v204_spawn_rebel_conquest_20_mc80_fleet = {
+    if = {
+        limit = { exists = event_target:foc_khan_rebel_alliance event_target:foc_khan_rebel_alliance = { foc_v232n_rebel_conquest_rewards_active = yes } }
+        create_fleet = {
+            name = "FOC_REPUBLIC_ORIGIN_REBEL_LINE_FLEET"
+            settings = {
+                can_upgrade = no
+                can_disband = yes
+                can_change_composition = no
+                spawn_debris = yes
+                ai_ignore_strength = yes
+            }
+            effect = {
+                set_owner = event_target:foc_khan_rebel_alliance
+                # V15 full-armor prerequisite: foc_v15_defense_eb0ae441d37a.
+                owner = {
+                    if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+                }
+                
+                # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+}
+                
+
+                
+
+                
+                if = {
+                    limit = { has_global_flag = foc_khan_strength_lowest }
+                    while = {
+                        count = 20
+                        create_ship = {
+                            name = random
+                            design = "NAME_FOC_REBEL_MC80_LINE_FOC_LOWEST"
+                            graphical_culture = rebel_01
+                            upgradable = no
+                            fleet_cache_recalc = yes
+                        }
+                    }
+                }
+                else = {
+                    while = {
+                        count = 20
+                        create_ship = {
+                            name = random
+                            design = "NAME_FOC_REBEL_MC80_LINE"
+                            graphical_culture = rebel_01
+                            upgradable = no
+                            fleet_cache_recalc = yes
+                        }
+                    }
+                }
+                set_location = { target = prev distance = 45 angle = random }
+                set_aggro_range_measure_from = self
+                set_aggro_range = 9999
+                set_formation_scale = 2
+                set_fleet_flag = foc_republic_origin_rebellion_fleet
+                set_fleet_flag = foc_v202_rebel_conquest_mc80_fleet
+            }
+        }
+    }
+}
+
+# 国家作用域（帝国叛军）。新的 20 艘 MC80 舰队优先落在还没有义军舰队的
+# 己方星系——也就是刚打下来的前线——找不到就落在首都。
+foc_saga_spawn_rebel_conquest_fleet = {
+    if = {
+        limit = { foc_v232n_rebel_conquest_rewards_active = yes }
+        foc_story_grant_imperial_rebel_mc80_design = yes
+        if = {
+            limit = {
+                any_system = {
+                    exists = space_owner
+                    space_owner = { is_same_value = event_target:foc_khan_rebel_alliance }
+                    NOT = {
+                        any_fleet_in_system = {
+                            exists = owner
+                            owner = { is_same_value = event_target:foc_khan_rebel_alliance }
+                            has_fleet_flag = foc_republic_origin_rebellion_fleet
+                        }
+                    }
+                }
+            }
+            random_system = {
+                limit = {
+                    exists = space_owner
+                    space_owner = { is_same_value = event_target:foc_khan_rebel_alliance }
+                    NOT = {
+                        any_fleet_in_system = {
+                            exists = owner
+                            owner = { is_same_value = event_target:foc_khan_rebel_alliance }
+                            has_fleet_flag = foc_republic_origin_rebellion_fleet
+                        }
+                    }
+                }
+                foc_v204_spawn_rebel_conquest_20_mc80_fleet = yes
+            }
+        }
+        else_if = {
+            limit = { any_owned_planet = { is_capital = yes } }
+            random_owned_planet = {
+                limit = { is_capital = yes }
+                solar_system = {
+                    foc_v204_spawn_rebel_conquest_20_mc80_fleet = yes
+                }
+            }
+        }
+    }
+}
+
+# 国家作用域（帝国叛军）。每个符合条件的“资源选项”额外叠加 5% 舰队维护费
+# 减免，资源改为完整设计基础造价 29800 合金。这里用累计次数缩放，不依赖同名 modifier 是否
+# 能重复叠加，保证每次选择都确实再减 5%。
+foc_v214_grant_rebel_colony_logistics_reward = {
+    if = {
+        limit = { foc_v232n_rebel_conquest_rewards_active = yes }
+        add_resource = { alloys = 29800 }
+        if = {
+            limit = { NOT = { is_variable_set = foc_v214_rebel_colony_logistics_stacks } }
+            set_variable = { which = foc_v214_rebel_colony_logistics_stacks value = 0 }
+        }
+        change_variable = { which = foc_v214_rebel_colony_logistics_stacks value = 1 }
+        foc_v214_refresh_rebel_colony_logistics_modifier = yes
+    }
+}
+
+# 国家作用域（帝国叛军）。每新增一个“有殖民星球”的星系只结算一次奖励：
+# AI 固定获得一支严格由 20 艘 MC80 组成的舰队；玩家仍可在 20 艘 MC80 与
+# “29800 合金 + 每次再叠加 5% 舰队维护费减免”之间选择。
+foc_v202_grant_rebel_conquest_reward = {
+    if = {
+        limit = { foc_v232n_rebel_conquest_rewards_active = yes }
+        if = {
+            limit = { is_ai = yes }
+            foc_saga_spawn_rebel_conquest_fleet = yes
+        }
+        else = {
+            if = {
+                limit = { NOT = { is_variable_set = foc_v232i_pending_conquest_rewards } }
+                set_variable = { which = foc_v232i_pending_conquest_rewards value = 0 }
+            }
+            change_variable = { which = foc_v232i_pending_conquest_rewards value = 1 }
+        }
+        country_event = { id = foc_rebel_growth.4 }
+    }
+}
+
+# 国家作用域（帝国叛军）。V214 按“星系本身”结算，而不是按净星系数。
+foc_saga_rebel_conquest_reinforcement = {
+    if = {
+        limit = { foc_v232n_rebel_conquest_rewards_active = yes }
+        if = {
+            limit = { NOT = { is_variable_set = foc_v232i_pending_conquest_rewards } }
+            set_variable = { which = foc_v232i_pending_conquest_rewards value = 0 }
+        }
+        if = {
+            limit = { NOT = { has_country_flag = foc_saga_rebel_conquest_tracker_ready } }
+            set_country_flag = foc_saga_rebel_conquest_tracker_ready
+            # 首次运行：当前所有控制区都视为历史领土，只登记不补发。
+            every_system = {
+                limit = {
+                    exists = space_owner
+                    space_owner = { is_same_value = event_target:foc_khan_rebel_alliance }
+                    NOT = { has_star_flag = foc_v214_rebel_conquest_reward_processed }
+                }
+                set_star_flag = foc_v214_rebel_conquest_reward_processed
+            }
+        }
+        else = {
+            every_system = {
+                limit = {
+                    exists = space_owner
+                    space_owner = { is_same_value = event_target:foc_khan_rebel_alliance }
+                    NOT = { has_star_flag = foc_v214_rebel_conquest_reward_processed }
+                }
+                # 无殖民星球：明确什么都不给，但仍写入一次性标记，防止以后
+                # 玩家在这里自行殖民时被错误当成“新占领殖民星系”。
+                if = {
+                    limit = { any_system_planet = { is_colony = yes } }
+                    event_target:foc_khan_rebel_alliance = {
+                        # V219: inline the one-step AI/player branch here. The old
+                        # helper added a fifth nested scripted-effect layer and hit
+                        # Stellaris' post-init recursion ceiling. Gameplay is unchanged.
+                        if = {
+                            limit = { is_ai = yes }
+                            foc_saga_spawn_rebel_conquest_fleet = yes
+                        }
+                        else = {
+                            if = {
+                                limit = { NOT = { is_variable_set = foc_v232i_pending_conquest_rewards } }
+                                set_variable = { which = foc_v232i_pending_conquest_rewards value = 0 }
+                            }
+                            change_variable = { which = foc_v232i_pending_conquest_rewards value = 1 }
+                        }
+                    }
+                }
+                set_star_flag = foc_v214_rebel_conquest_reward_processed
+            }
+        }
+        country_event = { id = foc_rebel_growth.4 }
+    }
+}

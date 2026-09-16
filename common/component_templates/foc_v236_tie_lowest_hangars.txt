@@ -1,0 +1,4751 @@
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_REMOTE_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size1_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = 0
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_REMOTE_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  
+  is_ship_size = ssp_remote_strike_carrier
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   OR = {
+    has_country_flag = ssp_size_original
+    NOR = {
+     has_country_flag = ssp_size_original
+     has_country_flag = ssp_size_2x
+     has_country_flag = ssp_size_5x
+     has_country_flag = ssp_size_10x
+    }
+   }
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ai_weight = { weight = 10 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_REMOTE_SIZE2_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size2_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = 0
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_REMOTE_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  
+  is_ship_size = ssp_remote_strike_carrier
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_2x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ai_weight = { weight = 10 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_REMOTE_SIZE5_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size5_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = 0
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_REMOTE_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  
+  is_ship_size = ssp_remote_strike_carrier
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_5x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ai_weight = { weight = 10 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_REMOTE_SIZE10_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size10_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = 0
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_REMOTE_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  
+  is_ship_size = ssp_remote_strike_carrier
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_10x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ai_weight = { weight = 10 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_01_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size1_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_01_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   OR = {
+    has_country_flag = ssp_size_original
+    NOR = {
+     has_country_flag = ssp_size_original
+     has_country_flag = ssp_size_2x
+     has_country_flag = ssp_size_5x
+     has_country_flag = ssp_size_10x
+    }
+   }
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_01_SIZE2_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size2_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_01_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_2x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_01_SIZE5_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size5_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_01_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_5x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_01_SIZE10_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size10_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_01_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_10x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_02_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size1_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_02_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   OR = {
+    has_country_flag = ssp_size_original
+    NOR = {
+     has_country_flag = ssp_size_original
+     has_country_flag = ssp_size_2x
+     has_country_flag = ssp_size_5x
+     has_country_flag = ssp_size_10x
+    }
+   }
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_02_SIZE2_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size2_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_02_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_2x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_02_SIZE5_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size5_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_02_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_5x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_02_SIZE10_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size10_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_02_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_10x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_03_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size1_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_03_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   OR = {
+    has_country_flag = ssp_size_original
+    NOR = {
+     has_country_flag = ssp_size_original
+     has_country_flag = ssp_size_2x
+     has_country_flag = ssp_size_5x
+     has_country_flag = ssp_size_10x
+    }
+   }
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_03_SIZE2_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size2_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_03_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_2x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_03_SIZE5_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size5_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_03_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_5x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_03_SIZE10_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size10_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_03_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_10x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_04_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size1_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_04_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   OR = {
+    has_country_flag = ssp_size_original
+    NOR = {
+     has_country_flag = ssp_size_original
+     has_country_flag = ssp_size_2x
+     has_country_flag = ssp_size_5x
+     has_country_flag = ssp_size_10x
+    }
+   }
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_04_SIZE2_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size2_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_04_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_2x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_04_SIZE5_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size5_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_04_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_5x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_04_SIZE10_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size10_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_04_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_10x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_05_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size1_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_05_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   OR = {
+    has_country_flag = ssp_size_original
+    NOR = {
+     has_country_flag = ssp_size_original
+     has_country_flag = ssp_size_2x
+     has_country_flag = ssp_size_5x
+     has_country_flag = ssp_size_10x
+    }
+   }
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_05_SIZE2_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size2_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_05_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_2x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_05_SIZE5_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size5_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_05_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_5x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_05_SIZE10_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size10_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_05_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_10x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_06_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size1_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_06_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   OR = {
+    has_country_flag = ssp_size_original
+    NOR = {
+     has_country_flag = ssp_size_original
+     has_country_flag = ssp_size_2x
+     has_country_flag = ssp_size_5x
+     has_country_flag = ssp_size_10x
+    }
+   }
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_06_SIZE2_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size2_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_06_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_2x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_06_SIZE5_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size5_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_06_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_5x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_06_SIZE10_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size10_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_06_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_10x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_07_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size1_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_07_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   OR = {
+    has_country_flag = ssp_size_original
+    NOR = {
+     has_country_flag = ssp_size_original
+     has_country_flag = ssp_size_2x
+     has_country_flag = ssp_size_5x
+     has_country_flag = ssp_size_10x
+    }
+   }
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_07_SIZE2_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size2_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_07_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_2x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_07_SIZE5_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size5_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_07_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_5x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_07_SIZE10_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size10_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_07_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_10x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_08_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size1_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_08_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   OR = {
+    has_country_flag = ssp_size_original
+    NOR = {
+     has_country_flag = ssp_size_original
+     has_country_flag = ssp_size_2x
+     has_country_flag = ssp_size_5x
+     has_country_flag = ssp_size_10x
+    }
+   }
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_08_SIZE2_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size2_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_08_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_2x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_08_SIZE5_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size5_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_08_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_5x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_08_SIZE10_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size10_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_08_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_10x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_09_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size1_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_09_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   OR = {
+    has_country_flag = ssp_size_original
+    NOR = {
+     has_country_flag = ssp_size_original
+     has_country_flag = ssp_size_2x
+     has_country_flag = ssp_size_5x
+     has_country_flag = ssp_size_10x
+    }
+   }
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_09_SIZE2_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size2_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_09_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_2x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_09_SIZE5_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size5_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_09_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_5x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_09_SIZE10_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size10_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_09_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_10x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_10_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size1_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_10_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   OR = {
+    has_country_flag = ssp_size_original
+    NOR = {
+     has_country_flag = ssp_size_original
+     has_country_flag = ssp_size_2x
+     has_country_flag = ssp_size_5x
+     has_country_flag = ssp_size_10x
+    }
+   }
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_10_SIZE2_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size2_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_10_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_2x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_10_SIZE5_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size5_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_10_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_5x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_10_SIZE10_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size10_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_10_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_10x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_11_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size1_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_11_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   OR = {
+    has_country_flag = ssp_size_original
+    NOR = {
+     has_country_flag = ssp_size_original
+     has_country_flag = ssp_size_2x
+     has_country_flag = ssp_size_5x
+     has_country_flag = ssp_size_10x
+    }
+   }
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_11_SIZE2_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size2_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_11_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_2x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_11_SIZE5_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size5_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_11_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_5x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_11_SIZE10_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size10_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_11_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_10x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_12_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size1_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_12_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   OR = {
+    has_country_flag = ssp_size_original
+    NOR = {
+     has_country_flag = ssp_size_original
+     has_country_flag = ssp_size_2x
+     has_country_flag = ssp_size_5x
+     has_country_flag = ssp_size_10x
+    }
+   }
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_12_SIZE2_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size2_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_12_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_2x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_12_SIZE5_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size5_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_12_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_5x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_12_SIZE10_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size10_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_12_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_10x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_13_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size1_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_13_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   OR = {
+    has_country_flag = ssp_size_original
+    NOR = {
+     has_country_flag = ssp_size_original
+     has_country_flag = ssp_size_2x
+     has_country_flag = ssp_size_5x
+     has_country_flag = ssp_size_10x
+    }
+   }
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_13_SIZE2_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size2_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_13_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_2x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_13_SIZE5_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size5_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_13_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_5x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_13_SIZE10_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size10_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_13_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_10x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_14_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size1_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_14_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   OR = {
+    has_country_flag = ssp_size_original
+    NOR = {
+     has_country_flag = ssp_size_original
+     has_country_flag = ssp_size_2x
+     has_country_flag = ssp_size_5x
+     has_country_flag = ssp_size_10x
+    }
+   }
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_14_SIZE2_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size2_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_14_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_2x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_14_SIZE5_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size5_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_14_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_5x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_14_SIZE10_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size10_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_14_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_10x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_15_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size1_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_15_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   OR = {
+    has_country_flag = ssp_size_original
+    NOR = {
+     has_country_flag = ssp_size_original
+     has_country_flag = ssp_size_2x
+     has_country_flag = ssp_size_5x
+     has_country_flag = ssp_size_10x
+    }
+   }
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_15_SIZE2_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size2_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_15_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_2x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_15_SIZE5_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size5_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_15_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_5x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_15_SIZE10_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size10_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_15_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_10x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_16_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size1_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_16_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   OR = {
+    has_country_flag = ssp_size_original
+    NOR = {
+     has_country_flag = ssp_size_original
+     has_country_flag = ssp_size_2x
+     has_country_flag = ssp_size_5x
+     has_country_flag = ssp_size_10x
+    }
+   }
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_16_SIZE2_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size2_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_16_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_2x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_16_SIZE5_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size5_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_16_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_5x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+
+strike_craft_component_template = {
+ key = "SSP_IMPERIAL_DEFENDER_HANGAR_16_SIZE10_LOWEST"
+ size = LARGE
+ entity = "foc_tie_size10_entity"
+ weapon_type = point_defence
+ projectile_gfx = "strike_craft_laser_3"
+ power = -60
+ resources = { category = ship_components cost = { alloys = 90 
+            sr_tibanna_swgs = 8
+        } upkeep = { energy = 2 alloys = 1 } }
+ count = 12
+ regeneration_per_day = 0.05
+ custom_tooltip = FOC_STRATEGIC_NO_COMBAT_REGEN_DESC
+ launch_time = 2
+ damage = { min = 5.333333333 max = 8 }
+ cooldown = 2.6
+ attack_range = 15
+ range = 15
+ engagement_range = 12000
+ accuracy = 1.0
+ tracking = 1.0
+ health = 38
+ armor = 20
+ shield = 32
+ evasion = 0.92
+ speed = 1150
+ rotation_speed = 0.8
+ acceleration = 0.9
+ shield_penetration = 0
+ armor_penetration = 0
+ shield_damage = 0.5
+ armor_damage = 0.5
+ hull_damage = 1.0
+ ship_behavior = "fighters_behavior"
+ icon = "GFX_ship_part_ssp_imperial_defender"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_DEFENDER_16_SET"
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ tags = { weapon_type_strike_craft }
+ potential = {
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  
+  NOT = { is_ship_size = ssp_remote_strike_carrier }
+  from = {
+   OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+
+   has_country_flag = ssp_size_10x
+  }
+ 
+ has_global_flag = foc_khan_strength_lowest
+ 
+ from = { NOT = { foc_v236_has_cis_aircraft_identity = yes } }
+ 
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+
+        from = { foc_v1718_allowed_country = yes }
+    }
+ ship_limit = 1
+ ai_weight = { weight = 1000 }
+ point_defence_targets = { "strike_craft" "missile" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}

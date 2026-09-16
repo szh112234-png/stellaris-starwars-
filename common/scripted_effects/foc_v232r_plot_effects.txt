@@ -1,0 +1,128 @@
+# Country scope. Only Republic-era points are recalculated; post-war closure is unchanged.
+foc_v232r_recalculate_plot = {
+    if = {
+        limit = {
+            foc_v197_republic_story_actor = yes
+            has_country_flag = foc_republic_origin_republic_country
+            NOT = { has_country_flag = foc_republic_origin_separatist_war_won }
+            NOT = { has_country_flag = foc_republic_origin_order_66_executed }
+        }
+        set_variable = { which = foc_v232r_plot_score value = 0 }
+        if = { limit = { has_country_flag = foc_v232r_plot_choice_12_favorable } change_variable = { which = foc_v232r_plot_score value = 20 } }
+        if = { limit = { has_country_flag = foc_v232r_plot_choice_13_favorable } change_variable = { which = foc_v232r_plot_score value = 20 } }
+        if = { limit = { has_country_flag = foc_v232r_plot_choice_14_favorable } change_variable = { which = foc_v232r_plot_score value = 20 } }
+        if = { limit = { has_country_flag = foc_v232r_plot_choice_15_favorable } change_variable = { which = foc_v232r_plot_score value = 20 } }
+        if = { limit = { has_country_flag = foc_v232r_plot_choice_8_favorable } change_variable = { which = foc_v232r_plot_score value = 20 } }
+        if = { limit = { has_country_flag = foc_v232r_plot_naboo } change_variable = { which = foc_v232r_plot_score value = 10 } }
+        if = { limit = { has_country_flag = foc_v232r_plot_clone_army } change_variable = { which = foc_v232r_plot_score value = 10 } }
+        if = { limit = { has_country_flag = foc_v232r_plot_kuat } change_variable = { which = foc_v232r_plot_score value = 10 } }
+        if = { limit = { has_country_flag = foc_v232r_plot_coruscant } change_variable = { which = foc_v232r_plot_score value = 10 } }
+        every_situation = {
+            limit = { is_situation_type = situation_foc_republic_origin_palpatine_plot }
+            export_trigger_value_to_variable = { trigger = situation_progress variable = foc_v232r_old_plot_progress }
+            set_variable = { which = foc_v232r_plot_delta value = owner.foc_v232r_plot_score }
+            subtract_variable = { which = foc_v232r_plot_delta value = foc_v232r_old_plot_progress }
+            add_situation_progress = foc_v232r_plot_delta
+            clear_variable = foc_v232r_old_plot_progress
+            clear_variable = foc_v232r_plot_delta
+        }
+        if = {
+            limit = { check_variable = { which = foc_v232r_plot_score value >= 140 } }
+            set_global_flag = foc_v209_cis_reinforcement_cutoff
+            set_country_flag = foc_republic_origin_order_66_pending
+        }
+        else = {
+            remove_global_flag = foc_v209_cis_reinforcement_cutoff
+            remove_country_flag = foc_republic_origin_order_66_pending
+        }
+        if = {
+            limit = { has_global_flag = foc_republic_origin_separatist_war_active }
+            country_event = { id = foc_republic_origin.19 days = 1 }
+        }
+    }
+}
+
+foc_v232r_plot_choice_12_a = {
+    if = {
+        limit = { NOT = { has_country_flag = foc_v232r_plot_choice_12_done } }
+        set_country_flag = foc_v232r_plot_choice_12_done
+        set_country_flag = foc_v232r_plot_choice_12_favorable
+        foc_v232r_recalculate_plot = yes
+    }
+}
+
+foc_v232r_plot_choice_12_b = {
+    if = {
+        limit = { NOT = { has_country_flag = foc_v232r_plot_choice_12_done } }
+        set_country_flag = foc_v232r_plot_choice_12_done
+        foc_v232r_recalculate_plot = yes
+    }
+}
+
+foc_v232r_plot_choice_13_a = {
+    if = {
+        limit = { NOT = { has_country_flag = foc_v232r_plot_choice_13_done } }
+        set_country_flag = foc_v232r_plot_choice_13_done
+        set_country_flag = foc_v232r_plot_choice_13_favorable
+        foc_v232r_recalculate_plot = yes
+    }
+}
+
+foc_v232r_plot_choice_13_b = {
+    if = {
+        limit = { NOT = { has_country_flag = foc_v232r_plot_choice_13_done } }
+        set_country_flag = foc_v232r_plot_choice_13_done
+        foc_v232r_recalculate_plot = yes
+    }
+}
+
+foc_v232r_plot_choice_14_a = {
+    if = {
+        limit = { NOT = { has_country_flag = foc_v232r_plot_choice_14_done } }
+        set_country_flag = foc_v232r_plot_choice_14_done
+        foc_v232r_recalculate_plot = yes
+    }
+}
+
+foc_v232r_plot_choice_14_b = {
+    if = {
+        limit = { NOT = { has_country_flag = foc_v232r_plot_choice_14_done } }
+        set_country_flag = foc_v232r_plot_choice_14_done
+        set_country_flag = foc_v232r_plot_choice_14_favorable
+        foc_v232r_recalculate_plot = yes
+    }
+}
+
+foc_v232r_plot_choice_15_a = {
+    if = {
+        limit = { NOT = { has_country_flag = foc_v232r_plot_choice_15_done } }
+        set_country_flag = foc_v232r_plot_choice_15_done
+        set_country_flag = foc_v232r_plot_choice_15_favorable
+        foc_v232r_recalculate_plot = yes
+    }
+}
+
+foc_v232r_plot_choice_15_b = {
+    if = {
+        limit = { NOT = { has_country_flag = foc_v232r_plot_choice_15_done } }
+        set_country_flag = foc_v232r_plot_choice_15_done
+        foc_v232r_recalculate_plot = yes
+    }
+}
+
+foc_v232r_plot_choice_8_a = {
+    if = {
+        limit = { NOT = { has_country_flag = foc_v232r_plot_choice_8_done } }
+        set_country_flag = foc_v232r_plot_choice_8_done
+        foc_v232r_recalculate_plot = yes
+    }
+}
+
+foc_v232r_plot_choice_8_b = {
+    if = {
+        limit = { NOT = { has_country_flag = foc_v232r_plot_choice_8_done } }
+        set_country_flag = foc_v232r_plot_choice_8_done
+        set_country_flag = foc_v232r_plot_choice_8_favorable
+        foc_v232r_recalculate_plot = yes
+    }
+}

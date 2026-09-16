@@ -1,0 +1,187 @@
+##########
+# PLANETARY RINGS
+##########
+
+##########
+# RING SECTIONS
+##########
+
+entity = {
+	name = "empire_01_orbital_ring_habitat_section_entity"
+	pdxmesh = "empire_weapons_orbital_ring_mesh"
+}
+
+entity = {
+	name = "empire_01_orbital_ring_shipyard_section_entity"
+	pdxmesh = "empire_weapons_orbital_ring_mesh"
+}
+
+entity = {
+	name = "empire_01_orbital_ring_anchorage_section_entity"
+	pdxmesh = "empire_weapons_orbital_ring_mesh"
+}
+
+entity = {
+	name = "empire_01_orbital_ring_hangarbay_section_entity"
+	pdxmesh = "empire_weapons_orbital_ring_mesh"
+}
+
+entity = {
+	name = "empire_01_orbital_ring_gun_section_entity"
+	pdxmesh = "empire_weapons_orbital_ring_mesh"
+}
+
+entity = {
+	name = "empire_01_orbital_ring_missile_section_entity"
+	pdxmesh = "empire_weapons_orbital_ring_mesh"
+}
+
+##########
+# COMPLETE RING
+##########
+
+entity = {
+	name = "empire_kuat_ring_01_entity"
+	pdxmesh = "empire_kuat_ring_01_mesh"
+}
+
+entity = {
+	name = "empire_kuat_ring_02_entity"
+	pdxmesh = "empire_kuat_ring_02_mesh"
+}
+
+entity = {
+	name = "empire_kuat_ring_03_entity"
+	pdxmesh = "empire_kuat_ring_03_mesh"
+}
+
+entity = {
+	name = "empire_kuat_ring_04_entity"
+	pdxmesh = "empire_kuat_ring_04_mesh"
+}
+
+entity = {
+	name = "empire_kuat_ring_05_entity"
+	pdxmesh = "empire_kuat_ring_05_mesh"
+}
+
+entity = {
+	name = "empire_kuat_ring_06_entity"
+	pdxmesh = "empire_kuat_ring_06_mesh"
+}
+
+entity = {
+	name = "empire_kuat_ring_07_entity"
+	pdxmesh = "empire_kuat_ring_07_mesh"
+}
+
+entity = {
+	name = "empire_kuat_ring_08_entity"
+	pdxmesh = "empire_kuat_ring_08_mesh"
+}
+
+entity = {
+	name = "empire_kuat_ring_09_entity"
+	pdxmesh = "empire_kuat_ring_09_mesh"
+}
+
+entity = {
+	name = "empire_kuat_ring_complete_entity"
+	scale = 0.17
+
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+
+	attach = { "loc101" = "empire_kuat_ring_01_entity" }
+	attach = { "loc101" = "empire_kuat_ring_02_entity" }
+	attach = { "loc101" = "empire_kuat_ring_03_entity" }
+	attach = { "loc101" = "empire_kuat_ring_04_entity" }
+	attach = { "loc101" = "empire_kuat_ring_05_entity" }
+	attach = { "loc101" = "empire_kuat_ring_06_entity" }
+	attach = { "loc101" = "empire_kuat_ring_07_entity" }
+	attach = { "loc101" = "empire_kuat_ring_08_entity" }
+	attach = { "loc101" = "empire_kuat_ring_09_entity" }
+}
+
+##########
+# RING TIERS
+##########
+
+entity = {
+	name = "empire_01_orbital_ring_construction_entity"
+	pdxmesh = "orbital_ring_tier_01_mesh"
+
+	attach = { "rotate" 		= "empire_kuat_ring_complete_entity" }
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5 animation = "idle"
+		event = { trigger_once = yes sound = { soundeffect = "place_construction" } }
+	}
+
+	cull_radius = 10000000
+}
+
+entity = {
+	name = "empire_01_orbital_ring_tier_1_entity"
+	pdxmesh = "orbital_ring_tier_01_frame_mesh"
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5 animation = "idle" }
+
+	cull_radius = 100
+}
+
+entity = {
+	name = "empire_01_orbital_ring_tier_2_entity"
+	pdxmesh = "orbital_ring_tier_02_frame_mesh"
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5 animation = "idle" }
+
+	cull_radius = 100
+}
+
+entity = {
+	name = "empire_01_orbital_ring_tier_3_entity"
+	pdxmesh = "orbital_ring_tier_03_frame_mesh"
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5 animation = "idle" }
+
+	cull_radius = 100
+}
+
+entity = {
+	name = "empire_01_orbital_ring_tier_1_section_entity"
+	pdxmesh = "orbital_ring_tier_01_mesh"
+
+	attach = { "rotate" 		= "empire_kuat_ring_complete_entity" }
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5 animation = "idle"
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_megastructure_orbital_ring_01_idle" } }
+	}
+}
+
+entity = {
+	name = "empire_01_orbital_ring_tier_2_section_entity"
+	pdxmesh = "orbital_ring_tier_02_mesh"
+
+	attach = { "rotate" 		= "empire_kuat_ring_complete_entity" }
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5 animation = "idle"
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_megastructure_orbital_ring_02_idle" } }
+	}
+}
+
+entity = {
+	name = "empire_01_orbital_ring_tier_3_section_entity"
+	pdxmesh = "orbital_ring_tier_03_mesh"
+
+	attach = { "rotate" 		= "empire_kuat_ring_complete_entity" }
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5 animation = "idle"
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_megastructure_orbital_ring_03_idle" } }
+	}
+}

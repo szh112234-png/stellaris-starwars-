@@ -1,0 +1,35 @@
+# V128 - Mandalore's country interface follows its story-state flags.
+
+gov_foc_mandalore_new_mandalorians = {
+    ruler_title = RT_FOC_MANDALORE_DUCHESS
+    ruler_title_female = RT_FOC_MANDALORE_DUCHESS
+    possible = {
+        has_country_flag = foc_mandalore_satine_government
+        has_authority = auth_oligarchic
+    }
+    weight = { base = 50000 }
+}
+
+gov_foc_mandalore_shadow_collective = {
+    ruler_title = RT_FOC_MANDALORE_SHADOW_RULER
+    ruler_title_female = RT_FOC_MANDALORE_SHADOW_RULER
+    possible = {
+        has_country_flag = foc_mandalore_maul_regime
+        has_authority = auth_dictatorial
+    }
+    weight = { base = 50000 }
+}
+
+gov_foc_mandalore_clan_council = {
+    ruler_title = RT_FOC_MANDALORE_CLAN_LEADER
+    ruler_title_female = RT_FOC_MANDALORE_CLAN_LEADER
+    possible = {
+        OR = {
+            has_country_flag = foc_mandalore_bo_katan_government
+            has_country_flag = foc_mandalore_restored_independent
+            has_country_flag = foc_mandalore_post_treaty_independent
+        }
+        has_authority = auth_oligarchic
+    }
+    weight = { base = 50000 }
+}

@@ -1,0 +1,240 @@
+# V178 story-map compatibility helpers.
+# The three Resistance bases are absent from the new-game map and are generated
+# only by their story stages at the exact V177 Coruscant-relative coordinates.
+
+# Any scope. Recover the sole coordinate anchor used by the V177 map.
+foc_v178_resolve_story_map_anchor = {
+    if = {
+        limit = { exists = event_target:foc_sw_coruscant_system }
+        event_target:foc_sw_coruscant_system = {
+            save_global_event_target_as = foc_khan_rebel_spawn_anchor
+        }
+    }
+    if = {
+        limit = { NOT = { exists = event_target:foc_khan_rebel_spawn_anchor } }
+        random_system = {
+            limit = { has_star_flag = foc_sw_coruscant_home }
+            save_global_event_target_as = foc_sw_coruscant_system
+            save_global_event_target_as = foc_khan_rebel_spawn_anchor
+        }
+    }
+}
+
+# Any scope. Old saves may already contain the V177 fixed-map versions. Adopt
+# those systems into the dynamic story chain instead of creating duplicates.
+foc_v178_adopt_static_dqar = {
+    # V235b: destroyed/lost bases are never initialization failures.
+    if = {
+        limit = { foc_v235b_dqar_settlement_allowed = yes }
+        if = {
+            limit = {
+                NOT = { any_system = { has_star_flag = foc_khan_rebel_dqar_home } }
+                any_system = { has_star_flag = foc_v175_d_qar_home }
+            }
+            random_system = {
+                limit = { has_star_flag = foc_v175_d_qar_home }
+                set_star_flag = foc_khan_rebel_home
+                set_star_flag = foc_khan_rebel_dqar_home
+                save_global_event_target_as = foc_khan_rebel_system
+                save_global_event_target_as = foc_khan_rebel_dqar_system
+                random_system_planet = {
+                    limit = { has_planet_flag = foc_v175_d_qar }
+                    set_planet_flag = foc_khan_rebel_capital
+                    set_planet_flag = foc_khan_rebel_dqar
+                    save_global_event_target_as = foc_khan_rebel_capital
+                }
+            }
+        }
+    }
+}
+
+foc_v178_adopt_static_crait = {
+    if = {
+        limit = {
+            NOT = { any_system = { has_star_flag = foc_khan_rebel_crait_home } }
+            any_system = { has_star_flag = foc_v175_crait_home }
+        }
+        random_system = {
+            limit = { has_star_flag = foc_v175_crait_home }
+            set_star_flag = foc_khan_rebel_crait_home
+            save_global_event_target_as = foc_khan_rebel_crait_system
+            random_system_planet = {
+                limit = { has_planet_flag = foc_v175_crait }
+                set_planet_flag = foc_khan_rebel_crait
+                save_global_event_target_as = foc_khan_rebel_crait
+            }
+        }
+    }
+}
+
+foc_v178_adopt_static_ajan_kloss = {
+    if = {
+        limit = {
+            NOT = { any_system = { has_star_flag = foc_khan_rebel_ajan_kloss_home } }
+            any_system = {
+                OR = {
+                    has_star_flag = foc_v175_ajan_kloss_home
+                    has_star_flag = foc_swmap_ajan_kloss_home
+                }
+            }
+        }
+        random_system = {
+            limit = {
+                OR = {
+                    has_star_flag = foc_v175_ajan_kloss_home
+                    has_star_flag = foc_swmap_ajan_kloss_home
+                }
+            }
+            set_star_flag = foc_khan_rebel_ajan_kloss_home
+            save_global_event_target_as = foc_khan_rebel_ajan_kloss_system
+            random_system_planet = {
+                limit = {
+                    OR = {
+                        has_planet_flag = foc_v175_ajan_kloss
+                        has_planet_flag = foc_swmap_ajan_kloss
+                    }
+                }
+                set_planet_flag = foc_khan_rebel_ajan_kloss
+                save_global_event_target_as = foc_khan_rebel_ajan_kloss
+            }
+        }
+    }
+}
+
+# Any scope. Spawn only when the corresponding dynamic system is still absent.
+foc_v178_spawn_dqar_at_map_position = {
+    # V235b: destroyed/lost bases are never initialization failures.
+    if = {
+        limit = { foc_v235b_dqar_settlement_allowed = yes }
+        if = { limit = { exists = event_target:foc_khan_rebel_spawn_anchor } clear_global_event_target = foc_khan_rebel_spawn_anchor }
+        foc_v178_resolve_story_map_anchor = yes
+        if = {
+            limit = {
+                exists = event_target:foc_khan_rebel_spawn_anchor
+                NOT = { any_system = { has_star_flag = foc_khan_rebel_dqar_home } }
+            }
+            event_target:foc_khan_rebel_spawn_anchor = {
+                spawn_system = {
+                    hyperlane = no
+                    is_discovered = no
+                    min_distance = 61.4902
+                    max_distance = 61.4902
+                    min_orientation_angle = 291.9182
+                    max_orientation_angle = 291.9182
+                    initializer = foc_khan_rebel_system
+                }
+            }
+        }
+    }
+}
+
+foc_v178_spawn_crait_at_map_position = {
+    if = { limit = { exists = event_target:foc_khan_rebel_spawn_anchor } clear_global_event_target = foc_khan_rebel_spawn_anchor }
+    foc_v178_resolve_story_map_anchor = yes
+    if = {
+        limit = {
+            exists = event_target:foc_khan_rebel_spawn_anchor
+            NOT = { any_system = { has_star_flag = foc_khan_rebel_crait_home } }
+        }
+        event_target:foc_khan_rebel_spawn_anchor = {
+            spawn_system = {
+                hyperlane = no
+                is_discovered = no
+                min_distance = 55.6697
+                max_distance = 55.6697
+                min_orientation_angle = 284.0362
+                max_orientation_angle = 284.0362
+                initializer = foc_khan_rebel_crait_system
+            }
+        }
+    }
+}
+
+foc_v178_spawn_ajan_kloss_at_map_position = {
+    if = { limit = { exists = event_target:foc_khan_rebel_spawn_anchor } clear_global_event_target = foc_khan_rebel_spawn_anchor }
+    foc_v178_resolve_story_map_anchor = yes
+    if = {
+        limit = {
+            exists = event_target:foc_khan_rebel_spawn_anchor
+            NOT = { any_system = { has_star_flag = foc_khan_rebel_ajan_kloss_home } }
+        }
+        event_target:foc_khan_rebel_spawn_anchor = {
+            spawn_system = {
+                hyperlane = no
+                is_discovered = no
+                min_distance = 27.0038
+                max_distance = 27.0038
+                min_orientation_angle = 90.0000
+                max_orientation_angle = 90.0000
+                initializer = foc_khan_rebel_ajan_kloss_system
+            }
+        }
+    }
+}
+
+# Restore the exact V177 map connections only after each hidden system appears.
+foc_v178_connect_dqar_map_routes = {
+    if = {
+        limit = { exists = event_target:foc_khan_rebel_dqar_system }
+        random_system = {
+            limit = { has_star_flag = foc_swmap_adelphi_home }
+            if = { limit = { NOT = { has_hyperlane_to = event_target:foc_khan_rebel_dqar_system } } add_hyperlane = { from = this to = event_target:foc_khan_rebel_dqar_system } }
+        }
+        random_system = {
+            limit = { has_star_flag = foc_swmap_naboo_home }
+            if = { limit = { NOT = { has_hyperlane_to = event_target:foc_khan_rebel_dqar_system } } add_hyperlane = { from = this to = event_target:foc_khan_rebel_dqar_system } }
+        }
+        random_system = {
+            limit = { has_star_flag = foc_v175_pantora_home }
+            if = { limit = { NOT = { has_hyperlane_to = event_target:foc_khan_rebel_dqar_system } } add_hyperlane = { from = this to = event_target:foc_khan_rebel_dqar_system } }
+        }
+        random_system = {
+            limit = { has_star_flag = foc_swmap_utapau_home }
+            if = { limit = { NOT = { has_hyperlane_to = event_target:foc_khan_rebel_dqar_system } } add_hyperlane = { from = this to = event_target:foc_khan_rebel_dqar_system } }
+        }
+    }
+}
+
+foc_v178_connect_crait_map_routes = {
+    if = {
+        limit = { exists = event_target:foc_khan_rebel_crait_system }
+        random_system = {
+            limit = { has_star_flag = foc_swmap_naboo_home }
+            if = { limit = { NOT = { has_hyperlane_to = event_target:foc_khan_rebel_crait_system } } add_hyperlane = { from = this to = event_target:foc_khan_rebel_crait_system } }
+        }
+        random_system = {
+            limit = { has_star_flag = foc_swmap_sullust_home }
+            if = { limit = { NOT = { has_hyperlane_to = event_target:foc_khan_rebel_crait_system } } add_hyperlane = { from = this to = event_target:foc_khan_rebel_crait_system } }
+        }
+        random_system = {
+            limit = { has_star_flag = foc_v175_malastare_home }
+            if = { limit = { NOT = { has_hyperlane_to = event_target:foc_khan_rebel_crait_system } } add_hyperlane = { from = this to = event_target:foc_khan_rebel_crait_system } }
+        }
+        random_system = {
+            limit = { has_star_flag = foc_swmap_eriadu_home }
+            if = { limit = { NOT = { has_hyperlane_to = event_target:foc_khan_rebel_crait_system } } add_hyperlane = { from = this to = event_target:foc_khan_rebel_crait_system } }
+        }
+    }
+}
+
+foc_v178_connect_ajan_kloss_map_routes = {
+    if = {
+        limit = { exists = event_target:foc_khan_rebel_ajan_kloss_system }
+        random_system = {
+            limit = { has_star_flag = foc_v175_dantooine_home }
+            if = { limit = { NOT = { has_hyperlane_to = event_target:foc_khan_rebel_ajan_kloss_system } } add_hyperlane = { from = this to = event_target:foc_khan_rebel_ajan_kloss_system } }
+        }
+        random_system = {
+            limit = { has_star_flag = foc_swmap_bracca_home }
+            if = { limit = { NOT = { has_hyperlane_to = event_target:foc_khan_rebel_ajan_kloss_system } } add_hyperlane = { from = this to = event_target:foc_khan_rebel_ajan_kloss_system } }
+        }
+        random_system = {
+            limit = { has_star_flag = foc_v175_ithor_home }
+            if = { limit = { NOT = { has_hyperlane_to = event_target:foc_khan_rebel_ajan_kloss_system } } add_hyperlane = { from = this to = event_target:foc_khan_rebel_ajan_kloss_system } }
+        }
+        random_system = {
+            limit = { has_star_flag = foc_v175_zeffo_home }
+            if = { limit = { NOT = { has_hyperlane_to = event_target:foc_khan_rebel_ajan_kloss_system } } add_hyperlane = { from = this to = event_target:foc_khan_rebel_ajan_kloss_system } }
+        }
+    }
+}

@@ -1,0 +1,38 @@
+# Minimal engine-required home used only during the hidden Republic game-start
+# relocation. This mirrors the working First Order preset initializer: the
+# player's species, pops and fleets exist normally during empire creation, then
+# foc_republic_origin.1 transfers them to the pre-authored Coruscant region and
+# removes this temporary colony.
+foc_republic_origin_staging_system = {
+    name = random
+    class = "sc_g"
+    usage = origin
+    flags = { empire_home_system foc_republic_origin_staging_system }
+    max_instances = 1
+
+    init_effect = { generate_home_system_resources = yes }
+
+    planet = {
+        class = "pc_g_star"
+        orbit_distance = 0
+        orbit_angle = 1
+        size = 20
+        has_ring = no
+    }
+
+    planet = {
+        class = ideal_planet_class
+        orbit_distance = 55
+        orbit_angle = 30
+        size = 22
+        starting_planet = yes
+        home_planet = yes
+        deposit_blockers = none
+        modifiers = none
+
+        init_effect = {
+            prevent_anomaly = yes
+            generate_empire_home_planet = yes
+        }
+    }
+}

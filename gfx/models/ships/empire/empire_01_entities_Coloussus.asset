@@ -1,0 +1,66 @@
+##########
+# COLOSSUS
+##########
+
+##########
+# FRAME
+##########
+
+entity = {
+	name = "empire_01_colossus_entity"
+	# FOC hotfix: required section attachment reported missing by the engine.
+	locator = { name = "frame_ship" position = { 0 0 0 } }
+	pdxmesh = "sw_empty_mesh"
+
+	locator = { name = "part1"	position = { 0 0 0 } }
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5 }
+	state = { name = "moving" state_time = 5 }
+
+	### Static Death Animation / Immediate Explosion
+	state = { name = "death" state_time = 0.3 looping = no
+		event = { time = 0.2 particle = "dreadnought_explosion_particle" sound = { soundeffect = "ship_destroyed" } }
+	}
+
+	game_data = {
+		size = 42.0
+	}
+}
+
+##########
+# Special
+##########
+
+entity = {
+	name = "empire_death_star_bottom_entity"
+	pdxmesh = "empire_death_star_bottom_mesh"
+}
+
+##########
+# FULL SHIPS
+##########
+
+entity = {
+	name = "empire_01_colossus_ship_entity"
+	pdxmesh = "empire_death_star_top_mesh"
+	scale = 0.25
+
+	locator = { name = "root" rotation = { 0 0 0 } position = { 0 0 0 } }
+	attach = { root = "empire_death_star_bottom_entity" }
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5 }
+	state = { name = "moving" state_time = 5 }
+
+	### Static Death Animation / Immediate Explosion
+	state = { name = "death" state_time = 0.3 looping = no
+		event = { time = 0.0 node = "detonate_01" particle = "juggernaut_explosion_particle" sound = { soundeffect = "ship_destroyed" } }
+		event = { time = 0.0 node = "detonate_02" particle = "juggernaut_explosion_particle" sound = { soundeffect = "ship_destroyed" } }
+		event = { time = 0.0 node = "detonate_03" particle = "juggernaut_explosion_particle" sound = { soundeffect = "ship_destroyed" } }
+		event = { time = 0.0 node = "detonate_04" particle = "juggernaut_explosion_particle" sound = { soundeffect = "ship_destroyed" } }
+		event = { time = 0.1 node = "detonate_05" particle = "juggernaut_explosion_particle" sound = { soundeffect = "ship_destroyed" } }
+		event = { time = 0.1 node = "detonate_06" particle = "juggernaut_explosion_particle" sound = { soundeffect = "ship_destroyed" } }
+		event = { time = 0.2 particle = "dreadnought_explosion_particle" sound = { soundeffect = "ship_destroyed" } }
+	}
+}

@@ -1,0 +1,12 @@
+# Self-contained particle registration, following the exact pattern proven to
+# work in the companion Kuat mod's exe_kuat_particles.gfx:
+#   name = <alias that entities reference>
+#   type = <the particle's internal name as defined in gfx/particles/*.asset>
+# name and type are DIFFERENT strings (no self-reference -> no NULL).
+# All names are uniquely myk_-prefixed, so they never collide with the Kuat
+# mod's particles, whether or not it is loaded.
+objectTypes = {
+	pdxparticle = { name = "myk_starkiller_red_beam"        type = "myk_starkiller_red_particledef"        scale = 50 }
+	pdxparticle = { name = "myk_starkiller_planet_red_beam" type = "myk_starkiller_planet_red_particledef" scale = 50 }
+	pdxparticle = { name = "myk_starkiller_sundrain_beam"   type = "myk_starkiller_sundrain_particledef"   scale = 50 }
+}

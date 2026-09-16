@@ -1,0 +1,761 @@
+#Krayt's Galactic Empire
+
+portraits = {
+	krayt_female_01 = {	entity = "portrait_human_female_01_entity"	clothes_selector = "krayt_female_clothes_01" 	attachment_selector = "krayt_female_01_hair"			greeting_sound = "human_female_greetings_03"
+		character_textures = { "gfx/models/portraits/human/human_female_body_01.dds" }
+	}
+	krayt_female_02 = {	entity = "portrait_human_female_02_entity"	clothes_selector = "krayt_female_clothes_01" 	attachment_selector = "krayt_female_01_hair"			greeting_sound = "human_female_greetings_04" 
+		character_textures = { "gfx/models/portraits/human/human_female_body_02.dds" }
+	}
+	krayt_female_03 = {	entity = "portrait_human_female_03_entity"	clothes_selector = "krayt_female_clothes_01" 	attachment_selector = "krayt_female_01_hair"			greeting_sound = "human_female_greetings_05" 
+		character_textures = { "gfx/models/portraits/human/human_female_body_03.dds" }
+	}	
+	krayt_female_04 = {	entity = "portrait_human_female_04_entity"	clothes_selector = "krayt_female_clothes_01" 	attachment_selector = "krayt_female_01_hair"			greeting_sound = "human_female_greetings_01" 
+		character_textures = { "gfx/models/portraits/human/human_female_body_04.dds" }
+	}
+	krayt_female_05 = {	entity = "portrait_human_female_05_entity"	clothes_selector = "krayt_female_clothes_01" 	attachment_selector = "krayt_female_01_hair"			greeting_sound = "human_female_greetings_02" 
+		character_textures = { "gfx/models/portraits/human/human_female_body_05.dds" }
+	}
+	krayt_male_01 = {	entity = "portrait_human_male_01_entity"		clothes_selector = "krayt_male_clothes_01" 	attachment_selector = "krayt_male_01_hair"			greeting_sound = "human_male_greetings_03" 
+		character_textures = { "gfx/models/portraits/human/human_male_body_01.dds" }
+	}	
+	krayt_male_02 = {	entity = "portrait_human_male_02_entity"		clothes_selector = "krayt_male_clothes_01" 	attachment_selector = "krayt_male_01_hair"			greeting_sound = "human_male_greetings_04" 
+		character_textures = { "gfx/models/portraits/human/human_male_body_02.dds" }
+	}
+	krayt_male_03 = {	entity = "portrait_human_male_03_entity"		clothes_selector = "krayt_male_clothes_01" 	attachment_selector = "krayt_male_01_hair"			greeting_sound = "human_male_greetings_05"  
+		character_textures = { "gfx/models/portraits/human/human_male_body_03.dds" }
+	}		
+	krayt_male_04 = {	entity = "portrait_human_male_04_entity"		clothes_selector = "krayt_male_clothes_01" 	attachment_selector = "krayt_male_01_hair"			greeting_sound = "human_male_greetings_01"  
+		character_textures = { "gfx/models/portraits/human/human_male_body_04.dds" }
+	}
+	krayt_male_05 = {	entity = "portrait_human_male_05_entity"		clothes_selector = "krayt_male_clothes_01" 	attachment_selector = "krayt_male_01_hair"			greeting_sound = "human_male_greetings_02"  
+		character_textures = { "gfx/models/portraits/human/human_male_body_05.dds" }
+	}
+	
+	#KRAYT OFFICERS
+	kraytofficer_male_01 = { entity = "portrait_human_male_01_entity" clothes_selector = "kraytofficer_male_clothes_01"	attachment_selector = "kraytofficer_male_01_hair"	greeting_sound = "human_male_greetings_01"
+		character_textures = { "gfx/models/portraits/human/human_male_body_01.dds" }
+	}
+	kraytofficer_male_02 = { entity = "portrait_human_male_02_entity" clothes_selector = "kraytofficer_male_clothes_01"	attachment_selector = "kraytofficer_male_01_hair"	greeting_sound = "human_male_greetings_02"
+		character_textures = { "gfx/models/portraits/human/human_male_body_02.dds" }
+	}
+	kraytofficer_male_03 = { entity = "portrait_human_male_03_entity" clothes_selector = "kraytofficer_male_clothes_01"	attachment_selector = "kraytofficer_male_01_hair"	greeting_sound = "human_male_greetings_03"
+		character_textures = { "gfx/models/portraits/human/human_male_body_03.dds" }
+	}
+	kraytofficer_female_01 = { entity = "portrait_human_female_01_entity" clothes_selector = "kraytofficer_female_clothes_01"	attachment_selector = "kraytofficer_female_01_hair"	greeting_sound = "human_female_greetings_01"
+		character_textures = { "gfx/models/portraits/human/human_female_body_01.dds" }
+	}
+	kraytofficer_female_02 = { entity = "portrait_human_female_02_entity" clothes_selector = "kraytofficer_female_clothes_01"	attachment_selector = "kraytofficer_female_01_hair"	greeting_sound = "human_female_greetings_02"
+		character_textures = { "gfx/models/portraits/human/human_female_body_02.dds" }
+	}
+	kraytofficer_female_03 = { entity = "portrait_human_female_03_entity" clothes_selector = "kraytofficer_female_clothes_01"	attachment_selector = "kraytofficer_female_01_hair"	greeting_sound = "human_female_greetings_03"
+		character_textures = { "gfx/models/portraits/human/human_female_body_03.dds" }
+	}
+	
+	#STORMTROOPER POPS
+	
+	kraytstormtrooper_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "kraytstormtrooper_male_clothes_01"	attachment_selector = "kraytstormtrooper_male_01_hair"		greeting_sound = "human_male_greetings_02"
+		character_textures = { "gfx/models/portraits/krayt/stormtrooper_male_body_03.dds" }		
+	}
+		
+	kraytstormtrooper_female_01 = { entity = "portrait_human_female_01_entity"	clothes_selector = "kraytstormtrooper_female_clothes_01"	attachment_selector = "kraytstormtrooper_female_01_hair"		greeting_sound = "human_female_greetings_02"
+		character_textures = { "gfx/models/portraits/krayt/stormtrooper_female_body_03.dds" } 
+	}	
+	
+	kraytstormtroopercaptain_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "kraytstormtroopercaptain_male_clothes_01"	attachment_selector = "kraytstormtroopercaptain_male_01_hair"		greeting_sound = "human_male_greetings_02"
+		character_textures = { "gfx/models/portraits/krayt/stormtrooper_male_body_03.dds" }		
+	}
+	
+	kraytstormtroopercaptain_female_01 = { entity = "portrait_human_female_01_entity"	clothes_selector = "kraytstormtroopercaptain_female_clothes_01"	attachment_selector = "kraytstormtroopercaptain_female_01_hair"		greeting_sound = "human_female_greetings_02"
+		character_textures = { "gfx/models/portraits/krayt/stormtrooper_female_body_03.dds" } 
+	}	
+	kraytrecontrooper_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "kraytrecontrooper_male_clothes_01"	attachment_selector = "kraytrecontrooper_male_01_hair"	greeting_sound = "human_male_greetings_01"
+		character_textures = { "gfx/models/portraits/krayt/stormtrooper_male_body_03.dds" }
+	}
+	kraytcadet_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "kraytcadet_male_clothes_01"	attachment_selector = "kraytcadet_male_01_hair"		greeting_sound = "human_male_greetings_02"
+		character_textures = { "gfx/models/portraits/krayt/stormtrooper_male_body_03.dds" } 
+	}
+	juggernaut_driver_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "juggernaut_driver_male_clothes_01"	attachment_selector = "juggernaut_driver_male_01_hair"		greeting_sound = "human_male_greetings_02"
+		character_textures = { "gfx/models/portraits/krayt/stormtrooper_male_body_03.dds" } 
+	}
+	#STORMTROOPER SCOUTS
+	
+	kraytscout_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "kraytscout_male_clothes_01"	attachment_selector = "kraytscout_male_01_hair"		greeting_sound = "human_male_greetings_02"
+		character_textures = { "gfx/models/portraits/krayt/stormtrooper_male_body_03.dds" } 
+	}
+	
+	kraytscoutcaptain_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "kraytscoutcaptain_male_clothes_01"	attachment_selector = "kraytscoutcaptain_male_01_hair"		greeting_sound = "human_male_greetings_02"
+		character_textures = { "gfx/models/portraits/krayt/stormtrooper_male_body_03.dds" } 
+	}
+
+	
+	#SITH POPS
+	kraytsith_female_01 = {	entity = "portrait_human_female_01_entity"	clothes_selector = "kraytsith_female_clothes_01" 	attachment_selector = "kraytsith_female_01_hair"			greeting_sound = "human_female_greetings_03"
+		character_textures = { "gfx/models/portraits/krayt/krayt_female_humansith_body_01.dds" }
+	}
+	kraytsith_female_02 = {	entity = "portrait_human_female_02_entity"	clothes_selector = "kraytsith_female_clothes_01" 	attachment_selector = "kraytsith_female_01_hair"			greeting_sound = "human_female_greetings_04" 
+		character_textures = {"gfx/models/portraits/krayt/krayt_female_humansith_body_02.dds"}
+	}
+	kraytsith_female_03 = {	entity = "portrait_human_female_03_entity"	clothes_selector = "kraytsith_female_clothes_01" 	attachment_selector = "kraytsith_female_01_hair"			greeting_sound = "human_female_greetings_05" 
+		character_textures = { "gfx/models/portraits/krayt/krayt_female_humansith_body_03.dds"	}
+	}	
+	kraytsith_female_04 = {	entity = "portrait_human_female_04_entity"	clothes_selector = "kraytsith_female_clothes_01" 	attachment_selector = "kraytsith_female_01_hair"			greeting_sound = "human_female_greetings_01" 
+		character_textures = { "gfx/models/portraits/krayt/krayt_female_humansith_body_04.dds"	}
+	}
+	kraytsith_female_05 = {	entity = "portrait_human_female_05_entity"	clothes_selector = "kraytsith_female_clothes_01" 	attachment_selector = "kraytsith_female_01_hair"			greeting_sound = "human_female_greetings_02" 
+		character_textures = { "gfx/models/portraits/krayt/krayt_female_humansith_body_05.dds"	}
+	}
+	kraytsith_male_01 = {	entity = "portrait_human_male_01_entity"		clothes_selector = "kraytsith_male_clothes_01" 	attachment_selector = "kraytsith_male_01_hair"			greeting_sound = "human_male_greetings_03" 
+		character_textures = { 
+			"gfx/models/portraits/krayt/krayt_male_humansith_body_01.dds"
+			"gfx/models/portraits/krayt/krayt_male_humansith_body2_01.dds"
+		}
+	}	
+	kraytsith_male_02 = {	entity = "portrait_human_male_02_entity"		clothes_selector = "kraytsith_male_clothes_01" 	attachment_selector = "kraytsith_male_01_hair"			greeting_sound = "human_male_greetings_04" 
+		character_textures = { 
+			"gfx/models/portraits/krayt/krayt_male_humansith_body_02.dds"
+			"gfx/models/portraits/krayt/krayt_male_humansith_body2_02.dds"
+		}
+	}
+	kraytsith_male_03 = {	entity = "portrait_human_male_03_entity"		clothes_selector = "kraytsith_male_clothes_01" 	attachment_selector = "kraytsith_male_01_hair"			greeting_sound = "human_male_greetings_05"  
+		character_textures = { "gfx/models/portraits/krayt/krayt_male_humansith_body_03.dds" }	
+	}		
+	kraytsith_male_04 = {	entity = "portrait_human_male_04_entity"		clothes_selector = "kraytsith_male_clothes_01" 	attachment_selector = "kraytsith_male_01_hair"			greeting_sound = "human_male_greetings_01"  
+		character_textures = { "gfx/models/portraits/krayt/krayt_male_humansith_body_04.dds"	}
+	}
+	kraytsith_male_05 = {	entity = "portrait_human_male_05_entity"		clothes_selector = "kraytsith_male_clothes_01" 	attachment_selector = "kraytsith_male_01_hair"			greeting_sound = "human_male_greetings_02"  
+		character_textures = { "gfx/models/portraits/krayt/krayt_male_humansith_body_05.dds" }
+	}
+	
+	#ALIEN SITH
+	darthwyyrlok_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "darthwyyrlok_male_clothes_01"	attachment_selector = "darthwyyrlok_male_01_hair"	greeting_sound = "human_male_greetings_01"
+		character_textures = { "gfx/models/portraits/krayt/krayt_male_humansith_body_01.dds" }
+	}
+	darthtalon_female_01 = { entity = "portrait_human_female_01_entity" clothes_selector = "no_texture"	attachment_selector = "darthtalon_female_01_hair"	greeting_sound = "human_female_greetings_01"
+		character_textures = { "gfx/models/portraits/krayt/krayt_female_talon_body.dds" }
+	}
+	darthnihl_male_01 = { entity = "portrait_human_male_01_entity" clothes_selector = "darthnihl_male_clothes_01" attachment_selector = "darthnihl_male_01_hair"	greeting_sound = "human_male_greetings_02"
+		character_textures = { "gfx/models/portraits/human/human_male_body_01.dds" }
+	}
+	darthmaladi_female_01 = { entity = "portrait_human_female_03_entity" clothes_selector = "darthmaladi_female_clothes_01" attachment_selector = "darthmaladi_female_01_hair" greeting_sound = "human_female_greetings_02"
+		character_textures = { "gfx/models/portraits/krayt/krayt_female_maladi_body_03.dds" }
+	}
+	
+	#KRAYT'S SITHTROOPERS
+	kraytsithtrooper_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "kraytsithtrooper_male_clothes_01" attachment_selector = "kraytsithtrooper_male_01_hair" greeting_sound = "human_male_greetings_01"
+		character_textures = { "gfx/models/portraits/krayt/krayt_male_humansith_body_01.dds" }
+	}
+	
+	kraytsithtrooper_female_01 = { entity = "portrait_human_female_01_entity" clothes_selector = "kraytsithtrooper_female_clothes_01" attachment_selector = "kraytsithtrooper_female_01_hair" greeting_sound = "human_female_greetings_01"
+		character_textures = { "gfx/models/portraits/krayt/krayt_female_humansith_body_01.dds" }
+	}
+	
+	
+	
+	#KRAYT SHOCKTROOPERS
+	
+	kraytshocktroopercap_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "kraytshocktroopercap_male_clothes_01"	attachment_selector = "kraytshocktroopercap_male_01_hair"	greeting_sound = "human_male_greetings_02"
+		character_textures = {	"gfx/models/portraits/krayt/stormtrooper_male_body_03.dds" }
+	}
+	
+	kraytshocktrooper_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "kraytshocktrooper_male_clothes_01"	attachment_selector = "kraytshocktrooper_male_01_hair"	 greeting_sound = "human_male_greetings_02"
+		character_textures = {	"gfx/models/portraits/krayt/stormtrooper_male_body_03.dds" }
+	}
+		
+	#DARKTROOPER
+	
+	kraytdarktrooper_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "kraytdarktrooper_male_clothes_01"	attachment_selector = "kraytdarktrooper_male_01_hair"	greeting_sound = "human_male_greetings_02"
+		character_textures = {	"gfx/models/portraits/krayt/stormtrooper_male_body_03.dds" }
+	}
+	
+	#CHISS
+	kraytchiss_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "krayt_male_clothes_01"	attachment_selector = "kraytchiss_male_01_hair"		greeting_sound = "human_male_greetings_02"
+		character_textures = { "gfx/models/portraits/krayt/thrawn_male_body_01.dds" } 
+	}
+	
+	#GIVIN
+	kraytgivin_male_01 = { entity = "portrait_human_male_01_entity" clothes_selector = "krayt_male_clothes_01" attachment_selector = "no_texture" greeting_sound = "human_male_greetings_02"
+		character_textures = { "gfx/models/portraits/krayt/krayt_male_givin_body.dds" }
+	}
+		
+	#KEL DOR
+	kraytkeldor_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "krayt_male_clothes_01"		attachment_selector = "kraytkeldor_male_01_head"	greeting_sound = "human_male_greetings_02"
+		character_textures = {	"gfx/models/portraits/krayt/krayt_keldor_male_body_01.dds" }
+	}
+	#RODIAN
+	kraytrodian_male_01 = { entity = "portrait_human_male_01_entity"	clothes_selector = "krayt_male_clothes_01"	attachment_selector = "kraytrodian_male_01_head"	greeting_sound = "human_male_greetings_02"
+		character_textures = { "gfx/models/portraits/krayt/krayt_rodian_bodygreen.dds" }
+	}
+	
+	#DARTH KRAYT
+	darthkrayt_male_01 = { entity = "portrait_human_male_03_entity" clothes_selector = "darthkrayt_male_clothes_01"	attachment_selector = "darthkrayt_male_01_hair"	greeting_sound = "human_male_greetings_01"
+		character_textures = { "gfx/models/portraits/krayt/krayt_male_krayt_body.dds" }
+	}
+	
+}
+portrait_groups = {
+	krayt = {
+		default = kraytstormtroopercaptain_male_01
+		game_setup = { #will run with a limited country scope. species and government is set but the country does not actually exist
+			add = {
+				trigger = {
+					ruler = {
+						OR = {
+							gender = male
+							gender = indeterminable
+						}
+					}
+				}
+				portraits = {
+					krayt_male_01
+					krayt_male_02
+					krayt_male_03
+					krayt_male_04
+					krayt_male_05
+					kraytofficer_male_01
+					kraytofficer_male_02
+					kraytofficer_male_03
+					kraytsith_male_01
+					kraytsith_male_02
+					kraytsith_male_03
+					kraytsith_male_04
+					kraytsith_male_05
+					kraytchiss_male_01
+					kraytrodian_male_01
+					darthkrayt_male_01
+					darthwyyrlok_male_01
+					darthnihl_male_01
+					kraytsithtrooper_male_01
+					kraytrecontrooper_male_01
+					kraytcadet_male_01
+					kraytstormtrooper_male_01
+					kraytstormtroopercaptain_male_01
+					kraytscout_male_01
+					kraytscoutcaptain_male_01
+					kraytdarktrooper_male_01
+					kraytshocktrooper_male_01
+					kraytshocktroopercap_male_01
+					kraytkeldor_male_01
+					kraytgivin_male_01
+				}
+			}
+			add = {
+				trigger = {
+					ruler = {
+						OR = {
+							gender = female
+							gender = indeterminable
+						}
+					}
+				}
+				portraits = {
+					krayt_female_01
+					krayt_female_02
+					krayt_female_03
+					krayt_female_04
+					krayt_female_05
+					kraytofficer_female_01
+					kraytofficer_female_02
+					kraytofficer_female_03
+					kraytsith_female_01
+					kraytsith_female_02
+					kraytsith_female_03
+					kraytsith_female_04
+					kraytsith_female_05
+					darthtalon_female_01
+					darthmaladi_female_01
+					kraytsithtrooper_female_01
+					kraytstormtrooper_female_01
+					kraytstormtroopercaptain_female_01
+				}
+			}
+			#set = {
+			#	trigger = { ... }
+			#	portraits = { ... }
+			#	#using "set =" instead of "add" will first clear any portraits already added
+			#}
+		}		
+		
+		#species scope
+		species = { #generic portrait for a species
+			add = {
+				portraits = {
+					kraytstormtrooper_male_01
+				}
+			}
+		}		
+		
+		#pop scope
+		pop_group = { #for a specific pop
+			add = {
+				portraits = {
+					krayt_female_01
+					krayt_female_02
+					krayt_female_03
+					krayt_female_04
+					krayt_female_05
+					kraytofficer_female_01
+					kraytofficer_female_02
+					kraytofficer_female_03
+					krayt_male_01
+					krayt_male_02
+					krayt_male_03
+					krayt_male_04
+					krayt_male_05
+					kraytofficer_male_01
+					kraytofficer_male_02
+					kraytofficer_male_03
+					kraytchiss_male_01
+					kraytrodian_male_01
+					kraytstormtrooper_male_01
+					kraytstormtrooper_female_01
+					kraytcadet_male_01
+					kraytshocktrooper_male_01
+					kraytshocktroopercap_male_01
+					kraytkeldor_male_01
+					kraytstormtroopercaptain_male_01
+					kraytstormtroopercaptain_female_01
+					kraytscout_male_01
+					kraytscoutcaptain_male_01
+					kraytgivin_male_01
+				}
+			}
+		}
+		
+		#leader scope
+		leader = { #scientists, generals, admirals, governor
+			add = {
+				trigger = {
+					OR = {
+						gender = female
+						gender = indeterminable
+					}
+					NOR = {
+						has_trait = leader_trait_sith
+						has_trait = leader_trait_psionic
+					}
+					leader_class = scientist
+				}
+				portraits = {
+					krayt_female_01
+					krayt_female_02
+					krayt_female_03
+					krayt_female_04
+					krayt_female_05
+				}
+			}
+			add = {
+				trigger = {
+					OR = {
+						gender = female
+						gender = indeterminable
+					}
+					OR = {
+						has_trait = leader_trait_sith
+						has_trait = leader_trait_psionic
+					}
+					leader_class = scientist
+				}
+				portraits = {
+					kraytsith_female_01
+					kraytsith_female_02
+					kraytsith_female_03
+					darthmaladi_female_01
+				}
+			}
+			add = {
+				trigger = {
+					OR = {
+						gender = male
+						gender = indeterminable
+					}
+					NOR = {
+						has_trait = leader_trait_sith
+						has_trait = leader_trait_psionic
+					}
+					leader_class = scientist
+				}
+				portraits = {
+					krayt_male_01
+					krayt_male_02
+					krayt_male_03
+					krayt_male_04
+					krayt_male_05
+					kraytrodian_male_01
+					kraytkeldor_male_01
+				}
+			}
+			add = {
+				trigger = {
+					OR = {
+						gender = male
+						gender = indeterminable
+					}
+					OR = {
+						has_trait = leader_trait_sith
+						has_trait = leader_trait_psionic
+					}
+					leader_class = scientist
+				}
+				portraits = {
+					kraytsith_male_01
+					kraytsith_male_02
+					kraytsith_male_03
+					kraytsith_male_04
+					kraytsith_male_05
+				}
+			}
+			add = {
+				trigger = {
+					OR = {
+						gender = female
+						gender = indeterminable
+					}
+					NOR = {
+						has_trait = leader_trait_sith
+						has_trait = leader_trait_psionic
+					}
+					leader_class = commander 
+					has_trait = subclass_commander_general 
+				}
+				portraits = {
+					krayt_female_01
+					krayt_female_02
+					krayt_female_03
+					krayt_female_04
+					krayt_female_05
+					kraytstormtroopercaptain_female_01
+				}
+			}
+			add = {
+				trigger = {
+					OR = {
+						gender = female
+						gender = indeterminable
+					}
+					OR = {
+						has_trait = leader_trait_sith
+						has_trait = leader_trait_psionic
+					}
+					leader_class = commander 
+					has_trait = subclass_commander_general 
+				}
+				portraits = {
+					kraytsith_female_01
+					kraytsith_female_02
+					kraytsith_female_03
+					kraytsith_female_04
+					kraytsith_female_05
+					darthtalon_female_01
+				}
+			}
+			
+			
+			add = {
+				trigger = {
+					OR = {
+						gender = male
+						gender = indeterminable
+					}
+					NOR = {
+						has_trait = leader_trait_sith
+						has_trait = leader_trait_psionic
+					}
+					leader_class = commander 
+					has_trait = subclass_commander_general 
+				}
+				portraits = {
+					krayt_male_01
+					krayt_male_02
+					krayt_male_03
+					krayt_male_04
+					krayt_male_05
+					kraytstormtroopercaptain_male_01
+					kraytdarktrooper_male_01
+					kraytshocktroopercap_male_01
+					kraytrecontrooper_male_01
+					kraytkeldor_male_01
+					kraytscoutcaptain_male_01
+				}
+			}
+			add = {
+				trigger = {
+					OR = {
+						gender = male
+						gender = indeterminable
+					}
+					OR = {
+						has_trait = leader_trait_sith
+						has_trait = leader_trait_psionic
+					}
+					leader_class = commander 
+					has_trait = subclass_commander_general 
+				}
+				portraits = {
+					kraytsith_male_01
+					kraytsith_male_02
+					kraytsith_male_03
+					kraytsith_male_04
+					kraytsith_male_05
+					darthnihl_male_01
+					
+				}
+			}
+			add = {
+				trigger = {
+					OR = {
+						gender = female
+						gender = indeterminable
+					}
+					NOR = {
+						has_trait = leader_trait_sith
+						has_trait = leader_trait_psionic
+					}
+					leader_class = commander 
+					NOT = { has_trait = subclass_commander_general }
+				}
+				portraits = {
+					krayt_female_01
+					krayt_female_02
+					krayt_female_03
+					krayt_female_04
+					krayt_female_05
+				}
+			}
+			add = {
+				trigger = {
+					OR = {
+						gender = female
+						gender = indeterminable
+					}
+					OR = {
+						has_trait = leader_trait_sith
+						has_trait = leader_trait_psionic
+					}
+					leader_class = commander 
+					NOT = { has_trait = subclass_commander_general }
+				}
+				portraits = {
+					kraytsith_female_01
+					kraytsith_female_02
+					kraytsith_female_03
+					kraytsith_female_04
+					kraytsith_female_05
+					darthtalon_female_01
+				}
+			}
+			add = {
+				trigger = {
+					OR = {
+						gender = male
+						gender = indeterminable
+					}
+					NOR = {
+						has_trait = leader_trait_sith
+						has_trait = leader_trait_psionic
+					}
+					leader_class = commander 
+					NOT = { has_trait = subclass_commander_general }
+				}
+				portraits = {
+					krayt_male_01
+					krayt_male_02
+					krayt_male_03
+					krayt_male_04
+					krayt_male_05
+					kraytchiss_male_01
+					kraytrodian_male_01
+					kraytkeldor_male_01
+				}
+			}
+			add = {
+				trigger = {
+					OR = {
+						gender = male
+						gender = indeterminable
+					}
+					OR = {
+						has_trait = leader_trait_sith
+						has_trait = leader_trait_psionic
+					}
+					leader_class = commander 
+					NOT = { has_trait = subclass_commander_general }
+				}
+				portraits = {
+					kraytsith_male_01
+					kraytsith_male_02
+					kraytsith_male_03
+					kraytsith_male_04
+					kraytsith_male_05
+				}
+			}
+			add = {
+				trigger = {
+					OR = {
+						gender = female
+						gender = indeterminable
+					}
+					NOR = {
+						has_trait = leader_trait_sith
+						has_trait = leader_trait_psionic
+					}
+					leader_class = official
+				}
+				portraits = {
+					krayt_female_01
+					krayt_female_02
+					krayt_female_03
+					krayt_female_04
+					krayt_female_05
+				}
+			}
+			add = {
+				trigger = {
+					OR = {
+						gender = female
+						gender = indeterminable
+					}
+					OR = {
+						has_trait = leader_trait_sith
+						has_trait = leader_trait_psionic
+					}
+					leader_class = official
+				}
+				portraits = {
+					kraytsith_female_01
+					kraytsith_female_02
+					kraytsith_female_03
+					kraytsith_female_04
+					kraytsith_female_05
+					darthtalon_female_01
+				}
+			}
+			add = {
+				trigger = {
+					OR = {
+						gender = male
+						gender = indeterminable
+					}
+					NOR = {
+						has_trait = leader_trait_sith
+						has_trait = leader_trait_psionic
+					}
+					leader_class = official
+				}
+				portraits = {
+					krayt_male_01
+					krayt_male_02
+					krayt_male_03
+					krayt_male_04
+					krayt_male_05
+					kraytrodian_male_01
+					kraytchiss_male_01
+					kraytkeldor_male_01
+				}
+			}
+			add = {
+				trigger = {
+					OR = {
+						gender = male
+						gender = indeterminable
+					}
+					OR = {
+						has_trait = leader_trait_sith
+						has_trait = leader_trait_psionic
+					}
+					leader_class = official
+				}
+				portraits = {
+					kraytsith_male_01
+					kraytsith_male_02
+					kraytsith_male_03
+					kraytsith_male_04
+					kraytsith_male_05
+				}
+			}
+		}
+		ruler = {
+			add = {
+				trigger = {
+					OR = {
+						gender = female
+						gender = indeterminable
+					}
+					NOR = {
+						has_trait = leader_trait_sith
+						has_trait = leader_trait_psionic
+					}
+				}
+				portraits = {
+					krayt_female_01
+					krayt_female_02
+					krayt_female_03
+					krayt_female_04
+					krayt_female_05
+				}
+			}
+			add = {
+				trigger = {
+					OR = {
+						gender = female
+						gender = indeterminable
+					}
+					OR = {
+						has_trait = leader_trait_sith
+						has_trait = leader_trait_psionic
+					}
+				}
+				portraits = {
+					kraytsith_female_01
+					kraytsith_female_02
+					kraytsith_female_03
+					kraytsith_female_04
+					kraytsith_female_05
+					darthtalon_female_01
+					darthmaladi_female_01
+				}
+			}
+			add = {
+				trigger = {
+					OR = {
+						gender = male
+						gender = indeterminable
+					}
+					NOR = {
+						has_trait = leader_trait_sith
+						has_trait = leader_trait_psionic
+					}
+				}
+				portraits = {
+					krayt_male_01
+					krayt_male_02
+					krayt_male_03
+					krayt_male_04
+					krayt_male_05
+				}
+			}
+			add = {
+				trigger = {
+					OR = {
+						gender = male
+						gender = indeterminable
+					}
+					OR = {
+						has_trait = leader_trait_sith
+						has_trait = leader_trait_psionic
+					}
+				}
+				portraits = {
+					kraytsith_male_01
+					kraytsith_male_02
+					kraytsith_male_03
+					kraytsith_male_04
+					kraytsith_male_05
+					darthkrayt_male_01
+					darthnihl_male_01
+					darthwyyrlok_male_01
+				}
+			}
+		}
+	}		
+}	

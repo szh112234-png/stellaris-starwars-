@@ -1,0 +1,47 @@
+entity = {
+	name = "Nebula_entity"
+	pdxmesh = "Nebula_mesh"
+	
+	default_state = "idle"
+	state = { name = "idle" 
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_battleship_hum" } }
+	}
+	state = { name = "moving" 
+		event = { trigger_once = yes sound = { soundeffect = "moving_out_battleship" } }
+	}
+	state = { name = "death" looping = no
+		event = { time = 1.7 node = "explosion_locator1" particle = "ship_burn_particle" }
+		event = { time = 1.7 node = "explosion_locator1" particle = "ship_explosion_particle" }
+		event = { time = 1.7 node = "explosion_locator2" particle = "ship_burn_particle" }
+		event = { time = 1.7 node = "explosion_locator2" particle = "ship_explosion_particle" }
+		event = { time = 2.16 node = "explosion_locator3" particle = "ship_burn_particle" }
+		event = { time = 2.16 node = "explosion_locator3" particle = "ship_explosion_particle" }
+		event = { time = 2.16 node = "explosion_locator4" particle = "ship_burn_particle" }
+		event = { time = 2.16 node = "explosion_locator4" particle = "ship_explosion_particle" }
+		event = { time = 3.9 node = "explosion_locator5" particle = "ship_burn_particle" }
+		event = { time = 3.9 node = "explosion_locator5" particle = "ship_explosion_particle" }
+		event = { time = 3.9 node = "explosion_locator6" particle = "ship_burn_particle" }
+		event = { time = 3.9 node = "explosion_locator6" particle = "ship_explosion_particle" }
+		event = { time = 7.5 node = "explosion_locator7" particle = "ship_burn_particle" }
+		event = { time = 7.5 node = "explosion_locator7" particle = "ship_explosion_particle" }
+		event = { time = 7.5 node = "explosion_locator8" particle = "ship_burn_particle" }
+		event = { time = 7.5 node = "explosion_locator8" particle = "ship_explosion_particle" }
+		event = { time = 2.16 node = "explosion_locator11" particle = "ship_burn_particle" }
+		event = { time = 2.16 node = "explosion_locator11" particle = "ship_explosion_particle" }
+		event = { time = 3.9 node = "explosion_locator12" particle = "ship_burn_particle" }
+		event = { time = 3.9 node = "explosion_locator12" particle = "ship_explosion_particle" }
+		event = { time = 0.5 node = "explode_locator_10" particle = "ship_burn_particle" }
+		event = { time = 0.5 node = "explode_locator_10" particle = "large_ship_explosion_particle" sound = { soundeffect = ship_destroyed } }
+	}
+	
+	scale = 0.55
+	
+	game_data = {
+		size = 24
+	}
+}
+
+entity = {
+	name = "Nebula_frame_entity"
+	pdxmesh = "Nebula_frame_mesh"
+}

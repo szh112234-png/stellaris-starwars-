@@ -1,0 +1,385 @@
+# V14: original point defense retained; retired ordinary aliases remain inert.
+utility_component_template = {
+    key = "FOC_IMMOBILIZER418_REACTOR"
+    size = extra_large
+    icon = "GFX_ship_part_dark_matter_power_core"
+    icon_frame = 1
+    power = 16000
+    potential = { always = no }
+    resources = {
+        category = ship_components
+        cost = { sr_coaxium_foc = 10 }
+    }
+    modifier = { ship_shield_regen_add_static = 500 }
+    component_set = "power_core"
+    size_restriction = { foc_immobilizer418 foc_immobilizer418_foc_lowest }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    ai_weight = { weight = 0 }
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "FOC_IMMOBILIZER418_JUMPDRIVE"
+    size = small
+    icon = "GFX_ship_part_jump_drive_1"
+    icon_frame = 1
+    power = -525
+    potential = { always = no }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 50 sr_coaxium_foc = 10 }
+    }
+    ftl = yes
+    jumpdrive = yes
+    ship_modifier = { ship_windup_mult = -0.8 ship_ftl_jumpdrive_range_mult = 0.6 }
+    class_restriction = { shipclass_military }
+    size_restriction = { foc_immobilizer418 foc_immobilizer418_foc_lowest }
+    component_set = "ftl_components"
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    ai_weight = { weight = 0 }
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "FOC_IMMOBILIZER418_THRUSTER"
+    size = large
+    icon = "GFX_ship_part_subspace_drive"
+    icon_frame = 1
+    power = -300
+    potential = { always = no }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 40 sr_coaxium_foc = 10 }
+    }
+    modifier = {
+        ship_base_speed_mult = 0.15
+        ship_emergency_ftl_mult = -0.8
+        ship_jumpdrive_cooldown_mult = -0.75
+        ship_emergency_ftl_min_days_add = -7
+    }
+    component_set = "thruster_components"
+    size_restriction = { foc_immobilizer418 foc_immobilizer418_foc_lowest }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    ai_weight = { weight = 0 }
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "FOC_IMMOBILIZER418_CORE"
+    size = small
+    icon = "GFX_ship_part_computer_carrier_sapient"
+    icon_frame = 1
+    power = -1960
+    potential = { always = no }
+    resources = {
+        category = ship_components
+        cost = { }
+    }
+    class_restriction = { shipclass_military }
+    size_restriction = { foc_immobilizer418 foc_immobilizer418_foc_lowest }
+    component_set = "combat_computers"
+    ship_behavior = "picket"
+    ship_modifier = {
+        ship_cloaking_detection_add = 4
+        ship_armor_hardening_add = 0.5
+        ship_shield_hardening_add = 0.5
+        ship_tracking_add = 20
+    }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    ai_weight = { weight = 0 }
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "FOC_IMMOBILIZER418_CREW"
+    size = aux
+    icon = "GFX_ship_part_computer_carrier_sapient"
+    icon_frame = 1
+    power = 0
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = {
+            food = 50
+        }
+    }
+    ship_modifier = {
+        ship_experience_gain_mult = 1.5
+        ship_hull_regen_add_perc = 0.3
+        ship_armor_regen_add_perc = 0.3
+    }
+    component_set = "foc_immobilizer418_aux_systems"
+    size_restriction = { foc_immobilizer418 foc_immobilizer418_foc_lowest }
+}
+utility_component_template = {
+    key = "FOC_IMMOBILIZER418_SNARE"
+    size = medium
+    icon = "GFX_ship_part_aura_snare"
+    icon_frame = 1
+    power = -2500
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+        }
+    }
+    resources = {
+        category = ship_components
+        cost = { }
+    }
+    size_restriction = { foc_immobilizer418 foc_rebel_mc158 foc_sw_lusankya imperialsd foc_rebel_mc80_line foc_immobilizer418_foc_lowest imperialsd_foc_lowest foc_rebel_mc80_line_foc_lowest foc_sw_lusankya_foc_lowest foc_rebel_mc158_foc_lowest foc_v118_executor_bastion_foc_lowest foc_v118_imperialsd_bastion_foc_lowest foc_imperialsd2 foc_imperialsd2_foc_lowest }
+    component_set = "foc_interdiction_gravity_well"
+    hostile_aura = {
+        name = "foc_immobilizer418_interdiction_aura"
+        radius = 750
+        apply_on = fleets
+        stack_info = {
+            id = foc_immobilizer418_interdiction_aura
+            priority = 999
+        }
+        modifier = {
+            ship_disengage_chance_mult = -9999
+            ship_emergency_ftl_min_days_add = 1000000
+        }
+        graphics = {
+            area_effect = {
+                entity = "circle_area_entity"
+                dynamic_scale = yes
+            }
+            ship_effect = {
+                entity = "ship_aura_negative_entity"
+                dynamic_scale = no
+            }
+        }
+    }
+    ai_weight = {
+        weight = 999
+    }
+}
+utility_component_template = {
+    key = "FOC_IMMOBILIZER418_SNARE_AUX"
+    size = aux
+    icon = "GFX_ship_part_aura_snare"
+    icon_frame = 1
+    power = -2500
+    resources = {
+        category = ship_components
+        cost = { }
+    }
+    size_restriction = { foc_immobilizer418 foc_immobilizer418_foc_lowest }
+    component_set = "foc_immobilizer418_aux_systems"
+    ship_limit = 4
+    hostile_aura = {
+        name = "foc_immobilizer418_interdiction_aura"
+        radius = 750
+        apply_on = fleets
+        stack_info = {
+            id = foc_immobilizer418_interdiction_aura
+            priority = 999
+        }
+        modifier = {
+            ship_disengage_chance_mult = -9999
+            ship_emergency_ftl_min_days_add = 1000000
+        }
+        graphics = {
+            area_effect = {
+                entity = "circle_area_entity"
+                dynamic_scale = yes
+            }
+            ship_effect = {
+                entity = "ship_aura_negative_entity"
+                dynamic_scale = no
+            }
+        }
+    }
+    ai_weight = {
+        weight = 999
+    }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_STD_TURBO_M_T3_G_V03"
+    size = medium
+    icon = "GFX_ship_part_turbo_laser_g_3"
+    icon_frame = 1
+    prerequisites = { "foc_tech_sw_turbolaser_3" }
+    component_set = "FOC_IMMOBILIZER418_TURBOCANNON"
+    projectile_gfx = "infrared_laser_m"
+    tags = { weapon_type_energy weapon_role_artillery M_slot }
+    ai_tags = { weapon_role_artillery }
+    ai_tag_weight = 0
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 25
+            sr_tibanna_swgs = 4
+        }
+        upkeep = { }
+    }
+    power = -100
+    damage = {
+        min = 228
+        max = 894
+    }
+    windup = {
+        min = 8
+        max = 8
+    }
+    total_fire_time = 4
+    range = 70
+    accuracy = 0.9
+    tracking = 0.5
+    hull_damage = 1
+    armor_damage = 2
+    shield_damage = 3
+    target_weights = {
+        titan = 1
+        battleship = 2
+        cruiser = 3
+        destroyer = 4
+        frigate = 5
+        corvette = 5
+    }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+strike_craft_component_template = {
+    key = "FOC_IMMOBILIZER418_INTERCEPTOR_HANGAR"
+    size = large
+    entity = "ssp_fo_interceptor_entity"
+    weapon_type = point_defence
+    point_defence_targets = { "strike_craft" }
+    projectile_gfx = "strike_craft_laser_3"
+    power = -60
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 165
+        
+            sr_tibanna_swgs = 8
+        }
+        upkeep = {
+            energy = 3
+            alloys = 2
+        }
+    }
+    count = 4
+    regeneration_per_day = 1.25
+    launch_time = 2
+    damage = {
+        min = 417.6
+        max = 626.4
+    }
+    cooldown = 1.044
+    attack_range = 15
+    range = 15
+    engagement_range = 12000
+    accuracy = 1
+    tracking = 1
+    health = 372
+    armor = 108
+    shield = 630
+    evasion = 0.97
+    speed = 1675.6
+    rotation_speed = 1.15
+    acceleration = 1.25
+    shield_penetration = 0.6
+    armor_penetration = 0.5
+    shield_damage = 1.65
+    armor_damage = 1.75
+    hull_damage = 1.7
+    ship_behavior = "fighters_behavior"
+    icon = "GFX_ship_part_ssp_fo_interceptor"
+    icon_frame = 1
+    component_set = "FOC_IMMOBILIZER418_INTERCEPTOR"
+    tags = { weapon_type_strike_craft }
+    potential = {
+        OR = {
+            is_ship_size = foc_immobilizer418
+            is_ship_size = foc_immobilizer418_foc_lowest
+        }
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+        }
+        from = {
+            NOT = {
+                foc_v236_has_cis_aircraft_identity = yes
+            }
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ship_limit = 1
+    ai_weight = {
+        weight = 999
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = point_defence
+    key = "FOC_STD_PD_P_T3_G_V01"
+    hidden = yes
+    size = point_defence
+    icon = "GFX_ship_part_defence_turbo_g_2"
+    icon_frame = 1
+    potential = {
+        OR = {
+            is_ship_size = foc_immobilizer418
+            is_ship_size = foc_immobilizer418_foc_lowest
+        }
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    component_set = "FOC_IMMOBILIZER418_POINT_DEFENCE"
+    tags = { weapon_type_point_defense weapon_type_energy }
+    ai_tags = { weapon_role_point_defense screen }
+    resources = {
+        category = ship_components
+        cost = {
+            alloys = 13
+            sr_tibanna_swgs = 2
+        }
+        upkeep = { }
+    }
+    power = -7.5
+    damage = {
+        min = 8
+        max = 16
+    }
+    total_fire_time = 0.5
+    range = 30
+    accuracy = 0.95
+    tracking = 1
+    point_defence_targets = { "missile" "strike_craft" }
+    ai_weight = {
+        weight = 999
+    }
+    projectile_gfx = "white_laser_pd"
+    prerequisites = { "foc_tech_std_pd_2" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}

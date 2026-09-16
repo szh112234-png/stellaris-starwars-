@@ -1,0 +1,75 @@
+
+###################################################################################
+###																				###
+###						 Eternal Fleet Battlecruiser							###
+###																				###
+###################################################################################
+
+# FRAME
+
+entity = {
+	name = "zakuul_battlecruiser_entity"
+	pdxmesh = "zakuul_batlecruiser_mesh"
+
+	default_state = "idle"
+	state = { name = "idle"	animation = "idle" animation_blend_time = 4
+		start_event = { trigger_once = yes sound = { soundeffect = "Eng_rebellion_frigate_idle" } }
+	}
+	state = { name = "moving"	animation = "idle" animation_blend_time = 2
+		event = { trigger_once = yes sound = { soundeffect = "moving_out_battleship" } }
+	}
+	state = { name = "death" animation = "death" animation_blend_time = 0.0 chance = 1 looping = no
+		event = { time = 8.15 node = "part1_locator" particle = "ship_explosion_air_vent_particle" }
+		event = { time = 8.15 node = "part1_locator" particle = "ship_burn_particle" }
+
+		event = { time = 8.15 node = "part2_locator" particle = "ship_burn_particle" }
+		event = { time = 8.15 node = "part2_locator" particle = "ship_explosion_air_vent_particle" }
+
+		event = { time = 8.3 node = "ship_main" particle = "ship_explosion_particle" }
+
+		event = { time = 0.0 particle = "large_ship_explosion_particle" sound = { soundeffect = Ship_Plasma_Explosion_small } }
+	}
+	state = { name = "death" animation = "death2" animation_blend_time = 0.0 chance = 1 looping = no
+		event = { time = 3.05 node = "part1_locator" particle = "ship_explosion_air_vent_particle" }
+		event = { time = 3.05 node = "part2_locator" particle = "ship_explosion_air_vent_particle" }
+		event = { time = 3.05 node = "ship_main" particle = "ship_explosion_particle" }
+
+		event = { time = 4.6 node = "ship_main" particle = "ship_explosion_particle" }
+		event = { time = 4.6 node = "part1_locator" particle = "ship_burn_particle" }
+		event = { time = 4.6 node = "part2_locator" particle = "ship_burn_particle" }
+
+		event = { time = 0.0 particle = "large_ship_explosion_particle" sound = { soundeffect = Ship_Plasma_Explosion_small } }
+	}
+	state = { name = "death" animation = "death3" animation_blend_time = 0.0 chance = 1 looping = no
+		event = { time = 1.05 node = "part2_local_explosion_locator" particle = "ship_explosion_particle" }
+		event = { time = 1.6 node = "part2_local_explosion_locator1" particle = "ship_explosion_particle" }
+		event = { time = 3.4 node = "part2_local_explosion_locator2" particle = "ship_explosion_particle" }
+		event = { time = 6.6 node = "part2_local_explosion_locator3" particle = "ship_explosion_particle" }
+		event = { time = 6.83 node = "part2_local_explosion_locator4" particle = "ship_explosion_particle" }
+		event = { time = 7.1 node = "part2_local_explosion_locator5" particle = "ship_explosion_particle" }
+		event = { time = 7.5 node = "part2_local_explosion_locator6" particle = "ship_explosion_particle" }
+
+		event = { time = 7.93 node = "part2_explosion_locator" particle = "large_ship_explosion_particle" sound = { soundeffect = Ship_Plasma_Explosion_small } }
+		event = { time = 7.93 node = "part1_locator" particle = "ship_explosion_particle" }
+		event = { time = 7.93 node = "part1_locator" particle = "ship_burn_particle" }
+		event = { time = 7.93 node = "part1_locator" particle = "ship_explosion_air_vent_particle" }
+	}
+
+	scale = 1.0
+	
+	locator = { name = "small_gun_01"	rotation = {  0 0 0 } position = { 0  0 0 } }
+	locator = { name = "small_gun_02"	rotation = {  0 0 0 } position = { 0  0 0 } }
+	locator = { name = "small_gun_03_l"	rotation = {  0 0 0 } position = { 0  0 0 } }
+	locator = { name = "small_gun_03_r"	rotation = {  0 0 0 } position = { 0  0 0 } }
+	locator = { name = "small_gun_04_l"	rotation = {  0 0 0 } position = { 0  0 0 } }
+	locator = { name = "small_gun_04_r"	rotation = {  0 0 0 } position = { 0  0 0 } }
+	locator = { name = "medium_gun_01"	rotation = {  0 0 0 } position = {  0 0 0 } }
+	locator = { name = "medium_gun_02"	rotation = {  0 0 0 } position = {  0  0 0 } }
+	locator = { name = "medium_gun_03"	rotation = {  0 0 0 } position = { 0  0 0 } }
+	locator = { name = "medium_gun_04"	rotation = {  0 0 0 } position = { 0  0 0 } }
+	locator = { name = "large_gun_01"	rotation = {  0 0 0 } position = { 0  0 0 } }
+	locator = { name = "large_gun_02_l"	rotation = {  0 0 0 } position = {  0 0 0 } }
+	locator = { name = "large_gun_02_r"	rotation = {  0 0 0 } position = {  0  0 0 } }
+	locator = { name = "large_gun_03_l"	rotation = {  0 0 0 } position = { 0  0 0 } }
+	locator = { name = "large_gun_03_r"	rotation = {  0 0 0 } position = { 0  0 0 } }
+}

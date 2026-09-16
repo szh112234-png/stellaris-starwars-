@@ -1,0 +1,59 @@
+# Starkiller Base orbital shipyard.
+#
+# The custom ring hull cannot take vanilla's orbital_ring_shipyard (its section
+# declares only orbital_ring_tier_1/2/3), so the capability is rebuilt here. The three
+# pieces that actually make a shipyard work, copied from vanilla orbital_ring_shipyard
+# in common/starbase_modules/00_orbital_ring_modules.txt:
+#   - station_modifier   starbase_shipyard_capacity_add
+#   - on_finished        set_ship_construction_type = starbase_shipyard
+#   - on_destroyed       revert to none when the last shipyard module is gone
+# Without on_finished the module builds but the starbase never gains the build button.
+#
+# The vanilla beastport mutual-exclusion checks are dropped: beastports are a separate
+# ring module that can never exist on this hull.
+
+foc_starkiller_shipyard = {
+	icon = "GFX_starbase_shipyard"
+	section = "FOC_STARKILLER_SHIPYARD_SECTION"
+	construction_days = 180
+	starbase_type = orbital_ring
+	category = sm_naval_support_cat
+
+	potential = {
+		exists = owner
+		has_starbase_size = foc_starkiller_ring
+		exists = planet
+		planet = { has_planet_flag = myk_starkiller_base_planet_flag }
+	}
+
+	resources = {
+		category = starbase_modules
+		cost = {
+			alloys = 500
+		}
+		upkeep = {
+			energy = 2
+		}
+	}
+
+	station_modifier = {
+		starbase_shipyard_capacity_add = 2
+	}
+
+	on_finished = {
+		set_ship_construction_type = starbase_shipyard
+	}
+
+	on_destroyed = {
+		if = {
+			limit = { NOT = { has_starbase_module = foc_starkiller_shipyard } }
+			set_ship_construction_type = none
+		}
+	}
+
+	# Below the hangar module's 1000 and the defense grid's 100: an AI-run First Order
+	# origin should arm the base before it turns it into a dockyard.
+	ai_weight = {
+		weight = 50
+	}
+}

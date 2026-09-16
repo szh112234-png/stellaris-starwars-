@@ -1,0 +1,20 @@
+# The dedicated Death Star culture inherits ordinary fallback assets from the
+# Galactic Empire ship family. Its Colossus frame and section remain supplied
+# directly by the Death Star assets.
+foc_imperial_remnant_01 = {
+    fallback = empire_01
+    ship_kinds = {
+        default_ship
+        space_amoeba
+        tiyanki
+        voidworm
+        cutholoid
+        crystalline_entity
+    }
+    ship_selection_weight = {
+        base = 0
+        modifier = { set = 10 graphical_culture = from }
+    }
+    has_city_graphics = no
+    ship_color = no
+}

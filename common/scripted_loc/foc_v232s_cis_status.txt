@@ -1,0 +1,30 @@
+defined_text = {
+    name = GetFocV232sCoruscantStatus
+    random = no
+    text = { trigger = { has_country_flag = foc_saga_cw_coruscant_shown } localization_key = foc_v232s.status.yes }
+    default = foc_v232s.status.no
+}
+defined_text = {
+    name = GetFocV232sUtapauStatus
+    random = no
+    text = { trigger = { has_country_flag = foc_saga_cw_utapau_shown } localization_key = foc_v232s.status.yes }
+    default = foc_v232s.status.no
+}
+defined_text = {
+    name = GetFocV232sPlotStatus
+    random = no
+    text = { trigger = { any_situation = { is_situation_type = situation_foc_republic_origin_palpatine_plot situation_progress >= 140 } } localization_key = foc_v232s.status.yes }
+    default = foc_v232s.status.no
+}
+defined_text = {
+    name = GetFocV232sStoryVictoryStatus
+    random = no
+    text = { trigger = { foc_v232s_cis_plot_victory = yes } localization_key = foc_v232s.status.yes }
+    default = foc_v232s.status.no
+}
+defined_text = {
+    name = GetFocV232sMilitaryVictoryStatus
+    random = no
+    text = { trigger = { foc_v232s_cis_military_victory = yes } localization_key = foc_v232s.status.yes }
+    default = foc_v232s.status.no
+}

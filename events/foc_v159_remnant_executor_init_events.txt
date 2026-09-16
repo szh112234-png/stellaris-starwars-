@@ -1,0 +1,43 @@
+namespace = foc_v159_remnant_assets
+
+# Bounded post-Treaty initialization verifier. It self-retries only while the
+# 30-day initialization flag exists. After that, no Executor is ever replenished.
+country_event = {
+    id = foc_v159_remnant_assets.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        has_country_flag = foc_sw_imperial_remnant_country
+        has_global_flag = foc_republic_origin_galactic_treaty
+        NOT = { has_global_flag = foc_sw_war_in_heaven_started }
+        has_country_flag = foc_v159_remnant_executor_init_window
+        NOT = { has_country_flag = foc_v159_remnant_executor_init_done }
+    }
+    immediate = {
+        foc_v159_repair_imperial_remnant_initial_executor_package = yes
+        if = {
+            limit = {
+                count_owned_fleet = {
+                    limit = { has_fleet_flag = foc_sw_imperial_executor_fleet }
+                    count >= 8
+                }
+                count_owned_ship = {
+                    limit = {
+                        OR = {
+                            is_ship_size = foc_sw_lusankya
+                            is_ship_size = foc_sw_lusankya_foc_lowest
+                        }
+                    }
+                    count >= 8
+                }
+            }
+            remove_country_flag = foc_v159_remnant_executor_init_window
+            set_country_flag = foc_v159_remnant_executor_init_done
+            log = "FOC_V159_REMNANT: initial Treaty fleet package verified at 8 Executor-class flagships; automatic repair is now permanently disabled."
+        }
+        else_if = {
+            limit = { has_country_flag = foc_v159_remnant_executor_init_window }
+            country_event = { id = foc_v159_remnant_assets.1 days = 3 }
+        }
+    }
+}

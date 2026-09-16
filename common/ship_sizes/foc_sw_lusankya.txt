@@ -1,0 +1,89 @@
+foc_sw_lusankya = {
+    # v17.18j-loadtest: filter in COUNTRY scope before generic design fitting.
+    # Same access rule as the required FOC cores; no new research or build permit.
+    potential_country = { foc_v1718_allowed_country = yes }
+    possible_country = { foc_v1718_allowed_country = yes }
+
+    formation_priority = 30
+    max_speed = 100
+    acceleration = 0.1
+    rotation_speed = 0.1
+    collision_radius = 32
+    max_hitpoints = 5196454
+    modifier = {
+        ship_evasion_add = 10
+        ship_armor_add = 811946
+        ship_shield_add = 1455000
+        ship_shield_regen_add_static = 1600
+        ship_armor_regen_add_static = 1600
+        ship_hull_regen_add_static = 1600
+    }
+    ship_modifier = {
+        ship_weapon_range_mult = 1
+        ship_starting_experience_add = 11100
+    }
+    available_to_everyone = yes
+    map_counter_icon = ship_counter_128
+    size_multiplier = 670
+    fleet_slot_size = 16
+    combat_size_multiplier = 80
+    section_slots = {
+        bow = {
+            locator = "core"
+        }
+        stern = {
+            locator = "core"
+        }
+        mid = {
+            locator = "core"
+        }
+        hull = {
+            locator = "core"
+        }
+        core = {
+            locator = "core"
+        }
+    }
+    num_target_locators = 5
+    is_space_station = no
+    icon = ship_size_military_32
+    is_designable = yes
+    base_buildtime = 2400
+    can_have_federation_design = no
+    enable_default_design = yes
+    ship_class_icon_frame = 37
+    possible_construction = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        exists = owner
+        owner = {
+            has_technology = tech_foc_jakku_executor_blueprint
+        }
+    }
+    prerequisites = { tech_foc_jakku_executor_blueprint }
+    default_behavior = foc_lus_carrier_ship
+    entity = foc_executor_2389_frame_entity
+    combat_disengage_chance = 0.5
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    required_component_set = "foc_interdiction_gravity_well"
+    resources = {
+        category = ships
+        cost = {
+            alloys = 2165950
+        }
+        upkeep = {
+            energy = 5
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 500
+    }
+
+    required_component_set = "power_core"
+    required_component_set = "thruster_components"
+    required_component_set = "sensor_components"
+    required_component_set = "combat_computers"
+    required_component_set = "ftl_components"
+}

@@ -1,0 +1,61 @@
+# V137 - country-scope fighter family enforcement for Star Wars story countries.
+# Researched legacy technologies are not forcibly removed; the family flag is
+# authoritative for designer/component access, matching the existing doctrine system.
+
+foc_v137_sync_story_starfighter_access = {
+    if = { limit = { NOT = { foc_v236_has_cis_aircraft_identity = yes } } remove_country_flag = ssp_fighter_group_cis }
+    if = { limit = { foc_v236_has_cis_aircraft_identity = yes } foc_v236_adopt_cis_aircraft = yes }
+    else_if = {
+        limit = { foc_v137_has_rebel_starfighter_identity = yes }
+        if = {
+            limit = {
+                OR = {
+                    has_country_flag = ssp_fighter_group_all
+                    has_country_flag = ssp_fighter_group_empire
+                    has_country_flag = ssp_fighter_group_republic
+                    NOT = { has_country_flag = ssp_fighter_group_rebel }
+                    NOT = { has_technology = tech_ssp_rebel_hyperspace }
+                }
+            }
+            foc_republic_origin_adopt_rebel_starfighters = yes
+        }
+    }
+    else_if = {
+        limit = { foc_v137_has_imperial_starfighter_identity = yes }
+        if = {
+            limit = {
+                OR = {
+                    has_country_flag = ssp_fighter_group_all
+                    has_country_flag = ssp_fighter_group_rebel
+                    has_country_flag = ssp_fighter_group_republic
+                    NOT = { has_country_flag = ssp_fighter_group_empire }
+                    NOT = { has_technology = tech_ssp_imperial_hyperspace }
+                }
+            }
+            foc_republic_origin_adopt_imperial_starfighters = yes
+        }
+    }
+    else_if = {
+        limit = { foc_v137_has_republic_starfighter_identity = yes }
+        if = {
+            limit = {
+                OR = {
+                    has_country_flag = ssp_fighter_group_all
+                    has_country_flag = ssp_fighter_group_empire
+                    has_country_flag = ssp_fighter_group_rebel
+                    NOT = { has_country_flag = ssp_fighter_group_republic }
+                    NOT = { has_technology = tech_ssp_republic_hyperspace }
+                }
+            }
+            foc_republic_origin_adopt_republic_starfighters = yes
+        }
+    }
+    else = {
+        # Story countries with no matching strategic-aircraft family (currently
+        # Mandalore) must not inherit a start-menu family by accident.
+        remove_country_flag = ssp_fighter_group_all
+        remove_country_flag = ssp_fighter_group_empire
+        remove_country_flag = ssp_fighter_group_rebel
+        remove_country_flag = ssp_fighter_group_republic
+    }
+}

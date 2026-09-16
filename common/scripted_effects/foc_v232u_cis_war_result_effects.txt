@@ -1,0 +1,9 @@
+# Country scope = victorious Republic. Do not mutate a war being removed by
+# the engine. Only latch its positive result and defer the existing story offer.
+foc_v232u_record_cis_military_victory = {
+    if = {
+        limit = { foc_v232u_can_receive_cis_result = yes }
+        set_country_flag = foc_v232u_cis_military_victory_confirmed
+        country_event = { id = foc_republic_origin.19 days = 1 }
+    }
+}

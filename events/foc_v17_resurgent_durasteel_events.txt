@@ -1,0 +1,15 @@
+namespace = foc_v17_durasteel
+
+country_event = {
+    id = foc_v17_durasteel.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        foc_v17_resurgent_durasteel_eligible = yes
+        OR = {
+            NOT = { has_country_flag = foc_v17_resurgent_durasteel_unlocked }
+            NOT = { has_technology = foc_tech_swgs_crisis_point_defence }
+        }
+    }
+    immediate = { foc_v17_unlock_resurgent_durasteel = yes }
+}

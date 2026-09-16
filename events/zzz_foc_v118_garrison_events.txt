@@ -1,0 +1,126 @@
+namespace = foc_v118_garrison
+
+# -----------------------------------------------------------------------------
+# FOC V118b: rebuild the three story Executor groups when they are wrong.
+#
+# Two things can be wrong with a group:
+#
+#   1. It carries the old FTL-capable hulls (a save made before the garrison
+#      rework). Only an AI Empire needs this fixed - a human Empire is supposed
+#      to keep mobile flagships, so its hulls are left alone.
+#
+#   2. It has no flagship at all. V118a shipped a parameterised
+#      foc_v118_create_guard_flagship whose $SHIPNAME$ substitution failed, so
+#      every create_ship for Executor, Lusankya and Punisher was a parse error
+#      and the fleets spawned with their ten Imperial-class escorts and nothing
+#      to escort. That hits AI and human Empires alike, so this half of the
+#      repair is not gated on is_ai.
+#
+# A hull swap cannot be done in place, so either case rebuilds the group at full
+# strength on its own anchor system. Accumulated damage and experience are lost.
+#
+# Each group is rebuilt at most once per save, guarded by its own country flag.
+# Without that guard a flagship killed in battle while its escorts survived
+# would look identical to case 2 and be resurrected every month.
+# -----------------------------------------------------------------------------
+country_event = {
+	id = foc_v118_garrison.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			has_country_flag = foc_republic_origin_empire_country
+			has_country_flag = foc_republic_origin_player_empire
+		}
+		NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+		OR = {
+			NOT = { has_country_flag = foc_v118_endor_guard_rebuilt }
+			NOT = { has_country_flag = foc_v118_coruscant_guard_rebuilt }
+			NOT = { has_country_flag = foc_v118_jakku_guard_rebuilt }
+		}
+		any_owned_fleet = {
+			OR = {
+				has_fleet_flag = foc_republic_origin_executor_endor_guard
+				has_fleet_flag = foc_republic_origin_lusankya_coruscant_guard
+				has_fleet_flag = foc_republic_origin_punisher_jakku_guard
+			}
+		}
+	}
+
+	immediate = {
+		save_event_target_as = foc_republic_origin_executor_reward_owner
+
+		if = {
+			limit = {
+				exists = event_target:foc_sw_endor_system
+				NOT = { has_country_flag = foc_v118_endor_guard_rebuilt }
+				any_owned_fleet = {
+					has_fleet_flag = foc_republic_origin_executor_endor_guard
+					OR = {
+						NOT = { any_owned_ship = { has_ship_flag = foc_republic_origin_executor_one } }
+						AND = {
+							owner = { is_ai = yes }
+							any_owned_ship = { OR = { OR = { is_ship_size = foc_sw_lusankya is_ship_size = foc_sw_lusankya_foc_lowest } OR = { is_ship_size = imperialsd is_ship_size = imperialsd_foc_lowest } } }
+						}
+					}
+				}
+			}
+			every_owned_fleet = {
+				limit = { has_fleet_flag = foc_republic_origin_executor_endor_guard }
+				destroy_fleet = this
+			}
+			event_target:foc_sw_endor_system = { foc_republic_origin_spawn_executor_endor_guard = yes }
+			set_country_flag = foc_v118_endor_guard_rebuilt
+			log = "FOC_V118_GARRISON: Endor guard rebuilt with its Executor flagship."
+		}
+
+		if = {
+			limit = {
+				exists = event_target:foc_sw_coruscant_system
+				NOT = { has_country_flag = foc_v118_coruscant_guard_rebuilt }
+				any_owned_fleet = {
+					has_fleet_flag = foc_republic_origin_lusankya_coruscant_guard
+					OR = {
+						NOT = { any_owned_ship = { has_ship_flag = foc_republic_origin_executor_two } }
+						AND = {
+							owner = { is_ai = yes }
+							any_owned_ship = { OR = { OR = { is_ship_size = foc_sw_lusankya is_ship_size = foc_sw_lusankya_foc_lowest } OR = { is_ship_size = imperialsd is_ship_size = imperialsd_foc_lowest } } }
+						}
+					}
+				}
+			}
+			every_owned_fleet = {
+				limit = { has_fleet_flag = foc_republic_origin_lusankya_coruscant_guard }
+				destroy_fleet = this
+			}
+			event_target:foc_sw_coruscant_system = { foc_republic_origin_spawn_lusankya_coruscant_guard = yes }
+			set_country_flag = foc_v118_coruscant_guard_rebuilt
+			log = "FOC_V118_GARRISON: Coruscant guard rebuilt with the Lusankya."
+		}
+
+		if = {
+			limit = {
+				exists = event_target:foc_sw_jakku_system
+				NOT = { has_country_flag = foc_v118_jakku_guard_rebuilt }
+				any_owned_fleet = {
+					has_fleet_flag = foc_republic_origin_punisher_jakku_guard
+					OR = {
+						NOT = { any_owned_ship = { has_ship_flag = foc_republic_origin_executor_three } }
+						AND = {
+							owner = { is_ai = yes }
+							any_owned_ship = { OR = { OR = { is_ship_size = foc_sw_lusankya is_ship_size = foc_sw_lusankya_foc_lowest } OR = { is_ship_size = imperialsd is_ship_size = imperialsd_foc_lowest } } }
+						}
+					}
+				}
+			}
+			every_owned_fleet = {
+				limit = { has_fleet_flag = foc_republic_origin_punisher_jakku_guard }
+				destroy_fleet = this
+			}
+			event_target:foc_sw_jakku_system = { foc_republic_origin_spawn_punisher_jakku_guard = yes }
+			set_country_flag = foc_v118_jakku_guard_rebuilt
+			log = "FOC_V118_GARRISON: Jakku guard rebuilt with the Punisher."
+		}
+	}
+}

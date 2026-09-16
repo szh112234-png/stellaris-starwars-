@@ -1,0 +1,356 @@
+# V14: original point defense retained; retired ordinary aliases remain inert.
+weapon_component_template = {
+    key = "FOC_STD_TURBO_L_T4_G_V03"
+    size = large
+    entity = "invisible_turret_entity"
+    type = instant
+    component_set = "FOC_KHAN_SUPREMACY_TURBOLASER_SET"
+    projectile_gfx = "infrared_laser_l"
+    icon = "GFX_ship_part_turbo_laser_g_4"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_role_artillery L_slot }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { foc_sai_supremacy_arkship_tier_3 foc_sai_supremacy_arkship_tier_3_foc_lowest }
+    prerequisites = { "foc_tech_sw_turbolaser_4" }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 12
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 7200
+        max = 10800
+    }
+    windup = {
+        min = 1
+        max = 3
+    }
+    total_fire_time = 4
+    range = 220
+    accuracy = 0.92
+    tracking = 0.35
+    hull_damage = 1.0
+    armor_damage = 1.75
+    shield_damage = 1.75
+    shield_penetration = 0
+    armor_penetration = 0
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_STD_TURBO_M_T4_G_V03"
+    size = medium
+    entity = "invisible_turret_entity"
+    type = instant
+    component_set = "FOC_KHAN_SUPREMACY_TURBOLASER_SET"
+    projectile_gfx = "infrared_laser_m"
+    icon = "GFX_ship_part_turbo_laser_g_4"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_role_medium M_slot }
+    ai_tags = { weapon_role_medium }
+    size_restriction = { foc_sai_supremacy_arkship_tier_3 foc_sai_supremacy_arkship_tier_3_foc_lowest }
+    prerequisites = { "foc_tech_sw_turbolaser_4" }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 6
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 3300
+        max = 5100
+    }
+    windup = {
+        min = 1
+        max = 3
+    }
+    total_fire_time = 3
+    range = 165
+    accuracy = 0.95
+    tracking = 0.55
+    hull_damage = 1.0
+    armor_damage = 1.75
+    shield_damage = 1.75
+    shield_penetration = 0
+    armor_penetration = 0
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_STD_TURBO_S_T4_G_V02"
+    size = small
+    entity = "invisible_turret_entity"
+    type = instant
+    component_set = "FOC_KHAN_SUPREMACY_TURBOLASER_SET"
+    projectile_gfx = "infrared_laser_s"
+    icon = "GFX_ship_part_turbo_laser_g_4"
+    icon_frame = 1
+    tags = { weapon_type_energy weapon_role_anti_hull S_slot }
+    ai_tags = { weapon_role_anti_hull }
+    size_restriction = { foc_sai_supremacy_arkship_tier_3 foc_sai_supremacy_arkship_tier_3_foc_lowest }
+    prerequisites = { "foc_tech_sw_turbolaser_4" }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 3
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 1320
+        max = 2160
+    }
+    windup = {
+        min = 1
+        max = 3
+    }
+    total_fire_time = 2
+    range = 110
+    accuracy = 0.98
+    tracking = 0.80
+    hull_damage = 1.0
+    armor_damage = 1.50
+    shield_damage = 1.50
+    shield_penetration = 0
+    armor_penetration = 0
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    key = "FOC_STD_PD_P_T4_G_V04"
+    hidden = yes
+    size = point_defence
+    type = instant
+    component_set = "FOC_KHAN_SUPREMACY_PD_SET"
+    icon = "GFX_ship_part_defence_turbo_g_3"
+    icon_frame = 1
+    tags = { weapon_type_point_defence weapon_role_point_defence }
+    ai_tags = { weapon_role_point_defence }
+    size_restriction = { foc_sai_supremacy_arkship_tier_3 foc_sai_supremacy_arkship_tier_3_foc_lowest }
+    potential = {
+        from = {
+            has_country_flag = foc_khan_first_order_country
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 3
+        }
+        upkeep = { }
+    }
+    power = -1
+    damage = {
+        min = 130
+        max = 210
+    }
+    windup = {
+        min = 1
+        max = 2
+    }
+    total_fire_time = 1
+    range = 80
+    accuracy = 1.0
+    tracking = 1.0
+    hull_damage = 1.0
+    armor_damage = 1.25
+    shield_damage = 1.25
+    shield_penetration = 0
+    armor_penetration = 0
+    ai_weight = {
+        weight = 0
+    }
+    projectile_gfx = "white_laser_pd"
+    entity = "invisible_turret_entity"
+    prerequisites = { "foc_tech_std_pd_3" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+utility_component_template = {
+    key = "FOC_KHAN_SUPREMACY_REACTOR"
+    size = small
+    icon = "GFX_foc_v1718c_supremacy_ship_part_reactor_1"
+    icon_frame = 1
+    power = 55000
+    potential = { always = no }
+    resources = {
+        category = ship_components
+        cost = { sr_coaxium_foc = 10 }
+        upkeep = { }
+    }
+    component_set = "power_core"
+    size_restriction = { foc_sai_supremacy_arkship_tier_3 foc_sai_supremacy_arkship_tier_3_foc_lowest }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "FOC_KHAN_SUPREMACY_THRUSTER"
+    size = small
+    icon = "GFX_foc_v1718c_supremacy_ship_part_thruster_1"
+    icon_frame = 1
+    power = -500
+    potential = { always = no }
+    resources = {
+        category = ship_components
+        cost = { sr_tibanna_swgs = 10 sr_coaxium_foc = 10 }
+        upkeep = { }
+    }
+    modifier = { ship_base_speed_mult = 0.10 ship_evasion_add = 1 }
+    component_set = "thruster_components"
+    size_restriction = {
+        corvette
+        destroyer
+        cruiser
+        battleship
+        titan
+        imperialsd
+        resurgentbattlecruiser
+        xystonsd
+        foc_khan_mandator
+        foc_khan_eclipse
+        foc_khan_eclipse_ii
+        foc_rebel_nebula
+        foc_rebel_mc158
+        foc_sai_supremacy_arkship_tier_1
+        foc_sai_supremacy_arkship_tier_2
+        foc_sai_supremacy_arkship_tier_3
+        imperialsd_foc_lowest
+        resurgentbattlecruiser_foc_lowest
+        foc_khan_mandator_foc_lowest
+        foc_khan_eclipse_foc_lowest
+        foc_khan_eclipse_ii_foc_lowest
+        foc_rebel_nebula_foc_lowest
+        foc_rebel_mc158_foc_lowest
+        foc_sai_supremacy_arkship_tier_1_foc_lowest
+        foc_sai_supremacy_arkship_tier_2_foc_lowest
+        foc_sai_supremacy_arkship_tier_3_foc_lowest
+        foc_v118_imperialsd_bastion_foc_lowest
+        foc_imperialsd2
+        foc_imperialsd2_foc_lowest
+    }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+utility_component_template = {
+    key = "FOC_KHAN_SUPREMACY_COMBAT_COMPUTER"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_strange_computer"
+    icon_frame = 1
+    power = -100
+    potential = { always = no }
+    resources = {
+        category = ship_components
+        cost = { }
+        upkeep = { }
+    }
+    size_restriction = { foc_sai_supremacy_arkship_tier_3 foc_sai_supremacy_arkship_tier_3_foc_lowest }
+    component_set = "combat_computers"
+    ship_behavior = "artillery"
+    ship_modifier = { ship_weapon_range_mult = 0.25 ship_tracking_add = 10 }
+    ai_weight = { weight = 0 }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+    show_tech_unlock_if = { always = no }
+}
+strike_craft_component_template = {
+    key = "FOC_KHAN_SUPREMACY_TIE"
+    size = LARGE
+    entity = "FirstOrder_TIEFighter_entity"
+    weapon_type = point_defence
+    projectile_gfx = "adv_kinetic_artillery"
+    power = -40
+    resources = {
+        category = ship_components
+        cost = { 
+            sr_tibanna_swgs = 8
+        }
+        upkeep = { }
+    }
+    count = 18
+    regeneration_per_day = 6
+    launch_time = 1.5
+    damage = {
+        min = 12
+        max = 20
+    }
+    cooldown = 0.5
+    range = 10
+    engagement_range = 175
+    accuracy = 1.00
+    tracking = 1.00
+    health = 120
+    armor = 20
+    shield = 10
+    evasion = 0.90
+    speed = 520
+    rotation_speed = 0.9
+    acceleration = 1.2
+    hull_damage = 1.25
+    shield_damage = 2.00
+    shield_penetration = 0
+    armor_damage = 1.75
+    armor_penetration = 0
+    ship_behavior = "bombers_behavior"
+    icon = "GFX_RESURGENTBATTLECRUISER_TIE"
+    icon_frame = 1
+    component_set = "RESURGENTBATTLECRUISER_TIE"
+    size_restriction = { foc_sai_supremacy_arkship_tier_3 foc_sai_supremacy_arkship_tier_3_foc_lowest }
+    tags = { weapon_type_strike_craft }
+    ai_tags = { weapon_role_anti_hull }
+    potential = {
+        from = {
+            has_country_flag = foc_khan_first_order_country
+        }
+        from = {
+            NOT = {
+                foc_v236_has_cis_aircraft_identity = yes
+            }
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 10
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}

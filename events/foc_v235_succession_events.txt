@@ -1,0 +1,137 @@
+namespace = foc_v235
+
+# Monthly and load hooks have no country scope. Dispatch once per eligible country.
+event = {
+    id = foc_v235.0
+    hide_window = yes
+    is_triggered_only = yes
+    immediate = {
+        every_country = {
+            limit = {
+                OR = {
+                    foc_v235_is_resistance = yes
+                    AND = {
+                        is_ai = no
+                        OR = {
+                            has_country_flag = foc_republic_origin_republic_country
+                            has_country_flag = foc_republic_origin_player_empire
+                            has_country_flag = foc_republic_origin_player_rebels
+                            has_country_flag = foc_republic_origin_player_imperial_remnant
+                            has_country_flag = foc_sw_new_republic_country
+                        }
+                    }
+                }
+            }
+            country_event = { id = foc_v235.1 }
+        }
+    }
+}
+
+country_event = {
+    id = foc_v235.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        OR = {
+            foc_v235_is_resistance = yes
+            AND = {
+                is_ai = no
+                OR = {
+                    has_country_flag = foc_republic_origin_republic_country
+                    has_country_flag = foc_republic_origin_player_empire
+                    has_country_flag = foc_republic_origin_player_rebels
+                    has_country_flag = foc_republic_origin_player_imperial_remnant
+                    has_country_flag = foc_sw_new_republic_country
+                }
+            }
+        }
+    }
+    immediate = {
+        if = { limit = { foc_v235_is_resistance = yes } foc_v235_ensure_resistance_storage = yes }
+        foc_v235_finish_player_treasury_succession = yes
+        if = {
+            limit = { is_ai = no NOT = { has_country_flag = foc_v235_loaded } }
+            set_country_flag = foc_v235_loaded
+            log = "FOC_V235_LOADED: treasury continuity, Resistance storage, full opening hull census and Death Star conditional cost loaded."
+        }
+    }
+}
+
+country_event = {
+    id = foc_v235.2
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        has_country_flag = foc_republic_origin_empire_country
+        has_country_flag = foc_v235_opening_ratio_pending
+        NOT = { has_country_flag = foc_v235_opening_ratio_done }
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+    }
+    immediate = { foc_v235_balance_opening_capital_totals = yes }
+}
+
+# Explicit opt-in for a backup OLD save. Never called by any on_action.
+# Run on either player's GCW country: event foc_v235.3
+country_event = {
+    id = foc_v235.3
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = { is_ai = no NOT = { has_global_flag = foc_republic_origin_galactic_treaty } }
+    immediate = {
+        every_country = {
+            limit = {
+                has_country_flag = foc_republic_origin_empire_country
+                NOT = { has_country_flag = foc_v235_opening_ratio_done }
+            }
+            foc_v235_balance_opening_capital_totals = yes
+        }
+    }
+}
+
+# The exact 900-day callback and the monthly power watcher share built guards.
+country_event = {
+    id = foc_v235.6
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        is_ai = yes
+        has_country_flag = foc_republic_origin_empire_country
+        has_country_flag = foc_republic_origin_death_star_project_started
+        has_country_flag = foc_v235_ds1_clock_started
+        NOT = { has_country_flag = foc_republic_origin_death_star_one_built }
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+    }
+    immediate = {
+        remove_country_flag = foc_v235_ds1_early_wait
+        # Check fleet power on the actual deadline even between monthly pulses.
+        if = {
+            limit = {
+                NOT = { has_country_flag = foc_v202_death_star_emergency_acceleration_used }
+                any_country = {
+                    foc_v235_is_gcw_rebel = yes
+                    is_at_war_with = root
+                    fleet_power > root.trigger:fleet_power
+                }
+            }
+            set_country_flag = foc_v202_death_star_emergency_acceleration_used
+        }
+        if = {
+            limit = { has_country_flag = foc_v202_death_star_emergency_acceleration_used }
+            country_event = { id = foc_republic_origin.170 }
+        }
+    }
+}
+
+# Read-only fleet census; no fleet creation, relocation or order clearing.
+country_event = {
+    id = foc_v235.9
+    hide_window = yes
+    is_triggered_only = yes
+    immediate = {
+        every_country = {
+            limit = { OR = { has_country_flag = foc_republic_origin_empire_country foc_v235_is_gcw_rebel = yes } }
+            foc_v235_count_capital_hulls = yes
+            log = "FOC_V235_CENSUS: [This.GetName]; ISD=[This.foc_v235_isd_total], MC80=[This.foc_v235_mc80_total]."
+        }
+    }
+}

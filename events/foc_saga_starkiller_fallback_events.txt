@@ -1,0 +1,209 @@
+namespace = foc_sk
+
+# =============================================================================
+# 弑星者基地：备用目标控制器
+# =============================================================================
+# 只在原控制器 foc_khan.1000 彻底找不到目标时接手，不改动它，也不与它抢。
+# 共用同一组全局旗标（foc_khan_forced_starkiller_in_progress /
+# foc_khan_forced_starkiller_cooldown），所以两个控制器不会同时开火。
+#
+# 调用的是同一对原生事件：myk_starkiller_dyson.8200 起爆、foc_khan.1001 结算，
+# scopes = { from = 基地 } 也一致，因此充能动画、星系摧毁、情报泄露、
+# 冷却与新闻事件全部照原流程走。
+#
+# 与原控制器唯一的区别：目标不再限定为首都，而是任何一个还有敌对殖民地、
+# 且恒星未被打碎的星系。首都打光之后，弑星者会继续往下打。
+# =============================================================================
+
+event = {
+    id = foc_sk.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_khan_phase_one
+        exists = event_target:foc_khan_first_order
+        exists = event_target:foc_khan_first_order_system
+        NOT = { has_global_flag = foc_khan_forced_starkiller_cooldown }
+        NOT = { has_global_flag = foc_khan_forced_starkiller_in_progress }
+        event_target:foc_khan_first_order_system = {
+            any_system_megastructure = {
+                is_megastructure_type = myk_starkiller_base_final
+            }
+        }
+        # 原控制器还有首都可打时，让它打，这里不插手。
+        foc_saga_starkiller_no_capital_target_left = yes
+        # 但确实还有别的东西可打。
+        any_system = { foc_saga_starkiller_fallback_target_system = yes }
+    }
+
+    immediate = {
+        clear_global_event_target = foc_khan_crisis_starkiller_base
+        clear_global_event_target = foc_saga_starkiller_fallback_system
+
+        # 每次重新取一遍实际存在的基地，读档后也能正确找到。
+        event_target:foc_khan_first_order_system = {
+            every_system_megastructure = {
+                limit = { is_megastructure_type = myk_starkiller_base_final }
+                save_global_event_target_as = foc_khan_crisis_starkiller_base
+            }
+        }
+
+        # Canon fallback: old saves can lose the saved Hosnian event target.
+        if = {
+            limit = { NOT = { exists = event_target:foc_sw_hosnian_system } }
+            random_system = {
+                limit = { has_star_flag = foc_sw_hosnian_home }
+                save_global_event_target_as = foc_sw_hosnian_system
+            }
+        }
+
+        # Even when Hosnian is no longer the New Republic capital, it remains the
+        # First Order's canonical first Starkiller target while the system survives.
+        if = {
+            limit = {
+                exists = event_target:foc_sw_hosnian_system
+                event_target:foc_sw_hosnian_system = {
+                    foc_saga_starkiller_fallback_target_system = yes
+                }
+            }
+            event_target:foc_sw_hosnian_system = {
+                save_global_event_target_as = foc_saga_starkiller_fallback_system
+            }
+        }
+        # v28：若霍斯尼亚已不存在，备用控制器才先找首都再退而求其次。
+        else_if = {
+            limit = { any_system = { foc_saga_starkiller_fallback_capital_system = yes } }
+            random_system = {
+                limit = { foc_saga_starkiller_fallback_capital_system = yes }
+                save_global_event_target_as = foc_saga_starkiller_fallback_system
+            }
+        }
+        # 没有首都可打时：义军残部 → 新共和国残部 → 任意敌对殖民地。
+        else_if = {
+            limit = {
+                exists = event_target:foc_khan_rebel_alliance
+                any_system = {
+                    foc_saga_starkiller_fallback_target_system = yes
+                    any_system_planet = {
+                        is_colony = yes
+                        NOT = { has_planet_flag = myk_starkiller_planet_destroyed }
+                        owner = { is_same_value = event_target:foc_khan_rebel_alliance }
+                    }
+                }
+            }
+            random_system = {
+                limit = {
+                    foc_saga_starkiller_fallback_target_system = yes
+                    any_system_planet = {
+                        is_colony = yes
+                        NOT = { has_planet_flag = myk_starkiller_planet_destroyed }
+                        owner = { is_same_value = event_target:foc_khan_rebel_alliance }
+                    }
+                }
+                save_global_event_target_as = foc_saga_starkiller_fallback_system
+            }
+        }
+        else_if = {
+            limit = {
+                exists = event_target:foc_sw_new_republic
+                any_system = {
+                    foc_saga_starkiller_fallback_target_system = yes
+                    any_system_planet = {
+                        is_colony = yes
+                        NOT = { has_planet_flag = myk_starkiller_planet_destroyed }
+                        owner = { is_same_value = event_target:foc_sw_new_republic }
+                    }
+                }
+            }
+            random_system = {
+                limit = {
+                    foc_saga_starkiller_fallback_target_system = yes
+                    any_system_planet = {
+                        is_colony = yes
+                        NOT = { has_planet_flag = myk_starkiller_planet_destroyed }
+                        owner = { is_same_value = event_target:foc_sw_new_republic }
+                    }
+                }
+                save_global_event_target_as = foc_saga_starkiller_fallback_system
+            }
+        }
+        else = {
+            random_system = {
+                limit = { foc_saga_starkiller_fallback_target_system = yes }
+                save_global_event_target_as = foc_saga_starkiller_fallback_system
+            }
+        }
+
+        if = {
+            limit = {
+                exists = event_target:foc_khan_crisis_starkiller_base
+                exists = event_target:foc_saga_starkiller_fallback_system
+            }
+            set_global_flag = foc_khan_forced_starkiller_in_progress
+            set_global_flag = foc_saga_starkiller_fallback_used
+            log = "FOC_SAGA_STARKILLER_FALLBACK: no live enemy capital remains; charging against [event_target:foc_saga_starkiller_fallback_system.GetName]."
+
+            event_target:foc_saga_starkiller_fallback_system = {
+                system_event = {
+                    id = myk_starkiller_dyson.8200
+                    scopes = { from = event_target:foc_khan_crisis_starkiller_base }
+                }
+                system_event = {
+                    id = foc_khan.1001
+                    days = 180
+                    scopes = { from = event_target:foc_khan_crisis_starkiller_base }
+                }
+            }
+        }
+    }
+}
+
+# =============================================================================
+# 老存档修复：提前置上的伊冷航路全局旗标
+# =============================================================================
+# 共和国起源的迁都事件曾经错误地 set_global_flag = foc_imperial_remnant_route_unlocked
+# （已在本补丁中改成国家旗标）。已经跑过那一步的存档里，这个全局旗标还留着，
+# 造成两件事：
+#   1. 全银河所有国家都能走贾库↔伊冷的门
+#   2. foc_starkiller_coords.1 的前置 NOT = { has_global_flag = ... } 永远不成立，
+#      「弑星者首次开火 → 各国三角定位伊冷坐标」这条支线永远不会开始
+#
+# 这里只在**弑星者确实还没开过火**的前提下把它撤掉：此时它一定是被提前置上的。
+# 一旦第一次打击真的发生过，coords.2 会按原设计重新置上，本事件不再介入。
+# =============================================================================
+
+event = {
+    id = foc_sk.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_imperial_remnant_route_unlocked
+        # 首次打击尚未发生 —— 说明这个旗标不是 coords.2 置的。
+        NOT = { has_global_flag = foc_khan_starkiller_first_system_destroyed }
+        NOT = { has_global_flag = foc_story_hosnian_destroyed }
+        NOT = { has_global_flag = foc_saga_ilum_route_flag_repaired }
+    }
+
+    immediate = {
+        set_global_flag = foc_saga_ilum_route_flag_repaired
+        remove_global_flag = foc_imperial_remnant_route_unlocked
+        log = "FOC_SAGA_ILUM_ROUTE: cleared a prematurely set foc_imperial_remnant_route_unlocked; the Jakku-Ilum gate is restricted again and the coordinate project chain can now run."
+
+        # 已经真正打通航路的一方保住自己的通行权，避免把第一秩序自己关在门外。
+        every_playable_country = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_republic_origin_ilum_granted
+                    has_country_flag = fop_origin_relocated_to_ilum
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = foc_khan_final_order_country
+                }
+            }
+            set_country_flag = fop_imperial_remnant_route_unlocked
+            add_seen_bypass_type = foc_imperial_remnant_route
+        }
+    }
+}
+

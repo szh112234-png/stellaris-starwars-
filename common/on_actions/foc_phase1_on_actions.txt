@@ -1,0 +1,33 @@
+# FOC Phase I dispatchers
+# V182: .1 is a one-time map initializer; the V153 monthly request-repair hook was removed.
+on_monthly_pulse_country = {
+    events = {
+        # Core story and state-transition dispatchers only.
+        foc_phase1.2
+        foc_phase1.3
+        foc_phase1.4
+        foc_phase1.5
+        foc_phase1.6
+        foc_phase1.8
+        foc_phase1.7
+        foc_gcw.1
+        foc_gcw.2
+    }
+}
+
+# This = destroyed starbase; From = destroying fleet.
+on_starbase_destroyed = {
+    events = { fop_ambition.13 }
+}
+
+# V184: strategic major-route control is recalculated once per year.
+on_yearly_pulse_country = {
+    events = {
+        foc_phase1.61
+        # V189: player Imperial Rebels may invest in the real vanilla spy network against the Empire.
+        foc_gcw.31
+        # V202: resource-backed frontier resistance; human choice and AI payment.
+        foc_gcw.32
+        foc_gcw.33
+    }
+}

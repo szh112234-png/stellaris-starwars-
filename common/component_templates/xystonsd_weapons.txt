@@ -1,0 +1,175 @@
+# V14: original point defense retained; retired ordinary aliases remain inert.
+weapon_component_template = {
+    key = "PLANET_KILLER_XYSTON_WEAPON"
+    size = planet_killer
+    type = planet_killer
+    entity = "invisible_turret_entity"
+    use_ship_main_target = no
+    hidden = no
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 128
+            sr_kyber_swgs = 24
+        }
+    }
+    power = -7000
+    windup = {
+        min = 30
+        max = 30
+    }
+    total_fire_time = 50
+    icon = GFX_xystonsd_planet_cracker
+    icon_frame = 1
+    component_set = "PLANET_KILLER_XYSTON_WEAPON"
+    planet_destruction_gfx = "foc_v13_xyston_planet_gfx"
+    size_restriction = { xystonsd foc_khan_xystonsd foc_khan_xystonsd_foc_lowest }
+    ai_weight = {
+        factor = 999
+    }
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+
+    prerequisites = { "tech_titans" "foc_tech_dark_legacy_xyston" }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    # v17.15: fixed single-hit alpha; 100%/100% penetration remains subject to hardening.
+    # Low base damage + layer multipliers; long reload, not a sustained-DPS target.
+
+    key = "XYSTONSD_GUN"
+    size = titanic
+    entity = "invisible_turret_entity"
+    type = instant
+    prio_projectile = yes
+    icon = GFX_xystonsd_planet_cracker
+    icon_frame = 1
+    firing_arc = 0.1
+    min_range = 10.0
+    prerequisites = { "tech_titans" "foc_tech_dark_legacy_xyston" }
+    component_set = "XYSTONSD_GUN"
+    projectile_gfx = "foc_v13_xyston_superweapon_gfx"
+    size_restriction = { xystonsd foc_khan_xystonsd foc_khan_xystonsd_combat foc_khan_xystonsd_foc_lowest foc_khan_xystonsd_combat_foc_lowest }
+    tags = { weapon_type_energy }
+    ai_tags = { weapon_role_artillery }
+    ai_tag_weight = 0
+    ship_modifier = {
+        ship_shield_mult = -1
+    }
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 64
+            sr_kyber_swgs = 1200
+        }
+    }
+    power = -7000
+    damage = { min = 3500000 max = 3500000 }
+    windup = { min = 40 max = 40 }
+    range = 300
+    accuracy = 1
+    tracking = 0
+    hull_damage = 6
+    armor_damage = 2
+    shield_damage = 4
+    shield_penetration = 1
+    armor_penetration = 1
+    target_weights = {
+        starbase_citadel = 10
+        starbase_starfortress = 9
+        starbase_starhold = 8
+        starbase_starport = 7
+        starbase_outpost = 6
+        starbase_deep_space_citadel_1 = 10
+        starbase_deep_space_citadel_2 = 10
+        starbase_deep_space_citadel_3 = 10
+        titan = 5
+        battleship = 4
+        cruiser = 2
+        destroyer = 0.8
+        frigate = 0.5
+        corvette = 0.2
+    }
+    ai_weight = {
+        weight = 999
+    }
+    potential = {
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    total_fire_time = 300
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}
+weapon_component_template = {
+    type = instant
+    key = "FOC_STD_TURBO_L_T5_R_V02"
+    size = large
+    icon = "GFX_ship_part_turbo_laser_r_5"
+    icon_frame = 1
+    prerequisites = { "tech_titans" "foc_tech_sw_turbolaser_5" }
+    component_set = "XYSTON_TURBOCANNON_GUN"
+    projectile_gfx = "infrared_laser_l"
+    tags = { weapon_type_kinetic }
+    ai_tags = { weapon_role_artillery }
+    size_restriction = { xystonsd foc_khan_xystonsd foc_khan_xystonsd_combat foc_khan_xystonsd_foc_lowest foc_khan_xystonsd_combat_foc_lowest }
+    ai_tag_weight = 0
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 16
+            sr_kyber_swgs = 2
+        }
+        upkeep = { }
+    }
+    power = -200
+    damage = {
+        min = 1404
+        max = 2070
+    }
+    windup = {
+        min = 5
+        max = 5
+    }
+    total_fire_time = 5
+    range = 140
+    accuracy = 0.8
+    tracking = 0.2
+    hull_damage = 1
+    armor_damage = 2
+    shield_damage = 3
+    shield_penetration = 0
+    armor_penetration = 0
+    target_weights = {
+        titan = 5
+        battleship = 4
+        cruiser = 3
+        destroyer = 2
+        frigate = 1
+        corvette = 1
+    }
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}

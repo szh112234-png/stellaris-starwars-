@@ -1,0 +1,2026 @@
+foc_immobilizer418_foc_lowest = {
+    ship_modifier = { }
+    formation_priority = 50
+    max_speed = 120
+    acceleration = 0.45
+    rotation_speed = 0.19
+    collision_radius = 6
+    modifier = { ship_evasion_add = 10 ship_armor_add = 948.348857 ship_shield_add = 474.174428 }
+    size_multiplier = 50
+    fleet_slot_size = 50
+    section_slots = {
+        core = { locator = core }
+    }
+    num_target_locators = 3
+    is_space_station = no
+    map_counter_icon = ship_counter_16
+    icon = ship_size_military_4
+    use_shipnames_from = cruiser
+    base_buildtime = 60
+    can_have_federation_design = no
+    enable_default_design = no
+    is_designable = no
+    enable_3dview_in_ship_browser = yes
+    entity = foc_immobilizer418_entity
+    default_behavior = picket
+    combat_disengage_chance = 0.15
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    required_component_set = power_core
+    required_component_set = "ftl_components"
+    required_component_set = thruster_components
+    required_component_set = sensor_components
+    required_component_set = combat_computers
+    resources = {
+        category = ships
+        cost = { energy = 200 alloys = 200 }
+    }
+    min_upgrade_cost = { alloys = 66 }
+    ai_ship_data = { min = 0 max = 0 }
+    available_to_everyone = no
+    potential_country = { has_global_flag = foc_khan_strength_lowest }
+    max_hitpoints = 1896.69771
+}
+imperialsd_foc_lowest = {
+    is_designable = yes
+    entity = battleship_entity
+    formation_priority = 5
+    max_speed = 100
+    acceleration = 0.25
+    rotation_speed = 0.1
+    collision_radius = 8
+    modifier = {
+        ship_evasion_add = 5
+        ship_armor_add = 3516.75824
+        ship_shield_add = 7582.41758
+    }
+    ship_modifier = {
+
+    }
+    size_multiplier = 57
+    fleet_slot_size = 8
+    section_slots = {
+        bow = {
+            locator = part1
+        }
+        mid = {
+            locator = part2
+        }
+        stern = {
+            locator = part3
+        }
+    }
+    num_target_locators = 5
+    is_space_station = no
+    map_counter_icon = ship_counter_32
+    icon = ship_size_military_8
+    use_shipnames_from = destroyer
+    base_buildtime = 180
+    can_have_federation_design = no
+    enable_default_design = yes
+    enable_3dview_in_ship_browser = yes
+    default_behavior = picket
+    possible_country = {
+        has_global_flag = foc_khan_strength_lowest
+        OR = {
+            foc_ai_capital_is_imperial_class_country = yes
+            any_owned_fleet = {
+                any_owned_ship = {
+                    is_ship_size = imperialsd_foc_lowest
+                }
+            }
+        }
+    }
+    prerequisites = {
+        tech_destroyers
+        foc_tech_dark_legacy_imperial
+    }
+    combat_disengage_chance = 0.10
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    possible_construction = {
+        exists = owner
+        owner = {
+            foc_ai_capital_is_imperial_class_country = yes
+            NOT = {
+                has_country_flag = foc_phase1_imperial_sd_retired
+            }
+        }
+    }
+    required_component_set = power_core
+    required_component_set = ftl_components
+    required_component_set = thruster_components
+    required_component_set = sensor_components
+    required_component_set = combat_computers
+    required_component_set = imperialsd_crew
+    resources = {
+        category = ships
+        cost = {
+            alloys = 1000
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 66
+    }
+    ai_ship_data = {
+        fraction = {
+            base = 0
+            modifier = {
+                add = 120
+                foc_ai_capital_is_imperial_class_country = yes
+                has_technology = foc_tech_dark_legacy_imperial
+                NOT = {
+                    has_country_flag = foc_phase1_imperial_sd_retired
+                }
+            }
+        }
+    }
+    available_to_everyone = no
+    potential_country = {
+        has_global_flag = foc_khan_strength_lowest
+        OR = {
+            foc_ai_capital_is_imperial_class_country = yes
+            any_owned_fleet = {
+                any_owned_ship = {
+                    is_ship_size = imperialsd_foc_lowest
+                }
+            }
+        }
+    }
+    max_hitpoints = 7032.69231
+
+
+}
+foc_rebel_mc80_line_foc_lowest = {
+    is_designable = yes
+    graphical_culture = {
+        rebel_01
+    }
+    formation_priority = 5
+    max_speed = 100
+    acceleration = 0.25
+    rotation_speed = 0.1
+    collision_radius = 8
+    modifier = {
+        ship_evasion_add = 5
+        ship_armor_add = 2751.35468
+        ship_shield_add = 14142.8571
+    }
+    ship_modifier = {
+
+    }
+    size_multiplier = 44
+    fleet_slot_size = 8
+    section_slots = {
+        bow = {
+            locator = part1
+        }
+        mid = {
+            locator = part2
+        }
+        stern = {
+            locator = part3
+        }
+    }
+    num_target_locators = 5
+    is_space_station = no
+    map_counter_icon = ship_counter_32
+    icon = ship_size_military_8
+    use_shipnames_from = cruiser
+    base_buildtime = 180
+    can_have_federation_design = no
+    enable_default_design = yes
+    enable_3dview_in_ship_browser = yes
+    entity = foc_v1717f_mc80_line_frame_entity
+    default_behavior = line
+    potential_country = {
+        has_global_flag = foc_khan_strength_lowest
+        foc_ai_capital_can_build_mc80 = yes
+    }
+    possible_country = {
+        has_global_flag = foc_khan_strength_lowest
+        foc_ai_capital_can_build_mc80 = yes
+    }
+    prerequisites = {
+        tech_destroyers
+    }
+    combat_disengage_chance = 0.10
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    possible_construction = {
+        exists = owner
+        owner = {
+            foc_ai_capital_can_build_mc80 = yes
+        }
+    }
+    required_component_set = power_core
+    required_component_set = ftl_components
+    required_component_set = thruster_components
+    required_component_set = sensor_components
+    required_component_set = combat_computers
+    resources = {
+        category = ships
+        cost = {
+            alloys = 700
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 66
+    }
+    ai_ship_data = {
+        fraction = {
+            base = 0
+            modifier = {
+                add = 120
+                foc_ai_capital_can_build_mc80 = yes
+            }
+        }
+    }
+    available_to_everyone = no
+    hull_scale = 2.0
+    max_hitpoints = 4401.35468
+
+
+}
+resurgentbattlecruiser_foc_lowest = {
+    is_designable = yes
+    entity = battleship_entity
+    formation_priority = 25
+    max_speed = 100
+    acceleration = 0.1
+    rotation_speed = 0.1
+    collision_radius = 8
+    modifier = {
+        ship_evasion_add = 5
+        ship_armor_add = 3626.62639
+        ship_shield_add = 3636.6171
+    }
+    ship_modifier = {
+
+    }
+    size_multiplier = 103
+    fleet_slot_size = 8
+    section_slots = {
+        core = {
+            locator = part1
+        }
+    }
+    num_target_locators = 5
+    is_space_station = no
+    map_counter_icon = ship_counter_32
+    icon = ship_size_military_8
+    use_shipnames_from = battleship
+    base_buildtime = 360
+    can_have_federation_design = no
+    enable_default_design = yes
+    enable_3dview_in_ship_browser = yes
+    default_behavior = picket
+    prerequisites = {
+        tech_plasma_3
+        tech_battleships
+        foc_tech_dark_legacy_resurgent
+    }
+    combat_disengage_chance = -0.10
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    required_component_set = power_core
+    required_component_set = ftl_components
+    required_component_set = thruster_components
+    required_component_set = sensor_components
+    required_component_set = combat_computers
+    required_component_set = resurgentbattlecruiser_crew
+    required_component_set = resurgentbattlecruiser_subsnare
+    potential_construction = {
+        OR = {
+            is_scope_type = starbase
+            AND = {
+                is_scope_type = megastructure
+                OR = {
+                    is_megastructure_type = mega_shipyard_3
+                    is_megastructure_type = mega_shipyard_restored
+                }
+            }
+        }
+    }
+    possible_construction = {
+        owner = {
+            NOT = {
+                has_country_flag = foc_phase1_resurgent_retired
+            }
+        }
+    }
+    resources = {
+        category = ships
+        cost = {
+            alloys = 1800
+        }
+        produces = {
+            unity = 50
+            influence = 0.05
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 1200
+    }
+    ai_ship_data = {
+        min = 0
+        max = 0
+    }
+    available_to_everyone = no
+    potential_country = {
+        has_global_flag = foc_khan_strength_lowest
+    }
+    max_hitpoints = 6963.5223
+
+
+}
+foc_khan_xystonsd_foc_lowest = {
+    entity = xystonsd_colossus_entity
+    formation_priority = 1
+    max_speed = 100
+    acceleration = 0.25
+    rotation_speed = 0.1
+    collision_radius = 8
+    modifier = {
+        ship_evasion_add = 5
+        ship_armor_add = 500
+        ship_shield_add = 2000
+    }
+    ship_modifier = {
+
+    }
+    size_multiplier = 85
+    fleet_slot_size = 8
+    section_slots = {
+        core = {
+            locator = part1
+        }
+    }
+    num_target_locators = 5
+    is_space_station = no
+    icon_frame = 6
+    map_counter_icon = ship_counter_8
+    icon = ship_size_military_2
+    base_buildtime = 360
+    can_have_federation_design = no
+    enable_default_design = no
+    use_shipnames_from = colossus
+    enable_3dview_in_ship_browser = yes
+    default_behavior = line
+    combat_disengage_chance = 0
+    class = shipclass_military_special
+    construction_type = starbase_shipyard
+    required_component_set = power_core
+    required_component_set = ftl_components
+    required_component_set = thruster_components
+    required_component_set = sensor_components
+    required_component_set = combat_computers
+    required_component_set = xystonsd_crew
+    potential_construction = {
+        always = no
+    }
+    possible_construction = {
+        always = no
+    }
+    resources = {
+        category = ships
+        cost = {
+            alloys = 1500
+        }
+        upkeep = {
+
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 1
+    }
+    ai_ship_data = {
+
+    }
+    available_to_everyone = no
+    is_designable = no
+    potential_country = {
+        has_global_flag = foc_khan_strength_lowest
+    }
+    max_hitpoints = 1100
+
+
+
+    # v17.18d: plot-only hull; fixed global designs are spawned by events.
+    # Do not expose an unresearched shipyard design to players or AI.
+    possible_country = { always = no }
+}
+foc_khan_xystonsd_combat_foc_lowest = {
+    entity = xystonsd_colossus_entity
+    formation_priority = 1
+    max_speed = 100
+    acceleration = 0.25
+    rotation_speed = 0.1
+    collision_radius = 8
+    modifier = {
+        ship_evasion_add = 5
+        ship_armor_add = 500
+        ship_shield_add = 2000
+    }
+    ship_modifier = {
+
+    }
+    size_multiplier = 85
+    fleet_slot_size = 8
+    section_slots = {
+        core = {
+            locator = part1
+        }
+    }
+    num_target_locators = 5
+    is_space_station = no
+    icon_frame = 6
+    map_counter_icon = ship_counter_8
+    icon = ship_size_military_2
+    base_buildtime = 360
+    can_have_federation_design = no
+    enable_default_design = no
+    use_shipnames_from = battleship
+    enable_3dview_in_ship_browser = yes
+    default_behavior = line
+    combat_disengage_chance = 0.05
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    required_component_set = power_core
+    required_component_set = ftl_components
+    required_component_set = thruster_components
+    required_component_set = sensor_components
+    required_component_set = combat_computers
+    required_component_set = xystonsd_crew
+    potential_construction = {
+        always = no
+    }
+    possible_construction = {
+        always = no
+    }
+    resources = {
+        category = ships
+        cost = {
+            alloys = 1500
+        }
+        upkeep = {
+
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 1
+    }
+    ai_ship_data = {
+
+    }
+    available_to_everyone = no
+    is_designable = no
+    potential_country = {
+        has_global_flag = foc_khan_strength_lowest
+    }
+    max_hitpoints = 1100
+
+
+
+    # v17.18d: plot-only hull; fixed global designs are spawned by events.
+    # Do not expose an unresearched shipyard design to players or AI.
+    possible_country = { always = no }
+}
+foc_khan_mandator_foc_lowest = {
+    formation_priority = 42
+    max_speed = 100
+    acceleration = 0.1
+    rotation_speed = 0.1
+    collision_radius = 8
+    modifier = {
+        ship_evasion_add = 5
+        ship_armor_add = 4291.27517
+        ship_shield_add = 13429.5302
+    }
+    ship_modifier = {
+
+    }
+    size_multiplier = 270
+    fleet_slot_size = 8
+    section_slots = {
+        main = {
+            locator = part1
+        }
+        bow = {
+            locator = part2
+        }
+        mid = {
+            locator = part3
+        }
+        stern = {
+            locator = part4
+        }
+    }
+    num_target_locators = 4
+    is_space_station = no
+    icon_frame = 6
+    base_buildtime = 1800
+    can_have_federation_design = no
+    entity = Manator_entity
+    enable_default_design = no
+    combat_disengage_chance = 0.5
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    required_component_set = power_core
+    required_component_set = ftl_components
+    required_component_set = thruster_components
+    required_component_set = sensor_components
+    required_component_set = combat_computers
+    required_component_set = FOC_KHAN_MANDATOR_SIEGE_LASER_SET
+    required_component_set = FOC_KHAN_MANDATOR_SIEGE_LASER_SECONDARY_SET
+    potential_construction = {
+        always = no
+    }
+    resources = {
+        category = ships
+        cost = {
+            alloys = 3000
+        }
+        upkeep = {
+
+        }
+    }
+    is_designable = no
+    potential_country = {
+        has_global_flag = foc_khan_strength_lowest
+    }
+    max_hitpoints = 17165.1007
+
+
+
+    # v17.18d: plot-only hull; fixed global designs are spawned by events.
+    # Do not expose an unresearched shipyard design to players or AI.
+    possible_country = { always = no }
+    possible_construction = { always = no }
+}
+foc_khan_eclipse_foc_lowest = {
+    formation_priority = 30
+    max_speed = 100
+    acceleration = 0.1
+    rotation_speed = 0.1
+    collision_radius = 32
+    modifier = {
+        ship_evasion_add = 5
+        ship_disengage_chance_mult = -9999
+        ship_emergency_ftl_min_days_mult = 9999
+        ship_armor_add = 3974.89919
+        ship_shield_add = 17926.2601
+    }
+    ship_modifier = {
+
+    }
+    size_multiplier = 618
+    fleet_slot_size = 16
+    section_slots = {
+        mid = {
+            locator = part1
+        }
+        bow = {
+            locator = part2
+        }
+        core = {
+            locator = part3
+        }
+        data = {
+            locator = part4
+        }
+        stern = {
+            locator = part5
+        }
+    }
+    num_target_locators = 8
+    is_space_station = no
+    icon_frame = 6
+    base_buildtime = 2400
+    can_have_federation_design = no
+    entity = eclipse_frame_entity
+    enable_default_design = no
+    combat_disengage_chance = 0
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    required_component_set = power_core
+    required_component_set = ftl_components
+    required_component_set = thruster_components
+    required_component_set = sensor_components
+    required_component_set = combat_computers
+    potential_construction = {
+        always = no
+    }
+    resources = {
+        category = ships
+        cost = {
+            alloys = 3000000
+        }
+        upkeep = {
+
+        }
+    }
+    combat_size_multiplier = 80
+    is_designable = no
+    potential_country = {
+        has_global_flag = foc_khan_strength_lowest
+    }
+    max_hitpoints = 21199.3241
+
+
+
+    # v17.18d: plot-only hull; fixed global designs are spawned by events.
+    # Do not expose an unresearched shipyard design to players or AI.
+    possible_country = { always = no }
+    possible_construction = { always = no }
+}
+foc_khan_eclipse_ii_foc_lowest = {
+    formation_priority = 30
+    max_speed = 100
+    acceleration = 0.1
+    rotation_speed = 0.1
+    collision_radius = 32
+    modifier = {
+        ship_evasion_add = 5
+        ship_armor_add = 3974.89919
+        ship_shield_add = 17926.2601
+    }
+    ship_modifier = {
+
+    }
+    size_multiplier = 618
+    fleet_slot_size = 16
+    combat_size_multiplier = 80
+    section_slots = {
+        bow = {
+            locator = part1
+        }
+        stern = {
+            locator = part2
+        }
+        mid = {
+            locator = part3
+        }
+        hull = {
+            locator = part4
+        }
+        core = {
+            locator = part5
+        }
+    }
+    num_target_locators = 0
+    is_space_station = no
+    icon_frame = 6
+    map_counter_icon = ship_counter_128
+    ship_class_icon_frame = 37
+    base_buildtime = 2400
+    can_have_federation_design = no
+    enable_default_design = no
+    is_designable = no
+    default_behavior = artillery
+    entity = foc_eclipse_ii_entity
+    combat_disengage_chance = 1.25
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    required_component_set = power_core
+    required_component_set = ftl_components
+    required_component_set = thruster_components
+    required_component_set = sensor_components
+    required_component_set = combat_computers
+    potential_construction = {
+        always = no
+    }
+    resources = {
+        category = ships
+        cost = {
+            alloys = 3000000
+        }
+        upkeep = {
+            energy = 5
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 500
+    }
+    potential_country = {
+        has_global_flag = foc_khan_strength_lowest
+    }
+    max_hitpoints = 21199.3241
+
+
+
+    # v17.18d: plot-only hull; fixed global designs are spawned by events.
+    # Do not expose an unresearched shipyard design to players or AI.
+    possible_country = { always = no }
+    possible_construction = { always = no }
+}
+foc_sw_lusankya_foc_lowest = {
+    formation_priority = 30
+    max_speed = 100
+    acceleration = 0.1
+    rotation_speed = 0.1
+    collision_radius = 32
+    modifier = {
+        ship_evasion_add = 5
+        ship_armor_add = 4058.87234
+        ship_shield_add = 16661.3861
+    }
+    ship_modifier = {
+
+    }
+    available_to_everyone = yes
+    map_counter_icon = ship_counter_128
+    size_multiplier = 670
+    fleet_slot_size = 16
+    combat_size_multiplier = 80
+    section_slots = {
+        bow = {
+            locator = core
+        }
+        stern = {
+            locator = core
+        }
+        mid = {
+            locator = core
+        }
+        hull = {
+            locator = core
+        }
+        core = {
+            locator = core
+        }
+    }
+    num_target_locators = 5
+    is_space_station = no
+    icon = ship_size_military_32
+    is_designable = yes
+    base_buildtime = 2400
+    can_have_federation_design = no
+    enable_default_design = yes
+    ship_class_icon_frame = 37
+    possible_construction = {
+        exists = owner
+        owner = {
+            has_technology = tech_foc_jakku_executor_blueprint
+        }
+    }
+    prerequisites = {
+        tech_foc_jakku_executor_blueprint
+    }
+    default_behavior = foc_lus_carrier_ship
+    entity = foc_executor_2389_frame_entity
+    combat_disengage_chance = 0.5
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    required_component_set = foc_interdiction_gravity_well
+    resources = {
+        category = ships
+        cost = {
+            alloys = 2165950
+        }
+        upkeep = {
+            energy = 5
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 500
+    }
+    potential_country = {
+        has_global_flag = foc_khan_strength_lowest
+    }
+    max_hitpoints = 21647.2663
+
+    required_component_set = "power_core"
+    required_component_set = "thruster_components"
+    required_component_set = "sensor_components"
+    required_component_set = "combat_computers"
+    required_component_set = "ftl_components"
+}
+foc_rebel_nebula_foc_lowest = {
+    available_to_everyone = yes
+    formation_priority = 24
+    max_speed = 100
+    acceleration = 0.1
+    rotation_speed = 0.1
+    collision_radius = 8
+    modifier = {
+        ship_evasion_add = 5
+        ship_armor_add = 2252.74725
+        ship_shield_add = 2252.74725
+    }
+    ship_modifier = {
+
+    }
+    size_multiplier = 37
+    fleet_slot_size = 8
+    section_slots = {
+        bow = {
+            locator = part1
+        }
+        stern = {
+            locator = part2
+        }
+        hull = {
+            locator = part3
+        }
+        core = {
+            locator = part4
+        }
+    }
+    num_target_locators = 8
+    is_space_station = no
+    map_counter_icon = ship_counter_64
+    icon = ship_size_military_8
+    use_shipnames_from = battleship
+    base_buildtime = 720
+    can_have_federation_design = no
+    enable_default_design = yes
+    is_designable = yes
+    enable_3dview_in_ship_browser = yes
+    default_behavior = carrier
+    entity = Nebula_entity
+    combat_disengage_chance = 0.25
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    required_component_set = power_core
+    required_component_set = ftl_components
+    required_component_set = thruster_components
+    required_component_set = sensor_components
+    required_component_set = combat_computers
+    possible_construction = {
+        exists = owner
+        owner = {
+            foc_ai_capital_can_build_nebula = yes
+        }
+    }
+    possible_country = {
+        has_global_flag = foc_khan_strength_lowest
+        foc_ai_capital_is_nebula_country = yes
+    }
+    prerequisites = {
+        tech_foc_rebel_nebula_blueprint
+    }
+    resources = {
+        category = ships
+        cost = {
+            alloys = 2760
+        }
+        upkeep = {
+            energy = 5
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 500
+    }
+    potential_country = {
+        has_global_flag = foc_khan_strength_lowest
+        foc_ai_capital_is_nebula_country = yes
+    }
+    ai_ship_data = {
+        fraction = {
+            base = 0
+            modifier = {
+                add = 100
+                foc_ai_capital_can_build_nebula = yes
+            }
+        }
+    }
+    max_hitpoints = 4054.94505
+
+
+}
+foc_rebel_mc158_foc_lowest = {
+    available_to_everyone = yes
+    formation_priority = 28
+    max_speed = 100
+    acceleration = 0.1
+    rotation_speed = 0.1
+    collision_radius = 32
+    modifier = {
+        ship_evasion_add = 5
+        ship_armor_add = 3328.85096
+        ship_shield_add = 23733.758
+    }
+    ship_modifier = {
+
+    }
+    size_multiplier = 600
+    fleet_slot_size = 16
+    section_slots = {
+        core = {
+            locator = root
+        }
+    }
+    num_target_locators = 12
+    is_space_station = no
+    map_counter_icon = ship_counter_128
+    icon = ship_size_military_8
+    use_shipnames_from = titan
+    base_buildtime = 1440
+    can_have_federation_design = no
+    enable_default_design = yes
+    is_designable = yes
+    enable_3dview_in_ship_browser = yes
+    default_behavior = carrier
+    entity = SWGS_Mc158_frame_entity
+    combat_disengage_chance = 0.5
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    required_component_set = power_core
+    required_component_set = ftl_components
+    required_component_set = thruster_components
+    required_component_set = sensor_components
+    required_component_set = combat_computers
+    required_component_set = foc_interdiction_gravity_well
+    possible_construction = {
+        exists = owner
+        owner = {
+            foc_ai_capital_can_build_viscount = yes
+        }
+    }
+    possible_country = {
+        has_global_flag = foc_khan_strength_lowest
+        foc_ai_capital_is_viscount_country = yes
+    }
+    prerequisites = {
+        tech_foc_rebel_viscount_blueprint
+    }
+    resources = {
+        category = ships
+        cost = {
+            alloys = 1665990
+        }
+        upkeep = {
+            energy = 5
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 500
+    }
+    potential_country = {
+        has_global_flag = foc_khan_strength_lowest
+        foc_ai_capital_is_viscount_country = yes
+    }
+    ai_ship_data = {
+        fraction = {
+            base = 0
+            modifier = {
+                add = 80
+                foc_ai_capital_can_build_viscount = yes
+            }
+        }
+    }
+    max_hitpoints = 18261.2127
+
+
+}
+foc_rebel_home_arkship_tier_3_foc_lowest = {
+    preserve_movement_animation_progress = yes
+    graphical_culture = {
+        rebel_01
+    }
+    hero_ship = {
+        hero_ship_fleet_background = GFX_arkship_fleetview_military
+        custom_class_text_color = H
+    }
+    class = shipclass_starbase
+    base_ship_size = military_arkship_tier_1
+    carries_colony = pc_ark
+    display_attack_neutral_fleet_button = no
+    automation_icon = GFX_fleet_order_auto_explore_arkship
+    arkship_picture = arkship_military
+    planet_view_header = GFX_arkship_planetview_header_military
+    auto_upgrade = yes
+    can_disable = no
+    stay_disabled = no
+    never_lost = no
+    collects_stockpile_from = {
+        shipclass_starbase
+        shipclass_constructor
+    }
+    collects_stockpile_to_country = yes
+    accepts_all_modifiers = yes
+    use_shipnames_from = titan
+    potential_construction = {
+        always = no
+    }
+    possible_construction = {
+        always = no
+    }
+    on_click_sound = arkship_military_selection
+    icon = ship_size_military_arkship_tier_3
+    icon_frame = 16
+    ship_class_icon_frame = 64
+    map_icon_override = {
+        normal = GFX_ship_icons_type_arkship
+        mixed = GFX_ship_icons_type_arkship_mixed
+        cloaked = GFX_ship_icons_type_arkship_cloaked
+        encamped = GFX_ship_icons_type_arkship_encamped
+    }
+    entity = titan_entity
+    section_slots = {
+        mid = {
+            locator = part2
+        }
+        1 = {
+            locator = part2
+        }
+        2 = {
+            locator = part2
+        }
+        3 = {
+            locator = part2
+        }
+        4 = {
+            locator = part2
+        }
+        5 = {
+            locator = part2
+        }
+        6 = {
+            locator = part2
+        }
+        spinal_mount_1 = {
+            locator = part2
+        }
+    }
+    formation_priority = 4
+    max_speed = 100
+    acceleration = 0.2
+    rotation_speed = 0.15
+    construction_offset_mult = 5
+    collision_radius = 4
+    modifier = {
+        ship_evasion_add = 5
+        starbase_module_capacity_add = 7
+        starbase_building_capacity_add = 12
+        planet_max_districts_add = 18
+        ship_sensor_range_add = 3
+        ship_armor_add = 6326.31579
+        ship_shield_add = 6326.31579
+    }
+    ship_modifier = {
+        ship_starbase_stockpile_collection_rate_add = 625
+    }
+    size_multiplier = 120
+    fleet_slot_size = 32
+    num_target_locators = 0
+    is_designable = no
+    is_space_station = no
+    is_civilian = no
+    can_have_federation_design = no
+    components_add_to_cost = no
+    available_to_everyone = yes
+    enable_default_design = no
+    enable_3dview_in_ship_browser = yes
+    combat_disengage_chance = 2
+    construction_type = starbase_shipyard
+    required_component_set = power_core
+    required_component_set = ftl_components
+    required_component_set = thruster_components
+    required_component_set = sensor_components
+    required_component_set = combat_computers
+    resources = {
+        category = starbase_arkships
+        upkeep = {
+            alloys = 4.5
+            energy = 4.5
+        }
+        logistics = {
+            trade = 0
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 1
+    }
+    ai_ship_data = {
+
+    }
+    potential_country = {
+        has_global_flag = foc_khan_strength_lowest
+    }
+    max_hitpoints = 25305.2632
+}
+foc_millennium_falcon_foc_lowest = {
+    entity = foc_millennium_falcon_entity
+    formation_priority = 1
+    max_speed = 160
+    acceleration = 1.25
+    rotation_speed = 0.75
+    collision_radius = 5
+    modifier = {
+        ship_evasion_add = 60
+        ship_armor_add = 1076.92308
+        ship_shield_add = 1076.92308
+    }
+    ship_modifier = {
+
+    }
+    size_multiplier = 2
+    combat_size_multiplier = 1.2
+    fleet_slot_size = 1
+    section_slots = {
+        mid = {
+            locator = mid
+        }
+    }
+    num_target_locators = 2
+    is_space_station = no
+    map_counter_icon = ship_counter_4
+    icon = ship_size_military_1
+    use_shipnames_from = corvette
+    base_buildtime = 1
+    can_have_federation_design = no
+    enable_default_design = no
+    is_designable = no
+    enable_3dview_in_ship_browser = yes
+    default_behavior = swarm
+    ship_roles = {
+        corvette
+    }
+    combat_disengage_chance = 0.65
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    required_component_set = power_core
+    required_component_set = ftl_components
+    required_component_set = thruster_components
+    required_component_set = sensor_components
+    required_component_set = combat_computers
+    potential_construction = {
+        always = no
+    }
+    possible_construction = {
+        always = no
+    }
+    available_to_everyone = no
+    components_add_to_cost = no
+    resources = {
+        category = ships
+        cost = {
+
+        }
+        upkeep = {
+
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 1
+    }
+    ai_ship_data = {
+
+    }
+    potential_country = {
+        has_global_flag = foc_khan_strength_lowest
+    }
+    max_hitpoints = 1346.15385
+}
+venatorclass_foc_lowest = {
+    is_designable = yes
+    ship_modifier = { }
+    entity = battleship_entity
+    formation_priority = 40
+    max_speed = 120
+    acceleration = 0.35
+    rotation_speed = 0.2
+    collision_radius = 4
+    modifier = { ship_evasion_add = 5 ship_armor_add = 2554.6 ship_shield_add = 6719.4 }
+    size_multiplier = 40
+    fleet_slot_size = 4
+    combat_size_multiplier = 80
+    section_slots = {
+        core = { locator = part1 }
+    }
+    num_target_locators = 4
+    is_space_station = no
+    map_counter_icon = ship_counter_16
+    icon = ship_size_military_8
+    use_shipnames_from = destroyer
+    base_buildtime = 300
+    can_have_federation_design = no
+    enable_default_design = yes
+    enable_3dview_in_ship_browser = yes
+    default_behavior = line
+    possible_country = {
+        has_global_flag = foc_khan_strength_lowest
+        OR = {
+            foc_ai_capital_is_republic_venator_country = yes
+            any_owned_fleet = {
+                any_owned_ship = { is_ship_size = venatorclass_foc_lowest }
+            }
+        }
+    }
+    prerequisites = { tech_destroyers foc_tech_republic_venator }
+    combat_disengage_chance = 1.25
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    possible_construction = {
+        exists = owner
+        owner = {
+            foc_ai_capital_is_republic_venator_country = yes
+            NOT = { has_country_flag = foc_phase1_venator_retired }
+        }
+    }
+    required_component_set = power_core
+    required_component_set = "ftl_components"
+    required_component_set = thruster_components
+    required_component_set = sensor_components
+    required_component_set = combat_computers
+    required_component_set = venatorclass_crew
+    resources = {
+        category = ships
+        cost = { alloys = 400 }
+        upkeep = { energy = 5 }
+    }
+    min_upgrade_cost = { alloys = 8 }
+    ai_ship_data = {
+        fraction = {
+            base = 0
+            modifier = {
+                add = 120
+                foc_ai_capital_is_republic_venator_country = yes
+                has_technology = foc_tech_republic_venator
+                NOT = { has_country_flag = foc_phase1_venator_retired }
+            }
+        }
+    }
+    available_to_everyone = no
+    potential_country = {
+        has_global_flag = foc_khan_strength_lowest
+        OR = {
+            foc_ai_capital_is_republic_venator_country = yes
+            any_owned_fleet = {
+                any_owned_ship = { is_ship_size = venatorclass_foc_lowest }
+            }
+        }
+    }
+    max_hitpoints = 5108.4
+}
+foc_trade_lucrehulk_foc_lowest = {
+    ship_modifier = { }
+    entity = cis_01_Carrier_entity
+    formation_priority = 40
+    max_speed = 100
+    acceleration = 0.35
+    rotation_speed = 0.2
+    collision_radius = 12
+    modifier = { ship_evasion_add = 5 ship_armor_add = 2554.6 ship_shield_add = 11199 }
+    size_multiplier = 20
+    fleet_slot_size = 4
+    combat_size_multiplier = 80
+    section_slots = {
+        core = { locator = part2 }
+    }
+    num_target_locators = 4
+    is_space_station = no
+    map_counter_icon = ship_counter_16
+    icon = ship_size_military_8
+    use_shipnames_from = battleship
+    base_buildtime = 300
+    can_have_federation_design = no
+    enable_default_design = yes
+    is_designable = yes
+    enable_3dview_in_ship_browser = yes
+    default_behavior = line
+    possible_country = { has_global_flag = foc_khan_strength_lowest foc_ai_capital_is_separatist_lucrehulk_country = yes }
+    prerequisites = { tech_battleships }
+    combat_disengage_chance = 1.25
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    required_component_set = power_core
+    required_component_set = "ftl_components"
+    required_component_set = thruster_components
+    required_component_set = sensor_components
+    required_component_set = combat_computers
+    required_component_set = venatorclass_crew
+    potential_construction = {
+        exists = owner
+        owner = { foc_ai_capital_is_separatist_lucrehulk_country = yes }
+    }
+    possible_construction = {
+        exists = owner
+        owner = { foc_ai_capital_is_separatist_lucrehulk_country = yes has_technology = tech_battleships }
+    }
+    available_to_everyone = no
+    components_add_to_cost = no
+    resources = {
+        category = ships
+        cost = { alloys = 330 }
+        upkeep = { energy = 6 }
+    }
+    min_upgrade_cost = { alloys = 1 }
+    ai_ship_data = {
+        fraction = {
+            base = 0
+            modifier = { add = 120 foc_ai_capital_is_separatist_lucrehulk_country = yes has_technology = tech_battleships }
+        }
+    }
+    potential_country = { has_global_flag = foc_khan_strength_lowest foc_ai_capital_is_separatist_lucrehulk_country = yes }
+    max_hitpoints = 8514
+}
+foc_sai_supremacy_arkship_tier_1_foc_lowest = {
+    preserve_movement_animation_progress = yes
+    is_starting_arkship = yes
+    graphical_culture = {
+        military_arkship
+    }
+    hero_ship = {
+        hero_ship_fleet_background = GFX_arkship_fleetview_military
+        custom_class_text_color = R
+    }
+    
+    class = shipclass_starbase
+    carries_colony = pc_ark
+    display_attack_neutral_fleet_button = no
+    automation_icon = GFX_fleet_order_auto_explore_arkship
+    arkship_picture = arkship_military
+    planet_view_header = GFX_arkship_planetview_header_military
+    auto_upgrade = yes
+    can_disable = yes
+    stay_disabled = yes
+    never_lost = yes
+    collects_stockpile_from = {
+        shipclass_starbase
+        shipclass_constructor
+    }
+    collects_stockpile_to_country = yes
+    accepts_all_modifiers = yes
+    use_shipnames_from = juggernaut
+    potential_construction = {
+        always = no
+    }
+    possible_construction = {
+        always = no
+    }
+    on_click_sound = arkship_military_selection
+    icon = ship_size_military_arkship_tier_1
+    icon_frame = 16
+    ship_class_icon_frame = 64
+    map_icon_override = {
+        normal = GFX_ship_icons_type_arkship
+        mixed = GFX_ship_icons_type_arkship_mixed
+        cloaked = GFX_ship_icons_type_arkship_cloaked
+        encamped = GFX_ship_icons_type_arkship_encamped
+    }
+    entity = sai_supremacy_entity
+    section_slots = {
+        mid = {
+            locator = core
+        }
+        1 = {
+            locator = core
+        }
+        2 = {
+            locator = core
+        }
+    }
+    formation_priority = 4
+    max_speed = 100
+    acceleration = 0.2
+    rotation_speed = 0.15
+    construction_offset_mult = 5
+    collision_radius = 4
+    modifier = {
+        ship_evasion_add = 5
+        starbase_module_capacity_add = 2
+        starbase_building_capacity_add = 4
+        planet_max_districts_add = 0
+        ship_sensor_range_add = 1
+        ship_armor_add = 876.396443
+        ship_shield_add = 10332.568366
+    }
+    ship_modifier = {
+        ship_starbase_stockpile_collection_rate_add = 125
+    }
+    size_multiplier = 80
+    fleet_slot_size = 8
+    is_designable = no
+    num_target_locators = 0
+    is_space_station = no
+    can_have_federation_design = no
+    is_civilian = no
+    components_add_to_cost = no
+    available_to_everyone = yes
+    enable_default_design = no
+    prerequisites = { "tech_military_arkship" }
+    combat_disengage_chance = 2
+    construction_type = starbase_shipyard
+    required_component_set = power_core
+    required_component_set = ftl_components
+    required_component_set = thruster_components
+    required_component_set = sensor_components
+    required_component_set = combat_computers
+    resources = {
+        category = starbase_arkships
+        upkeep = {
+            alloys = 1.5
+            energy = 1.5
+        }
+        logistics = {
+            trade = 0
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 1
+    }
+    ai_ship_data = {
+
+    }
+    potential_country = {
+        has_global_flag = foc_khan_strength_lowest
+    }
+    max_hitpoints = 9354.826664
+}
+foc_sai_supremacy_arkship_tier_2_foc_lowest = {
+    preserve_movement_animation_progress = yes
+    graphical_culture = {
+        military_arkship
+    }
+    hero_ship = {
+        hero_ship_fleet_background = GFX_arkship_fleetview_military
+        custom_class_text_color = R
+    }
+    base_ship_size = foc_sai_supremacy_arkship_tier_1_foc_lowest
+    class = shipclass_starbase
+    carries_colony = pc_ark
+    display_attack_neutral_fleet_button = no
+    automation_icon = GFX_fleet_order_auto_explore_arkship
+    arkship_picture = arkship_military
+    planet_view_header = GFX_arkship_planetview_header_military
+    auto_upgrade = yes
+    can_disable = yes
+    stay_disabled = yes
+    never_lost = yes
+    collects_stockpile_from = {
+        shipclass_starbase
+        shipclass_constructor
+    }
+    collects_stockpile_to_country = yes
+    accepts_all_modifiers = yes
+    use_shipnames_from = juggernaut
+    potential_construction = {
+        always = no
+    }
+    possible_construction = {
+        always = no
+    }
+    on_click_sound = arkship_military_selection
+    icon = ship_size_military_arkship_tier_2
+    icon_frame = 16
+    ship_class_icon_frame = 64
+    map_icon_override = {
+        normal = GFX_ship_icons_type_arkship
+        mixed = GFX_ship_icons_type_arkship_mixed
+        cloaked = GFX_ship_icons_type_arkship_cloaked
+        encamped = GFX_ship_icons_type_arkship_encamped
+    }
+    entity = sai_supremacy_entity
+    section_slots = {
+        mid = {
+            locator = core
+        }
+        1 = {
+            locator = core
+        }
+        2 = {
+            locator = core
+        }
+        3 = {
+            locator = core
+        }
+        4 = {
+            locator = core
+        }
+    }
+    formation_priority = 4
+    max_speed = 100
+    acceleration = 0.2
+    rotation_speed = 0.15
+    construction_offset_mult = 5
+    collision_radius = 4
+    modifier = {
+        ship_evasion_add = 5
+        starbase_module_capacity_add = 4
+        starbase_building_capacity_add = 8
+        planet_max_districts_add = 9
+        ship_sensor_range_add = 1
+        ship_armor_add = 1326.856469
+        ship_shield_add = 15643.417188
+    }
+    ship_modifier = {
+        ship_starbase_stockpile_collection_rate_add = 375
+    }
+    size_multiplier = 100
+    fleet_slot_size = 16
+    is_designable = no
+    num_target_locators = 0
+    is_space_station = no
+    can_have_federation_design = no
+    is_civilian = no
+    components_add_to_cost = no
+    available_to_everyone = yes
+    enable_default_design = no
+    prerequisites = {
+        tech_arkship_tier_2
+    }
+    combat_disengage_chance = 2
+    construction_type = starbase_shipyard
+    required_component_set = power_core
+    required_component_set = ftl_components
+    required_component_set = thruster_components
+    required_component_set = sensor_components
+    required_component_set = combat_computers
+    base_buildtime = 900
+    resources = {
+        category = starbase_arkships
+        cost = {
+            alloys = 5000
+            influence = 250
+        }
+        upkeep = {
+            alloys = 3
+            energy = 3
+        }
+        logistics = {
+            trade = 0
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 1
+    }
+    ai_ship_data = {
+
+    }
+    potential_country = {
+        has_global_flag = foc_khan_strength_lowest
+    }
+    max_hitpoints = 15933.515471
+}
+foc_sai_supremacy_arkship_tier_3_foc_lowest = {
+    preserve_movement_animation_progress = yes
+    graphical_culture = {
+        military_arkship
+    }
+    hero_ship = {
+        hero_ship_fleet_background = GFX_arkship_fleetview_military
+        custom_class_text_color = R
+    }
+    base_ship_size = foc_sai_supremacy_arkship_tier_1_foc_lowest
+    class = shipclass_starbase
+    carries_colony = pc_ark
+    display_attack_neutral_fleet_button = no
+    automation_icon = GFX_fleet_order_auto_explore_arkship
+    arkship_picture = arkship_military
+    planet_view_header = GFX_arkship_planetview_header_military
+    auto_upgrade = yes
+    can_disable = yes
+    stay_disabled = yes
+    never_lost = yes
+    collects_stockpile_from = {
+        shipclass_starbase
+        shipclass_constructor
+    }
+    collects_stockpile_to_country = yes
+    accepts_all_modifiers = yes
+    use_shipnames_from = juggernaut
+    potential_construction = {
+        always = no
+    }
+    possible_construction = {
+        always = no
+    }
+    on_click_sound = arkship_military_selection
+    icon = ship_size_military_arkship_tier_3
+    icon_frame = 16
+    ship_class_icon_frame = 64
+    map_icon_override = {
+        normal = GFX_ship_icons_type_arkship
+        mixed = GFX_ship_icons_type_arkship_mixed
+        cloaked = GFX_ship_icons_type_arkship_cloaked
+        encamped = GFX_ship_icons_type_arkship_encamped
+    }
+    entity = sai_supremacy_entity
+    section_slots = {
+        mid = {
+            locator = core
+        }
+        1 = {
+            locator = core
+        }
+        2 = {
+            locator = core
+        }
+        3 = {
+            locator = core
+        }
+        4 = {
+            locator = core
+        }
+        5 = {
+            locator = core
+        }
+        6 = {
+            locator = core
+        }
+        spinal_mount_1 = {
+            locator = core
+        }
+    }
+    formation_priority = 4
+    max_speed = 100
+    acceleration = 0.2
+    rotation_speed = 0.15
+    construction_offset_mult = 5
+    collision_radius = 4
+    modifier = {
+        ship_evasion_add = 5
+        starbase_module_capacity_add = 7
+        starbase_building_capacity_add = 12
+        planet_max_districts_add = 18
+        ship_sensor_range_add = 1
+        ship_armor_add = 1782.063788
+        ship_shield_add = 21010.235795
+    }
+    ship_modifier = {
+        ship_starbase_stockpile_collection_rate_add = 625
+    }
+    size_multiplier = 120
+    fleet_slot_size = 32
+    is_designable = no
+    num_target_locators = 0
+    is_space_station = no
+    can_have_federation_design = no
+    is_civilian = no
+    components_add_to_cost = no
+    available_to_everyone = yes
+    enable_default_design = no
+    prerequisites = {
+        tech_arkship_tier_3
+    }
+    combat_disengage_chance = 2
+    construction_type = starbase_shipyard
+    required_component_set = power_core
+    required_component_set = ftl_components
+    required_component_set = thruster_components
+    required_component_set = sensor_components
+    required_component_set = combat_computers
+    base_buildtime = 1080
+    resources = {
+        category = starbase_arkships
+        cost = {
+            alloys = 5000
+            influence = 250
+        }
+        upkeep = {
+            alloys = 4.5
+            energy = 4.5
+        }
+        logistics = {
+            trade = 0
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 1
+    }
+    ai_ship_data = {
+
+    }
+    potential_country = {
+        has_global_flag = foc_khan_strength_lowest
+    }
+    max_hitpoints = 22826.515875
+}
+sai_supremacy_arkship_tier_3_foc_lowest = {
+    preserve_movement_animation_progress = yes
+    graphical_culture = {
+        military_arkship
+    }
+    hero_ship = {
+        hero_ship_fleet_background = GFX_arkship_fleetview_military
+        custom_class_text_color = R
+    }
+    base_ship_size = sai_supremacy_arkship_tier_1_shell_foc_lowest
+    class = shipclass_starbase
+    carries_colony = pc_ark
+    display_attack_neutral_fleet_button = no
+    automation_icon = GFX_fleet_order_auto_explore_arkship
+    arkship_picture = arkship_military
+    planet_view_header = GFX_arkship_planetview_header_military
+    auto_upgrade = yes
+    can_disable = yes
+    stay_disabled = yes
+    never_lost = yes
+    collects_stockpile_from = {
+        shipclass_starbase
+        shipclass_constructor
+    }
+    collects_stockpile_to_country = yes
+    accepts_all_modifiers = yes
+    use_shipnames_from = juggernaut
+    potential_construction = {
+        always = no
+    }
+    possible_construction = {
+        always = no
+    }
+    on_click_sound = arkship_military_selection
+    icon = ship_size_military_arkship_tier_3
+    icon_frame = 16
+    ship_class_icon_frame = 64
+    map_icon_override = {
+        normal = GFX_ship_icons_type_arkship
+        mixed = GFX_ship_icons_type_arkship_mixed
+        cloaked = GFX_ship_icons_type_arkship_cloaked
+        encamped = GFX_ship_icons_type_arkship_encamped
+    }
+    entity = sai_supremacy_entity
+    section_slots = {
+        mid = {
+            locator = core
+        }
+        1 = {
+            locator = core
+        }
+        2 = {
+            locator = core
+        }
+        3 = {
+            locator = core
+        }
+        4 = {
+            locator = core
+        }
+        5 = {
+            locator = core
+        }
+        6 = {
+            locator = core
+        }
+        spinal_mount_1 = {
+            locator = core
+        }
+    }
+    formation_priority = 4
+    max_speed = 100
+    acceleration = 0.2
+    rotation_speed = 0.15
+    construction_offset_mult = 5
+    collision_radius = 4
+    modifier = {
+        ship_evasion_add = 5
+        starbase_module_capacity_add = 7
+        starbase_building_capacity_add = 12
+        planet_max_districts_add = 18
+        ship_sensor_range_add = 1
+        ship_armor_add = 1782.063788
+        ship_shield_add = 21010.235795
+    }
+    ship_modifier = {
+        ship_starbase_stockpile_collection_rate_add = 625
+    }
+    size_multiplier = 120
+    fleet_slot_size = 32
+    is_designable = no
+    num_target_locators = 0
+    is_space_station = no
+    can_have_federation_design = no
+    is_civilian = no
+    components_add_to_cost = no
+    available_to_everyone = yes
+    enable_default_design = no
+    prerequisites = {
+        tech_arkship_tier_3
+    }
+    combat_disengage_chance = 2
+    construction_type = starbase_shipyard
+    required_component_set = power_core
+    required_component_set = ftl_components
+    required_component_set = thruster_components
+    required_component_set = sensor_components
+    required_component_set = combat_computers
+    base_buildtime = 1080
+    resources = {
+        category = starbase_arkships
+        cost = {
+            alloys = 5000
+            influence = 250
+        }
+        upkeep = {
+            alloys = 4.5
+            energy = 4.5
+        }
+        logistics = {
+            trade = 0
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 1
+    }
+    ai_ship_data = {
+
+    }
+    potential_country = {
+        has_global_flag = foc_khan_strength_lowest
+    }
+    max_hitpoints = 22826.515875
+}
+foc_khan_starkiller_fixed_station_foc_lowest = {
+    ship_modifier = {
+
+    }
+    is_space_object = yes
+    max_speed = 0
+    acceleration = 0
+    rotation_speed = 0
+    modifier = {
+        ship_evasion_mult = -1
+        ship_armor_add = 8064.51613
+    }
+    combat_size_multiplier = 80
+    size_multiplier = 80
+    fleet_slot_size = 2
+    entity = invisible_turret_entity
+    graphical_culture = no
+    section_slots = {
+        core = {
+            locator = root
+        }
+    }
+    num_target_locators = 0
+    can_disable = yes
+    uses_name_prefix = no
+    takes_name_from_ship_design = yes
+    can_be_inspected = yes
+    class = shipclass_starbase
+    construction_type = starbase_shipyard
+    is_designable = no
+    enable_default_design = no
+    available_to_everyone = yes
+    can_have_federation_design = no
+    components_add_to_cost = no
+    potential_construction = {
+        always = no
+    }
+    possible_construction = {
+        always = no
+    }
+    required_component_set = power_core
+    required_component_set = sensor_components
+    required_component_set = combat_computers
+    formation_priority = 1
+    icon_frame = 9
+    potential_country = {
+        has_global_flag = foc_khan_strength_lowest
+    }
+    max_hitpoints = 16129.0323
+}
+foc_v118_executor_bastion_foc_lowest = {
+    formation_priority = 30
+    max_speed = 100
+    acceleration = 0.1
+    rotation_speed = 0.1
+    collision_radius = 32
+    modifier = {
+        ship_evasion_add = 5
+        ship_armor_add = 4058.87234
+        ship_shield_add = 16661.3861
+    }
+    available_to_everyone = no
+    map_counter_icon = ship_counter_128
+    size_multiplier = 670
+    fleet_slot_size = 16
+    combat_size_multiplier = 80
+    section_slots = {
+        bow = {
+            locator = core
+        }
+        stern = {
+            locator = core
+        }
+        mid = {
+            locator = core
+        }
+        hull = {
+            locator = core
+        }
+        core = {
+            locator = core
+        }
+    }
+    num_target_locators = 5
+    is_space_station = no
+    icon = ship_size_military_32
+    is_designable = no
+    base_buildtime = 2400
+    can_have_federation_design = no
+    enable_default_design = no
+    potential_construction = {
+        always = no
+    }
+    possible_construction = {
+        always = no
+    }
+    default_behavior = foc_lus_carrier_ship
+    entity = foc_executor_2389_frame_entity
+    combat_disengage_chance = 0
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    required_component_set = foc_interdiction_gravity_well
+    components_add_to_cost = no
+    resources = {
+        category = ships
+        cost = {
+            alloys = 2165950
+        }
+        upkeep = {
+            energy = 5
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 500
+    }
+    potential_country = {
+        has_global_flag = foc_khan_strength_lowest
+    }
+    max_hitpoints = 21647.2663
+}
+# Executor support: Imperial II garrison; legacy hull ID retained for save compatibility.
+foc_v118_imperialsd_bastion_foc_lowest = {
+    graphical_culture = {
+        empire_01
+    }
+    formation_priority = 5
+    max_speed = 150
+    acceleration = 0.25
+    rotation_speed = 0.1
+    collision_radius = 8
+    modifier = {
+        ship_evasion_add = 60
+        ship_armor_add = 5579.43262
+        ship_shield_add = 8156.02837
+        ship_shield_regen_add_static = 300
+        ship_armor_regen_add_static = 300
+        ship_hull_regen_add_static = 300
+    }
+    ship_modifier = {
+        ship_weapon_range_mult = 0.25
+        ship_weapon_damage = 0.25
+    }
+    size_multiplier = 57
+    fleet_slot_size = 8
+    section_slots = {
+        bow = {
+            locator = part1
+        }
+        mid = {
+            locator = part2
+        }
+        stern = {
+            locator = part3
+        }
+    }
+    num_target_locators = 5
+    is_space_station = no
+    map_counter_icon = ship_counter_32
+    icon = ship_size_military_8
+    use_shipnames_from = destroyer
+    base_buildtime = 180
+    can_have_federation_design = no
+    is_designable = no
+    enable_default_design = no
+    enable_3dview_in_ship_browser = yes
+    potential_construction = {
+        always = no
+    }
+    possible_construction = {
+        always = no
+    }
+    default_behavior = picket
+    combat_disengage_chance = 0
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    required_component_set = power_core
+    required_component_set = thruster_components
+    required_component_set = sensor_components
+    required_component_set = combat_computers
+    required_component_set = imperialsd_crew
+    components_add_to_cost = no
+    available_to_everyone = no
+    resources = {
+        category = ships
+        cost = {
+            alloys = 1000
+        }
+        upkeep = {
+            energy = 2
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 66
+    }
+    potential_country = {
+        has_global_flag = foc_khan_strength_lowest
+    }
+    max_hitpoints = 6051.77305
+
+    entity = foc_v1717f_executor_escort_frame_entity
+}

@@ -1,0 +1,150 @@
+namespace = fop_origin
+
+# Player-origin-only aftermath of a manually confirmed Hosnian system strike.
+# This transfers only the New Republic country and its surviving assets. The
+# separately flagged Rebel/Resistance countries, systems and event chain remain.
+country_event = {
+    id = fop_origin.23
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        # The Republic origin reaches the same playable First Order through the
+        # Galactic Treaty instead of origin_fop_first_order, so it must pass the
+        # identical New Republic collapse and annexation chain.
+        OR = {
+            has_origin = origin_fop_first_order
+            has_country_flag = foc_republic_origin_empire_crisis
+        }
+        has_country_flag = fop_origin_crisis_active
+        has_global_flag = foc_story_hosnian_destroyed
+        NOT = { has_global_flag = foc_sw_new_republic_absorbed_by_first_order }
+        OR = {
+            any_country = { has_country_flag = foc_sw_new_republic_country }
+            any_system = {
+                has_star_flag = foc_sw_new_republic_cluster
+                NOT = { has_star_flag = star_cracked }
+                OR = {
+                    NOT = { exists = starbase }
+                    starbase.owner = { has_country_flag = foc_sw_new_republic_country }
+                }
+            }
+        }
+    }
+
+    immediate = {
+        if = {
+            limit = { NOT = { exists = event_target:foc_sw_new_republic } }
+            random_country = {
+                limit = { has_country_flag = foc_sw_new_republic_country }
+                save_global_event_target_as = foc_sw_new_republic
+            }
+        }
+
+        if = {
+            limit = { exists = event_target:foc_sw_new_republic }
+            event_target:foc_sw_new_republic = {
+                # The player inherits New Republic territory only. Its military
+                # and civilian fleets remain with the defeated country and are
+                # removed when that country is destroyed below.
+                every_owned_starbase = { set_owner = root }
+                every_owned_planet = { set_owner = root }
+                set_country_flag = foc_sw_absorbed_by_first_order
+                destroy_country = yes
+            }
+            set_global_flag = foc_sw_new_republic_defeated
+            if = { limit = { exists = event_target:foc_sw_new_republic } clear_global_event_target = foc_sw_new_republic }
+        }
+
+        # Recover surviving New Republic cluster systems in old saves without
+        # taking any colony or starbase held by the independent Rebel Alliance
+        # or by an unrelated third party.
+        every_system = {
+            limit = {
+                has_star_flag = foc_sw_new_republic_cluster
+                NOT = { has_star_flag = star_cracked }
+                NOT = { has_star_flag = foc_khan_rebel_home }
+            }
+            if = {
+                limit = {
+                    exists = starbase
+                    starbase.owner = { has_country_flag = foc_sw_new_republic_country }
+                }
+                starbase = { set_owner = root }
+            }
+            else_if = {
+                limit = {
+                    NOT = { exists = starbase }
+                    NOT = {
+                        any_system_planet = {
+                            is_colony = yes
+                            owner = { NOT = { is_same_value = root } }
+                        }
+                    }
+                }
+                create_starbase = {
+                    size = starbase_outpost
+                    owner = root
+                }
+            }
+            every_system_planet = {
+                limit = {
+                    is_colony = yes
+                    owner = { has_country_flag = foc_sw_new_republic_country }
+                }
+                set_owner = root
+            }
+        }
+
+        set_global_flag = foc_sw_new_republic_absorbed_by_first_order
+        set_country_flag = fop_origin_new_republic_annexed
+    }
+}
+
+
+# Old-save recovery only: it never fires a weapon. If a First Order origin save
+# already contains a destroyed Hosnian system, restore the missed story broadcast
+# and run the same player-only New Republic annexation.
+country_event = {
+    id = fop_origin.24
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        OR = {
+            has_origin = origin_fop_first_order
+            has_country_flag = foc_republic_origin_empire_crisis
+        }
+        has_country_flag = fop_origin_crisis_active
+        NOT = { has_global_flag = foc_sw_new_republic_absorbed_by_first_order }
+        any_system = {
+            has_star_flag = foc_sw_hosnian_home
+            OR = {
+                has_star_flag = star_cracked
+                star = { is_planet_class = pc_black_hole }
+            }
+        }
+    }
+
+    immediate = {
+        if = {
+            limit = { NOT = { exists = event_target:foc_sw_hosnian_system } }
+            random_system = {
+                limit = { has_star_flag = foc_sw_hosnian_home }
+                save_global_event_target_as = foc_sw_hosnian_system
+            }
+        }
+        if = {
+            limit = {
+                NOT = { has_global_flag = foc_story_hosnian_destroyed }
+                exists = event_target:foc_sw_hosnian_system
+            }
+            event_target:foc_sw_hosnian_system = {
+                foc_story_notify_hosnian_destroyed = yes
+            }
+        }
+        country_event = { id = fop_origin.23 days = 1 }
+    }
+}

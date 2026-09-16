@@ -1,0 +1,55 @@
+# FOC V226 — Padmé Amidala as an actual legendary leader.
+
+foc_v226_create_padme = {
+    if = {
+        limit = {
+            NOT = { any_owned_leader = { has_leader_flag = foc_v226_padme_leader } }
+            NOT = { has_country_flag = foc_saga_padme_twins_shown }
+        }
+        create_leader = {
+            tier = leader_tier_legendary
+            class = official
+            species = owner_main_species
+            name = "FOC_V226_PADME_NAME"
+            gender = female
+            skill = 9
+            event_leader = yes
+            skip_background_generation = yes
+            randomize_traits = no
+            effect = {
+                change_leader_portrait = foc_v226_padme
+                set_leader_flag = foc_v226_padme_leader
+                set_immortal = yes
+            }
+        }
+    }
+}
+
+foc_v226_kill_padme_leader = {
+    every_owned_leader = {
+        limit = { has_leader_flag = foc_v226_padme_leader }
+        set_immortal = no
+        kill_leader = { show_notification = no }
+    }
+}
+
+# Save repair / maintenance. In V225 and earlier Padmé was narrative-only, and
+# Mustafar set the dead flag before the Twins event. V226 moves canonical death
+# to foc_padme.13. If a save is between those two events, restore her state.
+foc_v226_maintain_padme = {
+    if = {
+        limit = {
+            has_country_flag = foc_saga_padme_senator_shown
+            NOT = { has_country_flag = foc_saga_padme_twins_shown }
+        }
+        if = { limit = { has_global_flag = foc_saga_padme_dead } remove_global_flag = foc_saga_padme_dead }
+        set_country_flag = foc_saga_padme_story_present
+        set_global_flag = foc_saga_padme_story_present
+        foc_v226_create_padme = yes
+    }
+    else_if = {
+        limit = { has_country_flag = foc_saga_padme_twins_shown }
+        foc_v226_kill_padme_leader = yes
+        set_global_flag = foc_saga_padme_dead
+    }
+}

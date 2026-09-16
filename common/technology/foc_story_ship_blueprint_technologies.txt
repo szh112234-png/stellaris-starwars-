@@ -1,0 +1,72 @@
+# Construction permissions for three sealed FOC story blueprints. The light-side
+# designs remain event-only; the Republic-origin Empire may research Executor.
+# None exposes hidden hull-restricted weapons or components in the ship designer.
+
+tech_foc_rebel_nebula_blueprint = {
+    icon = tech_battleships
+    area = engineering
+    cost = 1
+    tier = 5
+    category = { voidcraft }
+    is_rare = yes
+    is_reverse_engineerable = no
+    ai_update_type = military
+
+    # 3.11w-fix: give_technology refuses techs whose potential fails for the
+    # receiving country, so "always = no" silently broke every blueprint grant.
+    # weight = 0 already keeps these out of the research pool.
+    potential = { always = yes }
+    weight = 0
+    ai_weight = { factor = 0 }
+}
+
+tech_foc_rebel_viscount_blueprint = {
+    icon = tech_titans
+    area = engineering
+    cost = 1
+    tier = 5
+    category = { voidcraft }
+    is_rare = yes
+    is_reverse_engineerable = no
+    ai_update_type = military
+
+    # 3.11w-fix: give_technology refuses techs whose potential fails for the
+    # receiving country, so "always = no" silently broke every blueprint grant.
+    # weight = 0 already keeps these out of the research pool.
+    potential = { always = yes }
+    weight = 0
+    ai_weight = { factor = 0 }
+}
+
+tech_foc_jakku_executor_blueprint = {
+    icon = tech_titans
+    area = engineering
+    cost = 50000
+    tier = 5
+    category = { voidcraft }
+    is_rare = yes
+    is_reverse_engineerable = no
+    ai_update_type = military
+
+    prerequisites = {
+        "tech_titans"
+        "foc_tech_dark_legacy_imperial"
+    }
+
+    # Keep potential open so the existing Jakku archaeology reward can still
+    # grant the technology directly. Research weight is nonzero only for the
+    # Republic-origin Galactic Empire.
+    potential = { always = yes }
+    weight = 35
+    weight_modifier = {
+        modifier = {
+            factor = 0
+            NOT = { has_country_flag = foc_republic_origin_executor_research_access }
+        }
+        modifier = {
+            factor = 2
+            has_country_flag = foc_republic_origin_executor_research_access
+        }
+    }
+    ai_weight = { factor = 2 }
+}

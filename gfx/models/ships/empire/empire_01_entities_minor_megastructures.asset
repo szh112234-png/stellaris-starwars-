@@ -1,0 +1,214 @@
+##########
+# HABITATS
+##########
+
+entity = {
+	name = "empire_01_habitat_phase_01_entity"
+	pdxmesh = "empire_valor_L1_mesh"
+
+	default_state = "idle"
+	state = { name = "idle" }
+	state = { name = "construction" }
+
+	game_data = {
+		shader_type = ship
+		emissive_recolor_crunch = 5.0
+	}
+}
+
+entity = {
+	name = "empire_01_habitat_phase_02_entity"
+	pdxmesh = "empire_valor_L2_mesh"
+
+	default_state = "idle"
+	state = { name = "idle" }
+	state = { name = "construction" }
+
+	game_data = {
+		shader_type = ship
+		emissive_recolor_crunch = 5.0
+	}
+}
+
+entity = {
+	name = "empire_01_habitat_phase_03_entity"
+	pdxmesh = "empire_valor_L3_mesh"
+
+	default_state = "idle"
+	state = { name = "idle" }
+	state = { name = "construction" }
+
+	game_data = {
+		shader_type = ship
+		emissive_recolor_crunch = 5.0
+	}
+}
+
+##########
+# CITADELS
+##########
+
+entity = {
+	name = "empire_01_deep_space_01_starbase_citadel_frame_entity"
+	pdxmesh = "sw_empty_mesh"
+	cull_radius = 20
+
+	default_state = "idle"
+	state = { name = "idle" }
+	state = { name = "death" animation = "idle" animation_blend_time = 1 chance = 1 looping = no animation_speed = 3
+			event = { time = 19.7 particle = "cybernetics_01_8_ship_explosion_effect" trigger_once = yes keep_particle = yes }
+	}
+}
+
+entity = {
+	name = "empire_01_deep_space_01_starbase_citadel_section_1_entity"
+	pdxmesh = "empire_valor_L1_mesh"
+
+	locator = { name = "point_defence_turret1"	position = { 0 0 0 } }
+	locator = { name = "point_defence_turret2"	position = { 0 0 0 } }
+	locator = { name = "point_defence_turret3"	position = { 0 0 0 } }
+	locator = { name = "point_defence_turret4"	position = { 0 0 0 } }
+	locator = { name = "point_defence_turret5"	position = { 0 0 0 } }
+	locator = { name = "point_defence_turret6"	position = { 0 0 0 } }
+	locator = { name = "point_defence_turret7"	position = { 0 0 0 } }
+	locator = { name = "point_defence_turret8"	position = { 0 0 0 } }
+	locator = { name = "point_defence_turret9"	position = { 0 0 0 } }
+	locator = { name = "large_turret1"		position = { 0 0 0 } }
+	locator = { name = "large_turret2"		position = { 0 0 0 } }
+	locator = { name = "large_turret3"		position = { 0 0 0 } }
+	locator = { name = "STRIKE_CRAFT_01"		position = { 0 0 0 } }
+	locator = { name = "STRIKE_CRAFT_02"		position = { 0 0 0 } }
+	locator = { name = "STRIKE_CRAFT_03"		position = { 0 0 0 } }
+
+	default_state = "idle"
+	state = { name = "idle"
+		start_event = { trigger_once = yes sound = { soundeffect = starbase_hum_stage_01 } }
+	}
+}
+
+entity = {
+	name = "empire_01_deep_space_02_starbase_citadel_entity"
+	pdxmesh = "sw_empty_mesh"
+	cull_radius = 20
+
+	default_state = "idle"
+	state = { name = "idle" }
+	state = { name = "death" animation = "idle" animation_blend_time = 1 chance = 1 looping = no animation_speed = 3
+		event = { time = 19.7 particle = "cybernetics_01_8_ship_explosion_effect" trigger_once = yes keep_particle = yes }
+	}
+}
+
+entity = {
+	name = "empire_01_deep_space_02_starbase_citadel_section_entity"
+	pdxmesh = "empire_valor_L2_mesh"
+
+	locator = { name = "point_defence_turret_02_01"	position = { 0 0 0 } }
+	locator = { name = "point_defence_turret_02_02"	position = { 0 0 0 } }
+	locator = { name = "point_defence_turret_02_03"	position = { 0 0 0 } }
+	locator = { name = "point_defence_turret_02_04"	position = { 0 0 0 } }
+	locator = { name = "point_defence_turret_02_05"	position = { 0 0 0 } }
+	locator = { name = "point_defence_turret_02_06"	position = { 0 0 0 } }
+	locator = { name = "point_defence_turret_02_07"	position = { 0 0 0 } }
+	locator = { name = "point_defence_turret_02_08"	position = { 0 0 0 } }
+	locator = { name = "point_defence_turret_02_09"	position = { 0 0 0 } }
+	locator = { name = "large_turret_02_01"		position = { 0 0 0 } }
+	locator = { name = "large_turret_02_02"		position = { 0 0 0 } }
+	locator = { name = "large_turret_02_03"		position = { 0 0 0 } }
+	locator = { name = "large_turret_02_04"		position = { 0 0 0 } }
+	locator = { name = "large_turret_02_05"		position = { 0 0 0 } }
+	locator = { name = "large_turret_02_06"		position = { 0 0 0 } }
+	locator = { name = "STRIKE_CRAFT_02_01"		position = { 0 0 0 } }
+	locator = { name = "STRIKE_CRAFT_02_02"		position = { 0 0 0 } }
+	locator = { name = "STRIKE_CRAFT_02_03"		position = { 0 0 0 } }
+	locator = { name = "STRIKE_CRAFT_02_04"		position = { 0 0 0 } }
+	locator = { name = "STRIKE_CRAFT_02_05"		position = { 0 0 0 } }
+	locator = { name = "STRIKE_CRAFT_02_06"		position = { 0 0 0 } }
+
+	default_state = "idle"
+	state = { name = "idle"
+		start_event = { trigger_once = yes sound = { soundeffect = starbase_hum_stage_01 } }
+	}
+}
+
+entity = {
+	name = "empire_01_deep_space_03_starbase_citadel_entity"
+	pdxmesh = "sw_empty_mesh"
+	cull_radius = 20
+
+	default_state = "idle"
+	state = { name = "idle" }
+	state = { name = "death" animation = "idle" animation_blend_time = 1 chance = 1 looping = no animation_speed = 3
+			event = { time = 19.7 particle = "cybernetics_01_8_ship_explosion_effect" trigger_once = yes keep_particle = yes }
+	}
+}
+
+entity = {
+	name = "empire_01_deep_space_03_starbase_citadel_section_entity"
+	pdxmesh = "empire_valor_L3_mesh"
+
+	locator = { name = "point_defence_turret_02_01"	position = { 0 0 0 } }
+	locator = { name = "point_defence_turret_02_02"	position = { 0 0 0 } }
+	locator = { name = "point_defence_turret_02_03"	position = { 0 0 0 } }
+	locator = { name = "point_defence_turret_02_04"	position = { 0 0 0 } }
+	locator = { name = "point_defence_turret_02_05"	position = { 0 0 0 } }
+	locator = { name = "point_defence_turret_02_06"	position = { 0 0 0 } }
+	locator = { name = "point_defence_turret_02_07"	position = { 0 0 0 } }
+	locator = { name = "point_defence_turret_02_08"	position = { 0 0 0 } }
+	locator = { name = "point_defence_turret_02_09"	position = { 0 0 0 } }
+	locator = { name = "large_turret_03_01"		position = { 0 0 0 } }
+	locator = { name = "large_turret_03_02"		position = { 0 0 0 } }
+	locator = { name = "large_turret_03_03"		position = { 0 0 0 } }
+	locator = { name = "large_turret_03_04"		position = { 0 0 0 } }
+	locator = { name = "large_turret_03_05"		position = { 0 0 0 } }
+	locator = { name = "large_turret_03_06"		position = { 0 0 0 } }
+	locator = { name = "STRIKE_CRAFT_03_01"		position = { 0 0 0 } }
+	locator = { name = "STRIKE_CRAFT_03_02"		position = { 0 0 0 } }
+	locator = { name = "STRIKE_CRAFT_03_03"		position = { 0 0 0 } }
+	locator = { name = "STRIKE_CRAFT_03_04"		position = { 0 0 0 } }
+	locator = { name = "STRIKE_CRAFT_03_05"		position = { 0 0 0 } }
+	locator = { name = "STRIKE_CRAFT_03_06"		position = { 0 0 0 } }
+	locator = { name = "STRIKE_CRAFT_03_07"		position = { 0 0 0 } }
+	locator = { name = "STRIKE_CRAFT_03_08"		position = { 0 0 0 } }
+	locator = { name = "STRIKE_CRAFT_03_09"		position = { 0 0 0 } }
+	locator = { name = "extra_large_turret"		position = { 0 0 0 } }
+
+	default_state = "idle"
+	state = { name = "idle"
+		start_event = { trigger_once = yes sound = { soundeffect = starbase_hum_stage_01 } }
+	}
+}
+
+entity = {
+	name = "empire_01_citadel_extra_large_turret_entity"
+	locator = { name = "turret_muzzle_01" 	position = { 0 0 0 } }
+	pdxmesh = "sw_empty_mesh"
+}
+
+entity = {
+	name = "empire_01_citadel_large_turret_entity"
+	locator = { name = "turret_muzzle_01" 	position = { 0 0 0 } }
+	pdxmesh = "sw_empty_mesh"
+}
+
+entity = {
+	name = "empire_01_citadel_point_defence_turret_entity"
+	locator = { name = "turret_muzzle_01" 	position = { 0 0 0 } }
+	pdxmesh = "sw_empty_mesh"
+}
+
+##########
+# HYPER RELAY
+##########
+
+entity = {
+	name = "empire_01_hyper_relay_entity"
+	pdxmesh = "empire_hyper_beacon_mesh"
+	scale = 3.0
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 2
+		event = { time = 0 node = "light_locator_01" particle = "ship_light_blue_effect" trigger_once = yes keep_particle = yes }
+		event = { time = 0 node = "light_locator_02" particle = "ship_light_blue_effect" trigger_once = yes keep_particle = yes }
+	}
+	state = { name = "construction" }
+}

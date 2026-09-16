@@ -1,0 +1,238 @@
+# This is a template which multiple species can use.
+  
+kotor2sith_male_01_hair = {
+	default = "gfx/models/portraits/human/human_male_hair_black_style_03_and_beard_dark_style_01.dds"
+	
+	game_setup = {#will run with a limited country scope. species and government is set but the country does not actually exist
+		default = "gfx/models/portraits/human/human_male_hair_black_style_03_and_beard_dark_style_01.dds"
+	}
+	
+	#species scope
+	species = { #generic portrait for a species
+		default = "gfx/models/portraits/human/human_male_hair_black_style_03_and_beard_dark_style_01.dds"
+	}
+	
+	#pop scope
+	pop = { #for a specific pop
+	
+		default = "gfx/models/portraits/human/human_male_hair_black_style_03_and_beard_dark_style_01.dds"
+
+		random = {
+			list = {
+				"gfx/models/portraits/kotor2sith/kotorsith_male_officer_hair.dds"
+			}
+		}
+	}
+
+
+
+
+	#leader scope
+	leader = { #scientists, generals, admirals, governor
+		"gfx/models/portraits/kotor2sith/kotorsith_male_officer_hair.dds" = {
+			leader_class = general
+			NOT = {
+				has_trait = leader_trait_general_psionic
+			}
+		}
+		"gfx/models/portraits/kotor2sith/kotorsith_male_general2_hair.dds" = {
+			leader_class = general
+			has_trait = leader_trait_general_psionic
+		}
+		random = {
+			trigger = { leader_class = admiral }
+			list = {
+				
+				"gfx/models/portraits/kotor2sith/kotorsith_male_admiral_hair.dds"
+			}
+		}
+		
+		random = {
+			trigger = { leader_class = scientist }
+			list = {
+				"gfx/models/portraits/human/human_male_hair_black_style_01.dds"
+				"gfx/models/portraits/human/human_male_hair_black_style_01_and_beard_dark_style_02.dds"
+				
+				"gfx/models/portraits/human/human_male_hair_black_style_03.dds"
+				"gfx/models/portraits/human/human_male_hair_black_style_03_and_beard_dark_style_01.dds"
+				"gfx/models/portraits/human/human_male_hair_black_style_03_and_beard_dark_style_02.dds"
+				"gfx/models/portraits/human/human_male_hair_black_style_04.dds"
+				"gfx/models/portraits/human/human_male_hair_black_style_04_and_beard_dark_style_01.dds"
+				"gfx/models/portraits/human/human_male_hair_black_style_04_and_beard_dark_style_02.dds"
+			
+			
+			
+				"gfx/models/portraits/human/human_male_hair_brown_style_03.dds"
+				"gfx/models/portraits/human/human_male_hair_brown_style_03_and_beard_dark_style_01.dds"
+				"gfx/models/portraits/human/human_male_hair_brown_style_03_and_beard_dark_style_02.dds"
+				"gfx/models/portraits/human/human_male_hair_brown_style_04.dds"
+				"gfx/models/portraits/human/human_male_hair_brown_style_04_and_beard_dark_style_01.dds"
+				"gfx/models/portraits/human/human_male_hair_brown_style_04_and_beard_dark_style_02.dds"
+				
+				
+				
+				"gfx/models/portraits/human/human_male_hair_cendre_style_01.dds"
+				"gfx/models/portraits/human/human_male_hair_cendre_style_01_and_beard_light_style_02.dds"
+				"gfx/models/portraits/human/human_male_hair_cendre_style_03.dds"
+				"gfx/models/portraits/human/human_male_hair_cendre_style_03_and_beard_light_style_01.dds"
+				"gfx/models/portraits/human/human_male_hair_cendre_style_03_and_beard_light_style_02.dds"
+				"gfx/models/portraits/human/human_male_hair_cendre_style_04.dds"
+				"gfx/models/portraits/human/human_male_hair_cendre_style_04_and_beard_light_style_01.dds"
+				"gfx/models/portraits/human/human_male_hair_cendre_style_04_and_beard_light_style_02.dds"
+				"gfx/models/portraits/kotor2sith/kotorsith_male_officer_hair.dds"
+
+			}
+		}
+		
+		random = {
+			trigger = { leader_class = governor }
+			list = {
+				"gfx/models/portraits/human/human_male_hair_black_style_01.dds"
+				"gfx/models/portraits/human/human_male_hair_black_style_01_and_beard_dark_style_02.dds"
+				
+				"gfx/models/portraits/human/human_male_hair_black_style_03.dds"
+				"gfx/models/portraits/human/human_male_hair_black_style_03_and_beard_dark_style_01.dds"
+				"gfx/models/portraits/human/human_male_hair_black_style_03_and_beard_dark_style_02.dds"
+				"gfx/models/portraits/human/human_male_hair_black_style_04.dds"
+				"gfx/models/portraits/human/human_male_hair_black_style_04_and_beard_dark_style_01.dds"
+				"gfx/models/portraits/human/human_male_hair_black_style_04_and_beard_dark_style_02.dds"
+			
+			
+			
+				"gfx/models/portraits/human/human_male_hair_brown_style_03.dds"
+				"gfx/models/portraits/human/human_male_hair_brown_style_03_and_beard_dark_style_01.dds"
+				"gfx/models/portraits/human/human_male_hair_brown_style_03_and_beard_dark_style_02.dds"
+				"gfx/models/portraits/human/human_male_hair_brown_style_04.dds"
+				"gfx/models/portraits/human/human_male_hair_brown_style_04_and_beard_dark_style_01.dds"
+				"gfx/models/portraits/human/human_male_hair_brown_style_04_and_beard_dark_style_02.dds"
+				
+				
+				
+				"gfx/models/portraits/human/human_male_hair_cendre_style_01.dds"
+				"gfx/models/portraits/human/human_male_hair_cendre_style_01_and_beard_light_style_02.dds"
+				"gfx/models/portraits/human/human_male_hair_cendre_style_03.dds"
+				"gfx/models/portraits/human/human_male_hair_cendre_style_03_and_beard_light_style_01.dds"
+				"gfx/models/portraits/human/human_male_hair_cendre_style_03_and_beard_light_style_02.dds"
+				"gfx/models/portraits/human/human_male_hair_cendre_style_04.dds"
+				"gfx/models/portraits/human/human_male_hair_cendre_style_04_and_beard_light_style_01.dds"
+				"gfx/models/portraits/human/human_male_hair_cendre_style_04_and_beard_light_style_02.dds"
+			}
+		}
+	}
+
+	#leader scope
+	ruler = { #for rulers
+		#default = "gfx/models/portraits/human/human_male_hair_brown_style_01_and_beard_dark_style_01.dds"
+		
+		random = {
+			trigger = {
+				owner = { has_militarist_government = yes }
+			}
+				
+			list = {
+
+				#	"gfx/models/portraits/human/human_male_hair_blonde_style_01_and_beard_light_style_01.dds"
+			#	"gfx/models/portraits/human/human_male_hair_blonde_style_01_and_beard_light_style_02.dds"
+			#	"gfx/models/portraits/human/human_male_hair_blonde_style_02_and_beard_light_style_01.dds"
+			#	"gfx/models/portraits/human/human_male_hair_blonde_style_02_and_beard_light_style_02.dds"
+			#	"gfx/models/portraits/human/human_male_hair_blonde_style_01_and_beard_light_style_01.dds"
+			#	"gfx/models/portraits/human/human_male_hair_blonde_style_02_and_beard_light_style_01.dds"
+			#	"gfx/models/portraits/human/human_male_hair_blonde_style_03_and_beard_light_style_01.dds"
+			#	"gfx/models/portraits/human/human_male_hair_blonde_style_03_and_beard_light_style_02.dds"
+			#	"gfx/models/portraits/human/human_male_hair_blonde_style_04_and_beard_light_style_01.dds"
+			#	"gfx/models/portraits/human/human_male_hair_blonde_style_04_and_beard_light_style_02.dds"
+				
+				
+				"gfx/models/portraits/human/human_male_hair_brown_style_02_and_beard_dark_style_01.dds"
+				"gfx/models/portraits/human/human_male_hair_brown_style_02_and_beard_dark_style_01.dds"
+				"gfx/models/portraits/human/human_male_hair_brown_style_02_and_beard_dark_style_02.dds"
+				"gfx/models/portraits/human/human_male_hair_brown_style_02_and_beard_dark_style_01.dds"
+				
+				"gfx/models/portraits/human/human_male_hair_brown_style_03_and_beard_dark_style_01.dds"
+				"gfx/models/portraits/human/human_male_hair_brown_style_03_and_beard_dark_style_02.dds"
+				"gfx/models/portraits/human/human_male_hair_brown_style_04_and_beard_dark_style_01.dds"
+				"gfx/models/portraits/human/human_male_hair_brown_style_04_and_beard_dark_style_02.dds"
+				
+
+				
+				"gfx/models/portraits/human/human_male_hair_cendre_style_01_and_beard_light_style_01.dds"
+				"gfx/models/portraits/human/human_male_hair_cendre_style_01_and_beard_light_style_02.dds"
+				"gfx/models/portraits/human/human_male_hair_cendre_style_02_and_beard_light_style_01.dds"
+				"gfx/models/portraits/human/human_male_hair_cendre_style_02_and_beard_light_style_02.dds"
+				"gfx/models/portraits/human/human_male_hair_cendre_style_01_and_beard_light_style_01.dds"
+				"gfx/models/portraits/human/human_male_hair_cendre_style_02_and_beard_light_style_01.dds"
+				"gfx/models/portraits/human/human_male_hair_cendre_style_03_and_beard_light_style_01.dds"
+				"gfx/models/portraits/human/human_male_hair_cendre_style_03_and_beard_light_style_02.dds"
+				"gfx/models/portraits/human/human_male_hair_cendre_style_04_and_beard_light_style_01.dds"
+				"gfx/models/portraits/human/human_male_hair_cendre_style_04_and_beard_light_style_02.dds"
+				"gfx/models/portraits/kotor2sith/kotorsith_male_governor_nohair.dds"
+			}
+		}
+		
+		random = {
+			trigger = {
+				owner = { has_spiritualist_government = yes }
+			}
+			
+			list = {
+				"gfx/models/portraits/human/human_male_hair_black_style_04.dds"
+			}
+		}
+		
+		random = {
+			trigger = {
+				owner = {
+					OR = {
+						has_government = gov_stagnant_ascendancy
+						has_primitive_government = yes
+						has_materialist_government = yes
+						has_pacifist_government = yes
+					}
+				}
+			}
+			
+			list = {
+				"gfx/models/portraits/human/human_male_hair_black_style_03.dds"
+				"gfx/models/portraits/human/human_male_hair_black_style_03_and_beard_dark_style_01.dds"
+				"gfx/models/portraits/human/human_male_hair_black_style_03_and_beard_dark_style_02.dds"
+				"gfx/models/portraits/human/human_male_hair_black_style_04.dds"
+				"gfx/models/portraits/human/human_male_hair_black_style_04_and_beard_dark_style_01.dds"
+				"gfx/models/portraits/human/human_male_hair_black_style_04_and_beard_dark_style_02.dds"
+				
+				"gfx/models/portraits/human/human_male_hair_black_style_02_and_beard_dark_style_02.dds"
+				"gfx/models/portraits/human/human_male_hair_black_style_03.dds"
+				"gfx/models/portraits/human/human_male_hair_black_style_03_and_beard_dark_style_02.dds"
+				"gfx/models/portraits/human/human_male_hair_black_style_04.dds"
+				"gfx/models/portraits/human/human_male_hair_black_style_04_and_beard_dark_style_01.dds"
+				"gfx/models/portraits/human/human_male_hair_black_style_04_and_beard_dark_style_02.dds"
+				
+				
+				
+			#	"gfx/models/portraits/human/human_male_hair_blonde_style_02_and_beard_light_style_02.dds"
+			#	"gfx/models/portraits/human/human_male_hair_blonde_style_03.dds"
+			#	"gfx/models/portraits/human/human_male_hair_blonde_style_03_and_beard_light_style_02.dds"
+			#	"gfx/models/portraits/human/human_male_hair_blonde_style_04.dds"
+			#	"gfx/models/portraits/human/human_male_hair_blonde_style_04_and_beard_light_style_01.dds"
+			#	"gfx/models/portraits/human/human_male_hair_blonde_style_04_and_beard_light_style_02.dds"
+				
+				
+				
+				"gfx/models/portraits/human/human_male_hair_brown_style_02_and_beard_dark_style_02.dds"
+				"gfx/models/portraits/human/human_male_hair_brown_style_03.dds"
+				"gfx/models/portraits/human/human_male_hair_brown_style_03_and_beard_dark_style_02.dds"
+				"gfx/models/portraits/human/human_male_hair_brown_style_04.dds"
+				"gfx/models/portraits/human/human_male_hair_brown_style_04_and_beard_dark_style_01.dds"
+				"gfx/models/portraits/human/human_male_hair_brown_style_04_and_beard_dark_style_02.dds"
+				
+				
+				
+				"gfx/models/portraits/human/human_male_hair_cendre_style_02_and_beard_light_style_02.dds"
+				"gfx/models/portraits/human/human_male_hair_cendre_style_03.dds"
+				"gfx/models/portraits/human/human_male_hair_cendre_style_03_and_beard_light_style_02.dds"
+				"gfx/models/portraits/human/human_male_hair_cendre_style_04.dds"
+				"gfx/models/portraits/human/human_male_hair_cendre_style_04_and_beard_light_style_01.dds"
+				"gfx/models/portraits/human/human_male_hair_cendre_style_04_and_beard_light_style_02.dds"
+			}
+		}
+	}
+}

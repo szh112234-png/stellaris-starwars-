@@ -1,0 +1,203 @@
+namespace = myk_starkiller
+country_event = {
+    id = myk_starkiller.10
+    title = myk_starkiller.10.title
+    desc = myk_starkiller.10.desc
+    picture = GFX_foc_event_starkiller_base_popup
+    show_sound = myk_starkillerbase_completed_speech
+    is_triggered_only = yes
+
+    immediate = {
+        # Planet model swap is now done directly in the megastructure's
+        # on_build_complete (on the player-chosen anchor planet), so this
+        # event only shows the completion notification.
+    }
+
+    option = { name = OK }
+}
+
+# Beacon completed message only; no target selection list.
+country_event = {
+    id = myk_starkiller.300
+    title = myk_starkiller.300.title
+    desc = myk_starkiller.300.desc
+    picture = GFX_foc_event_starkiller_base_popup
+    is_triggered_only = yes
+    option = { name = OK }
+}
+
+# Begin firing at the one-shot beacon target.
+country_event = {
+    id = myk_starkiller.310
+    title = myk_starkiller.310.title
+    desc = myk_starkiller.310.desc
+    picture = GFX_foc_event_starkiller_base_popup
+    is_triggered_only = yes
+
+    immediate = {
+        every_owned_megastructure = {
+            limit = { is_megastructure_type = myk_starkiller_base_final }
+            save_event_target_as = myk_starkiller_legacy_base_megastructure
+            solar_system = { save_event_target_as = myk_starkiller_legacy_base_system }
+        }
+
+        if = {
+            limit = { exists = event_target:myk_starkiller_current_target_beacon }
+            event_target:myk_starkiller_current_target_beacon = {
+                solar_system = {
+                    save_event_target_as = myk_starkiller_target_system_legacy
+
+                    # Prefer the planet closest to the target beacon.
+                    # This makes "Destroy Target Planet" hit the planet carrying/nearest to the beacon.
+                    random_system_planet = {
+                            limit = { is_star = no }
+                        save_event_target_as = myk_starkiller_target_planet
+                    }
+
+                    # Fallback in case distance check fails.
+                    if = {
+                        limit = { NOT = { exists = event_target:myk_starkiller_target_planet } }
+                        random_system_planet = {
+                            limit = { is_star = no }
+                            save_event_target_as = myk_starkiller_target_planet
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    option = {
+        name = myk_starkiller_fire_now
+        custom_tooltip = myk_starkiller_fire_warning
+        hidden_effect = { country_event = { id = myk_starkiller.311 } }
+    }
+    option = { name = CANCEL }
+}
+
+country_event = {
+    id = myk_starkiller.311
+    hide_window = yes
+    is_triggered_only = yes
+
+    immediate = {
+        set_timed_country_flag = { flag = myk_starkiller_base_cooldown days = 300 }
+
+        if = {
+            limit = { exists = event_target:myk_starkiller_base_planet_flag }
+            event_target:myk_starkiller_base_planet_flag = {
+                set_planet_entity = {
+                    entity = "myk_starkillerbase_firing_planet_entity"
+                    picture = pc_arctic
+                }
+            }
+        }
+
+        if = {
+            limit = { exists = event_target:myk_starkiller_legacy_base_system }
+            event_target:myk_starkiller_legacy_base_system = {
+                # [removed legacy spawn_megastructure animation block - conflicted with other mods]
+            }
+        }
+
+        country_event = { id = myk_starkiller.312 days = 20 }
+    }
+}
+
+country_event = {
+    id = myk_starkiller.312
+    hide_window = yes
+    is_triggered_only = yes
+
+    immediate = {
+        if = {
+            limit = { exists = event_target:myk_starkiller_legacy_sun_drain_location }
+            remove_megastructure = event_target:myk_starkiller_legacy_sun_drain_location
+        }
+
+        if = {
+            limit = { exists = event_target:myk_starkiller_legacy_base_system }
+            event_target:myk_starkiller_legacy_base_system = {
+                # [removed legacy spawn_megastructure animation block - conflicted with other mods]
+                # [removed legacy spawn_megastructure animation block - conflicted with other mods]
+            }
+        }
+
+        if = {
+            limit = { exists = event_target:myk_starkiller_target_system_legacy }
+            event_target:myk_starkiller_target_system_legacy = {
+                # [removed legacy spawn_megastructure animation block - conflicted with other mods]
+                # [removed legacy spawn_megastructure animation block - conflicted with other mods]
+            }
+        }
+
+        country_event = { id = myk_starkiller.313 days = 40 }
+    }
+}
+
+country_event = {
+    id = myk_starkiller.313
+    hide_window = yes
+    is_triggered_only = yes
+
+    immediate = {
+        if = {
+            limit = {
+                has_country_flag = myk_starkiller_mode_planet
+                exists = event_target:myk_starkiller_target_system_legacy
+            }
+            event_target:myk_starkiller_target_system_legacy = {
+                myk_starkiller_destroy_habitable_planets_in_system = yes
+            }
+        }
+        else_if = {
+            limit = { exists = event_target:myk_starkiller_target_system_legacy }
+            event_target:myk_starkiller_target_system_legacy = { myk_starkiller_destroy_entire_system = yes }
+        }
+
+        # Target-system markers disappear when the shot finishes.
+        if = { limit = { exists = event_target:myk_starkiller_legacy_fire_target_location } remove_megastructure = event_target:myk_starkiller_legacy_fire_target_location }
+        if = { limit = { exists = event_target:myk_starkiller_legacy_beacon_target_location } remove_megastructure = event_target:myk_starkiller_legacy_beacon_target_location }
+
+        country_event = { id = myk_starkiller.314 }
+        country_event = { id = myk_starkiller.315 days = 1 }
+    }
+}
+
+country_event = {
+    id = myk_starkiller.314
+    hide_window = yes
+    is_triggered_only = yes
+
+    immediate = {
+        if = { limit = { exists = event_target:myk_starkiller_legacy_fire_origin_location } remove_megastructure = event_target:myk_starkiller_legacy_fire_origin_location }
+        if = { limit = { exists = event_target:myk_starkiller_legacy_beacon_origin_location } remove_megastructure = event_target:myk_starkiller_legacy_beacon_origin_location }
+
+        if = {
+            limit = { exists = event_target:myk_starkiller_base_planet_flag }
+            event_target:myk_starkiller_base_planet_flag = {
+                set_planet_entity = {
+                    entity = "myk_starkillerbase_planet_entity"
+                    picture = pc_arctic
+                }
+            }
+        }
+
+        if = {
+            limit = { exists = event_target:myk_starkiller_current_target_beacon }
+            remove_megastructure = event_target:myk_starkiller_current_target_beacon
+        }
+
+        remove_country_flag = myk_starkiller_mode_planet
+    }
+}
+
+country_event = {
+    id = myk_starkiller.315
+    title = myk_starkiller.315.title
+    desc = myk_starkiller.315.desc
+    picture = GFX_foc_event_starkiller_base_popup
+    show_sound = myk_starkillerbase_fire
+    is_triggered_only = yes
+    option = { name = OK }
+}

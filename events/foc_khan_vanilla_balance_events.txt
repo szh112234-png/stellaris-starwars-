@@ -1,0 +1,92 @@
+namespace = foc_khan_balance
+
+# FOC 2.59: human players use direct component variants. The legacy per-ship
+# modifiers remain only for AI crisis/rebel ships whose global designs reference
+# fixed SG component IDs.
+country_event = {
+    id = foc_khan_balance.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        OR = {
+            is_ai = no
+            has_country_flag = foc_khan_first_order_country
+            has_country_flag = foc_khan_final_order_country
+            has_country_flag = foc_khan_rebel_alliance_country
+            has_modifier = foc_khan_vanilla_balance_country_combat
+            any_owned_ship = {
+                OR = {
+                    has_modifier = foc_khan_vanilla_balance_standard_ship
+                    has_modifier = foc_khan_vanilla_balance_heavy_ship
+                    has_modifier = foc_khan_vanilla_balance_xyston
+                    has_modifier = foc_khan_vanilla_balance_supercapital
+                    has_modifier = foc_khan_vanilla_balance_ultracapital
+                    has_modifier = foc_khan_vanilla_balance_player_supremacy
+                    has_modifier = foc_khan_vanilla_balance_arkship
+                }
+            }
+        }
+    }
+
+    immediate = {
+        country_event = { id = foc_component.1 }
+        # Reuse every existing post-spawn balance call to immediately apply the complete Lowest conversion.
+        country_event = { id = foc_lowest_complete.1 }
+        if = { limit = { has_modifier = foc_khan_vanilla_balance_country_combat } remove_modifier = foc_khan_vanilla_balance_country_combat }
+
+        every_owned_ship = {
+            if = {
+                limit = { owner = { is_ai = no } }
+                # Remove every legacy player-side multiplier: direct components now own the stats.
+                if = { limit = { has_modifier = foc_khan_vanilla_balance_standard_ship } remove_modifier = foc_khan_vanilla_balance_standard_ship }
+                if = { limit = { has_modifier = foc_khan_vanilla_balance_heavy_ship } remove_modifier = foc_khan_vanilla_balance_heavy_ship }
+                if = { limit = { has_modifier = foc_khan_vanilla_balance_xyston } remove_modifier = foc_khan_vanilla_balance_xyston }
+                if = { limit = { has_modifier = foc_khan_vanilla_balance_supercapital } remove_modifier = foc_khan_vanilla_balance_supercapital }
+                if = { limit = { has_modifier = foc_khan_vanilla_balance_ultracapital } remove_modifier = foc_khan_vanilla_balance_ultracapital }
+                if = { limit = { has_modifier = foc_khan_vanilla_balance_player_supremacy } remove_modifier = foc_khan_vanilla_balance_player_supremacy }
+                if = { limit = { has_modifier = foc_khan_vanilla_balance_arkship } remove_modifier = foc_khan_vanilla_balance_arkship }
+                if = { limit = { has_modifier = foc_khan_vanilla_balance_supremacy_speed } remove_modifier = foc_khan_vanilla_balance_supremacy_speed }
+
+                # The standalone Supremacy adds a +9900% package outside components.
+                # Lowest removes it; other tiers restore the exact package that existed.
+                if = {
+                    limit = { has_global_flag = foc_khan_strength_lowest }
+                    if = { limit = { has_modifier = foc_sai_supremacy_arkship_stats } remove_modifier = foc_sai_supremacy_arkship_stats set_ship_flag = foc_khan_restore_foc_supremacy_stats_253 }
+                    if = { limit = { has_modifier = sai_supremacy_arkship_stats } remove_modifier = sai_supremacy_arkship_stats set_ship_flag = foc_khan_restore_sai_supremacy_stats_253 }
+                    if = { limit = { has_modifier = foc_khan_supremacy_heavy_ark_slowdown } remove_modifier = foc_khan_supremacy_heavy_ark_slowdown set_ship_flag = foc_khan_restore_supremacy_power_253 }
+                }
+                else = {
+                    if = { limit = { has_ship_flag = foc_khan_restore_foc_supremacy_stats_253 } add_modifier = { modifier = foc_sai_supremacy_arkship_stats days = -1 } remove_ship_flag = foc_khan_restore_foc_supremacy_stats_253 }
+                    if = { limit = { has_ship_flag = foc_khan_restore_sai_supremacy_stats_253 } add_modifier = { modifier = sai_supremacy_arkship_stats days = -1 } remove_ship_flag = foc_khan_restore_sai_supremacy_stats_253 }
+                    if = { limit = { has_ship_flag = foc_khan_restore_supremacy_power_253 } add_modifier = { modifier = foc_khan_supremacy_heavy_ark_slowdown days = -1 } remove_ship_flag = foc_khan_restore_supremacy_power_253 }
+                }
+            }
+            else = {
+                # FOC Lowest complete-balance system now covers AI fixed designs too.
+                # Do not stack the legacy negative multipliers on top of the new
+                # vanilla-scale LOWEST components and ship-size normalizers.
+                if = { limit = { has_modifier = foc_khan_vanilla_balance_standard_ship } remove_modifier = foc_khan_vanilla_balance_standard_ship }
+                if = { limit = { has_modifier = foc_khan_vanilla_balance_heavy_ship } remove_modifier = foc_khan_vanilla_balance_heavy_ship }
+                if = { limit = { has_modifier = foc_khan_vanilla_balance_xyston } remove_modifier = foc_khan_vanilla_balance_xyston }
+                if = { limit = { has_modifier = foc_khan_vanilla_balance_supercapital } remove_modifier = foc_khan_vanilla_balance_supercapital }
+                if = { limit = { has_modifier = foc_khan_vanilla_balance_ultracapital } remove_modifier = foc_khan_vanilla_balance_ultracapital }
+                if = { limit = { has_modifier = foc_khan_vanilla_balance_player_supremacy } remove_modifier = foc_khan_vanilla_balance_player_supremacy }
+                if = { limit = { has_modifier = foc_khan_vanilla_balance_arkship } remove_modifier = foc_khan_vanilla_balance_arkship }
+                if = { limit = { has_modifier = foc_khan_vanilla_balance_supremacy_speed } remove_modifier = foc_khan_vanilla_balance_supremacy_speed }
+            }
+        }
+
+        every_owned_planet = {
+            if = {
+                limit = { has_global_flag = foc_khan_strength_lowest }
+                if = { limit = { has_modifier = foc_starkiller_base_world NOT = { has_modifier = foc_khan_vanilla_balance_starkiller_world } } add_modifier = { modifier = foc_khan_vanilla_balance_starkiller_world days = -1 } }
+                if = { limit = { has_modifier = foc_khan_starkiller_fortress_network } remove_modifier = foc_khan_starkiller_fortress_network }
+            }
+            else = {
+                if = { limit = { has_modifier = foc_khan_vanilla_balance_starkiller_world } remove_modifier = foc_khan_vanilla_balance_starkiller_world }
+                if = { limit = { has_modifier = foc_starkiller_base_world NOT = { has_modifier = foc_khan_starkiller_fortress_network } } add_modifier = { modifier = foc_khan_starkiller_fortress_network days = -1 } }
+            }
+        }
+    }
+}

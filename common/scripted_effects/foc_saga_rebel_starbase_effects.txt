@@ -1,0 +1,178 @@
+# =============================================================================
+# 义军 / 帝国叛军：造船基础设施
+# =============================================================================
+# 病因：foc_republic_origin_claim_for_rebels 给雅雯、霍斯、迪卡三个建国星系
+# 各建一座 starbase_outpost。**前哨站没有任何模块槽位**，所以义军从开局起就
+# 不可能有船坞——不是模块没装上，是根本没有可以装的地方。
+#
+# 这不是新问题，共和国那边踩过同一个坑。foc_republic_origin_effects.txt 第
+# 2667 行的注释写得很清楚：
+#     「用前哨站占下二十七个星系对开局预算是对的，但它让银河系最强的国家
+#       没有星港、没有船坞、没有一个设防星系。」
+# 共和国的解法是 foc_republic_origin_establish_core_starbases——只把三个关键
+# 世界升级成真正的基地，其余保持前哨站，避免遍地要塞造成维护费赤字。
+#
+# 义军没有对应的那一步。这里照抄同一套做法。
+# =============================================================================
+
+# 系统作用域。确保本系统有一座属于指定国家的恒星基地，并升到给定等级。
+# 这里不直接 set_starbase_size，因为要先保证 starbase 存在。
+foc_saga_ensure_rebel_starbase_here = {
+    if = {
+        limit = { NOT = { exists = starbase } }
+        create_starbase = {
+            size = starbase_outpost
+            owner = event_target:foc_khan_rebel_alliance
+        }
+    }
+    starbase = {
+        set_owner = event_target:foc_khan_rebel_alliance
+    }
+}
+
+# 国家作用域（义军 / 帝国叛军）。首都：主锚地与主船台。
+foc_saga_establish_rebel_core_starbases = {
+    if = {
+        limit = { any_owned_planet = { is_capital = yes } }
+        random_owned_planet = {
+            limit = { is_capital = yes }
+            solar_system = {
+                foc_saga_ensure_rebel_starbase_here = yes
+                # 槽位配置与 foc_republic_origin_establish_core_starbases 里
+                # 科洛桑那一段完全一致：要塞级 6 个模块槽、3 个建筑槽，装得下
+                # 双船坞 + 锚地 + 炮台。等级选要塞是因为 MOD 里只用过
+                # outpost / starport / starhold / citadel 这四个 key，
+                # 沿用已验证过的写法，不引入未经确认的等级名。
+                starbase = {
+                    set_starbase_size = starbase_citadel
+                    set_starbase_module = { slot = 1 module = shipyard }
+                    set_starbase_module = { slot = 2 module = shipyard }
+                    set_starbase_module = { slot = 3 module = anchorage }
+                    set_starbase_module = { slot = 4 module = gun_battery }
+                    if = {
+                        limit = { NOT = { has_starbase_building = crew_quarters } }
+                        set_starbase_building = { slot = 1 building = crew_quarters }
+                    }
+                    # V106: naval_logistics_office is optional and fails 4.4 potential checks here.
+                    set_ship_construction_type = starbase_shipyard
+                    set_starbase_flag = foc_saga_rebel_core_starbase
+                }
+            }
+        }
+    }
+
+    # 另外两个有殖民地的星系各升一座星港带一个船坞：舰队修理点与备用船台。
+    # 只升两个，其余保持前哨站，理由与共和国那边一样——避免维护费赤字。
+    while = {
+        count = 2
+        random_system = {
+            limit = {
+                exists = starbase
+                starbase = { owner = { is_same_value = event_target:foc_khan_rebel_alliance } }
+                NOT = { has_star_flag = foc_saga_rebel_secondary_yard }
+                # The capital was just upgraded above. Never select it again
+                # as a secondary yard and immediately downgrade it to a starport.
+                NOT = {
+                    any_system_planet = {
+                        is_capital = yes
+                        owner = { is_same_value = event_target:foc_khan_rebel_alliance }
+                    }
+                }
+                any_system_planet = {
+                    is_colony = yes
+                    owner = { is_same_value = event_target:foc_khan_rebel_alliance }
+                }
+            }
+            set_star_flag = foc_saga_rebel_secondary_yard
+            # 星港只有一个模块槽和一个建筑槽，所以这里只放一条船台，
+            # 不多写会失败的槽位。
+            starbase = {
+                # Retain any stronger base that this colony already owns.
+                if = {
+                    limit = { has_starbase_size = starbase_outpost }
+                    set_starbase_size = starbase_starport
+                }
+                set_starbase_module = { slot = 1 module = shipyard }
+                if = {
+                    limit = { NOT = { has_starbase_building = crew_quarters } }
+                    set_starbase_building = { slot = 1 building = crew_quarters }
+                }
+                set_ship_construction_type = starbase_shipyard
+                set_starbase_flag = foc_saga_rebel_core_starbase
+            }
+        }
+    }
+
+    set_country_flag = foc_saga_rebel_yards_established
+}
+
+# =============================================================================
+# 双死星覆灭：内环起义
+# =============================================================================
+# 本地化写的是「内环十四星系同时发动总起义并全部转入叛军控制」，但
+# foc_republic_origin.176 的代码里只发修正和资源，没有任何领土转移。事件文件
+# 里那段注释交代了原因：
+#     Territory is no longer transferred automatically: Coruscant, Kuat and
+#     Jakku must all be conquered for the military Treaty route.
+# 也就是说作者后来去掉了自动移交，但**中文文案没有跟着改**，两边一直对不上。
+#
+# 这里按文案把起义做出来，同时尊重作者那句注释的意图：
+#   * 内环其余星系随起义倒向叛军
+#   * 科洛桑与夸特保留在帝国手里——那是帝国的政治中心与船台，仍然必须打下来
+#   * 贾库属于外环，本来就不在起义范围内
+# 于是条约路线依旧要求攻克科洛桑、夸特、贾库，和作者的设计一致，但玩家看到的
+# 文字和实际发生的事终于对上了。
+#
+# 只翻转当前属于帝国的星系：已经是叛军的不动，分离主义残留的也不动。
+# V232f: dedicated claim wrapper for the uprising.  This second guard means
+# even if the outer every_system filter is changed later, the five exclusions
+# still cannot be transferred by this mechanic.
+foc_v232f_inner_rim_claim_for_rebels = {
+    if = {
+        limit = { NOT = { foc_v232f_is_inner_rim_uprising_excluded_system = yes } }
+        foc_republic_origin_claim_for_rebels = yes
+        set_star_flag = foc_saga_inner_rim_risen
+        log = "FOC_V232F_UPRISING: eligible Inner Rim system transferred to the Rebel Alliance."
+    }
+    else = {
+        log = "FOC_V232F_UPRISING: protected non-uprising system blocked from automatic transfer."
+    }
+}
+
+foc_saga_inner_rim_uprising = {
+    # V232f: the uprising still uses the final-New-Republic territory pool, but
+    # five non-uprising systems are hard-excluded before any owner change.
+    if = {
+        limit = { exists = event_target:foc_khan_rebel_alliance }
+
+        # Backfill a dedicated exclusion marker by planet identity as well as by
+        # initializer/event-target identity.  This survives old saves and map
+        # relocation/rebuilds where one class of marker may be missing.
+        every_system = {
+            limit = { foc_v232f_is_inner_rim_uprising_excluded_system = yes }
+            set_star_flag = foc_v232f_inner_rim_uprising_excluded
+        }
+
+        every_system = {
+            limit = {
+                foc_v231p_is_treaty_new_republic_system = yes
+                NOT = { has_star_flag = foc_sw_coruscant_home }
+                NOT = { has_star_flag = foc_sw_kuat_home }
+                NOT = { has_star_flag = foc_v232f_inner_rim_uprising_excluded }
+                NOT = { foc_v232f_is_inner_rim_uprising_excluded_system = yes }
+                NOT = { is_same_value = event_target:foc_sw_coruscant_system }
+                NOT = { is_same_value = event_target:foc_sw_kuat_system }
+            }
+            foc_v232f_inner_rim_claim_for_rebels = yes
+        }
+
+        set_global_flag = foc_saga_inner_rim_uprising_done
+        event_target:foc_khan_rebel_alliance = {
+            if = {
+                limit = { NOT = { has_modifier = foc_saga_inner_rim_wartime_logistics } }
+                add_modifier = { modifier = foc_saga_inner_rim_wartime_logistics days = -1 }
+            }
+        }
+        log = "FOC_V232F_UPRISING: transfer completed; Al'doleem, Rendili, Christophsis, Utapau, Jedha, Coruscant and Kuat were hard-excluded."
+    }
+}

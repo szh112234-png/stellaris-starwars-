@@ -1,0 +1,370 @@
+# V232i: copied from the user-supplied vanilla 01_pop_assembly_buildings.txt.
+# Country eligibility includes the two FOC crisis flags. V232m also honours the
+# existing temporary bootstrap flag for AI crowding; policy/species gates unchanged.
+
+building_robot_assembly_plant = {
+	base_buildtime = @b1_time
+	planet_limit = 1
+
+	category = pop_assembly
+
+	building_sets = {
+		government
+		urban
+	}
+
+	potential = {
+		exists = owner
+		owner = {
+			foc_v232i_allows_vanilla_robot_factory = yes
+			is_individual_machine = no
+			NOT = { has_policy_flag = robots_outlawed }
+			OR = {
+				is_ai = no
+				NOT = { has_ascension_perk = ap_engineered_evolution }
+				is_materialist = yes
+			}
+		}
+		NOT = {	has_modifier = resort_colony }
+	}
+
+	convert_to = {
+		building_machine_assembly_plant
+	}
+
+	upgrades = {
+		building_robot_assembly_complex
+	}
+
+	allow = {
+		hidden_trigger = {
+			OR = {
+                has_carrier_flag = ignore_ai_building_limitations
+				owner = { is_ai = no }
+				NAND = {
+					free_district_slots = 0
+					free_building_slots <= 1
+					free_housing <= 0
+					free_jobs <= 0
+				}
+			}
+		}
+	}
+
+	destroy_trigger = {
+		exists = owner
+		OR = {
+			owner = {
+				OR = {
+					foc_v232i_allows_vanilla_robot_factory = no
+					has_policy_flag = robots_outlawed
+				}
+			}
+			AND = {
+                NOT = { has_carrier_flag = ignore_ai_building_limitations }
+				owner = { is_ai = yes }
+				free_district_slots = 0
+				free_building_slots = 0
+				free_housing <= 0
+				free_jobs <= 0
+			}
+			owner = {
+				is_ai = yes
+				has_ascension_perk = ap_engineered_evolution
+				is_materialist = no
+			}
+		}
+	}
+
+	inline_script = {
+		script = jobs/roboticist_add
+		AMOUNT = @building_static_jobs_low
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = {
+				OR = {
+					has_origin = origin_mechanists
+					is_individual_machine = yes
+					has_country_flag = synthetic_empire
+				}
+			}
+			any_owned_pop_group = {
+				has_auto_modding_trait = yes
+			}
+		}
+		modifier = {
+			auto_mod_monthly_add = 200
+		}
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = {
+				has_country_flag = synth_unscheduled_updates
+			}
+		}
+		modifier = {
+			planet_pop_assembly_mult = 0.1
+		}
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = {
+				has_country_flag = synth_safe_updates
+			}
+		}
+		modifier = {
+			planet_pop_assembly_mult = -0.1
+			planet_stability_add = 2
+		}
+	}
+
+	### JOB STRATA FOCUS MODIFIERS ###
+	triggered_planet_modifier = { # Synth ruler focus
+		potential = {
+			exists = owner
+			owner = {
+				has_country_flag = synth_focus_rulers
+			}
+		}
+		modifier = {
+			planet_jobs_ruler_produces_mult = 0.15
+		}
+	}
+
+	triggered_planet_modifier = { # Synth specialist focus
+		potential = {
+			exists = owner
+			owner = {
+				has_country_flag = synth_focus_specialists
+			}
+		}
+		modifier = {
+			planet_jobs_specialist_produces_mult = 0.05
+		}
+	}
+
+	triggered_planet_modifier = { # Synth worker focus
+		potential = {
+			exists = owner
+			owner = {
+				has_country_flag = synth_focus_workers
+			}
+		}
+		modifier = {
+			planet_jobs_worker_produces_mult = 0.10
+		}
+	}
+
+	triggered_planet_modifier = { # Synth upkeep focus
+		potential = {
+			exists = owner
+			owner = {
+				has_country_flag = synth_focus_upkeep
+			}
+		}
+		modifier = {
+			planet_jobs_upkeep_mult = -0.05
+		}
+	}
+
+	resources = {
+		category = planet_buildings
+		inline_script = {
+			script = buildings/nomadic_cost_switcher
+			REGULAR_RESOURCE = minerals
+			NOMADIC_RESOURCE = rare_crystals
+			COST = @b2_minerals
+			NOMADIC_COST_MULT = @nomadic_minerals_to_strategic_ratio
+		}
+		upkeep = {
+			energy = @b2_upkeep
+		}
+	}
+
+	prerequisites = {
+		"tech_robotic_workers"
+	}
+}
+
+building_robot_assembly_complex = {
+	icon = building_machine_assembly_complex
+	base_buildtime = @b3_time
+	can_build = no
+
+	category = pop_assembly
+
+	building_sets = {
+		government
+		urban
+	}
+
+	potential = {
+		exists = owner
+		owner = {
+			foc_v232i_allows_vanilla_robot_factory = yes
+			is_individual_machine = no
+			NOT = { has_policy_flag = robots_outlawed }
+			OR = {
+				is_ai = no
+				NOT = { has_ascension_perk = ap_engineered_evolution }
+				is_materialist = yes
+			}
+		}
+	}
+
+	convert_to = {
+		building_machine_assembly_complex
+	}
+
+	destroy_trigger = {
+		exists = owner
+		OR = {
+			owner = {
+				OR = {
+					foc_v232i_allows_vanilla_robot_factory = no
+					has_policy_flag = robots_outlawed
+				}
+			}
+			AND = {
+                NOT = { has_carrier_flag = ignore_ai_building_limitations }
+				owner = { is_ai = yes }
+				free_district_slots = 0
+				free_building_slots = 0
+				free_housing <= 0
+				free_jobs <= 0
+			}
+			owner = {
+				is_ai = yes
+				has_ascension_perk = ap_engineered_evolution
+				is_materialist = no
+			}
+		}
+	}
+
+	inline_script = {
+		script = jobs/roboticist_add
+		AMOUNT = @building_static_jobs
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = {
+				OR = {
+					has_origin = origin_mechanists
+					is_individual_machine = yes
+					has_country_flag = synthetic_empire
+				}
+			}
+			any_owned_pop_group = {
+				has_auto_modding_trait = yes
+			}
+		}
+		modifier = {
+			auto_mod_monthly_add = 400
+		}
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = {
+				has_country_flag = synth_unscheduled_updates
+			}
+		}
+		modifier = {
+			planet_pop_assembly_mult = 0.1
+		}
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = {
+				has_country_flag = synth_safe_updates
+			}
+		}
+		modifier = {
+			planet_pop_assembly_mult = -0.1
+			planet_stability_add = 2
+		}
+	}
+
+	### JOB STRATA FOCUS MODIFIERS ###
+	triggered_planet_modifier = { # Synth ruler focus
+		potential = {
+			exists = owner
+			owner = {
+				has_country_flag = synth_focus_rulers
+			}
+		}
+		modifier = {
+			planet_jobs_ruler_produces_mult = 0.15
+		}
+	}
+
+	triggered_planet_modifier = { # Synth specialist focus
+		potential = {
+			exists = owner
+			owner = {
+				has_country_flag = synth_focus_specialists
+			}
+		}
+		modifier = {
+			planet_jobs_specialist_produces_mult = 0.05
+		}
+	}
+
+	triggered_planet_modifier = { # Synth worker focus
+		potential = {
+			exists = owner
+			owner = {
+				has_country_flag = synth_focus_workers
+			}
+		}
+		modifier = {
+			planet_jobs_worker_produces_mult = 0.10
+		}
+	}
+
+	triggered_planet_modifier = { # Synth upkeep focus
+		potential = {
+			exists = owner
+			owner = {
+				has_country_flag = synth_focus_upkeep
+			}
+		}
+		modifier = {
+			planet_jobs_upkeep_mult = -0.05
+		}
+	}
+
+	resources = {
+		category = planet_buildings
+		inline_script = {
+			script = buildings/nomadic_cost_switcher
+			REGULAR_RESOURCE = minerals
+			NOMADIC_RESOURCE = rare_crystals
+			COST = @b3_minerals
+			NOMADIC_COST_MULT = @nomadic_minerals_to_strategic_ratio
+		}
+		cost = {
+			rare_crystals = @b3_rare_cost
+		}
+		upkeep = {
+			energy = @b3_upkeep
+			rare_crystals = @b3_rare_upkeep
+		}
+	}
+
+	prerequisites = {
+		tech_robot_assembly_complex
+	}
+}

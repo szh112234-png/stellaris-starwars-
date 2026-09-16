@@ -1,0 +1,79 @@
+namespace = foc_v236_tri
+
+fleet_event = {
+ id = foc_v236_tri.1
+ hide_window = yes
+ is_triggered_only = yes
+ immediate = {
+  log = "SSP_STANDALONE: separatist TRI action completed"
+  save_event_target_as = foc_tri_source_fleet
+  controller = { save_event_target_as = foc_tri_owner }
+  solar_system = { save_event_target_as = foc_tri_source_system }
+  event_target:foc_tri_owner = {
+   random_system = { limit = { distance = { source = event_target:foc_tri_source_system min_jumps = 1 max_jumps = 2 } NOT = { has_star_flag = foc_tri_selected } } save_event_target_as = foc_tri_target_1 set_star_flag = foc_tri_selected }
+   random_system = { limit = { distance = { source = event_target:foc_tri_source_system min_jumps = 1 max_jumps = 2 } NOT = { has_star_flag = foc_tri_selected } } save_event_target_as = foc_tri_target_2 set_star_flag = foc_tri_selected }
+   random_system = { limit = { distance = { source = event_target:foc_tri_source_system min_jumps = 1 max_jumps = 2 } NOT = { has_star_flag = foc_tri_selected } } save_event_target_as = foc_tri_target_3 set_star_flag = foc_tri_selected }
+   random_system = { limit = { distance = { source = event_target:foc_tri_source_system min_jumps = 1 max_jumps = 2 } NOT = { has_star_flag = foc_tri_selected } } save_event_target_as = foc_tri_target_4 set_star_flag = foc_tri_selected }
+   random_system = { limit = { distance = { source = event_target:foc_tri_source_system min_jumps = 1 max_jumps = 2 } NOT = { has_star_flag = foc_tri_selected } } save_event_target_as = foc_tri_target_5 set_star_flag = foc_tri_selected }
+   random_system = { limit = { distance = { source = event_target:foc_tri_source_system min_jumps = 1 max_jumps = 2 } NOT = { has_star_flag = foc_tri_selected } } save_event_target_as = foc_tri_target_6 set_star_flag = foc_tri_selected }
+   random_system = { limit = { distance = { source = event_target:foc_tri_source_system min_jumps = 1 max_jumps = 2 } NOT = { has_star_flag = foc_tri_selected } } save_event_target_as = foc_tri_target_7 set_star_flag = foc_tri_selected }
+   random_system = { limit = { distance = { source = event_target:foc_tri_source_system min_jumps = 1 max_jumps = 2 } NOT = { has_star_flag = foc_tri_selected } } save_event_target_as = foc_tri_target_8 set_star_flag = foc_tri_selected }
+   random_system = { limit = { distance = { source = event_target:foc_tri_source_system min_jumps = 1 max_jumps = 2 } NOT = { has_star_flag = foc_tri_selected } } save_event_target_as = foc_tri_target_9 set_star_flag = foc_tri_selected }
+   random_system = { limit = { distance = { source = event_target:foc_tri_source_system min_jumps = 1 max_jumps = 2 } NOT = { has_star_flag = foc_tri_selected } } save_event_target_as = foc_tri_target_10 set_star_flag = foc_tri_selected }
+   random_system = { limit = { distance = { source = event_target:foc_tri_source_system min_jumps = 1 max_jumps = 2 } NOT = { has_star_flag = foc_tri_selected } } save_event_target_as = foc_tri_target_11 set_star_flag = foc_tri_selected }
+   random_system = { limit = { distance = { source = event_target:foc_tri_source_system min_jumps = 1 max_jumps = 2 } NOT = { has_star_flag = foc_tri_selected } } save_event_target_as = foc_tri_target_12 set_star_flag = foc_tri_selected }
+   every_system = { limit = { has_star_flag = foc_tri_selected } remove_star_flag = foc_tri_selected }
+   country_event = { id = foc_v236_tri.2 }
+  }
+ }
+}
+
+country_event = {
+ id = foc_v236_tri.2
+ title = FOC_TRI_TARGET_TITLE
+ desc = FOC_TRI_TARGET_DESC
+ picture = GFX_evt_fleet_neutral
+ is_triggered_only = yes
+ immediate = { log = "SSP_STANDALONE: separatist TRI target menu" }
+ option = { name = FOC_TRI_TARGET_1 trigger = { exists = event_target:foc_tri_target_1 } hidden_effect = { event_target:foc_tri_target_1 = { system_event = { id = foc_v236_tri.3 } } } }
+ option = { name = FOC_TRI_TARGET_2 trigger = { exists = event_target:foc_tri_target_2 } hidden_effect = { event_target:foc_tri_target_2 = { system_event = { id = foc_v236_tri.3 } } } }
+ option = { name = FOC_TRI_TARGET_3 trigger = { exists = event_target:foc_tri_target_3 } hidden_effect = { event_target:foc_tri_target_3 = { system_event = { id = foc_v236_tri.3 } } } }
+ option = { name = FOC_TRI_TARGET_4 trigger = { exists = event_target:foc_tri_target_4 } hidden_effect = { event_target:foc_tri_target_4 = { system_event = { id = foc_v236_tri.3 } } } }
+ option = { name = FOC_TRI_TARGET_5 trigger = { exists = event_target:foc_tri_target_5 } hidden_effect = { event_target:foc_tri_target_5 = { system_event = { id = foc_v236_tri.3 } } } }
+ option = { name = FOC_TRI_TARGET_6 trigger = { exists = event_target:foc_tri_target_6 } hidden_effect = { event_target:foc_tri_target_6 = { system_event = { id = foc_v236_tri.3 } } } }
+ option = { name = FOC_TRI_TARGET_7 trigger = { exists = event_target:foc_tri_target_7 } hidden_effect = { event_target:foc_tri_target_7 = { system_event = { id = foc_v236_tri.3 } } } }
+ option = { name = FOC_TRI_TARGET_8 trigger = { exists = event_target:foc_tri_target_8 } hidden_effect = { event_target:foc_tri_target_8 = { system_event = { id = foc_v236_tri.3 } } } }
+ option = { name = FOC_TRI_TARGET_9 trigger = { exists = event_target:foc_tri_target_9 } hidden_effect = { event_target:foc_tri_target_9 = { system_event = { id = foc_v236_tri.3 } } } }
+ option = { name = FOC_TRI_TARGET_10 trigger = { exists = event_target:foc_tri_target_10 } hidden_effect = { event_target:foc_tri_target_10 = { system_event = { id = foc_v236_tri.3 } } } }
+ option = { name = FOC_TRI_TARGET_11 trigger = { exists = event_target:foc_tri_target_11 } hidden_effect = { event_target:foc_tri_target_11 = { system_event = { id = foc_v236_tri.3 } } } }
+ option = { name = FOC_TRI_TARGET_12 trigger = { exists = event_target:foc_tri_target_12 } hidden_effect = { event_target:foc_tri_target_12 = { system_event = { id = foc_v236_tri.3 } } } }
+ option = { name = SSP_CANCEL }
+}
+
+system_event = {
+ id = foc_v236_tri.3
+ hide_window = yes
+ is_triggered_only = yes
+ immediate = {
+  log = "SSP_STANDALONE: spawning separatist TRI strike"
+  random_system_planet = { limit = { is_star = yes } save_event_target_as = foc_tri_target_star }
+  if = { limit = { exists = event_target:foc_tri_source_fleet exists = event_target:foc_tri_owner exists = event_target:foc_tri_target_star }
+   event_target:foc_tri_owner = {
+    create_fleet = {
+     name = "FOC_TRI_STRIKE_FLEET"
+     settings = { uses_naval_capacity = no can_upgrade = no can_disband = yes can_change_composition = yes can_change_leader = no spawn_debris = no }
+     effect = {
+      set_owner = event_target:foc_tri_owner
+      set_location = event_target:foc_tri_target_star
+      save_event_target_as = foc_tri_strike_fleet
+      event_target:foc_tri_source_fleet = { every_owned_ship = {
+foc_tri_spawn_from_source_ship = yes
+} }
+      if = { limit = { num_ships = 0 } destroy_fleet = this }
+      else = { set_fleet_flag = ssp_strike_fleet set_timed_fleet_flag = { flag = ssp_strike_active days = 180 } set_aggro_range_measure_from = self set_aggro_range = 12000 set_formation_scale = 0.5 fleet_event = { id = ssp_standalone.80 days = 180 } }
+     }
+    }
+   }
+  }
+ }
+}

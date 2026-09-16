@@ -1,0 +1,98 @@
+portraits = {
+	skakoan_male_01 = { entity = "humanoid_02_male_01_entity" clothes_selector = "skakoan_male_clothes_01"	attachment_selector = "no_texture"	greeting_sound = "humanoid_portrait_b_male"
+		character_textures = { "gfx/models/portraits/cis/cis_male_skakoan_body.dds" }
+	}
+}
+
+portrait_groups = {
+	skakoan1 = {
+		default = skakoan_male_01
+		game_setup = { #will run with a limited country scope. species and government is set but the country does not actually exist
+			add = {
+				trigger = {
+					ruler = {
+						OR = {
+							gender = male
+							gender = indeterminable
+						}
+					}
+				}
+				portraits = {
+					skakoan_male_01
+				}
+			}
+			add = {
+				trigger = {
+					ruler = {
+						OR = {
+							gender = female
+							gender = indeterminable
+						}
+					}
+				}
+				portraits = {
+					skakoan_male_01
+				}
+			}
+		}		
+		
+		#species scope
+		species = { #generic portrait for a species
+			add = {
+				portraits = {
+					skakoan_male_01
+				}
+			}
+		}		
+		
+		#pop scope
+		pop_group = { #for a specific pop
+			add = {
+				portraits = {
+					skakoan_male_01
+				}
+			}
+		}
+		
+		#leader scope
+		leader = { #scientists, generals, admirals, governor
+			add = {
+				trigger = {
+					gender = male
+				}
+				portraits = {
+					skakoan_male_01
+				}
+			}
+			add = {
+				trigger = {
+					gender = female
+				}
+				portraits = {
+					skakoan_male_01
+				}
+			}
+		}
+
+			
+		#leader scope 
+		ruler = {
+			add = {
+				trigger = {
+					gender = male
+				}
+				portraits = {
+					skakoan_male_01
+				}
+			}
+			add = {
+				trigger = {
+					gender = female
+				}
+				portraits = {
+					skakoan_male_01
+				}
+			}
+		}
+	}	
+}

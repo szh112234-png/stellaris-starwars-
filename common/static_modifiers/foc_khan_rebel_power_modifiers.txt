@@ -1,0 +1,39 @@
+# Rebel Alliance combat package.
+# 3.11w-v2 philosophy change: on all tiers BELOW Madness the Rebels receive NO
+# stat buff at all -- their difficulty scaling comes purely from fielding more
+# Nebula ships (see foc_khan_rebel_bonus_nebula_by_tier). Only the Madness tier
+# grants a stat buff, and it is set equal to the First Order crisis ship buff
+# (foc_khan_strength_madness_first) so the Resistance can trade blows with the
+# hardest crisis.
+#
+# The tiered survivability modifiers below are kept DEFINED (but no longer
+# applied) so that foc_khan_rebel.32 can still strip them from existing saves.
+foc_khan_rebel_strength_lowest = { ship_hull_mult = 0 }
+foc_khan_rebel_strength_initial = { ship_hull_mult = 0 }
+foc_khan_rebel_strength_intermediate = { ship_hull_mult = 0 }
+foc_khan_rebel_strength_high = { ship_hull_mult = 0 }
+
+# Madness tier: identical to the First Order crisis ship buff.
+# V13 user-approved exception: preserve the original ACOT/Madness package unchanged.
+foc_khan_rebel_war_power_057 = {
+	ship_weapon_damage = 6.00
+	ship_fire_rate_mult = 3.00
+	ship_hull_mult = 10.00
+	ship_armor_mult = 10.00
+	ship_shield_mult = 10.00
+	ship_speed_mult = 0.75
+	ship_tracking_add = 50
+	ship_accuracy_add = 40
+	ship_armor_hardening_add = 0.90
+	ship_shield_hardening_add = 0.90
+	country_naval_cap_mult = 100
+	ships_upkeep_mult = -0.90
+	ship_sensor_range_add = 2000
+	ship_hyperlane_range_add = 2000
+}
+
+# Always-on Rebel logistics protection (naval cap + free upkeep only).
+foc_khan_rebel_logistics_245 = {
+    # V232i: retired; zero-effect shell only for old-save cleanup.
+    ships_upkeep_mult = 0
+}

@@ -1,0 +1,8 @@
+# FOC V230: droid species are created synchronously during map bootstrap.
+# Story leaders retain their normal maintenance hooks.
+on_game_start_country = {
+    events = { foc_v223_story.1 }
+}
+on_yearly_pulse_country = {
+    events = { foc_v223_species.3 foc_v223_story.3 }
+}

@@ -1,0 +1,38 @@
+# Exclusive playable-crisis ascension for the player First Order origin.
+ap_fop_new_order_crisis = {
+    potential = {
+        is_ai = no
+        OR = { has_origin = origin_fop_first_order has_country_flag = foc_republic_origin_became_first_order has_country_flag = foc_republic_origin_empire_crisis }
+    }
+
+    possible = {
+        custom_tooltip = {
+            fail_text = fop_ap_requires_completed_starkiller
+            AND = {
+                foc_khan_owns_completed_starkiller = yes
+                has_country_flag = fop_origin_starkiller_first_real_impact
+                OR = {
+                    AND = { has_origin = origin_fop_first_order has_country_flag = fop_origin_public_emergence }
+                    has_country_flag = foc_republic_origin_became_first_order
+                }
+            }
+        }
+    }
+
+    modifier = {
+        country_naval_cap_add = 500
+        
+        starbase_shipyard_build_speed_mult = 0.25
+        country_war_exhaustion_mult = -0.50
+    }
+
+    on_enabled = {
+        hidden_effect = {
+            set_country_flag = fop_origin_special_ascension_enabled
+            country_event = { id = fop_origin.30 }
+        }
+        custom_tooltip = ap_fop_new_order_crisis_effect_tooltip
+    }
+
+    ai_weight = { factor = 0 }
+}

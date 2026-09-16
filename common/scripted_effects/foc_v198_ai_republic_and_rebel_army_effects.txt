@@ -1,0 +1,175 @@
+# V198/V199 - Clone Wars Republic fleet support and Imperial Rebel ground force.
+# V199 moves every Republic delivery to Kuat and changes each delivery to four
+# independent fleets of twenty-five Venators. The Rebel grant remains country scope
+# and idempotent so both new games and the old-save fallback are safe.
+
+# System scope (Kuat): create one independent fleet of exactly twenty-five
+# Venator-class Star Destroyers. The fixed story design works before the normal
+# Kuat construction technology is completed.
+foc_v199_spawn_one_ai_republic_25_venator_fleet = {
+    create_fleet = {
+        name = "FOC_REPUBLIC_ORIGIN_REPUBLIC_LINE_FLEET"
+        settings = {
+            can_upgrade = no
+            can_disband = yes
+            can_change_composition = no
+            spawn_debris = yes
+            ai_ignore_strength = yes
+        }
+        effect = {
+            set_owner = root
+            # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+}
+            
+
+            
+
+            
+            if = {
+                limit = { has_global_flag = foc_khan_strength_lowest }
+                while = {
+                    count = 25
+                    create_ship = {
+                        name = random
+                        design = "NAME_FOC_REPUBLIC_VENATOR_STORY_FOC_LOWEST"
+                        graphical_culture = republic_01
+                        upgradable = no
+                        fleet_cache_recalc = yes
+                    }
+                }
+            }
+            else = {
+                while = {
+                    count = 25
+                    create_ship = {
+                        name = random
+                        design = "NAME_FOC_REPUBLIC_VENATOR_STORY"
+                        graphical_culture = republic_01
+                        upgradable = no
+                        fleet_cache_recalc = yes
+                    }
+                }
+            }
+            set_location = { target = prev distance = 55 angle = random }
+            set_aggro_range_measure_from = self
+            set_aggro_range = 9999
+            set_formation_scale = 3
+            set_fleet_flag = foc_republic_origin_republic_fleet
+            set_fleet_flag = foc_v199_ai_republic_venator_support_fleet
+            every_owned_ship = {
+                set_ship_flag = foc_v199_ai_republic_venator_support_ship
+                if = {
+                    limit = {
+                        has_global_flag = foc_khan_strength_madness
+                        NOT = { has_modifier = foc_acot_sync_venator_lucrehulk }
+                    }
+                    add_modifier = { modifier = foc_acot_sync_venator_lucrehulk days = -1 }
+                }
+            }
+        }
+    }
+}
+
+# Country scope (AI Galactic Republic): one complete V199 delivery. Kuat is
+# selected by its canonical map flag and receives four separate 25-ship fleets.
+foc_v199_spawn_ai_republic_four_25_venator_fleets_at_kuat = {
+    if = {
+        limit = { NOT = { has_global_flag = foc_v211_ai_support_republic_disabled } }
+        random_system = {
+            limit = { has_star_flag = foc_sw_kuat_home }
+            if = {
+                limit = { has_global_flag = foc_v211_ai_support_republic_half }
+                while = { count = 2 foc_v199_spawn_one_ai_republic_25_venator_fleet = yes }
+            }
+            else_if = {
+                limit = { has_global_flag = foc_v211_ai_support_republic_one_and_half }
+                while = { count = 6 foc_v199_spawn_one_ai_republic_25_venator_fleet = yes }
+            }
+            else_if = {
+                limit = { has_global_flag = foc_v211_ai_support_republic_double }
+                while = { count = 8 foc_v199_spawn_one_ai_republic_25_venator_fleet = yes }
+            }
+            else = {
+                while = { count = 4 foc_v199_spawn_one_ai_republic_25_venator_fleet = yes }
+            }
+        }
+    }
+}
+
+# Country scope (AI Galactic Republic): atomic once-only starter. The direct
+# war-start hook calls this after declare_war, while event .1 repairs an old save.
+# V204: war start only arms the clock; the first four-fleet Venator batch arrives
+# after 360 days instead of being granted immediately.
+foc_v198_start_ai_republic_venator_support = {
+    if = {
+        limit = {
+            is_ai = yes
+            has_country_flag = foc_republic_origin_republic_country
+            has_country_flag = foc_republic_origin_separatist_war_started
+            has_global_flag = foc_republic_origin_separatist_war_active
+            NOT = { has_country_flag = foc_republic_origin_separatist_war_won }
+            NOT = { has_country_flag = foc_v198_ai_republic_venator_support_started }
+            any_system = { has_star_flag = foc_sw_kuat_home }
+        }
+        set_country_flag = foc_v198_ai_republic_venator_support_started
+        country_event = { id = foc_v198_republic_support.2 days = 360 }
+    }
+}
+
+# Country scope (Imperial Rebels): one mobile invasion force of eighteen Rebel
+# Pathfinder armies. Under Stellaris' army-power formula, one unmodified
+# Pathfinder is about 56.63 power, so the package is about 1,019 total power
+# before country, technology and difficulty modifiers.
+foc_v198_grant_imperial_rebel_1000_ground_force = {
+    if = {
+        limit = {
+            has_country_flag = foc_republic_origin_imperial_rebel_country
+            NOT = { has_country_flag = foc_v198_imperial_rebel_ground_force_granted }
+            exists = event_target:foc_khan_rebel_alliance
+            exists = event_target:foc_khan_rebel_system
+            exists = event_target:foc_khan_rebel_capital
+            is_same_value = event_target:foc_khan_rebel_alliance
+            event_target:foc_khan_rebel_capital = {
+                is_colony = yes
+                owner = { is_same_value = event_target:foc_khan_rebel_alliance }
+            }
+        }
+        set_country_flag = foc_v198_imperial_rebel_ground_force_granted
+        event_target:foc_khan_rebel_system = {
+            create_fleet = {
+                name = "FOC_KHAN_REBEL_FLEET"
+                settings = {
+                    can_upgrade = no
+                    can_disband = yes
+                    can_change_composition = yes
+                    spawn_debris = no
+                    ai_ignore_strength = yes
+                }
+                effect = {
+                    set_owner = event_target:foc_khan_rebel_alliance
+                    while = {
+                        count = 18
+                        create_army_transport = {
+                            army_type = foc_sw_rebel_pathfinders
+                            species = event_target:foc_khan_rebel_alliance.owner_main_species
+                        }
+                    }
+                    set_location = {
+                        target = event_target:foc_khan_rebel_capital
+                        distance = 20
+                        angle = random
+                    }
+                    set_fleet_flag = foc_v198_imperial_rebel_ground_force
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,39 @@
+# V14: original point defense retained; retired ordinary aliases remain inert.
+weapon_component_template = {
+    key = "FOC_STD_SPINAL_T_T3_N_V01"
+    size = titanic
+    type = instant
+    prio_projectile = yes
+    icon = "GFX_ship_part_arkship_devastator"
+    icon_frame = 1
+    prerequisites = { "foc_tech_sw_spinal_weapons_2" }
+    resources = {
+        category = ship_components
+        upkeep = {
+            alloys = @titanic_t7_upkeep_alloys
+            energy = @titanic_t7_upkeep_energy
+        }
+        cost = {
+            sr_tibanna_swgs = 32
+            sr_kyber_swgs = 4
+        }
+    }
+    collateral_damage = @arkship_devastator_fleet_damage
+    collateral_range = @arkship_devastator_collateral_range
+    firing_arc = 15.0
+    min_range = 30.0
+    tags = { weapon_type_energy weapon_role_artillery t_slot }
+    component_set = "ARKSHIP_DEVASTATOR_WEAPON"
+    projectile_gfx = "arkship_01_devastator_laser"
+    hidden = yes
+    potential = {
+        always = no
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 0
+    }
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}

@@ -1,0 +1,74 @@
+utility_component_template = {
+ key = "SSP_IMPERIAL_COMMAND_CORE"
+ size = aux
+ icon = "GFX_ship_part_ssp_imperial_tie"
+ icon_frame = 1
+ component_set = "SSP_IMPERIAL_COMMAND_CORE_SET"
+ power = -25
+ ship_limit = 1
+ resources = { category = ship_components cost = { alloys = 40 } upkeep = { energy = 1 } }
+ potential = {
+ from = {
+  OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_empire
+    has_technology = tech_ssp_imperial_hyperspace
+   }
+ }
+
+		
+	
+    from = { foc_v1717c_imperial_strategic_aircraft_allowed = yes }
+}
+ prerequisites = { "tech_ssp_imperial_hyperspace" }
+ scripted_action = { ssp_imperial_strike }
+ ai_weight = { weight = 500 }
+}
+
+utility_component_template = {
+ key = "SSP_REBEL_COMMAND_CORE"
+ size = aux
+ icon = "GFX_ship_part_ssp_xwing"
+ icon_frame = 1
+ component_set = "SSP_REBEL_COMMAND_CORE_SET"
+ power = -25
+ ship_limit = 1
+ resources = { category = ship_components cost = { alloys = 40 } upkeep = { energy = 1 } }
+ potential = {
+ from = {
+  OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_rebel
+    has_technology = tech_ssp_rebel_hyperspace
+   }
+ }
+	}
+ prerequisites = { "tech_ssp_rebel_hyperspace" }
+ scripted_action = { ssp_rebel_strike }
+ ai_weight = { weight = 500 }
+}
+
+utility_component_template = {
+ key = "SSP_REPUBLIC_COMMAND_CORE"
+ size = aux
+ icon = "GFX_ship_part_ssp_delta7"
+ icon_frame = 1
+ component_set = "SSP_REPUBLIC_COMMAND_CORE_SET"
+ power = -25
+ ship_limit = 1
+ resources = { category = ship_components cost = { alloys = 40 } upkeep = { energy = 1 } }
+ potential = {
+ from = {
+  OR = {
+    has_country_flag = ssp_fighter_group_all
+    has_country_flag = ssp_fighter_group_republic
+    has_technology = tech_ssp_republic_hyperspace
+   }
+ }
+
+    from = { foc_v1717c_republic_strategic_aircraft_allowed = yes }
+}
+ prerequisites = { "tech_ssp_republic_hyperspace" }
+ scripted_action = { ssp_republic_strike }
+ ai_weight = { weight = 500 }
+}

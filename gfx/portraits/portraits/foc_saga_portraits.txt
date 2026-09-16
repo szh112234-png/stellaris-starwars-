@@ -1,0 +1,133 @@
+# =============================================================================
+# FOC 命名角色头像
+# =============================================================================
+# 结构与字段名全部照抄来源包的 gfx/portraits/portraits/07_portraits_human.txt，
+# 不再有任何推测：
+#   * 文件必须放 gfx/portraits/portraits/（不是 common/portraits/）
+#   * 头发走 attachment_selector，不是 hair_selector
+#   * 脸与身体走 character_textures = { }
+#
+# 每个角色的 entity 也是照抄来源包里同一张 body 贴图配的那一个，
+# 所以不会出现贴图与网格 UV 对不上导致的脸部变形。
+#
+# 与来源包的唯一区别：来源包让命名角色共用 humanoid_master_* 那套公共
+# 选择器（会牵扯上百张分散在各族文件夹里的贴图），本 MOD 改用下面自带的
+# 最小选择器，只引用 gfx/models/portraits/foc_saga/ 里随包携带的贴图，
+# 这样不装来源包也能正常显示。
+#
+# 这些头像故意不登记进任何 portrait_group，只能由 change_leader_portrait
+# 调用，不会出现在建国界面的可选列表里。
+# =============================================================================
+
+portraits = {
+
+    foc_saga_luke_01 = {
+        entity = "portrait_human_male_01_entity"
+        clothes_selector = "foc_saga_luke_01_clothes"
+        attachment_selector = "foc_saga_luke_01_hair"
+        greeting_sound = "human_male_greetings_01"
+        character_textures = {
+            "gfx/models/portraits/foc_saga/luke_skywalker_male_body_01.dds"
+        }
+    }
+
+    foc_saga_luke_jedi_01 = {
+        entity = "portrait_human_male_01_entity"
+        clothes_selector = "foc_saga_luke_jedi_01_clothes"
+        attachment_selector = "foc_saga_luke_jedi_01_hair"
+        greeting_sound = "human_male_greetings_01"
+        character_textures = {
+            "gfx/models/portraits/foc_saga/luke_skywalker_male_body_01.dds"
+        }
+    }
+
+    foc_saga_leia_01 = {
+        entity = "portrait_human_female_01_entity"
+        clothes_selector = "foc_saga_leia_01_clothes"
+        attachment_selector = "foc_saga_leia_01_hair"
+        greeting_sound = "human_female_greetings_01"
+        character_textures = {
+            "gfx/models/portraits/foc_saga/leia_organa_female_body_01.dds"
+        }
+    }
+
+    foc_saga_mon_mothma_01 = {
+        entity = "portrait_human_female_04_entity"
+        clothes_selector = "foc_saga_mon_mothma_01_clothes"
+        attachment_selector = "foc_saga_mon_mothma_01_hair"
+        greeting_sound = "human_female_greetings_01"
+        character_textures = {
+            "gfx/models/portraits/foc_saga/mon_mothma_female_body_01.dds"
+        }
+    }
+
+    foc_saga_han_solo_01 = {
+        entity = "portrait_human_male_01_entity"
+        clothes_selector = "foc_saga_han_solo_01_clothes"
+        attachment_selector = "foc_saga_han_solo_01_hair"
+        greeting_sound = "human_male_greetings_01"
+        character_textures = {
+            "gfx/models/portraits/foc_saga/han_solo_male_body_01.dds"
+        }
+    }
+
+    foc_saga_lando_01 = {
+        entity = "portrait_human_male_05_entity"
+        clothes_selector = "foc_saga_lando_01_clothes"
+        attachment_selector = "foc_saga_lando_01_hair"
+        greeting_sound = "human_male_greetings_01"
+        character_textures = {
+            "gfx/models/portraits/foc_saga/lando_male_body_01.dds"
+        }
+    }
+
+    foc_saga_bail_organa_01 = {
+        entity = "portrait_human_male_03_entity"
+        clothes_selector = "foc_saga_bail_organa_01_clothes"
+        attachment_selector = "foc_saga_bail_organa_01_hair"
+        greeting_sound = "human_male_greetings_01"
+        character_textures = {
+            "gfx/models/portraits/foc_saga/bail_organa_male_body_01.dds"
+        }
+    }
+
+    foc_saga_rex_01 = {
+        entity = "portrait_human_male_01_entity"
+        clothes_selector = "foc_saga_rex_01_clothes"
+        attachment_selector = "foc_saga_rex_01_hair"
+        greeting_sound = "human_male_greetings_01"
+        character_textures = {
+            "gfx/models/portraits/foc_saga/rex_male_body_01.dds"
+        }
+    }
+
+    foc_saga_tarkin_01 = {
+        entity = "portrait_human_male_01_entity"
+        clothes_selector = "foc_saga_tarkin_01_clothes"
+        attachment_selector = "foc_saga_tarkin_01_hair"
+        greeting_sound = "human_male_greetings_03"
+        character_textures = {
+            "gfx/models/portraits/foc_saga/human_tarkin_body_01.dds"
+        }
+    }
+
+    foc_saga_thrawn_01 = {
+        entity = "portrait_human_male_04_entity"
+        clothes_selector = "foc_saga_thrawn_01_clothes"
+        attachment_selector = "foc_saga_thrawn_01_hair"
+        greeting_sound = "human_male_greetings_03"
+        character_textures = {
+            "gfx/models/portraits/foc_saga/thrawn_male_body_01.dds"
+        }
+    }
+
+    foc_saga_imperial_regent_01 = {
+        entity = "portrait_human_male_01_entity"
+        clothes_selector = "foc_saga_imperial_regent_01_clothes"
+        attachment_selector = "foc_saga_imperial_regent_01_hair"
+        greeting_sound = "human_male_greetings_03"
+        character_textures = {
+            "gfx/models/portraits/foc_saga/human_pellaeon_body_01.dds"
+        }
+    }
+}

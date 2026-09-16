@@ -1,0 +1,35 @@
+# Crisis-only Eclipse defensive module.
+# The old shared SWGS armor added 18 flat damage reduction per slot. The Eclipse
+# mounts 60 copies, which overflowed the reduction cap and made it effectively
+# immune. This copy keeps the raw durability while removing stacked immunity.
+utility_component_template = {
+    key = "FOC_KHAN_ECLIPSE_DEFENSE"
+    size = large
+    component_set = "FOC_KHAN_ADAPTIVE_DEFENSE_ARMOR"
+    icon = "GFX_ship_part_adaptive_defense_armor"
+    icon_frame = 1
+    power = -350
+
+    modifier = {
+        ship_hull_add = 3600
+        ship_shield_add = 3600
+        ship_armor_add = 3600
+        ship_hull_regen_add_static = 5
+        ship_shield_regen_add_static = 5
+        ship_armor_regen_add_static = 5
+    }
+
+    ship_modifier = {
+        # 60 copies total 12% armor/shield hardening.
+        ship_armor_hardening_add = 0.002
+        ship_shield_hardening_add = 0.002
+    }
+
+    potential = { always = no
+	from = { NOT = { has_country_flag = foc_khan_component_lowest } }
+}
+    resources = { category = ship_components cost = { 
+            sr_tibanna_swgs = 8
+        } upkeep = { } }
+    ai_weight = { weight = 0 }
+}

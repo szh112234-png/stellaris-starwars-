@@ -1,0 +1,188 @@
+foc_rebel_nebula = {
+    available_to_everyone = yes
+    formation_priority = 24
+    max_speed = 100
+    acceleration = 0.1
+    rotation_speed = 0.1
+    collision_radius = 8
+    max_hitpoints = 320000
+    modifier = {
+        ship_evasion_add = 55
+        ship_armor_add = 50000
+        ship_shield_add = 50000
+    }
+    ship_modifier = {
+        ship_weapon_range_mult = 0.25
+    }
+    size_multiplier = 37
+    fleet_slot_size = 8
+    section_slots = {
+        bow = {
+            locator = "part1"
+        }
+        stern = {
+            locator = "part2"
+        }
+        hull = {
+            locator = "part3"
+        }
+        core = {
+            locator = "part4"
+        }
+    }
+    num_target_locators = 8
+    is_space_station = no
+    map_counter_icon = ship_counter_64
+    icon = ship_size_military_8
+    use_shipnames_from = battleship
+    base_buildtime = 720
+    can_have_federation_design = no
+    enable_default_design = yes
+    is_designable = yes
+    enable_3dview_in_ship_browser = yes
+    default_behavior = carrier
+    entity = "Nebula_entity"
+    combat_disengage_chance = 0.25
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    required_component_set = "power_core"
+    required_component_set = "ftl_components"
+    required_component_set = "thruster_components"
+    required_component_set = "sensor_components"
+    required_component_set = "combat_computers"
+    possible_construction = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        exists = owner
+        owner = {
+            foc_ai_capital_can_build_nebula = yes
+        }
+    }
+    potential_country = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        foc_ai_capital_is_nebula_country = yes
+    }
+    possible_country = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        foc_ai_capital_is_nebula_country = yes
+    }
+    prerequisites = { tech_foc_rebel_nebula_blueprint }
+    resources = {
+        category = ships
+        cost = {
+            alloys = 2760
+        }
+        upkeep = {
+            energy = 5
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 500
+    }
+    ai_ship_data = {
+        fraction = {
+            base = 0
+            modifier = {
+                add = 100
+                foc_ai_capital_can_build_nebula = yes
+            }
+        }
+    }
+
+
+}
+foc_rebel_mc158 = {
+    available_to_everyone = yes
+    formation_priority = 28
+    max_speed = 100
+    acceleration = 0.1
+    rotation_speed = 0.1
+    collision_radius = 32
+    max_hitpoints = 4777739
+    modifier = {
+        ship_evasion_add = 10
+        ship_armor_add = 373261
+        ship_shield_add = 2120000
+    }
+    ship_modifier = {
+        ship_weapon_range_mult = 2.00
+    }
+    size_multiplier = 600
+    fleet_slot_size = 16
+    section_slots = {
+        core = {
+            locator = "root"
+        }
+    }
+    num_target_locators = 12
+    is_space_station = no
+    map_counter_icon = ship_counter_128
+    icon = ship_size_military_8
+    use_shipnames_from = titan
+    base_buildtime = 1440
+    can_have_federation_design = no
+    enable_default_design = yes
+    is_designable = yes
+    enable_3dview_in_ship_browser = yes
+    default_behavior = carrier
+    entity = "SWGS_Mc158_frame_entity"
+    combat_disengage_chance = 0.5
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    required_component_set = "power_core"
+    required_component_set = "ftl_components"
+    required_component_set = "thruster_components"
+    required_component_set = "sensor_components"
+    required_component_set = "combat_computers"
+    required_component_set = "foc_interdiction_gravity_well"
+    possible_construction = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        exists = owner
+        owner = {
+            foc_ai_capital_can_build_viscount = yes
+        }
+    }
+    potential_country = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        foc_ai_capital_is_viscount_country = yes
+    }
+    possible_country = {
+        NOT = {
+            has_global_flag = foc_khan_strength_lowest
+        }
+        foc_ai_capital_is_viscount_country = yes
+    }
+    prerequisites = { tech_foc_rebel_viscount_blueprint }
+    resources = {
+        category = ships
+        cost = {
+            alloys = 1665990
+        }
+        upkeep = {
+            energy = 5
+        }
+    }
+    min_upgrade_cost = {
+        alloys = 500
+    }
+    ai_ship_data = {
+        fraction = {
+            base = 0
+            modifier = {
+                add = 80
+                foc_ai_capital_can_build_viscount = yes
+            }
+        }
+    }
+
+
+}

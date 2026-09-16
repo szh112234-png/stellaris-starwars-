@@ -1,0 +1,22 @@
+# v62: Strategic fighter strength follows the main Star Wars MOD difficulty.
+# Vanilla -> original fighter profile; Intermediate -> SG profile; ACOT -> buff/enhanced profile.
+foc_sync_ssp_strength_to_main_difficulty = {
+    remove_country_flag = ssp_strength_balanced
+    remove_country_flag = ssp_strength_enhanced
+    remove_country_flag = ssp_strength_extreme
+    remove_country_flag = ssp_strength_sg
+    set_country_flag = ssp_strength_selected
+
+    if = {
+        limit = { has_global_flag = foc_khan_strength_madness }
+        set_country_flag = ssp_strength_enhanced
+    }
+    else_if = {
+        limit = { has_global_flag = foc_khan_strength_intermediate }
+        set_country_flag = ssp_strength_sg
+    }
+    else = {
+        # Also covers old/unselected saves until the main setup menu is confirmed.
+        set_country_flag = ssp_strength_balanced
+    }
+}

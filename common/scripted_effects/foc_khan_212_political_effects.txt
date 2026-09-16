@@ -1,0 +1,27 @@
+# 2.12 political consequences shared by First/Final Order subjects.
+
+# Scope: submitted country. Keep it hostile to every Rebel Alliance country/member.
+foc_khan_submitted_country_rebel_hostility_212 = {
+	every_country = {
+		limit = {
+			OR = {
+				has_country_flag = foc_khan_rebel_alliance_country
+				has_country_flag = foc_khan_rebel_member
+			}
+		}
+		set_faction_hostility = {
+			target = root
+			set_hostile = yes
+			set_neutral = no
+			set_friendly = no
+		}
+		root = {
+			set_faction_hostility = {
+				target = prev
+				set_hostile = yes
+				set_neutral = no
+				set_friendly = no
+			}
+		}
+	}
+}

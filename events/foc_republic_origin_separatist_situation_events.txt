@@ -1,0 +1,292 @@
+namespace = foc_sepplot
+
+# =============================================================================
+# 分离主义危机：32 BBY → 24 BBY → 22 BBY
+# =============================================================================
+# The situation itself has zero monthly progress. Every visible story event
+# advances it. 8 + 7 + 10 + 10 + 15 + 15 + 8 + 7 + 8 + 7 + 3 + 2 = 100.
+# The last +2 comes from foc_cw.1 (Geonosis opening story event). Only situation
+# completion is allowed to dispatch foc_republic_origin.10 and create the CIS.
+
+country_event = {
+    id = foc_sepplot.1
+    title = foc_sepplot.1.name
+    desc = foc_sepplot.1.desc
+    picture = GFX_foc_sep_dark_jedi
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_republic_origin_republic_country
+        has_country_flag = foc_republic_origin_naboo_crisis_resolved
+        has_country_flag = foc_sepplot_naboo_registered
+        NOT = { has_country_flag = foc_sepplot_sith_apprentice_seen }
+        NOT = { has_country_flag = foc_republic_origin_separatist_war_started }
+    }
+
+    immediate = {
+        set_country_flag = foc_sepplot_sith_apprentice_seen
+        random_situation = {
+            limit = { is_situation_type = situation_foc_republic_origin_separatist_crisis }
+            add_situation_progress = 7
+        }
+        country_event = { id = foc_sepplot.2 days = 720 }
+    }
+    option = { name = foc_sepplot.1.a }
+}
+
+country_event = {
+    id = foc_sepplot.2
+    title = foc_sepplot.2.name
+    desc = foc_sepplot.2.desc
+    picture = GFX_foc_sep_jedi_archives
+    location = event_target:foc_swmap_kamino_system
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_sepplot_sith_apprentice_seen
+        NOT = { has_country_flag = foc_sepplot_sifo_dyas_ordered }
+        NOT = { has_country_flag = foc_republic_origin_separatist_war_started }
+    }
+
+    immediate = {
+        set_country_flag = foc_sepplot_sifo_dyas_ordered
+        random_situation = {
+            limit = { is_situation_type = situation_foc_republic_origin_separatist_crisis }
+            add_situation_progress = 10
+        }
+        country_event = { id = foc_sepplot.3 days = 30 }
+    }
+    option = { name = foc_sepplot.2.a }
+}
+
+country_event = {
+    id = foc_sepplot.3
+    title = foc_sepplot.3.name
+    desc = foc_sepplot.3.desc
+    picture = GFX_foc_sep_dark_jedi
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_sepplot_sifo_dyas_ordered
+        NOT = { has_country_flag = foc_sepplot_dooku_hijacked_clone_plan }
+        NOT = { has_country_flag = foc_republic_origin_separatist_war_started }
+    }
+
+    immediate = {
+        set_country_flag = foc_sepplot_dooku_hijacked_clone_plan
+        random_situation = {
+            limit = { is_situation_type = situation_foc_republic_origin_separatist_crisis }
+            add_situation_progress = 10
+        }
+        # V73 chronology: Sifo-Dyas is killed and Dooku takes over the clone project in 2202.
+        # The separatist movement is not publicly declared until 2208.
+        country_event = { id = foc_sepplot.4 days = 2130 }
+    }
+    option = { name = foc_sepplot.3.a }
+}
+
+country_event = {
+    id = foc_sepplot.4
+    title = foc_sepplot.4.name
+    desc = foc_sepplot.4.desc
+    picture = GFX_foc_sep_senate
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_sepplot_dooku_hijacked_clone_plan
+        NOT = { has_country_flag = foc_sepplot_separatist_movement_declared }
+        NOT = { has_country_flag = foc_republic_origin_separatist_war_started }
+    }
+
+    immediate = {
+        set_country_flag = foc_sepplot_separatist_movement_declared
+        random_situation = {
+            limit = { is_situation_type = situation_foc_republic_origin_separatist_crisis }
+            add_situation_progress = 15
+        }
+        # 24 BBY → 22 BBY.
+        country_event = { id = foc_sepplot.5 days = 720 }
+    }
+    option = { name = foc_sepplot.4.a }
+}
+
+country_event = {
+    id = foc_sepplot.5
+    title = foc_sepplot.5.name
+    desc = foc_sepplot.5.desc
+    picture = GFX_foc_sep_federation
+    location = event_target:foc_swmap_geonosis_system
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_sepplot_separatist_movement_declared
+        NOT = { has_country_flag = foc_sepplot_corporate_alliance_formed }
+        NOT = { has_country_flag = foc_republic_origin_separatist_war_started }
+    }
+
+    immediate = {
+        set_country_flag = foc_sepplot_corporate_alliance_formed
+        random_situation = {
+            limit = { is_situation_type = situation_foc_republic_origin_separatist_crisis }
+            add_situation_progress = 15
+        }
+        country_event = { id = foc_sepplot.6 days = 60 }
+    }
+    option = { name = foc_sepplot.5.a }
+}
+
+country_event = {
+    id = foc_sepplot.6
+    title = foc_sepplot.6.name
+    desc = foc_sepplot.6.desc
+    picture = GFX_foc_sep_kamino
+    location = event_target:foc_swmap_kamino_system
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_sepplot_corporate_alliance_formed
+        NOT = { has_country_flag = foc_sepplot_kamino_discovered }
+        NOT = { has_country_flag = foc_republic_origin_separatist_war_started }
+    }
+
+    immediate = {
+        set_country_flag = foc_sepplot_kamino_discovered
+        random_situation = {
+            limit = { is_situation_type = situation_foc_republic_origin_separatist_crisis }
+            add_situation_progress = 8
+        }
+        country_event = { id = foc_sepplot.7 days = 30 }
+    }
+    option = { name = foc_sepplot.6.a }
+}
+
+country_event = {
+    id = foc_sepplot.7
+    title = foc_sepplot.7.name
+    desc = foc_sepplot.7.desc
+    picture = GFX_foc_sep_droid_factory
+    location = event_target:foc_swmap_geonosis_system
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_sepplot_kamino_discovered
+        NOT = { has_country_flag = foc_sepplot_geonosis_plot_discovered }
+        NOT = { has_country_flag = foc_republic_origin_separatist_war_started }
+    }
+
+    immediate = {
+        set_country_flag = foc_sepplot_geonosis_plot_discovered
+        random_situation = {
+            limit = { is_situation_type = situation_foc_republic_origin_separatist_crisis }
+            add_situation_progress = 7
+        }
+        country_event = { id = foc_sepplot.8 days = 10 }
+    }
+    option = { name = foc_sepplot.7.a }
+}
+
+country_event = {
+    id = foc_sepplot.8
+    title = foc_sepplot.8.name
+    desc = foc_sepplot.8.desc
+    picture = GFX_foc_sep_prisoners
+    location = event_target:foc_swmap_geonosis_system
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_sepplot_geonosis_plot_discovered
+        NOT = { has_country_flag = foc_sepplot_jedi_captured }
+        NOT = { has_country_flag = foc_republic_origin_separatist_war_started }
+    }
+
+    immediate = {
+        set_country_flag = foc_sepplot_jedi_captured
+        random_situation = {
+            limit = { is_situation_type = situation_foc_republic_origin_separatist_crisis }
+            add_situation_progress = 8
+        }
+        country_event = { id = foc_sepplot.9 days = 10 }
+    }
+    option = { name = foc_sepplot.8.a }
+}
+
+country_event = {
+    id = foc_sepplot.9
+    title = foc_sepplot.9.name
+    desc = foc_sepplot.9.desc
+    picture = GFX_foc_sep_palpatine
+    is_triggered_only = yes
+    force_open = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_sepplot_jedi_captured
+        NOT = { has_country_flag = foc_sepplot_emergency_powers_granted }
+        NOT = { has_country_flag = foc_republic_origin_separatist_war_started }
+    }
+
+    immediate = {
+        set_country_flag = foc_sepplot_emergency_powers_granted
+        random_situation = {
+            limit = { is_situation_type = situation_foc_republic_origin_separatist_crisis }
+            add_situation_progress = 7
+        }
+        
+        # The next window is the existing Clone Army Plan. During this canonical
+        # chain its historical option is mandatory and the refusal branch is hidden.
+        country_event = { id = foc_republic_origin.23 days = 1 }
+    }
+    option = { name = foc_sepplot.9.a }
+}
+
+# Old-save / interrupted-chain keeper. It only creates the new situation; once
+# Naboo has already happened it registers that first eight points and resumes at
+# the Sith-apprentice event. Existing Clone Wars saves are never rewound.
+country_event = {
+    id = foc_sepplot.90
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_country_flag = foc_republic_origin_republic_country
+        has_country_flag = foc_republic_origin_initialized
+        NOT = { has_country_flag = foc_republic_origin_separatist_war_started }
+        NOT = { has_country_flag = foc_republic_origin_arc_completed }
+    }
+
+    immediate = {
+        if = {
+            limit = { NOT = { has_country_flag = foc_republic_origin_separatist_crisis_started } }
+            start_situation = { type = situation_foc_republic_origin_separatist_crisis }
+        }
+        if = {
+            limit = {
+                has_country_flag = foc_republic_origin_naboo_crisis_resolved
+                NOT = { has_country_flag = foc_sepplot_naboo_registered }
+            }
+            set_country_flag = foc_sepplot_naboo_registered
+            random_situation = {
+                limit = { is_situation_type = situation_foc_republic_origin_separatist_crisis }
+                add_situation_progress = 8
+            }
+            country_event = { id = foc_sepplot.1 days = 1 }
+        }
+    }
+}

@@ -1,0 +1,18 @@
+namespace = foc_bwing_test
+# Manual console event only; grants the existing Rebel strike technology and missing UI defaults.
+country_event = {
+ id = foc_bwing_test.1
+ hide_window = yes
+ is_triggered_only = yes
+ immediate = {
+  if = { limit = { is_ai = yes } give_technology = { tech = tech_ssp_rebel_hyperspace message = no } }
+  if = {
+   limit = { NOR = { has_country_flag = ssp_strength_balanced has_country_flag = ssp_strength_enhanced has_country_flag = ssp_strength_extreme has_country_flag = ssp_strength_sg } }
+   set_country_flag = ssp_strength_balanced
+  }
+  if = {
+   limit = { NOR = { has_country_flag = ssp_size_original has_country_flag = ssp_size_2x has_country_flag = ssp_size_5x has_country_flag = ssp_size_10x } }
+   set_country_flag = ssp_size_original
+  }
+ }
+}

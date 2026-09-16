@@ -1,0 +1,33 @@
+# Starkiller Base defensive ring.
+#
+# The Starkiller Base megastructure now spawns a starbase of this level when it
+# finishes (see the "starbase = ..." line added to myk_starkiller_base_final and
+# fop_starkiller_base_final). This is the same mechanism vanilla uses for orbital
+# rings in common/megastructures/15_orbital_ring.txt.
+#
+# It runs on the mod's own invisible hull (common/ship_sizes/foc_starkiller_ring_size.txt)
+# so that no ring model is drawn around the planet. That hull defines section slots
+# "core" and "1"-"6", so module_slots MUST match and not go past 6, or the game throws
+# "section has no slot information". Hangar volume is scaled inside the module's
+# section instead (see foc_starkiller_ring_sections.txt).
+
+starbase_level_foc_starkiller_ring = {
+	ship_size = foc_starkiller_ring
+	level_weight = 0
+	ai_weight = { weight = 0 }
+	potential_home_base = yes
+	# Starbase-view background. GFX_fop_starkiller_base_event is the mod's own Starkiller
+	# artwork (gfx/event_pictures/fop_starkiller_base_event.dds), picked over
+	# GFX_myk_starkiller_base_megastructure because that one is a square megastructure
+	# icon and this slot is a wide background - a square source would stretch. If it
+	# still looks wrong, this is a one-line swap.
+	picture = "GFX_fop_starkiller_base_event"
+
+	module_slots = { 1 2 3 4 5 6 }
+	building_slots = { 1 2 }
+
+	# No next_level: the base is already at its final tier, and it must not be
+	# dismantled out from under the superweapon's firing logic.
+	can_always_dismantle = no
+	downgrade_potential = { always = no }
+}

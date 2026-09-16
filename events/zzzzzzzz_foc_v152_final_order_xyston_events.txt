@@ -1,0 +1,63 @@
+namespace = foc_v152_fo_xyston
+
+# V152: player Final Order gains Xyston-class construction rights.
+#
+# fop_origin.53 (events/fop_force_ascension_events.txt) now grants
+# foc_tech_dark_legacy_xyston at the moment the player takes Palpatine's mantle.
+# This monthly self-heal covers saves that were already Final Order before the
+# change, and repairs the grant if another mod strips the technology.
+#
+# xystonsd declares prerequisites = { tech_titans foc_tech_dark_legacy_xyston },
+# so both must be present. tech_titans is granted alongside.
+#
+# Deliberately player-only: fop_player_final_order is set exclusively in
+# fop_origin.53 and never on an AI country. The AI Final Order
+# (foc_khan_final_order_country) is untouched and keeps its own fixed fleets.
+country_event = {
+    id = foc_v152_fo_xyston.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        is_ai = no
+        has_country_flag = fop_player_final_order
+        OR = {
+            NOT = { has_technology = foc_tech_dark_legacy_xyston }
+            NOT = { has_technology = tech_titans }
+            AND = {
+                NOT = { has_global_flag = foc_khan_strength_lowest }
+                NOT = { has_country_flag = foc_khan_component_lowest }
+                NOT = { has_country_flag = foc_v1714_xyston_standard_registered }
+            }
+        }
+    }
+    immediate = {
+        if = {
+            limit = {
+                NOT = { has_technology = tech_titans }
+            }
+            give_technology = { tech = tech_titans message = no }
+        }
+        if = {
+            limit = {
+                NOT = { has_technology = foc_tech_dark_legacy_xyston }
+            }
+            give_technology = { tech = foc_tech_dark_legacy_xyston message = no }
+        }
+        log = "FOC_V152_XYSTON: player Final Order granted Xyston-class construction rights."
+        if = {
+            limit = {
+                foc_v1714_xyston_standard_buildable = yes
+                NOT = { has_country_flag = foc_v1714_xyston_standard_registered }
+            }
+            if = {
+                limit = { has_global_flag = foc_khan_strength_lowest }
+                create_ship_design = { design = "NAME_FOC_V1714_PLAYER_XYSTON_ISD1_V1718E_LOWEST" }
+            }
+            else = {
+                create_ship_design = { design = "NAME_FOC_V1714_PLAYER_XYSTON_ISD1" }
+            }
+            foc_v1716_register_design_3807ea65c2ec = yes
+            set_country_flag = foc_v1714_xyston_standard_registered
+        }
+    }
+}

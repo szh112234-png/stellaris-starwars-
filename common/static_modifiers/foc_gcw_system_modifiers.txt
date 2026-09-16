@@ -1,0 +1,67 @@
+# FOC Galactic Civil War strategic state
+foc_gcw_empire_high_control = {
+    planet_stability_add = 3
+    country_war_exhaustion_mult = -0.05
+}
+foc_gcw_empire_low_control = {
+    planet_stability_add = -4
+    country_unity_produces_mult = -0.05
+}
+foc_gcw_empire_high_morale = {
+    
+    army_damage_mult = 0.10
+}
+foc_gcw_empire_low_morale = {
+    
+    army_damage_mult = -0.10
+}
+
+# Partisan escalation is intentionally planet-local.
+foc_gcw_partisan_cell = {
+    planet_stability_add = -3
+    planet_crime_add = 12
+    planet_jobs_produces_mult = -0.03
+}
+foc_gcw_partisan_network = {
+    planet_stability_add = -7
+    planet_crime_add = 25
+    planet_jobs_produces_mult = -0.08
+}
+foc_gcw_partisan_uprising = {
+    planet_stability_add = -12
+    planet_crime_add = 40
+    planet_jobs_produces_mult = -0.15
+}
+foc_gcw_partisan_armed = {
+    army_defense_damage_mult = 0.20
+    planet_stability_add = -2
+}
+foc_gcw_local_concessions = {
+    planet_stability_add = 8
+    planet_crime_add = -15
+    planet_jobs_unity_produces_mult = 0.05
+}
+
+# Alliance mobilization tiers. These supplement rather than replace the existing
+# FOC story fleets.
+foc_gcw_rebel_mobilization_1 = {
+    country_naval_cap_add = 25
+    army_damage_mult = 0.05
+}
+foc_gcw_rebel_mobilization_2 = {
+    country_naval_cap_add = 50
+    
+    army_damage_mult = 0.08
+}
+foc_gcw_rebel_mobilization_3 = {
+    country_naval_cap_add = 100
+    
+    ship_speed_mult = 0.03
+    army_damage_mult = 0.10
+}
+foc_gcw_rebel_mobilization_4 = {
+    country_naval_cap_add = 150
+    
+    ship_speed_mult = 0.05
+    army_damage_mult = 0.15
+}

@@ -1,0 +1,39 @@
+objectTypes = {
+    pdxmesh = {
+        name = "foc_rebel_mc80_line_bow_mesh"
+        file = "gfx/models/ships/foc_rebel_mc80_line/rebel_MC80_battleship_bow.mesh"
+        scale = 0.25
+        meshsettings = {
+            shader = "PdxMeshShip"
+        }
+    }
+
+    # Helper meshes reuse the same locator-rich source mesh at effectively invisible scale.
+    # This lets the mid and stern sections own real weapon slots without drawing extra MC80 hulls.
+    pdxmesh = {
+        name = "foc_rebel_mc80_line_mid_mount_mesh"
+        file = "gfx/models/ships/foc_rebel_mc80_line/rebel_MC80_battleship_bow.mesh"
+        scale = 0.001
+        meshsettings = {
+            shader = "PdxMeshShip"
+        }
+    }
+    pdxmesh = {
+        name = "foc_rebel_mc80_line_stern_mount_mesh"
+        file = "gfx/models/ships/foc_rebel_mc80_line/rebel_MC80_battleship_bow.mesh"
+        scale = 0.001
+        meshsettings = {
+            shader = "PdxMeshShip"
+        }
+    }
+
+    # Alternate Liberty hull kept registered but unused.
+    pdxmesh = {
+        name = "foc_rebel_mc80_liberty_bow_mesh"
+        file = "gfx/models/ships/foc_rebel_mc80_line/rebel_MC80_liberty_battleship_bow.mesh"
+        scale = 0.25
+        meshsettings = {
+            shader = "PdxMeshShip"
+        }
+    }
+}

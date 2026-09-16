@@ -1,0 +1,46 @@
+namespace = foc_v157_disarm
+
+# Old-save / monthly keeper: every post-Treaty Imperial Remnant is disarmed
+# unless the player already completed the First Order Plan.
+country_event = {
+    id = foc_v157_disarm.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_republic_origin_galactic_treaty
+        has_country_flag = foc_sw_imperial_remnant_country
+        NOT = { has_country_flag = foc_republic_origin_first_order_plan_completed }
+        NOT = { has_modifier = foc_v157_imperial_remnant_disarmament }
+    }
+
+    immediate = {
+        set_country_flag = foc_v157_imperial_remnant_disarmed
+        add_modifier = { modifier = foc_v157_imperial_remnant_disarmament days = -1 }
+    }
+}
+
+# Old-save completion repair: if a human Treaty Remnant finished the Plan in an
+# earlier build, immediately restore clandestine military construction.
+country_event = {
+    id = foc_v157_disarm.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        has_country_flag = foc_republic_origin_player_imperial_remnant
+        has_country_flag = foc_republic_origin_first_order_plan_completed
+        OR = {
+            has_modifier = foc_v157_imperial_remnant_disarmament
+            has_country_flag = foc_v157_imperial_remnant_disarmed
+            NOT = { has_country_flag = foc_v157_secret_fleet_construction_authorized }
+        }
+    }
+
+    immediate = {
+        remove_modifier = foc_v157_imperial_remnant_disarmament
+        remove_country_flag = foc_v157_imperial_remnant_disarmed
+        set_country_flag = foc_v157_secret_fleet_construction_authorized
+    }
+}

@@ -1,0 +1,18 @@
+special_project = {
+    key = "FOC_SITH_WAYFINDER_PROJECT"
+    cost = 12000
+    tech_department = physics_technology
+    timelimit = -1
+    location = yes
+    picture = GFX_evt_gateway
+    icon = "gfx/interface/icons/situation_log/situation_log_physics.dds"
+    event_scope = country_event
+
+    on_success = { country_event = { id = foc_wayfinder.2 } }
+    abort_trigger = {
+        OR = {
+            has_country_flag = foc_sith_wayfinder_route_known
+            has_relic = r_foc_sith_wayfinder
+        }
+    }
+}

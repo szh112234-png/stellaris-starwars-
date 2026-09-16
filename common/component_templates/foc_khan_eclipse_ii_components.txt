@@ -1,0 +1,59 @@
+# V13: approved signature weapons retain baseline output through visible weapon statistics.
+weapon_component_template = {
+    # v17.15: fixed single-hit alpha; 100%/100% penetration remains subject to hardening.
+    # Low base damage + layer multipliers; long reload, not a sustained-DPS target.
+
+    key = "FOC_KHAN_ECLIPSE_II_SUPERLASER"
+    size = titanic
+    type = instant
+    prio_projectile = yes
+    icon = "GFX_foc_v1718c_st_ship_part_sw_superlaser_1"
+    icon_frame = 1
+    damage = { min = 5000000 max = 5000000 }
+    windup = { min = 80 max = 80 }
+    range = 500.0
+    accuracy = 0.9
+    tracking = 0.1
+    firing_arc = 20
+    shield_penetration = 1
+    armor_penetration = 1
+    power = -8000
+    resources = {
+        category = ship_components
+        cost = {
+            sr_tibanna_swgs = 64
+            sr_kyber_swgs = 5000
+        }
+        upkeep = { }
+    }
+    component_set = "FOC_KHAN_ECLIPSE_II_SUPERLASER_SET"
+    size_restriction = { foc_khan_eclipse_ii foc_khan_eclipse_ii_foc_lowest }
+    projectile_gfx = "foc_v13_eclipse_superweapon_gfx"
+    tags = { weapon_type_energy }
+    ai_tags = { weapon_role_anti_hull }
+    potential = {
+        from = {
+            OR = {
+                has_country_flag = foc_khan_first_order_country
+                has_country_flag = foc_khan_final_order_country
+            }
+        }
+        from = {
+            NOT = {
+                has_country_flag = foc_khan_component_lowest
+            }
+        }
+    
+        from = { foc_v1718_allowed_country = yes }
+    }
+    ai_weight = {
+        weight = 10
+    }
+    total_fire_time = 600
+
+    hull_damage = 6
+    shield_damage = 4
+    armor_damage = 2
+
+    valid_for_country = { foc_v1718_allowed_country = yes }
+}

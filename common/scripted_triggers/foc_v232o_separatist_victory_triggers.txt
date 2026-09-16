@@ -1,0 +1,43 @@
+# V232s: normal victory has two routes. Debug force-surrender is separate.
+# Death flags remain historical records, never an independent victory shortcut.
+foc_v232o_cis_both_commanders_dead = {
+    has_global_flag = foc_saga_dooku_dead
+    has_global_flag = foc_saga_grievous_dead
+}
+
+# Country scope: the original V232r three-condition story route, unchanged.
+foc_v232s_cis_plot_victory = {
+    has_country_flag = foc_saga_cw_coruscant_shown
+    has_country_flag = foc_saga_cw_utapau_shown
+    any_situation = {
+        is_situation_type = situation_foc_republic_origin_palpatine_plot
+        situation_progress >= 140
+    }
+}
+
+# V232u: military victory is a positive engine result, never a colony scan.
+# Only our on_war_won / on_country_destroyed handlers can issue this receipt.
+# In particular, an empty/missing CIS search is NOT evidence of victory.
+foc_v232s_cis_military_victory = {
+    has_country_flag = foc_republic_origin_separatist_war_started
+    has_country_flag = foc_v232u_cis_military_victory_confirmed
+}
+
+# Republic-country scope: the recipient must still be in the Clone Wars phase.
+foc_v232u_can_receive_cis_result = {
+    has_country_flag = foc_republic_origin_republic_country
+    has_country_flag = foc_republic_origin_separatist_war_started
+    has_global_flag = foc_republic_origin_separatist_war_active
+    NOT = { has_country_flag = foc_republic_origin_separatist_war_won }
+    NOT = { has_country_flag = foc_republic_origin_separatist_surrender_staging_142 }
+    NOT = { has_country_flag = foc_republic_origin_order_66_executed }
+    NOT = { has_country_flag = foc_republic_origin_arc_completed }
+    NOT = { has_country_flag = foc_v232u_cis_military_victory_confirmed }
+}
+
+foc_v232o_separatist_victory_condition = {
+    OR = {
+        foc_v232s_cis_plot_victory = yes
+        foc_v232s_cis_military_victory = yes
+    }
+}

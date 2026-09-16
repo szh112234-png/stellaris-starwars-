@@ -1,0 +1,608 @@
+# V17b: every max() comparison now subtracts into foc_v235_cmp and tests it
+# against a literal. Reading a variable on the right-hand side of a trigger
+# was the thing logging "Variable foc_v235_need_common is not set"; the same
+# read works fine on the effect side, which is where it now happens.
+# V235 player treasury succession. Native APIs follow the supplied vanilla
+# nomads_effects.txt and 000_how_to_use_variables_in_script.txt.
+# Same-country succession restores ONLY a shortfall, never credits a second copy.
+# Resource quantities are captured before old era storage modifiers are removed.
+
+foc_v235_ensure_resistance_storage = {
+    if = {
+        limit = { NOT = { has_modifier = foc_v235_resistance_storage } }
+        add_modifier = { modifier = foc_v235_resistance_storage days = -1 }
+    }
+}
+
+# Country scope. Callers fill the three requested floors; this only raises them.
+foc_v235_raise_treasury_floors = {
+    hidden_effect = {
+        # Keep every stored resource protected even if a modifier replacement causes
+        # an immediate engine capacity refresh. Never remove the old floor unbridged.
+        set_variable = { which = foc_v235_bridge_capacity value = foc_v235_need_common }
+        set_variable = { which = foc_v235_cmp value = foc_v235_need_artifact }
+        subtract_variable = { which = foc_v235_cmp value = foc_v235_bridge_capacity }
+        if = {
+            limit = { check_variable = { which = foc_v235_cmp value > 0 } }
+            set_variable = { which = foc_v235_bridge_capacity value = foc_v235_need_artifact }
+        }
+        set_variable = { which = foc_v235_cmp value = foc_v235_need_thread }
+        subtract_variable = { which = foc_v235_cmp value = foc_v235_bridge_capacity }
+        if = {
+            limit = { check_variable = { which = foc_v235_cmp value > 0 } }
+            set_variable = { which = foc_v235_bridge_capacity value = foc_v235_need_thread }
+        }
+        if = {
+            limit = { check_variable = { which = foc_v235_bridge_capacity value > 0 } }
+            add_modifier = { modifier = foc_v235_treasury_capacity_bridge days = -1 multiplier = foc_v235_bridge_capacity }
+        }
+        # V17: no zero initialiser; seed the floor from the already-set need value.
+        if = {
+            limit = { NOT = { is_variable_set = foc_v235_common_floor } }
+            set_variable = { which = foc_v235_common_floor value = foc_v235_need_common }
+            remove_modifier = foc_v235_inherited_treasury_storage
+        }
+        else_if = {
+            limit = { check_variable = { which = foc_v235_need_common value > foc_v235_common_floor } }
+            set_variable = { which = foc_v235_common_floor value = foc_v235_need_common }
+            remove_modifier = foc_v235_inherited_treasury_storage
+        }
+        if = {
+            limit = {
+                check_variable = { which = foc_v235_common_floor value > 0 }
+                NOT = { has_modifier = foc_v235_inherited_treasury_storage }
+            }
+            add_modifier = { modifier = foc_v235_inherited_treasury_storage days = -1 multiplier = foc_v235_common_floor }
+        }
+        # V17: no zero initialiser; seed the floor from the already-set need value.
+        if = {
+            limit = { NOT = { is_variable_set = foc_v235_artifact_floor } }
+            set_variable = { which = foc_v235_artifact_floor value = foc_v235_need_artifact }
+            remove_modifier = foc_v235_inherited_artifact_storage
+        }
+        else_if = {
+            limit = { check_variable = { which = foc_v235_need_artifact value > foc_v235_artifact_floor } }
+            set_variable = { which = foc_v235_artifact_floor value = foc_v235_need_artifact }
+            remove_modifier = foc_v235_inherited_artifact_storage
+        }
+        if = {
+            limit = {
+                check_variable = { which = foc_v235_artifact_floor value > 0 }
+                NOT = { has_modifier = foc_v235_inherited_artifact_storage }
+            }
+            add_modifier = { modifier = foc_v235_inherited_artifact_storage days = -1 multiplier = foc_v235_artifact_floor }
+        }
+        # V17: no zero initialiser; seed the floor from the already-set need value.
+        if = {
+            limit = { NOT = { is_variable_set = foc_v235_thread_floor } }
+            set_variable = { which = foc_v235_thread_floor value = foc_v235_need_thread }
+            remove_modifier = foc_v235_inherited_thread_storage
+        }
+        else_if = {
+            limit = { check_variable = { which = foc_v235_need_thread value > foc_v235_thread_floor } }
+            set_variable = { which = foc_v235_thread_floor value = foc_v235_need_thread }
+            remove_modifier = foc_v235_inherited_thread_storage
+        }
+        if = {
+            limit = {
+                check_variable = { which = foc_v235_thread_floor value > 0 }
+                NOT = { has_modifier = foc_v235_inherited_thread_storage }
+            }
+            add_modifier = { modifier = foc_v235_inherited_thread_storage days = -1 multiplier = foc_v235_thread_floor }
+        }
+        remove_modifier = foc_v235_treasury_capacity_bridge
+        clear_variable = foc_v235_bridge_capacity
+    }
+}
+
+foc_v235_begin_player_treasury_succession = {
+    hidden_effect = {
+        if = {
+            limit = { is_ai = no NOT = { has_country_flag = foc_v235_treasury_snapshot_pending } }
+            export_resource_stockpile_to_variable = { resource = energy variable = foc_v235_keep_energy }
+            export_resource_stockpile_to_variable = { resource = minerals variable = foc_v235_keep_minerals }
+            export_resource_stockpile_to_variable = { resource = food variable = foc_v235_keep_food }
+            export_resource_stockpile_to_variable = { resource = trade variable = foc_v235_keep_trade }
+            export_resource_stockpile_to_variable = { resource = consumer_goods variable = foc_v235_keep_consumer_goods }
+            export_resource_stockpile_to_variable = { resource = alloys variable = foc_v235_keep_alloys }
+            export_resource_stockpile_to_variable = { resource = unity variable = foc_v235_keep_unity }
+            export_resource_stockpile_to_variable = { resource = influence variable = foc_v235_keep_influence }
+            export_resource_stockpile_to_variable = { resource = volatile_motes variable = foc_v235_keep_volatile_motes }
+            export_resource_stockpile_to_variable = { resource = exotic_gases variable = foc_v235_keep_exotic_gases }
+            export_resource_stockpile_to_variable = { resource = rare_crystals variable = foc_v235_keep_rare_crystals }
+            export_resource_stockpile_to_variable = { resource = sr_living_metal variable = foc_v235_keep_sr_living_metal }
+            export_resource_stockpile_to_variable = { resource = sr_zro variable = foc_v235_keep_sr_zro }
+            export_resource_stockpile_to_variable = { resource = sr_dark_matter variable = foc_v235_keep_sr_dark_matter }
+            export_resource_stockpile_to_variable = { resource = nanites variable = foc_v235_keep_nanites }
+            export_resource_stockpile_to_variable = { resource = minor_artifacts variable = foc_v235_keep_minor_artifacts }
+            export_resource_stockpile_to_variable = { resource = astral_threads variable = foc_v235_keep_astral_threads }
+            export_resource_stockpile_to_variable = { resource = physics_research variable = foc_v235_keep_physics_research }
+            export_resource_stockpile_to_variable = { resource = society_research variable = foc_v235_keep_society_research }
+            export_resource_stockpile_to_variable = { resource = engineering_research variable = foc_v235_keep_engineering_research }
+            export_resource_stockpile_to_variable = { resource = biomass variable = foc_v235_keep_biomass }
+            # V17: seed from an exported stockpile that is always set. A literal
+            # 0 initialiser did not register, so every later read logged
+            # "Variable foc_v235_need_common is not set".
+            set_variable = { which = foc_v235_need_common value = foc_v235_keep_energy }
+            set_variable = { which = foc_v235_cmp value = foc_v235_keep_minerals }
+            subtract_variable = { which = foc_v235_cmp value = foc_v235_need_common }
+            if = {
+                limit = { check_variable = { which = foc_v235_cmp value > 0 } }
+                set_variable = { which = foc_v235_need_common value = foc_v235_keep_minerals }
+            }
+            set_variable = { which = foc_v235_cmp value = foc_v235_keep_food }
+            subtract_variable = { which = foc_v235_cmp value = foc_v235_need_common }
+            if = {
+                limit = { check_variable = { which = foc_v235_cmp value > 0 } }
+                set_variable = { which = foc_v235_need_common value = foc_v235_keep_food }
+            }
+            set_variable = { which = foc_v235_cmp value = foc_v235_keep_trade }
+            subtract_variable = { which = foc_v235_cmp value = foc_v235_need_common }
+            if = {
+                limit = { check_variable = { which = foc_v235_cmp value > 0 } }
+                set_variable = { which = foc_v235_need_common value = foc_v235_keep_trade }
+            }
+            set_variable = { which = foc_v235_cmp value = foc_v235_keep_consumer_goods }
+            subtract_variable = { which = foc_v235_cmp value = foc_v235_need_common }
+            if = {
+                limit = { check_variable = { which = foc_v235_cmp value > 0 } }
+                set_variable = { which = foc_v235_need_common value = foc_v235_keep_consumer_goods }
+            }
+            set_variable = { which = foc_v235_cmp value = foc_v235_keep_alloys }
+            subtract_variable = { which = foc_v235_cmp value = foc_v235_need_common }
+            if = {
+                limit = { check_variable = { which = foc_v235_cmp value > 0 } }
+                set_variable = { which = foc_v235_need_common value = foc_v235_keep_alloys }
+            }
+            set_variable = { which = foc_v235_cmp value = foc_v235_keep_volatile_motes }
+            subtract_variable = { which = foc_v235_cmp value = foc_v235_need_common }
+            if = {
+                limit = { check_variable = { which = foc_v235_cmp value > 0 } }
+                set_variable = { which = foc_v235_need_common value = foc_v235_keep_volatile_motes }
+            }
+            set_variable = { which = foc_v235_cmp value = foc_v235_keep_exotic_gases }
+            subtract_variable = { which = foc_v235_cmp value = foc_v235_need_common }
+            if = {
+                limit = { check_variable = { which = foc_v235_cmp value > 0 } }
+                set_variable = { which = foc_v235_need_common value = foc_v235_keep_exotic_gases }
+            }
+            set_variable = { which = foc_v235_cmp value = foc_v235_keep_rare_crystals }
+            subtract_variable = { which = foc_v235_cmp value = foc_v235_need_common }
+            if = {
+                limit = { check_variable = { which = foc_v235_cmp value > 0 } }
+                set_variable = { which = foc_v235_need_common value = foc_v235_keep_rare_crystals }
+            }
+            set_variable = { which = foc_v235_cmp value = foc_v235_keep_sr_living_metal }
+            subtract_variable = { which = foc_v235_cmp value = foc_v235_need_common }
+            if = {
+                limit = { check_variable = { which = foc_v235_cmp value > 0 } }
+                set_variable = { which = foc_v235_need_common value = foc_v235_keep_sr_living_metal }
+            }
+            set_variable = { which = foc_v235_cmp value = foc_v235_keep_sr_zro }
+            subtract_variable = { which = foc_v235_cmp value = foc_v235_need_common }
+            if = {
+                limit = { check_variable = { which = foc_v235_cmp value > 0 } }
+                set_variable = { which = foc_v235_need_common value = foc_v235_keep_sr_zro }
+            }
+            set_variable = { which = foc_v235_cmp value = foc_v235_keep_sr_dark_matter }
+            subtract_variable = { which = foc_v235_cmp value = foc_v235_need_common }
+            if = {
+                limit = { check_variable = { which = foc_v235_cmp value > 0 } }
+                set_variable = { which = foc_v235_need_common value = foc_v235_keep_sr_dark_matter }
+            }
+            set_variable = { which = foc_v235_cmp value = foc_v235_keep_nanites }
+            subtract_variable = { which = foc_v235_cmp value = foc_v235_need_common }
+            if = {
+                limit = { check_variable = { which = foc_v235_cmp value > 0 } }
+                set_variable = { which = foc_v235_need_common value = foc_v235_keep_nanites }
+            }
+            set_variable = { which = foc_v235_need_artifact value = foc_v235_keep_minor_artifacts }
+            set_variable = { which = foc_v235_need_thread value = foc_v235_keep_astral_threads }
+            foc_v235_raise_treasury_floors = yes
+            set_country_flag = foc_v235_treasury_snapshot_pending
+            log = "FOC_V235_TREASURY_SNAPSHOT: player stockpiles captured before succession."
+        }
+    }
+}
+
+foc_v235_finish_player_treasury_succession = {
+    hidden_effect = {
+        if = {
+            limit = { is_ai = no has_country_flag = foc_v235_treasury_snapshot_pending }
+            export_resource_stockpile_to_variable = { resource = energy variable = foc_v235_current_amount }
+            if = {
+                limit = { check_variable = { which = foc_v235_current_amount value < foc_v235_keep_energy } }
+                set_resource = { resource = energy value = foc_v235_keep_energy }
+            }
+            clear_variable = foc_v235_keep_energy
+            export_resource_stockpile_to_variable = { resource = minerals variable = foc_v235_current_amount }
+            if = {
+                limit = { check_variable = { which = foc_v235_current_amount value < foc_v235_keep_minerals } }
+                set_resource = { resource = minerals value = foc_v235_keep_minerals }
+            }
+            clear_variable = foc_v235_keep_minerals
+            export_resource_stockpile_to_variable = { resource = food variable = foc_v235_current_amount }
+            if = {
+                limit = { check_variable = { which = foc_v235_current_amount value < foc_v235_keep_food } }
+                set_resource = { resource = food value = foc_v235_keep_food }
+            }
+            clear_variable = foc_v235_keep_food
+            export_resource_stockpile_to_variable = { resource = trade variable = foc_v235_current_amount }
+            if = {
+                limit = { check_variable = { which = foc_v235_current_amount value < foc_v235_keep_trade } }
+                set_resource = { resource = trade value = foc_v235_keep_trade }
+            }
+            clear_variable = foc_v235_keep_trade
+            export_resource_stockpile_to_variable = { resource = consumer_goods variable = foc_v235_current_amount }
+            if = {
+                limit = { check_variable = { which = foc_v235_current_amount value < foc_v235_keep_consumer_goods } }
+                set_resource = { resource = consumer_goods value = foc_v235_keep_consumer_goods }
+            }
+            clear_variable = foc_v235_keep_consumer_goods
+            export_resource_stockpile_to_variable = { resource = alloys variable = foc_v235_current_amount }
+            if = {
+                limit = { check_variable = { which = foc_v235_current_amount value < foc_v235_keep_alloys } }
+                set_resource = { resource = alloys value = foc_v235_keep_alloys }
+            }
+            clear_variable = foc_v235_keep_alloys
+            export_resource_stockpile_to_variable = { resource = unity variable = foc_v235_current_amount }
+            if = {
+                limit = { check_variable = { which = foc_v235_current_amount value < foc_v235_keep_unity } }
+                set_resource = { resource = unity value = foc_v235_keep_unity }
+            }
+            clear_variable = foc_v235_keep_unity
+            export_resource_stockpile_to_variable = { resource = influence variable = foc_v235_current_amount }
+            if = {
+                limit = { check_variable = { which = foc_v235_current_amount value < foc_v235_keep_influence } }
+                set_resource = { resource = influence value = foc_v235_keep_influence }
+            }
+            clear_variable = foc_v235_keep_influence
+            export_resource_stockpile_to_variable = { resource = volatile_motes variable = foc_v235_current_amount }
+            if = {
+                limit = { check_variable = { which = foc_v235_current_amount value < foc_v235_keep_volatile_motes } }
+                set_resource = { resource = volatile_motes value = foc_v235_keep_volatile_motes }
+            }
+            clear_variable = foc_v235_keep_volatile_motes
+            export_resource_stockpile_to_variable = { resource = exotic_gases variable = foc_v235_current_amount }
+            if = {
+                limit = { check_variable = { which = foc_v235_current_amount value < foc_v235_keep_exotic_gases } }
+                set_resource = { resource = exotic_gases value = foc_v235_keep_exotic_gases }
+            }
+            clear_variable = foc_v235_keep_exotic_gases
+            export_resource_stockpile_to_variable = { resource = rare_crystals variable = foc_v235_current_amount }
+            if = {
+                limit = { check_variable = { which = foc_v235_current_amount value < foc_v235_keep_rare_crystals } }
+                set_resource = { resource = rare_crystals value = foc_v235_keep_rare_crystals }
+            }
+            clear_variable = foc_v235_keep_rare_crystals
+            export_resource_stockpile_to_variable = { resource = sr_living_metal variable = foc_v235_current_amount }
+            if = {
+                limit = { check_variable = { which = foc_v235_current_amount value < foc_v235_keep_sr_living_metal } }
+                set_resource = { resource = sr_living_metal value = foc_v235_keep_sr_living_metal }
+            }
+            clear_variable = foc_v235_keep_sr_living_metal
+            export_resource_stockpile_to_variable = { resource = sr_zro variable = foc_v235_current_amount }
+            if = {
+                limit = { check_variable = { which = foc_v235_current_amount value < foc_v235_keep_sr_zro } }
+                set_resource = { resource = sr_zro value = foc_v235_keep_sr_zro }
+            }
+            clear_variable = foc_v235_keep_sr_zro
+            export_resource_stockpile_to_variable = { resource = sr_dark_matter variable = foc_v235_current_amount }
+            if = {
+                limit = { check_variable = { which = foc_v235_current_amount value < foc_v235_keep_sr_dark_matter } }
+                set_resource = { resource = sr_dark_matter value = foc_v235_keep_sr_dark_matter }
+            }
+            clear_variable = foc_v235_keep_sr_dark_matter
+            export_resource_stockpile_to_variable = { resource = nanites variable = foc_v235_current_amount }
+            if = {
+                limit = { check_variable = { which = foc_v235_current_amount value < foc_v235_keep_nanites } }
+                set_resource = { resource = nanites value = foc_v235_keep_nanites }
+            }
+            clear_variable = foc_v235_keep_nanites
+            export_resource_stockpile_to_variable = { resource = minor_artifacts variable = foc_v235_current_amount }
+            if = {
+                limit = { check_variable = { which = foc_v235_current_amount value < foc_v235_keep_minor_artifacts } }
+                set_resource = { resource = minor_artifacts value = foc_v235_keep_minor_artifacts }
+            }
+            clear_variable = foc_v235_keep_minor_artifacts
+            export_resource_stockpile_to_variable = { resource = astral_threads variable = foc_v235_current_amount }
+            if = {
+                limit = { check_variable = { which = foc_v235_current_amount value < foc_v235_keep_astral_threads } }
+                set_resource = { resource = astral_threads value = foc_v235_keep_astral_threads }
+            }
+            clear_variable = foc_v235_keep_astral_threads
+            export_resource_stockpile_to_variable = { resource = physics_research variable = foc_v235_current_amount }
+            if = {
+                limit = { check_variable = { which = foc_v235_current_amount value < foc_v235_keep_physics_research } }
+                set_resource = { resource = physics_research value = foc_v235_keep_physics_research }
+            }
+            clear_variable = foc_v235_keep_physics_research
+            export_resource_stockpile_to_variable = { resource = society_research variable = foc_v235_current_amount }
+            if = {
+                limit = { check_variable = { which = foc_v235_current_amount value < foc_v235_keep_society_research } }
+                set_resource = { resource = society_research value = foc_v235_keep_society_research }
+            }
+            clear_variable = foc_v235_keep_society_research
+            export_resource_stockpile_to_variable = { resource = engineering_research variable = foc_v235_current_amount }
+            if = {
+                limit = { check_variable = { which = foc_v235_current_amount value < foc_v235_keep_engineering_research } }
+                set_resource = { resource = engineering_research value = foc_v235_keep_engineering_research }
+            }
+            clear_variable = foc_v235_keep_engineering_research
+            export_resource_stockpile_to_variable = { resource = biomass variable = foc_v235_current_amount }
+            if = {
+                limit = { check_variable = { which = foc_v235_current_amount value < foc_v235_keep_biomass } }
+                set_resource = { resource = biomass value = foc_v235_keep_biomass }
+            }
+            clear_variable = foc_v235_keep_biomass
+            clear_variable = foc_v235_current_amount
+            remove_country_flag = foc_v235_treasury_snapshot_pending
+            log = "FOC_V235_TREASURY_RETAINED: inherited stockpiles preserved without a duplicate grant."
+        }
+    }
+}
+
+# Source country scope. TARGET is a real player successor. Called BEFORE donor
+# destruction. In-place calls and AI recipients are rejected. Never a monthly grant.
+foc_v235_transfer_treasury_to_successor = {
+    hidden_effect = {
+        save_event_target_as = foc_v235_treasury_donor
+        if = {
+            limit = {
+                exists = $TARGET$
+                NOT = { has_country_flag = foc_v235_treasury_transferred }
+                $TARGET$ = {
+                    is_ai = no
+                    NOT = { is_same_value = event_target:foc_v235_treasury_donor }
+                }
+            }
+            $TARGET$ = { save_event_target_as = foc_v235_treasury_recipient }
+            export_resource_stockpile_to_variable = { resource = energy variable = foc_v235_donor_energy }
+            export_resource_stockpile_to_variable = { resource = minerals variable = foc_v235_donor_minerals }
+            export_resource_stockpile_to_variable = { resource = food variable = foc_v235_donor_food }
+            export_resource_stockpile_to_variable = { resource = trade variable = foc_v235_donor_trade }
+            export_resource_stockpile_to_variable = { resource = consumer_goods variable = foc_v235_donor_consumer_goods }
+            export_resource_stockpile_to_variable = { resource = alloys variable = foc_v235_donor_alloys }
+            export_resource_stockpile_to_variable = { resource = unity variable = foc_v235_donor_unity }
+            export_resource_stockpile_to_variable = { resource = influence variable = foc_v235_donor_influence }
+            export_resource_stockpile_to_variable = { resource = volatile_motes variable = foc_v235_donor_volatile_motes }
+            export_resource_stockpile_to_variable = { resource = exotic_gases variable = foc_v235_donor_exotic_gases }
+            export_resource_stockpile_to_variable = { resource = rare_crystals variable = foc_v235_donor_rare_crystals }
+            export_resource_stockpile_to_variable = { resource = sr_living_metal variable = foc_v235_donor_sr_living_metal }
+            export_resource_stockpile_to_variable = { resource = sr_zro variable = foc_v235_donor_sr_zro }
+            export_resource_stockpile_to_variable = { resource = sr_dark_matter variable = foc_v235_donor_sr_dark_matter }
+            export_resource_stockpile_to_variable = { resource = nanites variable = foc_v235_donor_nanites }
+            export_resource_stockpile_to_variable = { resource = minor_artifacts variable = foc_v235_donor_minor_artifacts }
+            export_resource_stockpile_to_variable = { resource = astral_threads variable = foc_v235_donor_astral_threads }
+            export_resource_stockpile_to_variable = { resource = physics_research variable = foc_v235_donor_physics_research }
+            export_resource_stockpile_to_variable = { resource = society_research variable = foc_v235_donor_society_research }
+            export_resource_stockpile_to_variable = { resource = engineering_research variable = foc_v235_donor_engineering_research }
+            export_resource_stockpile_to_variable = { resource = biomass variable = foc_v235_donor_biomass }
+            event_target:foc_v235_treasury_recipient = {
+                # V17: seeded from the first transfer sum instead of a literal 0.
+                set_variable = { which = foc_v235_need_common value = foc_v235_transfer_sum }
+                export_resource_stockpile_to_variable = { resource = energy variable = foc_v235_transfer_sum }
+                change_variable = { which = foc_v235_transfer_sum value = event_target:foc_v235_treasury_donor.foc_v235_donor_energy }
+                set_variable = { which = foc_v235_cmp value = foc_v235_transfer_sum }
+                subtract_variable = { which = foc_v235_cmp value = foc_v235_need_common }
+                if = {
+                    limit = { check_variable = { which = foc_v235_cmp value > 0 } }
+                    set_variable = { which = foc_v235_need_common value = foc_v235_transfer_sum }
+                }
+                export_resource_stockpile_to_variable = { resource = minerals variable = foc_v235_transfer_sum }
+                change_variable = { which = foc_v235_transfer_sum value = event_target:foc_v235_treasury_donor.foc_v235_donor_minerals }
+                set_variable = { which = foc_v235_cmp value = foc_v235_transfer_sum }
+                subtract_variable = { which = foc_v235_cmp value = foc_v235_need_common }
+                if = {
+                    limit = { check_variable = { which = foc_v235_cmp value > 0 } }
+                    set_variable = { which = foc_v235_need_common value = foc_v235_transfer_sum }
+                }
+                export_resource_stockpile_to_variable = { resource = food variable = foc_v235_transfer_sum }
+                change_variable = { which = foc_v235_transfer_sum value = event_target:foc_v235_treasury_donor.foc_v235_donor_food }
+                set_variable = { which = foc_v235_cmp value = foc_v235_transfer_sum }
+                subtract_variable = { which = foc_v235_cmp value = foc_v235_need_common }
+                if = {
+                    limit = { check_variable = { which = foc_v235_cmp value > 0 } }
+                    set_variable = { which = foc_v235_need_common value = foc_v235_transfer_sum }
+                }
+                export_resource_stockpile_to_variable = { resource = trade variable = foc_v235_transfer_sum }
+                change_variable = { which = foc_v235_transfer_sum value = event_target:foc_v235_treasury_donor.foc_v235_donor_trade }
+                set_variable = { which = foc_v235_cmp value = foc_v235_transfer_sum }
+                subtract_variable = { which = foc_v235_cmp value = foc_v235_need_common }
+                if = {
+                    limit = { check_variable = { which = foc_v235_cmp value > 0 } }
+                    set_variable = { which = foc_v235_need_common value = foc_v235_transfer_sum }
+                }
+                export_resource_stockpile_to_variable = { resource = consumer_goods variable = foc_v235_transfer_sum }
+                change_variable = { which = foc_v235_transfer_sum value = event_target:foc_v235_treasury_donor.foc_v235_donor_consumer_goods }
+                set_variable = { which = foc_v235_cmp value = foc_v235_transfer_sum }
+                subtract_variable = { which = foc_v235_cmp value = foc_v235_need_common }
+                if = {
+                    limit = { check_variable = { which = foc_v235_cmp value > 0 } }
+                    set_variable = { which = foc_v235_need_common value = foc_v235_transfer_sum }
+                }
+                export_resource_stockpile_to_variable = { resource = alloys variable = foc_v235_transfer_sum }
+                change_variable = { which = foc_v235_transfer_sum value = event_target:foc_v235_treasury_donor.foc_v235_donor_alloys }
+                set_variable = { which = foc_v235_cmp value = foc_v235_transfer_sum }
+                subtract_variable = { which = foc_v235_cmp value = foc_v235_need_common }
+                if = {
+                    limit = { check_variable = { which = foc_v235_cmp value > 0 } }
+                    set_variable = { which = foc_v235_need_common value = foc_v235_transfer_sum }
+                }
+                export_resource_stockpile_to_variable = { resource = volatile_motes variable = foc_v235_transfer_sum }
+                change_variable = { which = foc_v235_transfer_sum value = event_target:foc_v235_treasury_donor.foc_v235_donor_volatile_motes }
+                set_variable = { which = foc_v235_cmp value = foc_v235_transfer_sum }
+                subtract_variable = { which = foc_v235_cmp value = foc_v235_need_common }
+                if = {
+                    limit = { check_variable = { which = foc_v235_cmp value > 0 } }
+                    set_variable = { which = foc_v235_need_common value = foc_v235_transfer_sum }
+                }
+                export_resource_stockpile_to_variable = { resource = exotic_gases variable = foc_v235_transfer_sum }
+                change_variable = { which = foc_v235_transfer_sum value = event_target:foc_v235_treasury_donor.foc_v235_donor_exotic_gases }
+                set_variable = { which = foc_v235_cmp value = foc_v235_transfer_sum }
+                subtract_variable = { which = foc_v235_cmp value = foc_v235_need_common }
+                if = {
+                    limit = { check_variable = { which = foc_v235_cmp value > 0 } }
+                    set_variable = { which = foc_v235_need_common value = foc_v235_transfer_sum }
+                }
+                export_resource_stockpile_to_variable = { resource = rare_crystals variable = foc_v235_transfer_sum }
+                change_variable = { which = foc_v235_transfer_sum value = event_target:foc_v235_treasury_donor.foc_v235_donor_rare_crystals }
+                set_variable = { which = foc_v235_cmp value = foc_v235_transfer_sum }
+                subtract_variable = { which = foc_v235_cmp value = foc_v235_need_common }
+                if = {
+                    limit = { check_variable = { which = foc_v235_cmp value > 0 } }
+                    set_variable = { which = foc_v235_need_common value = foc_v235_transfer_sum }
+                }
+                export_resource_stockpile_to_variable = { resource = sr_living_metal variable = foc_v235_transfer_sum }
+                change_variable = { which = foc_v235_transfer_sum value = event_target:foc_v235_treasury_donor.foc_v235_donor_sr_living_metal }
+                set_variable = { which = foc_v235_cmp value = foc_v235_transfer_sum }
+                subtract_variable = { which = foc_v235_cmp value = foc_v235_need_common }
+                if = {
+                    limit = { check_variable = { which = foc_v235_cmp value > 0 } }
+                    set_variable = { which = foc_v235_need_common value = foc_v235_transfer_sum }
+                }
+                export_resource_stockpile_to_variable = { resource = sr_zro variable = foc_v235_transfer_sum }
+                change_variable = { which = foc_v235_transfer_sum value = event_target:foc_v235_treasury_donor.foc_v235_donor_sr_zro }
+                set_variable = { which = foc_v235_cmp value = foc_v235_transfer_sum }
+                subtract_variable = { which = foc_v235_cmp value = foc_v235_need_common }
+                if = {
+                    limit = { check_variable = { which = foc_v235_cmp value > 0 } }
+                    set_variable = { which = foc_v235_need_common value = foc_v235_transfer_sum }
+                }
+                export_resource_stockpile_to_variable = { resource = sr_dark_matter variable = foc_v235_transfer_sum }
+                change_variable = { which = foc_v235_transfer_sum value = event_target:foc_v235_treasury_donor.foc_v235_donor_sr_dark_matter }
+                set_variable = { which = foc_v235_cmp value = foc_v235_transfer_sum }
+                subtract_variable = { which = foc_v235_cmp value = foc_v235_need_common }
+                if = {
+                    limit = { check_variable = { which = foc_v235_cmp value > 0 } }
+                    set_variable = { which = foc_v235_need_common value = foc_v235_transfer_sum }
+                }
+                export_resource_stockpile_to_variable = { resource = nanites variable = foc_v235_transfer_sum }
+                change_variable = { which = foc_v235_transfer_sum value = event_target:foc_v235_treasury_donor.foc_v235_donor_nanites }
+                set_variable = { which = foc_v235_cmp value = foc_v235_transfer_sum }
+                subtract_variable = { which = foc_v235_cmp value = foc_v235_need_common }
+                if = {
+                    limit = { check_variable = { which = foc_v235_cmp value > 0 } }
+                    set_variable = { which = foc_v235_need_common value = foc_v235_transfer_sum }
+                }
+                export_resource_stockpile_to_variable = { resource = minor_artifacts variable = foc_v235_transfer_sum }
+                change_variable = { which = foc_v235_transfer_sum value = event_target:foc_v235_treasury_donor.foc_v235_donor_minor_artifacts }
+                set_variable = { which = foc_v235_need_artifact value = foc_v235_transfer_sum }
+                export_resource_stockpile_to_variable = { resource = astral_threads variable = foc_v235_transfer_sum }
+                change_variable = { which = foc_v235_transfer_sum value = event_target:foc_v235_treasury_donor.foc_v235_donor_astral_threads }
+                set_variable = { which = foc_v235_need_thread value = foc_v235_transfer_sum }
+                foc_v235_raise_treasury_floors = yes
+                export_resource_stockpile_to_variable = { resource = energy variable = foc_v235_receiving_amount }
+                change_variable = { which = foc_v235_receiving_amount value = event_target:foc_v235_treasury_donor.foc_v235_donor_energy }
+                set_resource = { resource = energy value = foc_v235_receiving_amount }
+                export_resource_stockpile_to_variable = { resource = minerals variable = foc_v235_receiving_amount }
+                change_variable = { which = foc_v235_receiving_amount value = event_target:foc_v235_treasury_donor.foc_v235_donor_minerals }
+                set_resource = { resource = minerals value = foc_v235_receiving_amount }
+                export_resource_stockpile_to_variable = { resource = food variable = foc_v235_receiving_amount }
+                change_variable = { which = foc_v235_receiving_amount value = event_target:foc_v235_treasury_donor.foc_v235_donor_food }
+                set_resource = { resource = food value = foc_v235_receiving_amount }
+                export_resource_stockpile_to_variable = { resource = trade variable = foc_v235_receiving_amount }
+                change_variable = { which = foc_v235_receiving_amount value = event_target:foc_v235_treasury_donor.foc_v235_donor_trade }
+                set_resource = { resource = trade value = foc_v235_receiving_amount }
+                export_resource_stockpile_to_variable = { resource = consumer_goods variable = foc_v235_receiving_amount }
+                change_variable = { which = foc_v235_receiving_amount value = event_target:foc_v235_treasury_donor.foc_v235_donor_consumer_goods }
+                set_resource = { resource = consumer_goods value = foc_v235_receiving_amount }
+                export_resource_stockpile_to_variable = { resource = alloys variable = foc_v235_receiving_amount }
+                change_variable = { which = foc_v235_receiving_amount value = event_target:foc_v235_treasury_donor.foc_v235_donor_alloys }
+                set_resource = { resource = alloys value = foc_v235_receiving_amount }
+                export_resource_stockpile_to_variable = { resource = unity variable = foc_v235_receiving_amount }
+                change_variable = { which = foc_v235_receiving_amount value = event_target:foc_v235_treasury_donor.foc_v235_donor_unity }
+                set_resource = { resource = unity value = foc_v235_receiving_amount }
+                export_resource_stockpile_to_variable = { resource = influence variable = foc_v235_receiving_amount }
+                change_variable = { which = foc_v235_receiving_amount value = event_target:foc_v235_treasury_donor.foc_v235_donor_influence }
+                set_resource = { resource = influence value = foc_v235_receiving_amount }
+                export_resource_stockpile_to_variable = { resource = volatile_motes variable = foc_v235_receiving_amount }
+                change_variable = { which = foc_v235_receiving_amount value = event_target:foc_v235_treasury_donor.foc_v235_donor_volatile_motes }
+                set_resource = { resource = volatile_motes value = foc_v235_receiving_amount }
+                export_resource_stockpile_to_variable = { resource = exotic_gases variable = foc_v235_receiving_amount }
+                change_variable = { which = foc_v235_receiving_amount value = event_target:foc_v235_treasury_donor.foc_v235_donor_exotic_gases }
+                set_resource = { resource = exotic_gases value = foc_v235_receiving_amount }
+                export_resource_stockpile_to_variable = { resource = rare_crystals variable = foc_v235_receiving_amount }
+                change_variable = { which = foc_v235_receiving_amount value = event_target:foc_v235_treasury_donor.foc_v235_donor_rare_crystals }
+                set_resource = { resource = rare_crystals value = foc_v235_receiving_amount }
+                export_resource_stockpile_to_variable = { resource = sr_living_metal variable = foc_v235_receiving_amount }
+                change_variable = { which = foc_v235_receiving_amount value = event_target:foc_v235_treasury_donor.foc_v235_donor_sr_living_metal }
+                set_resource = { resource = sr_living_metal value = foc_v235_receiving_amount }
+                export_resource_stockpile_to_variable = { resource = sr_zro variable = foc_v235_receiving_amount }
+                change_variable = { which = foc_v235_receiving_amount value = event_target:foc_v235_treasury_donor.foc_v235_donor_sr_zro }
+                set_resource = { resource = sr_zro value = foc_v235_receiving_amount }
+                export_resource_stockpile_to_variable = { resource = sr_dark_matter variable = foc_v235_receiving_amount }
+                change_variable = { which = foc_v235_receiving_amount value = event_target:foc_v235_treasury_donor.foc_v235_donor_sr_dark_matter }
+                set_resource = { resource = sr_dark_matter value = foc_v235_receiving_amount }
+                export_resource_stockpile_to_variable = { resource = nanites variable = foc_v235_receiving_amount }
+                change_variable = { which = foc_v235_receiving_amount value = event_target:foc_v235_treasury_donor.foc_v235_donor_nanites }
+                set_resource = { resource = nanites value = foc_v235_receiving_amount }
+                export_resource_stockpile_to_variable = { resource = minor_artifacts variable = foc_v235_receiving_amount }
+                change_variable = { which = foc_v235_receiving_amount value = event_target:foc_v235_treasury_donor.foc_v235_donor_minor_artifacts }
+                set_resource = { resource = minor_artifacts value = foc_v235_receiving_amount }
+                export_resource_stockpile_to_variable = { resource = astral_threads variable = foc_v235_receiving_amount }
+                change_variable = { which = foc_v235_receiving_amount value = event_target:foc_v235_treasury_donor.foc_v235_donor_astral_threads }
+                set_resource = { resource = astral_threads value = foc_v235_receiving_amount }
+                export_resource_stockpile_to_variable = { resource = physics_research variable = foc_v235_receiving_amount }
+                change_variable = { which = foc_v235_receiving_amount value = event_target:foc_v235_treasury_donor.foc_v235_donor_physics_research }
+                set_resource = { resource = physics_research value = foc_v235_receiving_amount }
+                export_resource_stockpile_to_variable = { resource = society_research variable = foc_v235_receiving_amount }
+                change_variable = { which = foc_v235_receiving_amount value = event_target:foc_v235_treasury_donor.foc_v235_donor_society_research }
+                set_resource = { resource = society_research value = foc_v235_receiving_amount }
+                export_resource_stockpile_to_variable = { resource = engineering_research variable = foc_v235_receiving_amount }
+                change_variable = { which = foc_v235_receiving_amount value = event_target:foc_v235_treasury_donor.foc_v235_donor_engineering_research }
+                set_resource = { resource = engineering_research value = foc_v235_receiving_amount }
+                export_resource_stockpile_to_variable = { resource = biomass variable = foc_v235_receiving_amount }
+                change_variable = { which = foc_v235_receiving_amount value = event_target:foc_v235_treasury_donor.foc_v235_donor_biomass }
+                set_resource = { resource = biomass value = foc_v235_receiving_amount }
+                clear_variable = foc_v235_receiving_amount
+                clear_variable = foc_v235_transfer_sum
+                log = "FOC_V235_TREASURY_TRANSFER: the successor received the donor country's remaining stockpiles."
+            }
+            # The donor is about to be destroyed; zero it once so retries cannot pay twice.
+            set_country_flag = foc_v235_treasury_transferred
+            set_resource = { resource = energy value = 0 }
+            clear_variable = foc_v235_donor_energy
+            set_resource = { resource = minerals value = 0 }
+            clear_variable = foc_v235_donor_minerals
+            set_resource = { resource = food value = 0 }
+            clear_variable = foc_v235_donor_food
+            set_resource = { resource = trade value = 0 }
+            clear_variable = foc_v235_donor_trade
+            set_resource = { resource = consumer_goods value = 0 }
+            clear_variable = foc_v235_donor_consumer_goods
+            set_resource = { resource = alloys value = 0 }
+            clear_variable = foc_v235_donor_alloys
+            set_resource = { resource = unity value = 0 }
+            clear_variable = foc_v235_donor_unity
+            set_resource = { resource = influence value = 0 }
+            clear_variable = foc_v235_donor_influence
+            set_resource = { resource = volatile_motes value = 0 }
+            clear_variable = foc_v235_donor_volatile_motes
+            set_resource = { resource = exotic_gases value = 0 }
+            clear_variable = foc_v235_donor_exotic_gases
+            set_resource = { resource = rare_crystals value = 0 }
+            clear_variable = foc_v235_donor_rare_crystals
+            set_resource = { resource = sr_living_metal value = 0 }
+            clear_variable = foc_v235_donor_sr_living_metal
+            set_resource = { resource = sr_zro value = 0 }
+            clear_variable = foc_v235_donor_sr_zro
+            set_resource = { resource = sr_dark_matter value = 0 }
+            clear_variable = foc_v235_donor_sr_dark_matter
+            set_resource = { resource = nanites value = 0 }
+            clear_variable = foc_v235_donor_nanites
+            set_resource = { resource = minor_artifacts value = 0 }
+            clear_variable = foc_v235_donor_minor_artifacts
+            set_resource = { resource = astral_threads value = 0 }
+            clear_variable = foc_v235_donor_astral_threads
+            set_resource = { resource = physics_research value = 0 }
+            clear_variable = foc_v235_donor_physics_research
+            set_resource = { resource = society_research value = 0 }
+            clear_variable = foc_v235_donor_society_research
+            set_resource = { resource = engineering_research value = 0 }
+            clear_variable = foc_v235_donor_engineering_research
+            set_resource = { resource = biomass value = 0 }
+            clear_variable = foc_v235_donor_biomass
+        }
+    }
+}

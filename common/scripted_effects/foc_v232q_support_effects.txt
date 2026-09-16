@@ -1,0 +1,44 @@
+# Country scope. A cooldown is committed before synchronous creation to prevent
+# the direct death hook, monthly watchdog and a queued tick from doubling a wave.
+foc_v232q_issue_empire_support = {
+    if = {
+        limit = {
+            foc_v232q_empire_support_eligible = yes
+            NOT = { has_country_flag = foc_v232q_empire_support_cooldown }
+        }
+        remove_country_flag = foc_v232q_empire_support_spawn_verified
+        set_timed_country_flag = { flag = foc_v232q_empire_support_cooldown days = 360 }
+        foc_v134_spawn_empire_annual_33_isd = yes
+        if = {
+            limit = { has_country_flag = foc_v232q_empire_support_spawn_verified }
+            set_country_flag = foc_v232q_empire_support_started
+            set_country_flag = foc_v134_empire_annual_support_started
+            remove_country_flag = foc_v201_empire_annual_support_early_unlocked
+            remove_country_flag = foc_v207_empire_annual_support_first_wave_pending
+            change_variable = { which = foc_v232q_empire_support_waves value = 1 }
+            country_event = { id = foc_v232q_support.2 days = 360 }
+            log = "FOC_V232Q_EMPIRE_SUPPORT: verified one reinforcement fleet; next wave in 360 days, unless Death Star II is destroyed."
+        }
+        else = {
+            remove_country_flag = foc_v232q_empire_support_cooldown
+            log = "FOC_V232Q_EMPIRE_SUPPORT: no hull was created; cooldown released for the normal monthly retry."
+        }
+        remove_country_flag = foc_v232q_empire_support_spawn_verified
+    }
+}
+
+# Any scope. Existing fleets are not confiscated; only future deliveries stop.
+foc_v232q_end_empire_support = {
+    set_global_flag = foc_v232q_empire_support_ended
+    every_country = {
+        limit = {
+            OR = {
+                has_country_flag = foc_republic_origin_empire_country
+                has_country_flag = foc_v232q_empire_support_started
+                has_country_flag = foc_v201_empire_annual_support_early_unlocked
+            }
+        }
+        remove_country_flag = foc_v201_empire_annual_support_early_unlocked
+        remove_country_flag = foc_v207_empire_annual_support_first_wave_pending
+    }
+}

@@ -1,0 +1,63 @@
+# FOC V13 - old Kyber deposit IDs are inert save-compatibility aliases.
+# Canonical worlds use permanent planet modifiers and fixed monthly payouts.
+# Tibanna deposit definitions below are unchanged.
+
+d_foc_kyber_crystal_veins = {
+    icon = d_foc_kyber_crystal_veins
+    drop_weight = { weight = 0 }
+}
+
+d_foc_kyber_crystal_veins_low = {
+    icon = d_foc_kyber_crystal_veins
+    drop_weight = { weight = 0 }
+}
+
+d_foc_kyber_crystal_veins_medium = {
+    icon = d_foc_kyber_crystal_veins
+    drop_weight = { weight = 0 }
+}
+
+d_foc_kyber_crystal_veins_high = {
+    icon = d_foc_kyber_crystal_veins
+    drop_weight = { weight = 0 }
+}
+
+d_foc_kyber_crystals_orbital_1 = {
+    icon = d_foc_kyber_crystal_veins
+    drop_weight = { weight = 0 }
+}
+
+d_foc_kyber_crystals_orbital_3 = {
+    icon = d_foc_kyber_crystal_veins
+    drop_weight = { weight = 0 }
+}
+
+d_foc_kyber_crystals_orbital_6 = {
+    icon = d_foc_kyber_crystal_veins
+    drop_weight = { weight = 0 }
+}
+
+# Tibanna remains a broad conventional military-industrial resource.
+d_foc_tibanna_gas_2 = {
+    resources = { category = orbital_mining_deposits produces = { sr_tibanna_swgs = 2 } }
+    station = shipclass_mining_station
+    is_for_colonizable = no
+    potential = { is_planet_class = pc_ice_asteroid }
+    drop_weight = { weight = 8 modifier = { factor = 1.5 is_inside_nebula = yes } }
+}
+
+d_foc_tibanna_gas_3 = {
+    resources = { category = orbital_mining_deposits produces = { sr_tibanna_swgs = 3 } }
+    station = shipclass_mining_station
+    is_for_colonizable = no
+    potential = { OR = { is_planet_class = pc_gas_giant is_planet_class = pc_ice_asteroid } }
+    drop_weight = { weight = 5 modifier = { factor = 1.5 is_inside_nebula = yes } }
+}
+
+d_foc_tibanna_gas_6 = {
+    resources = { category = orbital_mining_deposits produces = { sr_tibanna_swgs = 6 } }
+    station = shipclass_mining_station
+    is_for_colonizable = no
+    potential = { is_planet_class = pc_gas_giant }
+    drop_weight = { weight = 2 modifier = { factor = 1.5 is_inside_nebula = yes } }
+}

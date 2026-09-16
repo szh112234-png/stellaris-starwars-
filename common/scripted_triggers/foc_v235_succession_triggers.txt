@@ -1,0 +1,72 @@
+# V235: Resistance is NOT the pre-Treaty Imperial Rebellion.
+foc_v235_is_resistance = {
+    OR = {
+        has_country_flag = foc_khan_first_order_resistance_country
+        has_country_flag = foc_republic_origin_post_treaty_rebel_country
+        has_country_flag = foc_republic_origin_post_treaty_player_rebels
+    }
+    NOT = { has_country_flag = foc_republic_origin_imperial_rebel_country }
+    NOT = { has_country_flag = foc_republic_origin_rebel_alliance_country }
+}
+
+# Ship scope, all hulls owned by the two actual factions, regardless of fleet flags.
+foc_v235_is_imperial_class_hull = {
+    OR = {
+        is_ship_size = imperialsd
+        is_ship_size = imperialsd_foc_lowest
+        is_ship_size = foc_v118_imperialsd_bastion
+        is_ship_size = foc_v118_imperialsd_bastion_foc_lowest
+    }
+}
+foc_v235_is_mc80_hull = {
+    OR = {
+        is_ship_size = foc_rebel_mc80_line
+        is_ship_size = foc_rebel_mc80_line_foc_lowest
+        is_ship_size = foc_v231_home_one_arkship
+        AND = {
+            OR = { is_ship_size = battleship is_ship_size = titan }
+            OR = {
+                has_component = FOC_REBEL_REACTOR
+                OR = {
+                    has_component = FOC_REBEL_REACTOR_FOC_FIXED_LOWEST
+                    has_component = FOC_V177_LOWEST_24F5BD9C58AAE4
+                    has_component = FOC_V177_LOWEST_27ED8618C97213
+                    has_component = FOC_V177_LOWEST_95B090F927674C
+                    has_component = FOC_V177_LOWEST_C31AF9159C6E20
+                }
+            }
+            OR = {
+                has_component = FOC_REBEL_COMBAT_COMPUTER
+                OR = {
+                    has_component = FOC_REBEL_COMBAT_COMPUTER_FOC_FIXED_LOWEST
+                    has_component = FOC_V177_LOWEST_2BE80ED5915543
+                    has_component = FOC_V177_LOWEST_A0C8A3D6BEB3A7
+                    has_component = FOC_V177_LOWEST_B22385DDF1A4B5
+                    has_component = FOC_V177_LOWEST_EC56A1ED43618D
+                }
+            }
+        }
+        AND = {
+            OR = { is_ship_size = battleship is_ship_size = titan }
+            OR = {
+                has_component = FOC_V1718_REB_REACTOR_2
+                has_component = FOC_V1718_REB_REACTOR_2_LOWEST
+                has_component = FOC_V1718_REB_REACTOR_3
+                has_component = FOC_V1718_REB_REACTOR_3_LOWEST
+                has_component = FOC_V1718_REB_REACTOR_4
+                has_component = FOC_V1718_REB_REACTOR_4_LOWEST
+                has_component = FOC_V1718_REB_REACTOR_5
+                has_component = FOC_V1718_REB_REACTOR_5_LOWEST
+            }
+            owner = { foc_v14_is_rebel_arsenal_country = yes }
+        }
+    }
+}
+
+foc_v235_is_gcw_rebel = {
+    OR = {
+        has_country_flag = foc_republic_origin_imperial_rebel_country
+        has_country_flag = foc_republic_origin_rebel_alliance_country
+    }
+    foc_v235_is_resistance = no
+}

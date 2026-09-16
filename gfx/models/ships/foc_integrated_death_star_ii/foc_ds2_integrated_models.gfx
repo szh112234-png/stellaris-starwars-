@@ -1,0 +1,53 @@
+# Official glTF UVs, alpha cutoffs, material channels and authored emission groups.
+# Uniform matte gray hull/interior and solid construction details; original alpha and lamps retained.
+objectTypes = {
+    pdxmesh = {
+        name = "foc_ds2_integrated_battlestation_frame"
+        file = "gfx/models/ships/foc_integrated_death_star_ii/foc_ds2_integrated_battlestation_frame.mesh"
+        scale = 2.465084
+    }
+    pdxmesh = {
+        name = "foc_ds2_integrated_battlestation_mesh"
+        file = "gfx/models/ships/foc_integrated_death_star_ii/foc_ds2_integrated_death_star_ii.mesh"
+        scale = 2.465084
+        animation = { id = "idle"    type = "foc_ds2_integrated_idle_animation" }
+        animation = { id = "moving"  type = "foc_ds2_integrated_moving_animation" }
+        animation = { id = "death"   type = "foc_ds2_integrated_death_animation" }
+        animation = { id = "open"    type = "foc_ds2_integrated_openfire_animation" }
+        animation = { id = "opening" type = "foc_ds2_integrated_attacking_animation" }
+        animation = { id = "closing" type = "foc_ds2_integrated_charging_animation" }
+
+        meshsettings = { name = "ds2_g00_m02_circle_shape" index = 0 texture_diffuse = "foc_ds2_gray_source_m00.dds" texture_normal = "foc_ds2_gltf_m00_normal.dds" texture_specular = "foc_ds2_gltf_m00_specular.dds" shader = "PdxMeshFOCDS2GLTFM00" }
+        meshsettings = { name = "ds2_g02_m01_circle_shape" index = 0 texture_diffuse = "foc_ds2_gltf_m02_diffuse.dds" texture_normal = "foc_ds2_gltf_m02_normal.dds" texture_specular = "foc_ds2_gltf_m02_specular.dds" shader = "PdxMeshFOCDS2GLTFM02" }
+        meshsettings = { name = "ds2_g05_m00_circle_shape" index = 0 texture_diffuse = "foc_ds2_gray_source_m04.dds" texture_normal = "foc_ds2_gltf_m01_normal.dds" texture_specular = "foc_ds2_gltf_m01_specular.dds" shader = "PdxMeshFOCDS2GLTFM04" }
+
+        meshsettings = { name = "ds2_g03_m03_plane_shape" index = 0 texture_diffuse = "foc_ds2_gray_source_m03.dds" texture_normal = "foc_ds2_gltf_m03_normal.dds" texture_specular = "foc_ds2_gltf_m03_specular.dds" shader = "PdxMeshFOCDS2GLTFM03" }
+        meshsettings = { name = "ds2_g04_m03_plane_shape" index = 0 texture_diffuse = "foc_ds2_gray_source_m03.dds" texture_normal = "foc_ds2_gltf_m03_normal.dds" texture_specular = "foc_ds2_gltf_m03_specular.dds" shader = "PdxMeshFOCDS2GLTFM03" }
+
+        meshsettings = { name = "ds2_g01_m00_plane_shape" index = 0 texture_diffuse = "foc_ds2_gltf_m02_diffuse.dds" texture_normal = "foc_ds2_gltf_m01_normal.dds" texture_specular = "foc_ds2_gltf_m01_specular.dds" shader = "PdxMeshFOCDS2GLTFM01" }
+        meshsettings = { name = "ds2_g06_m00_plane_shape" index = 0 texture_diffuse = "foc_ds2_gltf_m06_diffuse.dds" texture_normal = "foc_ds2_gltf_m05_normal.dds" texture_specular = "foc_ds2_gltf_m03_specular.dds" shader = "PdxMeshFOCDS2GLTFM05" }
+        meshsettings = { name = "ds2_g07_m00_plane_shape" index = 0 texture_diffuse = "foc_ds2_gltf_m06_diffuse.dds" texture_normal = "foc_ds2_gltf_m01_normal.dds" texture_specular = "foc_ds2_gltf_m01_specular.dds" shader = "PdxMeshFOCDS2GLTFM06" }
+        meshsettings = { name = "ds2_g08_m00_plane_shape" index = 0 texture_diffuse = "foc_ds2_gltf_m06_diffuse.dds" texture_normal = "foc_ds2_gltf_m02_normal.dds" texture_specular = "foc_ds2_gltf_m07_specular.dds" shader = "PdxMeshFOCDS2GLTFM07" }
+        meshsettings = { name = "ds2_g09_m00_plane_shape" index = 0 texture_diffuse = "foc_ds2_gltf_m06_diffuse.dds" texture_normal = "foc_ds2_gltf_m01_normal.dds" texture_specular = "foc_ds2_gltf_m01_specular.dds" shader = "PdxMeshFOCDS2GLTFM08" }
+        meshsettings = { name = "ds2_g10_m00_plane_shape" index = 0 texture_diffuse = "foc_ds2_gray_source_m09.dds" texture_normal = "foc_ds2_gltf_m01_normal.dds" texture_specular = "foc_ds2_gltf_m01_specular.dds" shader = "PdxMeshFOCDS2GLTFM09" }
+        meshsettings = { name = "ds2_g11_m00_plane_shape" index = 0 texture_diffuse = "foc_ds2_gray_source_m09.dds" texture_normal = "foc_ds2_gltf_m10_normal.dds" texture_specular = "foc_ds2_gltf_m01_specular.dds" shader = "PdxMeshFOCDS2GLTFM10" }
+        meshsettings = { name = "fakelaserShape" index = 0 texture_diffuse = "foc_ds2_integrated_fakelaser_diffuse.dds" texture_normal = "foc_ds2_integrated_fakelaser_normal.dds" texture_specular = "foc_ds2_integrated_fakelaser_specular.dds" shader = "PdxMeshExtraDimensionalShip" }
+
+        # Added solid construction edges, supports and mechanical modules.
+        meshsettings = { name = "foc_ds2_depth_wall_00" index = 0 texture_diffuse = "foc_ds2_depth_diffuse.dds" texture_normal = "foc_ds2_depth_normal.dds" texture_specular = "foc_ds2_depth_specular.dds" shader = "PdxMeshFOCDS2DepthWall" }
+        meshsettings = { name = "foc_ds2_depth_wall_01" index = 0 texture_diffuse = "foc_ds2_depth_diffuse.dds" texture_normal = "foc_ds2_depth_normal.dds" texture_specular = "foc_ds2_depth_specular.dds" shader = "PdxMeshFOCDS2DepthWall" }
+        meshsettings = { name = "foc_ds2_depth_wall_02" index = 0 texture_diffuse = "foc_ds2_depth_diffuse.dds" texture_normal = "foc_ds2_depth_normal.dds" texture_specular = "foc_ds2_depth_specular.dds" shader = "PdxMeshFOCDS2DepthWall" }
+        meshsettings = { name = "foc_ds2_depth_wall_03" index = 0 texture_diffuse = "foc_ds2_depth_diffuse.dds" texture_normal = "foc_ds2_depth_normal.dds" texture_specular = "foc_ds2_depth_specular.dds" shader = "PdxMeshFOCDS2DepthWall" }
+        meshsettings = { name = "foc_ds2_depth_block0_04" index = 0 texture_diffuse = "foc_ds2_depth_diffuse.dds" texture_normal = "foc_ds2_depth_normal.dds" texture_specular = "foc_ds2_depth_specular.dds" shader = "PdxMeshFOCDS2DepthBlock0" }
+        meshsettings = { name = "foc_ds2_depth_block0_05" index = 0 texture_diffuse = "foc_ds2_depth_diffuse.dds" texture_normal = "foc_ds2_depth_normal.dds" texture_specular = "foc_ds2_depth_specular.dds" shader = "PdxMeshFOCDS2DepthBlock0" }
+        meshsettings = { name = "foc_ds2_depth_block1_06" index = 0 texture_diffuse = "foc_ds2_depth_diffuse.dds" texture_normal = "foc_ds2_depth_normal.dds" texture_specular = "foc_ds2_depth_specular.dds" shader = "PdxMeshFOCDS2DepthBlock1" }
+        meshsettings = { name = "foc_ds2_depth_block1_07" index = 0 texture_diffuse = "foc_ds2_depth_diffuse.dds" texture_normal = "foc_ds2_depth_normal.dds" texture_specular = "foc_ds2_depth_specular.dds" shader = "PdxMeshFOCDS2DepthBlock1" }
+        meshsettings = { name = "foc_ds2_depth_block2_08" index = 0 texture_diffuse = "foc_ds2_depth_diffuse.dds" texture_normal = "foc_ds2_depth_normal.dds" texture_specular = "foc_ds2_depth_specular.dds" shader = "PdxMeshFOCDS2DepthBlock2" }
+        meshsettings = { name = "foc_ds2_depth_block2_09" index = 0 texture_diffuse = "foc_ds2_depth_diffuse.dds" texture_normal = "foc_ds2_depth_normal.dds" texture_specular = "foc_ds2_depth_specular.dds" shader = "PdxMeshFOCDS2DepthBlock2" }
+    }
+    pdxmesh = {
+        name = "foc_ds2_integrated_empty_turret"
+        file = "gfx/models/ships/foc_integrated_death_star_ii/foc_ds2_integrated_empty_turret.mesh"
+        scale = 0.5
+    }
+}

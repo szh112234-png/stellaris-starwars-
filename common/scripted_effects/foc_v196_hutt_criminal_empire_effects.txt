@@ -1,0 +1,648 @@
+# V196: independent Hutt criminal empire and its three canonical colonies.
+# These effects are intentionally idempotent. V231n flattens the map-load Hutt chain to stay below Stellaris 4.4 scripted-effect post-init depth.
+
+# Planet scope.
+foc_v196_seed_hutt_population = {
+    if = {
+        limit = {
+            NOT = { has_planet_flag = foc_v196_hutt_population_seeded }
+        }
+        while = {
+            count = 6
+            create_pop_group = {
+                size = 100
+                species = event_target:foc_v187_hutt_species
+            }
+        }
+        set_planet_flag = foc_v196_hutt_population_seeded
+    }
+}
+
+# Planet scope. Transfer an existing colony without leaving it empty, remove only
+# the displaced owner's main species, and preserve unrelated local species.
+foc_v196_prepare_hutt_colony = {
+    if = {
+        limit = {
+            is_colony = yes
+            exists = owner
+            owner = {
+                NOT = { is_same_value = event_target:foc_v196_hutt_criminal_empire }
+            }
+        }
+        owner = {
+            owner_main_species = {
+                save_event_target_as = foc_v196_displaced_main_species
+            }
+        }
+        set_owner = event_target:foc_v196_hutt_criminal_empire
+        set_controller = event_target:foc_v196_hutt_criminal_empire
+        every_planet_army = { remove_army = yes }
+        if = {
+            limit = { NOT = { has_planet_flag = foc_v196_hutt_population_seeded } }
+            while = {
+                count = 6
+                create_pop_group = {
+                    size = 100
+                    species = event_target:foc_v187_hutt_species
+                }
+            }
+            set_planet_flag = foc_v196_hutt_population_seeded
+        }
+        every_owned_pop_group = {
+            limit = {
+                is_same_species = event_target:foc_v196_displaced_main_species
+                NOT = { is_same_species = event_target:foc_v187_hutt_species }
+            }
+            kill_all_pop = yes
+        }
+    }
+    else_if = {
+        limit = { is_colony = no }
+        create_colony = { owner = event_target:foc_v196_hutt_criminal_empire }
+        generate_start_deposits_and_blockers = yes
+        clear_blockers = yes
+        colony = { inline_script = "foc_v232i_safe_colony_layout" }
+        if = {
+            limit = { NOT = { has_planet_flag = foc_v196_hutt_population_seeded } }
+            while = {
+                count = 6
+                create_pop_group = {
+                    size = 100
+                    species = event_target:foc_v187_hutt_species
+                }
+            }
+            set_planet_flag = foc_v196_hutt_population_seeded
+        }
+    }
+    else = {
+        set_owner = event_target:foc_v196_hutt_criminal_empire
+        set_controller = event_target:foc_v196_hutt_criminal_empire
+        if = {
+            limit = { NOT = { has_planet_flag = foc_v196_hutt_population_seeded } }
+            while = {
+                count = 6
+                create_pop_group = {
+                    size = 100
+                    species = event_target:foc_v187_hutt_species
+                }
+            }
+            set_planet_flag = foc_v196_hutt_population_seeded
+        }
+    }
+
+    # Prevent the older additive species pass from duplicating Hutt groups.
+    set_planet_flag = foc_v187_hutt_seeded
+    set_planet_flag = foc_v187_hutt_diaspora_seeded
+    set_planet_flag = foc_v196_hutt_criminal_empire_colony
+
+    # Republic-origin member worlds use a special capital building whose
+    # modifiers only make sense under Republic rule. Replace it after transfer.
+    if = {
+        limit = { has_building = building_foc_republic_origin_member_world_nexus }
+        remove_building = building_foc_republic_origin_member_world_nexus
+        if = {
+            limit = { free_building_slots > 0 }
+            add_building = { building = building_capital }
+        }
+    }
+}
+
+# System scope. Old-save cleanup removes the successor-state allocation flags
+# before transferring the starbase, colonies, armies and megastructures.
+foc_v196_claim_hutt_system = {
+    set_star_flag = foc_v196_hutt_criminal_empire_system
+    remove_star_flag = foc_sw_new_republic_cluster
+    remove_star_flag = foc_sw_imperial_remnant_cluster
+
+    if = {
+        limit = { exists = starbase }
+        starbase = { set_owner = event_target:foc_v196_hutt_criminal_empire }
+    }
+    else = {
+        create_starbase = {
+            size = starbase_outpost
+            owner = event_target:foc_v196_hutt_criminal_empire
+        }
+    }
+
+    # V231o: inline foc_v196_prepare_hutt_colony here. The active map-load chain
+    # is now bootstrap -> establish -> claim; there is no fourth nested scripted
+    # effect for Stellaris 4.4 post-init to recurse into.
+    every_system_planet = {
+        remove_planet_flag = foc_sw_nr_colony
+        remove_planet_flag = foc_sw_ir_colony
+        if = {
+            limit = {
+                OR = {
+                    is_colony = yes
+                    has_planet_flag = foc_swmap_tatooine
+                    has_planet_flag = foc_swmap_nal_hutta
+                    has_planet_flag = foc_v175_nar_shaddaa
+                }
+            }
+            if = {
+                limit = {
+                    is_colony = yes
+                    exists = owner
+                    owner = { NOT = { is_same_value = event_target:foc_v196_hutt_criminal_empire } }
+                }
+                owner = {
+                    owner_main_species = { save_event_target_as = foc_v196_displaced_main_species }
+                }
+                set_owner = event_target:foc_v196_hutt_criminal_empire
+                set_controller = event_target:foc_v196_hutt_criminal_empire
+                every_planet_army = { remove_army = yes }
+                if = {
+                    limit = { NOT = { has_planet_flag = foc_v196_hutt_population_seeded } }
+                    while = {
+                        count = 6
+                        create_pop_group = { size = 100 species = event_target:foc_v187_hutt_species }
+                    }
+                    set_planet_flag = foc_v196_hutt_population_seeded
+                }
+                every_owned_pop_group = {
+                    limit = {
+                        is_same_species = event_target:foc_v196_displaced_main_species
+                        NOT = { is_same_species = event_target:foc_v187_hutt_species }
+                    }
+                    kill_all_pop = yes
+                }
+            }
+            else_if = {
+                limit = { is_colony = no }
+                create_colony = { owner = event_target:foc_v196_hutt_criminal_empire }
+                generate_start_deposits_and_blockers = yes
+                clear_blockers = yes
+                colony = { inline_script = "foc_v232i_safe_colony_layout" }
+                if = {
+                    limit = { NOT = { has_planet_flag = foc_v196_hutt_population_seeded } }
+                    while = {
+                        count = 6
+                        create_pop_group = { size = 100 species = event_target:foc_v187_hutt_species }
+                    }
+                    set_planet_flag = foc_v196_hutt_population_seeded
+                }
+            }
+            else = {
+                set_owner = event_target:foc_v196_hutt_criminal_empire
+                set_controller = event_target:foc_v196_hutt_criminal_empire
+                if = {
+                    limit = { NOT = { has_planet_flag = foc_v196_hutt_population_seeded } }
+                    while = {
+                        count = 6
+                        create_pop_group = { size = 100 species = event_target:foc_v187_hutt_species }
+                    }
+                    set_planet_flag = foc_v196_hutt_population_seeded
+                }
+            }
+
+            set_planet_flag = foc_v187_hutt_seeded
+            set_planet_flag = foc_v187_hutt_diaspora_seeded
+            set_planet_flag = foc_v196_hutt_criminal_empire_colony
+            if = {
+                limit = { has_building = building_foc_republic_origin_member_world_nexus }
+                remove_building = building_foc_republic_origin_member_world_nexus
+                if = {
+                    limit = { free_building_slots > 0 }
+                    add_building = { building = building_capital }
+                }
+            }
+        }
+        set_surveyed = {
+            surveyed = yes
+            surveyor = event_target:foc_v196_hutt_criminal_empire
+        }
+    }
+    every_system_megastructure = { set_owner = event_target:foc_v196_hutt_criminal_empire }
+    event_target:foc_v196_hutt_criminal_empire = { set_visited = prev }
+}
+
+# Country scope (human player dispatcher).
+foc_v196_establish_hutt_criminal_empire = {
+    # Playable-origin route: the player is the Hutt criminal empire. Preserve
+    # their custom country design, bind their main species, and remember the
+    # temporary engine home so it can be removed after relocation.
+    if = {
+        limit = { has_origin = origin_foc_hutt_criminal_empire }
+        set_country_flag = foc_v196_hutt_criminal_empire_country
+        save_global_event_target_as = foc_v196_hutt_criminal_empire
+        owner_main_species = {
+            set_species_flag = foc_v187_hutt_species
+            save_global_event_target_as = foc_v187_hutt_species
+        }
+        # Capture the temporary engine home once. If a partial old-save repair
+        # already moved the capital to Nal Hutta, a retry must not mistake the
+        # real capital for staging and remove it.
+        if = {
+            limit = { NOT = { has_country_flag = foc_v196_hutt_player_origin } }
+            set_country_flag = foc_v196_hutt_player_origin
+            capital_scope = {
+                planet = {
+                    save_global_event_target_as = foc_v196_hutt_staging_capital
+                    solar_system = {
+                        save_global_event_target_as = foc_v196_hutt_staging_system
+                    }
+                }
+            }
+        }
+    }
+
+    # Recover the existing Hutt species in migrated saves before creating one.
+    if = {
+        limit = { NOT = { exists = event_target:foc_v187_hutt_species } }
+        random_country = {
+            limit = {
+                any_owned_species = {
+                    has_species_flag = foc_v187_hutt_species
+                }
+            }
+            random_owned_species = {
+                limit = { has_species_flag = foc_v187_hutt_species }
+                save_global_event_target_as = foc_v187_hutt_species
+            }
+        }
+    }
+
+    if = {
+        limit = { NOT = { exists = event_target:foc_v187_hutt_species } }
+        random_system = {
+            limit = { has_star_flag = foc_swmap_nal_hutta_home }
+            random_system_planet = {
+                limit = { has_planet_flag = foc_swmap_nal_hutta }
+                create_species = {
+                    name = foc_v187_hutt_name
+                    plural = foc_v187_hutt_plural
+                    adjective = foc_v187_hutt_adjective
+                    name_list = "rebels"
+                    class = "MAM"
+                    portrait = "foc_v187_hutt_species_01"
+                    homeworld = this
+                    traits = {
+                        trait = "trait_venerable"
+                        trait = "trait_thrifty"
+                        trait = "trait_slow_breeders"
+                        trait = "trait_sedentary"
+                    }
+                    effect = {
+                        set_species_flag = foc_v187_hutt_species
+                        save_global_event_target_as = foc_v187_hutt_species
+                    }
+                }
+            }
+        }
+    }
+
+    if = {
+        limit = { NOT = { exists = event_target:foc_v196_hutt_criminal_empire } }
+        random_country = {
+            limit = { has_country_flag = foc_v196_hutt_criminal_empire_country }
+            save_global_event_target_as = foc_v196_hutt_criminal_empire
+        }
+    }
+
+    if = {
+        limit = {
+            exists = event_target:foc_v187_hutt_species
+            NOT = { exists = event_target:foc_v196_hutt_criminal_empire }
+        }
+        create_country = {
+            name = "FOC_V196_HUTT_CRIMINAL_EMPIRE"
+            type = default
+            auto_delete = no
+            ignore_initial_colony_error = yes
+            species = event_target:foc_v187_hutt_species
+            authority = auth_corporate
+            origin = origin_default
+            ethos = {
+                ethic = ethic_authoritarian
+                ethic = ethic_xenophobe
+                ethic = ethic_materialist
+            }
+            civics = {
+                civic = civic_criminal_heritage
+                civic = civic_franchising
+            }
+            flag = {
+                icon = { category = "corporate" file = "corporate_03.dds" }
+                background = { category = "backgrounds" file = "circle.dds" }
+                colors = { "yellow" "black" "null" "null" }
+            }
+            name_list = "rebels"
+            effect = {
+                set_country_flag = foc_v196_hutt_criminal_empire_country
+                save_global_event_target_as = foc_v196_hutt_criminal_empire
+                set_graphical_culture = mammalian_01
+                set_city_graphical_culture = mammalian_01
+                add_resource = {
+                    energy = 12000
+                    minerals = 8000
+                    food = 6000
+                    consumer_goods = 4000
+                    alloys = 5000
+                    unity = 3000
+                    influence = 300
+                }
+                give_technology = { tech = tech_space_construction message = no }
+                give_technology = { tech = tech_corvettes message = no }
+                give_technology = { tech = tech_destroyers message = no }
+                refresh_auto_generated_ship_designs = yes
+                ruler = {
+                    change_leader_portrait = foc_v187_hutt_species_01
+                }
+            }
+        }
+    }
+
+    if = {
+        limit = {
+            exists = event_target:foc_v187_hutt_species
+            exists = event_target:foc_v196_hutt_criminal_empire
+        }
+        event_target:foc_v187_hutt_species = {
+            set_citizenship_type = {
+                country = event_target:foc_v196_hutt_criminal_empire
+                type = citizenship_full
+                cooldown = no
+            }
+            set_military_service_type = {
+                country = event_target:foc_v196_hutt_criminal_empire
+                type = military_service_full
+                cooldown = no
+            }
+            set_population_controls = {
+                country = event_target:foc_v196_hutt_criminal_empire
+                type = population_control_no
+                cooldown = no
+            }
+            set_migration_controls = {
+                country = event_target:foc_v196_hutt_criminal_empire
+                type = migration_control_no
+                cooldown = no
+            }
+            set_colonization_controls = {
+                country = event_target:foc_v196_hutt_criminal_empire
+                type = colonization_control_no
+                cooldown = no
+            }
+        }
+
+        every_system = {
+            limit = {
+                OR = {
+                    has_star_flag = foc_swmap_tatooine_home
+                    has_star_flag = foc_swmap_nal_hutta_home
+                    has_star_flag = foc_v175_nar_shaddaa_home
+                }
+            }
+            # V13: inline the existing claim body to keep the full vanilla 4.4.6 startup chain <= 5.
+            set_star_flag = foc_v196_hutt_criminal_empire_system
+            remove_star_flag = foc_sw_new_republic_cluster
+            remove_star_flag = foc_sw_imperial_remnant_cluster
+            if = {
+                limit = {
+                    exists = starbase
+                }
+                starbase = {
+                    set_owner = event_target:foc_v196_hutt_criminal_empire
+                }
+            }
+            else = {
+                create_starbase = {
+                    size = starbase_outpost
+                    owner = event_target:foc_v196_hutt_criminal_empire
+                }
+            }
+            every_system_planet = {
+                remove_planet_flag = foc_sw_nr_colony
+                remove_planet_flag = foc_sw_ir_colony
+                if = {
+                    limit = {
+                        OR = {
+                            is_colony = yes
+                            has_planet_flag = foc_swmap_tatooine
+                            has_planet_flag = foc_swmap_nal_hutta
+                            has_planet_flag = foc_v175_nar_shaddaa
+                        }
+                    }
+                    if = {
+                        limit = {
+                            is_colony = yes
+                            exists = owner
+                            owner = {
+                                NOT = {
+                                    is_same_value = event_target:foc_v196_hutt_criminal_empire
+                                }
+                            }
+                        }
+                        owner = {
+                            owner_main_species = {
+                                save_event_target_as = foc_v196_displaced_main_species
+                            }
+                        }
+                        set_owner = event_target:foc_v196_hutt_criminal_empire
+                        set_controller = event_target:foc_v196_hutt_criminal_empire
+                        every_planet_army = {
+                            remove_army = yes
+                        }
+                        if = {
+                            limit = {
+                                NOT = {
+                                    has_planet_flag = foc_v196_hutt_population_seeded
+                                }
+                            }
+                            while = {
+                                count = 6
+                                create_pop_group = {
+                                    size = 100
+                                    species = event_target:foc_v187_hutt_species
+                                }
+                            }
+                            set_planet_flag = foc_v196_hutt_population_seeded
+                        }
+                        every_owned_pop_group = {
+                            limit = {
+                                is_same_species = event_target:foc_v196_displaced_main_species
+                                NOT = {
+                                    is_same_species = event_target:foc_v187_hutt_species
+                                }
+                            }
+                            kill_all_pop = yes
+                        }
+                    }
+                    else_if = {
+                        limit = {
+                            is_colony = no
+                        }
+                        create_colony = {
+                            owner = event_target:foc_v196_hutt_criminal_empire
+                        }
+                        generate_start_deposits_and_blockers = yes
+                        clear_blockers = yes
+                        colony = {
+                            inline_script = "foc_v232i_safe_colony_layout"
+                        }
+                        if = {
+                            limit = {
+                                NOT = {
+                                    has_planet_flag = foc_v196_hutt_population_seeded
+                                }
+                            }
+                            while = {
+                                count = 6
+                                create_pop_group = {
+                                    size = 100
+                                    species = event_target:foc_v187_hutt_species
+                                }
+                            }
+                            set_planet_flag = foc_v196_hutt_population_seeded
+                        }
+                    }
+                    else = {
+                        set_owner = event_target:foc_v196_hutt_criminal_empire
+                        set_controller = event_target:foc_v196_hutt_criminal_empire
+                        if = {
+                            limit = {
+                                NOT = {
+                                    has_planet_flag = foc_v196_hutt_population_seeded
+                                }
+                            }
+                            while = {
+                                count = 6
+                                create_pop_group = {
+                                    size = 100
+                                    species = event_target:foc_v187_hutt_species
+                                }
+                            }
+                            set_planet_flag = foc_v196_hutt_population_seeded
+                        }
+                    }
+                    set_planet_flag = foc_v187_hutt_seeded
+                    set_planet_flag = foc_v187_hutt_diaspora_seeded
+                    set_planet_flag = foc_v196_hutt_criminal_empire_colony
+                    if = {
+                        limit = {
+                            has_building = building_foc_republic_origin_member_world_nexus
+                        }
+                        remove_building = building_foc_republic_origin_member_world_nexus
+                        if = {
+                            limit = {
+                                free_building_slots > 0
+                            }
+                            add_building = {
+                                building = building_capital
+                            }
+                        }
+                    }
+                }
+                set_surveyed = {
+                    surveyed = yes
+                    surveyor = event_target:foc_v196_hutt_criminal_empire
+                }
+            }
+            every_system_megastructure = {
+                set_owner = event_target:foc_v196_hutt_criminal_empire
+            }
+            event_target:foc_v196_hutt_criminal_empire = {
+                set_visited = prev
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_nal_hutta_home }
+            set_star_flag = empire_home_system
+            set_star_flag = empire_cluster
+            every_system_planet = {
+                limit = { has_planet_flag = foc_swmap_nal_hutta }
+                set_capital = yes
+                save_global_event_target_as = foc_v196_hutt_capital
+            }
+            if = {
+                limit = {
+                    exists = starbase
+                    starbase.owner = { is_same_value = event_target:foc_v196_hutt_criminal_empire }
+                }
+                starbase = {
+                    set_starbase_size = starbase_starport
+                    set_starbase_module = { slot = 1 module = shipyard }
+                }
+            }
+        }
+
+        # The selectable origin uses a temporary ordinary home only to satisfy
+        # empire creation. Move its real starting population/fleets to Nal Hutta
+        # and remove that staging colony before the player receives control.
+        if = {
+            limit = {
+                has_origin = origin_foc_hutt_criminal_empire
+                exists = event_target:foc_v196_hutt_capital
+                exists = event_target:foc_v196_hutt_staging_capital
+            }
+            event_target:foc_v196_hutt_staging_capital = {
+                every_owned_pop_group = {
+                    resettle_pop_group = {
+                        POP_GROUP = this
+                        PLANET = event_target:foc_v196_hutt_capital
+                        PERCENTAGE = 1
+                    }
+                }
+            }
+            every_owned_species = {
+                limit = { is_same_value = owner_main_species }
+                set_species_homeworld = event_target:foc_v196_hutt_capital
+            }
+            every_owned_fleet = {
+                limit = { is_mobile = yes }
+                set_location = {
+                    target = event_target:foc_v196_hutt_capital
+                    distance = 30
+                    angle = random
+                }
+            }
+            if = {
+                limit = { exists = event_target:foc_v196_hutt_staging_system }
+                event_target:foc_v196_hutt_staging_system = {
+                    remove_star_flag = empire_home_system
+                    remove_star_flag = empire_cluster
+                    remove_star_flag = foc_v196_hutt_staging_system
+                    if = {
+                        limit = {
+                            exists = starbase
+                            starbase.owner = { is_same_value = root }
+                        }
+                        starbase = { fleet = { delete_fleet = this } }
+                    }
+                    set_name = random
+                    random_system_planet = {
+                        limit = { is_star = yes }
+                        set_name = solar_system
+                    }
+                }
+            }
+            event_target:foc_v196_hutt_staging_capital = { remove_planet = yes }
+            set_country_flag = foc_v196_hutt_player_origin_initialized
+        }
+
+        every_playable_country = {
+            limit = {
+                NOT = { is_same_value = event_target:foc_v196_hutt_criminal_empire }
+            }
+            establish_communications_no_message = event_target:foc_v196_hutt_criminal_empire
+            event_target:foc_v196_hutt_criminal_empire = {
+                establish_communications_no_message = prev
+            }
+        }
+
+        # A failed player relocation must remain retryable on the monthly
+        # fallback. The AI bootstrap has no temporary home and can finish here.
+        if = {
+            limit = {
+                OR = {
+                    NOT = { has_origin = origin_foc_hutt_criminal_empire }
+                    has_country_flag = foc_v196_hutt_player_origin_initialized
+                }
+            }
+            set_global_flag = foc_v196_hutt_criminal_empire_initialized
+            log = "FOC_V196_HUTT: Hutt criminal empire established on Tatooine, Nal Hutta and Nar Shaddaa."
+        }
+    }
+}

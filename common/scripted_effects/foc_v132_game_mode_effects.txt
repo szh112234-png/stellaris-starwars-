@@ -1,0 +1,53 @@
+# FOC V132 - one-click new-game presets.
+# These effects are country-scoped and are only used by the human player's
+# initial Star Wars MOD setup event.
+
+foc_v132_apply_shared_mode_defaults = {
+    inline_script = "foc_hotfix_shared_mode_defaults"
+}
+
+foc_v132_apply_vanilla_game_mode = {
+    remove_global_flag = foc_khan_strength_initial
+    remove_global_flag = foc_khan_strength_intermediate
+    remove_global_flag = foc_khan_strength_high
+    remove_global_flag = foc_khan_strength_madness
+    set_global_flag = foc_khan_strength_lowest
+
+    # "Medium support" maps to the existing standard crisis reinforcement set.
+    remove_global_flag = foc_khan_fleet_scale_low
+    remove_global_flag = foc_khan_fleet_scale_large
+    remove_global_flag = foc_khan_fleet_scale_max
+    set_global_flag = foc_khan_fleet_scale_standard
+
+    inline_script = "foc_hotfix_shared_mode_defaults"
+}
+
+foc_v132_apply_foc_game_mode = {
+    remove_global_flag = foc_khan_strength_lowest
+    remove_global_flag = foc_khan_strength_initial
+    remove_global_flag = foc_khan_strength_high
+    remove_global_flag = foc_khan_strength_madness
+    set_global_flag = foc_khan_strength_intermediate
+
+    remove_global_flag = foc_khan_fleet_scale_low
+    remove_global_flag = foc_khan_fleet_scale_standard
+    remove_global_flag = foc_khan_fleet_scale_large
+    set_global_flag = foc_khan_fleet_scale_max
+
+    inline_script = "foc_hotfix_shared_mode_defaults"
+}
+
+foc_v132_apply_acot_game_mode = {
+    remove_global_flag = foc_khan_strength_lowest
+    remove_global_flag = foc_khan_strength_initial
+    remove_global_flag = foc_khan_strength_intermediate
+    remove_global_flag = foc_khan_strength_high
+    set_global_flag = foc_khan_strength_madness
+
+    remove_global_flag = foc_khan_fleet_scale_low
+    remove_global_flag = foc_khan_fleet_scale_standard
+    remove_global_flag = foc_khan_fleet_scale_large
+    set_global_flag = foc_khan_fleet_scale_max
+
+    inline_script = "foc_hotfix_shared_mode_defaults"
+}

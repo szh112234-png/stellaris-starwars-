@@ -1,0 +1,22 @@
+myk_tech_starkiller_base = {
+    cost = @tier5cost3
+    area = engineering
+    tier = 5
+    category = { voidcraft }
+    prerequisites = { "tech_battleships" }
+    weight = @tier5weight3
+    icon = "myk_tech_starkiller_base" # 1.93: icon expects a key, not a file path; resolves to gfx/interface/icons/technologies/<key>.dds
+
+    # The playable First Order origin follows its isolated fop_ Starkiller path,
+    # so it cannot accidentally build the crisis-recognized generic base.
+    potential = {
+        is_ai = no
+        NOT = { has_origin = origin_fop_first_order }
+        OR = {
+            has_country_flag = foc_dark_order_legacy_access
+            # Direct Imperial victory grants Starkiller construction alone;
+            # the rest of Dark Legacy remains sealed until the base is complete.
+            has_country_flag = foc_republic_origin_starkiller_only_access
+        }
+    }
+}

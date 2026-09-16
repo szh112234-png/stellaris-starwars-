@@ -1,0 +1,361 @@
+namespace = foc_khan_expand
+
+# First/Final Order equivalent of vanilla Contingency crisis.2610/2611.
+# This = destroyed starbase; From = fleet that destroyed it.
+# No fleet movement or target orders are issued by this file.
+starbase_event = {
+	id = foc_khan_expand.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_global_flag = foc_khan_crisis_finished }
+		exists = from
+		from = {
+			exists = owner
+			owner = {
+				OR = {
+					has_country_flag = foc_khan_first_order_country
+					has_country_flag = foc_khan_final_order_country
+				}
+			}
+		}
+	}
+
+	immediate = {
+		solar_system = {
+			if = {
+				limit = { from.owner = { has_country_flag = foc_khan_final_order_country } }
+				remove_star_flag = foc_khan_pending_first_order_takeover
+				set_star_flag = foc_khan_pending_final_order_takeover
+			}
+			else_if = {
+				limit = { from.owner = { has_country_flag = foc_khan_first_order_country } }
+				set_star_flag = foc_khan_pending_first_order_takeover
+			}
+			system_event = { id = foc_khan_expand.2 days = 5 }
+		}
+	}
+}
+
+# Complete a marked system takeover after the destroyed outpost has actually
+# disappeared. This runs in solar-system scope, so create_starbase is used
+# directly, matching the working 0.67 implementation instead of nesting an
+# invalid/redundant solar_system switch inside a system event.
+system_event = {
+	id = foc_khan_expand.2
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			has_star_flag = foc_khan_pending_first_order_takeover
+			has_star_flag = foc_khan_pending_final_order_takeover
+		}
+	}
+
+	immediate = {
+		# Any First Order claim still pending after phase two belongs to the Final Order.
+		if = {
+			limit = {
+			has_star_flag = foc_khan_pending_first_order_takeover
+			has_global_flag = foc_khan_phase_two
+			exists = event_target:foc_khan_final_order
+			}
+			remove_star_flag = foc_khan_pending_first_order_takeover
+			set_star_flag = foc_khan_pending_final_order_takeover
+		}
+
+		if = {
+			limit = { has_star_flag = foc_khan_pending_final_order_takeover }
+
+			if = {
+				limit = { NOT = { exists = event_target:foc_khan_final_order } }
+				remove_star_flag = foc_khan_pending_final_order_takeover
+			}
+			else_if = {
+				# Never annex a system belonging to a country that submitted peacefully.
+				limit = {
+					any_system_planet = {
+						is_colony = yes
+						owner = { has_country_flag = foc_khan_submitted_final_order }
+					}
+				}
+				remove_star_flag = foc_khan_pending_final_order_takeover
+			}
+			else_if = {
+				# A destroyed base can remain addressable for several days. Do not cancel
+				# the claim merely because the old object has not been cleaned up yet.
+				limit = { exists = starbase }
+				if = {
+					limit = { starbase.owner = { is_same_value = event_target:foc_khan_final_order } }
+					remove_star_flag = foc_khan_pending_final_order_takeover
+					set_star_flag = foc_khan_final_order_conquered_system
+				}
+				else = { system_event = { id = foc_khan_expand.2 days = 10 } }
+			}
+			else_if = {
+				limit = {
+					NOT = {
+						any_system_planet = {
+							is_colony = yes
+							owner = { NOT = { is_same_value = event_target:foc_khan_final_order } }
+						}
+					}
+					NOT = {
+						any_fleet_in_system = {
+							exists = owner
+							owner = { is_hostile = event_target:foc_khan_final_order }
+						}
+					}
+				}
+				create_starbase = {
+					size = starbase_outpost
+					owner = event_target:foc_khan_final_order
+					effect = { set_starbase_flag = foc_khan_order_expansion_starbase }
+				}
+				every_system_planet = {
+					limit = { has_orbital_station = yes }
+					orbital_station = { dismantle = yes }
+				}
+				remove_star_flag = foc_khan_pending_first_order_takeover
+				remove_star_flag = foc_khan_pending_final_order_takeover
+				set_star_flag = foc_khan_final_order_conquered_system
+			}
+			else = { system_event = { id = foc_khan_expand.2 days = 30 } }
+		}
+		else_if = {
+			limit = { has_star_flag = foc_khan_pending_first_order_takeover }
+
+			if = {
+				limit = { NOT = { exists = event_target:foc_khan_first_order } }
+				remove_star_flag = foc_khan_pending_first_order_takeover
+			}
+			else_if = {
+				limit = {
+					any_system_planet = {
+						is_colony = yes
+						owner = { has_country_flag = foc_khan_submitted_first_order }
+					}
+				}
+				remove_star_flag = foc_khan_pending_first_order_takeover
+			}
+			else_if = {
+				limit = { exists = starbase }
+				if = {
+					limit = { starbase.owner = { is_same_value = event_target:foc_khan_first_order } }
+					remove_star_flag = foc_khan_pending_first_order_takeover
+					set_star_flag = foc_khan_first_order_conquered_system
+				}
+				else = { system_event = { id = foc_khan_expand.2 days = 10 } }
+			}
+			else_if = {
+				limit = {
+					NOT = {
+						any_system_planet = {
+							is_colony = yes
+							owner = { NOT = { is_same_value = event_target:foc_khan_first_order } }
+						}
+					}
+					NOT = {
+						any_fleet_in_system = {
+							exists = owner
+							owner = { is_hostile = event_target:foc_khan_first_order }
+						}
+					}
+				}
+				create_starbase = {
+					size = starbase_outpost
+					owner = event_target:foc_khan_first_order
+					effect = { set_starbase_flag = foc_khan_order_expansion_starbase }
+				}
+				every_system_planet = {
+					limit = { has_orbital_station = yes }
+					orbital_station = { dismantle = yes }
+				}
+				remove_star_flag = foc_khan_pending_first_order_takeover
+				set_star_flag = foc_khan_first_order_conquered_system
+			}
+			else = { system_event = { id = foc_khan_expand.2 days = 30 } }
+		}
+	}
+}
+
+# Compatibility target retained for older save/on-action references.
+planet_event = {
+	id = foc_khan_expand.3
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = { always = no }
+}
+
+# Some starbases are disabled instead of destroyed. Transfer those directly.
+starbase_event = {
+	id = foc_khan_expand.4
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_global_flag = foc_khan_crisis_finished }
+		exists = from
+		from = {
+			exists = owner
+			owner = {
+				OR = {
+					has_country_flag = foc_khan_first_order_country
+					has_country_flag = foc_khan_final_order_country
+				}
+			}
+		}
+		OR = {
+			AND = {
+				from.owner = { has_country_flag = foc_khan_first_order_country }
+				owner = { NOT = { has_country_flag = foc_khan_submitted_first_order } }
+			}
+			AND = {
+				from.owner = { has_country_flag = foc_khan_final_order_country }
+				owner = { NOT = { has_country_flag = foc_khan_submitted_final_order } }
+			}
+		}
+	}
+
+	immediate = {
+		set_owner = from.owner
+		if = {
+			limit = { owner = { has_country_flag = foc_khan_final_order_country } }
+			solar_system = {
+				remove_star_flag = foc_khan_pending_first_order_takeover
+				remove_star_flag = foc_khan_pending_final_order_takeover
+				set_star_flag = foc_khan_final_order_conquered_system
+			}
+		}
+		else_if = {
+			limit = { owner = { has_country_flag = foc_khan_first_order_country } }
+			solar_system = {
+				remove_star_flag = foc_khan_pending_first_order_takeover
+				set_star_flag = foc_khan_first_order_conquered_system
+			}
+		}
+	}
+}
+
+# Replacement constructors only; machine_interior_minister_module assigns work.
+country_event = {
+	id = foc_khan_expand.10
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_country_flag = foc_khan_final_order_country
+		has_global_flag = foc_khan_phase_two
+		NOT = { has_global_flag = foc_khan_crisis_finished }
+		exists = event_target:foc_khan_final_order_system
+		exists = event_target:foc_khan_exegol_capital
+		count_owned_ship = { count < 3 limit = { is_ship_class = shipclass_constructor } }
+	}
+
+	immediate = {
+		event_target:foc_khan_final_order_system = {
+			create_fleet = {
+				name = "FOC_KHAN_FINAL_ENGINEERING_FLEET"
+				effect = {
+					set_owner = event_target:foc_khan_final_order
+					create_ship = {
+						name = random
+						random_existing_design = constructor
+						graphical_culture = first_01
+						effect = { set_ship_flag = foc_khan_final_order_constructor }
+					}
+					set_location = { target = event_target:foc_khan_exegol_capital distance = 15 angle = random }
+					set_fleet_flag = foc_khan_final_order_engineering_fleet
+				}
+			}
+		}
+	}
+}
+
+event = { id = foc_khan_expand.20 hide_window = yes is_triggered_only = yes trigger = { always = no } }
+
+# Old-save/reload fallback: claim at most one cleared, unclaimed system per
+# monthly country pulse. It creates only the crisis starbase and never changes
+# fleet orders.
+country_event = {
+	id = foc_khan_expand.11
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_global_flag = foc_khan_crisis_finished }
+		OR = {
+			AND = {
+				has_country_flag = foc_khan_first_order_country
+				NOT = { has_country_flag = foc_khan_absorbed_by_final_order }
+				NOT = { has_global_flag = foc_khan_phase_two }
+			}
+			AND = {
+				has_country_flag = foc_khan_final_order_country
+				has_global_flag = foc_khan_phase_two
+			}
+		}
+	}
+
+	immediate = {
+		random_system = {
+			limit = {
+				NOT = { exists = starbase }
+				any_fleet_in_system = {
+					exists = owner
+					owner = { is_same_value = root }
+				}
+				NOT = {
+					any_system_planet = {
+						is_colony = yes
+						owner = { NOT = { is_same_value = root } }
+					}
+				}
+				NOT = {
+					any_fleet_in_system = {
+						exists = owner
+						owner = { is_hostile = root }
+					}
+				}
+			}
+			create_starbase = {
+				size = starbase_outpost
+				owner = root
+				effect = { set_starbase_flag = foc_khan_order_expansion_starbase }
+			}
+			if = {
+				limit = { root = { has_country_flag = foc_khan_final_order_country } }
+				set_star_flag = foc_khan_final_order_conquered_system
+			}
+			else = { set_star_flag = foc_khan_first_order_conquered_system }
+		}
+	}
+}
+
+# First/Final Order starbases must behave like crisis starbases: they are
+# destroyed when defeated, not left permanently disabled or transferred.
+# Scope from on_starbase_disabled: This = starbase; From = attacking fleet.
+starbase_event = {
+	id = foc_khan_expand.5
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		exists = owner
+		owner = {
+			OR = {
+				has_country_flag = foc_khan_first_order_country
+				has_country_flag = foc_khan_final_order_country
+			}
+		}
+		exists = from
+	}
+
+	immediate = {
+		# A starbase is internally represented by a ship. This is the same
+		# supported destruction pattern used by vanilla scripted stations.
+		ship = { destroy_ship = this }
+	}
+}

@@ -1,0 +1,31 @@
+namespace = foc_v111
+
+# Country-scope monthly migration. A fresh hidden prerequisite isolates Rebel ship sections
+# without changing the shared point-defense weapon technology used by both sides.
+country_event = {
+    id = foc_v111.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        OR = {
+            has_country_flag = foc_khan_rebel_alliance_country
+            has_country_flag = foc_republic_origin_imperial_rebel_country
+            has_country_flag = foc_republic_origin_rebel_alliance_country
+            has_country_flag = foc_republic_origin_post_treaty_rebel_country
+            has_country_flag = foc_sw_new_republic_country
+        }
+        NOT = { has_technology = foc_tech_rebel_ship_sections }
+        NOT = { has_country_flag = foc_republic_origin_empire_country }
+        NOT = { has_country_flag = foc_sw_imperial_remnant_country }
+        NOT = { has_country_flag = foc_khan_first_order_country }
+        NOT = { has_country_flag = foc_khan_final_order_country }
+        NOT = { has_country_flag = fop_player_first_order }
+        NOT = { has_country_flag = fop_player_final_order }
+    }
+
+    immediate = {
+        give_technology = { tech = foc_tech_rebel_ship_sections message = no }
+        refresh_auto_generated_ship_designs = yes
+    }
+}

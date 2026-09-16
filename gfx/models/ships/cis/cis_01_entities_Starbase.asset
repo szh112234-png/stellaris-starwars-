@@ -1,0 +1,307 @@
+##########
+# STARBASES
+##########
+
+##########
+# SPECIAL
+##########
+
+entity = {
+	name = "cis_starbase_L1_shield_entity"
+	pdxmesh = "cis_starbase_L1_shield_mesh"
+	
+	game_data = {
+		uv_animation_speed   = -0.05
+		uv_animation_direction  = { 0.0 1.0 }
+	}
+}
+
+entity = {
+	name = "cis_starbase_L4_shield_entity"
+	pdxmesh = "cis_starbase_L4_shield_mesh"
+	
+	game_data = {
+		uv_animation_speed   = -0.05
+		uv_animation_direction  = { 0.0 1.0 }
+	}
+}
+
+##########
+# STATION SECTIONS
+##########
+
+entity = {
+	name = "cis_01_orbital_station_assemblyyard_section_entity"
+	pdxmesh = "sw_empty_mesh"
+}
+
+entity = {
+	name = "cis_01_orbital_station_refinery_section_entity"
+	pdxmesh = "sw_empty_mesh"
+}
+
+entity = {
+	name = "cis_01_orbital_station_science_section_entity"
+	pdxmesh = "sw_empty_mesh"
+}
+
+entity = {
+	name = "cis_01_orbital_station_hangarbay_section_entity"
+	pdxmesh = "cis_weapons_starbase_sections_mesh"
+	scale = 0.9
+}
+
+entity = {
+	name = "cis_01_starbase_turret_section_entity"
+	pdxmesh = "cis_weapons_starbase_sections_mesh"
+	scale = 0.9
+}
+
+##########
+# OUTPOST
+##########
+
+entity = {
+	name = "cis_01_starbase_outpost_entity"
+	pdxmesh = "cis_frame_starbase_mesh"
+
+	game_data = {
+		size = 60.0
+	}
+}
+
+entity = {
+	name = "cis_01_starbase_outpost_section_entity"
+	pdxmesh = "cis_starbase_L1_mesh"
+	scale = 0.9
+
+	locator = { name = "root" rotation = { 0 0 0 } position = { 0 0 0 } }
+	attach = { root = "cis_starbase_L1_shield_entity" }
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5 }
+}
+
+entity = {
+	name = "cis_01_starbase_outpost_construction_entity"
+	pdxmesh = "cis_starbase_L1_mesh"
+	scale = 0.9
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5
+	event = { trigger_once = yes sound = { soundeffect = "place_construction" } } }
+}
+
+##########
+# STARPORT
+##########
+
+entity = {
+	name = "cis_01_starbase_starport_entity"
+	pdxmesh = "cis_frame_starbase_mesh"
+
+	game_data = {
+		size = 60.0
+	}
+}
+
+entity = {
+	name = "cis_01_starbase_starport_section_entity"
+	pdxmesh = "cis_starbase_L2_mesh"
+	scale = 0.9
+
+	locator = { name = "root" rotation = { 0 0 0 } position = { 0 0 0 } }
+	attach = { root = "cis_starbase_L1_shield_entity" }
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5 }
+}
+
+entity = {
+	name = "cis_01_starbase_starport_construction_entity"
+	pdxmesh = "cis_starbase_L2_mesh"
+	scale = 0.9
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5
+	event = { trigger_once = yes sound = { soundeffect = "place_construction" } } }
+}
+
+##########
+# STARHOLD
+##########
+
+entity = {
+	name = "cis_01_starbase_starhold_entity"
+	pdxmesh = "cis_frame_starbase_mesh"
+
+	game_data = {
+		size = 60.0
+	}
+}
+
+entity = {
+	name = "cis_01_starbase_starhold_section_entity"
+	pdxmesh = "cis_starbase_L3_mesh"
+	scale = 0.9
+
+	locator = { name = "root" rotation = { 0 0 0 } position = { 0 0 0 } }
+	attach = { root = "cis_starbase_L1_shield_entity" }
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5 }
+}
+
+entity = {
+	name = "cis_01_starbase_starhold_construction_entity"
+	pdxmesh = "cis_starbase_L3_mesh"
+	scale = 0.9
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5
+	event = { trigger_once = yes sound = { soundeffect = "place_construction" } } }
+}
+
+##########
+# STAR FORTRESS
+##########
+
+entity = {
+	name = "cis_01_starbase_starfortress_entity"
+	pdxmesh = "cis_frame_starbase_mesh"
+
+	game_data = {
+		size = 60.0
+	}
+}
+
+entity = {
+	name = "cis_01_starbase_starfortress_section_entity"
+	pdxmesh = "cis_starbase_L4_mesh"
+	scale = 0.9
+
+	locator = { name = "root" rotation = { 0 0 0 } position = { 0 0 0 } }
+	attach = { root = "cis_starbase_L1_shield_entity" }
+	attach = { root = "cis_starbase_L4_shield_entity" }
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5 }
+}
+
+entity = {
+	name = "cis_01_starbase_starfortress_construction_entity"
+	pdxmesh = "cis_starbase_L4_mesh"
+	scale = 0.9
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5
+	event = { trigger_once = yes sound = { soundeffect = "place_construction" } } }
+}
+
+##########
+# CITADEL
+##########
+
+entity = {
+	name = "cis_01_starbase_citadel_entity"
+	pdxmesh = "cis_frame_starbase_mesh"
+
+	game_data = {
+		size = 60.0
+	}
+}
+
+entity = {
+	name = "cis_01_starbase_citadel_section_entity"
+	pdxmesh = "cis_starbase_L5_mesh"
+	scale = 0.9
+
+	locator = { name = "root" rotation = { 0 0 0 } position = { 0 0 0 } }
+	attach = { root = "cis_starbase_L1_shield_entity" }
+	attach = { root = "cis_starbase_L4_shield_entity" }
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5 }
+}
+
+entity = {
+	name = "cis_01_starbase_citadel_construction_entity"
+	pdxmesh = "cis_starbase_L5_mesh"
+	scale = 0.9
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5
+	event = { trigger_once = yes sound = { soundeffect = "place_construction" } } }
+}
+
+##########
+# SOLAR STRONGHOLD
+##########
+
+entity = {
+	name = "cis_01_starbase_stronghold_entity"
+	pdxmesh = "cis_frame_starbase_mesh"
+
+	game_data = {
+		size = 60.0
+	}
+}
+
+entity = {
+	name = "cis_01_starbase_stronghold_section_entity"
+	pdxmesh = "cis_starbase_L5_mesh"
+	scale = 0.9
+
+	locator = { name = "root" rotation = { 0 0 0 } position = { 0 0 0 } }
+	attach = { root = "cis_starbase_L1_shield_entity" }
+	attach = { root = "cis_starbase_L4_shield_entity" }
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5 }
+}
+
+entity = {
+	name = "cis_01_starbase_stronghold_construction_entity"
+	pdxmesh = "cis_starbase_L5_mesh"
+	scale = 0.9
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5
+	event = { trigger_once = yes sound = { soundeffect = "place_construction" } } }
+}
+
+##########
+# HEADQUARTERS
+##########
+
+entity = {
+	name = "cis_01_starbase_headquarters_entity"
+	pdxmesh = "cis_frame_starbase_mesh"
+
+	game_data = {
+		size = 60.0
+	}
+}
+
+entity = {
+	name = "cis_01_starbase_headquarters_section_entity"
+	pdxmesh = "cis_starbase_L5_mesh"
+	scale = 0.9
+
+	locator = { name = "root" rotation = { 0 0 0 } position = { 0 0 0 } }
+	attach = { root = "cis_starbase_L1_shield_entity" }
+	attach = { root = "cis_starbase_L4_shield_entity" }
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5 }
+}
+
+entity = {
+	name = "cis_01_starbase_headquarters_construction_entity"
+	pdxmesh = "cis_starbase_L5_mesh"
+	scale = 0.9
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5
+	event = { trigger_once = yes sound = { soundeffect = "place_construction" } } }
+}

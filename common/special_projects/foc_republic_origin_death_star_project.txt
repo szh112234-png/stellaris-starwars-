@@ -1,0 +1,98 @@
+special_project = {
+    key = "FOC_REPUBLIC_ORIGIN_DEATH_STAR_PROJECT"
+    # V235 native conditional cost: keep the same project and researched progress.
+    cost = {
+        base = 60000
+        modifier = {
+            factor = 0.25
+            has_country_flag = foc_v202_player_death_star_one_emergency_project
+            desc = FOC_HOTFIX_DEATH_STAR_EMERGENCY_COST
+        }
+    }
+    tech_department = engineering_technology
+    timelimit = -1
+    location = yes
+    picture = GFX_evt_ship_in_orbit_3
+    icon = "gfx/interface/icons/deathstar_world_cracker.dds"
+    event_scope = country_event
+
+    # V154: for a player Empire this project represents the complete Phase-I
+    # design/construction effort. 60k engineering is the ~20-year baseline,
+    # but stronger research can finish it earlier. AI Empires do not use it.
+    on_success = {
+        set_country_flag = foc_v138_death_star_one_engineering_work_complete
+        country_event = { id = foc_republic_origin.170 days = 1 }
+    }
+    abort_trigger = { has_country_flag = foc_republic_origin_death_star_one_built }
+}
+
+special_project = {
+    key = "FOC_REPUBLIC_ORIGIN_DEATH_STAR_II_PROJECT"
+    # V154: one fifth of Phase I's workload: ~4 years at the same engineering
+    # output, while still allowing a player to accelerate completion.
+    cost = {
+        base = 12000
+        modifier = {
+            factor = 0.25
+            has_country_flag = foc_v202_player_death_star_two_emergency_project
+            desc = FOC_HOTFIX_DEATH_STAR_EMERGENCY_COST
+        }
+    }
+    tech_department = engineering_technology
+    timelimit = -1
+    location = yes
+    picture = GFX_evt_ship_in_orbit_3
+    icon = "gfx/interface/icons/deathstar_world_cracker.dds"
+    event_scope = country_event
+
+    on_success = {
+        set_country_flag = foc_v138_death_star_two_engineering_work_complete
+        country_event = { id = foc_republic_origin.174 days = 1 }
+    }
+    abort_trigger = {
+        OR = {
+            has_country_flag = foc_republic_origin_death_star_two_built
+        }
+    }
+}
+
+# V202 one-shot emergency versions for a player Empire. They use the same
+# completion events but exactly one quarter of the normal engineering workload.
+# Legacy active emergency IDs remain valid; never abort them just for an upgrade.
+special_project = {
+    key = "FOC_V202_DEATH_STAR_PROJECT_EMERGENCY"
+    cost = 15000
+    tech_department = engineering_technology
+    timelimit = -1
+    location = yes
+    picture = GFX_evt_ship_in_orbit_3
+    icon = "gfx/interface/icons/deathstar_world_cracker.dds"
+    event_scope = country_event
+
+    on_success = {
+        set_country_flag = foc_v138_death_star_one_engineering_work_complete
+        country_event = { id = foc_republic_origin.170 days = 1 }
+    }
+    abort_trigger = { has_country_flag = foc_republic_origin_death_star_one_built }
+}
+
+special_project = {
+    key = "FOC_V202_DEATH_STAR_II_PROJECT_EMERGENCY"
+    cost = 3000
+    tech_department = engineering_technology
+    timelimit = -1
+    location = yes
+    picture = GFX_evt_ship_in_orbit_3
+    icon = "gfx/interface/icons/deathstar_world_cracker.dds"
+    event_scope = country_event
+
+    on_success = {
+        set_country_flag = foc_v138_death_star_two_engineering_work_complete
+        country_event = { id = foc_republic_origin.174 days = 1 }
+    }
+    abort_trigger = {
+        OR = {
+            has_country_flag = foc_republic_origin_death_star_two_built
+        }
+    }
+}

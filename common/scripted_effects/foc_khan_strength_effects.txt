@@ -1,0 +1,63 @@
+# Remove every legacy/new strength package from the current Order country.
+foc_khan_clear_all_strength_modifiers = {
+    remove_modifier = foc_khan_first_order_power
+    remove_modifier = foc_khan_final_order_power
+    remove_modifier = foc_khan_strength_lowest_first
+    remove_modifier = foc_khan_strength_lowest_final
+    remove_modifier = foc_khan_strength_initial_first
+    remove_modifier = foc_khan_strength_initial_final
+    remove_modifier = foc_khan_strength_intermediate_first
+    remove_modifier = foc_khan_strength_intermediate_final
+    remove_modifier = foc_khan_strength_high_first
+    remove_modifier = foc_khan_strength_high_final
+    remove_modifier = foc_khan_strength_madness_first
+    remove_modifier = foc_khan_strength_madness_final
+}
+
+# Country scope. Only the non-playable crisis countries receive these packages.
+# The playable First Order origin uses its own progression rewards instead.
+foc_khan_apply_selected_strength = {
+    foc_khan_clear_all_strength_modifiers = yes
+
+    if = {
+        limit = {
+            has_country_flag = foc_khan_first_order_country
+            NOR = {
+                has_country_flag = fop_player_first_order
+                has_country_flag = fop_player_final_order
+            }
+        }
+        if = {
+            limit = { has_global_flag = foc_khan_strength_lowest }
+            add_modifier = { modifier = foc_khan_strength_lowest_first days = -1 }
+        }
+        else_if = {
+            limit = { has_global_flag = foc_khan_strength_madness }
+            add_modifier = { modifier = foc_khan_strength_madness_first days = -1 }
+        }
+        else = {
+            add_modifier = { modifier = foc_khan_strength_intermediate_first days = -1 }
+        }
+    }
+
+    if = {
+        limit = {
+            has_country_flag = foc_khan_final_order_country
+            NOR = {
+                has_country_flag = fop_player_first_order
+                has_country_flag = fop_player_final_order
+            }
+        }
+        if = {
+            limit = { has_global_flag = foc_khan_strength_lowest }
+            add_modifier = { modifier = foc_khan_strength_lowest_final days = -1 }
+        }
+        else_if = {
+            limit = { has_global_flag = foc_khan_strength_madness }
+            add_modifier = { modifier = foc_khan_strength_madness_final days = -1 }
+        }
+        else = {
+            add_modifier = { modifier = foc_khan_strength_intermediate_final days = -1 }
+        }
+    }
+}

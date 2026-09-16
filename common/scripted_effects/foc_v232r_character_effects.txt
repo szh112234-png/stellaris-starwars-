@@ -1,0 +1,12 @@
+# Country scope (Republic or CIS); real identified leader death only.
+foc_v232r_kill_dooku_at_coruscant = {
+    every_country = {
+        limit = { has_country_flag = foc_republic_origin_separatist_country }
+        every_owned_leader = {
+            limit = { has_leader_flag = foc_v232o_dooku_leader }
+            set_immortal = no
+            kill_leader = { show_notification = no }
+        }
+    }
+    set_global_flag = foc_saga_dooku_dead
+}

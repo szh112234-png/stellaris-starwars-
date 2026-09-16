@@ -1,0 +1,122 @@
+# V16: explicit Rebel identity; unaffiliated advanced arsenals follow the Imperial line.
+foc_v14_has_committed_republic_succession = {
+    OR = {
+        has_global_flag = foc_republic_origin_empire_war_active
+        has_global_flag = foc_republic_origin_galactic_treaty
+        has_global_flag = foc_republic_origin_republic_victory
+        has_global_flag = foc_republic_origin_empire_victory
+        has_global_flag = foc_republic_origin_empire_treaty_route
+        has_global_flag = foc_republic_origin_original_fallen_empires_restored
+        any_country = {
+            OR = {
+                has_country_flag = foc_republic_origin_empire_choice_committed
+                has_country_flag = foc_republic_origin_republic_destroyed_by_empire
+            }
+        }
+    }
+}
+foc_v14_has_republic_campaign = {
+    OR = {
+        has_global_flag = foc_republic_origin_active
+        has_global_flag = foc_v197_hutt_republic_era_initialized
+        any_country = {
+            OR = {
+                has_origin = origin_foc_republic_unification
+                has_origin = origin_foc_hutt_criminal_empire
+                has_country_flag = foc_v197_hutt_era_ai_republic
+            }
+        }
+    }
+}
+foc_v14_advanced_arsenal_era_allowed = {
+    OR = {
+        has_global_flag = foc_v14_post_republic_arsenal
+        foc_v14_has_committed_republic_succession = yes
+        NOT = {
+            foc_v14_has_republic_campaign = yes
+        }
+    }
+}
+foc_v14_is_imperial_arsenal_country = {
+    OR = {
+        OR = {
+            has_country_flag = foc_khan_first_order_country
+            has_country_flag = foc_khan_final_order_country
+            has_country_flag = fop_player_first_order
+            has_country_flag = fop_player_final_order
+            has_country_flag = foc_republic_origin_became_first_order
+            has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+        }
+        AND = {
+            NOT = {
+                OR = {
+                    has_country_flag = foc_khan_first_order_resistance_country
+                    has_country_flag = foc_republic_origin_post_treaty_new_republic
+                    has_country_flag = foc_sw_new_republic_country
+                    has_country_flag = foc_republic_origin_ai_new_republic_after_dqar
+                }
+            }
+            OR = {
+                OR = {
+                    has_country_flag = foc_republic_origin_empire_country
+                    has_country_flag = foc_republic_origin_became_first_order
+                    has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+                    has_country_flag = foc_republic_origin_empire_crisis
+                    has_country_flag = foc_khan_first_order_country
+                    has_country_flag = foc_khan_final_order_country
+                    has_country_flag = foc_sw_imperial_remnant_country
+                    has_country_flag = foc_republic_origin_player_empire
+                    has_country_flag = foc_republic_origin_player_imperial_remnant
+                    has_country_flag = fop_player_first_order
+                    has_country_flag = fop_player_final_order
+                }
+                AND = {
+                    has_origin = origin_fop_first_order
+                    NOT = {
+                        OR = {
+                            has_country_flag = foc_republic_origin_imperial_rebel_country
+                            has_country_flag = foc_republic_origin_rebel_alliance_country
+                            has_country_flag = foc_republic_origin_post_treaty_rebel_country
+                            has_country_flag = foc_republic_origin_post_treaty_new_republic
+                            has_country_flag = foc_khan_rebel_alliance_country
+                            has_country_flag = foc_khan_first_order_resistance_country
+                            has_country_flag = foc_sw_new_republic_country
+                            has_country_flag = foc_republic_origin_player_rebels
+                            has_country_flag = foc_republic_origin_post_treaty_player_rebels
+                            has_country_flag = foc_republic_origin_ai_new_republic_after_dqar
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+foc_v14_is_rebel_arsenal_country = {
+    NOT = {
+        foc_v14_is_imperial_arsenal_country = yes
+    }
+    OR = {
+        has_country_flag = foc_republic_origin_imperial_rebel_country
+        has_country_flag = foc_republic_origin_rebel_alliance_country
+        has_country_flag = foc_republic_origin_post_treaty_rebel_country
+        has_country_flag = foc_republic_origin_post_treaty_new_republic
+        has_country_flag = foc_khan_rebel_alliance_country
+        has_country_flag = foc_khan_first_order_resistance_country
+        has_country_flag = foc_sw_new_republic_country
+        has_country_flag = foc_republic_origin_player_rebels
+        has_country_flag = foc_republic_origin_post_treaty_player_rebels
+        has_country_flag = foc_republic_origin_ai_new_republic_after_dqar
+    }
+}
+foc_v14_can_research_empire_arsenal = {
+    foc_v1717_first_order_empire_arsenal_allowed = yes
+
+    foc_v14_advanced_arsenal_era_allowed = yes
+    NOT = {
+        foc_v14_is_rebel_arsenal_country = yes
+    }
+}
+foc_v14_can_research_rebel_arsenal = {
+    foc_v14_advanced_arsenal_era_allowed = yes
+    foc_v14_is_rebel_arsenal_country = yes
+}

@@ -1,0 +1,39 @@
+# FOC V17c: Imperial II hull. empire_ISD_II_mesh comes from the Empire Ships
+# addon; only the entity is new here, no mesh or texture is added.
+# FOC's own imperialsd_hull_mesh is scale 1, so the addon's 0.7 (tuned for the
+# vanilla battleship frame) is dropped and the mesh is used at native size.
+entity = {
+	name = "foc_v17_isd2_hull_entity"
+	pdxmesh = "empire_ISD_II_mesh"
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_titan_ship_hum_01" } }
+	}
+	state = { name = "moving" state_time = 5 }
+}
+
+# Ship-level frames. Stellaris resolves <graphical_culture>_<ship_size>_entity and
+# falls back to <ship_size>_entity; without these two the hull has no entity at all
+# and the ship never appears (ship_size.cpp:773).
+# Cloned from imperialsd_entity: same frame mesh, same part1/part2/part3 attach points.
+entity = {
+	name = "foc_imperialsd2_entity"
+	pdxmesh = "imperialsd_frame_mesh"
+
+	default_state = "idle"
+
+	attach = { part1 = "foc_v17_isd2_hull_entity" }
+	attach = { part2 = "imperialsd_mid_entity" }
+	attach = { part3 = "imperialsd_stern_entity" }
+}
+entity = {
+	name = "foc_imperialsd2_foc_lowest_entity"
+	pdxmesh = "imperialsd_frame_mesh"
+
+	default_state = "idle"
+
+	attach = { part1 = "foc_v17_isd2_hull_entity" }
+	attach = { part2 = "imperialsd_mid_entity" }
+	attach = { part3 = "imperialsd_stern_entity" }
+}

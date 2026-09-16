@@ -1,0 +1,64 @@
+# Supply only the additional Eclipse weapon load; no combat modifiers.
+
+utility_component_template = {
+    key = "FOC_V179_ECLIPSE_REACTOR"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_reactor"
+    icon_frame = 1
+    power = 65000
+    resources = {
+        category = ship_components
+        cost = { sr_coaxium_foc = 10 }
+        upkeep = { }
+    }
+    component_set = "power_core"
+    size_restriction = { foc_khan_eclipse }
+    ai_weight = { weight = 0 }
+    potential = { always = no }
+    prerequisites = { "foc_v179_tech_emp_heavy_4" }
+    show_tech_unlock_if = { always = no }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+}
+
+utility_component_template = {
+    key = "FOC_V179_ECLIPSE_II_REACTOR"
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_reactor"
+    icon_frame = 1
+    power = 65000
+    resources = {
+        category = ship_components
+        cost = { sr_coaxium_foc = 10 }
+        upkeep = { }
+    }
+    component_set = "power_core"
+    size_restriction = { foc_khan_eclipse_ii }
+    ai_weight = { weight = 0 }
+    potential = { always = no }
+    prerequisites = { "foc_v179_tech_emp_heavy_4" }
+    show_tech_unlock_if = { always = no }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+}
+
+utility_component_template = {
+    key = "FOC_V179_PLAYER_ECLIPSE_REACTOR"
+    size_restriction = { foc_player_eclipse }
+    size = small
+    icon = "GFX_foc_v1718c_ship_part_swgs_reactor"
+    icon_frame = 1
+    power = 65000
+    resources = {
+        category = ship_components
+        cost = { sr_coaxium_foc = 10 }
+        upkeep = { }
+    }
+    component_set = "power_core"
+    ai_weight = { weight = 0 }
+    potential = { always = no }
+    prerequisites = { "foc_v179_tech_emp_heavy_4" }
+    show_tech_unlock_if = { always = no }
+    valid_for_country = { foc_v1718_allowed_country = yes }
+    hidden = yes
+}

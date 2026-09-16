@@ -1,0 +1,33 @@
+entity = {
+	name = "kuat_ring_01_entity"
+	pdxmesh = "planet_non_clouded_mesh"
+	
+	scale = 0.02
+	
+	attach = { planet = "kuat_rotating_01_entity" }
+	
+	default_state = "idle"
+	playback_rate = -1.0 
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 }
+		start_event = { trigger_once = yes sound = { soundeffect = "ringworld_hum_idle_01" } }
+		start_event = { trigger_once = yes sound = { soundeffect = "ringworld_hum_idle_02" } }
+	}
+}
+
+entity = {
+	name = "kuat_rotating_01_entity"
+	pdxmesh = "kuat_ring_mesh"
+	
+	scale = 50.0
+	
+	default_state = "idle"
+	state = { name = "idle" state_time = 100 time_offset = { 0 100 }
+		start_event = { trigger_once = yes sound = { soundeffect = "ringworld_hum_idle_01" } }
+		start_event = { trigger_once = yes sound = { soundeffect = "ringworld_hum_idle_02" } }
+	}
+	state = { name = "construction"
+	start_event = { trigger_once = yes sound = { soundeffect = "ringworld_construction_ambient" } }
+	}
+}
+
+

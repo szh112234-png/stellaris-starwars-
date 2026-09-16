@@ -1,0 +1,82 @@
+# Construction permissions for four sealed Order ship classes. Imperial-class
+# is also granted when the Republic-origin Galactic Empire is proclaimed; the
+# Resurgent and Supremacy remain part of Dark Legacy; Xyston is Final Order-only.
+
+foc_tech_dark_legacy_imperial = {
+    icon = tech_destroyers
+    area = engineering
+    cost = 1
+    tier = 5
+    category = { voidcraft }
+    is_rare = yes
+    is_reverse_engineerable = no
+    ai_update_type = military
+    potential = {
+        OR = {
+            AND = {
+                is_ai = no
+                has_country_flag = foc_dark_order_legacy_access
+            }
+            # The Republic-origin Galactic Empire receives this hull at birth,
+            # independently of the later Dark Legacy / First Order package.
+            has_country_flag = foc_republic_origin_empire_country
+            # V183: the Treaty Imperial Remnant inherits the same Imperial industrial base.
+            has_country_flag = foc_sw_imperial_remnant_country
+        }
+    }
+    weight = 0
+    ai_weight = { factor = 0 }
+}
+
+foc_tech_dark_legacy_resurgent = {
+    icon = "tech_RESURGENTCLASS"
+    area = engineering
+    cost = 1
+    tier = 5
+    category = { voidcraft }
+    is_rare = yes
+    is_reverse_engineerable = no
+    ai_update_type = military
+    potential = {
+        is_ai = no
+        has_country_flag = foc_dark_order_legacy_access
+    }
+    weight = 0
+    ai_weight = { factor = 0 }
+}
+
+foc_tech_dark_legacy_xyston = {
+    icon = tech_titans
+    area = engineering
+    cost = 1
+    tier = 5
+    category = { voidcraft }
+    is_rare = yes
+    is_reverse_engineerable = no
+    ai_update_type = military
+    potential = {
+        foc_v1718_allowed_country = yes
+        has_country_flag = fop_player_final_order
+    
+        foc_v1718_allowed_country = yes
+    }
+    weight = 0
+    ai_weight = { factor = 0 }
+}
+
+foc_tech_dark_legacy_supremacy = {
+    icon = "tech_SUPREMACYCLASS"
+    area = engineering
+    cost = 1
+    tier = 5
+    category = { voidcraft }
+    is_rare = yes
+    is_reverse_engineerable = no
+    ai_update_type = military
+    potential = {
+        is_ai = no
+        has_country_flag = foc_dark_order_legacy_access
+    }
+    weight = 0
+    ai_weight = { factor = 0 }
+}

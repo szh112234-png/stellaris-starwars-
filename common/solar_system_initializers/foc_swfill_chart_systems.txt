@@ -1,0 +1,157 @@
+# FOC 11 V31 - filler systems from the canonical galaxy chart.
+# Deliberately uninhabitable: a star plus barren, frozen and gas bodies.
+# They add map density and hyperlane structure at no pop or performance
+# cost, since neither Fallen Empire can colonise them.
+
+foc_swfill_alderaan_system = {
+    name = "Alderaan"
+    class = "sc_g"
+    usage = misc_system_init
+    flags = { foc_swfill_alderaan_home foc_sw_new_republic_cluster }
+    max_instances = 1
+    init_effect = { save_global_event_target_as = foc_swfill_alderaan_system }
+
+    planet = { name = "Alderaan Star" class = "pc_g_star" orbit_distance = 0 orbit_angle = 1 size = 22 }
+    planet = {
+        name = "Alderaan"
+        class = "pc_continental"
+        orbit_distance = 48
+        orbit_angle = 80
+        size = 23
+        flags = { foc_sw_nr_colony foc_swfill_alderaan }
+        init_effect = { prevent_anomaly = yes }
+    }
+    planet = { name = "Alderaan II" class = "pc_barren" orbit_distance = 34 orbit_angle = 185 size = 12 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Alderaan III" class = "pc_gas_giant" orbit_distance = 46 orbit_angle = 285 size = 28 init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swfill_dorin_system = {
+    name = "Dorin"
+    class = "sc_k"
+    usage = misc_system_init
+    flags = { foc_swfill_dorin_home foc_sw_new_republic_cluster }
+    max_instances = 1
+
+    planet = { name = "Dorin" class = "pc_k_star" orbit_distance = 0 orbit_angle = 1 size = 22 }
+    planet = { name = "Dorin I" class = "pc_barren" orbit_distance = 38 orbit_angle = 70 size = 12 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Dorin II" class = "pc_frozen" orbit_distance = 30 orbit_angle = 190 size = 14 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Dorin III" class = "pc_gas_giant" orbit_distance = 42 orbit_angle = 290 size = 28 init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swfill_abregado_system = {
+    name = "Abregado-rae"
+    class = "sc_m"
+    usage = misc_system_init
+    flags = { foc_swfill_abregado_home foc_sw_new_republic_cluster }
+    max_instances = 1
+
+    planet = { name = "Abregado-rae" class = "pc_m_star" orbit_distance = 0 orbit_angle = 1 size = 22 }
+    planet = { name = "Abregado-rae I" class = "pc_barren" orbit_distance = 38 orbit_angle = 70 size = 12 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Abregado-rae II" class = "pc_frozen" orbit_distance = 30 orbit_angle = 190 size = 14 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Abregado-rae III" class = "pc_gas_giant" orbit_distance = 42 orbit_angle = 290 size = 28 init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swfill_iridonia_system = {
+    name = "Iridonia"
+    class = "sc_a"
+    usage = misc_system_init
+    flags = { foc_swfill_iridonia_home foc_sw_new_republic_cluster }
+    max_instances = 1
+
+    planet = { name = "Iridonia" class = "pc_a_star" orbit_distance = 0 orbit_angle = 1 size = 22 }
+    planet = { name = "Iridonia I" class = "pc_barren" orbit_distance = 38 orbit_angle = 70 size = 12 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Iridonia II" class = "pc_frozen" orbit_distance = 30 orbit_angle = 190 size = 14 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Iridonia III" class = "pc_gas_giant" orbit_distance = 42 orbit_angle = 290 size = 28 init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swfill_catoneimoidia_system = {
+    name = "Cato Neimoidia"
+    class = "sc_g"
+    usage = misc_system_init
+    flags = { foc_swfill_catoneimoidia_home foc_sw_new_republic_cluster }
+    max_instances = 1
+
+    planet = { name = "Cato Neimoidia" class = "pc_g_star" orbit_distance = 0 orbit_angle = 1 size = 22 }
+    planet = { name = "Cato Neimoidia I" class = "pc_barren" orbit_distance = 38 orbit_angle = 70 size = 12 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Cato Neimoidia II" class = "pc_frozen" orbit_distance = 30 orbit_angle = 190 size = 14 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Cato Neimoidia III" class = "pc_gas_giant" orbit_distance = 42 orbit_angle = 290 size = 28 init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swfill_fondor_system = {
+    name = "Fondor"
+    class = "sc_m"
+    usage = misc_system_init
+    flags = { foc_swfill_fondor_home foc_sw_new_republic_cluster }
+    max_instances = 1
+
+    planet = { name = "Fondor" class = "pc_m_star" orbit_distance = 0 orbit_angle = 1 size = 22 }
+    planet = { name = "Fondor I" class = "pc_barren" orbit_distance = 38 orbit_angle = 70 size = 12 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Fondor II" class = "pc_frozen" orbit_distance = 30 orbit_angle = 190 size = 14 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Fondor III" class = "pc_gas_giant" orbit_distance = 42 orbit_angle = 290 size = 28 init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swfill_thyferra_system = {
+    name = "Thyferra"
+    class = "sc_a"
+    usage = misc_system_init
+    flags = { foc_swfill_thyferra_home foc_sw_new_republic_cluster }
+    max_instances = 1
+
+    planet = { name = "Thyferra" class = "pc_a_star" orbit_distance = 0 orbit_angle = 1 size = 22 }
+    planet = { name = "Thyferra I" class = "pc_barren" orbit_distance = 38 orbit_angle = 70 size = 12 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Thyferra II" class = "pc_frozen" orbit_distance = 30 orbit_angle = 190 size = 14 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Thyferra III" class = "pc_gas_giant" orbit_distance = 42 orbit_angle = 290 size = 28 init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swfill_dantooine_system = {
+    name = "Dantooine"
+    class = "sc_a"
+    usage = misc_system_init
+    flags = { foc_swfill_dantooine_home foc_sw_new_republic_cluster }
+    max_instances = 1
+
+    planet = { name = "Dantooine" class = "pc_a_star" orbit_distance = 0 orbit_angle = 1 size = 22 }
+    planet = { name = "Dantooine I" class = "pc_barren" orbit_distance = 38 orbit_angle = 70 size = 12 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Dantooine II" class = "pc_frozen" orbit_distance = 30 orbit_angle = 190 size = 14 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Dantooine III" class = "pc_gas_giant" orbit_distance = 42 orbit_angle = 290 size = 28 init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swfill_taris_system = {
+    name = "Taris"
+    class = "sc_f"
+    usage = misc_system_init
+    flags = { foc_swfill_taris_home foc_sw_new_republic_cluster }
+    max_instances = 1
+
+    planet = { name = "Taris" class = "pc_f_star" orbit_distance = 0 orbit_angle = 1 size = 22 }
+    planet = { name = "Taris I" class = "pc_barren" orbit_distance = 38 orbit_angle = 70 size = 12 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Taris II" class = "pc_frozen" orbit_distance = 30 orbit_angle = 190 size = 14 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Taris III" class = "pc_gas_giant" orbit_distance = 42 orbit_angle = 290 size = 28 init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swfill_takodana_system = {
+    name = "Takodana"
+    class = "sc_k"
+    usage = misc_system_init
+    flags = { foc_swfill_takodana_home foc_sw_new_republic_cluster }
+    max_instances = 1
+
+    planet = { name = "Takodana" class = "pc_k_star" orbit_distance = 0 orbit_angle = 1 size = 22 }
+    planet = { name = "Takodana I" class = "pc_barren" orbit_distance = 38 orbit_angle = 70 size = 12 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Takodana II" class = "pc_frozen" orbit_distance = 30 orbit_angle = 190 size = 14 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Takodana III" class = "pc_gas_giant" orbit_distance = 42 orbit_angle = 290 size = 28 init_effect = { prevent_anomaly = yes } }
+}
+
+foc_swfill_narkina_system = {
+    name = "Narkina"
+    class = "sc_m"
+    usage = misc_system_init
+    flags = { foc_swfill_narkina_home foc_sw_new_republic_cluster }
+    max_instances = 1
+
+    planet = { name = "Narkina" class = "pc_m_star" orbit_distance = 0 orbit_angle = 1 size = 22 }
+    planet = { name = "Narkina I" class = "pc_barren" orbit_distance = 38 orbit_angle = 70 size = 12 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Narkina II" class = "pc_frozen" orbit_distance = 30 orbit_angle = 190 size = 14 init_effect = { prevent_anomaly = yes } }
+    planet = { name = "Narkina III" class = "pc_gas_giant" orbit_distance = 42 orbit_angle = 290 size = 28 init_effect = { prevent_anomaly = yes } }
+}
+

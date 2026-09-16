@@ -1,0 +1,207 @@
+# FOC V232 - vanilla-style faction droid industry for Stellaris 4.4.
+#
+# Vanilla 4.4 uses building_robot_assembly_plant plus job_roboticist for normal
+# organic empires. Story capitals therefore receive that exact vanilla building
+# immediately when their country/capital is established; no monthly building
+# backfill is required.
+#
+# Population routing:
+#   Republic / Imperial Rebels / Rebel Alliance / Resistance / New Republic
+#       -> Protocol Droid + Astromech Droid (C-3PO / R2-D2 / BB-8 family)
+#   Confederacy -> B1 Battle Droid only
+#   Galactic Empire / Imperial Remnant / First Order
+#       -> Security Droid (K-2SO portrait family)
+#
+# Legendary C-3PO, R2-D2, BB-8 and K-2SO leaders remain separate characters.
+
+# Planet scope during map bootstrap. V223 remains the sole owner of Protocol,
+# Astromech and Security Droid species; this effect only adds the CIS B1 species.
+# Keeping this effect flat avoids the 4.4 post-init scripted-effect recursion cap.
+foc_v231_ensure_faction_droid_species = {
+    if = {
+        limit = { NOT = { exists = event_target:foc_v231_battle_droid_species } }
+        create_species = {
+            name = foc_v231_battle_droid_name
+            plural = foc_v231_battle_droid_plural
+            adjective = foc_v231_battle_droid_adjective
+            class = "ROBOT"
+            namelist = "MACHINE1"
+            portrait = "foc_v231_cis_droid"
+            homeworld = this
+            traits = { trait = "trait_mechanical" trait = "trait_robot_battledroid" }
+        }
+        last_created_species = {
+            set_species_flag = foc_v231_battle_droid_species
+            save_global_event_target_as = foc_v231_battle_droid_species
+        }
+    }
+}
+
+# Shared vanilla factory pattern. The four seed effects below deliberately keep
+# population creation inline. V232m installs the factory only after robotics research.
+# has/set_carrier_flag is valid from both planet and colony carriers in 4.4,
+# unlike the old planet-only flag calls that errored from colony scope.
+
+# Planet/colony scope: Republic-family capital workforce.
+# V231n: the custom droid pop groups are created BEFORE tech_robotic_workers is
+# granted. This makes the country already own a built mechanical species when
+# vanilla action.56 checks has_built_species, so no generic Robot species is added.
+foc_v231_seed_republic_droid_pops = {
+    if = {
+        limit = { is_colony = yes exists = owner }
+        owner = {
+            if = { limit = { NOT = { has_technology = tech_powered_exoskeletons } } give_technology = { tech = tech_powered_exoskeletons message = no } }
+        }
+
+        if = {
+            limit = {
+                exists = event_target:foc_v223_protocol_droid_species
+                NOT = { any_owned_pop_group = { is_same_species = event_target:foc_v223_protocol_droid_species } }
+            }
+            create_pop_group = { size = 100 species = event_target:foc_v223_protocol_droid_species }
+        }
+        if = {
+            limit = {
+                exists = event_target:foc_v223_astromech_droid_species
+                NOT = { any_owned_pop_group = { is_same_species = event_target:foc_v223_astromech_droid_species } }
+            }
+            create_pop_group = { size = 100 species = event_target:foc_v223_astromech_droid_species }
+        }
+        set_carrier_flag = foc_v231_republic_droids_seeded
+        owner = {
+            if = { limit = { exists = event_target:foc_v223_protocol_droid_species } event_target:foc_v223_protocol_droid_species = { set_species_flag = mechanical_species@prev } }
+            if = { limit = { exists = event_target:foc_v223_astromech_droid_species } event_target:foc_v223_astromech_droid_species = { set_species_flag = mechanical_species@prev } }
+            if = { limit = { NOT = { has_technology = tech_robotic_workers } } give_technology = { tech = tech_robotic_workers message = no } }
+        }
+        # V232m: robotics is granted only after the fixed faction droids exist.
+        foc_v232m_ensure_vanilla_droid_factory = yes
+        if = {
+            limit = { OR = { has_building = building_robot_assembly_plant has_building = building_robot_assembly_complex } }
+            log = "FOC_V232M_DROIDS: Republic-family capital verified with Protocol/Astromech pops and a vanilla robot factory (plant or complex)."
+        }
+        else = {
+            log = "FOC_V232M_DROIDS: Capital workforce processed but no robot factory verified; inspect eligibility and building-zone slots."
+        }
+    }
+}
+
+# Planet/colony scope: Confederate B1 workforce. Called on every starting CIS colony.
+foc_v231_seed_separatist_droid_pops = {
+    if = {
+        limit = { is_colony = yes exists = owner }
+        owner = {
+            if = { limit = { NOT = { has_technology = tech_powered_exoskeletons } } give_technology = { tech = tech_powered_exoskeletons message = no } }
+        }
+
+        if = {
+            limit = {
+                exists = event_target:foc_v231_battle_droid_species
+                NOT = { any_owned_pop_group = { is_same_species = event_target:foc_v231_battle_droid_species } }
+            }
+            create_pop_group = { size = 100 species = event_target:foc_v231_battle_droid_species }
+        }
+        set_carrier_flag = foc_v231_separatist_droids_seeded
+        owner = {
+            if = { limit = { exists = event_target:foc_v231_battle_droid_species } event_target:foc_v231_battle_droid_species = { set_species_flag = mechanical_species@prev } }
+            if = { limit = { NOT = { has_technology = tech_robotic_workers } } give_technology = { tech = tech_robotic_workers message = no } }
+        }
+        # V232m: robotics is granted only after the fixed faction droids exist.
+        foc_v232m_ensure_vanilla_droid_factory = yes
+        if = {
+            limit = { OR = { has_building = building_robot_assembly_plant has_building = building_robot_assembly_complex } }
+            log = "FOC_V232M_DROIDS: Confederate colony verified with B1 pop and a vanilla robot factory (plant or complex)."
+        }
+        else = {
+            log = "FOC_V232M_DROIDS: Capital workforce processed but no robot factory verified; inspect eligibility and building-zone slots."
+        }
+    }
+}
+
+# Planet/colony scope: Galactic Empire and Imperial Remnant K-2SO security droids.
+foc_v231_seed_imperial_droid_pops = {
+    if = {
+        limit = { is_colony = yes exists = owner }
+        owner = {
+            if = { limit = { NOT = { has_technology = tech_powered_exoskeletons } } give_technology = { tech = tech_powered_exoskeletons message = no } }
+        }
+
+        if = {
+            limit = {
+                exists = event_target:foc_v223_security_droid_species
+                NOT = { any_owned_pop_group = { is_same_species = event_target:foc_v223_security_droid_species } }
+            }
+            create_pop_group = { size = 100 species = event_target:foc_v223_security_droid_species }
+        }
+        set_carrier_flag = foc_v231_imperial_droids_seeded
+        owner = {
+            if = { limit = { exists = event_target:foc_v223_security_droid_species } event_target:foc_v223_security_droid_species = { set_species_flag = mechanical_species@prev } }
+            if = { limit = { NOT = { has_technology = tech_robotic_workers } } give_technology = { tech = tech_robotic_workers message = no } }
+        }
+        # V232m: robotics is granted only after the fixed faction droids exist.
+        foc_v232m_ensure_vanilla_droid_factory = yes
+        if = {
+            limit = { OR = { has_building = building_robot_assembly_plant has_building = building_robot_assembly_complex } }
+            log = "FOC_V232M_DROIDS: Imperial-family capital verified with K-2SO Security Droid pop and a vanilla robot factory (plant or complex)."
+        }
+        else = {
+            log = "FOC_V232M_DROIDS: Capital workforce processed but no robot factory verified; inspect eligibility and building-zone slots."
+        }
+    }
+}
+
+# Planet/colony scope: First Order deliberately keeps the same K-2SO Security
+# Droid species as the Imperial Remnant. The species remains distinct and is not
+# collapsed into the vanilla generic Robot species.
+foc_v231_seed_first_order_droid_pops = {
+    if = {
+        limit = { is_colony = yes exists = owner }
+        owner = {
+            if = { limit = { NOT = { has_technology = tech_powered_exoskeletons } } give_technology = { tech = tech_powered_exoskeletons message = no } }
+        }
+
+        if = {
+            limit = {
+                exists = event_target:foc_v223_security_droid_species
+                NOT = { any_owned_pop_group = { is_same_species = event_target:foc_v223_security_droid_species } }
+            }
+            create_pop_group = { size = 100 species = event_target:foc_v223_security_droid_species }
+        }
+        set_carrier_flag = foc_v231_first_order_droids_seeded
+        owner = {
+            if = { limit = { exists = event_target:foc_v223_security_droid_species } event_target:foc_v223_security_droid_species = { set_species_flag = mechanical_species@prev } }
+            if = { limit = { NOT = { has_technology = tech_robotic_workers } } give_technology = { tech = tech_robotic_workers message = no } }
+        }
+        # V232m: robotics is granted only after the fixed faction droids exist.
+        foc_v232m_ensure_vanilla_droid_factory = yes
+        if = {
+            limit = { OR = { has_building = building_robot_assembly_plant has_building = building_robot_assembly_complex } }
+            log = "FOC_V232M_DROIDS: First Order capital verified with K-2SO Security Droid pop and a vanilla robot factory (plant or complex)."
+        }
+        else = {
+            log = "FOC_V232M_DROIDS: Capital workforce processed but no robot factory verified; inspect eligibility and building-zone slots."
+        }
+    }
+}
+
+# Country-scope entry points. Capitals are resolved at the moment the story
+# country has actually received one; seed effects themselves grant vanilla robotics.
+foc_v231_bootstrap_republic_droids = {
+    if = { limit = { exists = capital_scope } capital_scope = { foc_v231_seed_republic_droid_pops = yes } }
+}
+
+foc_v231_bootstrap_imperial_droids = {
+    if = { limit = { exists = capital_scope } capital_scope = { foc_v231_seed_imperial_droid_pops = yes } }
+}
+
+foc_v231_bootstrap_first_order_droids = {
+    if = { limit = { exists = capital_scope } capital_scope = { foc_v231_seed_first_order_droid_pops = yes } }
+}
+
+# Country scope: every colony already held by the Confederacy receives the
+# vanilla plant and fixed B1 population, preserving the original V230/V231 rule.
+foc_v231_bootstrap_separatist_droids = {
+    every_owned_planet = {
+        limit = { is_colony = yes }
+        foc_v231_seed_separatist_droid_pops = yes
+    }
+}

@@ -1,0 +1,13 @@
+special_project = {
+    key = "FOC_STARKILLER_COORDINATES_PROJECT"
+    cost = 12000
+    tech_department = physics_technology
+    timelimit = -1
+    location = yes
+    picture = GFX_foc_event_starkiller_base_popup
+    icon = "gfx/interface/icons/situation_log/situation_log_physics.dds"
+    event_scope = country_event
+
+    on_success = { country_event = { id = foc_starkiller_coords.2 } }
+    abort_trigger = { has_global_flag = foc_imperial_remnant_route_unlocked }
+}

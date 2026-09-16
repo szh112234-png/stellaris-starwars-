@@ -1,0 +1,56 @@
+# FOC 3.01: SHIPGIRL-style immediate game-start Fallen Empire initialization.
+
+on_game_start_country = {
+    events = { foc_swmap.100 }
+}
+
+on_monthly_pulse_country = {
+    events = {
+        # War-in-Heaven chronology and escalation.
+        foc_fallen_war.70
+        foc_fallen_war.71
+        foc_fallen_war.20
+
+        # Canonical post-Hosnian transfer and succession.
+        foc_fallen_war.24
+        foc_fallen_war.62
+
+        # Intentionally configured one-group-per-month wartime reinforcements.
+        # These are gameplay cadence, not a missing-fleet reconstruction system.
+        foc_fallen_war.30
+        foc_fallen_war.31
+    }
+}
+
+on_monthly_pulse = {
+    events = {
+        foc_fallen_war.40
+        # V206: old-save recovery only; normal defeat is handled same-tick below.
+        foc_fallen_war.72
+    }
+}
+
+# Root = planet; occupation/conquest immediately rechecks both Treaty successors.
+on_planet_occupied = {
+    events = { foc_fallen_war.73 }
+}
+
+on_planet_conquer = {
+    events = { foc_fallen_war.73 }
+}
+
+# Root = conquered colony carrier; some direct-transfer war types use this hook.
+on_colony_conquer = {
+    events = { foc_fallen_war.74 }
+}
+
+# Root = destroyed country. This final direct hook covers engine cleanup paths in
+# which no final planet callback survives long enough to run.
+on_country_destroyed = {
+    events = { foc_fallen_war.20 }
+}
+
+# Root = loser; From = main winner. Peace begins First Order succession.
+on_war_ended = {
+    events = { foc_fallen_war.63 }
+}

@@ -1,0 +1,108 @@
+# Country scope. Called only for Separatist/Council-remnant identities.
+foc_v236_register_cis_designs = {
+ if = { limit = { foc_v236_has_cis_aircraft_identity = yes }
+
+if = { limit = { has_global_flag = foc_khan_strength_lowest }
+if = { limit = { NOT = { has_country_flag = foc_v236_cis_registered_lowest } }
+
+
+
+# V14: exact faction technology prerequisites before fixed-design construction.
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+create_ship_design = { design = "NAME_FOC_V236_CIS_CORVETTE_LOWEST" }
+            foc_v1716_register_design_ec7fb356dca8 = yes # v17.16: registration occurs in its exact design branch after research checks.
+create_ship_design = { design = "NAME_FOC_V236_CIS_DESTROYER_LOWEST" }
+            foc_v1716_register_design_7129063a5ce6 = yes # v17.16: registration occurs in its exact design branch after research checks.
+create_ship_design = { design = "NAME_FOC_V236_CIS_CRUISER_LOWEST" }
+            foc_v1716_register_design_5d74bd1496a3 = yes # v17.16: registration occurs in its exact design branch after research checks.
+create_ship_design = { design = "NAME_FOC_V236_CIS_BATTLESHIP_LOWEST" }
+            foc_v1716_register_design_68c2130890ce = yes # v17.16: registration occurs in its exact design branch after research checks.
+
+
+create_ship_design = { design = "NAME_FOC_TRADE_LUCREHULK_FOC_LOWEST" }
+            foc_v1716_register_design_6e5132689bfa = yes # v17.16: registration occurs in its exact design branch after research checks.
+remove_country_flag = foc_v236_cis_registered_sg
+remove_country_flag = foc_v236_cis_registered_enhanced
+set_country_flag = foc_v236_cis_registered_lowest
+refresh_auto_generated_ship_designs = yes
+}
+}
+else_if = { limit = { has_global_flag = foc_khan_strength_madness }
+if = { limit = { NOT = { has_country_flag = foc_v236_cis_registered_enhanced } }
+
+
+
+# V14: exact faction technology prerequisites before fixed-design construction.
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+create_ship_design = { design = "NAME_FOC_V236_CIS_CORVETTE_ENHANCED" }
+            foc_v1716_register_design_7abae8d66d64 = yes # v17.16: registration occurs in its exact design branch after research checks.
+create_ship_design = { design = "NAME_FOC_V236_CIS_DESTROYER_ENHANCED" }
+            foc_v1716_register_design_e1e13dbd2378 = yes # v17.16: registration occurs in its exact design branch after research checks.
+create_ship_design = { design = "NAME_FOC_V236_CIS_CRUISER_ENHANCED" }
+            foc_v1716_register_design_63e36f89fa76 = yes # v17.16: registration occurs in its exact design branch after research checks.
+create_ship_design = { design = "NAME_FOC_V236_CIS_BATTLESHIP_ENHANCED" }
+            foc_v1716_register_design_6e03976c0f5b = yes # v17.16: registration occurs in its exact design branch after research checks.
+create_ship_design = { design = "NAME_FOC_V236_CIS_LUCREHULK_ENHANCED" }
+            foc_v1716_register_design_d87acffc65c1 = yes # v17.16: registration occurs in its exact design branch after research checks.
+remove_country_flag = foc_v236_cis_registered_sg
+remove_country_flag = foc_v236_cis_registered_lowest
+set_country_flag = foc_v236_cis_registered_enhanced
+refresh_auto_generated_ship_designs = yes
+}
+}
+else = {
+if = { limit = { NOT = { has_country_flag = foc_v236_cis_registered_sg } }
+
+
+
+# V14: exact faction technology prerequisites before fixed-design construction.
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+create_ship_design = { design = "NAME_FOC_V236_CIS_CORVETTE_SG" }
+            foc_v1716_register_design_26b1f465a37e = yes # v17.16: registration occurs in its exact design branch after research checks.
+create_ship_design = { design = "NAME_FOC_V236_CIS_DESTROYER_SG" }
+            foc_v1716_register_design_7274e0e91491 = yes # v17.16: registration occurs in its exact design branch after research checks.
+create_ship_design = { design = "NAME_FOC_V236_CIS_CRUISER_SG" }
+            foc_v1716_register_design_f82fdae1cdbf = yes # v17.16: registration occurs in its exact design branch after research checks.
+create_ship_design = { design = "NAME_FOC_V236_CIS_BATTLESHIP_SG" }
+            foc_v1716_register_design_35ffa917511b = yes # v17.16: registration occurs in its exact design branch after research checks.
+create_ship_design = { design = "NAME_FOC_TRADE_LUCREHULK" }
+            foc_v1716_register_design_438496b9959b = yes # v17.16: registration occurs in its exact design branch after research checks.
+remove_country_flag = foc_v236_cis_registered_enhanced
+remove_country_flag = foc_v236_cis_registered_lowest
+set_country_flag = foc_v236_cis_registered_sg
+refresh_auto_generated_ship_designs = yes
+}
+}
+
+ }
+}
+# Ship scope, only outside combat; exact desired loadout is an idempotence guard.
+foc_v236_retrofit_cis_ship = {
+if = { limit = { has_global_flag = foc_khan_strength_lowest }
+if = { limit = { is_ship_size = corvette NOT = { AND = { OR = { has_component = SSP_TRI_HANGAR_01_LOWEST has_component = FOC_V177_LOWEST_1C7DFF4FC0A4BB has_component = FOC_V177_LOWEST_2C79A119A3F7A3 has_component = FOC_V177_LOWEST_4296118ED6FDDD has_component = FOC_V177_LOWEST_96BB35A6F2FED3 has_component = FOC_V177_LOWEST_D2BAD5DC7FBB82 } OR = { has_component = FOC_TRI_COMMAND_CORE has_component = FOC_V177_LOWEST_23B126989E27C8 has_component = FOC_V177_LOWEST_34749CAB3EFAE3 has_component = FOC_V177_LOWEST_5A76FE1AEBA6A9 has_component = FOC_V177_LOWEST_6DD5098BFEC4F6 has_component = FOC_V177_LOWEST_78502C3C5169B8 } } } } set_ship_design = { design = "NAME_FOC_V236_CIS_CORVETTE_LOWEST" } }
+if = { limit = { is_ship_size = destroyer NOT = { AND = { OR = { has_component = SSP_TRI_HANGAR_01_LOWEST has_component = FOC_V177_LOWEST_1C7DFF4FC0A4BB has_component = FOC_V177_LOWEST_2C79A119A3F7A3 has_component = FOC_V177_LOWEST_4296118ED6FDDD has_component = FOC_V177_LOWEST_96BB35A6F2FED3 has_component = FOC_V177_LOWEST_D2BAD5DC7FBB82 } OR = { has_component = FOC_TRI_COMMAND_CORE has_component = FOC_V177_LOWEST_23B126989E27C8 has_component = FOC_V177_LOWEST_34749CAB3EFAE3 has_component = FOC_V177_LOWEST_5A76FE1AEBA6A9 has_component = FOC_V177_LOWEST_6DD5098BFEC4F6 has_component = FOC_V177_LOWEST_78502C3C5169B8 } } } } set_ship_design = { design = "NAME_FOC_V236_CIS_DESTROYER_LOWEST" } }
+if = { limit = { is_ship_size = cruiser NOT = { AND = { OR = { has_component = SSP_TRI_HANGAR_01_LOWEST has_component = FOC_V177_LOWEST_1C7DFF4FC0A4BB has_component = FOC_V177_LOWEST_2C79A119A3F7A3 has_component = FOC_V177_LOWEST_4296118ED6FDDD has_component = FOC_V177_LOWEST_96BB35A6F2FED3 has_component = FOC_V177_LOWEST_D2BAD5DC7FBB82 } OR = { has_component = SSP_TRI_HANGAR_02_LOWEST has_component = FOC_V177_LOWEST_04D5CD7EAD8FBD has_component = FOC_V177_LOWEST_48B6E769CD9587 has_component = FOC_V177_LOWEST_63D61651209803 } OR = { has_component = FOC_TRI_COMMAND_CORE has_component = FOC_V177_LOWEST_23B126989E27C8 has_component = FOC_V177_LOWEST_34749CAB3EFAE3 has_component = FOC_V177_LOWEST_5A76FE1AEBA6A9 has_component = FOC_V177_LOWEST_6DD5098BFEC4F6 has_component = FOC_V177_LOWEST_78502C3C5169B8 } } } } set_ship_design = { design = "NAME_FOC_V236_CIS_CRUISER_LOWEST" } }
+if = { limit = { is_ship_size = battleship NOT = { AND = { OR = { has_component = SSP_TRI_HANGAR_01_LOWEST has_component = FOC_V177_LOWEST_1C7DFF4FC0A4BB has_component = FOC_V177_LOWEST_2C79A119A3F7A3 has_component = FOC_V177_LOWEST_4296118ED6FDDD has_component = FOC_V177_LOWEST_96BB35A6F2FED3 has_component = FOC_V177_LOWEST_D2BAD5DC7FBB82 } OR = { has_component = SSP_TRI_HANGAR_02_LOWEST has_component = FOC_V177_LOWEST_04D5CD7EAD8FBD has_component = FOC_V177_LOWEST_48B6E769CD9587 has_component = FOC_V177_LOWEST_63D61651209803 } OR = { has_component = SSP_TRI_HANGAR_03_LOWEST has_component = FOC_V177_LOWEST_8C75E84103D4D6 has_component = FOC_V177_LOWEST_E57AC0C9C27007 } OR = { has_component = FOC_TRI_COMMAND_CORE has_component = FOC_V177_LOWEST_23B126989E27C8 has_component = FOC_V177_LOWEST_34749CAB3EFAE3 has_component = FOC_V177_LOWEST_5A76FE1AEBA6A9 has_component = FOC_V177_LOWEST_6DD5098BFEC4F6 has_component = FOC_V177_LOWEST_78502C3C5169B8 } } } } set_ship_design = { design = "NAME_FOC_V236_CIS_BATTLESHIP_LOWEST" } }
+if = { limit = { OR = { is_ship_size = foc_trade_lucrehulk is_ship_size = foc_trade_lucrehulk_foc_lowest } NOT = { AND = { OR = { has_component = SSP_TRI_HANGAR_01_LOWEST has_component = FOC_V177_LOWEST_1C7DFF4FC0A4BB has_component = FOC_V177_LOWEST_2C79A119A3F7A3 has_component = FOC_V177_LOWEST_4296118ED6FDDD has_component = FOC_V177_LOWEST_96BB35A6F2FED3 has_component = FOC_V177_LOWEST_D2BAD5DC7FBB82 } OR = { has_component = SSP_TRI_HANGAR_02_LOWEST has_component = FOC_V177_LOWEST_04D5CD7EAD8FBD has_component = FOC_V177_LOWEST_48B6E769CD9587 has_component = FOC_V177_LOWEST_63D61651209803 } OR = { has_component = SSP_TRI_HANGAR_03_LOWEST has_component = FOC_V177_LOWEST_8C75E84103D4D6 has_component = FOC_V177_LOWEST_E57AC0C9C27007 } OR = { has_component = SSP_TRI_HANGAR_04_LOWEST has_component = FOC_V177_LOWEST_F40CA8C7DA44AD }  OR = { has_component = FOC_TRI_COMMAND_CORE has_component = FOC_V177_LOWEST_23B126989E27C8 has_component = FOC_V177_LOWEST_34749CAB3EFAE3 has_component = FOC_V177_LOWEST_5A76FE1AEBA6A9 has_component = FOC_V177_LOWEST_6DD5098BFEC4F6 has_component = FOC_V177_LOWEST_78502C3C5169B8 } } } } set_ship_design = { design = "NAME_FOC_TRADE_LUCREHULK_FOC_LOWEST" } }
+
+}
+else_if = { limit = { has_global_flag = foc_khan_strength_madness }
+if = { limit = { is_ship_size = corvette NOT = { AND = { has_component = SSP_TRI_HANGAR_01_ENHANCED OR = { has_component = FOC_TRI_COMMAND_CORE has_component = FOC_V177_LOWEST_23B126989E27C8 has_component = FOC_V177_LOWEST_34749CAB3EFAE3 has_component = FOC_V177_LOWEST_5A76FE1AEBA6A9 has_component = FOC_V177_LOWEST_6DD5098BFEC4F6 has_component = FOC_V177_LOWEST_78502C3C5169B8 } } } } set_ship_design = { design = "NAME_FOC_V236_CIS_CORVETTE_ENHANCED" } }
+if = { limit = { is_ship_size = destroyer NOT = { AND = { has_component = SSP_TRI_HANGAR_01_ENHANCED OR = { has_component = FOC_TRI_COMMAND_CORE has_component = FOC_V177_LOWEST_23B126989E27C8 has_component = FOC_V177_LOWEST_34749CAB3EFAE3 has_component = FOC_V177_LOWEST_5A76FE1AEBA6A9 has_component = FOC_V177_LOWEST_6DD5098BFEC4F6 has_component = FOC_V177_LOWEST_78502C3C5169B8 } } } } set_ship_design = { design = "NAME_FOC_V236_CIS_DESTROYER_ENHANCED" } }
+if = { limit = { is_ship_size = cruiser NOT = { AND = { has_component = SSP_TRI_HANGAR_01_ENHANCED has_component = SSP_TRI_HANGAR_02_ENHANCED OR = { has_component = FOC_TRI_COMMAND_CORE has_component = FOC_V177_LOWEST_23B126989E27C8 has_component = FOC_V177_LOWEST_34749CAB3EFAE3 has_component = FOC_V177_LOWEST_5A76FE1AEBA6A9 has_component = FOC_V177_LOWEST_6DD5098BFEC4F6 has_component = FOC_V177_LOWEST_78502C3C5169B8 } } } } set_ship_design = { design = "NAME_FOC_V236_CIS_CRUISER_ENHANCED" } }
+if = { limit = { is_ship_size = battleship NOT = { AND = { has_component = SSP_TRI_HANGAR_01_ENHANCED has_component = SSP_TRI_HANGAR_02_ENHANCED has_component = SSP_TRI_HANGAR_03_ENHANCED OR = { has_component = FOC_TRI_COMMAND_CORE has_component = FOC_V177_LOWEST_23B126989E27C8 has_component = FOC_V177_LOWEST_34749CAB3EFAE3 has_component = FOC_V177_LOWEST_5A76FE1AEBA6A9 has_component = FOC_V177_LOWEST_6DD5098BFEC4F6 has_component = FOC_V177_LOWEST_78502C3C5169B8 } } } } set_ship_design = { design = "NAME_FOC_V236_CIS_BATTLESHIP_ENHANCED" } }
+if = { limit = { OR = { is_ship_size = foc_trade_lucrehulk is_ship_size = foc_trade_lucrehulk_foc_lowest } NOT = { AND = { has_component = SSP_TRI_HANGAR_01_ENHANCED has_component = SSP_TRI_HANGAR_02_ENHANCED has_component = SSP_TRI_HANGAR_03_ENHANCED has_component = SSP_TRI_HANGAR_04_ENHANCED  OR = { has_component = FOC_TRI_COMMAND_CORE has_component = FOC_V177_LOWEST_23B126989E27C8 has_component = FOC_V177_LOWEST_34749CAB3EFAE3 has_component = FOC_V177_LOWEST_5A76FE1AEBA6A9 has_component = FOC_V177_LOWEST_6DD5098BFEC4F6 has_component = FOC_V177_LOWEST_78502C3C5169B8 } } } } set_ship_design = { design = "NAME_FOC_V236_CIS_LUCREHULK_ENHANCED" } }
+
+}
+else = {
+if = { limit = { is_ship_size = corvette NOT = { AND = { has_component = SSP_TRI_HANGAR_01_SG OR = { has_component = FOC_TRI_COMMAND_CORE has_component = FOC_V177_LOWEST_23B126989E27C8 has_component = FOC_V177_LOWEST_34749CAB3EFAE3 has_component = FOC_V177_LOWEST_5A76FE1AEBA6A9 has_component = FOC_V177_LOWEST_6DD5098BFEC4F6 has_component = FOC_V177_LOWEST_78502C3C5169B8 } } } } set_ship_design = { design = "NAME_FOC_V236_CIS_CORVETTE_SG" } }
+if = { limit = { is_ship_size = destroyer NOT = { AND = { has_component = SSP_TRI_HANGAR_01_SG OR = { has_component = FOC_TRI_COMMAND_CORE has_component = FOC_V177_LOWEST_23B126989E27C8 has_component = FOC_V177_LOWEST_34749CAB3EFAE3 has_component = FOC_V177_LOWEST_5A76FE1AEBA6A9 has_component = FOC_V177_LOWEST_6DD5098BFEC4F6 has_component = FOC_V177_LOWEST_78502C3C5169B8 } } } } set_ship_design = { design = "NAME_FOC_V236_CIS_DESTROYER_SG" } }
+if = { limit = { is_ship_size = cruiser NOT = { AND = { has_component = SSP_TRI_HANGAR_01_SG has_component = SSP_TRI_HANGAR_02_SG OR = { has_component = FOC_TRI_COMMAND_CORE has_component = FOC_V177_LOWEST_23B126989E27C8 has_component = FOC_V177_LOWEST_34749CAB3EFAE3 has_component = FOC_V177_LOWEST_5A76FE1AEBA6A9 has_component = FOC_V177_LOWEST_6DD5098BFEC4F6 has_component = FOC_V177_LOWEST_78502C3C5169B8 } } } } set_ship_design = { design = "NAME_FOC_V236_CIS_CRUISER_SG" } }
+if = { limit = { is_ship_size = battleship NOT = { AND = { has_component = SSP_TRI_HANGAR_01_SG has_component = SSP_TRI_HANGAR_02_SG has_component = SSP_TRI_HANGAR_03_SG OR = { has_component = FOC_TRI_COMMAND_CORE has_component = FOC_V177_LOWEST_23B126989E27C8 has_component = FOC_V177_LOWEST_34749CAB3EFAE3 has_component = FOC_V177_LOWEST_5A76FE1AEBA6A9 has_component = FOC_V177_LOWEST_6DD5098BFEC4F6 has_component = FOC_V177_LOWEST_78502C3C5169B8 } } } } set_ship_design = { design = "NAME_FOC_V236_CIS_BATTLESHIP_SG" } }
+if = { limit = { OR = { is_ship_size = foc_trade_lucrehulk is_ship_size = foc_trade_lucrehulk_foc_lowest } NOT = { AND = { has_component = SSP_TRI_HANGAR_01_SG has_component = SSP_TRI_HANGAR_02_SG has_component = SSP_TRI_HANGAR_03_SG has_component = SSP_TRI_HANGAR_04_SG  OR = { has_component = FOC_TRI_COMMAND_CORE has_component = FOC_V177_LOWEST_23B126989E27C8 has_component = FOC_V177_LOWEST_34749CAB3EFAE3 has_component = FOC_V177_LOWEST_5A76FE1AEBA6A9 has_component = FOC_V177_LOWEST_6DD5098BFEC4F6 has_component = FOC_V177_LOWEST_78502C3C5169B8 } } } } set_ship_design = { design = "NAME_FOC_TRADE_LUCREHULK" } }
+
+}
+}

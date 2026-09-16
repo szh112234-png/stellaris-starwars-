@@ -1,0 +1,98 @@
+namespace = foc_ai_capital
+
+country_event = {
+    id = foc_ai_capital.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = yes
+        OR = {
+            AND = {
+                foc_ai_capital_is_mc80_country = yes
+                OR = {
+                    NOT = { has_country_flag = foc_rebel_mc80_design_unlocked }
+                    NOT = { has_country_flag = foc_rebel_mc80_design_registered_v131 }
+                }
+            }
+            AND = {
+                foc_ai_capital_is_republic_venator_country = yes
+                has_technology = foc_tech_republic_venator
+                NOT = { has_country_flag = foc_republic_origin_kuat_venator_design_granted_v118e }
+            }
+            AND = {
+                foc_ai_capital_is_separatist_lucrehulk_country = yes
+                NOT = { has_country_flag = foc_ai_capital_lucrehulk_design_registered_v1 }
+            }
+            AND = {
+                foc_ai_capital_is_imperial_class_country = yes
+                has_technology = foc_tech_dark_legacy_imperial
+                NOT = { has_country_flag = foc_ai_capital_imperial_design_registered_v1 }
+            }
+            AND = {
+                foc_ai_capital_is_new_republic_country = yes
+                NOT = { has_country_flag = foc_ai_capital_nr_designs_registered_v1 }
+            }
+            AND = {
+                foc_ai_capital_is_pre_treaty_rebel_country = yes
+                NOT = { has_country_flag = foc_saga_rebel_nebula_granted }
+                has_global_flag = foc_republic_origin_both_death_stars_destroyed
+                exists = event_target:foc_sw_kuat_system
+                event_target:foc_sw_kuat_system = {
+                    exists = space_owner
+                    space_owner = { is_same_value = root }
+                }
+            }
+        }
+    }
+
+    immediate = {
+        foc_ai_capital_register_mc80_design = yes
+        foc_ai_capital_register_venator_design = yes
+        foc_ai_capital_register_lucrehulk_design = yes
+        foc_ai_capital_register_imperial_design = yes
+        foc_ai_capital_register_new_republic_designs = yes
+
+        if = {
+            limit = {
+                foc_ai_capital_is_pre_treaty_rebel_country = yes
+                NOT = { has_country_flag = foc_saga_rebel_nebula_granted }
+                has_global_flag = foc_republic_origin_both_death_stars_destroyed
+                exists = event_target:foc_sw_kuat_system
+                event_target:foc_sw_kuat_system = {
+                    exists = space_owner
+                    space_owner = { is_same_value = root }
+                }
+            }
+            foc_saga_grant_rebel_nebula = yes
+            refresh_auto_generated_ship_designs = yes
+        }
+    }
+}
+
+# V204: the Resistance inherits the late New Republic heavy-ship production
+# package. It receives only Nebula/Viscount authorization; MC80 remains excluded
+# by foc_ai_capital_is_rebel_mc80_country, and Imperial/Republic/CIS hulls retain
+# their own strict identity gates. This also repairs existing Resistance saves.
+country_event = {
+    id = foc_ai_capital.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        foc_ai_capital_is_resistance_country = yes
+        OR = {
+            NOT = { has_technology = tech_foc_rebel_nebula_blueprint }
+            NOT = { has_technology = tech_foc_rebel_viscount_blueprint }
+            NOT = { has_country_flag = foc_saga_new_republic_shipyard_access }
+            NOT = { has_country_flag = foc_saga_rebel_nebula_design_added }
+            NOT = { has_country_flag = foc_saga_nr_designs_added }
+        }
+    }
+
+    immediate = {
+        foc_saga_open_new_republic_shipyards = yes
+        refresh_auto_generated_ship_designs = yes
+    }
+}
+

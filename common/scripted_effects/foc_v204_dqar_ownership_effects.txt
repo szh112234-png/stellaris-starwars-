@@ -1,0 +1,24 @@
+# FOC V204 - system scope. Once D'Qar belongs to Leia's Resistance it must stop
+# advertising itself as a New Republic region/colony to legacy territory passes.
+foc_v204_finalize_dqar_resistance_markers = {
+    if = {
+        limit = { has_star_flag = foc_khan_rebel_dqar_home }
+
+        remove_star_flag = foc_sw_new_republic_cluster
+        if = {
+            limit = { exists = starbase }
+            starbase = {
+                remove_starbase_flag = foc_v109_dqar_new_republic_starbase
+                remove_starbase_flag = foc_sw_new_republic_starbase
+                set_starbase_flag = foc_khan_rebel_base_starbase
+            }
+        }
+        every_system_planet = {
+            remove_planet_flag = foc_sw_nr_colony
+            remove_planet_flag = foc_v109_dqar_new_republic_colony
+        }
+
+        set_global_flag = foc_v161_dqar_resistance_founded
+        set_global_flag = foc_saga_dqar_held_by_rebels
+    }
+}

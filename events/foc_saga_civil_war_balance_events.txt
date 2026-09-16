@@ -1,0 +1,244 @@
+namespace = foc_balance
+
+# =============================================================================
+# 银河内战平衡：义军六级成长 + 帝国治安成本
+# =============================================================================
+# 义军不再在某一个事件里突然拿到一大包加成，而是随里程碑逐级爬升；帝国则随着
+# 起义蔓延越来越难压住地方，并且必须在每个星系留驻舰队。
+# 全部挂月脉冲，用修正本身去重，读档安全。
+# =============================================================================
+
+# --- 义军：六级阶梯 -----------------------------------------------------------
+country_event = {
+    id = foc_balance.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        OR = {
+            has_country_flag = foc_republic_origin_imperial_rebel_country
+            has_country_flag = foc_khan_rebel_alliance_country
+            has_country_flag = foc_republic_origin_rebel_alliance_country
+        }
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+    }
+
+    immediate = {
+        # 一、星火——义军已经建立。
+        foc_saga_rebel_step = { STEP = foc_saga_rebel_step_1_spark }
+
+        # 二、斯卡里夫档案。
+        if = {
+            limit = { has_global_flag = foc_republic_origin_scarif_weakness_obtained }
+            foc_saga_rebel_step = { STEP = foc_saga_rebel_step_2_scarif }
+        }
+
+        # 三、死星一号被摧毁。
+        if = {
+            limit = { has_global_flag = foc_republic_origin_death_star_one_destroyed }
+            foc_saga_rebel_step = { STEP = foc_saga_rebel_step_3_yavin }
+        }
+
+        # 四、内环起义（双死星覆灭）。
+        if = {
+            limit = { has_global_flag = foc_republic_origin_both_death_stars_destroyed }
+            foc_saga_rebel_step = { STEP = foc_saga_rebel_step_4_uprising }
+        }
+
+        # 五、夸特船台易手。
+        if = {
+            limit = {
+                exists = event_target:foc_sw_kuat_system
+                event_target:foc_sw_kuat_system = {
+                    exists = space_owner
+                    space_owner = { is_same_value = root }
+                }
+            }
+            foc_saga_rebel_step = { STEP = foc_saga_rebel_step_5_kuat }
+        }
+
+        # 六、科洛桑陷落。
+        if = {
+            limit = {
+                exists = event_target:foc_sw_coruscant_system
+                event_target:foc_sw_coruscant_system = {
+                    exists = space_owner
+                    space_owner = { is_same_value = root }
+                }
+            }
+            foc_saga_rebel_step = { STEP = foc_saga_rebel_step_6_coruscant }
+        }
+    }
+}
+
+# --- 帝国：治安成本 -----------------------------------------------------------
+country_event = {
+    id = foc_balance.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        OR = {
+            has_country_flag = foc_republic_origin_empire_country
+            has_country_flag = foc_republic_origin_player_empire
+        }
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        OR = {
+            has_global_flag = foc_khan_rebel_spawned
+            has_global_flag = foc_republic_origin_empire_rebel_stage
+            has_global_flag = foc_republic_origin_death_star_one_destroyed
+        }
+    }
+
+    immediate = {
+        # V109: Jedha proves the Death Star is real. Until Death Star II is
+        # destroyed, fear suppresses all empire-wide unrest tiers. Once the
+        # second station falls, the illusion breaks and the harshest tier returns.
+        if = {
+            limit = {
+                has_country_flag = foc_v109_jedha_fear_order_established
+                NOT = { has_global_flag = foc_republic_origin_death_star_two_destroyed }
+            }
+            remove_modifier = foc_saga_imperial_unrest_1
+            remove_modifier = foc_saga_imperial_unrest_2
+            remove_modifier = foc_saga_imperial_unrest_3
+        }
+        else_if = {
+            limit = { has_global_flag = foc_republic_origin_death_star_two_destroyed }
+            foc_saga_imperial_unrest_set = { TIER = foc_saga_imperial_unrest_3 }
+        }
+        else_if = {
+            limit = { has_global_flag = foc_republic_origin_death_star_one_destroyed }
+            foc_saga_imperial_unrest_set = { TIER = foc_saga_imperial_unrest_2 }
+        }
+        else = {
+            foc_saga_imperial_unrest_set = { TIER = foc_saga_imperial_unrest_1 }
+        }
+
+        foc_saga_imperial_garrison_check = yes
+    }
+}
+
+# --- 非帝国所有者：清除继承的驻防惩罚 -----------------------------------------
+# V215: 银河帝国以外任何国家都不允许保留此 Debuff；战争占领中的帝国殖民地则由
+# foc_saga_imperial_garrison_check 根据 controller 立即清理。
+country_event = {
+    id = foc_balance.4
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        NOR = {
+            has_country_flag = foc_republic_origin_empire_country
+            has_country_flag = foc_republic_origin_player_empire
+        }
+        any_owned_planet = { has_modifier = foc_saga_planet_ungarrisoned }
+    }
+
+    immediate = {
+        every_owned_planet = {
+            limit = { has_modifier = foc_saga_planet_ungarrisoned }
+            remove_modifier = foc_saga_planet_ungarrisoned
+        }
+    }
+}
+
+# --- V215：非帝国占领时即时清除驻防惩罚 --------------------------------------
+# Root = occupied/conquered colony. This event is called by the occupation and
+# conquest on_actions so the UI does not have to wait for the next monthly pulse.
+planet_event = {
+    id = foc_balance.5
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_modifier = foc_saga_planet_ungarrisoned
+        OR = {
+            NOT = { exists = controller }
+            controller = {
+                NOR = {
+                    has_country_flag = foc_republic_origin_empire_country
+                    has_country_flag = foc_republic_origin_player_empire
+                }
+            }
+        }
+    }
+
+    immediate = { remove_modifier = foc_saga_planet_ungarrisoned }
+}
+
+# --- 银河条约：内战结束，治安成本清零 ------------------------------------------
+country_event = {
+    id = foc_balance.3
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        has_global_flag = foc_republic_origin_galactic_treaty
+        OR = {
+            has_modifier = foc_saga_imperial_unrest_1
+            has_modifier = foc_saga_imperial_unrest_2
+            has_modifier = foc_saga_imperial_unrest_3
+        }
+    }
+
+    immediate = { foc_saga_imperial_unrest_clear = yes }
+}
+
+# --- 帝国方的警告：第一次进入不良治安时说明规则 --------------------------------
+country_event = {
+    id = foc_balance.10
+    title = foc_balance.10.name
+    desc = foc_balance.10.desc
+    picture = GFX_foc_saga_prisoner_roundup
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        NOT = { has_country_flag = foc_saga_unrest_notice_shown }
+        OR = {
+            has_modifier = foc_saga_imperial_unrest_1
+            has_modifier = foc_saga_imperial_unrest_2
+            has_modifier = foc_saga_imperial_unrest_3
+        }
+    }
+
+    immediate = { set_country_flag = foc_saga_unrest_notice_shown }
+
+    option = { name = foc_balance.10.a }
+}
+
+# --- Player Order safety ------------------------------------------------------
+# Republic-origin Empires can become the playable First Order without carrying
+# origin_fop_first_order, so fop_origin.2 is not guaranteed to run for them.
+# Keep every human First/Final Order route clear of the AI crisis strength
+# packages. Difficulty affects the AI crisis, never the player's global stats.
+country_event = {
+    id = foc_balance.20
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        OR = {
+            has_country_flag = fop_player_first_order
+            has_country_flag = fop_player_final_order
+        }
+        OR = {
+            has_modifier = foc_khan_first_order_power
+            has_modifier = foc_khan_final_order_power
+            has_modifier = foc_khan_strength_lowest_first
+            has_modifier = foc_khan_strength_lowest_final
+            has_modifier = foc_khan_strength_initial_first
+            has_modifier = foc_khan_strength_initial_final
+            has_modifier = foc_khan_strength_intermediate_first
+            has_modifier = foc_khan_strength_intermediate_final
+            has_modifier = foc_khan_strength_high_first
+            has_modifier = foc_khan_strength_high_final
+            has_modifier = foc_khan_strength_madness_first
+            has_modifier = foc_khan_strength_madness_final
+        }
+    }
+
+    immediate = { foc_khan_clear_all_strength_modifiers = yes }
+}

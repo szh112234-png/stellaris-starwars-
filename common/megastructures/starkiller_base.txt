@@ -1,0 +1,317 @@
+@myk_starkiller_stage_time = 720
+
+myk_starkiller_base_site = {
+    entity = "construction_platform_entity"
+    construction_entity = "construction_platform_entity"
+    portrait = "GFX_myk_starkiller_base_megastructure" # 1.94: restored original big artwork; build-list icon handled by GFX_megastructure_* sprites instead
+    construction_blocks_and_blocked_by = self_type
+    place_entity_on_planet_plane = yes       # sit the structure on the chosen planet's plane
+    show_galactic_map_icon = yes
+    show_in_outliner = yes
+    build_time = @myk_starkiller_stage_time
+
+    resources = {
+        category = megastructures
+        cost = { alloys = 20000 influence = 500 }
+    }
+
+    potential = {
+        exists = owner
+        owner = {
+            is_ai = no
+            OR = {
+                has_country_flag = foc_dark_order_legacy_access
+                has_country_flag = foc_republic_origin_starkiller_only_access
+            }
+            has_technology = myk_tech_starkiller_base
+        }
+    }
+
+    # System-level build conditions.
+    possible = {
+        exists = starbase
+        custom_tooltip = {
+            fail_text = "requires_inside_border"
+            is_inside_border = from
+        }
+        custom_tooltip = {
+            fail_text = myk_starkiller_one_only
+            from = {
+                NOR = {
+                    any_owned_megastructure = { is_megastructure_type = myk_starkiller_base_site }
+                    any_owned_megastructure = { is_megastructure_type = myk_starkiller_base_final }
+                    any_owned_megastructure = { is_megastructure_type = fop_starkiller_base_site }
+                    any_owned_megastructure = { is_megastructure_type = fop_starkiller_base_final }
+                }
+            }
+        }
+    }
+
+    # Per-planet build conditions: must be an OWNED, COLONIZED habitable world.
+    placement_rules = {
+        planet_possible = {
+            custom_tooltip = {
+                fail_text = myk_starkiller_requires_owned_colony
+                is_colony = yes
+                exists = owner
+                owner = { is_same_value = from }
+            }
+            custom_tooltip = {
+                fail_text = "requires_no_anomaly"
+                NOT = { has_anomaly = yes }
+            }
+            custom_tooltip = {
+                fail_text = "requires_no_existing_megastructure"
+                has_any_megastructure = no
+            }
+        }
+    }
+
+    # Never built by the AI.
+    ai_weight = { factor = 0 }
+}
+
+# (Removed the intermediate "frame" and "core" stages - they were invisible
+#  no-model upgrade steps with no visual value. The base now goes straight from
+#  the construction site to the finished base in a single upgrade.)
+
+myk_starkiller_base_final = {
+    entity = "myk_starkiller_invisible_entity"
+    construction_entity = ""
+    portrait = "GFX_myk_starkiller_base_megastructure"
+    construction_blocks_and_blocked_by = self_type
+    upgrade_from = { myk_starkiller_base_site }
+    show_galactic_map_icon = yes
+    show_in_outliner = yes
+    build_time = @myk_starkiller_stage_time
+    resources = {
+        category = megastructures
+        cost = { alloys = 75000 sr_dark_matter = 2000 }
+        upkeep = { energy = 150 }
+    }
+
+    on_build_complete = {
+        # The structure is anchored on the planet the player chose at build time.
+        # Turn THAT planet into the Starkiller Base directly (no random pick).
+        fromfrom = {
+            foc_v1717_record_completed_starkiller = yes
+
+            save_global_event_target_as = myk_starkiller_last_completed_megastructure
+            planet = {
+                save_global_event_target_as = myk_starkiller_base_planet_flag
+                set_planet_flag = myk_starkiller_base_planet_flag
+                # Defence + engineering research buffs for the finished installation.
+                # Shared with the player origin version so both behave identically.
+                add_modifier = {
+                    modifier = foc_starkiller_base_world
+                    days = -1
+                }
+                set_planet_entity = {
+                    entity = "myk_starkillerbase_planet_entity"
+                    picture = pc_arctic
+                }
+            }
+        }
+        # FOC 2.69: use Kuat's fixed global_ship_design method instead of the
+        # starbase auto-designer. The crisis station is spawned as a stationary
+        # shipclass_starbase with every slot written explicitly.
+        from = {
+            # V17.17: completion opens Imperial weapon research; no weapon technology is awarded.
+            if = { limit = { has_origin = origin_fop_first_order } set_country_flag = foc_v1717_starkiller_arsenal_unlocked }
+            # V17.17c: only the finished base unlocks Imperial strategic aviation.
+            country_event = { id = foc_v1717c_aircraft.2 }
+
+            give_technology = { tech = tech_battleships message = no }
+            if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } }
+            if = { limit = { is_ai = yes } give_technology = { tech = tech_ssp_imperial_hyperspace message = no } }
+            set_country_flag = ssp_fighter_group_empire
+            set_country_flag = ssp_strength_sg
+            set_country_flag = ssp_size_original
+            remove_country_flag = ssp_strength_balanced
+            remove_country_flag = ssp_strength_enhanced
+            remove_country_flag = ssp_strength_extreme
+            foc_sync_ssp_strength_to_main_difficulty = yes
+            remove_country_flag = ssp_size_2x
+            remove_country_flag = ssp_size_5x
+            remove_country_flag = ssp_size_10x
+        }
+
+        create_fleet = {
+            name = "NAME_FOC_KHAN_STARKILLER_FIXED_FLEET"
+            settings = {
+                spawn_debris = no
+                can_disband = no
+            }
+            effect = {
+                set_owner = from
+                # V15: exact inherited Starkiller equipment before both difficulty variants.
+                # Dark Legacy may be inherited by another faction; research-card gates remain unchanged.
+                owner = {
+                    if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+                    if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+                    if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_emp_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_2 message = no } } }
+                    if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_emp_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_heavy_3 message = no } } }
+                    if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+                    if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+                    if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+                    if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+                    if = { limit = { foc_v14_advanced_arsenal_era_allowed = yes NOT = { has_technology = foc_tech_emp_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_emp_sphat_2 message = no } } }
+                    if = { limit = { NOT = { has_technology = foc_tech_std_pd_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_pd_1 message = no } } }
+                    if = { limit = { NOT = { has_technology = foc_tech_std_pd_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_2 message = no } } }
+                    if = { limit = { NOT = { has_technology = foc_tech_std_pd_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_std_pd_3 message = no } } }
+                    if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+                }
+                set_fleet_flag = foc_khan_starkiller_fixed_station_fleet
+                if = {
+                    limit = { has_global_flag = foc_khan_strength_lowest }
+                    create_ship = {
+                        name = "NAME_FOC_KHAN_STARKILLER_FIXED_STATION"
+                        design = "NAME_FOC_KHAN_STARKILLER_FIXED_STATION_FOC_LOWEST"
+                        effect = {
+                            set_ship_flag = foc_khan_starkiller_fixed_station
+                            set_ship_flag = foc_khan_starkiller_base_survives
+
+                        }
+                    }
+                }
+                else = {
+                    create_ship = {
+                        name = "NAME_FOC_KHAN_STARKILLER_FIXED_STATION"
+                        design = "NAME_FOC_KHAN_STARKILLER_FIXED_STATION"
+                        effect = {
+                            set_ship_flag = foc_khan_starkiller_fixed_station
+                            set_ship_flag = foc_khan_starkiller_base_survives
+                        }
+                    }
+                }
+                set_location = { target = fromfrom distance = -1 angle = 0 }
+            }
+        }
+
+        from = {
+            set_country_flag = foc_khan_starkiller_owner_enemy
+            if = {
+                limit = { is_subject = yes }
+                set_subject_of = { who = none }
+                remove_country_flag = foc_khan_submitted_first_order
+                remove_country_flag = foc_khan_submitted_final_order
+                remove_country_flag = rebellion_cooldown
+            }
+            country_event = { id = myk_starkiller.10 }
+            country_event = { id = foc_khan.1600 }
+        }
+    }
+
+    # The crisis defensive station is spawned explicitly in on_build_complete using
+    # NAME_FOC_KHAN_STARKILLER_FIXED_STATION. No automatic starbase design is created.
+
+    scripted_action = { myk_starkiller_dyson_shoot }
+
+    ai_weight = { factor = 0 }
+}
+
+myk_starkiller_sun_drain = {
+    entity = "myk_starkiller_invisible_entity"  # sun-drain animation removed; kept invisible so star-drain logic still works without the crashing effect
+    construction_entity = ""
+    hide_name = yes
+    portrait = "GFX_megastructure_construction_background"
+    build_time = 1   # FIX: 0 is rejected by the engine ("build time shouldn't be 0. Setting to 1."); these are instant script-spawned markers anyway
+    upgrade_desc = hide
+    potential = { always = no }
+    show_in_outliner = no
+    show_galactic_map_icon = no
+    ai_weight = { factor = 0 }
+    # Empty build callbacks, matching the companion mod's working definitions.
+    # Without these, spawn_megastructure can hit an undefined build callback
+    # path that crashes when other mods modify the megastructure system.
+    possible = { }
+    on_build_start = { }
+    on_build_cancel = { }
+    on_build_complete = { }
+}
+
+myk_starkiller_fire_origin_marker = {
+    entity = "myk_starkiller_invisible_entity" # keep the marker/event target, hide only the unwanted origin red line
+    construction_entity = ""
+    hide_name = yes
+    portrait = "GFX_megastructure_construction_background"
+    build_time = 1   # FIX: 0 is rejected by the engine ("build time shouldn't be 0. Setting to 1."); these are instant script-spawned markers anyway
+    upgrade_desc = hide
+    potential = { always = no }
+    show_in_outliner = no
+    show_galactic_map_icon = no
+    ai_weight = { factor = 0 }
+    # Empty build callbacks, matching the companion mod's working definitions.
+    # Without these, spawn_megastructure can hit an undefined build callback
+    # path that crashes when other mods modify the megastructure system.
+    possible = { }
+    on_build_start = { }
+    on_build_cancel = { }
+    on_build_complete = { }
+}
+
+myk_starkiller_fire_target_marker = {
+    entity = "myk_starkiller_target_impact_entity"
+    construction_entity = ""
+    hide_name = yes
+    portrait = "GFX_megastructure_construction_background"
+    build_time = 1   # FIX: 0 is rejected by the engine ("build time shouldn't be 0. Setting to 1."); these are instant script-spawned markers anyway
+    upgrade_desc = hide
+    potential = { always = no }
+    show_in_outliner = no
+    show_galactic_map_icon = no
+    ai_weight = { factor = 0 }
+    # Empty build callbacks, matching the companion mod's working definitions.
+    # Without these, spawn_megastructure can hit an undefined build callback
+    # path that crashes when other mods modify the megastructure system.
+    possible = { }
+    on_build_start = { }
+    on_build_cancel = { }
+    on_build_complete = { }
+}
+
+myk_starkiller_beacon_target_marker = {
+    entity = "myk_starkiller_beacon_target_impact_entity"
+    construction_entity = ""
+    hide_name = yes
+    portrait = "GFX_megastructure_construction_background"
+    build_time = 1   # FIX: 0 is rejected by the engine ("build time shouldn't be 0. Setting to 1."); these are instant script-spawned markers anyway
+    upgrade_desc = hide
+    potential = { always = no }
+    show_in_outliner = no
+    show_galactic_map_icon = no
+    ai_weight = { factor = 0 }
+    # Empty build callbacks, matching the companion mod's working definitions.
+    # Without these, spawn_megastructure can hit an undefined build callback
+    # path that crashes when other mods modify the megastructure system.
+    possible = { }
+    on_build_start = { }
+    on_build_cancel = { }
+    on_build_complete = { }
+}
+
+
+# (Removed obsolete one-shot "target beacon" megastructure. It belonged to the
+#  old pre-Dyson-Gun firing system and is fully superseded by the scripted_action
+#  fire button on the finished base. Its entity, localisation and the now-unused
+#  myk_starkiller.300 event chain have also been cleaned up.)
+
+myk_starkiller_beacon_origin_marker = {
+    entity = "myk_starkiller_invisible_entity" # 1.90: origin-side red line hidden; marker/event target kept so firing logic is untouched
+    construction_entity = ""
+    hide_name = yes
+    portrait = "GFX_megastructure_construction_background"
+    build_time = 1   # FIX: 0 is rejected by the engine ("build time shouldn't be 0. Setting to 1."); these are instant script-spawned markers anyway
+    upgrade_desc = hide
+    potential = { always = no }
+    show_in_outliner = no
+    show_galactic_map_icon = no
+    ai_weight = { factor = 0 }
+    # Empty build callbacks, matching the companion mod's working definitions.
+    # Without these, spawn_megastructure can hit an undefined build callback
+    # path that crashes when other mods modify the megastructure system.
+    possible = { }
+    on_build_start = { }
+    on_build_cancel = { }
+    on_build_complete = { }
+}

@@ -1,0 +1,206 @@
+portraits = {
+
+	rakghoul_01 = { entity = "portrait_molluscoid_14_entity" clothes_selector = "no_texture" attachment_selector = "no_texture" greeting_sound = "molluscoid_01_greetings" 
+		character_textures = {
+			"gfx/models/portraits/rakghoul/rakghoul_massive_14_black.dds"
+			"gfx/models/portraits/rakghoul/rakghoul_massive_14_yellow.dds"
+			"gfx/models/portraits/rakghoul/rakghoul_massive_14_purple.dds"
+		}
+	}
+	nekghoul_01 = { entity = "portrait_molluscoid_14_entity" clothes_selector = "no_texture" attachment_selector = "no_texture" greeting_sound = "molluscoid_01_greetings"
+		character_textures = { "gfx/models/portraits/rakghoul/nekghoul_massive_14.dds" }
+	}
+	
+	#QUERMIAN
+	
+	quermian_01 = { entity = "portrait_quermian_01_entity" clothes_selector = "quermian_slender_clothes_02" attachment_selector = "no_texture" greeting_sound = "humanoid_portrait_a_male"
+		character_textures = {
+			"gfx/models/portraits/quermian/quermian_slender_02_red.dds"
+			"gfx/models/portraits/quermian/quermian_slender_02_yellow.dds"
+			"gfx/models/portraits/quermian/quermian_slender_02_white.dds"
+		}
+	}
+	
+}
+
+portrait_groups = {
+	rakghoul = {
+		default = rakghoul_01
+		game_setup = { #will run with a limited country scope. species and government is set but the country does not actually exist
+			add = {
+				trigger = {
+					ruler = {
+						OR = {
+							gender = male
+							gender = indeterminable
+						}
+					}
+				}
+				portraits = {
+					rakghoul_01
+					nekghoul_01
+					
+				}
+			}
+			add = {
+				trigger = {
+					ruler = {
+						OR = {
+							gender = female
+							gender = indeterminable
+						}
+					}
+				}
+				portraits = {
+					rakghoul_01
+					nekghoul_01
+					
+				}
+			}
+		}		
+		
+		#species scope
+		species = { #generic portrait for a species
+			add = {
+				portraits = {
+					rakghoul_01
+				}
+			}
+		}		
+		
+		#pop scope
+		pop = { #for a specific pop
+			add = {
+				portraits = {
+					rakghoul_01
+				}
+			}
+		}
+		
+		#leader scope
+		leader = { #scientists, generals, admirals, governor
+			add = {
+				trigger = {
+					gender = male
+				}
+				portraits = {
+					rakghoul_01
+					nekghoul_01
+				}
+			}
+			add = {
+				trigger = {
+					gender = female
+				}
+				portraits = {
+					rakghoul_01
+					nekghoul_01
+				}
+			}
+		}
+
+			
+		#leader scope 
+		ruler = {
+			add = {
+				trigger = {
+					gender = male
+				}
+				portraits = {
+					nekghoul_01
+				}
+			}
+			add = {
+				trigger = {
+					gender = female
+				}
+				portraits = {
+					nekghoul_01
+				}
+			}
+		}
+	}	
+}
+
+portrait_groups = {
+	quermian = {
+		default = quermian_01
+		game_setup = { #will run with a limited country scope. species and government is set but the country does not actually exist
+			add = {
+				trigger = {
+					ruler = { gender = male }
+				}
+				portraits = {
+					quermian_01
+				}
+			}
+			add = {
+				trigger = {
+					ruler = { gender = female }
+				}
+				portraits = {
+					quermian_01
+				}
+			}
+		}		
+		
+		#species scope
+		species = { #generic portrait for a species
+			add = {
+				portraits = {
+					quermian_01
+				}
+			}
+		}		
+		
+		#pop scope
+		pop = { #for a specific pop
+			add = {
+				portraits = {
+					quermian_01
+				}
+			}
+		}
+		
+		#leader scope
+		leader = { #scientists, generals, admirals, governor
+			add = {
+				trigger = {
+					gender = male
+				}
+				portraits = {
+					quermian_01
+				}
+			}
+			add = {
+				trigger = {
+					gender = female
+				}
+				portraits = {
+					quermian_01
+				}
+			}
+		}
+
+			
+		#leader scope 
+		ruler = {
+			add = {
+				trigger = {
+					gender = male
+				}
+				portraits = {
+					quermian_01
+				}
+			}
+			add = {
+				trigger = {
+					gender = female
+				}
+				portraits = {
+					quermian_01
+				}
+			}
+		}
+	}	
+}

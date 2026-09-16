@@ -1,0 +1,74 @@
+namespace = foc_giga_coruscant_compat
+
+# New-game bootstrap.  Delay one day so FOC's same-tick map initializer has
+# already created Coruscant and the New Republic.
+country_event = {
+    id = foc_giga_coruscant_compat.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_country_type = global_event
+        NOT = { has_global_flag = foc_giga_coruscant_guard_scheduled_312b }
+    }
+
+    immediate = {
+        set_global_flag = foc_giga_coruscant_guard_scheduled_312b
+        country_event = { id = foc_giga_coruscant_compat.2 days = 1 }
+    }
+}
+
+# Load-order-independent new-game guard.  Giga's weak-Dyson event rejects a
+# system containing an uncolonised colonisable world.  Coruscant's unique
+# size-11 barren planet is therefore made continental only for the short Giga
+# game-start window, then returned to its canonical class.  Giga's original
+# event remains untouched and can place the same enhancement in another valid
+# Fallen-Empire system.
+country_event = {
+    id = foc_giga_coruscant_compat.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    immediate = {
+        random_system = {
+            limit = {
+                has_star_flag = foc_sw_coruscant_home
+                exists = owner
+                owner = { has_country_flag = foc_sw_new_republic_country }
+            }
+            random_system_planet = {
+                limit = {
+                    is_star = no
+                    is_moon = no
+                    is_colony = no
+                    planet_size = 11
+                    is_planet_class = pc_barren
+                }
+                set_planet_flag = foc_giga_coruscant_temporary_guard_world_312b
+                change_pc = pc_continental
+            }
+        }
+        country_event = { id = foc_giga_coruscant_compat.3 days = 10 }
+    }
+}
+
+# Restore the temporary guard after Giga's deterministic day-1 plus day-2
+# Fallen-Empire enhancement chain has completed.  This also runs harmlessly
+# when Giga is not installed.
+country_event = {
+    id = foc_giga_coruscant_compat.3
+    hide_window = yes
+    is_triggered_only = yes
+
+    immediate = {
+        random_system = {
+            limit = { has_star_flag = foc_sw_coruscant_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_giga_coruscant_temporary_guard_world_312b }
+                change_pc = pc_barren
+                remove_planet_flag = foc_giga_coruscant_temporary_guard_world_312b
+            }
+        }
+        set_global_flag = foc_giga_coruscant_guard_finished_312b
+    }
+}

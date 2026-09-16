@@ -1,0 +1,18 @@
+# V209 Clone Wars reinforcement cutoff.
+# Country scope. Used by the CIS opening, story and annual support packages.
+foc_v209_cis_reinforcements_allowed = {
+    NOT = { has_global_flag = foc_v209_cis_reinforcement_cutoff }
+    NOT = {
+        any_country = {
+            has_country_flag = foc_republic_origin_republic_country
+            OR = {
+                has_country_flag = foc_republic_origin_order_66_pending
+                has_country_flag = foc_republic_origin_palpatine_plot_complete
+                any_situation = {
+                    is_situation_type = situation_foc_republic_origin_palpatine_plot
+                    situation_progress >= 140
+                }
+            }
+        }
+    }
+}

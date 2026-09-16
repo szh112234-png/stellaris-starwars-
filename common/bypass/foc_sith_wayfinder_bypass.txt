@@ -1,0 +1,32 @@
+foc_sith_wayfinder = {
+    name = FOC_SITH_WAYFINDER_GATE
+    is_pathfind = yes
+    uses_action = no
+    requires_exploration = no
+    always_active = yes
+    windup_time = 0
+    winddown_time = 0
+    ftl_multiplier = 0
+    extends_sensors = no
+    icon_frame = 25
+    remember_instances = no
+    connection_type = scripted_connection
+    animation_time = 1
+    ftl_ship_effect = "gateway_ftl_ship_effect_entity"
+    ftl_bypass_effect = "gateway_ftl_bypass_effect_entity"
+
+    country_can_use = {
+        OR = {
+            has_country_flag = foc_sith_wayfinder_route_known
+            has_relic = r_foc_sith_wayfinder
+            has_country_flag = foc_khan_final_order_country
+            has_country_flag = fop_player_final_order
+            is_country_type = foc_final_order_crisis_country
+        }
+    }
+
+    scripted_connection = {
+        node = { has_star_flag = foc_sw_jakku_home }
+        nexus = { has_star_flag = foc_khan_exegol_home }
+    }
+}

@@ -1,0 +1,210 @@
+namespace = foc_v14_arsenal
+country_event = {
+id = foc_v14_arsenal.2
+hide_window = yes
+is_triggered_only = yes
+trigger = { has_country_flag = foc_v14_rebel_fleets_pending foc_v14_advanced_arsenal_era_allowed = yes exists = event_target:foc_khan_rebel_system }
+immediate = {
+remove_country_flag = foc_v14_rebel_fleets_pending
+event_target:foc_khan_rebel_system = {
+if = {
+                        limit = { has_global_flag = foc_khan_fleet_scale_low }
+                        create_fleet = {
+                            name = "FOC_KHAN_REBEL_HOME_FLEET"
+                            effect = {
+                                set_owner = event_target:foc_khan_rebel_alliance
+                                # V15 full-armor prerequisite: foc_v15_defense_d6765d3cc9c2.
+                                owner = {
+                                    if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+                                }
+                                
+                                # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_2 message = no } } }
+}
+                                
+
+                                
+
+                                
+                                set_location = event_target:foc_khan_rebel_capital
+                                create_ship = { name = "Amity" design = "NAME_FOC_REBEL_NEBULA" upgradable = no }
+                                while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_NEBULA" upgradable = no } }
+                                while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_MC80" graphical_culture = rebel_01 upgradable = no } }
+                                create_ship = { name = random design = "NAME_FOC_REBEL_MC30" graphical_culture = rebel_01 upgradable = no }
+                                while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_CR90" graphical_culture = rebel_01 upgradable = no } }
+                                if = { limit = { exists = event_target:foc_khan_rebel_ackbar } assign_leader = event_target:foc_khan_rebel_ackbar }
+                                foc_khan_rebel_bonus_nebula_by_tier = yes
+                                set_fleet_flag = foc_khan_rebel_attack_fleet
+                                set_fleet_stance = aggressive
+                                set_aggro_range_measure_from = self
+                                set_aggro_range = 9999
+                            }
+                            settings = { can_upgrade = no can_disband = yes can_change_composition = no spawn_debris = yes ai_ignore_strength = yes }
+                        }
+                        while = {
+                            count = 2
+                            create_fleet = {
+                                name = "FOC_KHAN_REBEL_FLEET"
+                                effect = {
+                                    set_owner = event_target:foc_khan_rebel_alliance
+                                    # V15 full-armor prerequisite: foc_v15_defense_83653fabd460.
+                                    owner = {
+                                        if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+                                    }
+                                    
+                                    # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_2 message = no } } }
+}
+                                    
+
+                                    
+
+                                    
+                                    set_location = event_target:foc_khan_rebel_capital
+                                    create_ship = { name = random design = "NAME_FOC_REBEL_NEBULA" upgradable = no }
+                                    create_ship = { name = random design = "NAME_FOC_REBEL_NEBULA" upgradable = no }
+                                    create_ship = { name = random design = "NAME_FOC_REBEL_MC80" graphical_culture = rebel_01 upgradable = no }
+                                    create_ship = { name = random design = "NAME_FOC_REBEL_MC30" graphical_culture = rebel_01 upgradable = no }
+                                    while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_CR90" graphical_culture = rebel_01 upgradable = no } }
+                                    foc_khan_rebel_bonus_nebula_by_tier = yes
+                                    set_fleet_flag = foc_khan_rebel_attack_fleet
+                                    set_fleet_stance = aggressive
+                                    set_aggro_range_measure_from = self
+                                    set_aggro_range = 9999
+                                }
+                                settings = { can_upgrade = no can_disband = yes can_change_composition = no spawn_debris = yes ai_ignore_strength = yes }
+                            }
+                        }
+                    }
+                    else = {
+                        create_fleet = {
+                            name = "FOC_KHAN_REBEL_HOME_FLEET"
+                            effect = {
+                                set_owner = event_target:foc_khan_rebel_alliance
+                                # V15 full-armor prerequisite: foc_v15_defense_fe0e4284ddd5.
+                                owner = {
+                                    if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+                                }
+                                
+                                # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_2 message = no } } }
+}
+                                
+
+                                
+
+                                
+                                set_location = event_target:foc_khan_rebel_capital
+                                while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_NEBULA" upgradable = no } }
+                                while = { count = 6 create_ship = { name = random design = "NAME_FOC_REBEL_NEBULA" upgradable = no } }
+                                while = { count = 4 create_ship = { name = random design = "NAME_FOC_REBEL_MC80" graphical_culture = rebel_01 upgradable = no } }
+                                while = { count = 4 create_ship = { name = random design = "NAME_FOC_REBEL_MC30" graphical_culture = rebel_01 upgradable = no } }
+                                while = { count = 8 create_ship = { name = random design = "NAME_FOC_REBEL_CR90" graphical_culture = rebel_01 upgradable = no } }
+                                if = { limit = { exists = event_target:foc_khan_rebel_ackbar } assign_leader = event_target:foc_khan_rebel_ackbar }
+                                foc_khan_rebel_bonus_nebula_by_tier = yes
+                                set_fleet_flag = foc_khan_rebel_attack_fleet
+                                set_fleet_stance = aggressive
+                                set_aggro_range_measure_from = self
+                                set_aggro_range = 9999
+                            }
+                            settings = { can_upgrade = no can_disband = yes can_change_composition = no spawn_debris = yes ai_ignore_strength = yes }
+                        }
+                        # Six capital-heavy groups replace sixteen small-ship swarms.
+                        while = {
+                            count = 6
+                            create_fleet = {
+                                name = "FOC_KHAN_REBEL_FLEET"
+                                effect = {
+                                    set_owner = event_target:foc_khan_rebel_alliance
+                                    # V15 full-armor prerequisite: foc_v15_defense_33897dfb4bba.
+                                    owner = {
+                                        if = { limit = { NOT = { has_technology = foc_tech_swgs_crisis_point_defence } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_swgs_crisis_point_defence message = no } } }
+                                    }
+                                    
+                                    # V14: exact faction technology prerequisites before fixed-design construction.
+owner = {
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining } } give_technology = { tech = foc_tech_tibanna_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_1 } } give_technology = { tech = foc_tech_tibanna_mining_1 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_tibanna_mining_2 } } give_technology = { tech = foc_tech_tibanna_mining_2 message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_kyber_mining } } give_technology = { tech = foc_tech_kyber_mining message = no } }
+if = { limit = { NOT = { has_technology = foc_tech_std_heavy_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_heavy_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_heavy_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_heavy_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_quad_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_quad_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_2 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_quad_3 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_quad_3 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_sphat_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_sphat_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_sphat_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_sphat_2 message = no } } }
+if = { limit = { NOT = { has_technology = foc_tech_std_turbo_1 } } if = { limit = { foc_v1716_republic_start_arsenal_allowed = yes } give_technology = { tech = foc_tech_std_turbo_1 message = no } } }
+if = { limit = { foc_v14_can_research_rebel_arsenal = yes NOT = { has_technology = foc_tech_reb_turbo_2 } } if = { limit = { is_ai = yes } give_technology = { tech = foc_tech_reb_turbo_2 message = no } } }
+}
+                                    
+
+                                    
+
+                                    
+                                    set_location = event_target:foc_khan_rebel_capital
+                                    create_ship = { name = random design = "NAME_FOC_REBEL_NEBULA" upgradable = no }
+                                    while = { count = 3 create_ship = { name = random design = "NAME_FOC_REBEL_NEBULA" upgradable = no } }
+                                    while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_MC80" graphical_culture = rebel_01 upgradable = no } }
+                                    while = { count = 2 create_ship = { name = random design = "NAME_FOC_REBEL_MC30" graphical_culture = rebel_01 upgradable = no } }
+                                    while = { count = 4 create_ship = { name = random design = "NAME_FOC_REBEL_CR90" graphical_culture = rebel_01 upgradable = no } }
+                                    foc_khan_rebel_bonus_nebula_by_tier = yes
+                                    set_fleet_flag = foc_khan_rebel_attack_fleet
+                                    set_fleet_stance = aggressive
+                                    set_aggro_range_measure_from = self
+                                    set_aggro_range = 9999
+                                }
+                                settings = { can_upgrade = no can_disband = yes can_change_composition = no spawn_debris = yes ai_ignore_strength = yes }
+                            }
+                        }
+                    }
+
+                    # FOC 2.84: one dedicated capital defence fleet. It has no attack-fleet
+                    # flag and is therefore never sent out by foc_khan_rebel.30/.31.
+                    foc_khan_spawn_rebel_guard_fleet_284 = yes
+}
+}
+}

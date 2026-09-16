@@ -1,0 +1,224 @@
+# This is a template which multiple species can use. 
+  
+naga_female_hair_01 = {
+	default = "gfx/models/portraits/oldsithempire/x_female_hair_cleosith_01.dds"	## GOLD CLEO HELMET - RAVEN		
+	
+	game_setup = {#will run with a limited country scope. species and government is set but the country does not actually exist
+		default = "gfx/models/portraits/oldsithempire/x_female_hair_cleosith_01.dds"	## GOLD CLEO HELMET - RAVEN		
+	}
+	
+	#species scope
+	species = { #generic portrait for a species
+		default = "gfx/models/portraits/oldsithempire/x_female_hair_cleosith_01.dds"	## GOLD CLEO HELMET - RAVEN		
+	}
+	
+	#pop scope
+	pop = { #for a specific pop
+	
+		default = "gfx/models/portraits/human/human_female_hair_black_style_01.dds"
+
+		random = {
+			list = {	
+				"gfx/models/portraits/oldsithempire/x_female_hair_carter_01.dds"	## CARTER CUT - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_female_hair_carter_01.dds"	## CARTER CUT - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_female_hair_carter_01.dds"	## CARTER CUT - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_female_hair_carter_01.dds"	## CARTER CUT - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_female_hair_carter_01.dds"	## CARTER CUT - RAVEN					
+				"gfx/models/portraits/oldsithempire/x_female_hair_carter_05.dds"	## CARTER CUT - BURGUNDY	
+				"gfx/models/portraits/oldsithempire/x_female_hair_carter_05.dds"	## CARTER CUT - BURGUNDY
+				"gfx/models/portraits/oldsithempire/x_female_hair_carter_06.dds"	## CARTER CUT - CRIMSON
+				
+				"gfx/models/portraits/oldsithempire/x_female_hair_sithsoldier_01.dds"	## SOLDIER CAP - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_female_hair_sithsoldier_02.dds"	## SOLDIER CAP - CRIMSON
+				
+				"gfx/models/portraits/oldsithempire/x_female_hair_sculptedhelmetbob_01.dds"	## SCULPTED HELMET - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_female_hair_sculptedhelmetbob_02.dds"	## SCULPTED HELMET - CRIMSON	
+
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleo_01.dds"	## GOLD CLEO - RAVEN		
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleo_01.dds"	## GOLD CLEO - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleo_01.dds"	## GOLD CLEO - RAVEN
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleo_01.dds"	## GOLD CLEO - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleo_01.dds"	## GOLD CLEO - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleo_02.dds"	## GOLD CLEO - CRIMSON				
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleo_02.dds"	## GOLD CLEO - CRIMSON	
+
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleosilver_01.dds"	## SILVER CLEO - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleosilver_02.dds"	## SILVER CLEO - CRIMSON		
+
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleosith_01.dds"	## GOLD CLEO HELMET - RAVEN		
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleosith_02.dds"	## GOLD CLEO HELMET - CRIMSON	
+
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleosith_03.dds"	## SILVER CLEO HELMET - RAVEN			
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleosith_04.dds"	## SILVER CLEO HELMET - CRIMSON		
+
+				"gfx/models/portraits/oldsithempire/x_female_hair_unkempt_02.dds"	## UNKEMPT HAIR - RAVEN					
+			}
+		}	
+	}
+	
+	#leader scope
+	leader = { #scientists, generals, admirals, governor
+	
+		random = {
+			trigger = { leader_class = general }
+			list = {
+				"gfx/models/portraits/oldsithempire/x_female_hair_sithsoldier_01.dds"	## SOLDIER CAP - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_female_hair_sithsoldier_02.dds"	## SOLDIER CAP - CRIMSON
+				
+				"gfx/models/portraits/oldsithempire/x_female_hair_sculptedhelmetbob_01.dds"	## SCULPTED HELMET - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_female_hair_sculptedhelmetbob_02.dds"	## SCULPTED HELMET - CRIMSON		
+
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleosith_01.dds"	## GOLD CLEO HELMET - RAVEN		
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleosith_02.dds"	## GOLD CLEO HELMET - CRIMSON	
+
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleosith_03.dds"	## SILVER CLEO HELMET - RAVEN			
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleosith_04.dds"	## SILVER CLEO HELMET - CRIMSON					
+
+			}
+		}		
+		
+		random = {
+			trigger = { leader_class = admiral }
+			list = {
+				"gfx/models/portraits/oldsithempire/x_female_hair_sithsoldier_01.dds"	## SOLDIER CAP - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_female_hair_sithsoldier_02.dds"	## SOLDIER CAP - CRIMSON
+				
+				"gfx/models/portraits/oldsithempire/x_female_hair_sculptedhelmetbob_01.dds"	## SCULPTED HELMET - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_female_hair_sculptedhelmetbob_02.dds"	## SCULPTED HELMET - CRIMSON	
+
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleosith_01.dds"	## GOLD CLEO HELMET - RAVEN		
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleosith_02.dds"	## GOLD CLEO HELMET - CRIMSON	
+				
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleosith_03.dds"	## SILVER CLEO HELMET - RAVEN			
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleosith_04.dds"	## SILVER CLEO HELMET - CRIMSON					
+
+
+
+			}
+		}	
+		
+		random = {
+			trigger = { leader_class = scientist }
+			list = {
+				"gfx/models/portraits/oldsithempire/x_female_hair_carter_01.dds"	## CARTER CUT - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_female_hair_carter_01.dds"	## CARTER CUT - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_female_hair_carter_01.dds"	## CARTER CUT - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_female_hair_carter_01.dds"	## CARTER CUT - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_female_hair_carter_01.dds"	## CARTER CUT - RAVEN					
+				"gfx/models/portraits/oldsithempire/x_female_hair_carter_05.dds"	## CARTER CUT - BURGUNDY	
+				"gfx/models/portraits/oldsithempire/x_female_hair_carter_05.dds"	## CARTER CUT - BURGUNDY
+				"gfx/models/portraits/oldsithempire/x_female_hair_carter_06.dds"	## CARTER CUT - CRIMSON
+			
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleo_01.dds"	## GOLD CLEO - RAVEN		
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleo_01.dds"	## GOLD CLEO - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleo_01.dds"	## GOLD CLEO - RAVEN
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleo_01.dds"	## GOLD CLEO - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleo_01.dds"	## GOLD CLEO - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleo_02.dds"	## GOLD CLEO - CRIMSON				
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleo_02.dds"	## GOLD CLEO - CRIMSON	
+
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleosilver_01.dds"	## SILVER CLEO - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleosilver_02.dds"	## SILVER CLEO - CRIMSON
+
+				"gfx/models/portraits/oldsithempire/x_female_hair_unkempt_02.dds"	## UNKEMPT HAIR - RAVEN		
+				"gfx/models/portraits/oldsithempire/x_female_hair_unkempt_02.dds"	## UNKEMPT HAIR - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_female_hair_unkempt_02.dds"	## UNKEMPT HAIR - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_female_hair_unkempt_02.dds"	## UNKEMPT HAIR - RAVEN					
+			}
+		}		
+		
+		random = {
+			trigger = { leader_class = governor }
+			list = {
+				"gfx/models/portraits/oldsithempire/x_female_hair_ludokresh_01.dds"	## LUDO KRESH CLEO - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_female_hair_ludokresh_02.dds"	## LUDO KRESH BOB - RAVEN					
+			
+				"gfx/models/portraits/oldsithempire/x_female_hair_sculptedhelmetbob_01.dds"	## SCULPTED HELMET - RAVEN	
+				"gfx/models/portraits/oldsithempire/x_female_hair_sculptedhelmetbob_02.dds"	## SCULPTED HELMET - CRIMSON	
+
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleosith_01.dds"	## GOLD CLEO HELMET - RAVEN		
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleosith_02.dds"	## GOLD CLEO HELMET - CRIMSON	
+				
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleosith_03.dds"	## SILVER CLEO HELMET - RAVEN			
+				"gfx/models/portraits/oldsithempire/x_female_hair_cleosith_04.dds"	## SILVER CLEO HELMET - CRIMSON						
+			}
+		}
+	}
+  
+	#leader scope 
+	ruler = { #for rulers
+		
+		random = {
+			trigger = {
+				owner = { has_militarist_government = yes }
+			}
+			
+			list = {
+	
+
+
+				
+				"gfx/models/portraits/human/human_female_hair_blonde_style_02.dds"	## blonde crew cut
+				"gfx/models/portraits/human/human_female_hair_blonde_style_02.dds"	## blonde crew cut
+				"gfx/models/portraits/human/human_female_hair_blonde_style_02.dds"	## blonde crew cut
+				"gfx/models/portraits/human/human_female_hair_cendre_style_02.dds"	## light brown crew cut
+				"gfx/models/portraits/human/human_female_hair_brown_style_02.dds"	## brown crew cut
+				"gfx/models/portraits/human/human_female_hair_black_style_02.dds"	## black crew cut
+
+				"gfx/models/portraits/human/human_female_hair_brown_style_03.dds"	## brown bun
+				"gfx/models/portraits/human/human_female_hair_blonde_style_03.dds"	## blonde bun
+
+			}
+		}		
+		
+		random = {
+			trigger = {
+				owner = { has_spiritualist_government = yes }
+			}
+			
+			list = {
+
+
+				"gfx/models/portraits/human/human_female_hair_brown_style_03.dds"	## brown bun
+				"gfx/models/portraits/human/human_female_hair_brown_style_03.dds"	## brown bun
+				"gfx/models/portraits/human/human_female_hair_blonde_style_03.dds"	## blonde bun
+				"gfx/models/portraits/human/human_female_hair_blonde_style_03.dds"	## blonde bun
+				"gfx/models/portraits/human/human_female_hair_cendre_style_03.dds"	## light brown bun
+				"gfx/models/portraits/human/human_female_hair_cendre_style_03.dds"	## light brown bun
+				"gfx/models/portraits/human/human_female_hair_black_style_03.dds"	## black bun
+	
+	
+			}
+		}		
+		
+		random = {
+			trigger = {
+				owner = {
+					OR = {
+						has_government = gov_stagnant_ascendancy
+						has_primitive_government = yes
+						has_materialist_government = yes
+						has_pacifist_government = yes
+					}
+				}
+			}
+			
+			list = {
+
+
+				"gfx/models/portraits/human/human_female_hair_brown_style_03.dds"	## brown bun
+				"gfx/models/portraits/human/human_female_hair_brown_style_03.dds"	## brown bun
+				"gfx/models/portraits/human/human_female_hair_blonde_style_03.dds"	## blonde bun
+				"gfx/models/portraits/human/human_female_hair_blonde_style_03.dds"	## blonde bun
+				"gfx/models/portraits/human/human_female_hair_cendre_style_03.dds"	## light brown bun
+				"gfx/models/portraits/human/human_female_hair_cendre_style_03.dds"	## light brown bun
+				"gfx/models/portraits/human/human_female_hair_black_style_03.dds"	## black bun
+
+
+
+
+			}
+		}
+	}
+}
+  

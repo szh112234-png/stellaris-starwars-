@@ -1,0 +1,144 @@
+foc_khan_xystonsd = {
+    entity = "xystonsd_colossus_entity"
+    formation_priority = 1
+    max_speed = 150
+    acceleration = 0.25
+    rotation_speed = 0.1
+    collision_radius = 8
+    max_hitpoints = 77990
+    modifier = {
+        ship_evasion_add = 60
+        ship_armor_add = 35450
+        ship_shield_add = 25000
+        ship_shield_regen_add_static = 400
+        ship_armor_regen_add_static = 400
+        ship_hull_regen_add_static = 400
+    }
+    ship_modifier = {
+        ship_weapon_range_mult = 0.25
+    }
+    size_multiplier = 85
+    fleet_slot_size = 8
+    section_slots = {
+        core = {
+            locator = "part1"
+        }
+    }
+    num_target_locators = 5
+    is_space_station = no
+    icon_frame = 6
+    map_counter_icon = ship_counter_8
+    icon = ship_size_military_2
+    base_buildtime = 360
+    can_have_federation_design = no
+    enable_default_design = no
+    use_shipnames_from = colossus
+    enable_3dview_in_ship_browser = yes
+    default_behavior = line
+    combat_disengage_chance = 0
+    class = shipclass_military_special
+    construction_type = starbase_shipyard
+    required_component_set = "power_core"
+    required_component_set = "ftl_components"
+    required_component_set = "thruster_components"
+    required_component_set = "sensor_components"
+    required_component_set = "combat_computers"
+    required_component_set = "xystonsd_crew"
+    potential_construction = {
+        always = no
+    }
+    possible_construction = {
+        always = no
+    }
+    resources = {
+        category = ships
+        cost = {
+            alloys = 1500
+        }
+        upkeep = { }
+    }
+    min_upgrade_cost = {
+        alloys = 1
+    }
+    ai_ship_data = { }
+    available_to_everyone = no
+    is_designable = no
+
+
+
+    # v17.18d: plot-only hull; fixed global designs are spawned by events.
+    # Do not expose an unresearched shipyard design to players or AI.
+    possible_country = { always = no }
+}
+foc_khan_xystonsd_combat = {
+    entity = "xystonsd_colossus_entity"
+    formation_priority = 1
+    max_speed = 150
+    acceleration = 0.25
+    rotation_speed = 0.1
+    collision_radius = 8
+    max_hitpoints = 77990
+    modifier = {
+        ship_evasion_add = 60
+        ship_armor_add = 35450
+        ship_shield_add = 25000
+        ship_shield_regen_add_static = 400
+        ship_armor_regen_add_static = 400
+        ship_hull_regen_add_static = 400
+    }
+    ship_modifier = {
+        ship_weapon_range_mult = 0.25
+    }
+    size_multiplier = 85
+    fleet_slot_size = 8
+    section_slots = {
+        core = {
+            locator = "part1"
+        }
+    }
+    num_target_locators = 5
+    is_space_station = no
+    icon_frame = 6
+    map_counter_icon = ship_counter_8
+    icon = ship_size_military_2
+    base_buildtime = 360
+    can_have_federation_design = no
+    enable_default_design = no
+    use_shipnames_from = battleship
+    enable_3dview_in_ship_browser = yes
+    default_behavior = line
+    combat_disengage_chance = 0.05
+    class = shipclass_military
+    construction_type = starbase_shipyard
+    required_component_set = "power_core"
+    required_component_set = "ftl_components"
+    required_component_set = "thruster_components"
+    required_component_set = "sensor_components"
+    required_component_set = "combat_computers"
+    required_component_set = "xystonsd_crew"
+    potential_construction = {
+        always = no
+    }
+    possible_construction = {
+        always = no
+    }
+    resources = {
+        category = ships
+        cost = {
+            alloys = 1500
+        }
+        upkeep = { }
+    }
+    min_upgrade_cost = {
+        alloys = 1
+    }
+    ai_ship_data = { }
+    available_to_everyone = no
+    is_designable = no
+
+
+
+    # v17.18d: plot-only hull; fixed global designs are spawned by events.
+    # Do not expose an unresearched shipyard design to players or AI.
+    possible_country = { always = no }
+}

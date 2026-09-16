@@ -1,0 +1,243 @@
+namespace = foc_v1717_capacity
+
+country_event = {
+    id = foc_v1717_capacity.10
+    title = foc_v1717_capacity.naval_title
+    picture = GFX_evt_star_neutron
+    is_triggered_only = yes
+    trigger = { is_ai = no }
+    desc = {
+        trigger = { foc_v1717_naval_capacity_follows_difficulty = yes has_global_flag = foc_khan_strength_lowest }
+        text = foc_v1717_capacity.naval_auto_vanilla_desc
+    }
+    desc = {
+        trigger = { foc_v1717_naval_capacity_follows_difficulty = yes NOT = { has_global_flag = foc_khan_strength_lowest } }
+        text = foc_v1717_capacity.naval_auto_foc_desc
+    }
+    desc = {
+        trigger = { has_global_flag = foc_v1717_naval_override_0 }
+        text = foc_v1717_capacity.naval_0_desc
+    }
+    desc = {
+        trigger = { has_global_flag = foc_v1717_naval_override_1000 }
+        text = foc_v1717_capacity.naval_1000_desc
+    }
+    desc = {
+        trigger = { has_global_flag = foc_v1717_naval_override_5000 }
+        text = foc_v1717_capacity.naval_5000_desc
+    }
+    desc = {
+        trigger = { has_global_flag = foc_v1717_naval_override_10000 }
+        text = foc_v1717_capacity.naval_10000_desc
+    }
+    desc = {
+        trigger = { has_global_flag = foc_v1717_naval_override_30000 }
+        text = foc_v1717_capacity.naval_30000_desc
+    }
+    desc = {
+        trigger = { has_global_flag = foc_v1717_naval_override_99999 }
+        text = foc_v1717_capacity.naval_99999_desc
+    }
+    option = {
+        name = foc_v1717_capacity.naval_auto
+        hidden_effect = {
+            foc_v1717_clear_naval_capacity_override = yes
+            every_country = { foc_v232j_refresh_fleet_caps = yes }
+            country_event = { id = foc_v1717_capacity.10 }
+        }
+    }
+    option = {
+        name = foc_v1717_capacity.naval_0
+        hidden_effect = {
+            foc_v1717_clear_naval_capacity_override = yes
+            set_global_flag = foc_v1717_naval_override_0
+            every_country = { foc_v232j_refresh_fleet_caps = yes }
+            country_event = { id = foc_v1717_capacity.10 }
+        }
+    }
+    option = {
+        name = foc_v1717_capacity.naval_1000
+        hidden_effect = {
+            foc_v1717_clear_naval_capacity_override = yes
+            set_global_flag = foc_v1717_naval_override_1000
+            every_country = { foc_v232j_refresh_fleet_caps = yes }
+            country_event = { id = foc_v1717_capacity.10 }
+        }
+    }
+    option = {
+        name = foc_v1717_capacity.naval_5000
+        hidden_effect = {
+            foc_v1717_clear_naval_capacity_override = yes
+            set_global_flag = foc_v1717_naval_override_5000
+            every_country = { foc_v232j_refresh_fleet_caps = yes }
+            country_event = { id = foc_v1717_capacity.10 }
+        }
+    }
+    option = {
+        name = foc_v1717_capacity.naval_10000
+        hidden_effect = {
+            foc_v1717_clear_naval_capacity_override = yes
+            set_global_flag = foc_v1717_naval_override_10000
+            every_country = { foc_v232j_refresh_fleet_caps = yes }
+            country_event = { id = foc_v1717_capacity.10 }
+        }
+    }
+    option = {
+        name = foc_v1717_capacity.naval_30000
+        hidden_effect = {
+            foc_v1717_clear_naval_capacity_override = yes
+            set_global_flag = foc_v1717_naval_override_30000
+            every_country = { foc_v232j_refresh_fleet_caps = yes }
+            country_event = { id = foc_v1717_capacity.10 }
+        }
+    }
+    option = {
+        name = foc_v1717_capacity.naval_99999
+        hidden_effect = {
+            foc_v1717_clear_naval_capacity_override = yes
+            set_global_flag = foc_v1717_naval_override_99999
+            every_country = { foc_v232j_refresh_fleet_caps = yes }
+            country_event = { id = foc_v1717_capacity.10 }
+        }
+    }
+    option = {
+        name = foc_v1717_capacity.back
+        hidden_effect = {
+            if = {
+                limit = {
+                    has_country_flag = foc_v1717_capacity_return_to_start
+                    has_country_flag = foc_khan_start_settings_active_322
+                }
+                remove_country_flag = foc_v1717_capacity_return_to_start
+                country_event = { id = foc_khan_settings.16 }
+            }
+            else = {
+                remove_country_flag = foc_v1717_capacity_return_to_start
+                country_event = { id = foc_khan_settings.10 }
+            }
+        }
+    }
+}
+
+country_event = {
+    id = foc_v1717_capacity.20
+    title = foc_v1717_capacity.command_title
+    picture = GFX_evt_star_neutron
+    is_triggered_only = yes
+    trigger = { is_ai = no }
+    desc = {
+        trigger = { foc_v1717_command_capacity_follows_difficulty = yes has_global_flag = foc_khan_strength_lowest }
+        text = foc_v1717_capacity.command_auto_vanilla_desc
+    }
+    desc = {
+        trigger = { foc_v1717_command_capacity_follows_difficulty = yes NOT = { has_global_flag = foc_khan_strength_lowest } NOT = { has_global_flag = foc_khan_strength_madness } }
+        text = foc_v1717_capacity.command_auto_foc_desc
+    }
+    desc = {
+        trigger = { foc_v1717_command_capacity_follows_difficulty = yes NOT = { has_global_flag = foc_khan_strength_lowest } has_global_flag = foc_khan_strength_madness }
+        text = foc_v1717_capacity.command_auto_acot_desc
+    }
+    desc = {
+        trigger = { has_global_flag = foc_v1717_command_override_0 }
+        text = foc_v1717_capacity.command_0_desc
+    }
+    desc = {
+        trigger = { has_global_flag = foc_v1717_command_override_500 }
+        text = foc_v1717_capacity.command_500_desc
+    }
+    desc = {
+        trigger = { has_global_flag = foc_v1717_command_override_1000 }
+        text = foc_v1717_capacity.command_1000_desc
+    }
+    desc = {
+        trigger = { has_global_flag = foc_v1717_command_override_3500 }
+        text = foc_v1717_capacity.command_3500_desc
+    }
+    desc = {
+        trigger = { has_global_flag = foc_v1717_command_override_7000 }
+        text = foc_v1717_capacity.command_7000_desc
+    }
+    desc = {
+        trigger = { has_global_flag = foc_v1717_command_override_10000 }
+        text = foc_v1717_capacity.command_10000_desc
+    }
+    option = {
+        name = foc_v1717_capacity.command_auto
+        hidden_effect = {
+            foc_v1717_clear_command_capacity_override = yes
+            every_country = { foc_v232j_refresh_fleet_caps = yes }
+            country_event = { id = foc_v1717_capacity.20 }
+        }
+    }
+    option = {
+        name = foc_v1717_capacity.command_0
+        hidden_effect = {
+            foc_v1717_clear_command_capacity_override = yes
+            set_global_flag = foc_v1717_command_override_0
+            every_country = { foc_v232j_refresh_fleet_caps = yes }
+            country_event = { id = foc_v1717_capacity.20 }
+        }
+    }
+    option = {
+        name = foc_v1717_capacity.command_500
+        hidden_effect = {
+            foc_v1717_clear_command_capacity_override = yes
+            set_global_flag = foc_v1717_command_override_500
+            every_country = { foc_v232j_refresh_fleet_caps = yes }
+            country_event = { id = foc_v1717_capacity.20 }
+        }
+    }
+    option = {
+        name = foc_v1717_capacity.command_1000
+        hidden_effect = {
+            foc_v1717_clear_command_capacity_override = yes
+            set_global_flag = foc_v1717_command_override_1000
+            every_country = { foc_v232j_refresh_fleet_caps = yes }
+            country_event = { id = foc_v1717_capacity.20 }
+        }
+    }
+    option = {
+        name = foc_v1717_capacity.command_3500
+        hidden_effect = {
+            foc_v1717_clear_command_capacity_override = yes
+            set_global_flag = foc_v1717_command_override_3500
+            every_country = { foc_v232j_refresh_fleet_caps = yes }
+            country_event = { id = foc_v1717_capacity.20 }
+        }
+    }
+    option = {
+        name = foc_v1717_capacity.command_7000
+        hidden_effect = {
+            foc_v1717_clear_command_capacity_override = yes
+            set_global_flag = foc_v1717_command_override_7000
+            every_country = { foc_v232j_refresh_fleet_caps = yes }
+            country_event = { id = foc_v1717_capacity.20 }
+        }
+    }
+    option = {
+        name = foc_v1717_capacity.command_10000
+        hidden_effect = {
+            foc_v1717_clear_command_capacity_override = yes
+            set_global_flag = foc_v1717_command_override_10000
+            every_country = { foc_v232j_refresh_fleet_caps = yes }
+            country_event = { id = foc_v1717_capacity.20 }
+        }
+    }
+    option = {
+        name = foc_v1717_capacity.back
+        hidden_effect = {
+            if = {
+                limit = {
+                    has_country_flag = foc_v1717_capacity_return_to_start
+                    has_country_flag = foc_khan_start_settings_active_322
+                }
+                remove_country_flag = foc_v1717_capacity_return_to_start
+                country_event = { id = foc_khan_settings.16 }
+            }
+            else = {
+                remove_country_flag = foc_v1717_capacity_return_to_start
+                country_event = { id = foc_khan_settings.10 }
+            }
+        }
+    }
+}

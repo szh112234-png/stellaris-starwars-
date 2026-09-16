@@ -1,0 +1,55 @@
+# No override of the original FOC hidden carrier.
+entity = {
+ name = "foc_bwing_hidden_carrier_entity"
+ default_state = "idle"
+ state = { name = "idle" }
+ locator = { name = "locator1" position = { 0.0 0.0 0.0 } }
+}
+
+entity = {
+ name = "foc_ssp_bwing_size1_entity"
+ pdxmesh = "foc_bwing_static_mesh"
+ scale = 0.12
+ cull_radius = 8
+ default_state = "idle"
+ state = { name = "idle" }
+ state = { name = "attack" }
+ state = { name = "moving" }
+ attach = { engine_01 = "foc_bwing_blue_engine_entity" engine_02 = "foc_bwing_blue_engine_entity" engine_03 = "foc_bwing_blue_engine_entity" engine_04 = "foc_bwing_blue_engine_entity" }
+}
+
+entity = {
+ name = "foc_ssp_bwing_size2_entity"
+ pdxmesh = "foc_bwing_static_mesh"
+ scale = 0.24
+ cull_radius = 16
+ default_state = "idle"
+ state = { name = "idle" }
+ state = { name = "attack" }
+ state = { name = "moving" }
+ attach = { engine_01 = "foc_bwing_blue_engine_entity" engine_02 = "foc_bwing_blue_engine_entity" engine_03 = "foc_bwing_blue_engine_entity" engine_04 = "foc_bwing_blue_engine_entity" }
+}
+
+entity = {
+ name = "foc_ssp_bwing_size5_entity"
+ pdxmesh = "foc_bwing_static_mesh"
+ scale = 0.6
+ cull_radius = 40
+ default_state = "idle"
+ state = { name = "idle" }
+ state = { name = "attack" }
+ state = { name = "moving" }
+ attach = { engine_01 = "foc_bwing_blue_engine_entity" engine_02 = "foc_bwing_blue_engine_entity" engine_03 = "foc_bwing_blue_engine_entity" engine_04 = "foc_bwing_blue_engine_entity" }
+}
+
+entity = {
+ name = "foc_ssp_bwing_size10_entity"
+ pdxmesh = "foc_bwing_static_mesh"
+ scale = 1.2
+ cull_radius = 80
+ default_state = "idle"
+ state = { name = "idle" }
+ state = { name = "attack" }
+ state = { name = "moving" }
+ attach = { engine_01 = "foc_bwing_blue_engine_entity" engine_02 = "foc_bwing_blue_engine_entity" engine_03 = "foc_bwing_blue_engine_entity" engine_04 = "foc_bwing_blue_engine_entity" }
+}

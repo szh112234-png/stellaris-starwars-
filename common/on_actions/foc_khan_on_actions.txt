@@ -1,0 +1,209 @@
+# Immediate cleanup when the crisis Starkiller anchor planet is cracked or otherwise destroyed.
+# Scope supplied by the engine: This = planet.
+on_planet_class_changed = {
+	events = {
+		foc_khan.34
+		foc_khan.82
+	}
+}
+
+# Legacy direct hook. V112 timing gates prevent this from starting the war early;
+# the monthly/yearly controller now enforces the selected 60-year or Treaty +24-year schedule.
+on_galactic_community_formed = {
+	events = {
+		foc_khan.1
+	}
+}
+
+on_yearly_pulse_country = {
+	events = {
+		foc_khan.1
+	}
+}
+
+on_monthly_pulse_country = {
+    events = {
+        # Live hidden-route project progression.
+        # Wayfinder project creation is dispatched directly by the qualifying clue.
+        foc_v152_ai_project.1
+        foc_v152_ai_project.2
+        foc_v152_ai_project.3
+        foc_v152_ai_project.4
+
+        # Story-critical leader aging protection only. Hero rewards are
+        # dispatched directly by their battle/story completion events.
+        foc_story_leader_protect.1
+
+        # First/Final Order phase and defeat monitors.
+        foc_khan.30
+        foc_khan.35
+        foc_khan.90
+        foc_khan.1603
+        foc_khan.1601
+
+        # Live diplomacy/submission and Resistance behavior.
+        foc_khan_vassal.25
+        foc_khan_rebel.20
+
+        # Deliberately annual Leia support and live flagship monitors.
+        foc_v136_leia.1
+        foc_v136_leia.2
+        foc_v136_leia.3
+        # V212 must resolve Kylo's first bridge strike before a simultaneous
+        # Supremacy/Raddus duel can destroy the flagship.
+        foc_v212_story.21
+        foc_supremacy_duel.1
+    }
+}
+
+# No scope. Runs independently of the crisis country's normal AI.
+on_monthly_pulse = {
+    events = {
+        # Live crisis fleet movement and staged Resistance-base progression.
+        foc_khan_supremacy_move.1
+        foc_khan_rebel.30
+        # V235b: the old .43 loss fallback existed but had no monthly caller.
+        foc_v235b.1
+        foc_khan_rebel.43
+        foc_khan_rebel.34
+        foc_khan_rebel.35
+        foc_khan_rebel.36
+        foc_khan_rebel.37
+
+        # Dedicated crisis movement/support controllers.
+        foc_khan.43
+        foc_khan.45
+        foc_khan.80
+        foc_khan_vassal.1
+        foc_khan.1000
+        foc_khan.36
+        foc_khan.1200
+        foc_khan.1210
+    }
+}
+
+# The crisis country type uses custom_diplomacy = yes. Without this hook the
+# diplomacy button opens nothing. Scope: This = player, From = Order country.
+on_custom_diplomacy = {
+	events = {
+		foc_khan_vassal.10
+	}
+}
+
+# The external Supremacy Arkship becomes disabled at 1 hull instead of dying.
+# Convert the crisis flagship's disabled state into a real ship death, and
+# 3.11w: do the same for the player's own Supremacy arkship (foc_khan.1502).
+on_ship_disabled = {
+	events = {
+		# V65: resolve Raddus/Supremacy duel first and prevent Raddus capture.
+		foc_supremacy_duel.3
+		foc_khan.1500
+		foc_khan.1502
+	}
+}
+
+# Direct-death fallback for the crisis Supremacy. This catches destruction
+# effects that skip the mobile-starbase disabled state.
+on_ship_destroyed = {
+	events = {
+        # V212: Obi-Wan/Tarkin exit on the exact DS-I destruction tick.
+        foc_v212_story.30
+        # V232c: Death Star II destruction resolves Vader/Palpatine and the
+        # Chosen One redemption story on the exact destruction tick.
+        foc_luke.18
+		foc_story.5
+	}
+}
+
+# Root = attacking country; From = owner of the destroyed ship.
+on_ship_destroyed_perp = {
+	events = {
+		foc_wayfinder.6
+	}
+}
+
+# Root = invaded colony; From = attacking country. The event itself verifies
+# that Kylo Ren is attached to an attacking ground army on crisis Exegol.
+on_ground_combat_started = {
+	events = {
+		foc_hero_rewards.3
+	}
+}
+
+# Immediate defeat handling when the Starkiller capital or Exegol is occupied.
+# Root = planet; From = legal owner; FromFrom = occupying country.
+on_planet_occupied = {
+	events = {
+		# 3.11v: D'Qar unlocks Crait, Crait triggers Skywalker's death, and
+		# Ajan Kloss is the final defeat.
+		foc_khan_rebel.41
+		foc_story.30
+		foc_khan_rebel.38
+		foc_khan_capital.1
+		# 2.14: re-check the legal owner immediately after each Order occupation.
+		foc_khan_vassal.26
+		# 2.93: release combat fleets from a colony after its occupation completes.
+		foc_khan_293.1
+	}
+}
+
+# Political consequences for a newly completed Starkiller Base.
+# Root = builder/owner country; From = megastructure.
+# Kept outside all Starkiller gameplay files.
+on_megastructure_built = {
+	events = {
+		foc_khan.1602
+        foc_republic_origin.190
+        foc_republic_origin.168
+	}
+}
+
+on_megastructure_upgraded = {
+	events = {
+		foc_khan.1602
+        foc_republic_origin.190
+        foc_republic_origin.168
+	}
+}
+
+# This = destroyed starbase; From = fleet that destroyed it.
+# Only handles replacement starbase creation; it never changes fleet orders.
+on_starbase_destroyed = {
+	events = {
+		foc_khan_expand.1
+	}
+}
+
+# Some installations disable/capture an outpost instead of destroying it.
+# This transfers the disabled base directly and does not alter fleet orders.
+on_starbase_disabled = {
+	events = {
+		# Defensive check must run first, while the base still has its original owner.
+		foc_khan_expand.5
+		# Offensive case: an Order fleet disables an enemy base and captures it.
+		foc_khan_expand.4
+	}
+}
+
+# Some war types transfer ownership immediately instead of leaving a normal
+# occupation state. Reuse the same Exegol defeat detector for that path.
+on_planet_conquer = {
+	events = {
+		# 3.11v: cover direct-transfer wars for all staged Resistance worlds.
+		foc_khan_rebel.41
+		foc_story.30
+		foc_khan_rebel.38
+		foc_khan_capital.1
+	}
+}
+
+# The unique Millennium Falcon entering the isolated Final Order system.
+# Scope: This = fleet; From = system.
+on_entering_system_fleet = {
+	events = {
+        # V212: first real Raddus/First Order co-location triggers Kylo's strike.
+        foc_v212_story.20
+		foc_falcon_support.1
+		foc_republic_origin.183
+	}
+}

@@ -1,0 +1,346 @@
+# Jedi field formations for the Republic origin. The stat profile follows the
+# Grand Army of the Republic pack's own Jedi armies so the two feel identical,
+# but the keys, the building requirement and the ownership condition all belong
+# to this origin, so the pack's definitions are left untouched.
+#
+# They exist only while the Temple stands. Order 66 demolishes it, which ends
+# recruitment on the same night the Order itself ends.
+
+foc_republic_origin_jedi_padawans = {
+    damage = 1.3
+    health = 1.2
+    morale = 1.5
+    morale_damage = 1.2
+    collateral_damage = 0.5
+    war_exhaustion = 1.2
+    time = 100
+    icon = GFX_foc_army_type_jedi
+
+    resources = {
+        category = armies
+        cost = { minerals = 250 }
+        upkeep = { energy = 1.5 }
+    }
+
+    allow = {
+        has_active_building = building_foc_republic_origin_jedi_temple
+    }
+
+    potential = {
+        from = {
+            NOR = {
+                has_trait = "trait_mechanical"
+                has_trait = "trait_machine_unit"
+                is_sapient = no
+            }
+        }
+        planet = {
+            has_active_building = building_foc_republic_origin_jedi_temple
+        }
+        owner = {
+            has_country_flag = foc_republic_origin_jedi_council_created
+            NOT = { has_country_flag = foc_republic_origin_jedi_purged }
+            NOT = { has_authority = auth_machine_intelligence }
+        }
+    }
+
+    army_modifier = {
+        army_morale = 0.05
+    }
+}
+
+foc_republic_origin_jedi_knights = {
+    damage = 2.4
+    health = 2.5
+    morale = 2.5
+    morale_damage = 1.0
+    collateral_damage = 1.0
+    war_exhaustion = 2.0
+    time = 150
+    icon = GFX_foc_army_type_jedi_knight
+
+    resources = {
+        category = armies
+        cost = { minerals = 350 }
+        upkeep = { energy = 2 }
+    }
+
+    allow = {
+        has_active_building = building_foc_republic_origin_jedi_temple
+    }
+
+    potential = {
+        from = {
+            NOR = {
+                has_trait = "trait_mechanical"
+                has_trait = "trait_machine_unit"
+                is_sapient = no
+            }
+        }
+        planet = {
+            has_active_building = building_foc_republic_origin_jedi_temple
+        }
+        owner = {
+            has_country_flag = foc_republic_origin_jedi_council_created
+            NOT = { has_country_flag = foc_republic_origin_jedi_purged }
+            NOT = { has_authority = auth_machine_intelligence }
+        }
+    }
+
+    army_modifier = {
+        army_morale = 0.10
+    }
+}
+
+foc_republic_origin_jedi_masters = {
+    damage = 3.8
+    health = 3.5
+    morale = 3.5
+    morale_damage = 2.5
+    collateral_damage = 1.5
+    war_exhaustion = 5.0
+    time = 200
+    icon = GFX_foc_army_type_jedi_master
+
+    resources = {
+        category = armies
+        cost = { minerals = 750 }
+        upkeep = { energy = 5 }
+    }
+
+    allow = {
+        has_active_building = building_foc_republic_origin_jedi_temple
+        owner = { has_country_flag = foc_republic_origin_jedi_generals_commissioned }
+    }
+
+    potential = {
+        from = {
+            NOR = {
+                has_trait = "trait_mechanical"
+                has_trait = "trait_machine_unit"
+                is_sapient = no
+            }
+        }
+        planet = {
+            has_active_building = building_foc_republic_origin_jedi_temple
+        }
+        owner = {
+            has_country_flag = foc_republic_origin_jedi_council_created
+            NOT = { has_country_flag = foc_republic_origin_jedi_purged }
+            NOT = { has_authority = auth_machine_intelligence }
+        }
+    }
+
+    army_modifier = {
+        army_morale = 0.25
+    }
+}
+
+# =============================================================================
+# V119 - Jedi specialist formations integrated from the 17 Star Wars mod.
+# Stats retain the source mod's role differentiation, while recruitment is
+# adapted to FOC's own Jedi Temple / Order 66 / Jedi General flags.
+# =============================================================================
+
+foc_republic_origin_jedi_guardians = {
+    damage = 2.8
+    health = 3.5
+    morale = 3.5
+    morale_damage = 1.5
+    collateral_damage = 1.0
+    war_exhaustion = 4.0
+    time = 150
+    icon = GFX_foc_army_type_jedi_guardian
+
+    resources = {
+        category = armies
+        cost = { minerals = 500 }
+        upkeep = { energy = 3 }
+    }
+
+    allow = {
+        has_active_building = building_foc_republic_origin_jedi_temple
+        owner = { has_country_flag = foc_republic_origin_jedi_generals_commissioned }
+    }
+
+    potential = {
+        from = {
+            NOR = {
+                has_trait = "trait_mechanical"
+                has_trait = "trait_machine_unit"
+                is_sapient = no
+            }
+        }
+        planet = { has_active_building = building_foc_republic_origin_jedi_temple }
+        owner = {
+            has_country_flag = foc_republic_origin_jedi_council_created
+            has_country_flag = foc_republic_origin_jedi_generals_commissioned
+            NOT = { has_country_flag = foc_republic_origin_jedi_purged }
+            NOT = { has_authority = auth_machine_intelligence }
+        }
+    }
+
+    army_modifier = { army_morale = 0.15 }
+}
+
+foc_republic_origin_jedi_sentinels = {
+    damage = 3.5
+    health = 2.5
+    morale = 2.5
+    morale_damage = 2.0
+    collateral_damage = 0.75
+    war_exhaustion = 2.0
+    time = 150
+    icon = GFX_foc_army_type_jedi_sentinel
+
+    resources = {
+        category = armies
+        cost = { minerals = 500 }
+        upkeep = { energy = 3 }
+    }
+
+    allow = {
+        has_active_building = building_foc_republic_origin_jedi_temple
+        owner = { has_country_flag = foc_republic_origin_jedi_generals_commissioned }
+    }
+
+    potential = {
+        from = {
+            NOR = {
+                has_trait = "trait_mechanical"
+                has_trait = "trait_machine_unit"
+                is_sapient = no
+            }
+        }
+        planet = { has_active_building = building_foc_republic_origin_jedi_temple }
+        owner = {
+            has_country_flag = foc_republic_origin_jedi_council_created
+            has_country_flag = foc_republic_origin_jedi_generals_commissioned
+            NOT = { has_country_flag = foc_republic_origin_jedi_purged }
+            NOT = { has_authority = auth_machine_intelligence }
+        }
+    }
+
+    army_modifier = { army_morale = 0.10 }
+}
+
+foc_republic_origin_jedi_consulars = {
+    damage = 2.5
+    health = 1.5
+    morale = 2.0
+    morale_damage = 1.5
+    collateral_damage = 1.0
+    war_exhaustion = 0.75
+    time = 150
+    icon = GFX_foc_army_type_jedi_consular
+
+    resources = {
+        category = armies
+        cost = { minerals = 350 }
+        upkeep = { energy = 2 }
+    }
+
+    allow = {
+        has_active_building = building_foc_republic_origin_jedi_temple
+    }
+
+    potential = {
+        from = {
+            NOR = {
+                has_trait = "trait_mechanical"
+                has_trait = "trait_machine_unit"
+                is_sapient = no
+            }
+        }
+        planet = { has_active_building = building_foc_republic_origin_jedi_temple }
+        owner = {
+            has_country_flag = foc_republic_origin_jedi_council_created
+            NOT = { has_country_flag = foc_republic_origin_jedi_purged }
+            NOT = { has_authority = auth_machine_intelligence }
+        }
+    }
+
+    army_modifier = { army_morale = 0.20 }
+}
+
+foc_republic_origin_jedi_sages = {
+    damage = 2.8
+    health = 1.5
+    morale = 2.0
+    morale_damage = 2.0
+    collateral_damage = 4.0
+    war_exhaustion = 0.75
+    time = 150
+    icon = GFX_foc_army_type_jedi_sage
+
+    resources = {
+        category = armies
+        cost = { minerals = 500 }
+        upkeep = { energy = 3 }
+    }
+
+    allow = {
+        has_active_building = building_foc_republic_origin_jedi_temple
+        owner = { has_country_flag = foc_republic_origin_jedi_generals_commissioned }
+    }
+
+    potential = {
+        from = {
+            NOR = {
+                has_trait = "trait_mechanical"
+                has_trait = "trait_machine_unit"
+                is_sapient = no
+            }
+        }
+        planet = { has_active_building = building_foc_republic_origin_jedi_temple }
+        owner = {
+            has_country_flag = foc_republic_origin_jedi_council_created
+            has_country_flag = foc_republic_origin_jedi_generals_commissioned
+            NOT = { has_country_flag = foc_republic_origin_jedi_purged }
+            NOT = { has_authority = auth_machine_intelligence }
+        }
+    }
+
+    army_modifier = { army_morale = 0.35 }
+}
+
+foc_republic_origin_jedi_shadows = {
+    damage = 2.8
+    health = 1.8
+    morale = 2.0
+    morale_damage = 4.0
+    collateral_damage = 0.0
+    war_exhaustion = 0.75
+    time = 150
+    icon = GFX_foc_army_type_jedi_shadow
+
+    resources = {
+        category = armies
+        cost = { minerals = 500 }
+        upkeep = { energy = 2.5 }
+    }
+
+    allow = {
+        has_active_building = building_foc_republic_origin_jedi_temple
+        owner = { has_country_flag = foc_republic_origin_jedi_generals_commissioned }
+    }
+
+    potential = {
+        from = {
+            NOR = {
+                has_trait = "trait_mechanical"
+                has_trait = "trait_machine_unit"
+                is_sapient = no
+            }
+        }
+        planet = { has_active_building = building_foc_republic_origin_jedi_temple }
+        owner = {
+            has_country_flag = foc_republic_origin_jedi_council_created
+            has_country_flag = foc_republic_origin_jedi_generals_commissioned
+            NOT = { has_country_flag = foc_republic_origin_jedi_purged }
+            NOT = { has_authority = auth_machine_intelligence }
+        }
+    }
+
+    army_modifier = { army_morale = 0.20 }
+}

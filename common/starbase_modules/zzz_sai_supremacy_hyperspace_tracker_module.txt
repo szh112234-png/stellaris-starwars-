@@ -1,0 +1,45 @@
+# Event-only player Supremacy Tier III fixed axial system.
+# It uses spinal_mount_1 so the icon is shown below the axial-mount heading.
+sai_supremacy_hyperspace_tracker_module = {
+	icon = "GFX_sai_supremacy_hyperspace_tracker"
+	section = "SAI_SUPREMACY_HYPERSPACE_TRACKER_SECTION"
+	construction_days = 1
+	starbase_type = arkship
+	category = sm_spinal_cat
+
+	# The event/full-loadout Supremacy may already be a Tier III hull even when
+	# its player has not researched the normal Tier III Arkship technology.
+	# Hull identity, not the technology, controls this fixed event-only module.
+	potential = {
+		OR = { OR = { has_starbase_size = sai_supremacy_arkship_tier_3 has_starbase_size = sai_supremacy_arkship_tier_3_foc_lowest } has_starbase_size = sai_supremacy_arkship_tier_3_shell_foc_lowest }
+	}
+
+	show_tech_unlock_if = { always = no }
+
+	fits_on_slots = { spinal_mount_1 }
+	replaceable = { always = no }
+
+	resources = {
+		category = starbase_arkship_upgrades
+		cost = { alloys = 0 }
+		upkeep = { energy = 25 }
+	}
+
+	# Functional approximation of the film system: the Supremacy reads
+	# hyperspace wake signatures across the strategic map and keeps
+	# hostile fleet movements visible after jumps.
+	station_modifier = {
+		show_only_custom_tooltip = no
+		ship_sensor_range_add = 100
+		ship_hyperlane_range_add = 100
+		ship_cloaking_detection_add = 20
+	}
+
+	country_modifier = {
+		add_base_country_intel = 100
+		intel_decryption_add = 5
+	}
+
+	custom_tooltip_with_modifiers = sai_supremacy_hyperspace_tracker_module_tt
+	ai_weight = { weight = 0 }
+}

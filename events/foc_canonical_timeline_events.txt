@@ -1,0 +1,997 @@
+
+namespace = foc_canon
+
+# V78: story beats are anchored to real wars/treaties; battle windows require actual in-system combat.
+# The dispatchers are intentionally narrative-only. They do not force wars,
+# victories, deaths already owned by mechanical events, or country switches.
+
+country_event = {
+    id = foc_canon.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        OR = {
+            has_global_flag = foc_republic_origin_active
+            has_global_flag = foc_republic_origin_galactic_treaty
+            has_global_flag = foc_khan_phase_one
+            has_global_flag = foc_khan_phase_two
+        }
+    }
+    immediate = {
+        # V182: old-save portrait migration removed from the monthly timeline.
+
+        # V78: narrative chronology is relative to real campaign milestones, not
+        # the Stellaris calendar. The Clone War opening, Order 66, Death Star
+        # losses and the Galactic Treaty are the anchors.
+
+        # Clone-War era anchor is preserved. V85 starts generic phase-relative
+        # story timers only when the first independent battle is actually completed.
+        if = {
+            limit = { has_global_flag = foc_republic_origin_separatist_war_active NOT = { has_country_flag = foc_canon_clone_war_anchor } }
+            set_country_flag = foc_canon_clone_war_anchor
+            # V120: Maul takes Mandalore two full years after the Clone War begins.
+            set_timed_country_flag = { flag = foc_mandalore_wait_maul_coup_two_years days = 720 }
+            set_global_flag = foc_mandalore_maul_two_year_clock_initialized
+        }
+        if = { limit = { has_country_flag = foc_canon_clone_war_anchor has_country_flag = foc_canon_clone_war_first_battle_anchor has_global_flag = foc_republic_origin_separatist_war_active NOT = { has_country_flag = foc_canon_wait_mortis } NOT = { has_country_flag = foc_canon_mortis } NOT = { has_global_flag = foc_republic_origin_jedi_purged } } set_country_flag = foc_canon_mortis country_event = { id = foc_canon.10 } }
+        if = { limit = { has_country_flag = foc_canon_clone_war_anchor OR = { has_global_flag = foc_republic_origin_separatist_war_active has_country_flag = foc_republic_origin_separatist_war_won } NOT = { has_country_flag = foc_mandalore_wait_maul_coup_two_years } NOT = { has_country_flag = foc_canon_maul_mandalore } NOT = { has_global_flag = foc_republic_origin_jedi_purged } } set_country_flag = foc_canon_maul_mandalore country_event = { id = foc_canon.11 } }
+        if = { limit = { has_country_flag = foc_canon_clone_war_anchor has_country_flag = foc_canon_clone_war_first_battle_anchor has_global_flag = foc_republic_origin_separatist_war_active NOT = { has_country_flag = foc_canon_wait_tup_inquisitors } NOT = { has_country_flag = foc_canon_tup_inquisitors } NOT = { has_global_flag = foc_republic_origin_jedi_purged } } set_country_flag = foc_canon_tup_inquisitors country_event = { id = foc_canon.12 } }
+        if = { limit = { has_country_flag = foc_canon_clone_war_anchor has_country_flag = foc_canon_clone_war_first_battle_anchor has_global_flag = foc_republic_origin_separatist_war_active NOT = { has_country_flag = foc_canon_wait_ahsoka_leaves } NOT = { has_country_flag = foc_canon_ahsoka_leaves } NOT = { has_global_flag = foc_republic_origin_jedi_purged } } set_country_flag = foc_canon_ahsoka_leaves country_event = { id = foc_canon.13 } }
+        if = { limit = { has_country_flag = foc_canon_clone_war_anchor has_country_flag = foc_canon_clone_war_first_battle_anchor has_global_flag = foc_republic_origin_separatist_war_active NOT = { has_country_flag = foc_canon_wait_yoda_ghost } NOT = { has_country_flag = foc_canon_yoda_ghost } NOT = { has_global_flag = foc_republic_origin_jedi_purged } } set_country_flag = foc_canon_yoda_ghost country_event = { id = foc_canon.14 } }
+
+        # Order-66 / Imperial-era anchor.
+        if = {
+            limit = { has_country_flag = foc_republic_origin_order_66_executed NOT = { has_country_flag = foc_canon_order66_anchor } }
+            set_country_flag = foc_canon_order66_anchor
+            set_timed_country_flag = { flag = foc_canon_wait_mustafar_purge days = 15 }
+            set_timed_country_flag = { flag = foc_canon_wait_bad_batch days = 90 }
+            set_timed_country_flag = { flag = foc_canon_wait_vader_red_blade days = 360 }
+            set_timed_country_flag = { flag = foc_canon_wait_han_solo days = 1800 }
+            set_timed_country_flag = { flag = foc_canon_wait_cal_kestis days = 1890 }
+            set_timed_country_flag = { flag = foc_canon_wait_tanalorr days = 3960 }
+            set_timed_country_flag = { flag = foc_canon_wait_aldhani days = 4680 }
+            set_timed_country_flag = { flag = foc_canon_wait_maul_tatooine days = 5400 }
+        }
+        if = { limit = { has_country_flag = foc_canon_order66_anchor NOT = { has_global_flag = foc_republic_origin_galactic_treaty } NOT = { has_country_flag = foc_canon_wait_mustafar_purge } NOT = { has_country_flag = foc_canon_mustafar_purge } } set_country_flag = foc_canon_mustafar_purge country_event = { id = foc_canon.16 } }
+        if = { limit = { has_country_flag = foc_canon_order66_anchor NOT = { has_global_flag = foc_republic_origin_galactic_treaty } NOT = { has_country_flag = foc_canon_wait_bad_batch } NOT = { has_country_flag = foc_canon_bad_batch } } set_country_flag = foc_canon_bad_batch country_event = { id = foc_canon.20 } }
+        if = { limit = { has_country_flag = foc_canon_order66_anchor NOT = { has_global_flag = foc_republic_origin_galactic_treaty } NOT = { has_country_flag = foc_canon_wait_vader_red_blade } NOT = { has_country_flag = foc_canon_vader_red_blade } } set_country_flag = foc_canon_vader_red_blade country_event = { id = foc_canon.15 } }
+        if = { limit = { has_country_flag = foc_canon_order66_anchor NOT = { has_global_flag = foc_republic_origin_galactic_treaty } NOT = { has_country_flag = foc_canon_wait_han_solo } NOT = { has_country_flag = foc_canon_han_solo } } set_country_flag = foc_canon_han_solo country_event = { id = foc_canon.21 } }
+        if = { limit = { has_country_flag = foc_canon_order66_anchor NOT = { has_global_flag = foc_republic_origin_galactic_treaty } NOT = { has_country_flag = foc_canon_wait_cal_kestis } NOT = { has_country_flag = foc_canon_cal_kestis } } set_country_flag = foc_canon_cal_kestis country_event = { id = foc_canon.22 } }
+        if = { limit = { has_country_flag = foc_canon_order66_anchor NOT = { has_global_flag = foc_republic_origin_galactic_treaty } NOT = { has_country_flag = foc_canon_wait_tanalorr } NOT = { has_country_flag = foc_canon_tanalorr } } set_country_flag = foc_canon_tanalorr country_event = { id = foc_canon.24 } }
+        if = { limit = { has_country_flag = foc_canon_order66_anchor NOT = { has_global_flag = foc_republic_origin_galactic_treaty } NOT = { has_country_flag = foc_canon_wait_aldhani } NOT = { has_country_flag = foc_canon_aldhani } } set_country_flag = foc_canon_aldhani country_event = { id = foc_canon.25 } }
+        if = { limit = { has_country_flag = foc_canon_order66_anchor NOT = { has_global_flag = foc_republic_origin_galactic_treaty } NOT = { has_country_flag = foc_canon_wait_maul_tatooine } NOT = { has_country_flag = foc_canon_maul_tatooine } } set_country_flag = foc_canon_maul_tatooine country_event = { id = foc_canon.26 } }
+
+        # Rebel Alliance / Death-Star anchors.
+        if = { limit = { has_global_flag = foc_saga_rebel_alliance_declared NOT = { has_country_flag = foc_canon_rebel_anchor } } set_country_flag = foc_canon_rebel_anchor set_timed_country_flag = { flag = foc_canon_wait_jacen days = 1800 } set_timed_country_flag = { flag = foc_canon_wait_ahsoka_fulcrum days = 180 } }
+        # Ahsoka returns as Fulcrum after the Rebel Alliance is formally established.
+        if = { limit = { has_country_flag = foc_canon_rebel_anchor has_global_flag = foc_canon_ahsoka_left_order NOT = { has_global_flag = foc_republic_origin_galactic_treaty } NOT = { has_country_flag = foc_canon_wait_ahsoka_fulcrum } NOT = { has_country_flag = foc_canon_ahsoka_fulcrum_shown } } set_country_flag = foc_canon_ahsoka_fulcrum_shown country_event = { id = foc_canon.53 } }
+        if = { limit = { has_country_flag = foc_canon_rebel_anchor NOT = { has_global_flag = foc_republic_origin_galactic_treaty } NOT = { has_country_flag = foc_canon_wait_jacen } NOT = { has_country_flag = foc_canon_jacen } } set_country_flag = foc_canon_jacen country_event = { id = foc_canon.27 } }
+        # Malachor is narrative-only. It does not participate in battle anchors or require a system transfer.
+        if = { limit = { has_country_flag = foc_canon_rebel_anchor has_country_flag = foc_canon_gcw_first_battle_anchor has_global_flag = foc_canon_ahsoka_fulcrum_returned NOT = { has_global_flag = foc_republic_origin_galactic_treaty } NOT = { has_country_flag = foc_canon_wait_malachor_story } NOT = { has_country_flag = foc_canon_malachor_story_shown } } set_country_flag = foc_canon_malachor_story_shown country_event = { id = foc_canon.42 } }
+        if = { limit = { foc_v1710_scarif_month_elapsed = yes NOT = { has_country_flag = foc_v1717e_rescue_confirmed } } country_event = { id = foc_v1710_story.1 } }
+        # Return-of-the-Jedi prelude is anchored to Luke surviving Bespin, not to a calendar.
+        if = { limit = { has_country_flag = foc_saga_luke_bespin_shown NOT = { has_country_flag = foc_canon_post_bespin_anchor } NOT = { has_global_flag = foc_republic_origin_death_star_two_destroyed } } set_country_flag = foc_canon_post_bespin_anchor set_timed_country_flag = { flag = foc_canon_wait_tatooine_rescue days = 360 } }
+        if = { limit = { has_country_flag = foc_canon_post_bespin_anchor NOT = { has_global_flag = foc_republic_origin_death_star_two_destroyed } NOT = { has_country_flag = foc_canon_wait_tatooine_rescue } NOT = { has_country_flag = foc_canon_tatooine_rescue } } set_country_flag = foc_canon_tatooine_rescue country_event = { id = foc_canon.28 } }
+
+        # Endor / Treaty anchors.
+        if = { limit = { has_global_flag = foc_republic_origin_death_star_two_destroyed NOT = { has_country_flag = foc_canon_endor_anchor } } set_country_flag = foc_canon_endor_anchor set_timed_country_flag = { flag = foc_canon_wait_operation_cinder days = 180 } }
+        if = { limit = { has_country_flag = foc_canon_endor_anchor NOT = { has_global_flag = foc_republic_origin_galactic_treaty } NOT = { has_country_flag = foc_canon_wait_operation_cinder } NOT = { has_country_flag = foc_canon_operation_cinder } } set_country_flag = foc_canon_operation_cinder country_event = { id = foc_canon.29 } }
+        if = {
+            limit = { has_global_flag = foc_republic_origin_galactic_treaty NOT = { has_country_flag = foc_canon_treaty_anchor } }
+            set_country_flag = foc_canon_treaty_anchor
+            set_timed_country_flag = { flag = foc_canon_wait_sith_seed days = 30 }
+
+            set_timed_country_flag = { flag = foc_canon_wait_ahsoka_thrawn days = 2160 }
+            set_timed_country_flag = { flag = foc_canon_wait_starkiller_construction days = 5040 }
+        }
+        if = { limit = { has_country_flag = foc_canon_treaty_anchor NOT = { has_country_flag = foc_canon_wait_sith_seed } NOT = { has_country_flag = foc_canon_sith_eternal_seed } } set_country_flag = foc_canon_sith_eternal_seed country_event = { id = foc_canon.32 } }
+        if = { limit = { has_country_flag = foc_canon_treaty_anchor NOT = { has_global_flag = foc_khan_phase_one } NOT = { has_country_flag = foc_canon_wait_ahsoka_thrawn } NOT = { has_country_flag = foc_canon_ahsoka_thrawn_return } } set_country_flag = foc_canon_ahsoka_thrawn_return country_event = { id = foc_canon.33 } }
+        if = { limit = { has_country_flag = foc_canon_treaty_anchor NOT = { has_global_flag = foc_khan_phase_one } NOT = { has_country_flag = foc_canon_wait_starkiller_construction } NOT = { has_country_flag = foc_canon_starkiller_construction } } set_country_flag = foc_canon_starkiller_construction country_event = { id = foc_canon.31 } }
+
+        # First-Order war anchor: sequel-era personal events cannot spill into Final Order.
+        if = {
+            limit = { has_global_flag = foc_khan_phase_one NOT = { has_country_flag = foc_canon_fo_anchor } }
+            set_country_flag = foc_canon_fo_anchor
+        }
+    }
+}
+
+# V85 independent battle watcher. Every battle records its own completion flag.
+# Except for explicit special cases, a battle is complete only after the original
+# controlling faction has fully lost the system starbase. Battle order is NOT chained.
+country_event = {
+    id = foc_canon.2
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        foc_v197_republic_story_actor = yes
+        has_global_flag = foc_republic_origin_active
+    }
+    immediate = {
+        if = {
+            limit = {
+                has_global_flag = foc_republic_origin_separatist_war_active
+                has_country_flag = foc_saga_cw_coruscant_assault_launched
+                NOT = {
+                    has_country_flag = foc_saga_cw_coruscant_assault_engaged
+                }
+                any_system = {
+                    has_star_flag = foc_sw_coruscant_home
+                    any_fleet_in_system = {
+                        is_in_combat = yes
+                        exists = owner
+                        owner = {
+                            has_country_flag = foc_republic_origin_separatist_country
+                        }
+                    }
+                }
+            }
+            set_country_flag = foc_saga_cw_coruscant_assault_engaged
+        }
+        if = {
+            limit = {
+                has_global_flag = foc_republic_origin_separatist_war_active
+                NOT = {
+                    has_country_flag = foc_canon_battle_christophsis
+                }
+                any_system = {
+                    has_star_flag = foc_swmap_christophsis_home
+                    NOT = {
+                        space_owner? = {
+                            has_country_flag = foc_republic_origin_separatist_country
+                        }
+                    }
+                }
+            }
+            set_country_flag = foc_canon_battle_christophsis
+            country_event = {
+                id = foc_canon.40
+            }
+        }
+        if = {
+            limit = {
+                has_country_flag = foc_canon_maul_mandalore
+                NOT = {
+                    has_country_flag = foc_canon_wait_mandalore_siege
+                }
+                NOT = {
+                    has_global_flag = foc_republic_origin_jedi_purged
+                }
+                NOT = {
+                    has_country_flag = foc_canon_battle_mandalore
+                }
+                any_country = {
+                    has_country_flag = foc_republic_origin_republic_country
+                }
+            }
+            set_country_flag = foc_canon_battle_mandalore
+            country_event = {
+                id = foc_canon.41
+            }
+        }
+        if = {
+            limit = {
+                has_global_flag = foc_republic_origin_jedi_purged
+                any_country = {
+                    has_country_flag = foc_republic_origin_empire_country
+                }
+                NOT = {
+                    has_global_flag = foc_republic_origin_galactic_treaty
+                }
+                NOT = {
+                    has_country_flag = foc_canon_battle_lothal
+                }
+                any_system = {
+                    has_star_flag = foc_swmap_lothal_home
+                    NOT = {
+                        space_owner? = {
+                            has_country_flag = foc_republic_origin_empire_country
+                        }
+                    }
+                }
+            }
+            set_country_flag = foc_canon_battle_lothal
+            country_event = {
+                id = foc_canon.43
+            }
+        }
+        if = {
+            limit = {
+                has_global_flag = foc_republic_origin_scarif_weakness_obtained
+                NOT = {
+                    has_global_flag = foc_republic_origin_galactic_treaty
+                }
+                NOT = {
+                    has_country_flag = foc_v1717e_scarif_notice_shown
+                }
+                NOT = {
+                    has_country_flag = foc_canon_battle_scarif
+                }
+            }
+            if = {
+                limit = {
+                    foc_v1710_is_gcw_rebel = yes
+                }
+                country_event = {
+                    id = foc_rogue_one.14
+                }
+            }
+            else = {
+                if = {
+                    limit = {
+                        OR = {
+                            has_country_flag = foc_republic_origin_empire_country
+                            has_country_flag = foc_republic_origin_player_empire
+                        }
+                    }
+                    country_event = {
+                        id = foc_rogue_one.4
+                    }
+                }
+                else = {
+                    country_event = {
+                        id = foc_canon.44
+                    }
+                }
+            }
+        }
+        if = {
+            limit = {
+                has_global_flag = foc_republic_origin_death_star_one_destroyed
+                NOT = {
+                    has_country_flag = foc_canon_battle_yavin
+                }
+                NOT = {
+                    has_global_flag = foc_republic_origin_galactic_treaty
+                }
+            }
+            set_country_flag = foc_canon_battle_yavin
+            country_event = {
+                id = foc_canon.45
+            }
+        }
+        if = {
+            limit = {
+                has_global_flag = foc_republic_origin_jedi_purged
+                NOT = {
+                    has_global_flag = foc_republic_origin_galactic_treaty
+                }
+                NOT = {
+                    has_country_flag = foc_canon_hoth_evacuation_hidden_started
+                }
+                any_system = {
+                    has_star_flag = foc_swmap_hoth_home
+                    any_fleet_in_system = {
+                        is_in_combat = yes
+                        owner = {
+                            OR = {
+                                has_country_flag = foc_republic_origin_imperial_rebel_country
+                                has_country_flag = foc_republic_origin_rebel_alliance_country
+                            }
+                        }
+                    }
+                    any_fleet_in_system = {
+                        is_in_combat = yes
+                        owner = {
+                            has_country_flag = foc_republic_origin_empire_country
+                        }
+                    }
+                }
+            }
+            set_country_flag = foc_canon_hoth_evacuation_hidden_started
+            every_country = {
+                limit = {
+                    OR = {
+                        has_country_flag = foc_republic_origin_imperial_rebel_country
+                        has_country_flag = foc_republic_origin_rebel_alliance_country
+                    }
+                }
+                add_modifier = {
+                    modifier = foc_canon_hoth_evacuation
+                    days = 720
+                }
+            }
+        }
+        if = {
+            limit = {
+                has_global_flag = foc_republic_origin_jedi_purged
+                any_country = {
+                    has_country_flag = foc_republic_origin_empire_country
+                }
+                NOT = {
+                    has_global_flag = foc_republic_origin_galactic_treaty
+                }
+                NOT = {
+                    has_country_flag = foc_canon_battle_hoth
+                }
+                any_system = {
+                    has_star_flag = foc_swmap_hoth_home
+                    NOT = {
+                        space_owner? = {
+                            OR = {
+                                has_country_flag = foc_republic_origin_imperial_rebel_country
+                                has_country_flag = foc_republic_origin_rebel_alliance_country
+                            }
+                        }
+                    }
+                }
+            }
+            set_country_flag = foc_canon_battle_hoth
+            country_event = {
+                id = foc_canon.46
+            }
+        }
+        if = {
+            limit = {
+                has_global_flag = foc_republic_origin_jedi_purged
+                any_country = {
+                    has_country_flag = foc_republic_origin_empire_country
+                }
+                NOT = {
+                    has_global_flag = foc_republic_origin_galactic_treaty
+                }
+                NOT = {
+                    has_country_flag = foc_canon_battle_endor
+                }
+                any_system = {
+                    has_star_flag = foc_swmap_endor_home
+                    NOT = {
+                        space_owner? = {
+                            has_country_flag = foc_republic_origin_empire_country
+                        }
+                    }
+                }
+            }
+            set_country_flag = foc_canon_battle_endor
+            country_event = {
+                id = foc_canon.47
+            }
+        }
+        if = {
+            limit = {
+                has_global_flag = foc_republic_origin_death_star_two_destroyed
+                NOT = {
+                    has_global_flag = foc_republic_origin_galactic_treaty
+                }
+                NOT = {
+                    has_country_flag = foc_canon_battle_mandalore_purge
+                }
+                any_system = {
+                    has_star_flag = foc_swmap_mandalore_home
+                }
+            }
+            set_country_flag = foc_canon_battle_mandalore_purge
+            country_event = {
+                id = foc_canon.48
+            }
+        }
+        if = {
+            limit = {
+                has_global_flag = foc_republic_origin_death_star_two_destroyed
+                NOT = {
+                    has_global_flag = foc_republic_origin_galactic_treaty
+                }
+                NOT = {
+                    has_country_flag = foc_canon_battle_jakku
+                }
+                any_system = {
+                    has_star_flag = foc_sw_jakku_home
+                    NOT = {
+                        space_owner? = {
+                            OR = {
+                                has_country_flag = foc_republic_origin_empire_country
+                                has_country_flag = foc_sw_imperial_remnant_country
+                            }
+                        }
+                    }
+                }
+            }
+            set_country_flag = foc_canon_battle_jakku
+            country_event = {
+                id = foc_canon.49
+            }
+        }
+        if = {
+            limit = {
+                has_global_flag = foc_khan_phase_two
+                NOT = {
+                    has_country_flag = foc_canon_battle_exegol
+                }
+                any_system = {
+                    has_star_flag = foc_khan_exegol_home
+                    any_fleet_in_system = {
+                        is_in_combat = yes
+                        owner = {
+                            has_country_flag = foc_khan_final_order_country
+                        }
+                    }
+                    any_fleet_in_system = {
+                        is_in_combat = yes
+                        owner = {
+                            NOT = {
+                                has_country_flag = foc_khan_final_order_country
+                            }
+                        }
+                    }
+                }
+            }
+            set_country_flag = foc_canon_battle_exegol
+            country_event = {
+                id = foc_canon.52
+            }
+        }
+    }
+}
+
+# --- Relative-anchor visible story windows ---------------------------------------------
+country_event = { id = foc_canon.10 title = foc_canon.10.name desc = foc_canon.10.desc picture = GFX_foc_canon_v75_10 is_triggered_only = yes trigger = { has_global_flag = foc_republic_origin_separatist_war_active NOT = { has_global_flag = foc_republic_origin_jedi_purged } } immediate = { add_modifier = { modifier = foc_canon_mortis_insight days = 1440 } add_resource = { unity = 10000 } if = { limit = { exists = event_target:foc_republic_origin_anakin } event_target:foc_republic_origin_anakin = { add_experience = 1000 } } } option = { name = foc_canon.ok } }
+country_event = {
+    id = foc_canon.11
+    title = foc_canon.11.name
+    desc = foc_canon.11.desc
+    picture = GFX_foc_canon_v75_11
+    location = event_target:foc_swmap_mandalore_system
+    is_triggered_only = yes
+    trigger = {
+        OR = {
+            has_global_flag = foc_republic_origin_separatist_war_active
+            has_country_flag = foc_republic_origin_separatist_war_won
+        }
+        NOT = { has_global_flag = foc_republic_origin_jedi_purged }
+    }
+    immediate = {
+        foc_canon_mandalore_shadow_collective = yes
+        foc_mandalore_maul_takeover = yes
+        set_timed_country_flag = { flag = foc_canon_wait_mandalore_siege days = 360 }
+        set_global_flag = foc_mandalore_maul_coup_completed
+    }
+    option = { name = foc_canon.ok }
+}
+country_event = { id = foc_canon.12 title = foc_canon.12.name desc = foc_canon.12.desc picture = GFX_foc_canon_v75_12 is_triggered_only = yes trigger = { has_global_flag = foc_republic_origin_separatist_war_active NOT = { has_global_flag = foc_republic_origin_jedi_purged } } immediate = { set_global_flag = foc_canon_inhibitor_chip_exposed add_modifier = { modifier = foc_canon_chip_investigation days = 1440 } add_resource = { society_research = 5000 } } option = { name = foc_canon.ok } }
+country_event = { id = foc_canon.13 title = foc_canon.13.name desc = foc_canon.13.desc picture = GFX_foc_canon_v75_13 is_triggered_only = yes trigger = { has_global_flag = foc_republic_origin_separatist_war_active NOT = { has_global_flag = foc_republic_origin_jedi_purged } } immediate = { every_country = { limit = { has_country_flag = foc_republic_origin_republic_country } foc_canon_remove_ahsoka = yes add_resource = { unity = -5000 } } set_global_flag = foc_canon_ahsoka_left_order } option = { name = foc_canon.ok } }
+country_event = { id = foc_canon.14 title = foc_canon.14.name desc = foc_canon.14.desc picture = GFX_foc_canon_v75_14 is_triggered_only = yes trigger = { has_global_flag = foc_republic_origin_separatist_war_active NOT = { has_global_flag = foc_republic_origin_jedi_purged } } immediate = { add_modifier = { modifier = foc_canon_yoda_living_force days = 1800 } add_resource = { unity = 10000 } if = { limit = { exists = event_target:foc_republic_origin_jedi_grand_master } event_target:foc_republic_origin_jedi_grand_master = { add_experience = 1000 } } } option = { name = foc_canon.ok } }
+country_event = {
+    id = foc_canon.16
+    title = foc_canon.16.name
+    desc = foc_canon.16.desc
+    picture = GFX_foc_canon_v75_16
+    location = event_target:foc_swmap_mustafar_system
+    is_triggered_only = yes
+    trigger = {
+        has_global_flag = foc_republic_origin_jedi_purged
+        NOT = { has_global_flag = foc_republic_origin_separatist_war_active }
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+    }
+    immediate = {
+        # V232: CIS territory and country destruction already completed in the
+        # surrender chain. Mustafar/canon.16 is story state only and must never
+        # re-run transfer/destroy/clear operations on an already-dead CIS.
+        set_global_flag = foc_saga_separatist_council_purged
+        set_global_flag = foc_canon_cis_finally_ended
+    }
+    option = { name = foc_canon.ok }
+}
+country_event = { id = foc_canon.20 title = foc_canon.20.name desc = foc_canon.20.desc picture = GFX_foc_canon_v75_20 is_triggered_only = yes trigger = { has_global_flag = foc_republic_origin_jedi_purged NOT = { has_global_flag = foc_republic_origin_galactic_treaty } } immediate = { foc_canon_destroy_kamino_cloning_centers = yes every_country = { limit = { has_country_flag = foc_republic_origin_empire_country } add_modifier = { modifier = foc_canon_clone_transition days = 1440 } add_resource = { unity = -5000 } } set_global_flag = foc_canon_bad_batch_escaped } option = { name = foc_canon.ok } }
+country_event = { id = foc_canon.15 title = foc_canon.15.name desc = foc_canon.15.desc picture = GFX_foc_canon_v75_15 show_sound = foc_v232_vader_breathing location = event_target:foc_swmap_aldoleem_system is_triggered_only = yes trigger = { has_global_flag = foc_republic_origin_jedi_purged NOT = { has_global_flag = foc_republic_origin_galactic_treaty } } immediate = { every_country = { limit = { has_country_flag = foc_republic_origin_empire_country } add_modifier = { modifier = foc_canon_vader_red_blade days = -1 } if = { limit = { any_owned_leader = { has_leader_flag = foc_republic_origin_vader_leader } } random_owned_leader = { limit = { has_leader_flag = foc_republic_origin_vader_leader } add_experience = 1500 } } } set_global_flag = foc_canon_vader_red_blade_forged } option = { name = foc_canon.ok } }
+country_event = { id = foc_canon.21 title = foc_canon.21.name desc = foc_canon.21.desc picture = GFX_foc_canon_v75_21 location = event_target:foc_swmap_corellia_system is_triggered_only = yes trigger = { has_global_flag = foc_republic_origin_jedi_purged NOT = { has_global_flag = foc_republic_origin_galactic_treaty } } immediate = { set_global_flag = foc_canon_han_solo_active } option = { name = foc_canon.ok } }
+country_event = { id = foc_canon.22 title = foc_canon.22.name desc = foc_canon.22.desc picture = GFX_foc_canon_v75_22 location = event_target:foc_swmap_bracca_system is_triggered_only = yes trigger = { has_global_flag = foc_republic_origin_jedi_purged NOT = { has_global_flag = foc_republic_origin_galactic_treaty } } immediate = { set_global_flag = foc_canon_cal_kestis_active every_country = { limit = { OR = { has_country_flag = foc_republic_origin_imperial_rebel_country has_country_flag = foc_republic_origin_rebel_alliance_country has_country_flag = foc_khan_rebel_alliance_country } } foc_canon_create_cal_kestis = yes add_modifier = { modifier = foc_canon_hidden_path days = 1800 } add_resource = { society_research = 3000 } } } option = { name = foc_canon.ok } }
+country_event = {
+    id = foc_canon.23
+    title = foc_canon.23.name
+    desc = foc_canon.23.desc
+    picture = GFX_foc_canon_v75_23
+    location = event_target:foc_swmap_tatooine_system
+    is_triggered_only = yes
+    trigger = {
+        foc_v1710_scarif_month_elapsed = yes
+        has_global_flag = foc_republic_origin_scarif_weakness_obtained
+        has_country_flag = foc_v1717e_alderaan_confirmed
+        NOT = {
+            has_country_flag = foc_v1717e_scarif_choice_pending
+        }
+        NOT = {
+            has_country_flag = foc_v1710_leia_rescue_shown
+        }
+        NOT = {
+            has_country_flag = foc_v1717e_rescue_confirmed
+        }
+        NOT = {
+            has_global_flag = foc_republic_origin_galactic_treaty
+        }
+    }
+    immediate = {
+        set_country_flag = foc_v1710_leia_rescue_shown
+        set_country_flag = foc_v1717e_scarif_sequence_migrated
+        set_country_flag = foc_v1717e_scarif_choice_pending
+    }
+    option = {
+        name = foc_canon.ok
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_country_flag = foc_v1717e_rescue_confirmed
+                    }
+                }
+                if = {
+                    limit = {
+                        NOT = {
+                            has_global_flag = foc_republic_origin_galactic_treaty
+                        }
+                    }
+                    if = {
+                        limit = {
+                            NOT = {
+                                has_global_flag = foc_v1710_leia_rescue_completed
+                            }
+                        }
+                        set_global_flag = foc_v1710_leia_rescue_completed
+                        set_global_flag = foc_v212_obiwan_rescued_leia
+                        set_global_flag = foc_canon_obiwan_returned
+                        set_global_flag = foc_v212_obiwan_rescue_announced
+                        log = "FOC_V1717E_SCARIF: player confirmed Leia's rescue; Obi-Wan's sacrifice and intelligence now resolve."
+                    }
+                    foc_v212_obiwan_rescues_leia = yes
+                    every_country = {
+                        limit = {
+                            foc_v1710_is_gcw_rebel = yes
+                        }
+                        foc_v1710_apply_rescued_leia_intelligence = yes
+                        foc_v212_leia_joins_after_alderaan = yes
+                    }
+                    set_country_flag = foc_v1717e_rescue_confirmed
+                    country_event = {
+                        id = foc_v1710_story.1
+                        days = 1
+                    }
+                }
+                remove_country_flag = foc_v1717e_scarif_choice_pending
+            }
+        }
+    }
+    force_open = yes
+}
+country_event = { id = foc_canon.24 title = foc_canon.24.name desc = foc_canon.24.desc picture = GFX_foc_canon_v75_24 location = event_target:foc_swmap_tanalorr_system is_triggered_only = yes trigger = { has_global_flag = foc_republic_origin_jedi_purged NOT = { has_global_flag = foc_republic_origin_galactic_treaty } } immediate = { foc_canon_tanalorr_refuge_effect = yes every_country = { limit = { any_owned_leader = { has_leader_flag = foc_canon_cal_kestis_leader } } foc_canon_advance_cal_kestis = yes } set_global_flag = foc_canon_tanalorr_opened } option = { name = foc_canon.ok } }
+country_event = { id = foc_canon.25 title = foc_canon.25.name desc = foc_canon.25.desc picture = GFX_foc_canon_v75_25 location = event_target:foc_swmap_aldhani_system is_triggered_only = yes trigger = { has_global_flag = foc_republic_origin_jedi_purged NOT = { has_global_flag = foc_republic_origin_galactic_treaty } } immediate = { foc_canon_aldhani_raid_effect = yes set_global_flag = foc_canon_aldhani_raid_done } option = { name = foc_canon.ok } }
+country_event = { id = foc_canon.26 title = foc_canon.26.name desc = foc_canon.26.desc picture = GFX_foc_canon_v75_26 is_triggered_only = yes trigger = { has_global_flag = foc_republic_origin_jedi_purged NOT = { has_global_flag = foc_republic_origin_galactic_treaty } } immediate = { set_global_flag = foc_canon_maul_dead } option = { name = foc_canon.ok } }
+country_event = { id = foc_canon.27 title = foc_canon.27.name desc = foc_canon.27.desc picture = GFX_foc_canon_v75_27 is_triggered_only = yes trigger = { has_global_flag = foc_saga_rebel_alliance_declared NOT = { has_global_flag = foc_republic_origin_galactic_treaty } } immediate = { every_country = { limit = { OR = { has_country_flag = foc_republic_origin_imperial_rebel_country has_country_flag = foc_republic_origin_rebel_alliance_country has_country_flag = foc_khan_rebel_alliance_country } } add_modifier = { modifier = foc_canon_jacen_legacy days = -1 } } set_global_flag = foc_canon_jacen_born } option = { name = foc_canon.ok } }
+country_event = {
+    id = foc_canon.34
+    title = foc_canon.34.name
+    desc = foc_canon.34.desc
+    picture = GFX_foc_canon_v75_34
+    location = event_target:foc_swfill_alderaan_system
+    is_triggered_only = yes
+    trigger = {
+        foc_v1710_scarif_month_elapsed = yes
+        has_country_flag = foc_v1717e_courier_confirmed
+        NOT = {
+            has_country_flag = foc_v1717e_scarif_choice_pending
+        }
+        NOT = {
+            has_country_flag = foc_v1710_alderaan_shown
+        }
+        NOT = {
+            has_country_flag = foc_v1717e_alderaan_confirmed
+        }
+        NOT = {
+            has_global_flag = foc_republic_origin_galactic_treaty
+        }
+        foc_v1717e_death_star_one_alive = yes
+    }
+    immediate = {
+        set_country_flag = foc_v1710_alderaan_shown
+        set_country_flag = foc_v1717e_scarif_sequence_migrated
+        set_country_flag = foc_v1717e_scarif_choice_pending
+    }
+    option = {
+        name = foc_canon.ok
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_country_flag = foc_v1717e_alderaan_confirmed
+                    }
+                }
+                if = {
+                    limit = {
+                        NOT = {
+                            has_global_flag = foc_republic_origin_galactic_treaty
+                        }
+                    }
+                    if = {
+                        limit = {
+                            foc_v1717e_death_star_one_alive = yes
+                        }
+                        if = {
+                            limit = {
+                                NOT = {
+                                    has_global_flag = foc_saga_alderaan_destroyed
+                                }
+                            }
+                            set_global_flag = foc_saga_alderaan_destroyed
+                            if = {
+                                limit = {
+                                    exists = event_target:foc_swfill_alderaan_system
+                                }
+                                event_target:foc_swfill_alderaan_system = {
+                                    every_system_planet = {
+                                        limit = {
+                                            has_planet_flag = foc_swfill_alderaan
+                                            NOT = {
+                                                is_planet_class = pc_shattered
+                                            }
+                                        }
+                                        myk_starkiller_destroy_single_planet = yes
+                                    }
+                                }
+                            }
+                            if = {
+                                limit = {
+                                    exists = event_target:foc_khan_rebel_alliance
+                                }
+                                event_target:foc_khan_rebel_alliance = {
+                                    foc_v212_leia_joins_after_alderaan = yes
+                                }
+                            }
+                            else = {
+                                random_country = {
+                                    limit = {
+                                        NOT = {
+                                            has_country_flag = foc_khan_first_order_resistance_country
+                                        }
+                                        OR = {
+                                            has_country_flag = foc_republic_origin_imperial_rebel_country
+                                            has_country_flag = foc_republic_origin_rebel_alliance_country
+                                            has_country_flag = foc_khan_rebel_alliance_country
+                                        }
+                                    }
+                                    foc_v212_leia_joins_after_alderaan = yes
+                                }
+                            }
+                        }
+                    }
+                    set_country_flag = foc_canon_alderaan_destroyed
+                    set_country_flag = foc_v1717e_alderaan_confirmed
+                    country_event = {
+                        id = foc_v1710_story.1
+                        days = 1
+                    }
+                }
+                remove_country_flag = foc_v1717e_scarif_choice_pending
+            }
+        }
+    }
+}
+country_event = { id = foc_canon.28 title = foc_canon.28.name desc = foc_canon.28.desc picture = GFX_foc_canon_v75_28 is_triggered_only = yes trigger = { has_country_flag = foc_saga_luke_bespin_shown NOT = { has_global_flag = foc_republic_origin_death_star_two_destroyed } } immediate = { every_country = { limit = { OR = { has_country_flag = foc_republic_origin_imperial_rebel_country has_country_flag = foc_republic_origin_rebel_alliance_country has_country_flag = foc_khan_rebel_alliance_country } } foc_canon_ensure_han = yes foc_canon_kill_yoda = yes if = { limit = { any_owned_leader = { has_leader_flag = foc_saga_luke_leader } } foc_saga_luke_advance = yes } } } option = { name = foc_canon.ok } }
+country_event = { id = foc_canon.29 title = foc_canon.29.name desc = foc_canon.29.desc picture = GFX_foc_canon_v75_29 is_triggered_only = yes trigger = { has_global_flag = foc_republic_origin_death_star_two_destroyed NOT = { has_global_flag = foc_republic_origin_galactic_treaty } } immediate = { foc_canon_operation_cinder_effect = yes set_global_flag = foc_canon_operation_cinder_started } option = { name = foc_canon.ok } }
+country_event = { id = foc_canon.32 title = foc_canon.32.name desc = foc_canon.32.desc picture = GFX_foc_canon_v75_32 is_triggered_only = yes trigger = { has_global_flag = foc_republic_origin_galactic_treaty NOT = { has_global_flag = foc_khan_phase_one } } immediate = { foc_canon_sith_seed_effect = yes } option = { name = foc_canon.ok } }
+country_event = {
+    id = foc_canon.30
+    title = foc_canon.30.name
+    desc = foc_canon.30.desc
+    picture = GFX_foc_saga_mandalore_rally
+    location = event_target:foc_swmap_mandalore_system
+    is_triggered_only = yes
+    trigger = {
+        has_global_flag = foc_republic_origin_galactic_treaty
+        has_global_flag = foc_mandalore_treaty_empire_control
+        has_global_flag = foc_canon_mandalore_glassed
+        NOT = { has_global_flag = foc_mandalore_wait_restoration_six_years }
+        NOT = { has_global_flag = foc_mandalore_restored_independent }
+    }
+    immediate = {
+        remove_global_flag = foc_mandalore_restoration_event_pending
+        # V207: First Order timing must not permanently cancel an already-due
+        # six-year Mandalore restoration. Recreate the state first and only then
+        # consume the Darksaber/Gideon flags; a failed recreation remains retryable.
+        foc_mandalore_restore_independent = yes
+        if = {
+            limit = {
+                has_global_flag = foc_mandalore_restored_independent
+                exists = event_target:foc_mandalore_country
+            }
+            foc_canon_mandalore_rebuild = yes
+            set_global_flag = foc_canon_mandalore_restoration_started
+            set_global_flag = foc_mandalore_darksaber_destroyed
+            every_country = {
+                limit = { has_relic = r_foc_darksaber }
+                remove_relic = r_foc_darksaber
+            }
+            set_global_flag = foc_mandalore_gideon_base_destroyed
+            set_global_flag = foc_mandalore_six_year_restoration_completed
+            log = "FOC_MANDALORE_V207: canonical six-year restoration finalized."
+        }
+        else = {
+            log = "FOC_MANDALORE_V207: canonical restoration could not recreate Mandalore; completion flags were not consumed and the monthly watcher may retry."
+        }
+    }
+    option = { name = foc_canon.ok }
+}
+country_event = { id = foc_canon.33 title = foc_canon.33.name desc = foc_canon.33.desc picture = GFX_foc_canon_v75_33 is_triggered_only = yes trigger = { has_global_flag = foc_republic_origin_galactic_treaty NOT = { has_global_flag = foc_khan_phase_one } } immediate = { every_country = { limit = { has_country_flag = foc_sw_imperial_remnant_country NOT = { has_country_flag = foc_saga_thrawn_in_command } } country_event = { id = foc_thrawn.1 } } every_country = { limit = { OR = { has_country_flag = foc_sw_new_republic_country has_country_flag = foc_republic_origin_post_treaty_rebel_country has_country_flag = foc_khan_rebel_alliance_country } } foc_canon_create_ahsoka = yes } set_global_flag = foc_canon_thrawn_returned } option = { name = foc_canon.ok } }
+country_event = {
+    id = foc_canon.31
+    title = foc_canon.31.name
+    desc = foc_canon.31.desc
+    picture = GFX_foc_canon_v75_31
+    is_triggered_only = yes
+    trigger = {
+        OR = {
+            AND = {
+                has_global_flag = foc_republic_origin_galactic_treaty
+                NOT = { has_global_flag = foc_khan_phase_one }
+            }
+            AND = {
+                has_origin = origin_fop_first_order
+                NOT = { has_country_flag = fop_origin_story_timeline_locked }
+                has_country_flag = fop_origin_relocated_to_ilum
+                NOT = { has_country_flag = foc_canon_starkiller_start_shown }
+                NOT = { foc_khan_owns_completed_starkiller = yes }
+            }
+        }
+    }
+    immediate = {
+        if = {
+            limit = { has_origin = origin_fop_first_order }
+            set_country_flag = foc_canon_starkiller_start_shown
+        }
+        foc_canon_starkiller_construction_effect = yes
+    }
+    option = { name = foc_canon.ok }
+}
+
+# --- Actual-battle visible story windows ----------------------------------------------
+# V89 compatibility ID only. Geonosis is now the opening story event (foc_cw.1),
+# grants Republic control directly, and is deliberately excluded from battle anchors.
+country_event = { id = foc_canon.39 hide_window = yes is_triggered_only = yes immediate = { set_global_flag = foc_canon_geonosis_story_resolved } }
+country_event = {
+    id = foc_canon.40
+    title = foc_canon.40.name
+    desc = foc_canon.40.desc
+    picture = GFX_foc_canon_v75_40
+    show_sound = event_ship_bridge
+    is_triggered_only = yes
+    trigger = { has_global_flag = foc_republic_origin_separatist_war_active NOT = { has_global_flag = foc_republic_origin_jedi_purged } }
+    immediate = {
+        every_country = { limit = { has_country_flag = foc_republic_origin_republic_country } foc_canon_create_ahsoka = yes add_resource = { unity = 5000 } }
+        set_global_flag = foc_canon_christophsis_battle_started
+        set_global_flag = foc_canon_christophsis_battle_completed
+        if = { limit = { NOT = { has_global_flag = foc_canon_clone_war_first_battle_recorded } } set_global_flag = foc_canon_clone_war_first_battle_christophsis }
+        foc_canon_mark_clone_war_first_battle = yes
+        # V89: Coruscant's invasion clock starts here, not from the Outer Rim event.
+        set_country_flag = foc_saga_cw_christophsis_coruscant_anchor_v89
+        set_timed_country_flag = { flag = foc_saga_cw_coruscant_after_christophsis_wait_v89 days = 720 }
+    }
+    option = { name = foc_canon.ok }
+}
+country_event = {
+    id = foc_canon.41
+    title = foc_canon.41.name
+    desc = foc_canon.41.desc
+    picture = GFX_foc_canon_v75_41
+    location = event_target:foc_swmap_mandalore_system
+    show_sound = event_ship_bridge
+    is_triggered_only = yes
+    trigger = {
+        has_country_flag = foc_canon_maul_mandalore
+        NOT = { has_global_flag = foc_republic_origin_jedi_purged }
+        any_country = { has_country_flag = foc_republic_origin_republic_country }
+    }
+    immediate = {
+        if = {
+            limit = { exists = event_target:foc_swmap_mandalore_system }
+            event_target:foc_swmap_mandalore_system = {
+                every_system_planet = {
+                    limit = { has_planet_flag = foc_swmap_mandalore }
+                    remove_modifier = foc_canon_shadow_collective
+                    set_planet_flag = foc_canon_mandalore_siege
+                }
+            }
+        }
+        every_country = {
+            limit = { has_country_flag = foc_republic_origin_republic_country }
+            foc_canon_create_ahsoka = yes
+            add_modifier = { modifier = foc_mandalore_332nd_deployment days = 360 }
+        }
+        foc_mandalore_bo_katan_restoration = yes
+        set_global_flag = foc_mandalore_maul_captured
+        set_global_flag = foc_canon_mandalore_siege_started
+        set_global_flag = foc_canon_mandalore_siege_completed
+        # V151: if the Republic already ended the Clone War and the directive is
+        # waiting, the Mandalore finale releases Order 66 immediately.
+        every_country = {
+            limit = {
+                has_country_flag = foc_republic_origin_republic_country
+                has_country_flag = foc_republic_origin_separatist_war_won
+                has_country_flag = foc_republic_origin_order_66_pending
+                NOT = { has_country_flag = foc_republic_origin_order_66_executed }
+                NOT = { has_global_flag = foc_republic_origin_separatist_war_active }
+            }
+            country_event = { id = foc_republic_origin.202 days = 1 }
+        }
+        if = {
+            limit = { NOT = { has_global_flag = foc_canon_clone_war_first_battle_recorded } }
+            set_global_flag = foc_canon_clone_war_first_battle_mandalore
+        }
+        foc_canon_mark_clone_war_first_battle = yes
+    }
+    option = { name = foc_canon.ok }
+}
+country_event = { id = foc_canon.42 title = foc_canon.42.name desc = foc_canon.42.desc picture = GFX_foc_canon_v75_42 is_triggered_only = yes trigger = { has_global_flag = foc_republic_origin_jedi_purged has_global_flag = foc_canon_ahsoka_fulcrum_returned NOT = { has_global_flag = foc_republic_origin_galactic_treaty } } immediate = { every_country = { limit = { OR = { has_country_flag = foc_republic_origin_imperial_rebel_country has_country_flag = foc_republic_origin_rebel_alliance_country has_country_flag = foc_khan_rebel_alliance_country } } add_resource = { unity = 5000 } foc_canon_remove_ahsoka = yes } set_global_flag = foc_canon_ahsoka_malachor_missing set_global_flag = foc_canon_malachor_aftermath } option = { name = foc_canon.ok } }
+country_event = { id = foc_canon.43 title = foc_canon.43.name desc = foc_canon.43.desc picture = GFX_foc_canon_v75_43 show_sound = event_ship_bridge is_triggered_only = yes trigger = { has_global_flag = foc_republic_origin_jedi_purged any_country = { has_country_flag = foc_republic_origin_empire_country } NOT = { has_global_flag = foc_republic_origin_galactic_treaty } } immediate = { if = { limit = { exists = event_target:foc_swmap_lothal_system } event_target:foc_swmap_lothal_system = { every_system_planet = { set_planet_flag = foc_canon_lothal_uprising } } } set_global_flag = foc_canon_kannan_dead set_global_flag = foc_canon_thrawn_exiled set_global_flag = foc_canon_lothal_battle_completed if = { limit = { NOT = { has_global_flag = foc_canon_gcw_first_battle_recorded } } set_global_flag = foc_canon_gcw_first_battle_lothal } foc_canon_mark_galactic_civil_war_first_battle = yes } option = { name = foc_canon.ok } }
+country_event = {
+    id = foc_canon.44
+    title = foc_canon.44.name
+    desc = foc_canon.44.desc
+    picture = GFX_foc_canon_v75_44
+    show_sound = event_ship_bridge
+    is_triggered_only = yes
+    trigger = {
+        has_global_flag = foc_republic_origin_scarif_weakness_obtained
+        NOT = {
+            has_global_flag = foc_republic_origin_galactic_treaty
+        }
+        NOT = {
+            has_country_flag = foc_v1717e_scarif_notice_shown
+        }
+        NOT = {
+            has_country_flag = foc_rogue_one_rebel_scarif_shown
+        }
+        NOR = {
+            has_country_flag = foc_republic_origin_empire_country
+            has_country_flag = foc_republic_origin_player_empire
+        }
+    }
+    immediate = {
+        set_country_flag = foc_canon_battle_scarif
+        set_country_flag = foc_v1717e_scarif_notice_shown
+        set_country_flag = foc_v1717e_scarif_sequence_migrated
+        set_country_flag = foc_v1717e_scarif_choice_pending
+        foc_v1710_begin_scarif_aftermath = yes
+    }
+    option = {
+        name = foc_canon.ok
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_country_flag = foc_v1717e_scarif_confirmed
+                    }
+                }
+                if = {
+                    limit = {
+                        NOT = {
+                            has_global_flag = foc_republic_origin_galactic_treaty
+                        }
+                    }
+                    set_country_flag = foc_v1717e_scarif_confirmed
+                    country_event = {
+                        id = foc_v1710_story.1
+                        days = 1
+                    }
+                }
+                remove_country_flag = foc_v1717e_scarif_choice_pending
+            }
+        }
+    }
+}
+country_event = { id = foc_canon.45 title = foc_canon.45.name desc = foc_canon.45.desc picture = GFX_foc_canon_v75_45 show_sound = event_ship_bridge is_triggered_only = yes trigger = { has_global_flag = foc_republic_origin_death_star_one_destroyed has_global_flag = foc_republic_origin_jedi_purged NOT = { has_global_flag = foc_republic_origin_galactic_treaty } } immediate = { every_country = { limit = { OR = { has_country_flag = foc_republic_origin_imperial_rebel_country has_country_flag = foc_republic_origin_rebel_alliance_country has_country_flag = foc_khan_rebel_alliance_country } } foc_canon_ensure_han = yes } foc_v212_resolve_death_star_one_character_fates = yes set_global_flag = foc_canon_yavin_battle_started set_global_flag = foc_canon_yavin_battle_completed if = { limit = { NOT = { has_global_flag = foc_canon_gcw_first_battle_recorded } } set_global_flag = foc_canon_gcw_first_battle_yavin } foc_canon_mark_galactic_civil_war_first_battle = yes } option = { name = foc_canon.ok } }
+country_event = {
+    id = foc_canon.46
+    title = foc_canon.46.name
+    desc = foc_canon.46.desc
+    picture = GFX_foc_canon_v75_46
+    show_sound = event_ship_bridge
+    is_triggered_only = yes
+    trigger = {
+        has_global_flag = foc_republic_origin_jedi_purged
+        any_country = { has_country_flag = foc_republic_origin_empire_country }
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+    }
+    immediate = {
+        set_global_flag = foc_canon_hoth_evacuation_started
+        set_global_flag = foc_canon_hoth_battle_completed
+        if = {
+            limit = { NOT = { has_global_flag = foc_canon_gcw_first_battle_recorded } }
+            set_global_flag = foc_canon_gcw_first_battle_hoth
+        }
+        foc_canon_mark_galactic_civil_war_first_battle = yes
+
+        # V231e: commission Home One immediately when Hoth officially completes.
+        # The event itself owns all uniqueness guards, so the monthly convergence
+        # hook remains harmless and cannot create a second hull.
+        every_country = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_khan_rebel_alliance_country
+                    has_country_flag = foc_republic_origin_rebel_alliance_country
+                    has_country_flag = foc_republic_origin_imperial_rebel_country
+                }
+            }
+            country_event = { id = foc_v231_home_one.1 }
+        }
+    }
+    option = { name = foc_canon.ok }
+}
+country_event = { id = foc_canon.47 title = foc_canon.47.name desc = foc_canon.47.desc picture = GFX_foc_canon_v75_47 show_sound = event_ship_bridge is_triggered_only = yes trigger = { has_global_flag = foc_republic_origin_jedi_purged any_country = { has_country_flag = foc_republic_origin_empire_country } NOT = { has_global_flag = foc_republic_origin_galactic_treaty } } immediate = { set_global_flag = foc_canon_endor_battle_started set_global_flag = foc_canon_endor_battle_completed if = { limit = { NOT = { has_global_flag = foc_canon_gcw_first_battle_recorded } } set_global_flag = foc_canon_gcw_first_battle_endor } foc_canon_mark_galactic_civil_war_first_battle = yes } option = { name = foc_canon.ok } }
+country_event = {
+    id = foc_canon.48
+    title = foc_canon.48.name
+    desc = foc_canon.48.desc
+    picture = GFX_foc_canon_v75_48
+    location = event_target:foc_swmap_mandalore_system
+    show_sound = event_ship_bridge
+    is_triggered_only = yes
+    trigger = {
+        has_global_flag = foc_republic_origin_death_star_two_destroyed
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+    }
+    immediate = {
+        foc_canon_mandalore_purge = yes
+        foc_mandalore_establish_gideon_base = yes
+        set_global_flag = foc_canon_mandalore_purge_battle_completed
+        if = {
+            limit = { NOT = { has_global_flag = foc_canon_gcw_first_battle_recorded } }
+            set_global_flag = foc_canon_gcw_first_battle_mandalore_purge
+        }
+        foc_canon_mark_galactic_civil_war_first_battle = yes
+    }
+    option = { name = foc_canon.ok }
+}
+country_event = { id = foc_canon.49 title = foc_canon.49.name desc = foc_canon.49.desc picture = GFX_foc_canon_v75_49 show_sound = event_ship_bridge is_triggered_only = yes trigger = { has_global_flag = foc_republic_origin_death_star_two_destroyed NOT = { has_global_flag = foc_republic_origin_galactic_treaty } } immediate = { set_global_flag = foc_canon_jakku_battle_started set_global_flag = foc_canon_jakku_battle_completed if = { limit = { NOT = { has_global_flag = foc_canon_gcw_first_battle_recorded } } set_global_flag = foc_canon_gcw_first_battle_jakku } foc_canon_mark_galactic_civil_war_first_battle = yes every_country = { limit = { OR = { has_country_flag = foc_republic_origin_rebel_alliance_country has_country_flag = foc_sw_new_republic_country } } add_resource = { unity = 10000 } } } option = { name = foc_canon.ok } }
+# V84 compatibility aliases: old saves may have these events queued. They no longer
+# show windows; D'Qar and Crait are resolved by their actual loss handlers.
+country_event = {
+    id = foc_canon.50
+    hide_window = yes
+    is_triggered_only = yes
+    immediate = {
+        if = {
+            limit = { NOT = { has_global_flag = foc_canon_dqar_evacuation_started } }
+            set_global_flag = foc_canon_dqar_evacuation_started
+        }
+    }
+}
+country_event = {
+    id = foc_canon.51
+    hide_window = yes
+    is_triggered_only = yes
+    immediate = {
+        if = {
+            limit = { NOT = { has_global_flag = foc_canon_crait_last_stand } }
+            set_global_flag = foc_canon_crait_last_stand
+        }
+    }
+}
+country_event = { id = foc_canon.52 title = foc_canon.52.name desc = foc_canon.52.desc picture = GFX_foc_canon_v75_52 show_sound = event_ship_bridge is_triggered_only = yes trigger = { has_global_flag = foc_khan_phase_two } immediate = { foc_canon_people_fleet_effect = yes set_global_flag = foc_canon_exegol_final_battle set_global_flag = foc_canon_exegol_battle_started if = { limit = { NOT = { has_global_flag = foc_canon_final_order_first_battle_recorded } } set_global_flag = foc_canon_final_order_first_battle_exegol } foc_canon_mark_final_order_first_battle = yes } option = { name = foc_canon.ok } }
+
+
+# V85: Ahsoka returns to the Rebel Alliance as Fulcrum. This is a character event,
+# not a territorial battle and therefore never participates in battle-anchor ordering.
+country_event = {
+    id = foc_canon.53
+    title = foc_canon.53.name
+    desc = foc_canon.53.desc
+    picture = GFX_foc_canon_v75_42
+    is_triggered_only = yes
+    trigger = {
+        has_global_flag = foc_saga_rebel_alliance_declared
+        has_global_flag = foc_canon_ahsoka_left_order
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+    }
+    immediate = {
+        every_country = {
+            limit = {
+                OR = {
+                    has_country_flag = foc_republic_origin_imperial_rebel_country
+                    has_country_flag = foc_republic_origin_rebel_alliance_country
+                    has_country_flag = foc_khan_rebel_alliance_country
+                }
+            }
+            foc_canon_create_ahsoka = yes
+        }
+        set_global_flag = foc_canon_ahsoka_fulcrum_returned
+    }
+    option = { name = foc_canon.ok }
+}

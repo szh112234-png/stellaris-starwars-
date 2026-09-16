@@ -1,0 +1,40 @@
+##########
+# City Planet
+##########
+
+entity = {
+	name = "republic_01_city_planet_entity"
+	pdxmesh = "planet_clouded_mesh"
+
+	#planet surface texture override
+	meshsettings = {
+		name = "planet_geosphereShape"
+		texture_diffuse = "republic_coruscant_diffuse.dds"
+		texture_normal = "republic_coruscant_normal.dds"
+		texture_specular = "republic_coruscant_specular.dds"
+	}
+
+	##cloud texture override
+	meshsettings = {
+		name = "clouds_geosphereShape"
+		texture_diffuse = "republic_coruscant_clouds_diffuse.dds"
+		texture_normal = "nonormal.dds"
+		texture_specular = "nospec.dds"
+	}
+
+	##cloud shadow texture override
+	meshsettings = {
+		name = "clouds_shadow_geosphereShape"
+		texture_diffuse = "republic_coruscant_clouds_shadow_diffuse.dds"
+		texture_normal = "nonormal.dds"
+		texture_specular = "nospec.dds"
+	}
+
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 }
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_city_planet" } }
+		start_event = { trigger_once = yes sound = { soundeffect = "amb_city_planet_flyby" } }
+	}
+
+	attach = { planet = "city_planet_surface_ships_entity" }
+}

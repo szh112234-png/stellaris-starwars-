@@ -1,0 +1,69 @@
+# Country scope; old resources are hidden import ledgers only.
+foc_v1711_migrate_shared_resources = {
+    # v17.12: optional SG owns its native stockpile rules. Never import using
+    # the standalone FOC 15000 cap into an active SG save. Existing canonical
+    # sr_*_swgs balances are already shared and require no conversion.
+    if = {
+        limit = { NOT = { has_global_flag = has_swgs_mod } }
+        if = {
+            limit = { resource_stockpile_compare = { resource = tibanna_gas value > 0 } }
+            export_resource_stockpile_to_variable = { resource = tibanna_gas variable = foc_v1711_old }
+            export_resource_stockpile_to_variable = { resource = sr_tibanna_swgs variable = foc_v1711_before }
+            # Never write into an already-full or over-cap canonical stockpile.
+            # The shared registry's base capacity is 15000; leave legacy surplus hidden.
+            if = {
+                limit = { check_variable = { which = foc_v1711_before value < 15000 } }
+                set_variable = { which = foc_v1711_sum value = foc_v1711_before }
+                change_variable = { which = foc_v1711_sum value = foc_v1711_old }
+                set_resource = { resource = sr_tibanna_swgs value = foc_v1711_sum }
+                export_resource_stockpile_to_variable = { resource = sr_tibanna_swgs variable = foc_v1711_credited }
+                subtract_variable = { which = foc_v1711_credited value = foc_v1711_before }
+                if = {
+                    limit = { check_variable = { which = foc_v1711_credited value > 0 } }
+                    subtract_variable = { which = foc_v1711_old value = foc_v1711_credited }
+                    set_resource = { resource = tibanna_gas value = foc_v1711_old }
+                }
+            }
+        }
+        if = {
+            limit = { resource_stockpile_compare = { resource = kyber_crystals value > 0 } }
+            export_resource_stockpile_to_variable = { resource = kyber_crystals variable = foc_v1711_old }
+            export_resource_stockpile_to_variable = { resource = sr_kyber_swgs variable = foc_v1711_before }
+            # Never write into an already-full or over-cap canonical stockpile.
+            # The shared registry's base capacity is 15000; leave legacy surplus hidden.
+            if = {
+                limit = { check_variable = { which = foc_v1711_before value < 15000 } }
+                set_variable = { which = foc_v1711_sum value = foc_v1711_before }
+                change_variable = { which = foc_v1711_sum value = foc_v1711_old }
+                set_resource = { resource = sr_kyber_swgs value = foc_v1711_sum }
+                export_resource_stockpile_to_variable = { resource = sr_kyber_swgs variable = foc_v1711_credited }
+                subtract_variable = { which = foc_v1711_credited value = foc_v1711_before }
+                if = {
+                    limit = { check_variable = { which = foc_v1711_credited value > 0 } }
+                    subtract_variable = { which = foc_v1711_old value = foc_v1711_credited }
+                    set_resource = { resource = kyber_crystals value = foc_v1711_old }
+                }
+            }
+        }
+        clear_variable = foc_v1711_old
+        clear_variable = foc_v1711_before
+        clear_variable = foc_v1711_sum
+        clear_variable = foc_v1711_credited
+    }
+}
+
+# Called synchronously at the actual civil-war opening. Global deadline survives
+# loss of the original dispatcher country; monthly fallback can dispatch it.
+foc_v1711_start_leia_join_clock = {
+    if = {
+        limit = {
+            has_global_flag = foc_republic_origin_empire_war_active
+            NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+            NOT = { has_global_flag = foc_v212_leia_joined_imperial_rebels }
+            NOT = { has_global_flag = foc_v1711_leia_join_clock_started }
+        }
+        set_global_flag = foc_v1711_leia_join_clock_started
+        set_timed_global_flag = { flag = foc_v1711_wait_leia_join_10y days = 3600 }
+        country_event = { id = foc_v1711.20 days = 3600 }
+    }
+}

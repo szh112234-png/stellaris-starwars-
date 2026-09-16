@@ -1,0 +1,98 @@
+namespace = foc_native_species
+
+country_event = {
+    id = foc_native_species.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        NOT = { has_global_flag = foc_v182_native_species_initialized }
+        any_system = {
+            OR = {
+                has_star_flag = foc_swmap_kashyyyk_home
+                has_star_flag = foc_swmap_mon_cala_home
+                has_star_flag = foc_swmap_geonosis_home
+            }
+        }
+    }
+
+    immediate = {
+        set_global_flag = foc_v182_native_species_initialized
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_kashyyyk_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_swmap_kashyyyk }
+                foc_native_species_seed_kashyyyk = yes
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_mon_cala_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_swmap_mon_cala }
+                foc_native_species_seed_mon_cala = yes
+            }
+        }
+
+        every_system = {
+            limit = { has_star_flag = foc_swmap_geonosis_home }
+            every_system_planet = {
+                limit = { has_planet_flag = foc_swmap_geonosis }
+
+                foc_native_species_seed_geonosis = yes
+
+                # Keep the intended political status synchronized after the
+                # Clone Wars transfer without recreating any population.
+                if = {
+                    limit = {
+                        is_colony = yes
+                        exists = event_target:foc_native_geonosian_species
+                    }
+
+                    owner = {
+                        save_event_target_as = foc_native_geonosis_current_owner
+                    }
+
+                    event_target:foc_native_geonosian_species = {
+                        if = {
+                            limit = {
+                                event_target:foc_native_geonosis_current_owner = {
+                                    has_country_flag = foc_republic_origin_separatist_country
+                                }
+                            }
+                            set_citizenship_type = {
+                                country = event_target:foc_native_geonosis_current_owner
+                                type = citizenship_full
+                                cooldown = no
+                            }
+                            set_military_service_type = {
+                                country = event_target:foc_native_geonosis_current_owner
+                                type = military_service_full
+                                cooldown = no
+                            }
+                        }
+                        else_if = {
+                            limit = {
+                                event_target:foc_native_geonosis_current_owner = {
+                                    has_country_flag = foc_republic_origin_republic_country
+                                }
+                            }
+                            set_citizenship_type = {
+                                country = event_target:foc_native_geonosis_current_owner
+                                type = citizenship_limited
+                                cooldown = no
+                            }
+                            set_military_service_type = {
+                                country = event_target:foc_native_geonosis_current_owner
+                                type = military_service_limited
+                                cooldown = no
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

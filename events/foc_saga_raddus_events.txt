@@ -1,0 +1,103 @@
+namespace = foc_raddus
+
+# =============================================================================
+# 拉杜斯号：功能全失的修复
+# =============================================================================
+# 病因有两层，都出在「所有者是谁」上，与至尊号那套尺寸问题无关：
+#
+# 一、轴向模块 foc_rebel_home_arkship_strike_command_module 的 potential 里写着
+#     owner? = { has_country_flag = foc_khan_rebel_alliance_country }
+#     义军打赢、通过银河条约改组为新共和国之后，这个旗标就没有了（截图里那艘船
+#     已经叫 R.N.S. 拉杜斯号，停在科洛桑），potential 立刻不成立，模块被摘掉。
+#     这一层已在 common/starbase_modules/ 的覆盖里放宽。
+#
+# 二、负责重新安装模块的维护事件 foc_khan_rebel.45，trigger 第一行就是
+#     has_country_flag = foc_khan_rebel_alliance_country，
+#     后面还明确排除了共和国起源的义军身份，只服务霍斯尼亚陨落之后的抵抗力量。
+#     也就是说新共和国名下的拉杜斯号**没有任何东西会去补装它的模块**。
+#
+# 这里补第二层：只看船，不看国家旗标。凡是 foc_rebel_home_arkship_tier_3
+# 尺寸的舰船，三个模块缺哪个补哪个。
+# =============================================================================
+
+country_event = {
+    id = foc_raddus.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        any_owned_ship = {
+            OR = { is_ship_size = foc_rebel_home_arkship_tier_3 is_ship_size = foc_rebel_home_arkship_tier_3_foc_lowest }
+            OR = {
+                NOT = { has_ship_flag = foc_khan_rebel_home_arkship_core_initialized }
+                starbase = {
+                    OR = {
+                        NOT = { has_starbase_module = foc_rebel_home_arkship_engineering_bay }
+                        NOT = { has_starbase_module = foc_rebel_home_arkship_docking_bay }
+                        NOT = { has_starbase_module = foc_rebel_home_arkship_habitation_module }
+                        NOT = { has_starbase_module = foc_rebel_home_arkship_sensor_array }
+                        NOT = { has_starbase_module = foc_rebel_home_arkship_mining_array }
+                        NOT = { has_starbase_module = foc_rebel_home_arkship_archive }
+                        NOT = { has_starbase_module = foc_rebel_home_arkship_strike_command_module }
+                        NOT = { has_starbase_building = foc_rebel_home_arkship_armor }
+                        NOT = { has_starbase_building = foc_rebel_home_arkship_shield }
+                    }
+                }
+            }
+        }
+    }
+
+    immediate = {
+        every_owned_ship = {
+            limit = { OR = { is_ship_size = foc_rebel_home_arkship_tier_3 is_ship_size = foc_rebel_home_arkship_tier_3_foc_lowest } }
+            set_ship_flag = foc_khan_rebel_home_arkship
+            set_ship_flag = foc_khan_rebel_home_arkship_v41_home_one
+            set_graphical_culture = rebel_01
+            starbase = {
+                # Always write the full known-good layout. set_starbase_module
+                # replaces an obsolete V36/V37 clone in the same slot, making
+                # this a direct old-save migration as well as a repair pass.
+                set_starbase_module = { slot = 1 module = foc_rebel_home_arkship_engineering_bay }
+                set_starbase_module = { slot = 2 module = foc_rebel_home_arkship_docking_bay }
+                set_starbase_module = { slot = 3 module = foc_rebel_home_arkship_habitation_module }
+                set_starbase_module = { slot = 4 module = foc_rebel_home_arkship_sensor_array }
+                set_starbase_module = { slot = 5 module = foc_rebel_home_arkship_mining_array }
+                set_starbase_module = { slot = 6 module = foc_rebel_home_arkship_archive }
+                if = {
+                    limit = { NOT = { has_starbase_module = foc_rebel_home_arkship_strike_command_module } }
+                    set_starbase_module = { slot = 7 module = foc_rebel_home_arkship_strike_command_module }
+                }
+                set_starbase_building = { slot = 1 building = foc_rebel_home_arkship_armor }
+                set_starbase_building = { slot = 2 building = foc_rebel_home_arkship_shield }
+                set_ship_construction_type = starbase_shipyard
+            }
+            set_ship_flag = foc_khan_rebel_home_arkship_core_initialized
+        }
+        remove_country_flag = foc_saga_raddus_kit_installed
+        log = "FOC_SAGA_RADDUS: restored full seven-module/two-building Arkship core."
+        if = {
+            limit = {
+                is_ai = no
+                NOT = { has_country_flag = foc_saga_raddus_notice_shown }
+            }
+            country_event = { id = foc_raddus.2 days = 1 }
+        }
+    }
+}
+
+country_event = {
+    id = foc_raddus.2
+    title = foc_raddus.2.name
+    desc = foc_raddus.2.desc
+    picture = GFX_foc_saga_rebel_fleet
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = no
+        NOT = { has_country_flag = foc_saga_raddus_notice_shown }
+    }
+
+    immediate = { set_country_flag = foc_saga_raddus_notice_shown }
+
+    option = { name = foc_raddus.2.a }
+}

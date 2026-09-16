@@ -1,0 +1,13 @@
+# Crisis Mandator IV exclusive fixed T-slot.
+# The fitted weapon is additionally restricted to foc_khan_mandator by its
+# component definition, so ordinary titanic weapons cannot become its main gun.
+foc_khan_mandator_titanic_fixed = {
+    size = titanic
+    component = weapon
+    is_fixed = yes
+    entities = {
+        weapon_type_kinetic = "invisible_turret_entity"
+        weapon_type_energy = "invisible_turret_entity"
+        weapon_type_explosive = "invisible_turret_entity"
+    }
+}

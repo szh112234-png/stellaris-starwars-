@@ -1,0 +1,40 @@
+namespace = foc_263
+
+# Ensures existing saves receive the fixed SG strategic-fighter route before new crisis
+# reinforcement ships are created.
+country_event = {
+    id = foc_263.1
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        OR = {
+            has_country_flag = foc_khan_first_order_country
+            has_country_flag = foc_khan_final_order_country
+            has_country_flag = foc_khan_rebel_alliance_country
+        }
+    }
+
+    immediate = {
+        foc_sync_ssp_strength_to_main_difficulty = yes
+        set_country_flag = ssp_size_original
+
+        if = {
+            limit = { has_country_flag = foc_khan_rebel_alliance_country }
+            remove_country_flag = ssp_fighter_group_empire
+            set_country_flag = ssp_fighter_group_rebel
+            if = { limit = { is_ai = yes } give_technology = { tech = tech_ssp_rebel_hyperspace message = no } }
+        }
+        else = {
+            remove_country_flag = ssp_fighter_group_rebel
+            set_country_flag = ssp_fighter_group_empire
+            if = { limit = { is_ai = yes } give_technology = { tech = tech_ssp_imperial_hyperspace message = no } }
+        }
+
+        if = {
+            limit = { NOT = { has_country_flag = foc_263_sg_fighters_migrated } }
+            set_country_flag = foc_263_sg_fighters_migrated
+            log = "FOC_V62_FIGHTERS_SYNCED: crisis country strategic fighters synchronized to the main difficulty tier."
+        }
+    }
+}

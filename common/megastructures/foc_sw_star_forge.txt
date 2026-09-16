@@ -1,0 +1,65 @@
+@foc_star_forge_stage_time = 1800
+
+foc_sw_star_forge_site = {
+    entity = "rakatan_star_forge_entity"
+    construction_entity = "rakatan_star_forge_entity"
+    portrait = "GFX_foc_sw_star_forge"
+    place_entity_on_planet_plane = no
+    show_galactic_map_icon = yes
+    show_in_outliner = yes
+    construction_blocks_and_blocked_by = self_type
+    build_time = @foc_star_forge_stage_time
+    resources = { category = megastructures cost = { alloys = 10000 energy = 10000 influence = 200 } upkeep = { energy = 50 } produces = { alloys = 40 energy = 30 } }
+    potential = { exists = owner owner = { has_technology = tech_foc_sw_star_forge } }
+    possible = {
+        custom_tooltip = { fail_text = "requires_inside_border" is_inside_border = from }
+        custom_tooltip = {
+            fail_text = foc_sw_star_forge_one_only
+            from = { NOR = { any_owned_megastructure = { is_megastructure_type = foc_sw_star_forge_site } any_owned_megastructure = { is_megastructure_type = foc_sw_star_forge_2 } any_owned_megastructure = { is_megastructure_type = foc_sw_star_forge_3 } } }
+        }
+    }
+    placement_rules = {
+        planet_possible = {
+            custom_tooltip = { fail_text = "must_build_around_star" is_star = yes }
+            custom_tooltip = { fail_text = "requires_no_anomaly" NOT = { has_anomaly = yes } }
+            custom_tooltip = { fail_text = "requires_no_existing_megastructure" has_any_megastructure = no }
+        }
+    }
+    country_modifier = { country_naval_cap_add = 50 command_limit_add = 10 }
+    station_modifier = { starbase_shipyard_capacity_add = 5 starbase_shipyard_build_speed_mult = 0.25 }
+    on_build_complete = { from = { set_country_flag = foc_sw_star_forge_built } }
+    ai_weight = { factor = 0 }
+}
+
+foc_sw_star_forge_2 = {
+    entity = "rakatan_star_forge_entity"
+    construction_entity = "rakatan_star_forge_entity"
+    portrait = "GFX_foc_sw_star_forge"
+    place_entity_on_planet_plane = no
+    show_galactic_map_icon = yes
+    show_in_outliner = yes
+    construction_blocks_and_blocked_by = self_type
+    upgrade_from = { foc_sw_star_forge_site }
+    build_time = @foc_star_forge_stage_time
+    resources = { category = megastructures cost = { alloys = 15000 energy = 15000 influence = 250 } upkeep = { energy = 100 } produces = { alloys = 140 energy = 100 } }
+    country_modifier = { country_naval_cap_add = 100 command_limit_add = 15 ships_upkeep_mult = -0.05 }
+    station_modifier = { starbase_shipyard_capacity_add = 10 starbase_shipyard_build_speed_mult = 0.50 }
+    ai_weight = { factor = 0 }
+}
+
+foc_sw_star_forge_3 = {
+    entity = "rakatan_star_forge_entity"
+    construction_entity = "rakatan_star_forge_entity"
+    portrait = "GFX_foc_sw_star_forge"
+    place_entity_on_planet_plane = no
+    show_galactic_map_icon = yes
+    show_in_outliner = yes
+    construction_blocks_and_blocked_by = self_type
+    upgrade_from = { foc_sw_star_forge_2 }
+    build_time = 2400
+    resources = { category = megastructures cost = { alloys = 25000 energy = 25000 influence = 350 } upkeep = { energy = 200 } produces = { alloys = 300 energy = 250 } }
+    ship_modifier = { ship_starting_experience_add = 100 }
+    country_modifier = { country_naval_cap_add = 200 command_limit_add = 30 ships_upkeep_mult = -0.10 }
+    station_modifier = { starbase_shipyard_capacity_add = 20 starbase_shipyard_build_speed_mult = 1.00 }
+    ai_weight = { factor = 0 }
+}

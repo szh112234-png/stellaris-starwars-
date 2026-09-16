@@ -1,0 +1,67 @@
+# This is a template which multiple species can use. 
+
+gar_female_clothes_01 = {
+	default = "gfx/models/portraits/gar/gar_female_clothes_general.dds"
+	
+	game_setup = {#will run with a limited country scope. species and government is set but the country does not actually exist
+		default = "gfx/models/portraits/gar/gar_female_clothes_general.dds"
+	}
+	
+	#species scope
+	species = { #generic portrait for a species
+		default = "gfx/models/portraits/gar/gar_female_clothes_general.dds"
+	}
+	
+	#pop scope
+	pop = { #for a specific pop
+		default = "gfx/models/portraits/gar/gar_female_clothes_general.dds"
+		
+		random = {
+			list = {
+				"gfx/models/portraits/gar/gar_female_clothes_governor.dds"
+				"gfx/models/portraits/gar/gar_female_clothes_governor2.dds"
+				"gfx/models/portraits/gar/gar_female_clothes_scientist.dds"
+				"gfx/models/portraits/gar/republic_female_clothes_civilian.dds"
+			}
+		}
+	}
+	#leader scope
+	leader = { #scientists, generals admirals, governor
+		"gfx/models/portraits/gar/gar_female_clothes_general.dds" = {
+			leader_class = commander leader_should_wear_general_uniform = yes
+			NOT = {
+				has_trait = leader_trait_general_psionic
+			}
+		}
+		"gfx/models/portraits/gar/gar_female_clothes_jedi.dds" = {
+			leader_class = commander leader_should_wear_general_uniform = yes
+			has_trait = leader_trait_general_psionic
+		}
+		"gfx/models/portraits/gar/gar_female_clothes_scientist.dds" = { leader_class = scientist }
+		"gfx/models/portraits/gar/gar_female_clothes_admiral.dds" = { leader_class = commander leader_should_wear_general_uniform = no }
+		"gfx/models/portraits/gar/gar_female_clothes_governor.dds" = { leader_class = official }
+	}
+	
+	#leader scope 
+	ruler = { #for rulers
+		default = "gfx/models/portraits/gar/gar_female_clothes_ruler.dds"
+		
+		"gfx/models/portraits/gar/gar_female_clothes_ruler.dds" = { owner = { has_generic_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/gar/gar_female_clothes_general.dds" = { owner = { has_militarist_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/gar/gar_female_clothes_jedi.dds" = { owner = { has_spiritualist_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/gar/gar_female_clothes_governor.dds"  = { owner = { has_pacifist_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/gar/gar_female_clothes_governor.dds"  = { owner = { has_primitive_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/gar/gar_female_clothes_scientist.dds" = { owner = { has_materialist_government = yes NOT = { has_authority = auth_imperial } } }
+		"gfx/models/portraits/gar/gar_female_clothes_ruler.dds" = { owner = { has_authority = auth_imperial } }
+	}
+}
+
+gar_female_hair_1 = { 
+	default = "gfx/models/portraits/gar/gar_female_hair_red_style_01.dds"
+	
+	ruler = {
+	default = "gfx/models/portraits/gar/gar_female_hair_black_style_01.dds"
+	
+		"gfx/models/portraits/gar/gar_female_hair_black_style_01.dds" = { owner = { has_government = military_dictatorship } }
+	}
+}

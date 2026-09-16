@@ -1,0 +1,257 @@
+namespace = foc_v134_support
+
+# V232q: the former pre-Yavin emergency reinforcement controller is retired.
+# Death Star project acceleration (.6) is an independent mechanic and is unchanged.
+country_event = {
+    id = foc_v134_support.5
+    hide_window = yes
+    is_triggered_only = yes
+    # V232q: retired. Fleet-power overtakes NEVER unlock fleet reinforcement.
+    trigger = { always = no }
+}
+
+# V202 one-shot Death Star acceleration. AI counts the age of the Phase-I
+# program so the emergency route can finish at year 2.5 instead of year 20.
+# The first exact Rebel fleet-power overtake permanently latches the route.
+# A player Empire marks its active Death Star project for quarter cost. Native
+# conditional cost preserves the project object and invested progress; no abort/restart.
+country_event = {
+    id = foc_v134_support.6
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = { has_country_flag = foc_republic_origin_empire_country }
+
+    immediate = {
+        foc_v235_start_death_star_early_clock = yes
+        # AI only: keep a project-age clock independent of the power comparison.
+        # This lets a late Rebel overtake complete immediately once the original
+        # program is already at least 2.5 years old.
+        if = {
+            limit = {
+                is_ai = yes
+                has_country_flag = foc_republic_origin_death_star_project_started
+                NOT = { has_country_flag = foc_republic_origin_death_star_one_built }
+            }
+            if = {
+                limit = { NOT = { is_variable_set = foc_v202_death_star_one_project_months } }
+                set_variable = { which = foc_v202_death_star_one_project_months value = 0 }
+            }
+            change_variable = { which = foc_v202_death_star_one_project_months value = 1 }
+        }
+
+        # Latch once, at the first month in which Rebel total fleet power is
+        # strictly higher than the Empire's during an active Death Star phase.
+        if = {
+            limit = {
+                NOT = { has_country_flag = foc_v202_death_star_emergency_acceleration_used }
+                NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+                any_country = {
+                    foc_v235_is_gcw_rebel = yes
+                    is_at_war_with = root
+                    fleet_power > root.trigger:fleet_power
+                }
+                OR = {
+                    AND = {
+                        has_country_flag = foc_republic_origin_death_star_project_started
+                        NOT = { has_country_flag = foc_republic_origin_death_star_one_built }
+                    }
+                    AND = {
+                        is_ai = no
+                        has_country_flag = foc_republic_origin_death_star_two_project_started
+                        OR = { is_ai = no has_country_flag = foc_ds2_bothan_revealed }
+                        NOT = { has_country_flag = foc_republic_origin_death_star_two_built }
+                    }
+                }
+            }
+            set_country_flag = foc_v202_death_star_emergency_acceleration_used
+            log = "FOC_V235_DS_EMERGENCY: [This.GetName]; the opposing GCW country's total fleet power is higher."
+
+            if = {
+                limit = { is_ai = no }
+                if = {
+                    limit = {
+                        has_country_flag = foc_republic_origin_death_star_project_started
+                        NOT = { has_country_flag = foc_republic_origin_death_star_one_built }
+                    }
+                    set_country_flag = foc_v202_player_death_star_one_emergency_project
+                    if = {
+                        limit = {
+                            exists = event_target:foc_sw_coruscant_system
+                            NOT = { has_special_project = FOC_V202_DEATH_STAR_PROJECT_EMERGENCY }
+                            NOT = { has_special_project = FOC_REPUBLIC_ORIGIN_DEATH_STAR_PROJECT }
+                        }
+                        event_target:foc_sw_coruscant_system = {
+                            star = {
+                                enable_special_project = {
+                                    name = FOC_V202_DEATH_STAR_PROJECT_EMERGENCY
+                                    location = this
+                                    owner = root
+                                }
+                            }
+                        }
+                    }
+                }
+                else_if = {
+                    limit = {
+                        has_country_flag = foc_republic_origin_death_star_two_project_started
+                        OR = { is_ai = no has_country_flag = foc_ds2_bothan_revealed }
+                        NOT = { has_country_flag = foc_republic_origin_death_star_two_built }
+                    }
+                    set_country_flag = foc_v202_player_death_star_two_emergency_project
+                    if = {
+                        limit = {
+                            exists = event_target:foc_swmap_endor_system
+                            NOT = { has_special_project = FOC_V202_DEATH_STAR_II_PROJECT_EMERGENCY }
+                            NOT = { has_special_project = FOC_REPUBLIC_ORIGIN_DEATH_STAR_II_PROJECT }
+                        }
+                        event_target:foc_swmap_endor_system = {
+                            star = {
+                                enable_special_project = {
+                                    name = FOC_V202_DEATH_STAR_II_PROJECT_EMERGENCY
+                                    location = this
+                                    owner = root
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        # AI only: once the one-shot route is latched, Phase I completes when
+        # its exact 900-day deadline has elapsed (2.5 years). The original 7200-day
+        # event remains harmlessly scheduled as a 20-year fallback.
+        if = {
+            limit = {
+                is_ai = yes
+                has_country_flag = foc_v202_death_star_emergency_acceleration_used
+                NOT = { has_country_flag = foc_republic_origin_death_star_one_built }
+                has_country_flag = foc_v235_ds1_clock_started
+                NOT = { has_country_flag = foc_v235_ds1_early_wait }
+            }
+            country_event = { id = foc_republic_origin.170 }
+        }
+    }
+}
+
+# V232q: Yavin-to-Endor reinforcement starter and monthly lost-callback watchdog.
+# Death Star I must have been destroyed; commissioning alone does not qualify.
+country_event = {
+    id = foc_v134_support.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        foc_v232q_empire_support_eligible = yes
+        NOT = { has_country_flag = foc_v232q_empire_support_cooldown }
+    }
+    immediate = { foc_v232q_issue_empire_support = yes }
+}
+
+# Compatibility tombstone for the old reinforcement tick.
+country_event = {
+    id = foc_v134_support.2
+    hide_window = yes
+    is_triggered_only = yes
+    # V232q: consume old queued callbacks without producing a wave or requeueing.
+    # New callbacks have a different event ID and a persistent 360-day guard.
+    trigger = { always = no }
+}
+
+# Rebel annual support controller. Covers the Imperial Rebellion and Rebel Alliance incarnations.
+country_event = {
+    id = foc_v134_support.3
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = yes
+        OR = {
+            has_country_flag = foc_republic_origin_imperial_rebel_country
+            has_country_flag = foc_republic_origin_rebel_alliance_country
+            has_country_flag = foc_khan_rebel_alliance_country
+        }
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        NOT = { has_country_flag = foc_v134_rebel_annual_support_started }
+        any_country = {
+            has_country_flag = foc_republic_origin_empire_country
+            is_at_war_with = root
+        }
+        any_system = {
+            has_star_flag = foc_sw_yavin_home
+            space_owner? = { is_same_value = root }
+            NOT = {
+                any_system_planet = {
+                    is_colony = yes
+                    NOT = { owner = { is_same_value = root } }
+                }
+            }
+        }
+        exists = capital_scope
+    }
+
+    immediate = {
+        set_country_flag = foc_v134_rebel_annual_support_started
+        # V142: no opening support fleet. The first annual Rebel support arrives
+        # only after the Galactic Civil War has lasted a full 360 days.
+        country_event = { id = foc_v134_support.4 days = 360 }
+    }
+}
+
+# Rebel tick: exactly 20 dedicated MC80 line cruisers per year, AI only.
+country_event = {
+    id = foc_v134_support.4
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_ai = yes
+        OR = {
+            has_country_flag = foc_republic_origin_imperial_rebel_country
+            has_country_flag = foc_republic_origin_rebel_alliance_country
+            has_country_flag = foc_khan_rebel_alliance_country
+        }
+        NOT = { has_global_flag = foc_republic_origin_galactic_treaty }
+        any_country = {
+            has_country_flag = foc_republic_origin_empire_country
+            is_at_war_with = root
+        }
+        any_system = {
+            has_star_flag = foc_sw_yavin_home
+            space_owner? = { is_same_value = root }
+            NOT = {
+                any_system_planet = {
+                    is_colony = yes
+                    NOT = { owner = { is_same_value = root } }
+                }
+            }
+        }
+        exists = capital_scope
+    }
+
+    immediate = {
+        # V138: Republic-origin Imperial Rebels lose their annual MC80 support
+        # whenever either Death Star I or Death Star II actually exists. The
+        # support automatically resumes after the active station is destroyed,
+        # as long as neither Death Star is present at the next annual tick.
+        if = {
+            limit = {
+                OR = {
+                    NOT = { has_country_flag = foc_republic_origin_imperial_rebel_country }
+                    NOT = {
+                        any_country = {
+                            any_owned_ship = {
+                                OR = {
+                                    has_ship_flag = foc_republic_origin_death_star_one
+                                    has_ship_flag = foc_republic_origin_death_star_two
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            foc_v134_spawn_rebel_annual_20_mc80_line = yes
+        }
+        country_event = { id = foc_v134_support.4 days = 360 }
+    }
+}
