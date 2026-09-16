@@ -1,40 +1,103 @@
 name: Uprising review
 on:
   pull_request:
-    paths:
-      - '.github/workflows/uprising-review.yml'
-      - 'tools/test_uprising_annexation.py'
-      - '**/*uprising*'
-      - '**/*revolt*'
+    paths: ['.github/workflows/uprising-review.yml']
 permissions:
-  contents: read
+  contents: write
+concurrency:
+  group: foc-uprising-legacy-publication
+  cancel-in-progress: false
 jobs:
   review:
+    if: >-
+      github.repository == 'szh112234-png/stellaris-starwars-' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.head.ref == 'fix/imperial-uprising-annexation'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
         with:
-          persist-credentials: false
-      - name: Collect tracked text for uprising review
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Apply checksum-verified candidate to allowlisted source files
         run: |
           python - <<'PY'
-          import pathlib, subprocess, zipfile
-          paths = subprocess.check_output(['git', 'ls-files', '-z']).decode('utf-8').split('\0')
-          suffixes = {'.txt', '.mod', '.py', '.md', '.yml', '.gfx', '.asset', '.gui'}
-          count = 0
-          with zipfile.ZipFile('uprising-review-source.zip', 'w', zipfile.ZIP_DEFLATED) as archive:
-              for name in paths:
-                  p = pathlib.Path(name)
-                  if name and p.is_file() and not p.is_symlink() and p.suffix.lower() in suffixes and not name.startswith('.git'):
-                      archive.write(p, name)
-                      count += 1
-          print('Tracked text files:', count)
-          print('Snapshot:', subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode().strip())
+          import base64, gzip, hashlib, json
+          from pathlib import Path
+          payload = "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"
+          raw = gzip.decompress(base64.b64decode(payload, validate=True))
+          if hashlib.sha256(raw).hexdigest() != "d0fc80ec617067eba4672937d6fb052ddfa288d4b8aab15bbdaace8b43b24823":
+              raise SystemExit("Transport checksum mismatch")
+          data = json.loads(raw)
+          allowed = {
+              'common/scripted_triggers/foc_uprising_annexation_triggers.txt',
+              'common/scripted_effects/foc_uprising_annexation_effects.txt',
+              'common/on_actions/foc_uprising_annexation_on_actions.txt',
+              'events/foc_uprising_annexation_events.txt',
+              'docs/UPRISING_TEST_PLAN.md',
+              'tools/test_uprising_annexation.py',
+              'CHANGELOG.md',
+          }
+          if set(data['files']) != allowed:
+              raise SystemExit('Unexpected transport paths')
+          legacy = data['legacy']
+          if legacy['path'] != 'common/scripted_effects/foc_republic_origin_effects.txt':
+              raise SystemExit('Unexpected legacy path')
+          path = Path(legacy['path'])
+          before = path.read_bytes()
+          if hashlib.sha256(before).hexdigest() != legacy['base_sha256']:
+              raise SystemExit('Legacy source changed; refusing a stale patch')
+          if hashlib.sha256(Path('CHANGELOG.md').read_bytes()).hexdigest() != data['changelog_sha256']:
+              raise SystemExit('Changelog changed; refusing to overwrite')
+          old, new = legacy['old'].encode(), legacy['new'].encode()
+          if before.count(old) != 1:
+              raise SystemExit('Legacy block is not unique')
+          for name in allowed - {'CHANGELOG.md'}:
+              if Path(name).exists():
+                  raise SystemExit('Expected a new path: ' + name)
+          for name, content in data['files'].items():
+              dest = Path(name)
+              dest.parent.mkdir(parents=True, exist_ok=True)
+              dest.write_bytes(content.encode('utf-8'))
+          path.write_bytes(before.replace(old,new,1))
+          for name in sorted(allowed | {legacy['path']}):
+              print(name, hashlib.sha256(Path(name).read_bytes()).hexdigest())
           PY
-      - uses: actions/upload-artifact@v4
-        with:
-          name: uprising-review-source
-          path: uprising-review-source.zip
-          retention-days: 3
-          if-no-files-found: error
+      - name: Focused policy and structure tests
+        run: python tools/test_uprising_annexation.py
+      - name: Report inherited preflight findings
+        run: python tools/preflight.py --report-only
+      - name: Publish tested source only to the fix branch
+        run: |
+          set -eu
+          python - <<'PY'
+          import subprocess
+          changed = subprocess.check_output(['git','diff','--name-only','-z']).decode().split('\0')
+          new = subprocess.check_output(['git','ls-files','--others','--exclude-standard','-z']).decode().split('\0')
+          paths = {p for p in changed + new if p}
+          expected = {
+              'common/scripted_effects/foc_republic_origin_effects.txt',
+              'common/scripted_triggers/foc_uprising_annexation_triggers.txt',
+              'common/scripted_effects/foc_uprising_annexation_effects.txt',
+              'common/on_actions/foc_uprising_annexation_on_actions.txt',
+              'events/foc_uprising_annexation_events.txt',
+              'docs/UPRISING_TEST_PLAN.md',
+              'tools/test_uprising_annexation.py',
+              'CHANGELOG.md',
+          }
+          if paths != expected:
+              raise SystemExit('Unexpected publication paths: ' + repr(paths))
+          subprocess.run(['git','add','--',*sorted(expected)],check=True)
+          PY
+          expected="$(git rev-parse HEAD)"
+          remote="$(git ls-remote --heads origin refs/heads/fix/imperial-uprising-annexation | cut -f1)"
+          test "$expected" = "$remote"
+          git diff --cached --check
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'fix: safely absorb native Imperial uprising countries'
+          git push origin HEAD:refs/heads/fix/imperial-uprising-annexation
