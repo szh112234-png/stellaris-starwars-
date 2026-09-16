@@ -1,0 +1,25 @@
+name: FOC Preflight
+
+on:
+  push:
+    branches: [ main, "chore/**", "feature/**", "fix/**" ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run repository audit
+        run: python tools/preflight.py --report-only
+
+      - name: Note enforcement mode
+        run: echo "Preflight is initially report-only so inherited legacy findings can be baselined before CI becomes blocking."
