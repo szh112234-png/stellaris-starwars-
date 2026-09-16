@@ -1,0 +1,28 @@
+namespace = foc_uprising_annex
+
+# Runs for an actual Imperial/First Order parent, even in AI-controlled story
+# routes. No dependency on the Republic player, a civil-war flag, or a live war.
+country_event = {
+    id = foc_uprising_annex.1
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        foc_uprising_parent_country = yes
+        any_country = { foc_uprising_rebel_recipient = yes }
+    }
+    immediate = { foc_uprising_scan_native_breakaways = yes }
+}
+
+# Single-player old-save recovery. Monthly checks remain the multiplayer and
+# later-created-recipient fallback. Both paths use exactly the same safeguards.
+country_event = {
+    id = foc_uprising_annex.2
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        is_ai = no
+        any_country = { foc_uprising_parent_country = yes }
+        any_country = { foc_uprising_rebel_recipient = yes }
+    }
+    immediate = { foc_uprising_scan_native_breakaways = yes }
+}

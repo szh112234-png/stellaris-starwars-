@@ -2145,33 +2145,11 @@ foc_republic_origin_apply_original_fe_fleet_packages = {
 # and ownership transfers occur in the same option tick, so a target saved by an
 # earlier effect can briefly be unavailable even though the country already
 # exists. Referencing it unguarded leaves a formal war with neutral fleets.
-# V52: Vanilla/internal planetary revolts can create a separate "Separatists"
-# country inside the Galactic Empire while the scripted Imperial Rebellion is
-# already active.  Such breakaway states are not a third civil-war faction:
-# their territory, starbases and fleets are folded into the Imperial Rebels.
-# Requiring the vanilla separatist origin and an active war with this Empire
-# prevents unrelated foreign enemies from being absorbed.
+# Native revolts are handled independently of Republic player/story state.
+# Keep the legacy entry point for existing callers, but apply the same strict
+# provenance/recipient checks as the monthly and old-save recovery events.
 foc_republic_origin_absorb_empire_breakaway_revolts = {
-    if = {
-        limit = {
-            has_global_flag = foc_republic_origin_empire_war_active
-            exists = event_target:foc_republic_origin_empire
-            exists = event_target:foc_khan_rebel_alliance
-        }
-        every_country = {
-            limit = {
-                is_regular_empire = yes
-                has_origin = origin_separatists
-                NOT = { is_same_value = event_target:foc_republic_origin_empire }
-                NOT = { is_same_value = event_target:foc_khan_rebel_alliance }
-                is_at_war_with = event_target:foc_republic_origin_empire
-            }
-            every_owned_planet = { set_owner = event_target:foc_khan_rebel_alliance }
-            every_owned_starbase = { set_owner = event_target:foc_khan_rebel_alliance }
-            every_owned_fleet = { set_owner = event_target:foc_khan_rebel_alliance }
-            destroy_country = yes
-        }
-    }
+    foc_uprising_scan_native_breakaways = yes
 }
 
 foc_republic_origin_start_imperial_rebellion = {
