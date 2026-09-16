@@ -1,0 +1,91 @@
+# Country-scope identity checks. Native revolt provenance is checked separately.
+foc_uprising_parent_country = {
+    OR = {
+        has_country_flag = foc_republic_origin_empire_country
+        has_country_flag = foc_khan_first_order_country
+        has_country_flag = fop_player_first_order
+        has_country_flag = foc_republic_origin_became_first_order
+        has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+        has_country_flag = foc_republic_origin_empire_crisis
+        has_origin = origin_fop_first_order
+    }
+    NOR = {
+        has_country_flag = foc_khan_final_order_country
+        has_country_flag = fop_player_final_order
+        has_country_flag = fop_origin_player_final_order_established
+        is_country_type = foc_final_order_crisis_country
+        has_country_flag = foc_sw_new_republic_country
+        has_country_flag = foc_republic_origin_republic_country
+        has_country_flag = foc_republic_origin_separatist_country
+        has_country_flag = foc_khan_rebel_alliance_country
+        has_country_flag = foc_khan_first_order_resistance_country
+        has_country_flag = foc_republic_origin_imperial_rebel_country
+        has_country_flag = foc_republic_origin_rebel_alliance_country
+        has_country_flag = foc_republic_origin_post_treaty_player_rebels
+        has_country_flag = foc_sw_imperial_remnant_country
+    }
+}
+
+foc_uprising_rebel_recipient = {
+    OR = {
+        has_country_flag = foc_republic_origin_imperial_rebel_country
+        has_country_flag = foc_republic_origin_rebel_alliance_country
+        has_country_flag = foc_khan_rebel_alliance_country
+        has_country_flag = foc_khan_first_order_resistance_country
+    }
+    NOR = {
+        has_country_flag = foc_republic_origin_empire_country
+        has_country_flag = foc_khan_first_order_country
+        has_country_flag = fop_player_first_order
+        has_country_flag = foc_republic_origin_became_first_order
+        has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+        has_country_flag = foc_republic_origin_empire_crisis
+        has_origin = origin_fop_first_order
+        has_country_flag = foc_khan_final_order_country
+        has_country_flag = fop_player_final_order
+        has_country_flag = fop_origin_player_final_order_established
+        is_country_type = foc_final_order_crisis_country
+        has_country_flag = foc_sw_new_republic_country
+        has_country_flag = foc_republic_origin_post_treaty_new_republic
+        has_country_flag = foc_republic_origin_ai_new_republic_after_dqar
+        has_country_flag = foc_sw_imperial_remnant_country
+        has_country_flag = foc_republic_origin_republic_country
+        has_country_flag = foc_republic_origin_separatist_country
+    }
+    num_owned_planets > 0
+}
+
+# Eligibility is NOT proof of a revolt. The transfer must also check the exact
+# separatist_rebel_of_@<parent> flag written by unrest.4200.
+foc_uprising_breakaway_candidate = {
+    is_ai = yes
+    is_country_type = default
+    num_owned_planets > 0
+    NOR = {
+        has_country_flag = foc_republic_origin_empire_country
+        has_country_flag = foc_khan_first_order_country
+        has_country_flag = fop_player_first_order
+        has_country_flag = foc_republic_origin_became_first_order
+        has_country_flag = foc_republic_origin_remnant_rebranded_first_order
+        has_country_flag = foc_republic_origin_empire_crisis
+        has_origin = origin_fop_first_order
+        has_country_flag = foc_republic_origin_imperial_rebel_country
+        has_country_flag = foc_republic_origin_rebel_alliance_country
+        has_country_flag = foc_khan_rebel_alliance_country
+        has_country_flag = foc_khan_first_order_resistance_country
+        has_country_flag = foc_republic_origin_post_treaty_player_rebels
+        has_country_flag = foc_republic_origin_post_treaty_new_republic
+        has_country_flag = foc_republic_origin_ai_new_republic_after_dqar
+        has_country_flag = foc_uprising_absorption_started
+        has_country_flag = foc_republic_origin_republic_country
+        has_country_flag = foc_republic_origin_player_republic
+        has_country_flag = foc_republic_origin_separatist_country
+        has_country_flag = foc_sw_new_republic_country
+        has_country_flag = foc_sw_imperial_remnant_country
+        has_country_flag = foc_khan_final_order_country
+        has_country_flag = fop_player_final_order
+        has_country_flag = fop_origin_player_final_order_established
+        has_country_flag = foc_mandalore_independent_country
+        has_country_flag = foc_v196_hutt_criminal_empire_country
+    }
+}

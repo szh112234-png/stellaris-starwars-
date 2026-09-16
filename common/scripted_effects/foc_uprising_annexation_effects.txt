@@ -1,0 +1,79 @@
+# Scope-independent replacement for the old player-story-only revolt scan.
+# Validate the canonical Rebel target; do not rewrite any global story targets.
+# Without it, use a recipient only if its faction identity is unambiguous.
+foc_uprising_scan_native_breakaways = {
+    if = {
+        limit = {
+            exists = event_target:foc_khan_rebel_alliance
+            event_target:foc_khan_rebel_alliance = { foc_uprising_rebel_recipient = yes }
+        }
+        event_target:foc_khan_rebel_alliance = { foc_uprising_absorb_for_recipient = yes }
+    }
+    else = {
+        random_country = {
+            limit = { foc_uprising_rebel_recipient = yes }
+            save_event_target_as = foc_uprising_recipient_candidate
+            if = {
+                limit = {
+                    NOT = {
+                        any_country = {
+                            foc_uprising_rebel_recipient = yes
+                            NOT = { is_same_value = event_target:foc_uprising_recipient_candidate }
+                        }
+                    }
+                }
+                foc_uprising_absorb_for_recipient = yes
+            }
+        }
+    }
+}
+
+# Country scope = validated recipient, not ROOT (which can be the Empire, the
+# Rebel player, or a load-game caller). Named LOCAL targets avoid PREV ambiguity.
+foc_uprising_absorb_for_recipient = {
+    if = {
+        limit = { foc_uprising_rebel_recipient = yes }
+        save_event_target_as = foc_uprising_recipient
+        every_country = {
+            limit = { foc_uprising_parent_country = yes }
+            save_event_target_as = foc_uprising_parent
+            every_country = {
+                limit = {
+                    foc_uprising_breakaway_candidate = yes
+                    has_country_flag = separatist_rebel_of_@event_target:foc_uprising_parent
+                    NOT = { is_same_value = event_target:foc_uprising_recipient }
+                    NOT = { is_same_value = event_target:foc_uprising_parent }
+                }
+                # No origin/war check: native revolt origins can change and the
+                # Empire can choose a truce. Provenance is still mandatory.
+                save_event_target_as = foc_uprising_breakaway
+                set_country_flag = foc_uprising_absorption_started
+                log = "FOC_UPRISING_ANNEX: [This.GetName] from [event_target:foc_uprising_parent.GetName] joins [event_target:foc_uprising_recipient.GetName]."
+                # Temporary strike sorties must not outlive their old owner as
+                # newly inherited permanent fleets. Normal fleets are preserved.
+                every_owned_fleet = {
+                    limit = { has_fleet_flag = ssp_strike_fleet }
+                    destroy_fleet = this
+                }
+                every_owned_fleet = { set_owner = event_target:foc_uprising_recipient }
+                every_owned_megastructure = { set_owner = event_target:foc_uprising_recipient }
+                every_owned_starbase = { set_owner = event_target:foc_uprising_recipient }
+                every_owned_planet = {
+                    every_planet_army = {
+                        limit = { is_owned_by = event_target:foc_uprising_breakaway }
+                        set_owner = event_target:foc_uprising_recipient
+                    }
+                    set_owner = event_target:foc_uprising_recipient
+                }
+                # Defensive check: never destroy a country while a colony is
+                # still owned by it. A failed/partial transfer may retry next month.
+                if = {
+                    limit = { num_owned_planets = 0 }
+                    set_country_flag = silence_destroy_event
+                    destroy_country = yes
+                }
+                else = { remove_country_flag = foc_uprising_absorption_started }
+            }
+        }
+    }
+}

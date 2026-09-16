@@ -1,0 +1,34 @@
+name: Uprising regression
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/uprising-review.yml'
+      - 'tools/test_uprising_annexation.py'
+      - '**/*uprising*'
+      - 'common/scripted_effects/foc_republic_origin_effects.txt'
+      - 'events/unrest_events.txt'
+  push:
+    branches: [main, 'fix/imperial-uprising-annexation']
+    paths:
+      - '.github/workflows/uprising-review.yml'
+      - 'tools/test_uprising_annexation.py'
+      - '**/*uprising*'
+      - 'common/scripted_effects/foc_republic_origin_effects.txt'
+      - 'events/unrest_events.txt'
+permissions:
+  contents: read
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Native uprising policy and structure regressions
+        run: python tools/test_uprising_annexation.py
+      - name: Repository audit (inherited findings remain report-only)
+        run: python tools/preflight.py --report-only
