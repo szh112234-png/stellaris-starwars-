@@ -18,7 +18,6 @@ SKIP_DIRS = {".git", "__pycache__"}
 EVENT_ID_RE = re.compile(r"^\s*id\s*=\s*([A-Za-z0-9_.-]+)\s*$")
 LOC_KEY_RE = re.compile(r"^\s*([A-Za-z0-9_.-]+):\d*\s+")
 TOP_DEF_RE = re.compile(r"^\s*([A-Za-z0-9_.-]+)\s*=\s*\{")
-CALL_RE = re.compile(r"\b([A-Za-z0-9_.-]+)\s*=\s*(?:yes|no|\{)")
 
 
 def iter_text_files():
@@ -114,16 +113,24 @@ def collect_event_ids(path: Path, text: str, event_ids: dict[str, list[str]]):
             event_ids[m.group(1)].append(f"{rel}:{lineno}")
 
 
-def collect_loc_keys(path: Path, text: str, loc_keys: dict[str, list[str]]):
+def check_loc_duplicates(path: Path, text: str, findings: list[str]):
     if path.suffix.lower() != ".yml" or "localisation" not in path.parts:
         return
     rel = path.relative_to(ROOT)
+    seen: dict[str, int] = {}
     for lineno, line in enumerate(text.splitlines(), 1):
         if lineno == 1 and line.lstrip().startswith("l_"):
             continue
         m = LOC_KEY_RE.match(line)
-        if m:
-            loc_keys[m.group(1)].append(f"{rel}:{lineno}")
+        if not m:
+            continue
+        key = m.group(1)
+        if key in seen:
+            findings.append(
+                f"WARNING duplicate localisation key {key} in {rel}: lines {seen[key]} and {lineno}"
+            )
+        else:
+            seen[key] = lineno
 
 
 def parse_scripted_effects(text: str):
@@ -138,7 +145,7 @@ def parse_scripted_effects(text: str):
             continue
         name = m.group(1)
         depth = brace_delta(clean)
-        block = [clean]
+        block = []  # Exclude the definition header itself from call detection.
         j = i + 1
         while j < len(lines) and depth > 0:
             c = strip_comment(lines[j])
@@ -162,36 +169,36 @@ def check_scripted_effect_depth(findings: list[str]):
 
     names = set(definitions)
     graph: dict[str, set[str]] = {name: set() for name in names}
+    patterns = {name: re.compile(rf"\b{re.escape(name)}\s*=") for name in names}
     for name, (_, block) in definitions.items():
         body = "\n".join(block)
-        for candidate in names:
-            if candidate == name:
-                pattern = re.compile(rf"\b{re.escape(candidate)}\s*=")
-            else:
-                pattern = re.compile(rf"\b{re.escape(candidate)}\s*=")
+        for candidate, pattern in patterns.items():
             if pattern.search(body):
                 graph[name].add(candidate)
 
     memo: dict[str, int] = {}
-    visiting: list[str] = []
+    reported_cycles: set[tuple[str, ...]] = set()
 
-    def depth(node: str) -> int:
+    def depth(node: str, stack: list[str]) -> int:
         if node in memo:
             return memo[node]
-        if node in visiting:
-            cycle = visiting[visiting.index(node):] + [node]
-            findings.append("ERROR scripted_effects: recursion detected: " + " -> ".join(cycle))
+        if node in stack:
+            cycle = tuple(stack[stack.index(node):] + [node])
+            if cycle not in reported_cycles:
+                reported_cycles.add(cycle)
+                findings.append("ERROR scripted_effects: recursion detected: " + " -> ".join(cycle))
             return 999
-        visiting.append(node)
+        stack.append(node)
         best = 1
         for nxt in graph[node]:
-            best = max(best, 1 + depth(nxt))
-        visiting.pop()
-        memo[node] = best
+            best = max(best, 1 + depth(nxt, stack))
+        stack.pop()
+        if best < 999:
+            memo[node] = best
         return best
 
     for name in sorted(names):
-        d = depth(name)
+        d = depth(name, [])
         if 6 <= d < 999:
             rel = definitions[name][0].relative_to(ROOT)
             findings.append(f"ERROR scripted_effects: call depth {d} exceeds limit 5: {name} ({rel})")
@@ -204,7 +211,6 @@ def main() -> int:
 
     findings: list[str] = []
     event_ids: dict[str, list[str]] = defaultdict(list)
-    loc_keys: dict[str, list[str]] = defaultdict(list)
 
     count = 0
     for path in iter_text_files():
@@ -215,15 +221,11 @@ def main() -> int:
         if path.suffix.lower() in {".txt", ".mod", ".gui", ".gfx", ".asset"}:
             check_braces(path, text, findings)
         collect_event_ids(path, text, event_ids)
-        collect_loc_keys(path, text, loc_keys)
+        check_loc_duplicates(path, text, findings)
 
     for event_id, places in sorted(event_ids.items()):
         if len(places) > 1:
             findings.append(f"ERROR duplicate event id {event_id}: " + ", ".join(places))
-
-    for key, places in sorted(loc_keys.items()):
-        if len(places) > 1:
-            findings.append(f"WARNING duplicate localisation key {key}: " + ", ".join(places))
 
     check_scripted_effect_depth(findings)
 
