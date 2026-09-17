@@ -11,7 +11,7 @@ permissions:
 jobs:
   inventory:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
         with:
@@ -37,7 +37,7 @@ jobs:
       - name: Collect tracked inventory, text, and embedded model references
         shell: bash
         run: |
-          python - <<'PY'
+          python -u - <<'PY'
           import collections, hashlib, json, pathlib, re, subprocess, zipfile
           root = pathlib.Path('.')
           entries = []
@@ -77,9 +77,6 @@ jobs:
                   stats['text_files'] += 1
               archive.writestr('binary_references.json', json.dumps(binary_refs, ensure_ascii=False, indent=2))
               archive.writestr('sparse_excluded_files.json', json.dumps(skipped, ensure_ascii=False, indent=2))
-              check = subprocess.run(['python', 'tools/preflight.py', '--report-only'], capture_output=True, text=True)
-              archive.writestr('preflight_baseline.txt', check.stdout + '\nSTDERR:\n' + check.stderr)
-              stats['preflight_exit_code'] = check.returncode
               archive.writestr('summary.json', json.dumps(dict(stats), indent=2))
           gfx = [e for e in entries if e['path'].startswith('gfx/')]
           print(json.dumps({'tracked_files': len(entries), 'gfx_files': len(gfx), 'gfx_bytes': sum(e['size'] for e in gfx), 'snapshot': dict(stats), 'sparse_excluded': len(skipped)}, indent=2))
