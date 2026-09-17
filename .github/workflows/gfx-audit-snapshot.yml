@@ -1,0 +1,92 @@
+name: FOC GFX audit snapshot
+
+on:
+  push:
+    branches: ["chore/gfx-unused-model-audit"]
+    paths: [".github/workflows/gfx-audit-snapshot.yml"]
+
+permissions:
+  contents: read
+
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /*
+            !*.dds
+            !*.tga
+            !*.png
+            !*.jpg
+            !*.jpeg
+            !*.wav
+            !*.ogg
+            !*.mp3
+            !*.zip
+            !*.7z
+            !*.psd
+            !*.fbx
+            !*.blend
+            !*.xcf
+            !*.kra
+      - name: Collect tracked inventory, text, and embedded model references
+        shell: bash
+        run: |
+          python - <<'PY'
+          import collections, hashlib, json, pathlib, re, subprocess, zipfile
+          root = pathlib.Path('.')
+          entries = []
+          for record in subprocess.check_output(['git', 'ls-tree', '-r', '-l', '-z', 'HEAD']).split(b'\0'):
+              if not record:
+                  continue
+              metadata, path_bytes = record.split(b'\t', 1)
+              mode, kind, sha, size = metadata.decode('ascii').split()
+              entries.append({'path': path_bytes.decode('utf-8'), 'mode': mode, 'type': kind, 'sha': sha, 'size': int(size) if size != '-' else 0})
+          binary_refs = {}
+          stats = collections.Counter()
+          skipped = []
+          with zipfile.ZipFile('gfx-audit-snapshot.zip', 'w', zipfile.ZIP_DEFLATED) as archive:
+              archive.writestr('tree.json', json.dumps({'commit': subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode().strip(), 'base_commit': 'f7858fe766a69cea90c1438a623c9c63ebdd16d4', 'tree': entries}, ensure_ascii=False, indent=2))
+              for entry in entries:
+                  p = root / entry['path']
+                  if not p.is_file():
+                      skipped.append(entry['path'])
+                      continue
+                  data = p.read_bytes()
+                  if p.suffix.lower() in {'.mesh', '.anim'}:
+                      strings = re.findall(rb'[\x20-\x7e]{4,}', data)
+                      refs = sorted({s.decode('ascii') for s in strings if any(ext in s.lower() for ext in (b'.dds', b'.tga', b'.png', b'.mesh', b'.anim', b'.asset', b'.gfx'))})
+                      binary_refs[entry['path']] = {'sha256': hashlib.sha256(data).hexdigest(), 'bytes': len(data), 'references': refs}
+                      stats['binary_models_and_animations_scanned'] += 1
+                      continue
+                  if b'\0' in data:
+                      stats['other_binary_files'] += 1
+                      continue
+                  try:
+                      data.decode('utf-8-sig')
+                  except UnicodeDecodeError:
+                      archive.writestr('undecodable/' + entry['path'], data)
+                      stats['undecodable_files'] += 1
+                      continue
+                  archive.writestr('source/' + entry['path'], data)
+                  stats['text_files'] += 1
+              archive.writestr('binary_references.json', json.dumps(binary_refs, ensure_ascii=False, indent=2))
+              archive.writestr('sparse_excluded_files.json', json.dumps(skipped, ensure_ascii=False, indent=2))
+              check = subprocess.run(['python', 'tools/preflight.py', '--report-only'], capture_output=True, text=True)
+              archive.writestr('preflight_baseline.txt', check.stdout + '\nSTDERR:\n' + check.stderr)
+              stats['preflight_exit_code'] = check.returncode
+              archive.writestr('summary.json', json.dumps(dict(stats), indent=2))
+          gfx = [e for e in entries if e['path'].startswith('gfx/')]
+          print(json.dumps({'tracked_files': len(entries), 'gfx_files': len(gfx), 'gfx_bytes': sum(e['size'] for e in gfx), 'snapshot': dict(stats), 'sparse_excluded': len(skipped)}, indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gfx-audit-snapshot
+          path: gfx-audit-snapshot.zip
+          retention-days: 7
+          if-no-files-found: error
